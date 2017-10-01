@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="card" *ngIf="calendars && calendars.length > 0">
+      <div class="card-content ps-child">
+        <select id="field_calendarType" name="calendarType" class="form-control selectpicker"
+                data-style="btn btn-primary btn-round" data-size="7" [ngModel]="selectedCalendar"
+                (ngModelChange)="onCalendarChange($event)">
+          <option *ngFor="let calendar of calendars" [ngValue]="calendar">
+            {{ calendar.name?.toUpperCase() }}
+          </option>
+        </select>
+        <div *ngFor="let calendar of calendars" [id]="getIdentity(calendar) + CALENDAR_ID"
+             [hidden]="getIdentity(calendar) != getIdentity(selectedCalendar)">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

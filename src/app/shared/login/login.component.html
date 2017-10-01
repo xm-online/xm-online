@@ -1,0 +1,47 @@
+
+<div class="text-center">
+  <xm-social provider="linkedin" *ngIf="socialConfiguration.linkedinEnabled"></xm-social>
+  <xm-social provider="facebook" *ngIf="socialConfiguration.facebookEnabled"></xm-social>
+  <xm-social provider="google" *ngIf="socialConfiguration.googleEnabled"></xm-social>
+  <xm-social provider="twitter" *ngIf="socialConfiguration.twitterEnabled"></xm-social>
+</div>
+
+<div class="alert alert-danger" *ngIf="authenticationError"
+     jhiTranslate="login.messages.error.authentication">
+  <strong>Failed to sign in!</strong> Please check your credentials and try again.
+</div>
+
+
+<form class="form" role="form" (ngSubmit)="login()">
+  <div class="form-group label-floating">
+    <label for="username" class="control-label" jhiTranslate="global.form.login">Login</label>
+    <input type="text" class="form-control" name="username" id="username"
+           [(ngModel)]="username">
+  </div>
+  <div class="form-group label-floating">
+    <label for="password" class="control-label" jhiTranslate="login.form.password">Password</label>
+    <input type="password" class="form-control" name="password" id="password"
+           [(ngModel)]="password">
+  </div>
+  <div class="form-group checkbox">
+
+    <label>
+      <input type="checkbox" name="rememberMe" id="rememberMe" [(ngModel)]="rememberMe" checked>
+    </label>
+    <label jhiTranslate="login.form.rememberMe" for="rememberMe">  Remember me
+    </label>
+  </div>
+  <div class="text-right">
+    <button type="submit" class="btn btn-primary" jhiTranslate="login.form.button">Sign in</button>
+  </div>
+</form>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="alert alert-primary">
+      <a class="alert-link" (click)="requestResetPassword()" jhiTranslate="login.password.forgot">
+        Did you forget your password?
+      </a>
+    </div>
+  </div>
+</div>

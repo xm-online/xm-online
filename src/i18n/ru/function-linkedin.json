@@ -1,0 +1,21 @@
+{
+    "xm": {
+        "functionLinkedin": {
+            "title": "Извлечь профиль LinkedIn",
+            "location": "Место нахождения",
+            "current": "Текущий",
+            "summary": "Резюме",
+            "recommendations": "Рекомендации",
+            "experienceCurrent": "Текущий опыт",
+            "experiencePast": "Прошлый опыт",
+            "volunteer": "Волонтерские причины",
+            "languages": "Языки",
+            "certifications": "Сертификаты",
+            "awards": "Награды",
+            "skills": "Навыки",
+            "interests": "Интересы",
+            "projects": "Проекты",
+            "education": "Образование"
+        }
+    }
+}

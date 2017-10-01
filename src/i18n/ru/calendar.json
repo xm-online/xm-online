@@ -1,0 +1,19 @@
+{
+    "xm": {
+        "calendar": {
+            "add": {
+                "title": "Добавить новое событие для [ <b>{{name}}</b> ]"
+            }
+        }
+    },
+    "entityApp": {
+        "calendar": {
+            "chooseEventType": "Выберите тип события"
+        }
+    },
+    "entity": {
+        "validation": {
+            "ZonedDateTimelocal": "Это поле должно быть дата и время."
+        }
+    }
+}

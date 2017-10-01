@@ -1,0 +1,32 @@
+<div class="card">
+  <div class="card-header card-header-icon" data-background-color="primary">
+    <i class="material-icons">call</i>
+  </div>
+
+  <div class="card-content">
+    <h4 class="card-title" jhiTranslate="xm.widgetActiveCalls.active">Active calls</h4>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th jhiTranslate="xm.widgetActiveCalls.caller">Caller</th>
+          <th jhiTranslate="xm.widgetActiveCalls.connected">Connected</th>
+          <th class="text-center" jhiTranslate="xm.widgetActiveCalls.status">Status</th>
+          <th class="text-center" jhiTranslate="xm.widgetActiveCalls.dataTime">Date/time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let channel of channels">
+          <td>{{channel.caller.name ? channel.caller.name : 'noname'}} ({{channel.caller.number}})</td>
+          <td>{{channel.connected.name ? channel.connected.name : 'noname'}} ({{channel.connected.number}})</td>
+          <td class="text-center">
+            <span class="label label-primary">{{channel.state}}</span>
+          </td>
+          <td class="text-center">{{channel.creationtime}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

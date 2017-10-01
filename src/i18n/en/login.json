@@ -1,0 +1,20 @@
+{
+    "login": {
+        "title": "Sign in",
+        "signin": "Sign-in",
+        "signup": "Sign-up",
+        "messages": {
+            "error": {
+                "authentication": "<strong>Failed to sign in!</strong> Please check your credentials and try again."
+            }
+        },
+        "form": {
+            "password": "Password",
+            "rememberMe": "Remember me",
+            "button": "Sign in"
+        },
+        "password": {
+            "forgot": "Did you forget your password?"
+        }
+    }
+}

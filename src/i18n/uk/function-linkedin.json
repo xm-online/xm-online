@@ -1,0 +1,21 @@
+{
+    "xm": {
+        "functionLinkedin": {
+            "title": "Витягнути профіль LinkedIn",
+            "location": "Місцезнаходження",
+            "current": "Струм",
+            "summary": "Резюме",
+            "recommendations": "Рекомендації",
+            "experienceCurrent": "Поточний досвід",
+            "experiencePast": "Минулий досвід",
+            "volunteer": "Волонтерська причина",
+            "languages": "Мови",
+            "certifications": "Сертифікати",
+            "awards": "Нагороди",
+            "skills": "Навички",
+            "interests": "Інтереси",
+            "projects": "Проекти",
+            "education": "Освіта"
+        }
+    }
+}

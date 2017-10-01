@@ -1,0 +1,23 @@
+{
+    "xm": {
+        "defaultProfile": {
+            "home": {
+                "title": "Default Profiles",
+                "createLabel": "Создать новый Default Profile",
+                "createOrEditLabel": "Создать или отредактировать Default Profile",
+                "search": "Найти Default Profile"
+            },
+            "created": "Новый Default Profile создан с идентификатором {{ param }}",
+            "updated": "Default Profile обновлен с идентификатором {{ param }}",
+            "deleted": "Default Profile удален с идентификатором {{ param }}",
+            "delete": {
+                "question": "Вы уверены что хотите удалить Default Profile {{ id }}?"
+            },
+            "detail": {
+                "title": "Default Profile"
+            },
+            "roleKey": "Role Key",
+            "dashboard": "Панель управления"
+        }
+    }
+}

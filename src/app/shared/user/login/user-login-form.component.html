@@ -1,0 +1,17 @@
+<div class="alert alert-success" *ngIf="success" jhiTranslate="settings.messages.logins.success">
+    <strong>Settings saved!</strong>
+</div>
+<form name="editForm" novalidate (ngSubmit)="save()" #editForm="ngForm">
+    <div class="form-group label-floating" *ngFor="let login of userLogins">
+        <label class="control-label" for="{{login.key}}">{{login.name}}</label>
+        <input class="form-control" id="{{login.key}}" name="{{login.key}}" [(ngModel)]="login.value">
+    </div>
+    <div class="text-right" *ngIf="!isCreate">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()" *ngIf="isUser">
+            <span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button [disabled]="!isSubmitValid(editForm)" class="btn btn-primary">
+            <span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

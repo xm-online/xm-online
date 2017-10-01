@@ -1,0 +1,6 @@
+<div *ngFor="let row of dashboard?.layout" [className]="row.class">
+  <dynamic-widget *ngFor="let item of row?.content"
+                  [className]="item.class"
+                  [widgetData]="{component: item.widget?.component, inputs: {config: item.widget?.config || {}}}">
+  </dynamic-widget>
+</div>

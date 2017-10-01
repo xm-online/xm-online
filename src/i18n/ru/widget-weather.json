@@ -1,0 +1,13 @@
+{
+    "xmApp": {
+        "widgetWeather": {
+            "humidity": "влажность",
+            "windSpeed": "Скорость ветра"
+        },
+        "widget": {
+            "weather": {
+                "ms": "м/с"
+            }
+        }
+    }
+}

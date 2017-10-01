@@ -1,0 +1,16 @@
+{
+    "register": {
+        "title": "Registration",
+        "messages": {
+            "success": "<strong>Registration saved!</strong> Please check your email for confirmation.",
+            "error": {
+                "fail": "<strong>Registration failed!</strong> Please try again later.",
+                "userexists": "<strong>Login already registered!</strong> Please choose another one.",
+                "emailempty": "<strong>Email can't be empty!</strong> Please choose one."
+            }
+        },
+        "form": {
+            "button": "Register"
+        }
+    }
+}

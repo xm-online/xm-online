@@ -1,0 +1,13 @@
+{
+    "formPlayground": {
+        "definition": "Определение",
+        "selectSchema": "SELECT SCHEMA",
+        "loading": "(loading form specification...)",
+        "result": "результат",
+        "output": "Вывод",
+        "valid": "Валидно?:",
+        "na": "n/a",
+        "errors": "— errors from validationErrors():",
+        "liveData": "Live data — from onChanges():"
+    }
+}

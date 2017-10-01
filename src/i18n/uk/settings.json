@@ -1,0 +1,15 @@
+{
+    "settings": {
+        "form": {
+            "general": "Загальна інформація",
+            "button": "Зберегти",
+            "logins": "Логіни"
+        },
+        "messages": {
+            "success": "<strong>Налаштування збережено!</strong>",
+            "logins": {
+                "success": "<strong>Логін збережений!</strong>"
+            }
+        }
+    }
+}

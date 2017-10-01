@@ -1,0 +1,13 @@
+{
+    "formPlayground": {
+        "definition": "Definition",
+        "selectSchema": "SELECT SCHEMA",
+        "loading": "(loading form specification...)",
+        "result": "Result",
+        "output": "Output",
+        "valid": "Valid?:",
+        "na": "n/a",
+        "errors": "— errors from validationErrors():",
+        "liveData": "Live data — from onChanges():"
+    }
+}

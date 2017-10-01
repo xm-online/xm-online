@@ -1,0 +1,83 @@
+
+<button type="submit" class="btn btn-primary" (click)="zipTranslations()">Upload result</button>
+<button type="submit" class="btn btn-primary" (click)="resetLocalStorage()">Reset local storage</button>
+
+<div class="row" *ngIf="missedTranslations.length > 0">
+  <div class="col-md-12">
+    <div class="card ui-specification">
+      <div class="card-header card-header-icon" data-background-color="primary">
+        <i class="material-icons">perm_data_setting</i>
+      </div>
+      <div class="card-content">
+        <h4 class="card-title">Missed location</h4>
+
+        <table class="table">
+          <thead class="text-primary">
+          <tr>
+            <th>Key</th><th>Default value</th><th>Target files</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let missedTranslation of missedTranslations">
+            <td>{{missedTranslation.key}}</td>
+            <td>
+              {{missedTranslation.defaultValue}}
+            </td>
+            <td>
+              <div class="radio" *ngFor="let langFile of missedTranslation.langFiles;  let i = index;">
+                <label>
+                  <input type="radio" [name]="missedTranslation.key" checked="false" (click)="missedTranslation.targetFile = langFile">
+                  {{langFile}}
+                </label>
+              </div>
+              <button class="btn btn-primary" *ngIf="missedTranslation.targetFile" (click)="addTranslationToFile(i, missedTranslation)">Move to file</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <th *ngFor="let lang of settings.langs">
+      <button class="btn btn-primary" *ngIf="lang != 'en'" (click)="translateAllTo(lang)">Translate ALL to {{lang}}</button>
+    </th>
+  </div>
+</div>
+<div class="row" *ngFor="let location of settings.locations">
+  <div class="col-md-12">
+    <div class="card ui-specification">
+      <div class="card-header card-header-icon" data-background-color="primary">
+        <i class="material-icons">perm_data_setting</i>
+      </div>
+      <div class="card-content">
+        <h4 class="card-title">{{location}}</h4>
+
+        <table class="table">
+          <thead class="text-primary">
+          <tr>
+            <th>Key</th>
+            <th *ngFor="let lang of settings.langs">
+              {{lang}} <button class="btn btn-primary" *ngIf="lang != 'en'" (click)="translateLocationTo(location, lang)">Translate {{location}} to {{lang}}</button>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let property of localization[location]">
+            <td>{{property.property}}</td>
+            <td *ngFor="let lang of settings.langs" (click)="startEdit(property)">
+              <span *ngIf="!property.editing">{{property.langs[lang]}}</span>
+              <textarea *ngIf="property.editing" style="width: 100%; height: 100%; min-width: 400px;" rows="2"
+                        (change)="onChangePropery($event, property, lang)"
+              >{{property.langs[lang]}}</textarea>
+              <button *ngIf="lang!='en'" (click)="translate(property, lang)"  class="btn btn-primary">Translate</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

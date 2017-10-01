@@ -1,0 +1,11 @@
+{
+    "xm": {
+        "widgetActiveCalls": {
+            "active": "Active calls",
+            "caller": "Caller",
+            "connected": "Connected",
+            "status": "Status",
+            "dataTime": "Date/time"
+        }
+    }
+}

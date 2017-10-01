@@ -1,0 +1,101 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save(editForm)" #editForm="ngForm">
+    <div class="modal-header">
+        <h4 class="modal-title">
+            <span jhiTranslate="xm.calendar.add.title" translateValues="{name: '{{xmEntity.name}}'}">Add new event for the [<b>{{xmEntity.name}}</b>]</span>
+        </h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-group">
+            <select name="typeKey" id="field_typeKey" class="form-control selectpicker" data-style="btn btn-primary btn-round"
+                    [(ngModel)]="event.typeKey" data-size="7" required>
+                <option disabled><span jhiTranslate="entityApp.calendar.chooseEventType">Choose event type</span></option>
+                <option [ngValue]="eventType.key"
+                        *ngFor="let eventType of calendarType.events"
+                        [attr.selected]="event && eventType.key == event.typeKey ? true : null" >
+
+                    <span [style.borderColor]="eventType.color">{{eventType?.title?.toUpperCase()}}</span>
+                </option>
+            </select>
+            <div [hidden]="!(editForm.controls.typeKey?.dirty && editForm.controls.typeKey?.invalid)">
+                <small class="form-text text-danger"
+                       [hidden]="!editForm.controls.typeKey?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="xm.xmEntity.startDate" for="field_startDate">Start Date</label>
+                    <div class="d-flex">
+                        <input id="field_startDate" type="datetime-local" class="form-control" name="startDate" [(ngModel)]="event.startDate"
+                               required  />
+                    </div>
+                    <div [hidden]="!(editForm.controls.startDate?.dirty && editForm.controls.startDate?.invalid)">
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.startDate?.errors?.required" jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.startDate?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="xm.xmEntity.endDate" for="field_endDate">End Date</label>
+                    <div class="d-flex">
+                        <input id="field_endDate" type="datetime-local" class="form-control" name="endDate" [(ngModel)]="event.endDate"
+                               required
+                        />
+                    </div>
+                    <div [hidden]="!(editForm.controls.endDate?.dirty && editForm.controls.endDate?.invalid)">
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.endDate?.errors?.required" jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.endDate?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group label-floating">
+            <label class="control-label" for="field_title" jhiTranslate="xm.xmEntity.title">Title</label>
+            <div class="d-flex">
+                <input type="text" class="form-control" name="title" id="field_title"
+                       [(ngModel)]="event.title" required
+                />
+            </div>
+            <div [hidden]="!(editForm.controls.title?.dirty && editForm.controls.title?.invalid)">
+                <small class="form-text text-danger"
+                       [hidden]="!editForm.controls.title?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group label-floating">
+            <label class="control-label" for="field_description" jhiTranslate="xm.xmEntity.description">Description</label>
+            <textarea type="text" class="form-control" name="description" id="field_description"
+                      [(ngModel)]="event.description"
+            ></textarea>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving">
+            <span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,16 @@
+<form name="deleteForm" (ngSubmit)="confirmDelete(xmEntity.id)">
+    <div class="modal-header">
+        <h4 class="modal-title" jhiTranslate="entity.delete.title">Confirm delete operation</h4>
+    </div>
+    <div class="modal-body">
+        <p jhiTranslate="xm.comment.delete.question" translateValues="{id: '{{xmEntity.id}}'}">Are you sure you want to delete this Xm Entity?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" class="btn btn-danger">
+            <span jhiTranslate="entity.action.delete">Delete</span>
+        </button>
+    </div>
+</form>

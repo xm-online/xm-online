@@ -1,0 +1,27 @@
+{
+    "xm": {
+        "dashboard": {
+            "home": {
+                "title": "Dashboards",
+                "createLabel": "Create a new Dashboard",
+                "createOrEditLabel": "Create or edit a Dashboard",
+                "search": "Search for Dashboard"
+            },
+            "created": "A new Dashboard is created with identifier {{ param }}",
+            "updated": "A Dashboard is updated with identifier {{ param }}",
+            "deleted": "A Dashboard is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Dashboard {{ id }}?"
+            },
+            "detail": {
+                "title": "Dashboard"
+            },
+            "name": "Name",
+            "owner": "Owner",
+            "layout": "Layout",
+            "config": "Config",
+            "isPublic": "Is Public",
+            "widgets": "Widgets"
+        }
+    }
+}

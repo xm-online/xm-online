@@ -1,0 +1,15 @@
+{
+    "settings": {
+        "form": {
+            "general": "General info",
+            "button": "Save",
+            "logins": "Logins"
+        },
+        "messages": {
+            "success": "<strong>Settings saved!</strong>",
+            "logins": {
+                "success": "<strong>Logins saved!</strong>"
+            }
+        }
+    }
+}

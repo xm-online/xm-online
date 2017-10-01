@@ -1,0 +1,194 @@
+<div class="logo">
+  <div class="logo-normal">
+    <a [routerLink]="isAuthenticated() ? '/dashboard' : '/'" class="simple-text"
+       style="text-transform: none; padding-left: 75px; text-align: left;">
+      {{tenantName}}
+    </a>
+  </div>
+  <div class="logo-img">
+    <img [src]="tenantLogoUrl"/>
+  </div>
+</div>
+
+<div class="sidebar-wrapper" [ngSwitch]="isAuthenticated()">
+  <div *ngSwitchCase="true" class="user">
+    <div class="photo">
+      <span *ngIf="getImageUrl()">
+        <img [src]="getImageUrl()" class="img-fluid rounded-circle" alt="Avatar">
+      </span>
+      <span *ngIf="!getImageUrl()">
+        <img src="./assets/img/anonymous.png" class="img-fluid rounded-circle" alt="Avatar">
+      </span>
+    </div>
+    <div class="info">
+      <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+        <span>
+            {{principal.getName()}}
+            <b class="caret"></b>
+        </span>
+      </a>
+      <div class="collapse" id="collapseExample">
+        <ul class="nav">
+          <li>
+            <a routerLink="settings" routerLinkActive="active">
+              <span class="sidebar-mini" jhiTranslate="global.menu.account.mini.settings">S</span>
+              <span class="sidebar-normal" jhiTranslate="global.menu.account.settings">Settings</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="password" routerLinkActive="active">
+              <span class="sidebar-mini" jhiTranslate="global.menu.account.mini.password">P</span>
+              <span class="sidebar-normal" jhiTranslate="global.menu.account.password">Password</span>
+            </a>
+          </li>
+          <li>
+            <a id="logout" (click)="logout()">
+              <span class="sidebar-mini" jhiTranslate="global.menu.account.mini.profile">SO</span>
+              <span class="sidebar-normal" jhiTranslate="global.menu.account.logout">Sign out</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isNotMobileMenu()">
+    <form class="navbar-form navbar-right" role="search">
+      <div class="form-group form-search is-empty">
+        <input class="form-control" placeholder="Search" type="text">
+        <span class="material-input"></span>
+        <span class="material-input"></span>
+      </div>
+      <button class="btn btn-white btn-round btn-just-icon" type="submit">
+        <i class="material-icons">search</i>
+        <div class="ripple-container"></div>
+      </button>
+    </form>
+    <ul class="nav nav-mobile-menu">
+      <li class="">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#pablo" aria-expanded="false">
+          <i class="material-icons">dashboard</i>
+          <p class="hidden-lg hidden-md" jhiTranslate="global.menu.dashboards.main">Dashboard</p>
+          <div class="ripple-container"></div>
+        </a>
+      </li>
+      <li class="">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#pablo" aria-expanded="false">
+          <i class="material-icons">person</i>
+          <p class="hidden-lg hidden-md" jhiTranslate="global.menu.account.profile">Profile</p>
+          <div class="ripple-container"></div>
+        </a>
+      </li>
+      <li class="separator hidden-lg hidden-md"></li>
+    </ul>
+  </div>
+
+  <div class="nav-container">
+    <ul class="nav">
+      <li *ngSwitchCase="true" routerLinkActive="active">
+        <a data-toggle="collapse" href="#dashboards">
+          <i class="material-icons">dashboard</i>
+          <p><span jhiTranslate="global.menu.dashboards.main">Dashboards</span><b class="caret"></b></p>
+        </a>
+        <div class="collapse" id="dashboards">
+          <ul class="nav">
+            <li *ngFor="let dashboard of dashboards" routerLinkActive="active">
+              <a [routerLink]="['dashboard', dashboard.id]">
+                <span class="sidebar-mini">{{ dashboard.name?.charAt(0) }}</span>
+                <span class="sidebar-normal">{{ dashboard.name }}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li *ngSwitchCase="true" routerLinkActive="active">
+        <a data-toggle="collapse" href="#applications">
+          <i class="material-icons">apps</i>
+          <p><span jhiTranslate="global.menu.applications.main">Applications</span><b class="caret"></b></p>
+        </a>
+        <div class="collapse" id="applications">
+          <ul class="nav" *ngIf="applications">
+            <li *ngFor="let application of applications | async" routerLinkActive="active">
+              <a [routerLink]="['application', application.key]">
+                <span class="sidebar-mini">{{(application.name | name: principal).charAt(0) }}</span>
+                <span class="sidebar-normal">{{ application.name | name: principal }}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li *ngSwitchCase="true" routerLinkActive="active">
+        <a data-toggle="collapse" href="#administrations">
+          <i class="material-icons">settings</i>
+          <p><span jhiTranslate="global.menu.admin.main">Administration</span><b class="caret"></b></p>
+        </a>
+        <div class="collapse" id="administrations">
+          <ul class="nav">
+            <li routerLinkActive="active">
+              <a routerLink="/administration/gateway">
+                <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.gateway">G</span>
+                <span class="sidebar-normal" jhiTranslate="global.menu.admin.gateway">Gateway</span>
+              </a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/administration/user-management">
+                <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.userManagement">UM</span>
+                <span class="sidebar-normal" jhiTranslate="global.menu.admin.userManagement">User management</span>
+              </a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/administration/metrics">
+                <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.metrics">M</span>
+                <span class="sidebar-normal" jhiTranslate="global.menu.admin.metrics">Metrics</span>
+              </a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/administration/health">
+                <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.health">H</span>
+                <span class="sidebar-normal" jhiTranslate="global.menu.admin.health">Health</span>
+              </a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/administration/audits">
+                <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.audits">A</span>
+                <span class="sidebar-normal" jhiTranslate="global.menu.admin.audits">Audits</span>
+              </a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/administration/logs">
+                <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.logs">L</span>
+                <span class="sidebar-normal" jhiTranslate="global.menu.admin.logs">Logs</span>
+              </a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/administration/form-playground">
+                <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.formPlayground">FP</span>
+                <span class="sidebar-normal" jhiTranslate="global.menu.admin.formPlayground">Form playground</span>
+              </a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/administration/configuration">
+                <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.configuration">C</span>
+                <span class="sidebar-normal" jhiTranslate="global.menu.admin.configuration">Configuration</span>
+              </a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/administration/translation">
+                <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.translation">T</span>
+                <span class="sidebar-normal" jhiTranslate="global.menu.admin.translation">Translation</span>
+              </a>
+            </li>
+            <li *ngIf="swaggerEnabled" routerLinkActive="active">
+              <a routerLink="/administration/docs">
+                <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.apidocs">A</span>
+                <span class="sidebar-normal" jhiTranslate="global.menu.admin.apidocs">API</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

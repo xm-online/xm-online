@@ -1,0 +1,18 @@
+{
+    "xm": {
+        "attachment": {
+            "delete": {
+                "question": "Are you sure you want to delete Attachment"
+            },
+            "add": {
+                "title": "Add new attachment for the [<b>{{name}}</b>]"
+            },
+            "edit": {
+                "title": "Edit attachment [<b>{{nameAtt}}</b>] for the [<b>{{nameEnt}}</b>]"
+            },
+            "chooseType": "Choose attachment type",
+            "upload": "Click to upload or drop file here",
+            "size": "Size:"
+        }
+    }
+}

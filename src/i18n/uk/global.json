@@ -1,0 +1,178 @@
+{
+    "global": {
+        "messages": {
+            "validate": {
+                "newpassword": {
+                    "strength": "Надійність паролю:",
+                    "required": "Ваш пароль потрібен.",
+                    "minlength": "Ваш пароль повинен складатися не менше 4 символів.",
+                    "maxlength": "Ваш пароль не може перевищувати 50 символів."
+                },
+                "confirmpassword": {
+                    "required": "Ваш пароль для підтвердження необхідний.",
+                    "minlength": "Ваш пароль підтвердження повинен складатися не менше 4 символів.",
+                    "maxlength": "Ваш пароль підтвердження не може перевищувати 50 символів."
+                },
+                "email": {
+                    "required": "Ваша електронна адреса обов&#39;язкова.",
+                    "invalid": "Ваш електронний лист недійсний.",
+                    "minlength": "Ваша електронна адреса повинна містити принаймні 5 символів.",
+                    "maxlength": "Ваш електронний лист не може перевищувати 50 символів."
+                },
+                "oldpassword": {
+                    "required": "Потрібний старий пароль.",
+                    "minlength": "Старий пароль повинен складатися не менше 4 символів.",
+                    "maxlength": "Старий пароль не може перевищувати 50 символів."
+                },
+                "firstname": {
+                    "required": "Ваше ім&#39;я обов&#39;язкове.",
+                    "minlength": "Ваше ім&#39;я має містити принаймні 1 символ",
+                    "maxlength": "Ваше ім&#39;я не може перевищувати 50 символів"
+                },
+                "lastname": {
+                    "required": "Ваше прізвище потрібно.",
+                    "minlength": "Ваше прізвище має містити принаймні 1 символ",
+                    "maxlength": "Ваше прізвище не може перевищувати 50 символів"
+                },
+                "captcha": {
+                    "required": "Потрібна сaptcha."
+                }
+            },
+            "error": {
+                "dontmatch": "Пароль та його підтвердження не збігаються!",
+                "captchaempty": "Будь ласка, перевірте captcha."
+            },
+            "info": {
+                "authenticated": {
+                    "prefix": "Якщо ти хочеш",
+                    "link": "увійти",
+                    "suffix": ", ви можете спробувати облікові записи за умовчанням:"
+                }
+            }
+        },
+        "ribbon": {
+            "dev": "Розвиток"
+        },
+        "form": {
+            "signin": "увійти",
+            "newpassword": "Новий пароль",
+            "confirmpassword": "Нове підтвердження пароля",
+            "email": "Електронна пошта",
+            "oldpassword": "Старий пароль",
+            "firstname": "Ім'я",
+            "lastname": "Прізвище",
+            "login": "Увійти"
+        },
+        "field": {
+            "id": "Ідентифікатор"
+        },
+        "all": "Все",
+        "menu": {
+            "account": {
+                "mini": {
+                    "settings": "Н",
+                    "password": "П",
+                    "profile": "В"
+                },
+                "settings": "Налаштування",
+                "password": "Пароль",
+                "logout": "Вийти з аккаунта",
+                "profile": "Профіль"
+            },
+            "dashboards": {
+                "main": "Інформаційні панелі"
+            },
+            "applications": {
+                "main": "Програми"
+            },
+            "admin": {
+                "main": "Адміністрування",
+                "mini": {
+                    "gateway": "Ш",
+                    "userManagement": "К",
+                    "metrics": "М",
+                    "health": "С",
+                    "audits": "А.",
+                    "logs": "Л",
+                    "formPlayground": "Г",
+                    "configuration": "К",
+                    "translation": "П",
+                    "apidocs": "А."
+                },
+                "gateway": "Шлюз",
+                "userManagement": "Керування користувачами",
+                "metrics": "Показники",
+                "health": "Здоров'я",
+                "audits": "Аудит",
+                "logs": "Журнали",
+                "formPlayground": "Тестовый майданчик форми",
+                "configuration": "Конфігурація",
+                "translation": "Переклади",
+                "apidocs": "API"
+            },
+            "entities": {
+                "main": "Об'єкти",
+                "vote": "Голосувати",
+                "rating": "Рейтинг",
+                "tag": "Тег",
+                "location": "Місцезнаходження",
+                "link": "Посилання",
+                "event": "Подія",
+                "country": "Країна",
+                "content": "Вміст",
+                "comment": "Коментар",
+                "calendar": "Календар",
+                "attachment": "Вкладення",
+                "xmEntity": "Xm Entity",
+                "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+            }
+        },
+        "new": "Новий"
+    },
+    "entity": {
+        "delete": {
+            "title": "Підтвердьте операцію видалення"
+        },
+        "action": {
+            "cancel": "Скасувати",
+            "delete": "Видалити",
+            "back": "Назад",
+            "save": "Зберегти"
+        },
+        "validation": {
+            "maxlength": "Це поле не може перевищувати {{max}} символів.",
+            "required": "Це поле є обов&#39;язковим."
+        },
+        "detail": {
+            "square": "Площа: {{квадратний}} м"
+        }
+    },
+    "xm": {
+        "xmEntity": {
+            "listView": "Перелік списку",
+            "treeView": "Вид дерева"
+        }
+    },
+    "error": {
+        "internalServerError": "Внутрішня помилка сервера",
+        "server.not.reachable": "Сервер недоступний",
+        "url.not.found": "Не знайдено",
+        "NotNull": "Поле {{fieldName}} не може бути порожнім!",
+        "Size": "Поле {{fieldName}} не відповідає мінімальному / максовому розміру!",
+        "userexists": "Ім&#39;я входу вже використовується!",
+        "emailexists": "Електронна пошта вже використовується!",
+        "idexists": "Новий {{entityName}} не може вже мати ідентифікатор",
+        "invalid_request": "Невірний запит",
+        "invalid_client": "Недійсний клієнт",
+        "invalid_grant": "Недійсний грант",
+        "unauthorized_client": "Неавторизований клієнт",
+        "unsupported_grant_type": "Непідтримуваний тип гранту",
+        "invalid_scope": "Неправильний обсяг",
+        "insufficient_scope": "Недостатній обсяг",
+        "invalid_token": "Неприпустимий маркер",
+        "redirect_uri_mismatch": "Переспрямовувати uri невідповідність",
+        "unsupported_response_type": "Непідтримуваний тип відповіді",
+        "access_denied": "Доступ заборонено",
+        "validation": "Помилка вхідних параметрів"
+    }
+}

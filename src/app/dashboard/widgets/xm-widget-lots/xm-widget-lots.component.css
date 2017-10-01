@@ -1,0 +1,30 @@
+.table tr:first-child td{
+  border-top: none;
+}
+.gallery img{
+  width: 100%;
+  border-radius: 6px;
+}
+.carousel {
+  margin-top: -54px;
+}
+.current-bid-caption {
+  margin-top: 22px;
+}
+.current-bid-caption .text-primary {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.form-group-search {
+  margin: 0 0 20px;
+}
+
+@media (max-width: 990px) {
+  .carousel {
+    margin: 20px 0;
+  }
+  .hide-small {
+    display: none;
+  }
+}

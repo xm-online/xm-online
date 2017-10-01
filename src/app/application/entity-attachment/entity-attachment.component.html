@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-lg-2 col-md-4 col-sm-4" *ngFor="let attachment of attachments">
+    <div class="card card-product">
+      <div class="card-image" style="min-height: 80px;">
+        <img [src]="attachment.contentType == 'image' && attachment.content?.value || attachment.contentUrl" [hidden]="attachment.noImage"
+             (error)="attachment.noImage=true" />
+        <h3 *ngIf="attachment.noImage"><strong>{{attachment.fileType}}</strong></h3>
+      </div>
+      <div class="card-content">
+        <p class="category"><em>{{attachment.typeName?.toUpperCase()}}</em></p>
+        <h5 class="card-title">{{attachment.name}}</h5>
+      </div>
+      <div class="card-footer">
+        <div class="stats"><span jhiTranslate="xm.attachment.size">Size:</span> {{attachment.contentSize}}</div>
+        <div class="navbar-right" >
+          <a role="button" [hidden]="true" (click)="onManage(xmEntity, attachment)">
+            <i class="material-icons">edit</i>
+          </a>
+          <a role="button" class="text-muted" (click)="onRemove(attachment)">
+            <i class="material-icons">close</i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

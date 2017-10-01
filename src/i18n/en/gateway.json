@@ -1,0 +1,11 @@
+{
+    "gateway": {
+        "title": "Gateway",
+        "routes": {
+            "url": "URL",
+            "service": "service",
+            "servers": "Available servers",
+            "error": "Warning: no server available!"
+        }
+    }
+}

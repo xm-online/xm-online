@@ -1,0 +1,18 @@
+.card {
+  min-height: 128px;
+}
+.wdt-entities-loader {
+  position: relative;
+}
+.wdt-entities-loader .loader {
+  top: 35px;
+}
+.wdt-entities-pagination {
+  margin-top: 10px;
+}
+.wdt-entities-pagination .pagination {
+  margin-top: 10px;
+}
+.tab-content {
+  margin: 0;
+}

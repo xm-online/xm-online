@@ -1,0 +1,41 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save(editForm)" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title">
+            <span jhiTranslate="xm.comment.add.title" translateValues="{name: '{{xmEntity.name}}'}">Add new comment for the [<b>{{xmEntity.name}}</b>]</span>
+        </h4>
+    </div>
+    <div class="modal-body">
+        <select name="typeKey" id="field_typeKey" class="form-control selectpicker" data-style="btn btn-primary btn-round"
+                [(ngModel)]="comment.typeKey" data-size="7" required>
+            <option disabled><span jhiTranslate="entityApp.comment.chooseType">Choose event type</span></option>
+            <option [value]="item.key" *ngFor="let item of commentTypes">
+                {{(item.name | name: principal)?.toUpperCase()}}
+            </option>
+        </select>
+
+        <div class="form-group label-floating">
+            <strong class="text-danger">*</strong>
+            <label class="control-label" for="field_comment" jhiTranslate="xm.comment.comment">Comment</label>
+            <div class="d-flex">
+                <textarea type="text" class="form-control" name="comment" id="field_comment"
+                          [(ngModel)]="comment.message" required
+                ></textarea>
+            </div>
+            <div [hidden]="!(editForm.controls.comment?.dirty && editForm.controls.comment?.invalid)">
+                <small class="form-text text-danger"
+                       [hidden]="!editForm.controls.comment?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="editForm.form.invalid || isSaving">
+            <span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

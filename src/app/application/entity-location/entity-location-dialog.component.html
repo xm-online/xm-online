@@ -1,0 +1,362 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save(editForm)" #editForm="ngForm" *ngIf="xmEntity">
+    <div class="modal-header">
+        <h4 *ngIf="!location.id" class="modal-title">
+            <span jhiTranslate="xm.location.add.title" translateValues="{name: '{{xmEntity.name}}'}">Add new location for the [<b>{{xmEntity.name}}</b>]</span>
+        </h4>
+        <h4 *ngIf="location.id" class="modal-title"jhiTranslate="xm.location.edit.title"
+            translateValues="{nameAtt: '{{location.name}}', nameEnt: '{{location.name}}'}">
+            Edit location [<b>{{location.name}}</b>] for the [<b>{{xmEntity.name}}</b>]
+        </h4>
+    </div>
+    <div class="modal-body">
+        <input *ngIf="location.id" type="hidden" class="form-control" id="id" name="id" [(ngModel)]="location.id" readonly />
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <select class="form-control selectpicker" data-style="btn btn-primary btn-round" id="field_typeKey"
+                        name="typeKey" title="Location Type" data-size="5" [(ngModel)]="location.typeKey" (ngModelChange)="onChangeType(nameCtrl)">
+                    <option disabled jhiTranslate="xm.xmEntity.chooseLocationType">Choose location type</option>
+
+                    countryOption.id === location.country?.id ? location.country : countryOption
+                    <option [ngValue]="locationType.key" [attr.selected]="locationType.key === location?.typeKey ? true : null"
+                            *ngFor="let locationType of locationTypes">
+                        {{ (locationType.name | name: principal).toUpperCase() }}
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group label-floating" #nameCtrl>
+                    <label class="control-label" jhiTranslate="xm.xmEntity.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name" [(ngModel)]="location.name"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- TODO: change country object to country code -->
+            <div class="form-group col-md-6">
+                <select class="form-control selectpicker" data-style="btn btn-primary btn-round"
+                        data-size="7" id="field_country" name="country">
+                    <option disabled selected><span jhiTranslate="entityApp.location.chooseCounty">Choose country</span></option>
+                    <option value="AF" jhiTranslate="entityApp.location.countries.Afghanistan">Afghanistan</option>
+                    <option value="AX" jhiTranslate="entityApp.location.countries.ÅlandIslands">Åland Islands</option>
+                    <option value="AL" jhiTranslate="entityApp.location.countries.Albania">Albania</option>
+                    <option value="DZ" jhiTranslate="entityApp.location.countries.Algeria">Algeria</option>
+                    <option value="AS" jhiTranslate="entityApp.location.countries.AmericanSamoa">American Samoa</option>
+                    <option value="AD" jhiTranslate="entityApp.location.countries.Andorra">Andorra</option>
+                    <option value="AO" jhiTranslate="entityApp.location.countries.Angola">Angola</option>
+                    <option value="AI" jhiTranslate="entityApp.location.countries.Anguilla">Anguilla</option>
+                    <option value="AQ" jhiTranslate="entityApp.location.countries.Antarctica">Antarctica</option>
+                    <option value="AG" jhiTranslate="entityApp.location.countries.AntiguaAndBarbuda">Antigua and Barbuda</option>
+                    <option value="AR" jhiTranslate="entityApp.location.countries.Argentina">Argentina</option>
+                    <option value="AM" jhiTranslate="entityApp.location.countries.Armenia">Armenia</option>
+                    <option value="AW" jhiTranslate="entityApp.location.countries.Aruba">Aruba</option>
+                    <option value="AU" jhiTranslate="entityApp.location.countries.Australia">Australia</option>
+                    <option value="AT" jhiTranslate="entityApp.location.countries.Austria">Austria</option>
+                    <option value="AZ" jhiTranslate="entityApp.location.countries.Azerbaijan">Azerbaijan</option>
+                    <option value="BS" jhiTranslate="entityApp.location.countries.Bahamas">Bahamas</option>
+                    <option value="BH" jhiTranslate="entityApp.location.countries.Bahrain">Bahrain</option>
+                    <option value="BD" jhiTranslate="entityApp.location.countries.Bangladesh">Bangladesh</option>
+                    <option value="BB" jhiTranslate="entityApp.location.countries.Barbados">Barbados</option>
+                    <option value="BY" jhiTranslate="entityApp.location.countries.Belarus">Belarus</option>
+                    <option value="BE" jhiTranslate="entityApp.location.countries.Belgium">Belgium</option>
+                    <option value="BZ" jhiTranslate="entityApp.location.countries.Belize">Belize</option>
+                    <option value="BJ" jhiTranslate="entityApp.location.countries.Benin">Benin</option>
+                    <option value="BM" jhiTranslate="entityApp.location.countries.Bermuda">Bermuda</option>
+                    <option value="BT" jhiTranslate="entityApp.location.countries.Bhutan">Bhutan</option>
+                    <option value="BO" jhiTranslate="entityApp.location.countries.BoliviaPlurinationalStateOf">Bolivia, Plurinational State of</option>
+                    <option value="BQ" jhiTranslate="entityApp.location.countries.BonaireSintEustatiusAndSaba">Bonaire, Sint Eustatius and Saba</option>
+                    <option value="BA" jhiTranslate="entityApp.location.countries.BosniaAndHerzegovina">Bosnia and Herzegovina</option>
+                    <option value="BW" jhiTranslate="entityApp.location.countries.Botswana">Botswana</option>
+                    <option value="BV" jhiTranslate="entityApp.location.countries.BouvetIsland">Bouvet Island</option>
+                    <option value="BR" jhiTranslate="entityApp.location.countries.Brazil">Brazil</option>
+                    <option value="IO" jhiTranslate="entityApp.location.countries.BritishIndianOceanTerritory">British Indian Ocean Territory</option>
+                    <option value="BN" jhiTranslate="entityApp.location.countries.BruneiDarussalam">Brunei Darussalam</option>
+                    <option value="BG" jhiTranslate="entityApp.location.countries.Bulgaria">Bulgaria</option>
+                    <option value="BF" jhiTranslate="entityApp.location.countries.BurkinaFaso">Burkina Faso</option>
+                    <option value="BI" jhiTranslate="entityApp.location.countries.Burundi">Burundi</option>
+                    <option value="KH" jhiTranslate="entityApp.location.countries.Cambodia">Cambodia</option>
+                    <option value="CM" jhiTranslate="entityApp.location.countries.Cameroon">Cameroon</option>
+                    <option value="CA" jhiTranslate="entityApp.location.countries.Canada">Canada</option>
+                    <option value="CV" jhiTranslate="entityApp.location.countries.CapeVerde">Cape Verde</option>
+                    <option value="KY" jhiTranslate="entityApp.location.countries.CaymanIslands">Cayman Islands</option>
+                    <option value="CF" jhiTranslate="entityApp.location.countries.CentralAfricanRepublic">Central African Republic</option>
+                    <option value="TD" jhiTranslate="entityApp.location.countries.Chad">Chad</option>
+                    <option value="CL" jhiTranslate="entityApp.location.countries.Chile">Chile</option>
+                    <option value="CN" jhiTranslate="entityApp.location.countries.China">China</option>
+                    <option value="CX" jhiTranslate="entityApp.location.countries.ChristmasIsland">Christmas Island</option>
+                    <option value="CC" jhiTranslate="entityApp.location.countries.CocosKeelingIslands">Cocos (Keeling) Islands</option>
+                    <option value="CO" jhiTranslate="entityApp.location.countries.Colombia">Colombia</option>
+                    <option value="KM" jhiTranslate="entityApp.location.countries.Comoros">Comoros</option>
+                    <option value="CG" jhiTranslate="entityApp.location.countries.Congo">Congo</option>
+                    <option value="CD" jhiTranslate="entityApp.location.countries.CongoTheDemocraticRepublicOfThe">Congo, the Democratic Republic of the</option>
+                    <option value="CK" jhiTranslate="entityApp.location.countries.CookIslands">Cook Islands</option>
+                    <option value="CR" jhiTranslate="entityApp.location.countries.CostaRica">Costa Rica</option>
+                    <option value="CI" jhiTranslate="entityApp.location.countries.CôteDIvoire">Côte d'Ivoire</option>
+                    <option value="HR" jhiTranslate="entityApp.location.countries.Croatia">Croatia</option>
+                    <option value="CU" jhiTranslate="entityApp.location.countries.Cuba">Cuba</option>
+                    <option value="CW" jhiTranslate="entityApp.location.countries.Curaçao">Curaçao</option>
+                    <option value="CY" jhiTranslate="entityApp.location.countries.Cyprus">Cyprus</option>
+                    <option value="CZ" jhiTranslate="entityApp.location.countries.CzechRepublic">Czech Republic</option>
+                    <option value="DK" jhiTranslate="entityApp.location.countries.Denmark">Denmark</option>
+                    <option value="DJ" jhiTranslate="entityApp.location.countries.Djibouti">Djibouti</option>
+                    <option value="DM" jhiTranslate="entityApp.location.countries.Dominica">Dominica</option>
+                    <option value="DO" jhiTranslate="entityApp.location.countries.DominicanRepublic">Dominican Republic</option>
+                    <option value="EC" jhiTranslate="entityApp.location.countries.Ecuador">Ecuador</option>
+                    <option value="EG" jhiTranslate="entityApp.location.countries.Egypt">Egypt</option>
+                    <option value="SV" jhiTranslate="entityApp.location.countries.ElSalvador">El Salvador</option>
+                    <option value="GQ" jhiTranslate="entityApp.location.countries.EquatorialGuinea">Equatorial Guinea</option>
+                    <option value="ER" jhiTranslate="entityApp.location.countries.Eritrea">Eritrea</option>
+                    <option value="EE" jhiTranslate="entityApp.location.countries.Estonia">Estonia</option>
+                    <option value="ET" jhiTranslate="entityApp.location.countries.Ethiopia">Ethiopia</option>
+                    <option value="FK" jhiTranslate="entityApp.location.countries.FalklandIslandsMalvinas">Falkland Islands (Malvinas)</option>
+                    <option value="FO" jhiTranslate="entityApp.location.countries.FaroeIslands">Faroe Islands</option>
+                    <option value="FJ" jhiTranslate="entityApp.location.countries.Fiji">Fiji</option>
+                    <option value="FI" jhiTranslate="entityApp.location.countries.Finland">Finland</option>
+                    <option value="FR" jhiTranslate="entityApp.location.countries.France">France</option>
+                    <option value="GF" jhiTranslate="entityApp.location.countries.FrenchGuiana">French Guiana</option>
+                    <option value="PF" jhiTranslate="entityApp.location.countries.FrenchPolynesia">French Polynesia</option>
+                    <option value="TF" jhiTranslate="entityApp.location.countries.FrenchSouthernTerritories">French Southern Territories</option>
+                    <option value="GA" jhiTranslate="entityApp.location.countries.Gabon">Gabon</option>
+                    <option value="GM" jhiTranslate="entityApp.location.countries.Gambia">Gambia</option>
+                    <option value="GE" jhiTranslate="entityApp.location.countries.Georgia">Georgia</option>
+                    <option value="DE" jhiTranslate="entityApp.location.countries.Germany">Germany</option>
+                    <option value="GH" jhiTranslate="entityApp.location.countries.Ghana">Ghana</option>
+                    <option value="GI" jhiTranslate="entityApp.location.countries.Gibraltar">Gibraltar</option>
+                    <option value="GR" jhiTranslate="entityApp.location.countries.Greece">Greece</option>
+                    <option value="GL" jhiTranslate="entityApp.location.countries.Greenland">Greenland</option>
+                    <option value="GD" jhiTranslate="entityApp.location.countries.Grenada">Grenada</option>
+                    <option value="GP" jhiTranslate="entityApp.location.countries.Guadeloupe">Guadeloupe</option>
+                    <option value="GU" jhiTranslate="entityApp.location.countries.Guam">Guam</option>
+                    <option value="GT" jhiTranslate="entityApp.location.countries.Guatemala">Guatemala</option>
+                    <option value="GG" jhiTranslate="entityApp.location.countries.Guernsey">Guernsey</option>
+                    <option value="GN" jhiTranslate="entityApp.location.countries.Guinea">Guinea</option>
+                    <option value="GW" jhiTranslate="entityApp.location.countries.GuineaBissau">Guinea-Bissau</option>
+                    <option value="GY" jhiTranslate="entityApp.location.countries.Guyana">Guyana</option>
+                    <option value="HT" jhiTranslate="entityApp.location.countries.Haiti">Haiti</option>
+                    <option value="HM" jhiTranslate="entityApp.location.countries.HeardIslandAndMcDonaldIslands">Heard Island and McDonald Islands</option>
+                    <option value="VA" jhiTranslate="entityApp.location.countries.HolySeeVaticanCityState">Holy See (Vatican City State)</option>
+                    <option value="HN" jhiTranslate="entityApp.location.countries.Honduras">Honduras</option>
+                    <option value="HK" jhiTranslate="entityApp.location.countries.HongKong">Hong Kong</option>
+                    <option value="HU" jhiTranslate="entityApp.location.countries.Hungary">Hungary</option>
+                    <option value="IS" jhiTranslate="entityApp.location.countries.Iceland">Iceland</option>
+                    <option value="IN" jhiTranslate="entityApp.location.countries.India">India</option>
+                    <option value="ID" jhiTranslate="entityApp.location.countries.Indonesia">Indonesia</option>
+                    <option value="IR" jhiTranslate="entityApp.location.countries.IranIslamicRepublicOf">Iran, Islamic Republic of</option>
+                    <option value="IQ" jhiTranslate="entityApp.location.countries.Iraq">Iraq</option>
+                    <option value="IE" jhiTranslate="entityApp.location.countries.Ireland">Ireland</option>
+                    <option value="IM" jhiTranslate="entityApp.location.countries.IsleOfMan">Isle of Man</option>
+                    <option value="IL" jhiTranslate="entityApp.location.countries.Israel">Israel</option>
+                    <option value="IT" jhiTranslate="entityApp.location.countries.Italy">Italy</option>
+                    <option value="JM" jhiTranslate="entityApp.location.countries.Jamaica">Jamaica</option>
+                    <option value="JP" jhiTranslate="entityApp.location.countries.Japan">Japan</option>
+                    <option value="JE" jhiTranslate="entityApp.location.countries.Jersey">Jersey</option>
+                    <option value="JO" jhiTranslate="entityApp.location.countries.Jordan">Jordan</option>
+                    <option value="KZ" jhiTranslate="entityApp.location.countries.Kazakhstan">Kazakhstan</option>
+                    <option value="KE" jhiTranslate="entityApp.location.countries.Kenya">Kenya</option>
+                    <option value="KI" jhiTranslate="entityApp.location.countries.Kiribati">Kiribati</option>
+                    <option value="KP" jhiTranslate="entityApp.location.countries.KoreaDemocraticPeoplesRepublicOf">Korea, Democratic People's Republic of</option>
+                    <option value="KR" jhiTranslate="entityApp.location.countries.KoreaRepublicOf">Korea, Republic of</option>
+                    <option value="KW" jhiTranslate="entityApp.location.countries.Kuwait">Kuwait</option>
+                    <option value="KG" jhiTranslate="entityApp.location.countries.Kyrgyzstan">Kyrgyzstan</option>
+                    <option value="LA" jhiTranslate="entityApp.location.countries.LaoPeoplesDemocraticRepublic">Lao People's Democratic Republic</option>
+                    <option value="LV" jhiTranslate="entityApp.location.countries.Latvia">Latvia</option>
+                    <option value="LB" jhiTranslate="entityApp.location.countries.Lebanon">Lebanon</option>
+                    <option value="LS" jhiTranslate="entityApp.location.countries.Lesotho">Lesotho</option>
+                    <option value="LR" jhiTranslate="entityApp.location.countries.Liberia">Liberia</option>
+                    <option value="LY" jhiTranslate="entityApp.location.countries.Libya">Libya</option>
+                    <option value="LI" jhiTranslate="entityApp.location.countries.Liechtenstein">Liechtenstein</option>
+                    <option value="LT" jhiTranslate="entityApp.location.countries.Lithuania">Lithuania</option>
+                    <option value="LU" jhiTranslate="entityApp.location.countries.Luxembourg">Luxembourg</option>
+                    <option value="MO" jhiTranslate="entityApp.location.countries.Macao">Macao</option>
+                    <option value="MK" jhiTranslate="entityApp.location.countries.MacedoniaTheFormerYugoslavRepublicOf">Macedonia, the former Yugoslav Republic of</option>
+                    <option value="MG" jhiTranslate="entityApp.location.countries.Madagascar">Madagascar</option>
+                    <option value="MW" jhiTranslate="entityApp.location.countries.Malawi">Malawi</option>
+                    <option value="MY" jhiTranslate="entityApp.location.countries.Malaysia">Malaysia</option>
+                    <option value="MV" jhiTranslate="entityApp.location.countries.Maldives">Maldives</option>
+                    <option value="ML" jhiTranslate="entityApp.location.countries.Mali">Mali</option>
+                    <option value="MT" jhiTranslate="entityApp.location.countries.Malta">Malta</option>
+                    <option value="MH" jhiTranslate="entityApp.location.countries.MarshallIslands">Marshall Islands</option>
+                    <option value="MQ" jhiTranslate="entityApp.location.countries.Martinique">Martinique</option>
+                    <option value="MR" jhiTranslate="entityApp.location.countries.Mauritania">Mauritania</option>
+                    <option value="MU" jhiTranslate="entityApp.location.countries.Mauritius">Mauritius</option>
+                    <option value="YT" jhiTranslate="entityApp.location.countries.Mayotte">Mayotte</option>
+                    <option value="MX" jhiTranslate="entityApp.location.countries.Mexico">Mexico</option>
+                    <option value="FM" jhiTranslate="entityApp.location.countries.MicronesiaFederatedStatesOf">Micronesia, Federated States of</option>
+                    <option value="MD" jhiTranslate="entityApp.location.countries.MoldovaRepublicOf">Moldova, Republic of</option>
+                    <option value="MC" jhiTranslate="entityApp.location.countries.Monaco">Monaco</option>
+                    <option value="MN" jhiTranslate="entityApp.location.countries.Mongolia">Mongolia</option>
+                    <option value="ME" jhiTranslate="entityApp.location.countries.Montenegro">Montenegro</option>
+                    <option value="MS" jhiTranslate="entityApp.location.countries.Montserrat">Montserrat</option>
+                    <option value="MA" jhiTranslate="entityApp.location.countries.Morocco">Morocco</option>
+                    <option value="MZ" jhiTranslate="entityApp.location.countries.Mozambique">Mozambique</option>
+                    <option value="MM" jhiTranslate="entityApp.location.countries.Myanmar">Myanmar</option>
+                    <option value="NA" jhiTranslate="entityApp.location.countries.Namibia">Namibia</option>
+                    <option value="NR" jhiTranslate="entityApp.location.countries.Nauru">Nauru</option>
+                    <option value="NP" jhiTranslate="entityApp.location.countries.Nepal">Nepal</option>
+                    <option value="NL" jhiTranslate="entityApp.location.countries.Netherlands">Netherlands</option>
+                    <option value="NC" jhiTranslate="entityApp.location.countries.NewCaledonia">New Caledonia</option>
+                    <option value="NZ" jhiTranslate="entityApp.location.countries.NewZealand">New Zealand</option>
+                    <option value="NI" jhiTranslate="entityApp.location.countries.Nicaragua">Nicaragua</option>
+                    <option value="NE" jhiTranslate="entityApp.location.countries.Niger">Niger</option>
+                    <option value="NG" jhiTranslate="entityApp.location.countries.Nigeria">Nigeria</option>
+                    <option value="NU" jhiTranslate="entityApp.location.countries.Niue">Niue</option>
+                    <option value="NF" jhiTranslate="entityApp.location.countries.NorfolkIsland">Norfolk Island</option>
+                    <option value="MP" jhiTranslate="entityApp.location.countries.NorthernMarianaIslands">Northern Mariana Islands</option>
+                    <option value="NO" jhiTranslate="entityApp.location.countries.Norway">Norway</option>
+                    <option value="OM" jhiTranslate="entityApp.location.countries.Oman">Oman</option>
+                    <option value="PK" jhiTranslate="entityApp.location.countries.Pakistan">Pakistan</option>
+                    <option value="PW" jhiTranslate="entityApp.location.countries.Palau">Palau</option>
+                    <option value="PS" jhiTranslate="entityApp.location.countries.PalestinianTerritoryOccupied">Palestinian Territory, Occupied</option>
+                    <option value="PA" jhiTranslate="entityApp.location.countries.Panama">Panama</option>
+                    <option value="PG" jhiTranslate="entityApp.location.countries.PapuaNewGuinea">Papua New Guinea</option>
+                    <option value="PY" jhiTranslate="entityApp.location.countries.Paraguay">Paraguay</option>
+                    <option value="PE" jhiTranslate="entityApp.location.countries.Peru">Peru</option>
+                    <option value="PH" jhiTranslate="entityApp.location.countries.Philippines">Philippines</option>
+                    <option value="PN" jhiTranslate="entityApp.location.countries.Pitcairn">Pitcairn</option>
+                    <option value="PL" jhiTranslate="entityApp.location.countries.Poland">Poland</option>
+                    <option value="PT" jhiTranslate="entityApp.location.countries.Portugal">Portugal</option>
+                    <option value="PR" jhiTranslate="entityApp.location.countries.PuertoRico">Puerto Rico</option>
+                    <option value="QA" jhiTranslate="entityApp.location.countries.Qatar">Qatar</option>
+                    <option value="RE" jhiTranslate="entityApp.location.countries.Réunion">Réunion</option>
+                    <option value="RO" jhiTranslate="entityApp.location.countries.Romania">Romania</option>
+                    <option value="RU" jhiTranslate="entityApp.location.countries.RussianFederation">Russian Federation</option>
+                    <option value="RW" jhiTranslate="entityApp.location.countries.Rwanda">Rwanda</option>
+                    <option value="BL" jhiTranslate="entityApp.location.countries.SaintBarthélemy">Saint Barthélemy</option>
+                    <option value="SH" jhiTranslate="entityApp.location.countries.SaintHelenaAscensionAndTristanDaCunha">Saint Helena, Ascension and Tristan da Cunha</option>
+                    <option value="KN" jhiTranslate="entityApp.location.countries.SaintKittsAndNevis">Saint Kitts and Nevis</option>
+                    <option value="LC" jhiTranslate="entityApp.location.countries.SaintLucia">Saint Lucia</option>
+                    <option value="MF" jhiTranslate="entityApp.location.countries.SaintMartinFrenchPart">Saint Martin (French part)</option>
+                    <option value="PM" jhiTranslate="entityApp.location.countries.SaintPierreAndMiquelon">Saint Pierre and Miquelon</option>
+                    <option value="VC" jhiTranslate="entityApp.location.countries.SaintVincentAndTheGrenadines">Saint Vincent and the Grenadines</option>
+                    <option value="WS" jhiTranslate="entityApp.location.countries.Samoa">Samoa</option>
+                    <option value="SM" jhiTranslate="entityApp.location.countries.SanMarino">San Marino</option>
+                    <option value="ST" jhiTranslate="entityApp.location.countries.SaoTomeAndPrincipe">Sao Tome and Principe</option>
+                    <option value="SA" jhiTranslate="entityApp.location.countries.SaudiArabia">Saudi Arabia</option>
+                    <option value="SN" jhiTranslate="entityApp.location.countries.Senegal">Senegal</option>
+                    <option value="RS" jhiTranslate="entityApp.location.countries.Serbia">Serbia</option>
+                    <option value="SC" jhiTranslate="entityApp.location.countries.Seychelles">Seychelles</option>
+                    <option value="SL" jhiTranslate="entityApp.location.countries.SierraLeone">Sierra Leone</option>
+                    <option value="SG" jhiTranslate="entityApp.location.countries.Singapore">Singapore</option>
+                    <option value="SX" jhiTranslate="entityApp.location.countries.SintMaartenDutchPart">Sint Maarten (Dutch part)</option>
+                    <option value="SK" jhiTranslate="entityApp.location.countries.Slovakia">Slovakia</option>
+                    <option value="SI" jhiTranslate="entityApp.location.countries.Slovenia">Slovenia</option>
+                    <option value="SB" jhiTranslate="entityApp.location.countries.SolomonIslands">Solomon Islands</option>
+                    <option value="SO" jhiTranslate="entityApp.location.countries.Somalia">Somalia</option>
+                    <option value="ZA" jhiTranslate="entityApp.location.countries.SouthAfrica">South Africa</option>
+                    <option value="GS" jhiTranslate="entityApp.location.countries.SouthGeorgiaAndTheSouthSandwichIslands">South Georgia and the South Sandwich Islands</option>
+                    <option value="SS" jhiTranslate="entityApp.location.countries.SouthSudan">South Sudan</option>
+                    <option value="ES" jhiTranslate="entityApp.location.countries.Spain">Spain</option>
+                    <option value="LK" jhiTranslate="entityApp.location.countries.SriLanka">Sri Lanka</option>
+                    <option value="SD" jhiTranslate="entityApp.location.countries.Sudan">Sudan</option>
+                    <option value="SR" jhiTranslate="entityApp.location.countries.Suriname">Suriname</option>
+                    <option value="SJ" jhiTranslate="entityApp.location.countries.SvalbardAndJanMayen">Svalbard and Jan Mayen</option>
+                    <option value="SZ" jhiTranslate="entityApp.location.countries.Swaziland">Swaziland</option>
+                    <option value="SE" jhiTranslate="entityApp.location.countries.Sweden">Sweden</option>
+                    <option value="CH" jhiTranslate="entityApp.location.countries.Switzerland">Switzerland</option>
+                    <option value="SY" jhiTranslate="entityApp.location.countries.SyrianArabRepublic">Syrian Arab Republic</option>
+                    <option value="TW" jhiTranslate="entityApp.location.countries.TaiwanProvinceOfChina">Taiwan, Province of China</option>
+                    <option value="TJ" jhiTranslate="entityApp.location.countries.Tajikistan">Tajikistan</option>
+                    <option value="TZ" jhiTranslate="entityApp.location.countries.TanzaniaUnitedRepublicOf">Tanzania, United Republic of</option>
+                    <option value="TH" jhiTranslate="entityApp.location.countries.Thailand">Thailand</option>
+                    <option value="TL" jhiTranslate="entityApp.location.countries.TimorLeste">Timor-Leste</option>
+                    <option value="TG" jhiTranslate="entityApp.location.countries.Togo">Togo</option>
+                    <option value="TK" jhiTranslate="entityApp.location.countries.Tokelau">Tokelau</option>
+                    <option value="TO" jhiTranslate="entityApp.location.countries.Tonga">Tonga</option>
+                    <option value="TT" jhiTranslate="entityApp.location.countries.TrinidadAndTobago">Trinidad and Tobago</option>
+                    <option value="TN" jhiTranslate="entityApp.location.countries.Tunisia">Tunisia</option>
+                    <option value="TR" jhiTranslate="entityApp.location.countries.Turkey">Turkey</option>
+                    <option value="TM" jhiTranslate="entityApp.location.countries.Turkmenistan">Turkmenistan</option>
+                    <option value="TC" jhiTranslate="entityApp.location.countries.TurksAndCaicosIslands">Turks and Caicos Islands</option>
+                    <option value="TV" jhiTranslate="entityApp.location.countries.Tuvalu">Tuvalu</option>
+                    <option value="UG" jhiTranslate="entityApp.location.countries.Uganda">Uganda</option>
+                    <option value="UA" jhiTranslate="entityApp.location.countries.Ukraine">Ukraine</option>
+                    <option value="AE" jhiTranslate="entityApp.location.countries.UnitedArabEmirates">United Arab Emirates</option>
+                    <option value="GB" jhiTranslate="entityApp.location.countries.UnitedKingdom">United Kingdom</option>
+                    <option value="US" jhiTranslate="entityApp.location.countries.UnitedStates" selected="true">United States</option>
+                    <option value="UM" jhiTranslate="entityApp.location.countries.UnitedStatesMinorOutlyingIslands">United States Minor Outlying Islands</option>
+                    <option value="UY" jhiTranslate="entityApp.location.countries.Uruguay">Uruguay</option>
+                    <option value="UZ" jhiTranslate="entityApp.location.countries.Uzbekistan">Uzbekistan</option>
+                    <option value="VU" jhiTranslate="entityApp.location.countries.Vanuatu">Vanuatu</option>
+                    <option value="VE" jhiTranslate="entityApp.location.countries.VenezuelaBolivarianRepublicOf">Venezuela, Bolivarian Republic of</option>
+                    <option value="VN" jhiTranslate="entityApp.location.countries.VietNam">Viet Nam</option>
+                    <option value="VG" jhiTranslate="entityApp.location.countries.VirginIslandsBritish">Virgin Islands, British</option>
+                    <option value="VI" jhiTranslate="entityApp.location.countries.VirginIslandsUS">Virgin Islands, U.S.</option>
+                    <option value="WF" jhiTranslate="entityApp.location.countries.WallisAndFutuna">Wallis and Futuna</option>
+                    <option value="EH" jhiTranslate="entityApp.location.countries.WesternSahara">Western Sahara</option>
+                    <option value="YE" jhiTranslate="entityApp.location.countries.Yemen">Yemen</option>
+                    <option value="ZM" jhiTranslate="entityApp.location.countries.Zambia">Zambia</option>
+                    <option value="ZW" jhiTranslate="entityApp.location.countries.Zimbabwe">Zimbabwe</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group label-floating">
+                    <label class="control-label" jhiTranslate="xm.location.zip" for="field_zip">Zip</label>
+                    <input type="text" class="form-control" name="zip" id="field_zip"
+                           [(ngModel)]="location.zip"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group label-floating">
+                    <label class="control-label" jhiTranslate="xm.location.region" for="field_region">Region</label>
+                    <input type="text" class="form-control" name="region" id="field_region"
+                           [(ngModel)]="location.region"/>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group label-floating">
+                    <label class="control-label" jhiTranslate="xm.location.city" for="field_city">City</label>
+                    <input type="text" class="form-control" name="city" id="field_city"
+                           [(ngModel)]="location.city"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group label-floating">
+                    <label class="control-label" jhiTranslate="xm.location.addressLine1" for="field_addressLine1">Address Line 1</label>
+                    <input type="text" class="form-control" name="addressLine1" id="field_addressLine1"
+                        [(ngModel)]="location.addressLine1"/>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group label-floating">
+                    <label class="control-label" jhiTranslate="xm.location.addressLins2" for="field_addressLins2">Address Lins 2</label>
+                    <input type="text" class="form-control" name="addressLins2" id="field_addressLins2"
+                        [(ngModel)]="location.addressLins2"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group label-floating">
+                    <label class="control-label" jhiTranslate="xm.location.longitude" for="field_longitude">Longitude</label>
+                    <input type="number" class="form-control" name="longitude" id="field_longitude"
+                           [(ngModel)]="location.longitude"/>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group label-floating">
+                    <label class="control-label" jhiTranslate="xm.location.latitude" for="field_latitude">Latitude</label>
+                    <input type="number" class="form-control" name="latitude" id="field_latitude"
+                           [(ngModel)]="location.latitude"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>
+
+

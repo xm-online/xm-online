@@ -1,0 +1,23 @@
+{
+    "xm": {
+        "defaultProfile": {
+            "home": {
+                "title": "Default Profiles",
+                "createLabel": "Create a new Default Profile",
+                "createOrEditLabel": "Create or edit a Default Profile",
+                "search": "Search for Default Profile"
+            },
+            "created": "A new Default Profile is created with identifier {{ param }}",
+            "updated": "A Default Profile is updated with identifier {{ param }}",
+            "deleted": "A Default Profile is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Default Profile {{ id }}?"
+            },
+            "detail": {
+                "title": "Default Profile"
+            },
+            "roleKey": "Role Key",
+            "dashboard": "Dashboard"
+        }
+    }
+}

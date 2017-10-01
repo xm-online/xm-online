@@ -1,0 +1,76 @@
+<div class="card">
+  <div class="card-header card-header-icon" data-background-color="primary">
+    <i class="material-icons">euro_symbol</i>
+  </div>
+  <div class="card-content">
+    <h4 class="card-title" jhiTranslate="xmApp.widgetExchange.title">Exchange calculator</h4>
+
+    <div class="row">
+      <div class="col-xs-8 col-sm-6">
+        <select class="wdt-exchange-selectpicker" [(ngModel)]="currency.selected" data-style="btn btn-primary btn-round" data-size="7" (change)="onChangeCurrency()">
+          <option [ngValue]="item" *ngFor="let item of currency?.available">{{item.txt}} ({{item.cc}})</option>
+        </select>
+      </div>
+      <div class="wdt-exchange-units col-xs-4 col-sm-6"><span class="wdt-exchange-value">1</span> <span class="wdt-exchange-label" jhiTranslate="xmApp.widgetExchange.numberUnits">Number of units</span></div>
+    </div>
+
+    <table class="table">
+      <thead class="text-gray">
+      <tr>
+        <th><span jhiTranslate="xmApp.widgetExchange.code">Code</span></th>
+        <th><span jhiTranslate="xmApp.widgetExchange.currency">Currency</span></th>
+        <th><span jhiTranslate="xmApp.widgetExchange.course">Official course</span></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of currency.displayed">
+        <td>{{item.cc}}</td>
+        <td>{{item.txt}}</td>
+        <td class="text-primary">{{item.rate}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div>
+      <button class="btn btn-primary btn-round" (click)="onShowCalc()">
+        <i class="material-icons" *ngIf="!isShowCalc">arrow_drop_down</i>
+        <i class="material-icons" *ngIf="isShowCalc">arrow_drop_up</i>
+        <span jhiTranslate="xmApp.widgetExchange.title">Calculator</span>
+      </button>
+    </div>
+
+    <form #calcForm="ngForm" class="xm-animate" [ngClass]="{show: isShowCalc}" [style.display]="isShowCalc ? 'block' : 'none'">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <select class="wdt-exchange-selectpicker" name="from" [(ngModel)]="calc.from" (ngModelChange)="onChangeCalcFrom($event)"
+                  data-style="btn btn-primary btn-round" title="Select currency from" data-size="7">
+            <option [ngValue]="item" *ngFor="let item of calc.available">{{item.txt}} ({{item.cc}})</option>
+          </select>
+        </div>
+
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group label-floating">
+            <label class="control-label" jhiTranslate="xmApp.widgetExchange.from">From</label>
+            <input type="number" class="form-control" name="fromValue" [(ngModel)]="calc.fromValue" (ngModelChange)="onChangeCalc($event)">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <select class="wdt-exchange-selectpicker" name="to" [(ngModel)]="calc.to" (ngModelChange)="onChangeCalc($event)"
+                  data-style="btn btn-primary btn-round" title="Select currency to" data-size="7">
+            <option [ngValue]="item" *ngFor="let item of calc.available">{{item.txt}} ({{item.cc}})</option>
+          </select>
+        </div>
+
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <input type="number" class="form-control" name="toValue" [ngModel]="calc.toValue" readonly>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>

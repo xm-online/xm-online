@@ -1,0 +1,18 @@
+<form name="deleteForm" (ngSubmit)="confirmChange()">
+    <div class="modal-header">
+        <h4 class="modal-title" jhiTranslate="xm.state.edit.title">Confirm change State</h4>
+    </div>
+    <div class="modal-body">
+        <p jhiTranslate="xm.state.edit.question" translateValues="{name: '{{xmEntity.name}}'}">
+            Are you sure you want to change State for the [<b>{{xmEntity.name}}</b>]?
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="isDisable">
+            <span jhiTranslate="entity.action.change">Change</span>
+        </button>
+    </div>
+</form>

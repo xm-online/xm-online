@@ -1,0 +1,6 @@
+{
+    "error": {
+        "403": "You are not authorized to access the page.",
+        "title": "Error page!"
+    }
+}

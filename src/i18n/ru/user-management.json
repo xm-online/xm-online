@@ -1,0 +1,27 @@
+{
+    "userManagement": {
+        "home": {
+            "editLoginsLabel": "Отредактировать логины пользователя",
+            "createOrEditLabel": "Создать или отредактировать пользователя",
+            "title": "Пользователи"
+        },
+        "delete": {
+            "question": "Вы уверены, что хотите удалить пользователя {{ userKey }}?"
+        },
+        "detail": {
+            "title": "Пользователь"
+        },
+        "logins": "Логины",
+        "deactivated": "Неактивен",
+        "activated": "Активен",
+        "firstName": "Имя",
+        "lastName": "Фамилия",
+        "langKey": "Язык",
+        "createdBy": "Создал",
+        "createdDate": "Дата создания",
+        "lastModifiedBy": "Изменено",
+        "lastModifiedDate": "Дата изменения",
+        "profiles": "Профили",
+        "userKey": "Ключ пользователя"
+    }
+}

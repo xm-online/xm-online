@@ -1,0 +1,166 @@
+<div class="text-center">
+  <xm-social provider="linkedin" *ngIf="socialConfiguration.linkedinEnabled"></xm-social>
+  <xm-social provider="facebook" *ngIf="socialConfiguration.facebookEnabled"></xm-social>
+  <xm-social provider="google" *ngIf="socialConfiguration.googleEnabled"></xm-social>
+  <xm-social provider="twitter" *ngIf="socialConfiguration.twitterEnabled"></xm-social>
+</div>
+
+<!--Messages-->
+<div class="alert alert-success" *ngIf="success" jhiTranslate="register.messages.success">
+  <strong>Registration saved!</strong> Please check your email for confirmation.
+</div>
+
+<div class="alert alert-danger" *ngIf="error" jhiTranslate="register.messages.error.fail">
+  <strong>Registration failed!</strong> Please try again later.
+</div>
+
+<div class="alert alert-danger" *ngIf="errorUserExists" jhiTranslate="register.messages.error.userexists">
+  <strong>Login already registered!</strong> Please choose another one.
+</div>
+
+<div class="alert alert-danger" *ngIf="errorEmailEmpty" jhiTranslate="register.messages.error.emailempty">
+  <strong>Email can't be empty!</strong> Please choose one.
+</div>
+
+<div class="alert alert-danger" *ngIf="doNotMatch" jhiTranslate="global.messages.error.dontmatch">
+  The password and its confirmation do not match!
+</div>
+
+<div class="alert alert-danger" *ngIf="captchaRequired" jhiTranslate="global.messages.error.captchaempty">
+  Please check captcha.
+</div>
+
+<!--Body-->
+<form name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm">
+  <div class="form-group label-floating">
+    <label class="control-label" for="email" jhiTranslate="global.form.email">Email</label>
+    <input type="email" class="form-control" id="email" name="email" #emailInput="ngModel"
+           [(ngModel)]="email" minlength=5 maxlength=100 required>
+    <div *ngIf="emailInput.dirty && emailInput.invalid">
+      <small class="form-text text-danger" *ngIf="emailInput.errors.required"
+             jhiTranslate="global.messages.validate.email.required">
+        Your email is required.
+      </small>
+      <small class="form-text text-danger" *ngIf="emailInput.errors.invalid"
+             jhiTranslate="global.messages.validate.email.invalid">
+        Your email is invalid.
+      </small>
+      <small class="form-text text-danger" *ngIf="emailInput.errors.minlength"
+             jhiTranslate="global.messages.validate.email.minlength">
+        Your email is required to be at least 5 characters.
+      </small>
+      <small class="form-text text-danger" *ngIf="emailInput.errors.maxlength"
+             jhiTranslate="global.messages.validate.email.maxlength">
+        Your email cannot be longer than 100 characters.
+      </small>
+    </div>
+  </div>
+  <div class="form-group label-floating">
+    <label class="control-label" for="firstName" jhiTranslate="global.form.firstname">First name</label>
+    <input class="form-control" id="firstName" name="firstName" #firstNameInput="ngModel"
+           [(ngModel)]="registerAccount.firstName" minlength=1 maxlength=50 required>
+    <div *ngIf="firstNameInput.dirty && firstNameInput.invalid">
+      <small class="form-text text-danger"
+             *ngIf="firstNameInput.errors.required"
+             jhiTranslate="global.messages.validate.firstname.required">
+          Your first name is required.
+      </small>
+      <small class="form-text text-danger"
+             *ngIf="firstNameInput.errors.minlength"
+             jhiTranslate="global.messages.validate.firstname.minlength">
+        Your first name is required to be at least 1 character.
+      </small>
+      <small class="form-text text-danger"
+             *ngIf="firstNameInput.errors.maxlength"
+             jhiTranslate="global.messages.validate.firstname.maxlength">
+        Your first name cannot be longer than 50 characters.
+      </small>
+    </div>
+  </div>
+  <div class="form-group label-floating">
+    <label class="control-label" for="lastName" jhiTranslate="global.form.lastname">Last name</label>
+    <input class="form-control" id="lastName" name="lastName" #lastNameInput="ngModel"
+           [(ngModel)]="registerAccount.lastName" minlength=1 maxlength=50 required>
+    <div *ngIf="lastNameInput.dirty && lastNameInput.invalid">
+        <small class="form-text text-danger"
+               *ngIf="lastNameInput.errors.required"
+               jhiTranslate="global.messages.validate.lastname.required">
+            Your last name is required.
+        </small>
+        <small class="form-text text-danger"
+               *ngIf="lastNameInput.errors.minlength"
+               jhiTranslate="global.messages.validate.lastname.minlength">
+            Your last name is required to be at least 1 character.
+        </small>
+        <small class="form-text text-danger"
+               *ngIf="lastNameInput.errors.maxlength"
+               jhiTranslate="global.messages.validate.lastname.maxlength">
+            Your last name cannot be longer than 50 characters.
+        </small>
+    </div>
+  </div>
+  <div class="form-group label-floating">
+    <label class="control-label" for="password" jhiTranslate="global.form.newpassword">New password</label>
+    <input type="password" class="form-control" id="password" name="password" #password="ngModel"
+           [(ngModel)]="registerAccount.password" minlength=4 maxlength=50 required>
+    <div *ngIf="password.dirty && password.invalid">
+      <small class="form-text text-danger" *ngIf="password.errors.required"
+             jhiTranslate="global.messages.validate.newpassword.required">
+        Your password is required.
+      </small>
+      <small class="form-text text-danger" *ngIf="password.errors.minlength"
+             jhiTranslate="global.messages.validate.newpassword.minlength">
+        Your password is required to be at least 4 characters.
+      </small>
+      <small class="form-text text-danger" *ngIf="password.errors.maxlength"
+             jhiTranslate="global.messages.validate.newpassword.maxlength">
+        Your password cannot be longer than 50 characters.
+      </small>
+    </div>
+    <xm-password-strength-bar [passwordToCheck]="registerAccount.password"></xm-password-strength-bar>
+  </div>
+  <div class="form-group label-floating">
+    <label class="control-label" for="confirmPassword" jhiTranslate="global.form.confirmpassword">New password
+      confirmation</label>
+    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+           #confirmPasswordInput="ngModel"
+           [(ngModel)]="confirmPassword" minlength=4 maxlength=50 required>
+    <div *ngIf="confirmPasswordInput.dirty && confirmPasswordInput.invalid">
+      <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.required"
+             jhiTranslate="global.messages.validate.confirmpassword.required">
+        Your confirmation password is required.
+      </small>
+      <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.minlength"
+             jhiTranslate="global.messages.validate.confirmpassword.minlength">
+        Your confirmation password is required to be at least 4 characters.
+      </small>
+      <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.maxlength"
+             jhiTranslate="global.messages.validate.confirmpassword.maxlength">
+        Your confirmation password cannot be longer than 50 characters.
+      </small>
+    </div>
+  </div>
+
+  <div class="form-group" *ngIf="needCaptcha" >
+    <re-captcha (captchaResponse)="handleCorrectCaptcha($event)"
+                (captchaExpired)="handleCaptchaExpired($event)"
+                [language]="language"
+                site_key="{{publicKey}}"></re-captcha>
+
+    <input type="hidden" class="form-control" id="captcha" name="captcha"
+           #captcha="ngModel"
+           [(ngModel)]="registerAccount.captcha" required>
+    <div *ngIf="registerAccount.dirty && registerAccount.invalid">
+      <small class="form-text text-danger" *ngIf="registerAccount.errors.required"
+             jhiTranslate="global.messages.validate.captcha.required">
+        Captcha is required.
+      </small>
+    </div>
+  </div>
+
+  <div class="text-right">
+    <button type="submit" [disabled]="registerForm.form.invalid" class="btn btn-primary"
+            jhiTranslate="register.form.button">Register
+    </button>
+  </div>
+</form>

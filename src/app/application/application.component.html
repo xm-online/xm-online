@@ -1,0 +1,84 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-header-icon" data-background-color="primary">
+        <i class="material-icons" *ngIf="entityType">{{ entityType.icon }}</i>
+      </div>
+
+      <div class="card-content">
+        <h4 class="card-title" *ngIf="entityType">{{ entityType.name | name: principal }}</h4>
+        <!-- Fast search -->
+        <div *ngIf="getFastSearches(typeKey)" class="btn-group">
+          <button class="btn btn-primary btn-sm btn-round"
+                  [class.disabled]="!currentSearch"
+                  (click)="applyFastSearch(null)" jhiTranslate="global.all">All
+          </button>
+          <button class="btn btn-primary btn-sm btn-round"
+                  *ngFor="let fastSearch of getFastSearches(typeKey)"
+                  [class.disabled]="currentSearch === fastSearch.query"
+                  (click)="applyFastSearch(fastSearch.query)">{{ fastSearch.name | name: principal }}
+          </button>
+        </div>
+        <!-- /.Fast search -->
+
+        <div class="table-responsive" *ngIf="xmEntities">
+          <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+              <th></th>
+              <th jhiSortBy="name"><span jhiTranslate="xm.xmEntity.name">Name</span> <span
+                  class="fa fa-sort"></span></th>
+              <th jhiSortBy="typeKey"><span jhiTranslate="xm.xmEntity.type">Type</span> <span
+                  class="fa fa-sort"></span></th>
+              <th jhiSortBy="stateKey"><span jhiTranslate="xm.xmEntity.state">State</span> <span
+                  class="fa fa-sort"></span></th>
+              <th jhiSortBy="description"><span jhiTranslate="xm.xmEntity.description">Description</span> <span
+                  class="fa fa-sort"></span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let xmEntity of xmEntities ;trackBy: trackId">
+              <td>
+                <img src="{{ xmEntity.avatarUrl ? xmEntity.avatarUrl : './assets/img/placeholder.jpg' }}"
+                     class="xm-avatar-sm">
+              </td>
+              <td><a title="{{ xmEntity.key }}" routerLink="{{ xmEntity.id }}">{{xmEntity.name}}</a></td>
+              <td><h6 *ngIf="xmEntity.entityType">{{xmEntity.entityType.name | name: principal}}</h6></td>
+              <td>
+                <div class="xm-state" *ngIf="xmEntity.state">
+                  <div class="xm-state-icon"
+                       [style.background]="xmEntity.state.color">
+                    <i class="material-icons">{{xmEntity.state.icon}}</i>
+                  </div>
+                  {{xmEntity.state.name | name: principal}}
+                </div>
+              </td>
+              <td>{{getShortDescription(xmEntity)}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Pager is not implemented yet, so this is normal pagination instead -->
+        <div *ngIf="xmEntities && xmEntities.length">
+          <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+          </div>
+          <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page"
+                            (pageChange)="loadPage(page)"></ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="xm-fab" *ngIf="typeKey">
+  <button class="xm-fab-option" (click)="generateXmEntity(typeKey)">
+    <i class="material-icons">plus_one</i>
+  </button>
+  <button class="xm-fab-button"
+          [routerLink]="['/', { outlets: { popup: 'application/'+ typeKey +'/entity-new'} }]">
+    <i class="material-icons">add</i>
+  </button>
+</div>

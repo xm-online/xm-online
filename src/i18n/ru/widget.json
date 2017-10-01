@@ -1,0 +1,26 @@
+{
+    "xm": {
+        "widget": {
+            "home": {
+                "title": "Widgets",
+                "createLabel": "Создать новый Widget",
+                "createOrEditLabel": "Создать или отредактировать Widget",
+                "search": "Найти Widget"
+            },
+            "created": "Новый Widget создан с идентификатором {{ param }}",
+            "updated": "Widget обновлен с идентификатором {{ param }}",
+            "deleted": "Widget удален с идентификатором {{ param }}",
+            "delete": {
+                "question": "Вы уверены что хотите удалить Widget {{ id }}?"
+            },
+            "detail": {
+                "title": "Widget"
+            },
+            "selector": "Selector",
+            "name": "Name",
+            "config": "Config",
+            "isPublic": "Is Public",
+            "dashboard": "Панель управления"
+        }
+    }
+}

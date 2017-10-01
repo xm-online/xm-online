@@ -1,0 +1,78 @@
+/**
+ XM voucher
+ */
+.voucher {
+  display: inline-block;
+  margin-bottom: 10px;
+  overflow: hidden;
+  text-align: center;
+  vertical-align: middle;
+  width: 350px;
+  height: 200px;
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.06);
+  border: 0 none;
+  border-radius: 10px;
+  padding: 0;
+}
+
+.voucher-header {
+  height: 30px;
+}
+
+.voucher-secret-line {
+  background: #616161;
+}
+
+.voucher-secret-line > span > input {
+  width: 150px;
+  color: #FFFFFF;
+  background: #616161;
+  border: 0px;
+}
+
+.voucher-footer {
+  height: 110px;
+}
+
+.voucher-unknown {
+  background: #E0E0E0;
+}
+
+.voucher-success {
+  background: #80CBC4;
+}
+
+.voucher-error {
+  background: #EF9A9A;
+}
+
+.shell {
+  position: relative;
+  line-height: 1;
+}
+
+.shell span {
+  position: absolute;
+  left: 3px;
+  top: 1px;
+  color: #ccc;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.shell span i {
+  font-style: normal;
+  /* any of these 3 will work */
+  color: transparent;
+  opacity: 0;
+  visibility: hidden;
+}
+
+input.masked,
+.shell span {
+  font-size: 16px;
+  font-family: monospace;
+  padding-right: 10px;
+  background-color: transparent;
+  text-transform: uppercase;
+}

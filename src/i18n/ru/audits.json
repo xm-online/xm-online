@@ -1,0 +1,21 @@
+{
+    "audits": {
+        "title": "Аудит",
+        "filter": {
+            "title": "Фильтр по дате",
+            "from": "от",
+            "to": "до"
+        },
+        "table": {
+            "header": {
+                "date": "Дата",
+                "principal": "Пользователь",
+                "status": "Состояние",
+                "data": "Доп. инф."
+            },
+            "data": {
+                "remoteAddress": "Удалённый адрес:"
+            }
+        }
+    }
+}

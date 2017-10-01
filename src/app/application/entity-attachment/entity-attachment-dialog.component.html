@@ -1,0 +1,88 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save(editForm)" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 *ngIf="!attachment.id" class="modal-title">
+            <span jhiTranslate="xm.attachment.add.title" translateValues="{name: '{{xmEntity.name}}'}">Add new attachment for the [<b>{{xmEntity.name}}</b>]</span>
+        </h4>
+        <h4 *ngIf="attachment.id" class="modal-title" jhiTranslate="xm.attachment.edit.title"
+            translateValues="{nameAtt: '{{attachment.name}}', nameEnt: '{{xmEntity.name}}'}">
+            Edit attachment [<b>{{attachment.name}}</b>] for the [<b>{{xmEntity.name}}</b>]
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="xm.xmEntity.type" for="field_typeKey">Type</label>
+            <select name="typeKey" id="field_typeKey" class="form-control selectpicker" data-style="btn btn-primary btn-round"
+                    [(ngModel)]="attachment.typeKey" (ngModelChange)="onChangeType()" data-size="7" required>
+                <option disabled><span jhiTranslate="xm.attachment.chooseType">Choose attachment type</span></option>
+                <option [ngValue]="attType.key"
+                        *ngFor="let attType of attachmentTypes"
+                        [attr.selected]="attType.key == attachment.typeKey ? true : null" >
+                    {{(attType.name | name: principal).toUpperCase()}}
+                </option>
+            </select>
+            <div [hidden]="!(editForm.controls.typeKey?.dirty && editForm.controls.typeKey?.invalid)">
+                <small class="form-text text-danger"
+                       [hidden]="!editForm.controls.typeKey?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group label-floating" #nameCtrl>
+            <label class="control-label" jhiTranslate="xm.xmEntity.name" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                   [(ngModel)]="attachment.name" required
+            />
+            <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                <small class="form-text text-danger"
+                       [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group label-floating">
+            <label class="control-label" jhiTranslate="xm.xmEntity.description" for="field_description">Description</label>
+            <textarea type="text" class="form-control" name="description" id="field_description"
+                   [(ngModel)]="attachment.description"
+            ></textarea>
+        </div>
+        <div class="form-group">
+            <div *ngIf="!attachment.valueContentType">
+                <label class="control-label" class="btn btn-primary btn-round" for="uploadFile" jhiTranslate="xm.attachment.upload">
+                    Click to upload or drop file here
+                </label>
+
+                <input type="file" id="uploadFile" (change)="setFileData($event, editForm.controls.value)" />
+
+                <input type="hidden" class="form-control" name="value" id="field_value"
+                       [(ngModel)]="attachment.content.value"
+                       required />
+                <input type="hidden" class="form-control" name="valueContentType" id="field_valueContentType"
+                       [(ngModel)]="attachment.valueContentType" />
+
+                <div [hidden]="!(editForm.controls.value?.dirty && editForm.controls.value?.invalid)">
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.value?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+
+            </div>
+            <div *ngIf="attachment.valueContentType" class="form-text text-danger clearfix">
+                <span class="pull-left">{{attachment.valueContentType}}, {{byteSize(attachment.content.value, attachment.valueContentSize)}}</span>
+                <button type="button" (click)="attachment.content.value=null;attachment.valueContentType=null;"
+                        class="btn btn-primary btn-xs pull-right">
+                    <span class="fa fa-times"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving">
+            <span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

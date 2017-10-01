@@ -1,0 +1,21 @@
+{
+    "xm": {
+        "functionLinkedin": {
+            "title": "Extract LinkedIn profile",
+            "location": "Location",
+            "current": "Current",
+            "summary": "Summary",
+            "recommendations": "Recommendations",
+            "experienceCurrent": "Current Experience",
+            "experiencePast": "Past Experience",
+            "volunteer": "Volunteer Causes",
+            "languages": "Languages",
+            "certifications": "Certifications",
+            "awards": "Awards",
+            "skills": "Skills",
+            "interests": "Interests",
+            "projects": "Projects",
+            "education": "Education"
+        }
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "settings": {
+        "form": {
+            "general": "Основная информация",
+            "button": "Сохранить",
+            "logins": "Логины"
+        },
+        "messages": {
+            "success": "<strong>Настройки сохранены!</strong>",
+            "logins": {
+                "success": "<strong>Логины сохранены!</strong>"
+            }
+        }
+    }
+}

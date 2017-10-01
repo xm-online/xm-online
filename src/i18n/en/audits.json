@@ -1,0 +1,21 @@
+{
+    "audits": {
+        "title": "Audits",
+        "filter": {
+            "title": "Filter per date",
+            "from": "from",
+            "to": "to"
+        },
+        "table": {
+            "header": {
+                "date": "Date",
+                "principal": "User",
+                "status": "State",
+                "data": "Extra data"
+            },
+            "data": {
+                "remoteAddress": "Remote Address:"
+            }
+        }
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "userManagement": {
+        "home": {
+            "editLoginsLabel": "Оновити логіни користувачів",
+            "createOrEditLabel": "Створіть або відредагуйте користувача",
+            "title": "Користувачі"
+        },
+        "delete": {
+            "question": "Ви впевнені, що хочете видалити користувача {{userKey}}?"
+        },
+        "detail": {
+            "title": "Користувач"
+        },
+        "logins": "Логіни",
+        "deactivated": "Деактивовано",
+        "activated": "Активовано",
+        "firstName": "Ім&#39;я",
+        "lastName": "Прізвище",
+        "langKey": "Мова",
+        "createdBy": "Створений",
+        "createdDate": "Створена дата",
+        "lastModifiedBy": "Змінено на",
+        "lastModifiedDate": "Змінена дата",
+        "profiles": "Профілі",
+        "userKey": "Ключ користувача"
+    }
+}

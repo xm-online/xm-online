@@ -1,0 +1,12 @@
+{
+    "xmApp": {
+        "widgetExchange": {
+            "title": "Калькулятор обмена",
+            "numberUnits": "Количество единиц",
+            "code": "Код",
+            "currency": "валюта",
+            "course": "Официальный курс",
+            "from": "Из"
+        }
+    }
+}

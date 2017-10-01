@@ -1,0 +1,70 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save(editForm)" #editForm="ngForm">
+    <div class="modal-header">
+        <h4 class="modal-title" jhiTranslate="xm.link.add.title" translateValues="{name: '{{xmEntity.name}}'}">
+            Add new Link for the [<b>{{xmEntity.name}}</b>]
+        </h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-group">
+            <select name="targetTypeKey" id="field_targetTypeKey" class="form-control selectpicker" data-style="btn btn-primary btn-round"
+                    [(ngModel)]="newXmEntity.typeKey" data-size="7" required (change)="onEntityTypeSelect(newXmEntity.typeKey, nameCtrl)">
+                <option disabled><span jhiTranslate="xm.xmEntity.chooseTargetEntityType">Choose target xm entity type</span></option>
+                <option [ngValue]="entityType.key"
+                        *ngFor="let entityType of entityTypes"
+                        [attr.selected]="newXmEntity && entityType.key == newXmEntity.typeKey ? true : null" >
+                    {{(entityType.name | name: principal).toUpperCase()}}
+                </option>
+            </select>
+            <div [hidden]="!(editForm.controls.targetTypeKey?.dirty && editForm.controls.targetTypeKey?.invalid)">
+                <small class="form-text text-danger"
+                       [hidden]="!editForm.controls.targetTypeKey?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+
+
+        <div class="form-group label-floating" #nameCtrl>
+            <strong class="required-star text-danger">*</strong>
+            <label class="control-label" for="field_name" jhiTranslate="xm.xmEntity.name">Name</label>
+            <div class="d-flex">
+                <input type="text" class="form-control" name="name" id="field_name"
+                       [(ngModel)]="link.name" required
+                />
+            </div>
+            <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                <small class="form-text text-danger"
+                       [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group label-floating">
+            <label class="control-label" for="field_description" jhiTranslate="xm.xmEntity.description">Description</label>
+            <textarea type="text" class="form-control" name="description" id="field_description"
+                      [(ngModel)]="link.description"
+            ></textarea>
+        </div>
+
+        <json-schema-form
+                [framework]="'bootstrap-3'"
+                [schema]="formData.schema"
+                [layout]="formData.layout"
+                [data]="newXmEntity?.data"
+                (formLayout)="showFormLayoutFn($event)"
+                *ngIf="formData"
+        >
+        </json-schema-form>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving">
+            <span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

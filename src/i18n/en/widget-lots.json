@@ -1,0 +1,37 @@
+{
+    "global": {
+        "date": {
+            "days": "days",
+            "hours": "hours",
+            "minutes": "minutes",
+            "seconds": "seconds"
+        },
+        "entity": {
+            "action": {
+                "view": "View"
+            }
+        }
+    },
+    "xmApp": {
+        "widgetLots": {
+            "timeUp": "The bidding's closed!",
+            "currentBid": "Current bid",
+            "placeBid": "Place bid",
+            "or": "or",
+            "buy": "Buy",
+            "shareOn": "Share on",
+            "backToLots": "Back to lots listing",
+            "noData": "No Lots!",
+            "placeBidAlert": "The bid is placed!",
+            "buyLotAlert": "Sold out!",
+            "title": "Lots",
+            "brand": "Brand",
+            "model": "Model",
+            "buildYear": "Build year",
+            "mileage": "Mileage",
+            "transmission": "Transmission",
+            "driveType": "Drive type",
+            "searchPlaceholder": "search"
+        }
+    }
+}

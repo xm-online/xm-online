@@ -1,0 +1,178 @@
+{
+    "global": {
+        "messages": {
+            "validate": {
+                "newpassword": {
+                    "strength": "Password strength:",
+                    "required": "Your password is required.",
+                    "minlength": "Your password is required to be at least 4 characters.",
+                    "maxlength": "Your password cannot be longer than 50 characters."
+                },
+                "confirmpassword": {
+                    "required": "Your confirmation password is required.",
+                    "minlength": "Your confirmation password is required to be at least 4 characters.",
+                    "maxlength": "Your confirmation password cannot be longer than 50 characters."
+                },
+                "email": {
+                    "required": "Your email is required.",
+                    "invalid": "Your email is invalid.",
+                    "minlength": "Your email is required to be at least 5 characters.",
+                    "maxlength": "Your email cannot be longer than 50 characters."
+                },
+                "oldpassword": {
+                    "required": "Old password is required.",
+                    "minlength": "Old password is required to be at least 4 characters.",
+                    "maxlength": "Old password cannot be longer than 50 characters."
+                },
+                "firstname": {
+                    "required": "Your first name is required.",
+                    "minlength": "Your first name is required to be at least 1 character",
+                    "maxlength": "Your first name cannot be longer than 50 characters"
+                },
+                "lastname": {
+                    "required": "Your last name is required.",
+                    "minlength": "Your last name is required to be at least 1 character",
+                    "maxlength": "Your last name cannot be longer than 50 characters"
+                },
+                "captcha": {
+                    "required": "Captcha is required."
+                }
+            },
+            "error": {
+                "dontmatch": "The password and its confirmation do not match!",
+                "captchaempty": "Please check captcha."
+            },
+            "info": {
+                "authenticated": {
+                    "prefix": "If you want to",
+                    "link": "sign in",
+                    "suffix": ", you can try the default accounts:"
+                }
+            }
+        },
+        "ribbon": {
+            "dev": "Development"
+        },
+        "form": {
+            "signin": "sign in",
+            "newpassword": "New password",
+            "confirmpassword": "New password confirmation",
+            "email": "Email",
+            "oldpassword": "Old password",
+            "firstname": "First name",
+            "lastname": "Last name",
+            "login": "Login"
+        },
+        "field": {
+            "id": "ID"
+        },
+        "all": "All",
+        "menu": {
+            "account": {
+                "mini": {
+                    "settings": "S",
+                    "password": "P",
+                    "profile": "SO"
+                },
+                "settings": "Settings",
+                "password": "Password",
+                "logout": "Sign out",
+                "profile": "Profile"
+            },
+            "dashboards": {
+                "main": "Dashboards"
+            },
+            "applications": {
+                "main": "Applications"
+            },
+            "admin": {
+                "main": "Administration",
+                "mini": {
+                    "gateway": "G",
+                    "userManagement": "U",
+                    "metrics": "M",
+                    "health": "H",
+                    "audits": "A",
+                    "logs": "L",
+                    "formPlayground": "F",
+                    "configuration": "C",
+                    "translation": "T",
+                    "apidocs": "A"
+                },
+                "gateway": "Gateway",
+                "userManagement": "User management",
+                "metrics": "Metrics",
+                "health": "Health",
+                "audits": "Audits",
+                "logs": "Logs",
+                "formPlayground": "Form Playground",
+                "configuration": "Configuration",
+                "translation": "Translation",
+                "apidocs": "API"
+            },
+            "entities": {
+                "main": "Entities",
+                "vote": "Vote",
+                "rating": "Rating",
+                "tag": "Tag",
+                "location": "Location",
+                "link": "Link",
+                "event": "Event",
+                "country": "Country",
+                "content": "Content",
+                "comment": "Comment",
+                "calendar": "Calendar",
+                "attachment": "Attachment",
+                "xmEntity": "Xm Entity",
+                "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+            }
+        },
+        "new": "New"
+    },
+    "entity": {
+        "delete": {
+            "title": "Confirm delete operation"
+        },
+        "action": {
+            "cancel": "Cancel",
+            "delete": "Delete",
+            "back": "Back",
+            "save": "Save"
+        },
+        "validation": {
+            "maxlength": "This field cannot be longer than {{ max }} characters.",
+            "required": "This field is required."
+        },
+        "detail": {
+            "square": "Square: {{square}} m"
+        }
+    },
+    "xm": {
+        "xmEntity": {
+            "listView": "List view",
+            "treeView": "Tree view"
+        }
+    },
+    "error": {
+        "internalServerError": "Internal server error",
+        "server.not.reachable": "Server not reachable",
+        "url.not.found": "Not found",
+        "NotNull": "Field {{ fieldName }} cannot be empty!",
+        "Size": "Field {{ fieldName }} does not meet min/max size requirements!",
+        "userexists": "Login name already used!",
+        "emailexists": "Email is already in use!",
+        "idexists": "A new {{ entityName }} cannot already have an ID",
+        "invalid_request": "Invalid request",
+        "invalid_client": "Invalid client",
+        "invalid_grant": "Invalid grant",
+        "unauthorized_client": "Unauthorized client",
+        "unsupported_grant_type": "Unsupported grant type",
+        "invalid_scope": "Invalid scope",
+        "insufficient_scope": "Insufficient scope",
+        "invalid_token": "Invalid token",
+        "redirect_uri_mismatch": "Redirect uri mismatch",
+        "unsupported_response_type": "Unsupported response type",
+        "access_denied": "Access denied",
+        "validation": "Input parameters error"
+    }
+}

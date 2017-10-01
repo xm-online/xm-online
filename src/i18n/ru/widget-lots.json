@@ -1,0 +1,37 @@
+{
+    "global": {
+        "date": {
+            "days": "дней",
+            "hours": "часов",
+            "minutes": "минут",
+            "seconds": "секунд"
+        },
+        "entity": {
+            "action": {
+                "view": "Посмотреть"
+            }
+        }
+    },
+    "xmApp": {
+        "widgetLots": {
+            "timeUp": "Торг окончен!",
+            "currentBid": "Текущая ставка",
+            "placeBid": "Сделать ставку",
+            "or": "или",
+            "buy": "Купить",
+            "shareOn": "Поделитесь",
+            "backToLots": "Вернуться к списку лотов",
+            "noData": "Нет лотов!",
+            "placeBidAlert": "Ставка сделана!",
+            "buyLotAlert": "Продано!",
+            "title": "Лоты",
+            "brand": "Марка",
+            "model": "Модель",
+            "buildYear": "Год выпуска",
+            "mileage": "Пробег",
+            "transmission": "Коробка передач",
+            "driveType": "Привод",
+            "searchPlaceholder": "Поиск"
+        }
+    }
+}

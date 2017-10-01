@@ -1,0 +1,25 @@
+{
+    "xm": {
+        "content": {
+            "home": {
+                "title": "Contents",
+                "createLabel": "Create a new Content",
+                "createOrEditLabel": "Create or edit a Content"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Content {{ id }}?"
+            },
+            "detail": {
+                "title": "Content"
+            },
+            "value": "Value"
+        }
+    },
+    "entityApp": {
+        "content": {
+            "created": "A new Content is created with identifier {{ param }}",
+            "updated": "A Content is updated with identifier {{ param }}",
+            "deleted": "A Content is deleted with identifier {{ param }}"
+        }
+    }
+}

@@ -1,0 +1,82 @@
+<div class="modal-body">
+  <div class="row">
+    <div class="col-sm-12 col-md-6">
+      <div class="text-center">
+        <h2 class="text-danger" jhiTranslate="xmApp.widgetLots.timeUp" *ngIf="isTimeUp">Time’s up!</h2>
+        <xm-lot-countdown *ngIf="xmEntity.countdownFrom" [from]="xmEntity.countdownFrom" [xmEntityId]="xmEntity.id"></xm-lot-countdown>
+        <h6 class="current-bid-caption">
+          <span jhiTranslate="xmApp.widgetLots.currentBid">Current bid</span>:
+          <span class="text-primary">${{xmEntity.maxPrice}}</span>
+        </h6>
+        <button class="btn btn-primary btn-round" (click)="onPlaceBib()" [disabled]="xmEntity.stateKey=='FINISHED'">
+          <span jhiTranslate="xmApp.widgetLots.placeBid">Place bid</span> $100
+        </button>
+        <div jhiTranslate="xmApp.widgetLots.or">or</div>
+        <button class="btn btn-primary btn-round" (click)="onBuy()" [disabled]="xmEntity.stateKey=='FINISHED'">
+          <span jhiTranslate="xmApp.widgetLots.buy">Buy</span> ${{xmEntity.data?.lotprice}}
+        </button>
+        <div class="share-container">
+          <div class="xm-sb-caption" jhiTranslate="xmApp.widgetLots.shareOn">Share on</div>:
+          <share-buttons
+            [pinterest]="false"
+            [linkedIn]="false"
+            [tumblr]="false"
+            [whatsApp]="false"
+            [reddit]="false"
+            [stumbleUpOn]="false"
+          ></share-buttons>
+        </div>
+      </div>
+      <table class="table table-hover">
+        <tbody>
+        <tr *ngFor="let item of bidHistory">
+          <td class="text-right col-sm-6 col-md-6">{{item.date}}</td>
+          <td class="col-sm-6 col-md-6">${{item.price}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-sm-12 col-md-6">
+      <ngb-carousel class="gallery">
+        <ng-template ngbSlide *ngFor="let item of images">
+          <img src="{{item.content?.value}}">
+        </ng-template>
+      </ngb-carousel>
+      <table class="table table-hover">
+        <tbody>
+        <tr *ngIf="info.brand">
+          <td class="text-right col-sm-6 col-md-6"><span jhiTranslate="xmApp.widgetLots.brand">Brand</span>:</td>
+          <td class="col-sm-6 col-md-6">{{info.brand}}</td>
+        </tr>
+        <tr *ngIf="info.model">
+          <td class="text-right col-sm-6 col-md-6"><span jhiTranslate="xmApp.widgetLots.model">Model</span>:</td>
+          <td class="col-sm-6 col-md-6">{{info.model}}</td>
+        </tr>
+        <tr *ngIf="info.buildYear">
+          <td class="text-right col-sm-6 col-md-6"><span jhiTranslate="xmApp.widgetLots.buildYear">Build year</span>:</td>
+          <td class="col-sm-6 col-md-6">{{info.buildYear}}</td>
+        </tr>
+        <tr *ngIf="info.mileage">
+          <td class="text-right col-sm-6 col-md-6"><span jhiTranslate="xmApp.widgetLots.mileage">Mileage</span>:</td>
+          <td class="col-sm-6 col-md-6">{{info.mileage}}</td>
+        </tr>
+        <tr *ngIf="info.transmission">
+          <td class="text-right col-sm-6 col-md-6"><span jhiTranslate="xmApp.widgetLots.transmission">Transmission</span>:</td>
+          <td class="col-sm-6 col-md-6">{{info.transmission}}</td>
+        </tr>
+        <tr *ngIf="info.driveType">
+          <td class="text-right col-sm-6 col-md-6"><span jhiTranslate="xmApp.widgetLots.driveType">Drive type</span>:</td>
+          <td class="col-sm-6 col-md-6">{{info.driveType}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCancel()">
+    <span jhiTranslate="xmApp.widgetLots.backToLots">Back to lots listing</span>
+  </button>
+</div>

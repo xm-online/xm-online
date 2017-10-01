@@ -1,0 +1,31 @@
+{
+    "health": {
+        "details": {
+            "properties": "Властивості",
+            "name": "Ім&#39;я",
+            "value": "Значення",
+            "error": "Помилка",
+            "details": "Подробиці"
+        },
+        "title": "Перевірки здоров&#39;я",
+        "table": {
+            "service": "Назва служби",
+            "status": "Статус"
+        },
+        "status": {
+            "UP": "Вгору",
+            "DOWN": "ВНИЗ"
+        },
+        "refresh.button": "Оновити",
+        "stacktrace": "Стаккрайс",
+        "indicator": {
+            "discoveryComposite": "Discovery Composite",
+            "refreshScope": "Обновити обсяги Microservice",
+            "configServer": "Сервер конфігурації Microservice",
+            "hystrix": "Hystrix",
+            "diskSpace": "Дисковий простір",
+            "mail": "Електронна пошта",
+            "consul": "Консул"
+        }
+    }
+}

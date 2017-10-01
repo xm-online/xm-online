@@ -1,0 +1,71 @@
+<div class="modal-lg">
+
+    <div class="modal-header">
+        <h4 class="modal-title" jhiTranslate="xm.link.add.title" translateValues="{name: '{{xmEntity.name}}'}">
+            Add new link for the [<b>{{xmEntity.name}}</b>]
+        </h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-group">
+            <div class="d-flex">
+                <input type="text" class="form-control" name="search" id="field_search" placeholder="Search" [(ngModel)]="searchQuery" (change)="search()" />
+            </div>
+        </div>
+
+        <div class="row" *ngIf="!xmEntities || xmEntities?.length <= 0">
+            <div class="col-md-12 text-center">
+                <h3 class="text-muted" jhiTranslate="xm.link.noFount">No element found</h3>
+            </div>
+        </div>
+
+        <div class="table-responsive" *ngIf="xmEntities && xmEntities?.length > 0">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th><span jhiTranslate="xm.xmEntity.name">Name</span></th>
+                    <th><span jhiTranslate="xm.xmEntity.state">State key</span></th>
+                    <th><span jhiTranslate="xm.xmEntity.description">Description</span></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let entity of xmEntities">
+                    <td>
+                        <img src="{{ entity.avatarUrl ? entity.avatarUrl : './assets/img/placeholder.jpg' }}" alt="..." class="xm-avatar-sm">
+                    </td>
+                    <td>{{entity.name}}</td>
+                    <td>
+                        <div class="xm-state" *ngIf="entity.state">
+                            <div class="xm-state-icon"
+                                 [style.background]="entity.state.color">
+                                <i class="material-icons">{{entity.state.icon}}</i>
+                            </div>
+                            {{entity.state.name?.en}}
+                        </div>
+                    </td>
+                    <td>{{entity.description}}</td>
+                    <td>
+                        <button *ngIf="xmEntity" class="btn btn-primary btn-round btn-sm" (click)="save(entity)" jhiTranslate="xm.link.add.title" translateValues="{name: '{{xmEntity.name}}'}">
+                            Add new link for the [<b>{{xmEntity.name}}</b>]
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <button class="btn btn-primary col-md-12" (click)="showMore()" *ngIf="xmEntities && xmEntities.length < total">
+                <span jhiTranslate="xm.xmEntity.showMore">Show more</span>
+            </button>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+                <span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+        </div>
+    </div>
+</div>

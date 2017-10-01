@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-md-6">
+    <dynamic-widget *ngIf="defaultWidget" [class.one-col]="defaultWidget.config?.lotsCount==1" [widgetData]="{component: defaultWidget.component, inputs: {config: defaultWidget.config || {}}}"></dynamic-widget>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header card-header-icon" data-background-color="primary" [hidden]="!isLoginFormView">
+        <i class="material-icons">person</i>
+      </div>
+      <div class="card-header card-header-icon" data-background-color="primary" [hidden]="isLoginFormView">
+        <i class="material-icons">person_add</i>
+      </div>
+      <div class="card-content">
+        <h4 class="card-title" jhiTranslate="login.title" [hidden]="!isLoginFormView">Sign in</h4>
+        <h4 class="card-title" jhiTranslate="register.title" [hidden]="isLoginFormView">Registration</h4>
+        <div class="text-center">
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary btn-sm btn-round" [disabled]="isLoginFormView"
+                    (click)="changeMode()" jhiTranslate="login.signin">Sign-in
+            </button>
+            <button type="button" class="btn btn-primary btn-sm btn-round" [disabled]="!isLoginFormView"
+                    (click)="changeMode()" jhiTranslate="login.signup">Sign-up
+            </button>
+          </div>
+        </div>
+        <xm-login [hidden]="!isLoginFormView"></xm-login>
+        <xm-register [hidden]="isLoginFormView"></xm-register>
+      </div>
+    </div>
+  </div>
+</div>

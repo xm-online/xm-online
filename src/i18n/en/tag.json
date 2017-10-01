@@ -1,0 +1,29 @@
+{
+    "xm": {
+        "tag": {
+            "home": {
+                "title": "Tags",
+                "createLabel": "Create a new Tag",
+                "createOrEditLabel": "Create or edit a Tag",
+                "search": "Search for Tag"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Tag {{ id }}?"
+            },
+            "detail": {
+                "title": "Tag"
+            },
+            "typeKey": "Type Key",
+            "name": "Name",
+            "startDate": "Start Date",
+            "xmEntity": "Xm Entity"
+        }
+    },
+    "entityApp": {
+        "tag": {
+            "created": "A new Tag is created with identifier {{ param }}",
+            "updated": "A Tag is updated with identifier {{ param }}",
+            "deleted": "A Tag is deleted with identifier {{ param }}"
+        }
+    }
+}

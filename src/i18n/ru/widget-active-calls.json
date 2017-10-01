@@ -1,0 +1,11 @@
+{
+    "xm": {
+        "widgetActiveCalls": {
+            "active": "Активные вызовы",
+            "caller": "Гость",
+            "connected": "Связанный",
+            "status": "Положение дел",
+            "dataTime": "Дата / время"
+        }
+    }
+}

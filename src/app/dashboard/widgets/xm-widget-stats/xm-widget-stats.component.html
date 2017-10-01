@@ -1,0 +1,17 @@
+<div class="col-lg-3 col-md-6 col-sm-6" *ngFor="let item of stats">
+  <div class="card card-stats">
+    <div class="card-header" [attr.data-background-color]="item.color">
+      <i class="material-icons">{{item.icon}}</i>
+    </div>
+    <div class="card-content">
+      <p class="category">{{item.name}}</p>
+      <h3 class="card-title">{{item.value || '?'}}</h3>
+    </div>
+    <div class="card-footer" *ngIf="false">
+      <div class="stats">
+        <i class="material-icons text-danger">warning</i>
+        <a href="#pablo" jhiTranslate="xmApp.widgetStats.moreSpace">Get More Space...</a>
+      </div>
+    </div>
+  </div>
+</div>

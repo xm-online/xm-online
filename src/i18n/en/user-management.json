@@ -1,0 +1,27 @@
+{
+    "userManagement": {
+        "home": {
+            "editLoginsLabel": "Update user logins",
+            "createOrEditLabel": "Create or edit a user",
+            "title": "Users"
+        },
+        "delete": {
+            "question": "Are you sure you want to delete user {{ userKey }}?"
+        },
+        "detail": {
+            "title": "User"
+        },
+        "logins": "Logins",
+        "deactivated": "Deactivated",
+        "activated": "Activated",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "langKey": "Language",
+        "createdBy": "Created by",
+        "createdDate": "Created date",
+        "lastModifiedBy": "Modified by",
+        "lastModifiedDate": "Modified date",
+        "profiles": "Profiles",
+        "userKey": "User key"
+    }
+}

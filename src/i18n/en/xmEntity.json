@@ -1,0 +1,55 @@
+{
+    "xm": {
+        "xmEntity": {
+            "votes": "Vote(s)",
+            "name": "Name",
+            "type": "Type",
+            "state": "State",
+            "description": "Description",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "title": "Title",
+            "addPhoto": "Add Photo",
+            "change": "Change",
+            "edit": {
+                "title": "Edit a entity [<b>{{name}}</b>]"
+            },
+            "add": {
+                "title": "Add a new entity",
+                "chooseType": "Choose entity type"
+            },
+            "data": "Data",
+            "functions": "Functions",
+            "lifecycle": {
+                "title": "Lifecycle",
+                "nextStates": "Next states available through the lifecycle:"
+            },
+            "redeem": {
+                "title": "Redeem"
+            },
+            "showMore": "Show more",
+            "locations": "Locations",
+            "timeline": "Timeline",
+            "timelines": {
+                "by": "by",
+                "success": "SUCCESS",
+                "error": "ERROR",
+                "more": "more timeline events...",
+                "timeAgo": {
+                    "seconds": "a few seconds ago",
+                    "minute": "a minute ago",
+                    "minutes": " minutes ago",
+                    "hour": "an hour ago",
+                    "hours": " hours ago",
+                    "day": "a day ago",
+                    "days": " days ago",
+                    "month": "a month ago",
+                    "months": " months ago",
+                    "year": "a year ago",
+                    "years": " years ago"
+                }
+            },
+            "search": "Search result for "
+        }
+    }
+}

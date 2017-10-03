@@ -17,7 +17,7 @@ They are stateless, and several instances of them can be launched in parallel to
 Repository: [xm-ms-dashboard](https://github.com/xm-online/xm-ms-dashboard)
   * **Entity** - represents general business entities like, but not limited: Accounts, Resources, Agreements, Orders, Contacts, Products, Handlings etc. 
 Repository: [xm-ms-entity](https://github.com/xm-online/xm-ms-entity)
-  * **Timlene** - stores and presents all historical information. 
+  * **Timeline** - stores and presents all historical information. 
 Repository: [xm-ms-timeline](https://github.com/xm-online/xm-ms-timeline)
   * **Balance** - provides a balance management with payment channels and financial operations. 
 Repository: [xm-ms-timeline](https://github.com/xm-online/xm-ms-balance)

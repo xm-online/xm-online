@@ -1,3 +1,7 @@
+XM^online is an open-source framework that helps startups and developing businesses make digital transformation and launch a product with short time-to-market using MVP (Minimum Viable Product) approach. Due to real-time big data processing, multi-channel networks, enterprise integration, and secure multi-tenancy, it makes possible to launch new products and active high response engagement campaigns faster. 
+
+The solution combines a set of customizable tools that allow customers to get own cloud application and configure it according to their needs and preferences.
+
 # XM^online architecture
 
 <img src="/assets/img/HLA-general.png" width="600">

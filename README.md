@@ -29,9 +29,24 @@ Repository: [xm-ms-timeline](https://github.com/xm-online/xm-ms-balance)
 Repository: [xm-ms-config](https://github.com/xm-online/xm-ms-config)
 
 # XM^online features
-## Multitenancy
+## Anylogin
 
-## Multilogin
+The default authentication flow requires users to pick their unique username and password when signing in. Some systems offer to enter email or phone number as a username instead. XM^online provides an alternative to both and allows customers to sign in using multiple login identifiers.
+
+Anylogin functionality enables customers to sign in the system using a username or email address, or phone number (plus password, of course). Customers are free to insert any of pre-configured login types into login form’s username field.
+
+By default XM^online offers three ways of authentication:
+* Email and Password
+* Phone number and Password
+* Username and Password
+
+<img src="/assets/img/XM2-feature-anylogin.png" width="300">
+
+Besides users are able to sign in for XM^online using their social network credentials, such as Linkedin, Facebook, Google, Twitter.
+
+Anylogin is an out-of-the-box authorization mechanism that is available to all customers by default. Once system user has specified his username, phone number, email at the system account settings he can use any of this information as login credentials.
+
+## Multitenancy
 
 ## Attribute Based Access Control
 

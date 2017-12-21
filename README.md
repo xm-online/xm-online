@@ -40,7 +40,7 @@ By default XM^online offers three ways of authentication:
 * Phone number and Password
 * Username and Password
 
-<img src="/assets/img/XM2-feature-anylogin.png" width="300">
+<img src="/assets/img/XM2-feature-anylogin.png" width="400">
 
 Besides users are able to sign in for XM^online using their social network credentials, such as Linkedin, Facebook, Google, Twitter.
 

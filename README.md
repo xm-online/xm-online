@@ -52,12 +52,12 @@ Anylogin is an out-of-the-box authorization mechanism that is available to all c
 
 ## Domain Objects
 
+## Logic Extension Points
+
 ## Dashboards and Widgets
 
 ## Timelines
 
-## Logic Extension Points
+
 
 ## Balances
-
-## Real-time Campaign Management

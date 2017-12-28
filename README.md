@@ -1,6 +1,6 @@
 # XM^online 2
 
-# Introduction
+## Introduction
 XM^online is an open-source framework that helps startups and developing businesses make digital transformation and launch a product with short time-to-market using MVP (Minimum Viable Product) approach. Due to real-time big data processing, multi-channel networks, enterprise integration, and secure multi-tenancy, it makes possible to launch new products and active high response engagement campaigns faster. 
 
 The solution combines a set of customizable tools that allow customers to get own cloud application and configure it according to their needs and preferences.
@@ -11,7 +11,7 @@ https://www.xm-online.com/
  * To submit bug reports and feature suggestions:
 https://github.com/xm-online/xm-online/issues
 
-# XM^online architecture
+## XM^online architecture
 
 <img src="/assets/img/HLA-general.png" width="600">
 
@@ -37,8 +37,8 @@ Repository: [xm-ms-timeline](https://github.com/xm-online/xm-ms-balance)
   * **Config** - stores and presents configuration in SVC for all XM^online modules and microservices.
 Repository: [xm-ms-config](https://github.com/xm-online/xm-ms-config)
 
-# XM^online features
-## Anylogin
+## XM^online features
+### Anylogin
 
 The default authentication flow requires users to pick their unique username and password when signing in. Some systems offer to enter email or phone number as a username instead. XM^online provides an alternative to both and allows customers to sign in using **multiple login identifiers**.
 
@@ -55,7 +55,7 @@ Besides users are able to sign in for XM^online using their **social network** c
 
 Anylogin is an out-of-the-box authorization mechanism that is available to all customers by default. Once system user has specified his username, phone number, email at the system account settings he can use any of this information as login credentials.
 
-## Multitenancy
+### Multitenancy
 
 Multitenancy is an architectural feature of XM^online allowing to provide a **dedicated space** (tenant) for each customer. A tenant serves to a group of users with specific privileges who share common access to their exclusive instance. It can be compared with a turn-key property rental in an apartment building, where a lodger does not have to be concerned about engineering the base, connecting to the facilities, accessing the entrance of the building and so on because he gets all public utility services with his flat.
 
@@ -65,18 +65,16 @@ The multitenant architecture allows customers to get a dedicated software with i
 
 The Multitenancy provides a high level of **customization** to satisfy company’s needs. XM^online supports customization of the user interface, business logic, workflow and access control. 
 
-## Attribute Based Access Control
+### Attribute Based Access Control
 
 <img src="/assets/img/XM2-feature-abac.png" width="400">
 
-## Domain Objects
+### Domain Objects
 
-## Logic Extension Points
+### Logic Extension Points
 
-## Dashboards and Widgets
+### Dashboards and Widgets
 
-## Timelines
+### Timelines
 
-
-
-## Balances
+### Balances

@@ -58,6 +58,8 @@ The Multitenancy provides a high level of **customization** to satisfy companyâ€
 
 ## Attribute Based Access Control
 
+<img src="/assets/img/XM2-feature-abac.png" width="400">
+
 ## Domain Objects
 
 ## Logic Extension Points

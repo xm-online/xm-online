@@ -70,9 +70,9 @@ The Multitenancy provides a high level of **customization** to satisfy companyâ€
 Attribute-based access control (abbreviated as **ABAC**) is an authorization model that provides dynamic, context-aware and risk-intelligent access control. ABAC evaluates available descriptive data (attributes) against stored policies to determine whether the user is authorized to access the requested resource. This authorization model helps XM^online users to configure larger and more definitive set of rules to express tenant access policies.
 
 For example, with the help of access-control model it is possible to set the rules, like:
-    *User A can access all entities of his company.*
-    *User B can access all entities of his department.*
-    *User C can access entities he created.*
+* *User A can access all entities of his company.*
+* *User B can access all entities of his department.*
+* *User C can access entities he created.*
 
 In ABAC each separate action is evaluated against the attributes of entities (subject and object), operations, and the environmental conditions relevant to the request, while other access control paradigms consider each request in terms of isolated user role and the type of action that need to be performed.
 

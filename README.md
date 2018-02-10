@@ -87,6 +87,11 @@ In ABAC each separate action is evaluated against the attributes of entities (su
 This approach has no restrictions: users can apply the rules of any complexity, including those that contain some unknown attributes. Due to the comparatively clear business logic and compact configuration ABAC makes it possible to avoid many of the costs associated with maintenance when implementing complex rules and provides absolute control over the actions and data inside the tenant, making it ideal for dynamic projects with rapidly changing requirements.
 
 ### Domain Objects
+A domain object is a concept that represents an entity from a domain model related to the software and implements the business logic of its work. For example, the software solution for orders management can contain such domain objects as "order", "order item", "invoice". Domain objects encapsulate the information about the entity in the business domain, which is necessary for the software, that makes it understandable for non-technical people, such as business representatives. 
+
+XM^online entities are created and configured dynamically within a tenant, where an administrator can specify and flexibly configure attributes, lifecycles and their relationships with other entities (domain objects) to cover customer’s problem area. This approach lets a customer avoid the hard-coding of all service functionalities and their possible compositions at design time, delaying their refinement until the execution phase.
+
+If you’d like to learn more about XM^online domain objects read our article ‘[How to specify domain objects](https://github.com/xm-online/xm-online/wiki/How-to-specify-domain-objects)’.
 
 ### Logic Extension Points
 

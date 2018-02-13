@@ -91,6 +91,8 @@ A domain object is a concept that represents an entity from a domain model relat
 
 XM^online entities are created and configured dynamically within a tenant, where an administrator can specify and flexibly configure attributes, lifecycles and their relationships with other entities (domain objects) to cover customer’s problem area. This approach lets a customer avoid the hard-coding of all service functionalities and their possible compositions at design time, delaying their refinement until the execution phase.
 
+<img src="/assets/img/XM2-feature-domain-objects.png" width="600">
+
 If you’d like to learn more about XM^online domain objects read our article ‘[How to specify domain objects](https://github.com/xm-online/xm-online/wiki/How-to-specify-domain-objects)’.
 
 ### Logic Extension Points

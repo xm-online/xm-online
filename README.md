@@ -11,6 +11,34 @@ https://www.xm-online.com/
  * To submit bug reports and feature suggestions:
 https://github.com/xm-online/xm-online/issues
 
+## Technologies
+
+XM^online based on the JHipster generator. JHipster is a development platform to generate, develop and deploy Spring Boot + Angular Web applications and Spring microservices.
+
+### Client Side
+* **HTML 5** is a markup language used for structuring and presenting content on the World Wide Web. It is the fifth and current major version of the HTML standard.
+* **CSS 3** is a style sheet language used for describing the presentation of a document written in a markup language like HTML.
+* **Bootstrap 3** is a free and open-source front-end library for designing websites and web applications. It contains HTML- and CSS-based design templates for typography, forms, buttons, navigation and other interface components, as well as optional JavaScript extensions. 
+* **Angular 5** is a TypeScript-based open-source front-end web application platform.
+
+### Server Side
+* **Spring Boot** is Spring's convention-over-configuration solution for creating stand-alone, production-grade Spring-based Applications that can "just run".
+* **Spring Security** is a Java framework that provides authentication, authorization and other security features for enterprise applications.
+* **Netflix OSS** cloud platform consists of Zuul (which integrates Hystrix, Eureka, and Ribbon as part of its IPC capabilities) provides dyamically scriptable proxying at the edge of the cloud deployment.
+* **Consul** makes Service Discovery simple for services to register themselves and to discover other services via a DNS or HTTP interface. Register external services such as SaaS providers as well.
+* **Gradle** is an open-source build automation system that introduces a Groovy-based domain-specific language (DSL) for declaring the project configuration.
+* **Hibernate** is an object-relational mapping tool for the Java programming language. It provides a framework for mapping an object-oriented domain model to a relational database.
+* **Liquibase** is an open source database-independent library for tracking, managing and applying database schema changes.
+* **PostgreSQL** is an object-relational database management system (ORDBMS) with an emphasis on extensibility and standards compliance.
+* **Cassandra** is a free and open-source distributed NoSQL database management system designed to handle large amounts of data across many commodity servers, providing high availability with no single point of failure.
+* **ElasticSearch** is a search engine based on Lucene. It provides a distributed, multitenant-capable full-text search engine with an HTTP web interface and schema-free JSON documents.
+* **Kafka** is an open-source stream-processing software platform.
+* **Swagger** is an open source software framework backed by a large ecosystem of tools that helps developers design, build, document, and consume RESTful Web services.
+* **Gatling** is an open-source load and performance testing framework based on Scala, Akka and Netty.
+
+### Deployment
+* **Docke** performs operating-system-level virtualization also known as containerization.
+
 ## XM^online architecture
 
 <img src="/assets/img/HLA-general.png" width="600">

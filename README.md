@@ -37,7 +37,7 @@ XM^online based on the JHipster generator. JHipster is a development platform to
 * **Gatling** is an open-source load and performance testing framework based on Scala, Akka and Netty.
 
 ### Deployment
-* **Docke** performs operating-system-level virtualization also known as containerization.
+* **Docker** performs operating-system-level virtualization also known as containerization.
 
 ## XM^online architecture
 

@@ -20,6 +20,7 @@ XM^online based on the JHipster generator. JHipster is a development platform to
 * **CSS 3** is a style sheet language used for describing the presentation of a document written in a markup language like HTML.
 * **Bootstrap 3** is a free and open-source front-end library for designing websites and web applications. It contains HTML- and CSS-based design templates for typography, forms, buttons, navigation and other interface components, as well as optional JavaScript extensions. 
 * **Angular 5** is a TypeScript-based open-source front-end web application platform.
+* **Angular JSON Schema Form** is a JSON Schema Form builder for Angular.
 
 ### Server Side
 * **Spring Boot** is Spring's convention-over-configuration solution for creating stand-alone, production-grade Spring-based Applications that can "just run".
@@ -73,7 +74,7 @@ And clone this project and make git clone --mirror project xm2-config
  ```sh
 $ git clone https://github.com/xm-online/xm-online.git 
 ```
-  - and make git clone --mirror project xm2-config
+  - and make `git clone --mirror project xm2-config`
   ```sh
 cd xm-online/assets/ 
 ```
@@ -82,12 +83,12 @@ cd xm-online/assets/
 $ git clone --mirror https://github.com/xm-online/xm-ms-config-repository.git
 ```
 
-On the project path where XM^Online2 is cloned, run docker up to start containers defined.
+On the project path where XM^online2 is cloned, run docker up to start containers defined.
   - start swarm for work docker stack
  ```sh
 $ docker swarm init
 ```
-  - start service XM^Online2
+  - start service XM^online2
 
  ```sh
 $ docker stack deploy -c docker-compose.yml xm2local

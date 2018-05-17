@@ -147,7 +147,7 @@ services:
         networks:
             - xm2
         volumes:
-            - ./xm2local.git:/git
+            - ./xm-ms-config-repository.git:/git
         environment:
             - SPRING_PROFILES_ACTIVE=prod,swagger
             - SPRING_CLOUD_CONSUL_HOST=consul

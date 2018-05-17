@@ -9,7 +9,11 @@ And clone this project and make git clone --mirror project xm2-config
  ```sh
 $ git clone https://github.com/xm-online/xm-online.git 
 ```
-  - andmake git clone --mirror project xm2-config
+  - and make git clone --mirror project xm2-config
+  ```sh
+cd xm-online/assets/ 
+```
+ 
  ```sh
 $ git clone --mirror https://github.com/xm-online/xm-ms-config-repository.git
 ```
@@ -20,9 +24,7 @@ On the project path where XM^Online2 is cloned, run docker up to start container
 $ docker swarm init
 ```
   - start service XM^Online2
- ```sh
-cd assets/ 
-```
+
  ```sh
 $ docker stack deploy -c docker-compose.yml xm2local
 ```

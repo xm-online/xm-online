@@ -1,0 +1,248 @@
+version: '3'
+services:
+    web-app:
+        image: xmonline/xm-webapp
+        networks:
+            - xm2
+        environment:
+            - GATE_HOST=gate-app
+        ports:
+            - 80:80
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+
+    gate-app:
+        image: xmonline/xm-gate
+        networks:
+            - xm2
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_CLOUD_CONSUL_HOST=consul
+            - SPRING_CLOUD_CONSUL_PORT=8500
+            - SPRING_CLOUD_INETUTILS_PREFERREDNETWORKS_1=192.168.
+            - SPRING_CLOUD_INETUTILS_PREFERREDNETWORKS_2=10.0
+            - SPRING_DATA_CASSANDRA_CONTACTPOINTS=gate-cassandra
+            - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+            - XM_CONFIG_HAZELCAST_GROUP_PASS=xm2
+            - XM_CONFIG_HAZELCAST_INTERFACES=192.168.101.*,10.0.0.*
+            - APPLICATION_HOSTS=,,localhost
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+
+    postgresql:
+        image: postgres:9.6.2
+        networks:
+            - xm2
+        volumes:
+            - ./:/docker-entrypoint-initdb.d/
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+        ports:
+            - 5432:5432
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+    cassandra:
+        image: cassandra:3.11
+        networks:
+            - xm2
+        environment:
+            - HEAP_NEWSIZE=2M
+            - MAX_HEAP_SIZE=2048M
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+
+    entity-app:
+        image: xmonline/xm-ms-entity
+        networks:
+            - xm2
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_CLOUD_CONSUL_HOST=consul
+            - SPRING_CLOUD_CONSUL_PORT=8500
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/entity
+            - SPRING_DATASOURCE_USERNAME=postgres
+            - SPRING_DATASOURCE_PASSWORD=postgres
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=elasticsearch:9300
+            - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+            - XMX=512m
+            - XM_CONFIG_HAZELCAST_GROUP_PASS=xm2
+            - JHIPSTER_SECURITY_CLIENT_AUTHORIZATION_CLIENT_ID=internal
+            - JHIPSTER_SECURITY_CLIENT_AUTHORIZATION_CLIENT_SECRET=internal
+            - APPLICATION_AMAZON_AWS_ENDPOINT=http://localhost
+            - APPLICATION_AMAZON_AWS_TEMPLATE=https://%s-localhost/
+            - APPLICATION_AMAZON_AWS_REGION=null
+            - APPLICATION_AMAZON_AWS_ACCESS_KEY_ID=null
+            - APPLICATION_AMAZON_AWS_ACCESS_KEY_SECRET=null
+            - APPLICATION_AMAZON_S3_BUCKET=xm-avatar
+            - SPRING_MAIL_HOST=localhost
+            - SPRING_MAIL_PORT=25
+            - SPRING_MAIL_PROTOCOL=smtp
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+
+    elasticsearch:
+        image: elasticsearch:2.4.1
+        networks:
+            - xm2
+        deploy:
+          placement:
+            constraints: [node.role == manager]
+
+    dashboard-app:
+        image: xmonline/xm-ms-dashboard
+        networks:
+            - xm2
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_CLOUD_CONSUL_HOST=consul
+            - SPRING_CLOUD_CONSUL_PORT=8500
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/dashboard
+            - SPRING_DATASOURCE_USERNAME=postgres
+            - SPRING_DATASOURCE_PASSWORD=postgres
+            - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+            - XM_CONFIG_HAZELCAST_GROUP_PASS=xm2
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+
+    timeline-app:
+        image: xmonline/xm-ms-timeline
+        networks:
+            - xm2
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_CLOUD_CONSUL_HOST=consul
+            - SPRING_CLOUD_CONSUL_PORT=8500
+            - SPRING_DATA_CASSANDRA_CONTACTPOINTS=cassandra
+            - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+            - XM_CONFIG_HAZELCAST_GROUP_PASS=xm2
+            - JHIPSTER_SECURITY_CLIENT_AUTHORIZATION_CLIENT_ID=internal
+            - JHIPSTER_SECURITY_CLIENT_AUTHORIZATION_CLIENT_SECRET=internal
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+
+    config-app:
+        image: xmonline/xm-ms-config:git-clone-noauth
+        networks:
+            - xm2
+        volumes:
+            - ./xm2local.git:/git
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_CLOUD_CONSUL_HOST=consul
+            - SPRING_CLOUD_CONSUL_PORT=8500
+            - APPLICATION_GIT_BRANCH_NAME=master
+            - APPLICATION_GIT_URI=/git
+            - XM_CONFIG_HAZELCAST_GROUP_PASS=xm2
+            - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+
+    balance-app:
+        image: xmonline/xm-ms-balance
+        networks:
+            - xm2
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_CLOUD_CONSUL_HOST=consul
+            - SPRING_CLOUD_CONSUL_PORT=8500
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/balance
+            - SPRING_DATASOURCE_USERNAME=postgres
+            - SPRING_DATASOURCE_PASSWORD=postgres
+            - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+            - XM_CONFIG_HAZELCAST_GROUP_PASS=xm2
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+
+    uaa-app:
+        image: xmonline/xm-uaa
+        networks:
+            - xm2
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_CLOUD_CONSUL_HOST=consul
+            - SPRING_CLOUD_CONSUL_PORT=8500
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/uaa
+            - SPRING_DATASOURCE_USERNAME=postgres
+            - SPRING_DATASOURCE_PASSWORD=postgres
+            - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+            - XM_CONFIG_HAZELCAST_GROUP_PASS=xm2
+            - APPLICATION_RECAPTCHA_SECRETKEY=null
+            - APPLICATION_RECAPTCHA_PUBLICKEY=null
+            - APPLICATION_DEFAULT_CLIENT_ID=internal,web_app
+            - APPLICATION_DEFAULT_CLIENT_SECRET=internal
+            - JHIPSTER_SECURITY_CLIENT_AUTHORIZATION_CLIENT_ID=internal
+            - JHIPSTER_SECURITY_CLIENT_AUTHORIZATION_CLIENT_SECRET=internal
+            - SPRING_MAIL_HOST=localhost
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+
+
+    consul:
+        image: consul:0.8.5
+        networks:
+            - xm2
+        ports:
+            - 8500:8500
+        command: consul agent -dev -ui -client 0.0.0.0
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+
+    zookeeper:
+        image: jbsukraine/apache-zookeeper:3.4.10
+        networks:
+            - xm2
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+
+    kafka:
+        image: jbsukraine/apache-kafka:2.11-0.11.0.1
+        networks:
+            - xm2
+        environment:
+            ZOO_HOST: zookeeper:2181
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+   
+networks:
+    xm2:
+        driver: overlay

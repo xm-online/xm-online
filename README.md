@@ -70,11 +70,11 @@ Repository: [xm-ms-config](https://github.com/xm-online/xm-ms-config)
 
 To install XM^online 2 on docker, first you need to have installed Docker v17.06+ . For installation follow its official documentation.
 
-And clone this project and make git clone --mirror project xm2-config
+Сlone this project and set up a mirror of the source repository xm2-config for local configuration, make git clone --mirror project xm2-config
  ```sh
 $ git clone https://github.com/xm-online/xm-online.git 
 ```
-  - and make `git clone --mirror project xm2-config`
+  - and set up a mirror of the source repository xm2-config for local configuration
   ```sh
 cd xm-online/assets/ 
 ```

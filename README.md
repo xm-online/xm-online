@@ -200,10 +200,48 @@ XM^online entities are created and configured dynamically within a tenant, where
 
 If you’d like to learn more about XM^online domain objects read our article ‘[How to specify domain objects](https://github.com/xm-online/xm-online/wiki/How-to-specify-domain-objects)’.
 
+### Balances
+The Balance Management provides activities related to the creation and maintenance of the balances of a customer and/or a subscriber. Balances may be shared (e.g. between subscribers in a hierarchy).
+
+Types of balances include:
+* Monetary balances 
+* Non-monetary balances (e.g. free unites, quota, tokens, etc.)
+
+The balance management supports the definition of policies per balance or balance type. Policies include:
+* Minimum Allowable Balance limit (e.g. balance must remain above zero).
+* Balance expiration dates. 
+* Balance thresholds actions and notifications.
+
+Balance management operations include: 
+* Unit reservation from a balance for a specified interval (session). Unused units are credited back into the balance when the session is released.
+* Release of reserved unit 
+* Balance prioritization based on policy/rules
+* Balance inquiry. 
+* Support for multiple simultaneous sessions that affect a common balance. 
+* Splitting charges between multiple balances. 
+* Application of a payment to a balance.
+
+Communication of balance information to the financial systems (e.g. General Ledger, Accounts Receivable) within the enterprise.
+
+<img src="/assets/img/XM2-feature-balance.png" width="200">
+
+A balance (B) usually consists of a single value only. Its use is not directly restricted by specific periods of time. Instead it is only indirectly restricted through the rules the balance is used in.
+
+For credit balances, however, it might be required that a balance consists of one or more values:
+* with its own period of availability (which may then be further restricted by the rules the balance appears in) or
+* marked with a label to identify a specific portion of a balance
+
+Such a value with a certain validity period or a specific label is called a pocket (P). The validity start and end of a pocket can be configured based on
+* date level, so that the validity of a pocket starts on day x at 00:00:00 and ends at day y at 00:00:00 or
+* date and time level, so that the validity of a pocket also depends on the time of day, so when the pocket is created on day x at hh:mm:ss, the validity ends on day y at the same time on hh:mm:ss.
+
+In the example, the value of the balance B3 is the sum of the values of all pockets P1, P2 and P3, which are valid at this point of time.
+
+<img src="/assets/img/XM2-feature-balance-with-pockets.png" width="600">
+
 ### Logic Extension Points
 
 ### Dashboards and Widgets
 
 ### Timelines
 
-### Balances

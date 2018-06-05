@@ -223,7 +223,7 @@ Balance management operations include:
 
 Communication of balance information to the financial systems (e.g. General Ledger, Accounts Receivable) within the enterprise.
 
-<img src="/assets/img/XM2-feature-balance.png" width="200">
+<img src="/assets/img/XM2-feature-balance.png" width="350">
 
 A balance (B) usually consists of a single value only. Its use is not directly restricted by specific periods of time. Instead it is only indirectly restricted through the rules the balance is used in.
 

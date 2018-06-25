@@ -244,7 +244,7 @@ LEP is a middle between the need for time-consuming full development and low-cod
 
 XM^online with LEP functionality for application development that employ declarative techniques instead of programming are available to customers at low- or no-cost in money and training time to begin, with costs rising in proportion of the business value of the platforms.
 
-<img src="/assets/img/XM2-feature-logic-extension-points.png" width="500">
+<img src="/assets/img/XM2-feature-logic-extension-points.png" width="450">
 
 There are several important drivers:
 

@@ -240,6 +240,21 @@ In the example, the value of the balance B3 is the sum of the values of all pock
 <img src="/assets/img/XM2-feature-balance-with-pockets.png" width="600">
 
 ### Logic Extension Points
+LEP is a middle between the need for time-consuming full development and low-code/no-code platforms with pure visual tools. Many startups and enterprises focused on delivering applications for innovation, customer engagement, operational efficiency, or legacy migration are recognising the inherent business value and time-to-market advantages of using simple scripting coding (based on the Groovy).
+
+XM^online with LEP functionality for application development that employ declarative techniques instead of programming are available to customers at low- or no-cost in money and training time to begin, with costs rising in proportion of the business value of the platforms.
+
+<img src="/assets/img/XM2-feature-logic-extension-points.png" width="450">
+
+There are several important drivers:
+* *Operation-driven development*
+LEP offer more intuitive ways to build applications, minimising the use of coding. This approach enables a range of users - from professional developers to citizen developers.
+* *Reusability*
+Productivity can be further accelerated with LEP that promote reusability through out-of-the-box templates, plug-ins, business components, and connectors to emerging technologies.
+* *Support beyond the build phase*
+XM^online with LEP are designed to support the entire app lifecycle: design, build, deploy, manage and iterate.
+* *Cloud-native deployment*
+XM^online offer the flexibility to deploy and manage applications in the cloud of your choice, or even on premises. Offering automated deployment along with a cloud-native, stateless architecture enables out-of-the-box high availability and fail over to support large-scale deployments, particularly in an enterprise context.
 
 ### Dashboards and Widgets
 

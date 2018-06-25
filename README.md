@@ -248,19 +248,16 @@ XM^online with LEP functionality for application development that employ declara
 
 There are several important drivers:
 
-* *Operation-driven development*
-
+#### Operation-driven development
 LEP offer more intuitive ways to build applications, minimising the use of coding. This approach enables a range of users - from professional developers to citizen developers.
 
-* *Reusability*
-
+#### Reusability
 Productivity can be further accelerated with LEP that promote reusability through out-of-the-box templates, plug-ins, business components, and connectors to emerging technologies.
-* *Support beyond the build phase*
 
+#### Support beyond the build phase
 XM^online with LEP are designed to support the entire app lifecycle: design, build, deploy, manage and iterate.
 
-* *Cloud-native deployment*
-
+#### Cloud-native deployment
 XM^online offer the flexibility to deploy and manage applications in the cloud of your choice, or even on premises. Offering automated deployment along with a cloud-native, stateless architecture enables out-of-the-box high availability and fail over to support large-scale deployments, particularly in an enterprise context.
 
 ### Dashboards and Widgets

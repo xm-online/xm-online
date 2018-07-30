@@ -149,14 +149,13 @@ postgresql:
 To get credentials of other services you may want to see docker-compose.yml and docker logs 
 
 ### Start/Stop and health check
-To stop Docker swarm cluster you need to stop docker service with command:
+To stop Docker swarm use command:
 ```sh
-$ service docker stop
+$ docker stack rm xm2local
 ```
-Then start service again and run stack deploy for starting:
+To start:
 
 ```sh
-$ service docker start
 $ docker stack deploy -c docker-compose.yml xm2local
 ```
 

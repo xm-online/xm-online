@@ -68,7 +68,17 @@ Repository: [xm-ms-config](https://github.com/xm-online/xm-ms-config)
 
 ## XM^online installation using Docker
 
-To install XM^online 2 on docker, first you need to have installed Docker v17.06+ . For installation follow its official documentation.
+### System requirements
+
+OS:  any which supports Docker (Linux is recommended)
+RAM: 8 GB minimum (16 recommended)
+CPU: 2 cores
+STORAGE: 20 GB
+Applications:
+ - Docker v17.06+ (For installation follow its official documentation)
+ - Git
+
+### Installation steps
 
 Сlone this project and set up a mirror of the source repository xm2-config for local configuration, make git clone --mirror project xm2-config
  ```sh
@@ -83,7 +93,7 @@ cd xm-online/assets/
 $ git clone --mirror https://github.com/xm-online/xm-ms-config-repository.git
 ```
 
-On the project path where XM^online2 is cloned, run docker up to start containers defined.
+From the `xm-online/assets/` run docker to start containers defined.
   - start swarm for work docker stack
  ```sh
 $ docker swarm init
@@ -101,15 +111,17 @@ If nothing goes wrong you should see a couple of containers are running on your 
 $ docker ps
 $ docker service ls
 ```
-In this example, we simply map port 10080 of the host to port 80 of the Docker (or whatever port was exposed in the docker-compose.yml)
+In this example, we simply map port 80 of the host to port 80 of the Docker (or whatever port was exposed in the docker-compose.yml)
 Verify the deployment by navigating to your server address in your preferred browser. 
  ```sh
- localhost:80 
+ 127.0.0.1:80 
  ```
 or 
  ```sh
  <ip>:80 
  ```
+
+*Note: some browsers for example Chrome prevents accessing to the url localhost:80 so we recommend to use direct IP*
 
 The ports of all the services like Postgresql, Kafka etc. were intentionally changed to custom ones to not to conflict with the default ones that may be installed and running on machine. For example, to connect to Postgresql here is the credentials:
  ```sh
@@ -131,6 +143,27 @@ postgresql:
                 condition: on-failur
 ```
 To get credentials of other services you may want to see docker-compose.yml and docker logs 
+
+### Start/Stop and health check
+To stop Docker swarm cluster you need to stop docker service with command:
+```sh
+service docker stop
+```
+Then start service again and run stack deploy for starting:
+
+```sh
+$ docker stack deploy -c docker-compose.yml xm2local
+```
+
+Also you can check active services in consul by url: `http://<IP>:8500` and ensure that next ervices ar active (green):
+ - balance
+ - config
+ - consul
+ - dashboard
+ - entity
+ - gate
+ - timeline
+ - uaa
 
 ### Debugging
 For debugging you can open logs service 

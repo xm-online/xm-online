@@ -70,17 +70,14 @@ Repository: [xm-ms-config](https://github.com/xm-online/xm-ms-config)
 
 ### System requirements
 
-OS:  any which supports Docker (Linux is recommended)
-
-RAM: 8 GB minimum (16 recommended)
-
-CPU: 2 cores
-
-STORAGE: 20 GB
+* **OS** - any which supports Docker (Linux is recommended)
+* **RAM** - 8 Gb minimum (16 Gb recommended)
+* **CPU** - 2 cores minimum (6 cores recommended)
+* **Storage** - 20 Gb minimum
 
 Applications:
- - Docker v17.06+ (For installation follow its official documentation)
- - Git
+- Docker v17.06+ (For installation follow its official documentation)
+- Git
 
 ### Installation steps
 

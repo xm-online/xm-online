@@ -151,7 +151,7 @@ To get credentials of other services you may want to see docker-compose.yml and 
 ### Start/Stop and health check
 To stop Docker swarm cluster you need to stop docker service with command:
 ```sh
-service docker stop
+$ service docker stop
 ```
 Then start service again and run stack deploy for starting:
 
@@ -159,7 +159,7 @@ Then start service again and run stack deploy for starting:
 $ docker stack deploy -c docker-compose.yml xm2local
 ```
 
-Also you can check active services in consul by url: `http://<IP>:8500` and ensure that next ervices ar active (green):
+Also you can check active services in consul by url: `http://<IP>:8500` and ensure that next ervices are active (green):
  - balance
  - config
  - consul

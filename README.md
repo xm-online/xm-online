@@ -156,6 +156,7 @@ $ service docker stop
 Then start service again and run stack deploy for starting:
 
 ```sh
+$ service docker start
 $ docker stack deploy -c docker-compose.yml xm2local
 ```
 

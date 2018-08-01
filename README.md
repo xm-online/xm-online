@@ -295,6 +295,26 @@ XM^online with LEP are designed to support the entire app lifecycle: design, bui
 XM^online offer the flexibility to deploy and manage applications in the cloud of your choice, or even on premises. Offering automated deployment along with a cloud-native, stateless architecture enables out-of-the-box high availability and fail over to support large-scale deployments, particularly in an enterprise context.
 
 ### Dashboards and Widgets
+A **dashboard** is a visual display of the most important information needed to achieve different objectives, arranged on a single screen, so the main information can be seen at first sight. In other terms, they are a collection of widgets that give an overview of the most important data.
+
+XM^online, allows to create multiple dashboards, which, helps to navigate faster through the System and allows to configure dashboards, for different users. For example, simple user can have access to only certain dashboard, while other user, to the other one. Also, dashboard logic depends mainly on the business task.
+
+A **widget** is a mini-report that can display your data in a number of different presentation styles, including simple graphics, charts, tables. On the specific dashboard, they can show information about bookings, revenue or completed tasks. Widgets, can be different. For example, *Stats Widget* can give the information about number of active accounts and, in the same time, about number of cars. The thing is, that they can be the same type, but they give different information, from different applications, for different dashboards.
+
+Widgets can contain not only plain static numbers, but also, they can perform different active functions. For example, *Tasks Widget*, where you have functionality such as adding tasks, changing reminders, creating events, editing and completing tasks is available straight from your home screen. 
+
+There are widgets that can not be configured, while others can be for specific client needs, like:
+* *Welcome Widget*
+* *Sign-in/Sign-up Widget*
+* *Entity Widget*
+* *Stats Widget*
+* *General map Widget*
+* *Weather Widget*
+* *Clock Widget*
+* *News Widget*
+* *Markdown Widget*
+* *Tasks Widget*
+* *Entities list Widget*
 
 ### Timelines
 

@@ -319,16 +319,14 @@ There are widgets that can not be configured, while others can be for specific c
 ### Timelines
 A **timeline** diagrams present events during specific intervals shown chronologically along a line. Timelines are used as a control and monitoring tools. They can highlight important events and required information in the current context to provide additional information on how the process can be optimized and therefore increased.
 
-As an example of timeline, it can be a history of the bank operations. It can include different operations (cash withdrawal, payments, receipts and other business transactions).The start point can be the first transaction of account, the last point will be the most recent transaction. It allows to see how money are moved through account and for what reason.
+*As an example of timeline, it can be a history of the bank operations. It can include different operations (cash withdrawal, payments, receipts and other business transactions). The start point can be the first transaction of account, the last point will be the most recent transaction. It allows to see how money are moved through account and for what reason.*
 
-Events in timelines are tied with each other and they can be aggregated. Besides timeline can be displayed for any element of the System whether it is timeline of entity or timeline of menu.
-
-A timeline implemented in the XM^online is a technical entity in which is recorded what was changed in the System. Timeline in the XM^online allows the next things:
+A timeline implemented in the XM^online is a presentation tool which is displayed most important events that occur in the System relating to the specified entity. Events in timelines are tied with each other and they can be aggregated. Besides timeline can be displayed for any element of the System whether it is timeline of entity or timeline of menu. Timeline in the XM^online allows the next things:
 * sorting by tags, for quicker search of problems, important information that happened in a certain time or the other things that can be useful for customers;
-* configuring to show only important changes in entity; 
-* configuring to show changes of some special functionality;
+* configuring to display only important changes with an entity; 
+* configuring to display changes of some special functionality;
 * tuning displayed events such as:
   * technical data of person who changed (browser, operating system);
   * business data (transactions, fulfilling orders);
   * logic data (what was changed and why);
-* configuring how to display events(ways of notes, ordering). 
+* configuring how to display events (ways of notes, ordering, icons). 

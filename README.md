@@ -321,6 +321,8 @@ A **timeline** diagrams present events during specific intervals shown chronolog
 
 *As an example of timeline, it can be a history of the bank operations. It can include different operations (cash withdrawal, payments, receipts and other business transactions). The start point can be the first transaction of account, the last point will be the most recent transaction. It allows to see how money are moved through account and for what reason.*
 
+<img src="/assets/img/XM2-feature-timeline.png" width="300">
+
 A timeline implemented in the XM^online is a presentation tool which is displayed most important events that occur in the System relating to the specified entity. Events in timelines are tied with each other and they can be aggregated. Besides timeline can be displayed for any element of the System whether it is timeline of entity or timeline of menu. Timeline in the XM^online allows the next things:
 * sorting by tags, for quicker search of problems, important information that happened in a certain time or the other things that can be useful for customers;
 * configuring to display only important changes with an entity; 

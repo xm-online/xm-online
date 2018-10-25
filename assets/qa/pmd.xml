@@ -1,0 +1,262 @@
+<?xml version="1.0"?>
+
+<!--
+    PMD rule sets that check code compliance to ICT^hothouse technical coding standards.
+
+    Read first before adding any modifications:
+    http://pmd.sourceforge.net/pmd-4.3.0/howtomakearuleset.html
+-->
+<ruleset name="ICThh"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+    <description>
+        PMD RuleSets set for ICT^hothouse projects
+    </description>
+
+    <!-- Documentation for PMD Java rules: https://pmd.github.io/pmd-5.5.4/pmd-java/rules -->
+
+    <rule ref="rulesets/java/basic.xml"/>
+    <rule ref="rulesets/java/braces.xml"/>
+    <rule ref="rulesets/java/clone.xml"/>
+
+    <rule ref="rulesets/java/codesize.xml"/>
+    <rule ref="rulesets/java/codesize.xml/TooManyMethods">
+        <properties>
+            <property name="maxmethods" value="15"/>
+            <!-- Spring global controller advices may contain many simple methods - 1 per Exception class, skip them -->
+            <property name="violationSuppressXPath" value=".[
+                //ClassOrInterfaceDeclaration[../Annotation/*/Name[@Image='RestControllerAdvice']]
+                or
+                //ClassOrInterfaceDeclaration[../Annotation/*/Name[@Image='ControllerAdvice']]
+                or
+                //ClassOrInterfaceDeclaration[matches(@Image,'.*Test$')]
+            ]"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/comments.xml">
+        <!-- would clutter code with /*default*/ comments for package private modifiers -->
+        <exclude name="CommentDefaultAccessModifier"/>
+        <!-- write and support javadocs will cost a lot of effort  -->
+        <exclude name="CommentRequired"/>
+    </rule>
+    <rule ref="rulesets/java/comments.xml/CommentSize">
+        <properties>
+            <property name="maxLines" value="12"/>
+            <!-- synchronize with general line length rule -->
+            <property name="maxLineLength" value="120"/>
+        </properties>
+    </rule>
+
+
+    <rule ref="rulesets/java/controversial.xml">
+        <exclude name="OnlyOneReturn"/>
+        <exclude name="AssignmentInOperand"/>
+        <exclude name="AtLeastOneConstructor"/>
+        <exclude name="CallSuperInConstructor"/>
+        <exclude name="DefaultPackage"/>
+        <exclude name="DataflowAnomalyAnalysis"/>
+        <exclude name="AvoidFinalLocalVariable"/>
+        <exclude name="AvoidUsingVolatile"/>
+        <exclude name="OneDeclarationPerLine"/>
+        <exclude name="AvoidPrefixingMethodParameters"/>
+        <exclude name="UseConcurrentHashMap"/>
+    </rule>
+
+    <rule ref="rulesets/java/coupling.xml">
+        <!-- would require too much verbosity in too many places -->
+        <exclude name="LawOfDemeter"/>
+        <!-- as we don't use wildcard imports, we disable this check -->
+        <exclude name="ExcessiveImports"/>
+        <!-- we don't have any global package patterns -->
+        <exclude name="LoosePackageCoupling"/>
+    </rule>
+    <rule ref="rulesets/java/coupling.xml/CouplingBetweenObjects">
+        <properties>
+            <!-- Spring global controller advices may contain many references to "*Exception" classes -->
+            <property name="violationSuppressXPath" value=".[
+                //ClassOrInterfaceDeclaration[../Annotation/*/Name[@Image='RestControllerAdvice']]
+                or
+                //ClassOrInterfaceDeclaration[../Annotation/*/Name[@Image='ControllerAdvice']]
+            ]"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/design.xml">
+        <exclude name="ConfusingTernary"/>
+        <exclude name="UseLocaleWithCaseConversions"/>
+    </rule>
+    <rule ref="rulesets/java/design.xml/ImmutableField">
+        <properties>
+            <property name="violationSuppressXPath" value=".[
+                ../../../../../../Annotation/*/Name[@Image='Setter']
+                or
+                ../../../../../../Annotation/*/Name[@Image='Data']
+                or
+                ../../../../../../Annotation/*/Name[@Image='NoArgsConstructor']
+                or
+                ../../../Annotation/*/Name[@Image='Setter']
+                or
+                ../../../Annotation/*/Name[@Image='CreatedDate']
+                or
+                ../../../Annotation/*/Name[@Image='LastModifiedDate']
+            ]"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/java/design.xml/SingularField">
+        <properties>
+            <property name="violationSuppressXPath" value=".[
+                ../../../../Annotation/*/Name[@Image='Setter']
+                or
+                ../../../../Annotation/*/Name[@Image='Getter']
+                or
+                ../../../../Annotation/*/Name[@Image='Data']
+                or
+                ../../../Annotation/*/Name[@Image='Setter']
+                or
+                ../../../Annotation/*/Name[@Image='Getter']
+            ]"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/java/design.xml/AbstractClassWithoutAnyMethod">
+        <properties>
+            <property name="violationSuppressXPath" value=".[
+                ../Annotation/NormalAnnotation[Name[@Image='NoArgsConstructor'] and MemberValuePairs//PrimaryPrefix/Name[@Image='AccessLevel.PRIVATE'] and count(//ImportDeclaration/Name[@Image='lombok.NoArgsConstructor']) = 1]
+                or
+                ../Annotation/NormalAnnotation[Name[@Image='NoArgsConstructor'] and MemberValuePairs//PrimaryPrefix/Name[@Image='AccessLevel.PROTECTED'] and count(//ImportDeclaration/Name[@Image='lombok.NoArgsConstructor']) = 1]
+            ]"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/java/design.xml/UseUtilityClass">
+        <properties>
+            <property name="violationSuppressXPath" value=".[
+                ../../Annotation/NormalAnnotation[Name[@Image='NoArgsConstructor'] and MemberValuePairs//PrimaryPrefix/Name[@Image='AccessLevel.PRIVATE'] and count(//ImportDeclaration/Name[@Image='lombok.NoArgsConstructor']) = 1]
+                or
+                ../../Annotation/MarkerAnnotation/Name[@Image='UtilityClass' and count(//ImportDeclaration/Name[@Image='lombok.experimental.UtilityClass']) = 1]
+                or
+                ../../Annotation/MarkerAnnotation/Name[@Image='SpringBootApplication']
+            ]"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/java/design.xml/AbstractClassWithoutAbstractMethod">
+        <properties>
+            <property name="violationSuppressXPath" value=".[
+                ../Annotation/NormalAnnotation[Name[@Image='NoArgsConstructor'] and MemberValuePairs//PrimaryPrefix/Name[@Image='AccessLevel.PROTECTED'] and count(//ImportDeclaration/Name[@Image='lombok.NoArgsConstructor']) = 1]
+                or
+                ../Annotation/NormalAnnotation[Name[@Image='RequiredArgsConstructor'] and MemberValuePairs//PrimaryPrefix/Name[@Image='AccessLevel.PROTECTED'] and count(//ImportDeclaration/Name[@Image='lombok.RequiredArgsConstructor']) = 1]
+                or
+                ../Annotation/NormalAnnotation[Name[@Image='AllArgsConstructor'] and MemberValuePairs//PrimaryPrefix/Name[@Image='AccessLevel.PROTECTED'] and count(//ImportDeclaration/Name[@Image='lombok.AllArgsConstructor']) = 1]
+            ]"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/java/design.xml/UncommentedEmptyMethodBody">
+        <properties>
+            <!-- AspectJ pointcuts have empty method body with @Pointcut annotation -->
+            <property name="violationSuppressXPath" value=".[
+                ../../Annotation/SingleMemberAnnotation[Name[@Image='Pointcut'] and count(//ImportDeclaration/Name[@Image='org.aspectj.lang.annotation.Pointcut']) = 1]
+            ]"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/empty.xml"/>
+    <rule ref="rulesets/java/finalizers.xml"/>
+    <rule ref="rulesets/java/imports.xml">
+        <!-- as we don't use wildcard imports, we disable this check for static imports -->
+        <exclude name="TooManyStaticImports"/>
+    </rule>
+    <rule ref="rulesets/java/j2ee.xml"/>
+
+    <rule ref="rulesets/java/javabeans.xml">
+        <exclude name="BeanMembersShouldSerialize"/>
+    </rule>
+
+    <rule ref="rulesets/java/junit.xml">
+        <!-- more than 1 assert is used in integration tests -->
+        <exclude name="JUnitTestContainsTooManyAsserts"/>
+        <!-- doesn't apply to JUnit > 3 -->
+        <exclude name="JUnitSpelling"/>
+    </rule>
+
+    <rule ref="rulesets/java/logging-jakarta-commons.xml">
+        <!-- explicit if (log.isDebugEnabled) is too verbose in most of the cases for simple string param reference -->
+        <exclude name="GuardLogStatement"/>
+        <exclude name="GuardDebugLogging"/>
+    </rule>
+    <rule ref="rulesets/java/logging-java.xml">
+        <exclude name="GuardLogStatementJavaUtil"/>
+    </rule>
+
+    <rule ref="rulesets/java/migrating.xml"/>
+
+    <rule ref="rulesets/java/naming.xml">
+        <exclude name="AbstractNaming"/>
+        <exclude name="AvoidFieldNameMatchingTypeName"/>
+    </rule>
+    <rule ref="rulesets/java/naming.xml/ShortVariable">
+        <properties>
+            <!-- relax to allow "id" field for example -->
+            <property name="minimum" value="2"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/java/naming.xml/LongVariable">
+        <properties>
+            <!-- keep common sense, long names are self-documenting -->
+            <property name="minimum" value="30"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/java/naming.xml/ShortClassName">
+        <properties>
+            <property name="minimum" value="3"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/java/naming.xml/MethodNamingConventions">
+        <properties>
+            <property name="violationSuppressXPath" value=".[
+                ../../Annotation/*[Name[@Image='Test'] and count(//ImportDeclaration/Name[@Image='org.junit.Test']) = 1]
+                or
+                //ClassOrInterfaceDeclaration[matches(@Image,'.*Test$')]
+            ]"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/optimizations.xml">
+        <exclude name="MethodArgumentCouldBeFinal"/>
+        <exclude name="LocalVariableCouldBeFinal"/>
+        <exclude name="UseStringBufferForStringAppends"/>
+        <exclude name="AvoidInstantiatingObjectsInLoops"/>
+    </rule>
+
+    <rule ref="rulesets/java/strictexception.xml"/>
+    <rule ref="rulesets/java/strictexception.xml/SignatureDeclareThrowsException">
+        <properties>
+            <property name="violationSuppressXPath" value=".[
+                ../../../Annotation/*[Name[@Image='Test'] and count(//ImportDeclaration/Name[@Image='org.junit.Test']) = 1]
+                or
+                //ClassOrInterfaceDeclaration[matches(@Image,'.*Test$')]
+            ]"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/strings.xml"/>
+    <rule ref="rulesets/java/sunsecure.xml"/>
+    <rule ref="rulesets/java/typeresolution.xml"/>
+    <rule ref="rulesets/java/unnecessary.xml"/>
+
+    <rule ref="rulesets/java/unusedcode.xml"/>
+    <rule ref="rulesets/java/unusedcode.xml/UnusedPrivateMethod">
+        <properties>
+            <property name="violationSuppressXPath" value=".[
+                ../../Annotation/NormalAnnotation[Name[@Image='AssertTrue'] and count(//ImportDeclaration/Name[@Image='javax.validation.constraints.AssertTrue']) = 1]
+                or
+                ../../Annotation/MarkerAnnotation[Name[@Image='PrePersist'] and count(//ImportDeclaration/Name[@Image='javax.persistence.PrePersist']) = 1]
+                or
+                ../../Annotation/MarkerAnnotation[Name[@Image='PreUpdate'] and count(//ImportDeclaration/Name[@Image='javax.persistence.PreUpdate']) = 1]
+                or
+                ../../Annotation/MarkerAnnotation[Name[@Image='PostLoad'] and count(//ImportDeclaration/Name[@Image='javax.persistence.PostLoad']) = 1]
+            ]"/>
+        </properties>
+    </rule>
+
+</ruleset>

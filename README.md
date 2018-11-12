@@ -8,7 +8,7 @@ The solution combines a set of customizable tools that allow customers to get ow
 * For a full description of the solution, visit the project page:
 https://www.xm-online.com/
 
- * To submit bug reports and feature suggestions:
+* To submit bug reports and feature suggestions:
 https://github.com/xm-online/xm-online/issues
 
 ## Technologies
@@ -121,6 +121,10 @@ or
  ```sh
  <ip>:80 
  ```
+ 
+<img src="/assets/img/XM2-home-page.png" width="6800">
+ 
+Default user `xm/P@ssw0rd` could be used to sign-in.
 
 *Note: some browsers for example Chrome prevents accessing to the url localhost:80 so we recommend to use direct IP*
 

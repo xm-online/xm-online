@@ -22,13 +22,14 @@ services:
             - SPRING_PROFILES_ACTIVE=prod,swagger
             - SPRING_CLOUD_CONSUL_HOST=consul
             - SPRING_CLOUD_CONSUL_PORT=8500
-            - SPRING_CLOUD_INETUTILS_PREFERREDNETWORKS_1=192.168.
-            - SPRING_CLOUD_INETUTILS_PREFERREDNETWORKS_2=10.0
+            - SPRING_CLOUD_INETUTILS_PREFERREDNETWORKS_0=192.168.
+            - SPRING_CLOUD_INETUTILS_PREFERREDNETWORKS_1=10.0
             - SPRING_DATA_CASSANDRA_CONTACTPOINTS=gate-cassandra
             - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
             - XM_CONFIG_HAZELCAST_GROUP_PASS=xm2
             - XM_CONFIG_HAZELCAST_INTERFACES=192.168.101.*,10.0.0.*
             - APPLICATION_HOSTS=,,localhost
+            - APPLICATION_CASSANDRA_ENABLED=false
         deploy:
             mode: replicated
             replicas: 1

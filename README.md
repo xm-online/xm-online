@@ -19,7 +19,7 @@ XM^online based on the JHipster generator. JHipster is a development platform to
 * **HTML 5** is a markup language used for structuring and presenting content on the World Wide Web. It is the fifth and current major version of the HTML standard.
 * **CSS 3** is a style sheet language used for describing the presentation of a document written in a markup language like HTML.
 * **Bootstrap 3** is a free and open-source front-end library for designing websites and web applications. It contains HTML- and CSS-based design templates for typography, forms, buttons, navigation and other interface components, as well as optional JavaScript extensions. 
-* **Angular 6** is a TypeScript-based open-source front-end web application platform.
+* **Angular 7** is a TypeScript-based open-source front-end web application platform.
 * **Angular JSON Schema Form** is a JSON Schema Form builder for Angular.
 
 ### Server Side

@@ -1,0 +1,127 @@
+import { Component, NO_ERRORS_SCHEMA, TemplateRef, ViewContainerRef } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
+import { By } from '@angular/platform-browser';
+import { Subject } from 'rxjs/Subject';
+
+import { JhiLanguageHelper } from '../../shared';
+import { Principal } from '../../shared/auth/principal.service';
+import {XmPrivilegeDirective} from './xmPrivilege.directive';
+
+class Mock {
+}
+
+@Component({
+    template: `<div>
+        <button class="noPermission">noPermission</button>
+        <button class="privOk" *xmPermitted="['TEST_OK']">privOk</button>
+        <button class="privNok" *xmPermitted="['TEST_NOK']">privNok</button>
+        <button class="privOkCtxOk" *xmPermitted="['TEST_OK']; context:contextCB(true)">privOkCtxOk</button>
+        <button class="privOkCtxNok" *xmPermitted="['TEST_OK']; context:contextCB(false)">privOkCtxNok</button>
+        <button class="privNokCtxOk" *xmPermitted="['TEST_NOK']; context:contextCB(true)">privNokCtxOk</button>
+        <button class="privNokCtxNok" *xmPermitted="['TEST_NOK']; context:contextCB(false)">privNokCtxNok</button>
+    </div>`
+})
+class TestComponent {
+    contextCB(value: boolean): Function  {
+        return () => {return value};
+    }
+}
+
+describe('Directive: PermitDirective', () => {
+    let component: TestComponent;
+    let fixture: ComponentFixture<TestComponent>;
+
+    let mockPrincipalService;
+
+    let authenticationState;
+
+    const OK_SET  = new Set(['noPermission', 'privOk', 'privOkCtxOk']);
+    const NOK_SET = new Set(['privNok', 'privOkCtxNok', 'privNokCtxOk', 'privNokCtxNok']);
+
+    const OK_PRIV = 'TEST_OK';
+    const NOK_PRIV = 'TEST_NOK';
+
+    const permissionResolver = (privileges: string[] = [], privilegesOperation: string = 'OR') => {
+        if (!privileges) {
+            console.log('No privileges passed');
+            return Promise.resolve(false);
+        }
+
+        if (privileges.length === 1 && OK_PRIV === privileges[0]) {
+            return Promise.resolve(true);
+        }
+
+        if (privileges.length === 1 && NOK_PRIV === privileges[0]) {
+            return Promise.resolve(false);
+        }
+
+        console.log('Resolve false, no match');
+        return Promise.resolve(false);
+    };
+
+    beforeEach(async(() => {
+
+        mockPrincipalService = jasmine.createSpyObj(['getAuthenticationState', 'hasPrivileges']);
+
+        mockPrincipalService.hasPrivileges.and.callFake(permissionResolver);
+
+        TestBed.configureTestingModule({
+            declarations: [
+                XmPrivilegeDirective,
+                TestComponent,
+            ],
+            providers: [
+                JhiEventManager,
+                ViewContainerRef,
+                TemplateRef,
+                { provide: JhiLanguageHelper, useClass: Mock },
+                { provide: JhiLanguageService, useClass: Mock },
+                { provide: Router, useClass: Mock},
+                { provide: Principal, useValue : mockPrincipalService},
+            ],
+            schemas: [
+                NO_ERRORS_SCHEMA
+            ]
+        });
+
+        authenticationState = new Subject<any>();
+        fixture = TestBed.createComponent(TestComponent);
+        component = fixture.componentInstance;
+
+    }));
+
+    it('should be visible all elements from OK_SET',  async(() => {
+        authenticationState.next(true);
+        mockPrincipalService.getAuthenticationState.and.returnValue(authenticationState.asObservable());
+
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            const buttonComp = fixture.debugElement.queryAll(By.css('button'));
+            for (const item of buttonComp) {
+                expect(OK_SET.has(item.nativeElement.textContent)).toBe(true);
+
+            }
+        });
+
+    }));
+
+    it('should not be visible all elements from NOK_SET',  async(() => {
+        authenticationState.next(true);
+        mockPrincipalService.getAuthenticationState.and.returnValue(authenticationState.asObservable());
+
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            const buttonComp = fixture.debugElement.queryAll(By.css('button'));
+            for (const item of buttonComp) {
+                expect(NOK_SET.has(item.nativeElement.textContent)).toBe(false);
+
+            }
+        });
+
+    }));
+
+});

@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {EventManager, JhiLanguageService} from 'ng-jhipster';
+import {JhiEventManager} from 'ng-jhipster';
 import {NgForm} from '@angular/forms';
 import {UserLoginService} from './user-login.service';
 import {UserLogin} from './user-login.model';
@@ -9,7 +9,7 @@ import {UserService} from '../user.service';
 import {User} from '../user.model';
 import {AccountService} from '../../auth/account.service';
 import {Principal} from '../../auth/principal.service';
-import {UseGlobalTranslations} from "../../language/use.global.location";
+import {XM_EVENT_LIST} from '../../../../app/xm.constants';
 
 @Component({
     selector: 'xm-user-login-form',
@@ -29,13 +29,11 @@ export class UserLoginFormComponent implements OnChanges {
     success: Boolean;
 
     constructor(private activeModal: NgbActiveModal,
-                private jhiLanguageService: JhiLanguageService,
                 private userService: UserService,
                 private accountService: AccountService,
                 private principal: Principal,
-                private eventManager: EventManager,
+                private eventManager: JhiEventManager,
                 private userLoginService: UserLoginService) {
-        this.jhiLanguageService.addLocation('settings');
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -103,7 +101,7 @@ export class UserLoginFormComponent implements OnChanges {
         this.isSaving = false;
         this.success = true;
         if (this.isUser) {
-            this.eventManager.broadcast({name: 'userListModification', content: 'OK'});
+            this.eventManager.broadcast({name: XM_EVENT_LIST.XM_USER_LIST_MODIFICATION, content: 'OK'});
             this.activeModal.dismiss(result);
         } else {
             this.principal.identity(true).then((account) => {

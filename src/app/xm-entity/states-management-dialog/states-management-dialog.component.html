@@ -1,0 +1,70 @@
+<div class="modal-header">
+  <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+  <h4 class="modal-title text-left">
+    {{'xm-entity.states-management-dialog.title' | translate}}
+  </h4>
+</div>
+<div class="modal-body">
+  <ng-container *ngIf="specs$ | async as fetchedSpecs;">
+    <ng-container
+      *ngIf="fetchedSpecs; then resultData; else noData"
+    ></ng-container>
+
+    <ng-template #resultData>
+      <div class="states-management">
+        <div class="states-management__filter">
+          <mat-form-field>
+            <mat-select
+              (selectionChange)="onSaveSelectedSpecKey($event.value)"
+              [(ngModel)]="selectedSpec"
+              placeholder="{{'xm-entity.states-management-dialog.choose-state' | translate}}"
+            >
+              <ngx-mat-select-search
+                [formControl]="formSpecSearch"
+                [placeholderLabel]="'global.rest-select-placeholder-search' | translate"
+                [noEntriesFoundLabel]="'global.rest-select-placeholder-noresults' | translate"
+              ></ngx-mat-select-search>
+
+              <mat-option *ngFor="let option of filteredSpecOptions$ | async" [value]="option.key">
+                {{ option.key }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="states-management__results">
+          <ng-container *ngIf="ratioSpec$ | async as fetchedRatioSpec">
+            <ng-container
+              *ngIf="fetchedRatioSpec; then resultRatioData; else noRatioData"
+            ></ng-container>
+
+            <ng-template #resultRatioData>
+              <table class="status-distribution">
+                <tr *ngFor="let row of fetchedRatioSpec">
+                  <td
+                    *ngFor="let cell of row"
+                    [class.active]="cell === 'active'"
+                  >
+                    <div class="status-distribution__cell">
+                      <xm-entity-state
+                        *ngIf="cell !== 'active' && cell !== 'empty'"
+                        [stateSpec]="cell"
+                      ></xm-entity-state>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </ng-template>
+
+            <ng-template #noRatioData>
+              <no-data [show]="true"></no-data>
+            </ng-template>
+          </ng-container>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #noData>
+      <no-data [show]="true"></no-data>
+    </ng-template>
+  </ng-container>
+</div>

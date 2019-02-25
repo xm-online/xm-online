@@ -1,0 +1,8 @@
+<mat-form-field>
+  <input matInput
+         [name]="controlName"
+         type="datetime-local"
+         [value]="controlValueFormatted"
+         [disabled]="options['readonly'] || options['disabled']"
+         (change)="changeText($event)">
+</mat-form-field>

@@ -1,9 +1,0 @@
-{
-    "xm": {
-        "event": {
-            "delete": {
-                "question": "Are you sure you want to delete Event?"
-            }
-        }
-    }
-}

@@ -1,0 +1,19 @@
+{
+    "xm-balance": {
+        "common": {
+            "cancel": "Отмена",
+            "fields": {
+                "label": "Mетка",
+                "start-date": "Дата начала",
+                "end-date": "Дата окончания",
+                "amount": "Количество"
+            }
+        },
+        "balance-detail-dialog": {
+            "title": "Детали баланса"
+        },
+        "balance-list-card": {
+            "title": "Балансы"
+        }
+    }
+}

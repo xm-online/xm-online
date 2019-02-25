@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+  <h4 class="modal-title text-left" jhiTranslate="global.shared.privacy-and-terms-dialog.title">Privacy and Terms</h4>
+</div>
+<div class="modal-body">
+  <markdown [src]="config?.privacyAndTerms[lang ? lang : 'en']"></markdown>
+  <div class="form-group checkbox">
+    <label>
+      <input id="iAgree" name="iAgree" type="checkbox" [(ngModel)]="iAgree">
+    </label>
+    <label for="iAgree">
+      <span jhiTranslate="global.shared.privacy-and-terms-dialog.i-agree">I agree</span>
+    </label>
+  </div>
+</div>
+<div class="modal-footer">
+  <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()">
+    <span jhiTranslate="global.common.cancel">Cancel</span>
+  </button>
+  <button mat-raised-button
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+          [disabled]="!iAgree" (click)="onAccept()">
+    <span jhiTranslate="global.common.accept">Accept</span>
+  </button>
+</div>

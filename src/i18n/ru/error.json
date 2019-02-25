@@ -2,5 +2,36 @@
     "error": {
         "403": "Вы не авторизованы для доступа к странице",
         "title": "Ошибка!"
-    }
+    },
+    "errors": {
+        "error.internalServerError": "Внутренняя ошибка сервера",
+        "privilegeOperationWrong": "Операция не поддерживается '{{ name }}'!",
+        "privilegeInsufficient": "недостаточно привилегий '{{ name }}'!",
+        "accessDenied": "Доступ запрещен",
+        "internalServerError": "Внутренняя ошибка сервера",
+        "server.not.reachable": "Сервер не доступен",
+        "url.not.found": "Не найдено",
+        "NotNull": "Поле {{fieldName}} не может быть пустым!",
+        "Size": "Поле {{fieldName}} не отвечает требованиям мин/макс.го размера!",
+        "userexists": "Имя пользователя уже используется!",
+        "emailexists": "Эл. почта уже используется!!",
+        "idexists": "Новый {{entityName}} не может иметь данный ID",
+        "invalid_request": "Неверный запрос",
+        "invalid_client": "Недопустимый клиент",
+        "invalid_grant": "Недействительный грант",
+        "unauthorized_client": "Неавторизованный клиент",
+        "unsupported_grant_type": "Неподдерживаемый тип прав",
+        "invalid_scope": "Недопустимая область",
+        "insufficient_scope": "Недостаточный охват",
+        "invalid_token": "Недопустимый токен",
+        "redirect_uri_mismatch": "Неверный URL перенаправления",
+        "unsupported_response_type": "Неподдерживаемый тип ответа",
+        "access_denied": "Доступ закрыт",
+        "validation": "Неверные входящие параметры",
+        "notfound": "Запрашиваемый ресурс не найден",
+        "error.business": "Ошибка переадресации",
+        "unauthorized": "Необходима авторизация",
+        "session_expired": "Сессия истекла. Пожалуйста, войдите."
+    },
+    "Unauthorized": "Нужна авторизация!"
 }

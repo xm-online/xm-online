@@ -1,0 +1,48 @@
+{
+  "nemondo": {
+    "widget": {
+      "customerInfo": {
+        "title": "Customer information"
+      }
+    },
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "countryCode": "Country",
+    "localCurrency": "Local currency",
+    "locality": "City/State",
+    "zip": "Zip code",
+    "address1": "Address 1",
+    "address2": "Address 2",
+    "phone": "Phone number",
+    "state": {
+      "ON-REVIEW": " - state[On review]",
+      "UPDATE-NEEDED": " - state[Update needed]",
+      "REJECTED": " - state[Rejected]",
+      "VIDEO-VERIFIED" : " - state [On video review]",
+      "ACTIVE": "Activated"
+    },
+    "invalid": {
+      "firstName": "the field cannot be empty",
+      "lastName": "the field cannot be empty",
+      "countryCode": "the field cannot be empty",
+      "locality": "the field cannot be empty",
+      "zip": "the field must contain only 5 digits",
+      "address": "the field cannot be empty",
+      "phone": "the field must contain at least 7 digits",
+      "localCurrency": "the field cannot be empty"
+    },
+    "notification": {
+      "okTransfer" : "Request created. txID: {{id}}",
+      "okEscrowWallet" : "Escrow wallet created",
+      "okEscrowSellerCharge" : "Seller validated",
+      "okEscrowBuyerCharge" : "Coins reserved",
+      "escrowCanceled" : "ESCROW canceled",
+      "ACTIVE" : "Account approved. Please login to start",
+      "ON-REVIEW" : "Information on review",
+      "UPDATE-NEEDED" : "Request rejected. Please update provided information"
+    },
+    "wallets" : {
+      "noWallets" : "Create new wallet to start!"
+    }
+  }
+}

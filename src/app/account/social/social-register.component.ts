@@ -18,7 +18,7 @@ export class SocialRegisterComponent implements OnInit  {
         private route: ActivatedRoute,
         private jhiLanguageService: JhiLanguageService
     ) {
-        this.jhiLanguageService.addLocation('social');
+        // this.jhiLanguageService.addLocation('social');
     }
 
     ngOnInit() {
@@ -31,4 +31,8 @@ export class SocialRegisterComponent implements OnInit  {
         this.error = !this.success;
         this.providerLabel = this.provider.charAt(0).toUpperCase() + this.provider.slice(1);
     }
+
+    login() {
+    }
+
 }

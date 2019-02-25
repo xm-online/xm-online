@@ -1,0 +1,21 @@
+<form class="m-0" name="deleteForm" (ngSubmit)="onConfirmDelete(role.roleKey)" *ngIf="role">
+    <div class="modal-header">
+        <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+        <h4 class="modal-title text-left" jhiTranslate="entity.delete.title">Confirm delete operation</h4>
+    </div>
+
+    <div class="modal-body">
+        <xm-loader [showLoader]="showLoader" [noDisableParent]="true"></xm-loader>
+
+        <p class="word-break" jhiTranslate="rolesManagement.delete.question" translateValues="{roleKey: '{{role.roleKey}}'}">Are you sure you want to delete this Role?</p>
+    </div>
+
+    <div class="modal-footer">
+        <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button mat-raised-button type="submit" class="btn btn-danger" [disabled]="showLoader">
+            <span class="fa fa-trash"></span>&nbsp;<span jhiTranslate="entity.action.delete">Delete</span>
+        </button>
+    </div>
+</form>

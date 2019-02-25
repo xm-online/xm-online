@@ -1,0 +1,36 @@
+.word-container {
+  margin-bottom: 16px;
+}
+.word-list {
+  z-index: 100;
+  position: absolute;
+  background: #fafafa;
+  border: 1px solid #eeeeee;
+  border-radius: 0 6px 6px;
+  overflow: hidden;
+
+  -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
+  box-shadow: 0 3px 9px rgba(0,0,0,.5);
+
+  > div {
+    padding: 6px 10px;
+
+/*    &:nth-of-type(odd) {
+      background-color: #f9f9f9;
+    }*/
+
+    &:hover {
+      cursor: pointer;
+      background: #DDDDDD;
+    }
+
+    &.active {
+      background: #cccccc;
+    }
+  }
+}
+
+.word-hint {
+  position: absolute;
+  font-size: 11px;
+}

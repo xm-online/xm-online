@@ -1,6 +1,8 @@
 {
     "navbar": {
         "toggleNotification": "Toggle navigation",
-        "notification": "Notifications"
+        "notification": "Notifications",
+        "search": "Search"
     }
 }
+

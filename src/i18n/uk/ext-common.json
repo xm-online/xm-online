@@ -1,0 +1,26 @@
+{
+    "ext-common": {
+        "clock-widget": {
+            "title": "Годинник"
+        },
+        "exchange-widget": {
+            "title": "Обмінний калькулятор",
+            "number-units": "Кількість одиниць",
+            "code": "Код",
+            "currency": "Валюта",
+            "course": "Офіційний курс",
+            "from": "Від",
+            "select-from": "Виберіть валюту з",
+            "select-to": "Виберіть валюту в"
+        },
+        "sign-in-up-widget": {
+            "sign-in": "Увійти",
+            "sign-up": "Зареєструватися"
+        },
+        "weather-widget": {
+            "humidity": "Вологість",
+            "wind-speed": "Швидкість вітру",
+            "ms": "м/с"
+        }
+    }
+}

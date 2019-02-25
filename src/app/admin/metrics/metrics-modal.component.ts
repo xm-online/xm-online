@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import {UseGlobalTranslations} from "../../shared/language/use.global.location";
-import {JhiLanguageService} from "ng-jhipster";
+import { JhiLanguageService } from 'ng-jhipster';
 
 @Component({
     selector: 'xm-metrics-modal',
@@ -19,7 +18,7 @@ export class JhiMetricsMonitoringModalComponent implements OnInit {
 
     constructor(public activeModal: NgbActiveModal,
                 private jhiLanguageService: JhiLanguageService) {
-        this.jhiLanguageService.addLocation('metrics');
+        // this.jhiLanguageService.addLocation('metrics');
     }
 
     ngOnInit() {

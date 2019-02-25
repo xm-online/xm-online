@@ -1,16 +1,25 @@
 <div class="alert alert-success" *ngIf="success" jhiTranslate="settings.messages.logins.success">
     <strong>Settings saved!</strong>
 </div>
-<form name="editForm" novalidate (ngSubmit)="save()" #editForm="ngForm">
-    <div class="form-group label-floating" *ngFor="let login of userLogins">
-        <label class="control-label" for="{{login.key}}">{{login.name}}</label>
-        <input class="form-control" id="{{login.key}}" name="{{login.key}}" [(ngModel)]="login.value">
+<form class="m-0" name="editForm" novalidate (ngSubmit)="save()" #editForm="ngForm">
+    <div class="form-group" *ngFor="let login of userLogins">
+      <mat-form-field>
+        <input matInput
+               id="{{login.key}}"
+               name="{{login.key}}"
+               type="text"
+               [(ngModel)]="login.value"
+               placeholder="{{login.name}}">
+      </mat-form-field>
     </div>
     <div class="text-right" *ngIf="!isCreate">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()" *ngIf="isUser">
+        <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="clear()" *ngIf="isUser">
             <span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
-        <button [disabled]="!isSubmitValid(editForm)" class="btn btn-primary">
+        <button mat-raised-button
+                [disabled]="!isSubmitValid(editForm)"
+                class="btn btn-primary"
+                *xmPermitted="['ACCOUNT.LOGIN.UPDATE']">
             <span jhiTranslate="entity.action.save">Save</span>
         </button>
     </div>

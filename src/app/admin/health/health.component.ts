@@ -6,24 +6,82 @@ import { JhiHealthService } from './health.service';
 import { JhiHealthModalComponent } from './health-modal.component';
 
 @Component({
-    selector: 'health',
+    selector: 'xm-health',
     templateUrl: './health.component.html',
+    styleUrls: ['./health.component.scss']
 })
 export class JhiHealthCheckComponent implements OnInit {
+
     healthData: any;
-    updatingHealth: boolean;
+    showLoader: boolean;
+    allHealthChecks: any[];
+    services: any[];
+    instances: any[];
+    selectedService = '';
+    selectedInstance = '';
+    selectedInstanceStatus: string;
 
     constructor(
         private jhiLanguageService: JhiLanguageService,
         private modalService: NgbModal,
         private healthService: JhiHealthService
     ) {
-        this.jhiLanguageService.addLocation('health');
-
     }
 
     ngOnInit() {
-        this.refresh();
+        this.initHealthCheck();
+    }
+
+    initHealthCheck() {
+        this.healthService
+            .getMonitoringServicesCollection()
+            .subscribe(result => {
+                this.services = result || [];
+                if (this.services.length > 0) {
+                    this.selectedService = this.services[0].name;
+                    this.onServiceSelect();
+                }
+            }, error => console.log(error));
+    }
+
+    onServiceSelect(): void {
+        this.instances = null;
+        this.services
+            .filter(s => s.name === this.selectedService)
+            .map(i => this.instances = i.instances || null);
+        this.getHealthCheck(this.selectedService);
+    }
+
+    getHealthCheck(selectedService: string): void {
+        this.showLoader = true;
+        this.healthData = [];
+        this.selectedInstanceStatus = null;
+        this.healthService
+            .getHealsCheckByMsName(selectedService, 'health')
+            .subscribe(result => {
+                this.allHealthChecks = result || [];
+                this.mapHealthCheck(this.allHealthChecks[0].instanceId);
+                this.showLoader = false;
+            }, error => {
+                console.log(error);
+                if (error.status === 503) {
+                    this.healthData = this.healthService.transformHealthData(error.json());
+                }
+                this.showLoader = false;
+            });
+    }
+
+    mapHealthCheck(metricId) {
+        this.selectedInstance = metricId || '';
+        const currentMetrics = this.allHealthChecks.filter(h => h.instanceId === metricId).shift();
+        this.healthData = currentMetrics && currentMetrics.health
+            ? this.healthService.transformHealthData(currentMetrics.health)
+            : [];
+        this.selectedInstanceStatus =
+            currentMetrics
+            && currentMetrics.health
+            && currentMetrics.health.status
+            ? currentMetrics.health.status : null;
     }
 
     baseName(name: string) {
@@ -38,22 +96,8 @@ export class JhiHealthCheckComponent implements OnInit {
         }
     }
 
-    refresh() {
-        this.updatingHealth = true;
-
-        this.healthService.checkHealth().subscribe((health) => {
-            this.healthData = this.healthService.transformHealthData(health);
-            this.updatingHealth = false;
-        }, (error) => {
-            if (error.status === 503) {
-                this.healthData = this.healthService.transformHealthData(error.json());
-                this.updatingHealth = false;
-            }
-        });
-    }
-
     showHealth(health: any) {
-        const modalRef  = this.modalService.open(JhiHealthModalComponent);
+        const modalRef  = this.modalService.open(JhiHealthModalComponent, {backdrop: 'static'});
         modalRef.componentInstance.currentHealth = health;
         modalRef.result.then((result) => {
             // Left blank intentionally, nothing to do here

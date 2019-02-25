@@ -76,6 +76,16 @@
             "p95": "p95",
             "p99": "p99",
             "max": "Макс"
+        },
+        "options": {
+            "service-name": "Назва сервісу",
+            "instance-name": "Інстанс",
+            "done": "Закрити",
+            "f-all": "All",
+            "f-runnable": "Runnable",
+            "f-waiting": "Waiting",
+            "f-timed-waiting": "Timed Waiting",
+            "f-blocked": "Blocked"
         }
     }
 }

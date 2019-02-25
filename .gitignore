@@ -1,3 +1,22 @@
 .idea/
 *.iml
 node_modules/
+dist/
+out-tsc/
+.DS_Store
+#
+package-lock.json
+# local dev configuration
+local.proxy.conf.js
+.vscode/
+
+src/i18n/en.json
+src/i18n/ru.json
+src/i18n/uk.json
+
+src/assets/mock-data
+
+src/app/ext/*
+src/assets/css/ext/
+src/assets/img/ext/
+angular.json

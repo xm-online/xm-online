@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProfileService } from './profile.service';
 import { ProfileInfo } from './profile-info.model';
-import {UseGlobalTranslations} from "../../shared/language/use.global.location";
+import {Principal} from '../../shared/auth/principal.service';
+import {Subscription} from 'rxjs';
+import {JhiEventManager} from 'ng-jhipster';
+import {XM_EVENT_LIST} from '../../xm.constants';
 
 @Component({
     selector: 'xm-page-ribbon',
@@ -10,18 +13,50 @@ import {UseGlobalTranslations} from "../../shared/language/use.global.location";
         'page-ribbon.css'
     ]
 })
-@UseGlobalTranslations()
-export class PageRibbonComponent implements OnInit {
+export class PageRibbonComponent implements OnInit, OnDestroy {
 
     profileInfo: ProfileInfo;
     ribbonEnv: string;
+    private eventAuthSubscriber: Subscription;
 
-    constructor(private profileService: ProfileService) {}
+    constructor(
+        private principal: Principal,
+        private profileService: ProfileService,
+        private eventManager: JhiEventManager,
+    ) {
+        this.registerChangeAuth();
+    }
 
     ngOnInit() {
-        this.profileService.getProfileInfo().subscribe((profileInfo) => {
-            this.profileInfo = profileInfo;
-            this.ribbonEnv = profileInfo.ribbonEnv;
-        });
+
+      this.principal.hasAnyAuthority(['ROLE_ADMIN'])
+        .then(value => {
+          if (value) {
+            this.principal.getAuthenticationState().subscribe(state => {
+              if (state) {
+                this.principal.identity()
+                  .then(() => {
+                    this.profileService.getProfileInfo().subscribe((profileInfo) => {
+                      this.profileInfo = profileInfo;
+                      this.ribbonEnv = profileInfo.ribbonEnv;
+                    });
+                  });
+              }});
+          }
+        })
+        .catch(error => console.log('PageRibbonComponent %o', error));
+
+    }
+
+    ngOnDestroy() {
+      if (this.ribbonEnv) {
+        this.eventManager.destroy(this.eventAuthSubscriber);
+      }
+    }
+
+    private registerChangeAuth() {
+      if (this.ribbonEnv) {
+        this.eventAuthSubscriber = this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, (message) => this.ngOnInit());
+      }
     }
 }

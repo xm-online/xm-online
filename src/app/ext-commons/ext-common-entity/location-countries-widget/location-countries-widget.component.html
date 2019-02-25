@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-header card-header-icon card-header-primary">
+    <div class="card-icon">
+      <i class="material-icons">language</i>
+    </div>
+    <h4 class="card-title">{{config.name ? config.name : 'Countries'}}</h4>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-5">
+        <xm-md-table [data]="tableData">
+        </xm-md-table>
+      </div>
+      <div class="col-md-6 offset-md-1">
+        <div id="worldMap" class="map"></div>
+      </div>
+    </div>
+  </div>
+</div>

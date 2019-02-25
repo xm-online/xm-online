@@ -1,0 +1,14 @@
+<ul>
+  <li *ngFor="let link of links">
+    <span (click)="toggle(link)">
+      <div *ngIf="link.target.avatarUrl" class="xm-avatar-img-container">
+        <img src="{{link.target.avatarUrl}}">
+      </div>
+      <p>{{link.target.name}}</p>
+      <i class="material-icons" *ngIf="!link.target.targets">keyboard_arrow_right</i>
+    </span>
+    <xm-link-list-tree-section [links]="filterByLinkType(link.target.targets)" [linkSpec]="linkSpec"
+                                *ngIf="filterByLinkType(link.target.targets).length > 0">
+    </xm-link-list-tree-section>
+  </li>
+</ul>

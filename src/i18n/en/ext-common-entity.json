@@ -1,0 +1,13 @@
+{
+    "ext-common-entity": {
+        "available-offerings-widget": {
+            "action-dialog": {
+                "question": "Are you sure you want to <b>{{action}}</b> to the <b>{{name}}</b>?"
+            }
+        },
+        "entity-fab-actions": {
+            "operation-success": "Operation successful!",
+            "operation-error": "Operation fail!"
+        }
+    }
+}

@@ -1,0 +1,28 @@
+<div class="card card-product">
+  <div class="card-header card-header-image attachment-card-image d-flex align-items-center">
+    <img class="img"
+         [src]="imageSrc"
+         *ngIf="isImage() && imageSrc"/>
+    <img class="img"
+         [src]="getFileTypeImage()"
+         *ngIf="!isImage() && getFileTypeImage()"/>
+    <img class="img"
+         [src]="'./assets/img/filetypes/filetype-noimg.png'"
+         *ngIf="!(isImage() && imageSrc) && !(!isImage() && getFileTypeImage())">
+  </div>
+  <div class="card-body text-center">
+    <p class="category"><em>{{(attachmentSpec.name | i18nName : principal).toUpperCase()}}</em></p>
+    <h5 class="card-title attachment-card-title xm-word-wrap">{{attachment.name}}</h5>
+  </div>
+  <div class="card-footer">
+    <div class="stats">{{getFileSize(2)}}</div>
+    <div class="navbar-right">
+      <a href="javascript: void(0);" role="button" (click)="onDownload()">
+        <i class="material-icons">file_download</i>
+      </a>
+      <a href="javascript: void(0);" role="button" (click)="onRemove()">
+        <i class="material-icons">close</i>
+      </a>
+    </div>
+  </div>
+</div>

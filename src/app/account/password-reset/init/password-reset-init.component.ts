@@ -14,12 +14,10 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
     success: string;
 
     constructor(
-        private jhiLanguageService: JhiLanguageService,
         private passwordResetInit: PasswordResetInit,
         private elementRef: ElementRef,
         private renderer: Renderer
     ) {
-        this.jhiLanguageService.addLocation('reset');
     }
 
     ngOnInit() {

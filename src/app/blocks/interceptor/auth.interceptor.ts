@@ -1,27 +1,35 @@
-import { Observable } from 'rxjs/Observable';
-import { RequestOptionsArgs, Response } from '@angular/http';
-import { LocalStorageService, SessionStorageService } from 'ng2-webstorage';
-import { HttpInterceptor } from 'ng-jhipster';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+import { Observable } from 'rxjs';
 
-export class AuthInterceptor extends HttpInterceptor {
+import { CONFIG_SETTINGS_API, TOKEN_URL } from '../../shared';
+import { SERVER_API_URL } from '../../xm.constants';
 
-    constructor(
-        private localStorage: LocalStorageService,
-        private sessionStorage: SessionStorageService
-    ) {
-        super();
+export class AuthInterceptor implements HttpInterceptor {
+
+    constructor(private localStorage: LocalStorageService,
+                private sessionStorage: SessionStorageService) {
     }
 
-    requestIntercept(options?: RequestOptionsArgs): RequestOptionsArgs {
-        const token = this.localStorage.retrieve('authenticationToken') || this.sessionStorage.retrieve('authenticationToken');
-        if (!!token) {
-            options.headers.append('Authorization', 'Bearer ' + token);
+    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if (!request || !request.url || (/^http/.test(request.url) && !(SERVER_API_URL && request.url.startsWith(SERVER_API_URL)))) {
+            return next.handle(request);
         }
-        return options;
-    }
 
-    responseIntercept(observable: Observable<Response>): Observable<Response> {
-        return observable; // by pass
+        if ((TOKEN_URL === request.url) || (CONFIG_SETTINGS_API === request.url)) {
+            return next.handle(request);
+        }
+
+        const token = this.localStorage.retrieve('authenticationToken')
+            || this.sessionStorage.retrieve('authenticationToken');
+        if (!!token) {
+            request = request.clone({
+                setHeaders: {
+                    Authorization: 'Bearer ' + token
+                }
+            });
+        }
+        return next.handle(request);
     }
 
 }

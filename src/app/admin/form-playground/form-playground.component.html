@@ -1,97 +1,108 @@
 <div class="row">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header card-header-icon" data-background-color="primary">
-                <i class="material-icons">perm_data_setting</i>
-            </div>
-            <div class="card-content">
-                <!--Header-->
-                <h4 class="card-title" jhiTranslate="formPlayground.definition">Definition</h4>
-
-                <div class="form-group">
-                    <select class="form-control selectpicker" #file data-style="btn btn-primary btn-round"
-                            data-size="7" (change)="loadSelectedExample($event, file.value)">
-                        <option disabled><span jhiTranslate="formPlayground.selectSchema">SELECT SCHEMA</span></option>
-                        <option *ngFor="let schema of examples.schemas" value="{{schema.file}}" >{{schema.name}}</option>
-                    </select>
-                </div>
-
-                <div>
-                    <div *ngIf="visible.schema" [@expandSection]="true"
-                         ace-editor
-                         [text]="jsonFormSchema"
-                         [options]="aceEditorOptions"
-                         [readOnly]="false"
-                         [autoUpdateContent]="true"
-                         (textChanged)="generateForm($event)"
-                         [style.min-height]="aceHeight + 'px'"
-                         style="width:100%; overflow: auto; border: 1px solid lightgray;">
-                            <span jhiTranslate="formPlayground.loading">(loading form specification...)</span>
-                    </div>
-                </div>
-
-            </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header card-header-icon card-header-primary">
+        <div class="card-icon">
+          <i class="material-icons">perm_data_setting</i>
         </div>
+        <h4 class="card-title" jhiTranslate="formPlayground.definition">Definition</h4>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <mat-form-field>
+            <mat-select #file
+                        (selectionChange)="loadSelectedExample($event, file.value)"
+                        placeholder="{{'rolesManagement.permission.msName' | translate}}">
+              <mat-option disabled>
+                {{'formPlayground.selectSchema' | translate}}
+              </mat-option>
+              <mat-option *ngFor="let schema of examples.schemas" [value]="schema.file">
+                {{schema.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <div xmAceEditor
+               *ngIf="visible.schema"
+               [text]="jsonFormSchema"
+               [options]="aceEditorOptions"
+               [readOnly]="false"
+               [autoUpdateContent]="true"
+               (textChanged)="generateForm($event)"
+               [style.min-height]="aceHeight + 'px'"
+               style="width:100%; overflow: auto; border: 1px solid lightgray;">
+            <span jhiTranslate="formPlayground.loading">(loading form specification...)</span>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header card-header-icon" data-background-color="primary">
-                <i class="material-icons">content_paste</i>
-            </div>
-            <div class="card-content">
-                <!--Header-->
-                <h4 class="card-title" jhiTranslate="formPlayground.result">Result</h4>
-
-                <div *ngIf="!formActive">{{jsonFormStatusMessage}}</div>
-
-                <!-- This is the form! -->
-                <div class="image-container">
-                <json-schema-form
-                        *ngIf="formActive"
-                        [framework]="'bootstrap-3'"
-                        [schema]="jsonFormObject.schema"
-                        [layout]="jsonFormObject.layout"
-                        [data]="jsonFormObject.data"
-                        (onChanges)="onChanges($event)"
-                        (onSubmit)="onSubmit($event)"
-                        (isValid)="isValid($event)"
-                        (validationErrors)="validationErrors($event)">
-                </json-schema-form>
-                </div>
-            </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header card-header-icon card-header-primary">
+        <div class="card-icon">
+          <i class="material-icons">content_paste</i>
         </div>
-        <div class="card">
-            <div class="card-header card-header-icon" data-background-color="primary">
-                <i class="material-icons">report</i>
-            </div>
-            <div class="card-content">
-                <!--Header-->
-                <h4 class="card-title" jhiTranslate="formPlayground.output">Output</h4>
-
-                <div>
-                    <span jhiTranslate="formPlayground.valid">Valid?:</span>
-                    <strong *ngIf="formIsValid || prettyValidationErrors"
-                            [class.text-success]="formIsValid"
-                            [class.text-danger]="!formIsValid">
-                        {{formIsValid ? 'Yes' : 'No'}}
-                    </strong>
-                    <span *ngIf="!formIsValid && !prettyValidationErrors" jhiTranslate="formPlayground.na">n/a</span>
-                    <span *ngIf="prettyValidationErrors" jhiTranslate="formPlayground.errors">— errors from validationErrors():</span>
-                    <pre *ngIf="prettyValidationErrors" class="bg-danger">{{prettyValidationErrors}}</pre>
-                </div>
-                <div>
-                    <span jhiTranslate="formPlayground.liveData">Live data — from onChanges():</span>
-                    <pre
-                            [class.data-good]="!prettyValidationErrors && prettyLiveFormData !== '{}'"
-                            [class.data-bad]="prettyValidationErrors">{{prettyLiveFormData}}</pre>
-                </div>
-            </div>
+        <h4 class="card-title" jhiTranslate="formPlayground.result">Result</h4>
+      </div>
+      <div class="card-body">
+        <div *ngIf="!formActive">{{jsonFormStatusMessage}}</div>
+        <!-- This is the form! -->
+        <div class="image-container">
+          <json-schema-form
+            *ngIf="formActive"
+            [framework]="'material-design'"
+            [schema]="jsonFormObject.schema"
+            [layout]="jsonFormObject.layout | i18nJsf :principal"
+            [data]="jsonFormObject.data"
+            [options]="jsonFormObject.options | i18nJsf :principal"
+            [form]="jsonFormObject.form | i18nJsf :principal"
+            [widgets]="widgets"
+            (formLayout)="formLayout()"
+            (onChanges)="onChanges($event)"
+            (onSubmit)="onSubmit($event)"
+            (isValid)="isValid($event)"
+            (validationErrors)="validationErrors($event)">
+          </json-schema-form>
         </div>
+      </div>
     </div>
+    <div class="card">
+      <div class="card-header card-header-icon card-header-primary">
+        <div class="card-icon">
+          <i class="material-icons">report</i>
+        </div>
+        <h4 class="card-title" jhiTranslate="formPlayground.output">Output</h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <span jhiTranslate="formPlayground.valid">Valid?:</span>
+          <strong *ngIf="formIsValid || prettyValidationErrors"
+                  [class.text-success]="formIsValid"
+                  [class.text-danger]="!formIsValid">
+            {{formIsValid ? 'Yes' : 'No'}}
+          </strong>
+          <span *ngIf="!formIsValid && !prettyValidationErrors" jhiTranslate="formPlayground.na">n/a</span>
+          <span *ngIf="prettyValidationErrors"
+                jhiTranslate="formPlayground.errors">— errors from validationErrors():</span>
+          <pre *ngIf="prettyValidationErrors" class="bg-danger">{{prettyValidationErrors}}</pre>
+        </div>
+        <div>
+          <span jhiTranslate="formPlayground.liveData">Live data — from onChanges():</span>
+          <pre
+            [class.data-good]="!prettyValidationErrors && prettyLiveFormData !== '{}'"
+            [class.data-bad]="prettyValidationErrors">{{prettyLiveFormData}}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="row">
-    <div class="col-md-12">
+  <div class="col-md-12">
 
-    </div>
+  </div>
 </div>

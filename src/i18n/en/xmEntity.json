@@ -12,7 +12,7 @@
             "addPhoto": "Add Photo",
             "change": "Change",
             "edit": {
-                "title": "Edit a entity [<b>{{name}}</b>]"
+                "title": "Edit an entity [<b>{{name}}</b>]"
             },
             "add": {
                 "title": "Add a new entity",
@@ -29,24 +29,10 @@
             },
             "showMore": "Show more",
             "locations": "Locations",
-            "timeline": "Timeline",
-            "timelines": {
-                "by": "by",
-                "success": "SUCCESS",
-                "error": "ERROR",
-                "more": "more timeline events...",
-                "timeAgo": {
-                    "seconds": "a few seconds ago",
-                    "minute": "a minute ago",
-                    "minutes": " minutes ago",
-                    "hour": "an hour ago",
-                    "hours": " hours ago",
-                    "day": "a day ago",
-                    "days": " days ago",
-                    "month": "a month ago",
-                    "months": " months ago",
-                    "year": "a year ago",
-                    "years": " years ago"
+            "tenant": {
+                "error": {
+                    "alreadyUsed": "Tenant name already used",
+                    "tenantKeyFormat": "Tenant name should be alpha-numeric string with underscores. First alpha character. Not start with 'pg_'. Max length is 48 symbols"
                 }
             },
             "search": "Search result for "

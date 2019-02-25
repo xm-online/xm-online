@@ -1,0 +1,113 @@
+<form class="m-0" name="editForm" role="form" novalidate action="" #editForm="ngForm">
+  <div class="modal-header">
+    <a href="javascript: void(0);" class="modal-close material-icons" (click)="clear()">close</a>
+    <h4 class="modal-title text-left" id="myUserLabel" jhiTranslate="clientManagement.home.createOrEditLabel">
+      Create or edit a Client</h4>
+  </div>
+  <div class="modal-body">
+    <xm-loader [showLoader]="showLoader"></xm-loader>
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput
+               id="clientId"
+               type="text"
+               name="clientId"
+               [(ngModel)]="client.clientId"
+               #clientClientId="ngModel"
+               placeholder="{{'clientManagement.clientId' | translate}}"
+               pattern="^\s*[\w|\d\-]+\s*$"
+               [disabled]="client.id"
+               required>
+        <mat-error *ngIf="clientClientId.hasError('required')">
+          <span jhiTranslate="xm-entity.common.validation.required">This field is required.</span>
+        </mat-error>
+        <mat-error *ngIf="clientClientId.hasError('pattern')">
+          <span jhiTranslate="xm-entity.common.validation.pattern">This field does not match the rules</span>:&nbsp;&nbsp;<span
+          [innerHtml]="'^\s*[\w|\d]+\s*$'"></span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput
+               id="clientSecret"
+               type="password"
+               name="clientSecret"
+               [(ngModel)]="client.clientSecret"
+               #clientClientSecret="ngModel"
+               placeholder="{{'clientManagement.clientSecret' | translate}}">
+
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-select [(ngModel)]="client.roleKey"
+                    #clientAuthority="ngModel"
+                    name="authority"
+                    placeholder="{{'clientManagement.role' | translate}}"
+                    required>
+          <mat-option *ngFor="let authority of authorities" [value]="authority">
+            {{authority}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="clientAuthority.hasError('required')">
+          <span jhiTranslate="xm-entity.common.validation.required">This field is required.</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput
+               id="validityPeriod"
+               type="text"
+               name="validityPeriod"
+               [(ngModel)]="client.accessTokenValiditySeconds"
+               #clientValidityPeriod="ngModel"
+               pattern="^\d+$"
+               maxlength="9"
+               placeholder="{{'clientManagement.validityPeriod' | translate}}">
+        <mat-error *ngIf="clientValidityPeriod.hasError('pattern')">
+              <span jhiTranslate="xm-entity.common.validation.pattern">
+                This field does not match the rules
+              </span>:
+          &nbsp;&nbsp;
+          <span [innerHtml]="'^\d+$'"></span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput
+               id="description"
+               type="text"
+               name="description"
+               [(ngModel)]="client.description"
+               #clientDescription="ngModel"
+               placeholder="{{'clientManagement.description' | translate}}">
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <div class="sources-holder">
+        <tag-input class="xm-sources-tags"
+                   theme="filled-theme"
+                   secondaryPlaceholder="{{'clientManagement.scopes-add' | translate}}"
+                   placeholder="{{'clientManagement.scopes-add' | translate}}"
+                   [(ngModel)]='scopes'
+                   name="scopes">
+        </tag-input>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="clear()">
+      <span class="fa fa-ban"></span>&nbsp;<span
+      jhiTranslate="entity.action.cancel">Cancel</span>
+    </button>
+    <button mat-raised-button
+            type="submit"
+            (click)="save()"
+            [disabled]="editForm.form.invalid || showLoader" class="btn btn-primary">
+      <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+    </button>
+  </div>
+</form>

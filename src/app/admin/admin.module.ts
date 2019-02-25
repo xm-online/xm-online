@@ -1,55 +1,97 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import {
+    MaterialDesignFramework,
+    MaterialDesignFrameworkModule,
+    Framework,
+    FrameworkLibraryService,
+    JsonSchemaFormModule, JsonSchemaFormService,
+    WidgetLibraryService
+} from 'angular2-json-schema-form';
+
+import { JhiLanguageHelper } from '../shared';
+import { ModulesLanguageHelper } from '../shared/language/modules-language.helper';
+import { XmSharedModule } from '../shared/shared.module';
 
 import {
     AuditsComponent,
-    UserMgmtComponent,
-    UserDialogComponent,
+    AuditsService,
+    BaseAdminListComponent,
+    ClientMgmtComponent,
+    ClientMgmtDeleteDialogComponent,
+    ClientMgmtDialogComponent,
+    ClientResolvePagingParams,
+    GatewayRoutesService,
+    JhiDocsComponent,
+    JhiGatewayComponent,
+    JhiHealthCheckComponent,
+    JhiHealthModalComponent,
+    JhiHealthService,
+    JhiMetricsMonitoringComponent,
+    JhiMetricsMonitoringModalComponent,
+    JhiMetricsService,
+    LogsComponent,
+    LogsService,
+    RoleConditionDialogComponent,
+    RoleMgmtDeleteDialogComponent,
+    RoleMgmtDetailComponent,
+    RoleMgmtDialogComponent,
+    RolesMatrixComponent,
+    RolesMgmtComponent,
+    RolesResolve,
     UserDeleteDialogComponent,
+    UserDialogComponent,
     UserLoginDialogComponent,
     UserLoginMgmtDialogComponent,
+    UserMgmtComponent,
+    UserMgmtDeleteDialogComponent,
     UserMgmtDetailComponent,
     UserMgmtDialogComponent,
-    UserMgmtDeleteDialogComponent,
-    LogsComponent,
-    JhiMetricsMonitoringModalComponent,
-    JhiMetricsMonitoringComponent,
-    JhiHealthModalComponent,
-    JhiHealthCheckComponent,
-    JhiDocsComponent,
-    AuditsService,
-    JhiHealthService,
-    JhiMetricsService,
-    GatewayRoutesService,
-    JhiGatewayComponent,
-    LogsService,
-    UserResolvePagingParams,
+    UserModalService,
     UserResolve,
-    UserModalService
+    UserResolvePagingParams
 } from './';
-import {adminState} from "./admin.route";
-import {FormPlaygroundComponent} from './form-playground/form-playground.component';
-import {AceEditorDirective} from './form-playground/ace-editor.directive';
-import {FormsModule} from '@angular/forms';
-import {BrowserModule} from '@angular/platform-browser';
-import {HttpModule} from '@angular/http';
-import {JsonSchemaFormModule} from 'angular2-json-schema-form';
-import {ConfigurationComponent} from './configuration/configuration.component';
-import {XmConfigService} from './configuration/config.service';
-import {TranslationComponent} from './translations/translation.component';
-import {TranslationService} from './translations/translation.service';
-import {GateSharedModule} from "../shared/shared.module";
+import { adminState } from './admin.route';
+import { MaintenanceComponent } from './maintenance/maintenance.component';
+import { FormPlaygroundComponent } from './form-playground/form-playground.component';
+import { TranslationComponent } from './translations/translation.component';
+import { TranslationService } from './translations/translation.service';
+import { XmConfigService } from './../shared/spec/config.service';
+import { TagInputModule } from 'ngx-chips';
 
 @NgModule({
     imports: [
-        GateSharedModule, JsonSchemaFormModule,
-        BrowserModule,
-        FormsModule, HttpModule,
-        RouterModule.forRoot(adminState, { useHash: true })
+        CommonModule,
+        TagInputModule,
+        XmSharedModule,
+        MaterialDesignFrameworkModule,
+        {
+            ngModule: JsonSchemaFormModule,
+            providers: [
+                JsonSchemaFormService,
+                FrameworkLibraryService,
+                WidgetLibraryService,
+                {provide: Framework, useClass: MaterialDesignFramework, multi: true}
+            ]
+        },
+        FormsModule,
+        RouterModule.forChild(adminState)
     ],
     declarations: [
-        AceEditorDirective,
         AuditsComponent,
+
+        RolesMgmtComponent,
+        RoleMgmtDetailComponent,
+        RoleMgmtDialogComponent,
+        RoleMgmtDeleteDialogComponent,
+        RoleConditionDialogComponent,
+        RolesMatrixComponent,
+
+        ClientMgmtComponent,
+        ClientMgmtDialogComponent,
+        ClientMgmtDeleteDialogComponent,
         UserMgmtComponent,
         UserDialogComponent,
         UserDeleteDialogComponent,
@@ -58,36 +100,49 @@ import {GateSharedModule} from "../shared/shared.module";
         UserMgmtDetailComponent,
         UserMgmtDialogComponent,
         UserMgmtDeleteDialogComponent,
+
         LogsComponent,
         JhiHealthCheckComponent,
         JhiHealthModalComponent,
         FormPlaygroundComponent,
-        ConfigurationComponent,
+        MaintenanceComponent,
         TranslationComponent,
         JhiDocsComponent,
         JhiGatewayComponent,
         JhiMetricsMonitoringComponent,
-        JhiMetricsMonitoringModalComponent
+        JhiMetricsMonitoringModalComponent,
     ],
     entryComponents: [
+        RoleMgmtDialogComponent,
+        RoleMgmtDeleteDialogComponent,
+        RoleConditionDialogComponent,
         UserLoginMgmtDialogComponent,
         UserMgmtDialogComponent,
         UserMgmtDeleteDialogComponent,
+        ClientMgmtDialogComponent,
+        ClientMgmtDeleteDialogComponent,
         JhiHealthModalComponent,
-        JhiMetricsMonitoringModalComponent,
+        JhiMetricsMonitoringModalComponent
     ],
     providers: [
+        BaseAdminListComponent,
         AuditsService,
         JhiHealthService,
         JhiMetricsService,
         GatewayRoutesService,
         LogsService,
+        RolesResolve,
         UserResolvePagingParams,
         UserResolve,
         UserModalService,
+        ClientResolvePagingParams,
         XmConfigService,
-        TranslationService,
+        TranslationService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class GateAdminModule {}
+export class XmAdminModule {
+    constructor(private modulesLangHelper: ModulesLanguageHelper, private languageHelper: JhiLanguageHelper) {
+        this.languageHelper.language.subscribe((languageKey: string) => {this.modulesLangHelper.correctLang(languageKey)});
+    }
+}

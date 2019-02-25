@@ -1,44 +1,75 @@
-<div *ngIf="user">
-    <h2>
-        <span jhiTranslate="userManagement.detail.title">User</span> [<b>{{user.userKey}}</b>]
-    </h2>
-    <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="userManagement.logins">Logins</span></dt>
-        <dd>
-            <div *ngFor="let login of user.logins">
-                <span>{{getLogin(login)}}</span>
-            </div>
-            <span class="badge badge-danger" *ngIf="!user.activated"
-                  jhiTranslate="userManagement.deactivated">Deactivated</span>
+<xm-loader [showLoader]="showLoader"></xm-loader>
+
+<div class="row" *ngIf="user">
+  <div class="col-md-5 col-xm-12">
+    <div class="card">
+      <div class="card-header card-header-icon card-header-primary">
+        <div class="card-icon">
+          <i class="material-icons">info_outline</i>
+        </div>
+        <h4 class="card-title" jhiTranslate="xm-entity.entity-data-card.title">Data</h4>
+      </div>
+      <div class="card-body">
+        <div class="form-horizontal">
+          <label class="control-label">ID: </label>
+          <p class="form-control-static">{{user.id}}</p>
+          <label class="control-label">UserKey:</label>
+          <p class="form-control-static">{{user.userKey}}</p>
+          <label class="control-label">Email:</label>
+          <p class="form-control-static">
+            {{userEmail}}
+          </p>
+          <label class="control-label">Status:</label>
+          <p class="form-control-static">
+                        <span class="badge badge-danger" *ngIf="!user.activated"
+                              jhiTranslate="userManagement.deactivated">Deactivated</span>
             <span class="badge badge-success" *ngIf="user.activated"
                   jhiTranslate="userManagement.activated">Activated</span>
-        </dd>
-        <dt><span jhiTranslate="userManagement.firstName">First Name</span></dt>
-        <dd>{{user.firstName}}</dd>
-        <dt><span jhiTranslate="userManagement.lastName">Last Name</span></dt>
-        <dd>{{user.lastName}}</dd>
-        <dt><span jhiTranslate="userManagement.langKey">Lang Key</span></dt>
-        <dd>{{user.langKey}}</dd>
-        <dt><span jhiTranslate="userManagement.createdBy">Created By</span></dt>
-        <dd>{{user.createdBy}}</dd>
-        <dt><span jhiTranslate="userManagement.createdDate">Created Date</span></dt>
-        <dd>{{user.createdDate | date:'dd/MM/yy HH:mm' }}</dd>
-        <dt><span jhiTranslate="userManagement.lastModifiedBy">Last Modified By</span></dt>
-        <dd>{{user.lastModifiedBy}}</dd>
-        <dt><span jhiTranslate="userManagement.lastModifiedDate">Last Modified Date</span></dt>
-        <dd>{{user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</dd>
-        <dt><span jhiTranslate="userManagement.profiles">Profiles</span></dt>
-        <dd>
-            <ul class="list-unstyled">
-                <li *ngFor="let authority of user.authorities">
-                    <span class="badge badge-info">{{authority}}</span>
-                </li>
-            </ul>
-        </dd>
-    </dl>
-    <button type="submit"
-            routerLink="/administration/user-management"
-            class="btn btn-info">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
-    </button>
+          </p>
+        </div>
+        <div class="text-left">
+          <button (click)="initPasswordReset()"
+                  routerLink="/administration/user-management"
+                  class="btn btn-info" [disabled]="pwdResetDisabled()">
+            <span>ResetPassword</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-7 col-xm-12">
+    <div class="card">
+      <div class="card-header card-header-icon card-header-primary">
+        <div class="card-icon">
+          <i class="material-icons">info_outline</i>
+        </div>
+        <h4 class="card-title" jhiTranslate="xm-entity.entity-data-card.title">Data</h4>
+      </div>
+      <div class="card-body">
+        <div class="form-horizontal">
+          <label class="control-label">First Name: </label>
+          <p class="form-control-static">{{user.firstName}}</p>
+          <label class="control-label">Last Name:</label>
+          <p class="form-control-static">{{user.lastName}}</p>
+          <label class="control-label">Created By:</label>
+          <p class="form-control-static">{{user.createdBy}} {{user.createdDate}}</p>
+          <label class="control-label">Modified By:</label>
+          <p class="form-control-static">{{user.lastModifiedBy}} {{user.lastModifiedDate}}</p>
+          <label class="form-control-label">Prefered Language:</label>
+          <p class="form-control-static">{{user.langKey}}</p>
+          <label class="control-label">Role:</label>
+          <p class="form-control-static">{{user.roleKey}}</p>
+        </div>
+        <div class="text-left">
+          <button type="submit"
+                  (click)="onBack()"
+                  class="btn btn-info">
+            <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<no-data [show]="!user"></no-data>

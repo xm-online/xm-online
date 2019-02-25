@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {UseGlobalTranslations} from "../../shared/language/use.global.location";
-import {JhiLanguageService} from "ng-jhipster";
 
 @Component({
     selector: 'xm-sign-up',
@@ -8,7 +6,6 @@ import {JhiLanguageService} from "ng-jhipster";
 })
 export class SignUpComponent {
 
-    constructor(private jhiLanguageService: JhiLanguageService) {
-        this.jhiLanguageService.addLocation('register');
+    constructor() {
     }
 }

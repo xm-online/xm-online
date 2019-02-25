@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>TSG</title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
+  <meta name="viewport" content="width=device-width"/>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/material-dashboard.css">
+  <link rel="stylesheet" href="/assets/css/material-dashboard.css">
+  <link rel="stylesheet" href="/assets/css/tenant/xm.css">
+  <link rel="stylesheet" href="/assets/css/tenant/tsg.css">
+
+  <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script>
+
+  <style>
+    .lang-mask {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+    }
+
+    .preload {
+      display: none;
+    }
+
+    .preload.load {
+      display: block;
+    }
+  </style>
+</head>
+
+<body class="xm-body xm-public-screen xm-login-app">
+  <div class="wrapper" id="app">
+    <div class="lang-mask"  v-if="showLangOptions" @click.prevent="showLangOptions = !showLangOptions"></div>
+
+    <div class="sidebar preload" :class="{load: loaded}">
+      <div class="logo">
+          <div class="logo-normal">
+            <a class="simple-text" style="text-transform: none; padding-left: 75px; text-align: left;" href="/login/" v-if="tenantName">
+              {{tenantName}}
+            </a>
+          </div>
+          
+          <div class="logo-img" v-if="tenantLogo">
+            <img :src="tenantLogo">
+          </div>
+        </div>
+      </div>
+
+
+    <div class="main-panel preload" :class="{load: loaded}">
+        <nav class="navbar navbar-transparent navbar-absolute" @click.prevent.stop="showLangOptions=false">
+            <div class="container-fluid">
+              <div class="collapse navbar-collapse">
+                <div>
+                  <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs" style="position: relative; z-index: 101;">
+                    <li class="dropdown open">
+                      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarLanguageMenuLink" aria-expanded="true" @click.prevent.stop="showLangOptions = !showLangOptions">
+                        <i class="material-icons">language</i>
+                      <div class="ripple-container"></div></a>
+                      <ul class="dropdown-menu" v-if="showLangOptions">
+                        <li>
+                          <a href="javascript:void(0)" @click.prevent="$i18n.locale = 'en'">{{$t('langEN')}}</a>
+                        </li>
+                        <li>
+                          <a href="javascript:void(0)" @click.prevent="$i18n.locale = 'ru'">{{$t('langRU')}}</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="separator hidden-lg hidden-md"></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </nav>
+
+
+          <div class="main-content">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 flex-container">
+                  <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="primary" v-if="isOptForm || isLoginForm && !isForgotForm">
+                      <i class="material-icons">person</i>
+                    </div>
+                    <div class="card-header card-header-icon" data-background-color="primary" v-if="!isLoginForm && !isForgotForm && !isOptForm">
+                      <i class="material-icons">person_add</i>
+                    </div>
+                    <div class="card-header card-header-icon" data-background-color="primary" v-if="isForgotForm">
+                      <i class="material-icons">security</i>
+                    </div>
+                    
+                    <div class="card-content">
+                      <h4 class="card-title" v-if="isOptForm || isLoginForm && !isForgotForm">
+                        <span>{{$t('loginTitle')}}</span>
+                      </h4>
+
+                      <h4 class="card-title" v-if="!isLoginForm && !isForgotForm && !isOptForm">
+                        <span>{{$t('registerTitle')}}</span>
+                      </h4>
+
+                      <h4 class="card-title" v-if="isForgotForm">
+                        <a href="/login/">{{$t('forgotTitle')}}</a>
+                      </h4>
+
+                      <div class="text-center">
+                        <div class="btn-group" v-if="!isForgotForm">
+                          <button class="btn btn-primary btn-sm btn-round" type="button" :disabled="isLoginForm" @click.prevent="toogleForm()">
+                            <span>{{$t('signIn')}}</span>
+                          </button>
+
+                          <button class="btn btn-primary btn-sm btn-round" type="button" :disabled="!isLoginForm" @click.prevent="toogleForm()">
+                            <span>{{$t('signUp')}}</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="alert alert-danger" v-if="errorLogin">
+                        <span>
+                          <strong>{{$t('errorFailOperation')}}</strong> {{$t('errorFailOperationMessage')}}</span>
+                      </div>
+
+                      <div class="alert alert-success" v-if="successRegister">
+                        <span>
+                          <strong>{{$t('successReg')}}</strong> {{$t('successRegMessage')}}</span>
+                      </div>
+
+                      <div class="alert alert-success" v-if="successForgot">
+                        <span>{{$t('successForgotMessage')}}</span>
+                      </div>
+
+                      <div class="alert alert-info" v-if="infoOpt">
+                        <span>{{$t('noticeOpt')}}</span>
+                      </div>
+
+                      <form autocomplete="off" class="form" novalidate="" role="form" v-if="isLoginForm && !isForgotForm">
+                        <div class="form-group label-floating">
+                          <label class="control-label" for="username">
+                            <span>{{$t('fieldLogin')}}</span>
+                          </label>
+                          <input autocomplete="off" class="form-control" id="username" name="username" v-model="name" type="text">
+                        </div>
+                        <div class="form-group label-floating">
+                          <label class="control-label" for="password">
+                            <span>{{$t('fieldPassword')}}</span>
+                          </label>
+                          <input autocomplete="off" class="form-control" id="password" name="password" v-model="password" type="password">
+                        </div>
+
+
+                        <div class="row">
+                          <div class="col-xs-6 col-md-6">
+                            <div class="form-group checkbox">
+                              <label>
+                                <input id="rememberMe" name="rememberMe" type="checkbox" v-model="rememberMe">
+                                <span class="checkbox-material">
+                                  <span class="check"></span>
+                                </span>
+                              </label>
+                              <label for="rememberMe">
+                                <span>{{$t('fieldRememberMe')}}</span>
+                              </label>
+                            </div>
+                          </div>
+
+                          <div class="col-xs-6 col-md-6 ">
+                            <div class="form-group text-right">
+                              <a href="javascript:void(0);" class="forgot-link" @click.prevent="isForgotForm = true; successRegister = false; successForgot = false; errorLogin = false;">
+                                <span>{{$t('fieldForgotPass')}}</span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="text-right">
+                          <button class="btn btn-primary display-block" type="submit" :disabled="validLoginForm" @click.prevent="sendData()">
+                            <span>{{$t('fieldSendLogin')}}</span>
+                          </button>
+                        </div>
+                      </form>
+
+                      <form class="form" novalidate="" role="form" v-if="isOptForm && !isLoginForm && !isForgotForm">
+                        <div class="form-group label-floating">
+                          <label class="control-label" for="username"><span>{{$t('fieldOpt')}}</span></label>
+                          <input class="form-control" id="otp" name="otp" v-model="opt" type="text">
+                        </div>
+
+                        <div class="text-right">
+                          <button class="btn btn-primary" type="button" @click.prevent="cancelOpt()"><span>{{$t('fieldCancel')}}</span></button>
+                          <button class="btn btn-primary" type="submit" @click.prevent="sendOpt()" :disabled="opt === ''"><span>{{$t('fieldSendOpt')}}</span></button>
+                        </div>
+                      </form>
+
+
+                      <form name="form" novalidate="" role="form" v-if="!isLoginForm && !isForgotForm && !isOptForm">
+                        <div class="form-group label-floating">
+                          <label class="control-label" for="email">
+                            <span>Email</span>
+                          </label>
+                          <input class="form-control" id="email" maxlength="100" minlength="5" name="email" required="" v-model="regEmail" type="email">
+                        </div>
+                        <div class="form-group label-floating">
+                          <label class="control-label" for="firstName">
+                            <span>{{$t('fieldName')}}</span>
+                          </label>
+                          <input class="form-control" id="firstName" maxlength="50" minlength="1" name="firstName" v-model="firstName" required="">
+                        </div>
+                        <div class="form-group label-floating">
+                          <label class="control-label" for="lastName">
+                            <span>{{$t('fieldLastname')}}</span>
+                          </label>
+                          <input class="form-control" id="lastName" maxlength="50" minlength="1" name="lastName" v-model="lastName" required="">
+                        </div>
+                        <div class="form-group label-floating">
+                          <label class="control-label" for="password">
+                            <span>{{$t('fieldNewPassword')}}</span>
+                          </label>
+                          <input class="form-control" id="password" maxlength="50" minlength="4" name="password" v-model="regPassword" required="" type="password">
+
+                          <div v-if="shortPass">
+                            <small class="form-text text-danger">
+                              <span>{{$t('errorShortPass')}}</span>
+                            </small>
+                          </div>
+                        </div>
+                        <div class="form-group label-floating">
+                          <label class="control-label" for="confirmPassword">
+                            <span>{{$t('fieldNewPasswordConfirm')}}</span>
+                          </label>
+                          <input class="form-control" id="confirmPassword" maxlength="50" minlength="4" name="confirmPassword" required="" v-model="regPasswordRepeat" type="password">
+                        </div>
+
+                        <div class="form-group label-floating captcha-holder" v-if="isCaptchaNeeded">
+                          <vue-recaptcha :size="100 + '%'" :sitekey="publicSiteKey" @verify="onVerify"></vue-recaptcha>
+                        </div>
+
+                        <div class="text-right">
+                          <button class="btn btn-primary" jhitranslate="register.form.button" :disabled="validRegForm" type="submit" @click.prevent="sendReg()">
+                            <span>{{$t('fieldSendRegister')}}</span>
+                          </button>
+                        </div>
+                      </form>
+
+                      <form name="form" novalidate="" role="form" v-if="isForgotForm && !successForgot">
+                          <div class="form-group label-floating">
+                              <label class="control-label" for="email"><span>Email</span></label>
+                              <input class="form-control" id="email" maxlength="100" minlength="5" name="email" required="" type="email" v-model="restorEmail">
+                          </div>
+
+                          <button class="btn btn-primary" type="submit" :disabled="restorEmail == ''" @click.prevent="sendForgot()"><span>{{$t('fieldSendForgot')}}</span></button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+  <script src="https://unpkg.com/vue-i18n/dist/vue-i18n.js"></script>
+  <script src="https://unpkg.com/vue-recaptcha@latest/dist/vue-recaptcha.min.js"></script>
+  
+  <script>
+    const i18n = new VueI18n({
+        locale: 'en',
+        messages: {
+          en: {
+            langEN: "English",
+            langRU: "Русский",
+            loginTitle: "Sign in",
+            registerTitle: "Registration",
+            forgotTitle: "Reset your password",
+            signIn: "Sign-in",
+            signUp: "Sign-up",
+            fieldOpt: "One Time Password",
+            fieldLogin: "Login",
+            fieldPassword: "Password",
+            fieldRememberMe: "Remember me",
+            fieldForgotPass: "Did you forget your password?",
+            fieldSendLogin: "Sign in",
+            fieldSendOpt: "Send OTP",
+            fieldCancel: "Cancel",
+            fieldSendRegister: "Register",
+            fieldSendForgot: "Reset password",
+            fieldName: "First name",
+            fieldLastname: "Last name",
+            fieldNewPassword: "New password",
+            fieldNewPasswordConfirm: "New password confirmation",
+            errorFailOperation: "Operation failed!",
+            errorFailOperationMessage: "Please check your credentials and try again.",
+            noticeOpt: "Please enter one time password from email",
+            successReg: "Registration is successful!",
+            successRegMessage: "Please check your email for confirmation.",
+            successForgotMessage: "Check your emails for details on how to reset your password.",
+            errorShortPass: "Your password is required to be at least 4 characters.",
+          },
+          ru: {
+            langEN: "English",
+            langRU: "Русский",
+            loginTitle: "Авторизация",
+            registerTitle: "Регистрация",
+            forgotTitle: "Сброс пароля",
+            signIn: "Войти в систему",
+            signUp: "Зарегистрироваться",
+            fieldOpt: "Одноразовый пароль",
+            fieldLogin: "Логин",
+            fieldPassword: "Пароль",
+            fieldRememberMe: "Запомни меня",
+            fieldForgotPass: "Вы забыли ваш пароль?",
+            fieldSendLogin: "Войти",
+            fieldSendOpt: "Отправить ОП",
+            fieldCancel: "Отменить",
+            fieldSendRegister: "Зарегистрироваться",
+            fieldSendForgot: "Сбросить пароль",
+            fieldName: "Имя",
+            fieldLastname: "Фамилия",
+            fieldNewPassword: "Новый пароль",
+            fieldNewPasswordConfirm: "Подтверждение нового пароля",
+            errorFailOperation: "Не удалось выполнить операцию!",
+            errorFailOperationMessage: "Пожалуйста, проверьте ваши учетные данные и попробуйте еще раз.",
+            noticeOpt: "Пожалуйста, введите единоразовый пароль, отправленный на Ваш электронный ящик",
+            successReg: "Регистрация успешна!",
+            successRegMessage: "Пожалуйста, проверьте ваш email для подтверждения.",
+            successForgotMessage: "Проверьте ваш email для подробной информации о том, как сбросить пароль.",
+            errorShortPass: "Длина пароля должна быть хотя-бы 4 символов",
+          }
+        }
+      });
+
+    const API_HEADER = { 'Authorization': 'Basic d2ViYXBwOndlYmFwcA==' };
+
+
+
+    const app = new Vue({
+      i18n: i18n,
+      data() {
+        return {
+          loaded: false,
+          localeCurrent: 'ru',
+
+          tenantLogo: false,
+          tenantName: false,
+          tenantTheme: false,
+
+          showLangOptions: false,
+
+
+          opt: '',
+          name: '',
+          password: '',
+          rememberMe: false,
+          token: '',
+          publicToken: '',
+          publicOptToken: '',
+          publicOptTokenType: '',
+          publicSiteKey: '',
+          validCaptcha: false,
+          refreshToken: '',
+          errorLogin: false,
+          isForgotForm: false,
+          isLoginForm: true,
+          isOptForm: false,
+          restorEmail: '',
+
+          regEmail: '',
+          regPassword: '',
+          regPasswordRepeat: '',
+          firstName: '',
+          lastName: '',
+          successRegister: false,
+          successForgot: false,
+          infoOpt: false,
+
+          isCaptchaNeeded: false,
+          toShortPass: false,
+        }
+      },
+
+      components: { VueRecaptcha },
+      
+      computed: {
+        validLoginForm() {
+          if (this.name === '' || this.password === '') {
+            return true
+          } else {
+            return false
+          }
+        },
+        validRegForm() {
+          if (this.firstName === '' || this.lastName === '' || this.regEmail === '' || this.regPassword === '' || this.regPassword.length < 4 || this.regPasswordRepeat === '' || (this.regPassword != this.regPasswordRepeat) || (!this.validCaptcha && this.isCaptchaNeeded)) {
+            return true
+          } else {
+            return false
+          }
+        },
+        shortPass() {
+          if(this.regPassword.length<4 && this.regPassword.length != 0){
+              return true;
+            } else {
+              return false;
+            }
+        },
+      },
+      mounted () {
+        this.handleTheme();
+        this.getPublickToken();
+      },
+      methods: {
+        handleTheme() {
+          var _self = this;
+
+          let client = axios.create();
+
+          client.get('/config/api/profile/webapp/settings-public.yml?toJson').then(function (response) {
+            var res = response.data;
+
+            _self.tenantLogo = res.logoUrl;
+            _self.tenantName = res.name;
+            _self.loginRoute = res.defaultLoginRoute;
+
+            if (res.defaultLang) {
+              i18n.locale = res.defaultLang;
+            }
+
+            if(res.theme){
+              _self.tenantTheme = res.theme;
+              _self.injectThemeStyles(_self.tenantTheme);
+            }
+           
+            setTimeout(function(){
+              _self.loaded = true;
+            }, 200);
+          }).catch(function (e) {
+            console.log(e);
+
+            setTimeout(function(){
+              _self.loaded = true;
+            }, 200);
+          });
+        },
+        injectThemeStyles(theme) {
+          var themePass = `/assets/css/tenant/${theme}.css`;
+          const head = document.head || document.getElementsByTagName('head') [0];
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = themePass;
+          head.appendChild(link);
+        },
+
+
+        // get publick key
+        getPublickToken() {
+          _self = this;
+
+          _self.publicToken = '';
+
+          let client = axios.create({
+            headers: { 'Authorization': 'Basic d2ViYXBwOndlYmFwcA==' },
+            params: {
+              grant_type: 'client_credentials',
+            }
+          });
+
+          client.post('/uaa/oauth/token').then(function (response) {
+            // console.log(response);
+            _self.publicToken = response.data.access_token;
+            
+            // check if captcha needed
+            _self.getCaptca();
+         
+          }).catch(function (e) {
+            console.log(e);
+          });
+        },
+        // check if need captcha and get site key
+        getCaptca () {
+          _self = this;
+          
+          this.validCaptcha = false;
+
+          let client = axios.create({
+            headers: { 'Authorization': 'Bearer '+_self.publicToken },
+          });
+
+          client.get('/uaa/api/is-captcha-need').then(function (response) {
+            // console.log(response);
+            _self.isCaptchaNeeded = response.data.isCaptchaNeed;
+            _self.publicSiteKey = response.data.publicKey;
+         
+          }).catch(function (e) {
+            console.log(e);
+          });
+        },
+
+        // set valid captcha
+        onVerify: function (response) {
+          this.validCaptcha = response;
+        },
+
+       
+
+        // switching between forms
+        toogleForm() {
+          var _self = this;
+          _self.errorLogin = false;
+          _self.infoOpt = false;
+          
+          setTimeout(function(){_self.successRegister = false;}, 3000)
+
+          _self.name = '';
+          _self.password = '';
+
+          _self.firstName = '';
+          _self.lastName = '';
+          _self.regEmail = '';
+          _self.regPassword = '';
+          _self.regPasswordRepeat = '';
+          _self.isOptForm = false;
+
+          _self.isLoginForm = !_self.isLoginForm;
+        },
+
+        // sending login data
+        sendData() {
+          this.token = '';
+          this.refreshToken = '';
+          this.errorLogin = false;
+          this.successRegister = false;
+          _self = this;
+
+          const data = new FormData();
+
+          data.append('grant_type', 'password');
+          data.append('username', this.name);
+          data.append('password', this.password);
+
+          let client = axios.create();
+          
+          client.defaults.headers.common['Authorization'] = 'Basic d2ViYXBwOndlYmFwcA==';
+          client.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
+
+          client.post('/uaa/oauth/token', data).then(function (response) {
+            let resHeaders = response.headers;
+
+            if(resHeaders["icthh-xm-tfa-otp"] == 'required') {
+              _self.isLoginForm = false;
+              _self.isOptForm = true;
+              _self.infoOpt = true;
+
+              _self.publicOptToken = response.data.access_token;
+              _self.publicOptTokenType = response.data.token_type;
+            } else {
+              _self.token = response.data.access_token;
+              _self.refreshToken = response.data.refresh_token;
+              _self.setSession();
+            }
+          }).catch(function (e) {
+            console.log(e);
+            window.sessionStorage.setItem('jhi-authenticationToken', "");
+            window.sessionStorage.setItem('jhi-refresh_token', "");
+            window.sessionStorage.setItem('jhi-authenticationtokenexpiresdate', "");
+
+            _self.errorLogin = true
+          });
+
+        },
+
+        // cancel opt actions
+        cancelOpt() {
+          this.opt = '';
+          this.name = '';
+          this.password = '';
+          this.infoOpt = false;
+          this.errorLogin = false;
+          this.isOptForm = false;
+          this.isLoginForm = true;
+        },
+        // proceed opt
+        sendOpt() {
+          this.infoOpt = false;
+
+          const dataOpt = new FormData();
+
+          dataOpt.append('grant_type', 'tfa_otp_token');
+          dataOpt.append('otp', this.opt);
+          dataOpt.append('tfa_access_token_type', this.publicOptTokenType);
+          dataOpt.append('tfa_access_token', this.publicOptToken);
+
+          let client = axios.create({
+            headers: { 'Authorization': 'Basic d2ViYXBwOndlYmFwcA==' },
+          });
+
+          client.post('/uaa/oauth/token', dataOpt).then(function (response) {
+             _self.token = response.data.access_token;
+             _self.refreshToken = response.data.refresh_token;
+             _self.setSession();
+
+          }).catch(function (e) {
+            console.log(e);
+           
+            window.sessionStorage.setItem('jhi-authenticationToken', "");
+            window.sessionStorage.setItem('jhi-refresh_token', "");
+            window.sessionStorage.setItem('jhi-authenticationtokenexpiresdate', "");
+
+            _self.errorLogin = true
+          });
+        },
+
+        // setting session
+        setSession() {
+         if(this.rememberMe) {
+            window.localStorage.setItem('jhi-authenticationtoken', '"' + this.token + '"');
+            window.localStorage.setItem('jhi-refresh_token', '"' + this.refreshToken + '"');
+          }
+
+          window.sessionStorage.setItem('jhi-authenticationtoken', '"' + this.token + '"');
+          window.sessionStorage.setItem('jhi-refresh_token', '"' + this.refreshToken + '"');
+
+          //@todo: set right date
+          window.sessionStorage.setItem('jhi-authenticationtokenexpiresdate', 1522279999999);
+
+          setTimeout(function () {
+            window.location = _self.loginRoute ? _self.loginRoute : '/dashboard/951';
+          }, 500);
+        },
+
+        // sending register data
+        sendReg() {
+          _self = this;
+
+          let data = {
+            captcha: _self.validCaptcha,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            password: this.regPassword,
+            langKey: i18n.locale,
+            logins: [{
+                login:_self.regEmail,
+                typeKey:"LOGIN.EMAIL"
+              }]
+          }
+
+          let client = axios.create({
+            headers: { 'Authorization': 'Bearer '+_self.publicToken },
+          });
+
+          client.post('/uaa/api/register', data).then(function (response) {
+            _self.successRegister = true;
+            _self.toogleForm();
+
+          }).catch(function (e) {
+            console.log(e);
+            _self.errorLogin = true
+          });
+        },
+        
+        //sending reset password data
+        sendForgot() {
+          _self = this;
+         
+          let client = axios.create({
+            headers: { 'Authorization': 'Bearer '+_self.publicToken },
+          });
+
+          client.defaults.headers.common['Authorization'] = 'Bearer '+_self.publicToken;
+          client.defaults.headers.post['Content-Type'] = 'text/plain';
+
+
+
+          client.post('/uaa/api/account/reset_password/init', this.restorEmail).then(function (response) {
+            console.log(response);
+
+            _self.successForgot = true;
+          }).catch(function (e) {
+            console.log(e);
+            _self.successForgot = false;
+          });
+          
+        }
+      }
+  }).$mount('#app')
+  </script>
+</body>
+
+</html>

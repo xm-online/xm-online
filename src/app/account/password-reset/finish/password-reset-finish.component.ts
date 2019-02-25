@@ -5,6 +5,14 @@ import { JhiLanguageService } from 'ng-jhipster';
 
 import { PasswordResetFinish } from './password-reset-finish.service';
 
+interface ResetPasswordFormConfig {
+    formTitle: string,
+    formMessageInfo: string,
+    formMessageError: string,
+    formMessageSuccess: string,
+    formButtonLabel: string,
+}
+
 @Component({
     selector: 'xm-password-reset-finish',
     templateUrl: './password-reset-finish.component.html'
@@ -14,10 +22,13 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     doNotMatch: string;
     error: string;
     keyMissing: boolean;
+    keyExpired: boolean;
+    keyUsed: boolean;
     resetAccount: any;
     success: string;
     modalRef: NgbModalRef;
     key: string;
+    config: ResetPasswordFormConfig;
 
     constructor(
         private jhiLanguageService: JhiLanguageService,
@@ -27,12 +38,37 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
         private renderer: Renderer,
         private router: Router
     ) {
-        this.jhiLanguageService.addLocation('reset');
+        this.config = {
+            formTitle: 'reset.finish.title',
+            formMessageInfo: 'reset.finish.messages.info',
+            formMessageError: 'reset.finish.messages.error',
+            formMessageSuccess: 'reset.finish.messages.success',
+            formButtonLabel: 'reset.finish.form.button',
+        }
     }
 
     ngOnInit() {
         this.route.queryParams.subscribe((params) => {
             this.key = params['key'];
+
+            this.passwordResetFinish.check(this.key).subscribe(
+                resp => {}, err => {
+                    if (err.error && err.error.error) {
+                        this.keyExpired = (err.error.error === 'error.reset.code.expired');
+                        this.keyUsed = (err.error.error === 'error.reset.code.used');
+                    }
+            });
+        });
+        this.route.data.subscribe(data => {
+            if (data && data.config) {
+                this.config = {
+                    formTitle: data.config.formTitle,
+                    formMessageInfo: data.config.formMessageInfo,
+                    formMessageError: data.config.formMessageError,
+                    formMessageSuccess: data.config.formMessageSuccess,
+                    formButtonLabel: data.config.formButtonLabel
+                };
+            }
         });
         this.resetAccount = {};
         this.keyMissing = !this.key;

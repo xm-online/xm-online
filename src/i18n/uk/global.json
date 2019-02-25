@@ -1,5 +1,22 @@
 {
     "global": {
+        "common" : {
+            "cancel": "Скасувати",
+            "accept": "Приняти",
+            "are-you-sure": "Ви впевнені?",
+            "yes-exit": "Так, вийти!"
+        },
+        "shared": {
+            "privacy-and-terms-dialog": {
+                "title": "Конфіденційність і Умови",
+                "i-agree": "Я згоден з Умовами Обслуговування і обробкою своєї інформації, як описано в Політиці Конфіденційності"
+            },
+            "ext-md-editor": {
+                "placeholder": "Натисніть кнопку редагувати щоб змінити опис в полі",
+                "placeholder-empty": "Поле пусте! Натисніть кнопку редагувати щоб додати опис в полі",
+                "save-button": "Зберегти зміни"
+            }
+        },
         "messages": {
             "validate": {
                 "newpassword": {
@@ -61,12 +78,14 @@
             "oldpassword": "Старий пароль",
             "firstname": "Ім'я",
             "lastname": "Прізвище",
-            "login": "Увійти"
+            "login": "Увійти",
+            "otp": "One Time Password"
         },
         "field": {
             "id": "Ідентифікатор"
         },
         "all": "Все",
+        "item-count": "Показано {{first}} - {{second}} із {{total}} елементів.",
         "menu": {
             "account": {
                 "mini": {
@@ -76,6 +95,7 @@
                 },
                 "settings": "Налаштування",
                 "password": "Пароль",
+                "passwordSetup": "Запрошення до системи",
                 "logout": "Вийти з аккаунта",
                 "profile": "Профіль"
             },
@@ -83,30 +103,38 @@
                 "main": "Інформаційні панелі"
             },
             "applications": {
-                "main": "Програми"
+                "main": "Програми",
+                "application": "Програма"
             },
             "admin": {
                 "main": "Адміністрування",
                 "mini": {
                     "gateway": "Ш",
+                    "rolesManagement": "Р",
+                    "rolesMatrix": "Р",
                     "userManagement": "К",
+                    "clientManagement": "К",
                     "metrics": "М",
                     "health": "С",
                     "audits": "А.",
                     "logs": "Л",
                     "formPlayground": "Г",
-                    "configuration": "К",
+                    "maintenance": "О",
                     "translation": "П",
                     "apidocs": "А."
                 },
                 "gateway": "Шлюз",
+                "dashboard": "Панель управління",
+                "rolesManagement": "Управління ролями",
+                "rolesMatrix": "Матриця ролей",
                 "userManagement": "Керування користувачами",
+                "clientManagement": "Керування клієнтами",
                 "metrics": "Показники",
                 "health": "Здоров'я",
                 "audits": "Аудит",
                 "logs": "Журнали",
                 "formPlayground": "Тестовый майданчик форми",
-                "configuration": "Конфігурація",
+                "maintenance": "Обслуговування",
                 "translation": "Переклади",
                 "apidocs": "API"
             },
@@ -127,7 +155,22 @@
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             }
         },
-        "new": "Новий"
+        "new": "Новий",
+        "perPage": "елементів на сторінці",
+        "noData": "Немає даних!",
+        "actionPerformed" : "Action performed",
+        "rest-select-placeholder-search": "Пошук",
+        "rest-select-placeholder-noresults": "Нічого не знайдено"
+    },
+    "mat": {
+        "paginator": {
+            "itemsPerPageLabel": "Показувати по:",
+            "firstPageLabel": "Перша сторінка",
+            "lastPageLabel": "Остання сторінка",
+            "nextPageLabel": "Наступна сторінка",
+            "previousPageLabel": "Попередня сторінка",
+            "of": "з"
+        }
     },
     "entity": {
         "delete": {
@@ -145,15 +188,23 @@
         },
         "detail": {
             "square": "Площа: {{квадратний}} м"
-        }
+        },
+        "search": "Пошук",
+        "add": "Додати"
     },
     "xm": {
         "xmEntity": {
             "listView": "Перелік списку",
             "treeView": "Вид дерева"
+        },
+        "delete": {
+            "question": "Ви впевнені, що хочете видалити [ <b>{{name}}</b> ]?"
         }
     },
     "error": {
+        "privilegeOperationWrong": "Operation not supported '{{ name }}'!",
+        "privilegeInsufficient": "Недостаточно привилегений '{{ name }}'!",
+        "accessDenied": "Доступ заборонено",
         "internalServerError": "Внутрішня помилка сервера",
         "server.not.reachable": "Сервер недоступний",
         "url.not.found": "Не знайдено",
@@ -173,6 +224,10 @@
         "redirect_uri_mismatch": "Переспрямовувати uri невідповідність",
         "unsupported_response_type": "Непідтримуваний тип відповіді",
         "access_denied": "Доступ заборонено",
-        "validation": "Помилка вхідних параметрів"
+        "validation": "Помилка вхідних параметрів",
+        "notfound": "Ресурс не знайдено",
+        "business": "Помилка переадресації",
+        "unauthorized": "Необхідна авторизація",
+        "session_expired": "Сесія закінчилася. Будь ласка, увійдіть"
     }
 }

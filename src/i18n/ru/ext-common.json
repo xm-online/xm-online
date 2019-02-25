@@ -1,0 +1,26 @@
+{
+    "ext-common": {
+        "clock-widget": {
+            "title": "Часы"
+        },
+        "exchange-widget": {
+            "title": "Калькулятор обмена",
+            "number-units": "Количество единиц",
+            "code": "Код",
+            "currency": "Валюта",
+            "course": "Официальный курс",
+            "from": "Из",
+            "select-from": "Выберите валюту из",
+            "select-to": "Выберите валюту в"
+        },
+        "sign-in-up-widget": {
+            "sign-in": "Войти в систему",
+            "sign-up": "Зарегистрироваться"
+        },
+        "weather-widget": {
+            "humidity": "Влажность",
+            "wind-speed": "Скорость ветра",
+            "ms": "м/с"
+        }
+    }
+}

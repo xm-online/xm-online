@@ -1,0 +1,81 @@
+<div class="card" *ngIf="currency?.rates">
+  <div class="card-header card-header-icon card-header-primary">
+    <div class="card-icon">
+      <i class="material-icons">euro_symbol</i>
+    </div>
+    <h4 class="card-title" jhiTranslate="ext-common.exchange-widget.title">Exchange calculator</h4>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-xs-8 col-sm-6">
+        <select class="selectpicker" data-style="btn btn-primary btn-round"
+                data-size="7" (change)="onChangeCurrency($event)">
+          <option [value]="item" [attr.selected]="item == currency.selected ? true : null"
+                  *ngFor="let item of currency.all">{{item}}</option>
+        </select>
+      </div>
+      <div class="wdt-exchange-units col-xs-4 col-sm-6">
+        <span class="wdt-exchange-value">1</span>
+        <span class="wdt-exchange-label" jhiTranslate="ext-common.exchange-widget.number-units">Number of
+          units</span>
+      </div>
+    </div>
+    <table class="table">
+      <thead class="text-gray">
+      <tr>
+        <th><span jhiTranslate="ext-common.exchange-widget.code">Code</span></th>
+        <th><span jhiTranslate="ext-common.exchange-widget.course">Official course</span></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let to of currency.available">
+        <td>{{to}}</td>
+        <td class="text-primary">{{getRate(null, to)}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <div>
+      <button class="btn btn-primary btn-round" (click)="isShowCalc = !isShowCalc;">
+        <i class="material-icons" *ngIf="!isShowCalc">arrow_drop_down</i>
+        <i class="material-icons" *ngIf="isShowCalc">arrow_drop_up</i>
+        <span jhiTranslate="ext-common.exchange-widget.title">Exchange calculator</span>
+      </button>
+    </div>
+    <form #calcForm="ngForm" class="xm-animate" [ngClass]="{show: isShowCalc}"
+          [style.display]="isShowCalc ? 'block' : 'none'">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <select class="selectpicker" name="from"
+                  title="{{'ext-common.exchange-widget.select-from' | translate}}"
+                  data-style="btn btn-primary btn-round" data-size="7"
+                  [(ngModel)]="calc.from"
+                  (ngModelChange)="onChangeCalc()">
+            <option [ngValue]="item" *ngFor="let item of currency.all">{{item}}</option>
+          </select>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group label-floating">
+            <label class="control-label" jhiTranslate="ext-common.exchange-widget.from">From</label>
+            <input type="number" class="form-control" name="fromValue" [(ngModel)]="calc.fromValue"
+                   (ngModelChange)="onChangeCalc()">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <select class="selectpicker" name="to" [(ngModel)]="calc.to"
+                  title="{{'ext-common.exchange-widget.select-from' | translate}}"
+                  (ngModelChange)="onChangeCalc()"
+                  data-style="btn btn-primary btn-round" data-size="7">
+            <option [ngValue]="item" *ngFor="let item of currency.all">{{item}}</option>
+          </select>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <input type="number" class="form-control" name="toValue" [ngModel]="calc.toValue" readonly>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

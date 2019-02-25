@@ -1,0 +1,86 @@
+<ng-container *ngIf="xmEntity$ | async as fetchedXmEntity; else loading ">
+  <ng-container
+    *ngIf="fetchedXmEntity; then cardsData; else noData"
+  ></ng-container>
+
+  <ng-template #cardsData>
+    <div *ngFor="let row of grid" [className]="row.class">
+      <div *ngFor="let item of row?.content" [className]="item.class">
+        <div [ngSwitch]="item.component">
+          <div *ngSwitchCase="'entity-card'">
+            <xm-entity-card
+              [xmEntity]="fetchedXmEntity"
+              [xmEntitySpec]="xmEntitySpec"
+            ></xm-entity-card>
+
+            <xm-balance-list-card
+              [xmEntityId]="fetchedXmEntity.id"
+              [typeKey]="xmEntity.typeKey"
+            ></xm-balance-list-card>
+          </div>
+          <div *ngSwitchCase="'entity-data-card'">
+            <xm-entity-data-card
+              [xmEntity]="fetchedXmEntity"
+              [xmEntitySpec]="xmEntitySpec"
+            ></xm-entity-data-card>
+          </div>
+          <div *ngSwitchCase="'attachment-list'">
+            <xm-attachment-list
+              [xmEntityId]="fetchedXmEntity.id"
+              [attachmentSpecs]="xmEntitySpec?.attachments"
+              *ngIf="xmEntitySpec?.attachments">
+            </xm-attachment-list>
+          </div>
+          <div *ngSwitchCase="'location-list-card'">
+            <xm-location-list-card
+              [xmEntityId]="fetchedXmEntity.id" [locationSpecs]="xmEntitySpec?.locations"
+              *ngIf="xmEntitySpec?.locations">
+            </xm-location-list-card>
+          </div>
+          <div *ngSwitchCase="'link-list'">
+            <xm-link-list
+              [xmEntityId]="fetchedXmEntity.id"
+              [linkSpecs]="xmEntitySpec?.links"
+              [backLinkSpecs]="backLinkSpecs"
+              *ngIf="xmEntitySpec?.links?.length > 0 || backLinkSpecs.length > 0">
+            </xm-link-list>
+          </div>
+          <div *ngSwitchCase="'comment-list'">
+            <xm-comment-list
+              [xmEntityId]="fetchedXmEntity.id"
+              [commentSpecs]="xmEntitySpec?.comments"
+              *ngIf="xmEntitySpec?.comments">
+            </xm-comment-list>
+          </div>
+          <div *ngSwitchCase="'calendar-card'">
+            <xm-calendar-card
+              [xmEntityId]="fetchedXmEntity.id"
+              [calendarSpecs]="xmEntitySpec?.calendars"
+              *ngIf="xmEntitySpec?.calendars">
+            </xm-calendar-card>
+          </div>
+          <div *ngSwitchCase="'timeline'">
+            <xm-timeline [xmEntityId]="fetchedXmEntity?.id"
+                         *xmPermitted="['TIMELINE.GET_LIST']">
+            </xm-timeline>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <xm-entity-detail-fab
+      *ngIf="spec && xmEntitySpec"
+      [xmEntity]="fetchedXmEntity"
+      [xmEntitySpec]="xmEntitySpec"
+      [spec]="spec"
+    ></xm-entity-detail-fab>
+  </ng-template>
+
+  <ng-template #noData>
+    <no-data [show]="true"></no-data>
+  </ng-template>
+</ng-container>
+
+<ng-template #loading>
+  <xm-loader></xm-loader>
+</ng-template>

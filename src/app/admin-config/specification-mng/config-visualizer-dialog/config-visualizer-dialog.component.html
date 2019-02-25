@@ -1,0 +1,50 @@
+<div id="canvasHolder"
+     class="modal-body frame-height"
+     (mousedown)="mouseDown($event)"
+     (mouseup)="mouseUp()"
+     (mousemove)="mouseMove($event)"
+     (wheel)="wheel($event)"
+     #canvasHolder>
+  <div class="actions text-right">
+    <button class="btn btn-just-icon btn-icon btn-link"
+            type="button"
+            (click)="magnifyViewport(2)"
+            mat-raised-button>
+      <i class="material-icons">zoom_in</i>
+    </button>
+    <button class="btn btn-just-icon btn-icon btn-link"
+            type="button"
+            (click)="resetViewport()"
+            mat-raised-button>
+      <i class="material-icons">center_focus_strong</i>
+    </button>
+    <button class="btn btn-just-icon btn-icon btn-link"
+            (click)="magnifyViewport(-2)"
+            type="button"
+            mat-raised-button>
+      <i class="material-icons">zoom_out</i>
+    </button>
+  </div>
+  <canvas id="canvas" #canvas></canvas>
+
+
+  <div class="custom-modal-footer">
+    <a href="javascript: void(0);"
+       class="btn btn-primary mr-1"
+       (click)="doDownloadPng('config-model')">
+      {{'admin-config.common.save' | translate}} PNG
+    </a>
+    <a href="javascript: void(0);"
+       class="btn btn-primary mr-1"
+       (click)="doDownloadSvg('config-model')"
+       #downloadLinkSvg>
+      {{'admin-config.common.save' | translate}} SVG
+    </a>
+    <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()">
+      <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
+    </button>
+
+    <a href="javascript: void(0);" class="hidden" #downloadLink></a>
+  </div>
+</div>
+

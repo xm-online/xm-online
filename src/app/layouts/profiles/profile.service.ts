@@ -1,6 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { ProfileInfo } from './profile-info.model';
 
@@ -9,18 +10,16 @@ export class ProfileService {
 
     private profileInfoUrl = 'api/profile-info';
 
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
     getProfileInfo(): Observable<ProfileInfo> {
-        return this.http.get(this.profileInfoUrl)
-            .map((res: Response) => {
-                const data = res.json();
+        return this.http.get<any>(this.profileInfoUrl).pipe(map((data) => {
                 const pi = new ProfileInfo();
                 pi.activeProfiles = data.activeProfiles;
                 pi.ribbonEnv = data.ribbonEnv;
                 pi.inProduction = data.activeProfiles.indexOf('prod') !== -1;
                 pi.swaggerEnabled = data.activeProfiles.indexOf('swagger') !== -1;
                 return pi;
-            });
+            }));
     }
 }

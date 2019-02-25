@@ -14,6 +14,7 @@
         "logins": "Logins",
         "deactivated": "Deactivated",
         "activated": "Activated",
+        "autoLogout": "Auto logout",
         "firstName": "First name",
         "lastName": "Last name",
         "langKey": "Language",
@@ -21,7 +22,13 @@
         "createdDate": "Created date",
         "lastModifiedBy": "Modified by",
         "lastModifiedDate": "Modified date",
-        "profiles": "Profiles",
-        "userKey": "User key"
+        "role": "Role",
+        "userKey": "User key",
+        "onlineUsers": "Online users: ",
+        "success": "Success",
+        "error": "Error",
+        "twoFAEnabled":"Two Factor authentication enabled",
+        "twoFADisabled":"Two Factor authentication disabled",
+        "search-by-login": "Search by login"
     }
 }

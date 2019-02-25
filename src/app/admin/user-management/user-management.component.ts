@@ -1,139 +1,175 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Response } from '@angular/http';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventManager, PaginationUtil, ParseLinks, AlertService, JhiLanguageService } from 'ng-jhipster';
+import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 
-import { ITEMS_PER_PAGE, Principal, User, UserService } from '../../shared';
-import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
-import {UserLogin} from "../../shared/user/login/user-login.model";
-import {UserLoginService} from "../../shared/user/login/user-login.service";
+import swal from 'sweetalert2';
+import { XM_EVENT_LIST } from '../../../app/xm.constants';
+import { Principal, RoleService, User, UserLogin, UserLoginService, UserService } from '../../shared';
+import { BaseAdminListComponent } from '../admin.service';
+
 
 @Component({
     selector: 'xm-user-mgmt',
     templateUrl: './user-management.component.html'
 })
-export class UserMgmtComponent implements OnInit, OnDestroy {
+export class UserMgmtComponent extends BaseAdminListComponent implements OnInit {
 
     currentAccount: any;
-    users: User[];
-    error: any;
-    success: any;
-    routeData: any;
-    links: any;
-    totalItems: any;
-    queryCount: any;
-    itemsPerPage: any;
-    page: any;
-    predicate: any;
-    previousPage: any;
-    reverse: any;
+    list: User[];
+    eventModify: string = XM_EVENT_LIST.XM_USER_LIST_MODIFICATION;
+    navigateUrl = 'administration/user-management';
+    basePredicate = 'id';
+    login: string;
+    authorities: any[];
+    currentSearch: string;
+    onlineUsers = 0;
 
-    constructor(
-        private jhiLanguageService: JhiLanguageService,
-        private userService: UserService,
-        private parseLinks: ParseLinks,
-        private alertService: AlertService,
-        private userLoginService: UserLoginService,
-        private principal: Principal,
-        private eventManager: EventManager,
-        private paginationUtil: PaginationUtil,
-        private paginationConfig: PaginationConfig,
-        private activatedRoute: ActivatedRoute,
-        private router: Router
-    ) {
-        this.itemsPerPage = ITEMS_PER_PAGE;
-        this.routeData = this.activatedRoute.data.subscribe((data) => {
-            this.page = data['pagingParams'].page;
-            this.previousPage = data['pagingParams'].page;
-            this.reverse = data['pagingParams'].ascending;
-            this.predicate = data['pagingParams'].predicate;
-        });
-        this.jhiLanguageService.setLocations(['user-management']);
+    constructor(protected activatedRoute: ActivatedRoute,
+                protected alertService: JhiAlertService,
+                protected eventManager: JhiEventManager,
+                protected parseLinks: JhiParseLinks,
+                protected router: Router,
+                private userLoginService: UserLoginService,
+                private userService: UserService,
+                private roleService: RoleService,
+                public principal: Principal) {
+        super(activatedRoute, alertService, eventManager, parseLinks, router);
+        this.currentSearch = activatedRoute.snapshot.params['search'] || '';
     }
 
     ngOnInit() {
         this.principal.identity().then((account) => {
+            this.registerChangeInList();
             this.currentAccount = account;
+            this.roleService.getRoles().subscribe(roles => this.authorities = roles.map(role => role.roleKey).sort());
+            this.userService.getOnlineUsers().subscribe(result => this.onlineUsers = result.body);
             this.loadAll();
-            this.registerChangeInUsers();
         });
     }
 
-    ngOnDestroy() {
-        this.routeData.unsubscribe();
+
+    private changeUserState(user) {
+        user.activated = !user.activated;
+        this.userService.update(user).subscribe(() => {
+            this.alertService.success('userManagement.success');
+        }, err => {
+            console.log(err);
+            this.alertService.error('userManagement.error');
+            user.activated = !user.activated
+        });
     }
 
-    registerChangeInUsers() {
-        this.eventManager.subscribe('userListModification', (response) => this.loadAll());
+    protected changeState(user) {
+        swal({
+            title: user.activated ? `Block user?` : `Unblock user?`,
+            showCancelButton: true,
+            buttonsStyling: false,
+            confirmButtonClass: 'btn mat-raised-button btn-primary',
+            cancelButtonClass: 'btn mat-raised-button',
+            confirmButtonText: 'Yes'
+        }).then((result) => result.value ?
+            this.changeUserState(user) :
+            console.log('Cancel'))
     }
 
-    setActive(user, isActivated) {
-        user.activated = isActivated;
+    getRegistrationEmail(user: User): string {
+        if (!user || !user.logins) {
+            return '';
+        }
 
-        this.userService.update(user).subscribe(
-            (response) => {
-                if (response.status === 200) {
-                    this.error = null;
-                    this.success = 'OK';
-                    this.loadAll();
-                } else {
-                    this.success = null;
-                    this.error = 'ERROR';
-                }
-            });
+        for (const entry of user.logins) {
+            if (entry.typeKey = 'LOGIN.EMAIL') {
+                return entry.login;
+            }
+        }
+
+        console.log('Key LOGIN.EMAIL not found %o', user.logins);
+        return '';
+    }
+
+    enable2FA(user: User) {
+        swal({
+            title: `Enable 2FA?`,
+            showCancelButton: true,
+            buttonsStyling: false,
+            confirmButtonClass: 'btn mat-raised-button btn-primary',
+            cancelButtonClass: 'btn mat-raised-button',
+            confirmButtonText: 'Yes, Enable'
+        }).then((result) => result.value ?
+            this.userService.enable2FA(user.userKey, this.getRegistrationEmail(user))
+                .subscribe(resp => {
+                        user.tfaEnabled = true;
+                        this.alertService.success('userManagement.twoFAEnabled')
+                    },
+                    error => this.alertService.error(error)) :
+            console.log('Cancel'))
+    }
+
+    disable2FA(user: User) {
+        swal({
+            title: `Disable 2FA?`,
+            showCancelButton: true,
+            buttonsStyling: false,
+            confirmButtonClass: 'btn mat-raised-button btn-primary',
+            cancelButtonClass: 'btn mat-raised-button',
+            confirmButtonText: 'Yes, Disable'
+        }).then((result) => result.value ?
+            this.userService.disable2FA(user.userKey)
+                .subscribe(resp => {
+                        user.tfaEnabled = false;
+                        this.alertService.success('userManagement.twoFADisabled')
+                    },
+                    error => this.alertService.error(error)) :
+            console.log('Cancel'));
     }
 
     loadAll() {
+        this.showLoader = true;
         this.userService.query({
             page: this.page - 1,
             size: this.itemsPerPage,
-            sort: this.sort()}).subscribe(
-            (res: Response) => this.onSuccess(res.json(), res.headers),
-            (res: Response) => this.onError(res.json())
-        );
+            sort: this.sort(),
+            roleKey: this.currentSearch
+        }).subscribe((res) => this.list = this.onSuccess(res.body, res.headers),
+            (err) => console.log(err),
+            () => this.showLoader = false);
     }
 
     trackIdentity(index, item: User) {
         return item.id;
     }
 
-    sort() {
-        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-        if (this.predicate !== 'id') {
-            result.push('id');
-        }
-        return result;
-    }
-
-    loadPage(page: number) {
-        if (page !== this.previousPage) {
-            this.previousPage = page;
-            this.transition();
-        }
-    }
-
-    transition() {
-        this.router.navigate(['/user-management'], { queryParams:
-                {
-                    page: this.page,
-                    sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-                }
-        });
-        this.loadAll();
-    }
-
     getLogin(login: UserLogin) {
         return this.userLoginService.getLogin(login)
     }
 
-    private onSuccess(data, headers) {
-        this.links = this.parseLinks.parse(headers.get('link'));
-        this.totalItems = headers.get('X-Total-Count');
-        this.queryCount = this.totalItems;
-        this.users = data;
+    applySearchByRole(roleKey: string) {
+        this.login = '';
+        this.page = 1;
+        this.previousPage = null;
+        this.currentSearch = roleKey;
+        this.transition();
     }
 
-    private onError(error) {
-        this.alertService.error(error.error, error.message, null);
+    searchByLogin() {
+        if (!(this.login && this.login.trim())) {
+            return this.loadAll();
+        }
+        this.showLoader = true;
+
+        this.userService.findByLogin(this.login)
+            .subscribe((res) => {
+                    this.page = 1;
+                    this.previousPage = null;
+                    this.totalItems = 1;
+                    this.queryCount = this.totalItems;
+                    this.list = [res.body]
+                },
+                (err) => {
+                    this.showLoader = false;
+                    console.log(err);
+                    this.list = []
+                },
+                () => this.showLoader = false);
     }
 }

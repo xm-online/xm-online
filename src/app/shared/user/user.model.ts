@@ -1,4 +1,4 @@
-import {UserLogin} from "./login/user-login.model";
+import {UserLogin} from './login/user-login.model';
 
 export class User {
     public id?: any;
@@ -7,13 +7,18 @@ export class User {
     public firstName?: string;
     public lastName?: string;
     public activated?: Boolean;
+    public autoLogoutEnabled?: Boolean;
+    public autoLogoutTimeoutSeconds?: number;
     public langKey?: string;
-    public authorities?: any[];
+    public permissions?: any[];
+    public roleKey?: string;
     public createdBy?: string;
     public createdDate?: Date;
     public lastModifiedBy?: string;
     public lastModifiedDate?: Date;
     public password?: string;
+    public tfaEnabled?: boolean;
+    public imageUrl?: string;
     constructor(
         id?: any,
         userKey?: string,
@@ -21,13 +26,18 @@ export class User {
         firstName?: string,
         lastName?: string,
         activated?: Boolean,
+        autoLogoutEnabled?: Boolean,
+        autoLogoutTimeoutSeconds?: number,
         langKey?: string,
-        authorities?: any[],
+        permissions?: any[],
+        roleKey?: string,
         createdBy?: string,
         createdDate?: Date,
         lastModifiedBy?: string,
         lastModifiedDate?: Date,
-        password?: string
+        password?: string,
+        tfaEnabled?: boolean,
+        imageUrl?: string
     ) {
         this.id = id ? id : null;
         this.userKey = userKey ? userKey : null;
@@ -35,12 +45,24 @@ export class User {
         this.firstName = firstName ? firstName : null;
         this.lastName = lastName ? lastName : null;
         this.activated = activated ? activated : false;
+        this.autoLogoutEnabled = autoLogoutEnabled ? autoLogoutEnabled : false;
+
+        if (this.autoLogoutEnabled) {
+            this.autoLogoutTimeoutSeconds = autoLogoutTimeoutSeconds ? autoLogoutTimeoutSeconds : 60 * 30;
+        } else {
+          this.autoLogoutTimeoutSeconds = null;
+        }
+
         this.langKey = langKey ? langKey : null;
-        this.authorities = authorities ? authorities : null;
+        this.permissions = permissions ? permissions : null;
+        this.roleKey = roleKey ? roleKey : null;
         this.createdBy = createdBy ? createdBy : null;
         this.createdDate = createdDate ? createdDate : null;
         this.lastModifiedBy = lastModifiedBy ? lastModifiedBy : null;
         this.lastModifiedDate = lastModifiedDate ? lastModifiedDate : null;
         this.password = password ? password : null;
+        this.tfaEnabled = tfaEnabled ? tfaEnabled : false;
+        this.imageUrl = imageUrl;
     }
+
 }

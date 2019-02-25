@@ -1,0 +1,26 @@
+{
+    "clientManagement": {
+        "home": {
+            "createOrEditLabel": "Создать или отредактировать клиента",
+            "title": "Клиенты"
+        },
+        "delete": {
+            "question": "Вы уверены, что хотите удалить клиента {{ id }}?"
+        },
+        "detail": {
+            "title": "Клиент"
+        },
+        "clientId": "Идентификатор клиента",
+        "clientSecret": "Пароль клиента",
+        "roleKey": "Роль",
+        "description": "Описание",
+        "createdBy": "Создано",
+        "createdDate": "Дата создания",
+        "lastModifiedBy": "Изменено",
+        "lastModifiedDate": "Дата изменения",
+        "roles": "Роли",
+        "role": "Роль",
+        "validityPeriod": "Срок действия",
+        "scopes-add": "Добавить области"
+    }
+}

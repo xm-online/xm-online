@@ -1,0 +1,26 @@
+{
+    "ext-common": {
+        "clock-widget": {
+            "title": "Clock"
+        },
+        "exchange-widget": {
+            "title": "Exchange calculator",
+            "number-units": "Number of units",
+            "code": "Code",
+            "currency": "Currency",
+            "course": "Official course",
+            "from": "From",
+            "select-from": "Select currency from",
+            "select-to": "Select currency to"
+        },
+        "sign-in-up-widget": {
+            "sign-in": "Sign in",
+            "sign-up": "Sign up"
+        },
+        "weather-widget": {
+            "humidity": "Humidity",
+            "wind-speed": "Wind speed",
+            "ms": "m/s"
+        }
+    }
+}

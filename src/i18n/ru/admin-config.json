@@ -1,0 +1,76 @@
+{
+    "admin-config": {
+        "common": {
+            "save": "Сохранить",
+            "cancel": "Отменить",
+            "menu": {
+                "title": "Конфигурация",
+                "dashboard-mng": "Конфигураци Панели",
+                "specification-mng": "Спецификации",
+                "mini": {
+                    "dashboard-mng": "КП",
+                    "specification-mng": "С"
+                }
+            },
+            "fields": {
+                "id": "ID",
+                "name": "Название",
+                "owner": "Владелец",
+                "typeKey": "Код Типа",
+                "config": "Конфигурация",
+                "layout": "Раскладка",
+                "selector": "Селектор"
+            }
+        },
+        "dashboard-detail-dialog": {
+            "add": {
+                "title": "Добавить новую панель",
+                "success": "Успешно"
+            },
+            "edit": {
+                "title": "Редактировать панель",
+                "success": "Успешно"
+            }
+        },
+        "dashboard-list-card": {
+            "title": "Панели"
+        },
+        "specification-mng": {
+            "loading": "загрузка спецификации...",
+            "validate": "Проверка",
+            "ui": {
+                "title": "Интерфейс",
+                "save": "Обновить спецификацию Интерфейса"
+            },
+            "entity": {
+                "title": "Модель",
+                "save": "Обновить спецификацию Модели"
+            },
+            "timeline": {
+                "title": "История",
+                "save": "Обновить спецификацию Истории"
+            },
+            "uaa": {
+                "title": "UAA",
+                "save": "Обновить спецификацию UAA"
+            },
+            "uaa-login": {
+                "title": "Логин",
+                "save": "Обновить спецификацию Логина"
+            }
+        },
+        "widget-detail-dialog": {
+            "add": {
+                "title": "Добавить новый виджет",
+                "success": "Успешно"
+            },
+            "edit": {
+                "title": "Редактировать виджет",
+                "success": "Успешно"
+            }
+        },
+        "widget-list-card": {
+            "title": "Виджеты"
+        }
+    }
+}

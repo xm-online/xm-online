@@ -1,0 +1,17 @@
+.balance-section {
+  display: flex;
+
+  .ct-chart {
+    width: 64px;
+    height: 64px;
+  }
+
+  .balance-amount {
+    margin-top: -12px;
+  }
+
+  .balance-name {
+    color: grey;
+  }
+
+}

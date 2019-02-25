@@ -1,0 +1,15 @@
+::ng-deep {
+    ngx-mat-select-search {
+        display: block;
+        margin-bottom: 7px;
+    }
+}
+
+:host {
+    .location-detail-dialog {
+        &__map {
+            width: 100%;
+            height: 200px
+        }
+    }
+}

@@ -1,0 +1,31 @@
+<div class="xm-form-autocomplete" [ngClass]="options?.htmlClass || ''">
+  <mat-form-field>
+    <input matInput
+           type="text"
+           #emailRef
+           [ngModel]="searchLabel"
+           placeholder="email"
+           (keyup)="showAutocomplete = false;"
+           (blur)="hideAutocomplete();"
+           name="{{controlName}}">
+  </mat-form-field>
+
+  <div *ngIf="showAutocomplete">
+    <ul class="autocomplete-drop" *ngIf="filteredItems?.length > 0">
+      <li *ngFor="let item of filteredItems;">
+        <a href="" (click)="updateValue(item, $event)">
+          <span>{{item.label}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="selectedItem && dataFields">
+    <div *ngFor="let field of dataFields;">
+      <div class="form-group" *ngIf="field.message">
+        <label class="field-label" *ngIf="field.title">{{field.title}}</label>
+        <div>{{field.message}}</div>
+      </div>
+    </div>
+  </div>
+</div>

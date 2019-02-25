@@ -1,0 +1,13 @@
+{
+    "ext-common-entity": {
+        "available-offerings-widget": {
+            "action-dialog": {
+                "question": "Ви впевнені, що хочете <b>{{action}}</b> для <b>{{name}}</b>?"
+            }
+        },
+        "entity-fab-actions": {
+            "operation-success": "Операція успішна!",
+            "operation-error": "Операція не успішна!"
+        }
+    }
+}

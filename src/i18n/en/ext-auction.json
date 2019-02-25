@@ -1,0 +1,33 @@
+{
+    "ext-auction": {
+        "common": {
+            "date": {
+                "days": "days",
+                "hours": "hours",
+                "minutes": "minutes",
+                "seconds": "seconds"
+            }
+        },
+        "lot-detail-dialog": {
+            "time-up": "The bidding's closed!",
+            "current-bid": "Current bid",
+            "place-bid": "Place bid",
+            "or": "or",
+            "buy": "Buy",
+            "brand": "Brand",
+            "model": "Model",
+            "build-year": "Build year",
+            "mileage": "Mileage",
+            "transmission": "Transmission",
+            "drive-type": "Drive type",
+            "back-to-lots": "Back to lots listing",
+            "place-bid-alert": "The bid is placed!",
+            "buy-lot-alert": "Sold out!"
+        },
+        "lot-list-widget": {
+            "search-placeholder": "search",
+            "action-view": "View",
+            "no-data": "No Lots!"
+        }
+    }
+}

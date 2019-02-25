@@ -1,0 +1,14 @@
+<div class="xm-per-page">
+  <div class="pager-wrapper">
+    <mat-form-field>
+      <mat-select [(ngModel)]="itemsPerPage"
+                  (selectionChange)="onChangeSelect()">
+        <mat-option *ngFor="let item of sizes" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <span class="per-page-text" jhiTranslate="global.perPage">item per page</span>.
+</div>

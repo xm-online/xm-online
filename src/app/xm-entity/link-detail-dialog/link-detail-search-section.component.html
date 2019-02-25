@@ -1,0 +1,62 @@
+<div class="modal-body modal-btn-group">
+  <xm-loader [showLoader]="showLoader"></xm-loader>
+
+  <div class="form-group">
+    <mat-form-field>
+      <input matInput
+             id="field_search"
+             type="text"
+             name="search"
+             [(ngModel)]="searchQuery"
+             (change)="onSearch()"
+             placeholder="{{'xm-entity.link-detail-dialog.add.build-type-search' | translate}}">
+    </mat-form-field>
+  </div>
+
+  <no-data [show]="!searchXmEntities || searchXmEntities?.length <= 0"></no-data>
+
+  <div class="table-responsive" *ngIf="searchXmEntities?.length > 0">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th></th>
+        <th><span jhiTranslate="xm-entity.common.fields.name">Name</span></th>
+        <th><span jhiTranslate="xm-entity.common.fields.description">Description</span></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let xmEntity of searchXmEntities">
+        <td>
+          <div class="xm-avatar-img-container">
+            <img src="{{xmEntity.avatarUrl ? xmEntity.avatarUrl : './assets/img/placeholder.png'}}">
+            <i class="material-icons" *ngIf="linkSpec.icon && !xmEntity.avatarUrl">{{linkSpec.icon}}</i>
+          </div>
+        </td>
+        <td>{{xmEntity.name}}</td>
+        <td>{{xmEntity.description}}</td>
+        <td>
+          <button class="btn btn-primary btn-round btn-sm" (click)="onAdd(xmEntity)">
+            <span jhiTranslate="xm-entity.link-detail-dialog.add-link">add</span>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <button mat-raised-button class="btn btn-primary btn-round" [disabled]="showLoader" (click)="onShowMore()"
+              *ngIf="searchXmEntities?.length < total">
+        <span jhiTranslate="xm-entity.link-detail-dialog.show-more">Show more</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button mat-raised-button type="button" class="btn" data-dismiss="modal" (click)="onCancel()">
+    <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
+  </button>
+</div>

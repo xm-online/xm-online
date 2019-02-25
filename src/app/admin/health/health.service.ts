@@ -1,23 +1,34 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
+
+import { SERVER_API_URL } from '../../xm.constants';
+
+const SERVICES_COLLECTION = '/api/monitoring/services';
 
 @Injectable()
 export class JhiHealthService {
-
     separator: string;
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
         this.separator = '.';
     }
 
+    getMonitoringServicesCollection(): Observable<any> {
+        return this.http.get(SERVICES_COLLECTION);
+    }
+
+    getHealsCheckByMsName(msName: string, metricsType: string): Observable<any> {
+        return this.http.get(`/api/monitoring/services/${msName}/${metricsType}`);
+    }
+
     checkHealth(): Observable<any> {
-        return this.http.get('management/health').map((res: Response) => res.json());
+        return this.http.get(SERVER_API_URL + 'management/health');
     }
 
     transformHealthData(data): any {
         const response = [];
-        this.flattenHealthData(response, null, data);
+        this.flattenHealthData(response, null, data.details);
         return response;
     }
 
@@ -93,7 +104,7 @@ export class JhiHealthService {
         let result;
         if (path && name) {
             result = path + this.separator + name;
-        }  else if (path) {
+        } else if (path) {
             result = path;
         } else if (name) {
             result = name;
@@ -129,4 +140,5 @@ export class JhiHealthService {
         }
         return result;
     }
+
 }

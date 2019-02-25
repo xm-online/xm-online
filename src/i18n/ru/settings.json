@@ -3,13 +3,21 @@
         "form": {
             "general": "Основная информация",
             "button": "Сохранить",
-            "logins": "Логины"
+            "logins": "Логины",
+            "utc-time": "Время UTC: ",
+            "local-time": "Местное время: ",
+            "offset-time": "Смещение часового пояса: "
         },
         "messages": {
             "success": "<strong>Настройки сохранены!</strong>",
             "logins": {
                 "success": "<strong>Логины сохранены!</strong>"
             }
+        },
+        "security" : {
+            "name" : "Настройки безопасности",
+            "twoFAStatus" : "Двухфакторная аутентификация",
+            "autoLogout" : "Авто выход"
         }
     }
 }

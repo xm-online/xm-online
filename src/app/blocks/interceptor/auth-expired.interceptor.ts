@@ -1,39 +1,37 @@
-import {EventManager, HttpInterceptor} from 'ng-jhipster';
-import { RequestOptionsArgs, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injector } from '@angular/core';
-import { AuthService } from '../../shared/auth/auth.service';
-import { Principal } from '../../shared/auth/principal.service';
-import { AuthServerProvider } from '../../shared/auth/auth-jwt.service';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
-export class AuthExpiredInterceptor extends HttpInterceptor {
+import { LoginService } from '../../shared';
+import { Router } from '@angular/router';
 
-    constructor(
-        private injector: Injector,
-        private eventManager: EventManager,
-    ) {
-        super();
+export class AuthExpiredInterceptor implements HttpInterceptor {
+
+    constructor(private injector: Injector) {
     }
 
-    requestIntercept(options?: RequestOptionsArgs): RequestOptionsArgs {
-        return options;
-    }
-
-    responseIntercept(observable: Observable<Response>): Observable<Response> {
-        return <Observable<Response>> observable.catch((error, source) => {
-            if (error.status === 401 && !(error.json().path && error.json().path.indexOf('/api/account') === 0)) {
-                const principal: Principal = this.injector.get(Principal);
-
-                if (principal.isAuthenticated()) {
-                    const auth: AuthService = this.injector.get(AuthService);
-                    auth.authorize(true);
-                } else {
-                    const authServerProvider: AuthServerProvider = this.injector.get(AuthServerProvider);
-                    authServerProvider.logout().subscribe();
-                    this.eventManager.broadcast({name: 'xm.unauthorized', content: error});
+    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        return next.handle(request).pipe(tap(
+            (event: HttpEvent<any>) => {
+            },
+            (err: any) => {
+                if (err instanceof HttpErrorResponse) {
+                    if (err.status === 401) {
+                        const router: Router = this.injector.get(Router);
+                        const stripedPath = router.parseUrl(router.url)
+                            .root.children['primary']
+                            .segments
+                            .map(it => it.path)
+                            .join('/');
+                        // when user is anonymous he get 401 when request account, and can't reset password
+                        if (stripedPath !== 'password/setup' && stripedPath !== 'reset/finish') {
+                            const loginService: LoginService = this.injector.get(LoginService);
+                            loginService.logout();
+                        }
+                    }
                 }
             }
-            return Observable.throw(error);
-        });
+        ));
     }
 }

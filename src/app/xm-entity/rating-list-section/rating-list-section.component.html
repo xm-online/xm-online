@@ -1,0 +1,18 @@
+<div *ngFor="let ratingSpec of ratingSpecs">
+  <div [ngSwitch]="ratingSpec.style">
+    <div *ngSwitchCase="'5STARS'">
+      <div class="row align-items-center">
+        <div class="col-auto pt-1">
+          <rating [float]="true"
+                  [(ngModel)]="getRatingByRatingSpec(ratingSpec).value"
+                  (ngModelChange)="onChange($event, getRatingByRatingSpec(ratingSpec))">
+          </rating>
+        </div>
+        <div class="col">
+          {{votesNumber[ratingSpec.key]}}
+          <span jhiTranslate="xm-entity.rating-list-section.votes">votes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

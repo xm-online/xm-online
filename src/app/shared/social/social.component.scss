@@ -1,0 +1,17 @@
+form {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+button {
+    img {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+
+    &.has-image {
+        background-color: transparent!important;
+        border-color: transparent!important;
+    }
+}

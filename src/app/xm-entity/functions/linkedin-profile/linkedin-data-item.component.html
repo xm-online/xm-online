@@ -1,0 +1,11 @@
+<div>
+  <div>
+    <div>{{dataItem.title}}</div>
+    <div>{{dataItem.org}}</div>
+    <div>{{dataItem.dateRange}}</div>
+  </div>
+  <div *ngIf="dataItem.logoUrl">
+    <img class="logo-url-from-linkedin" src="{{dataItem.logoUrl}}" alt="">
+  </div>
+</div>
+<div>{{dataItem.location}}</div>

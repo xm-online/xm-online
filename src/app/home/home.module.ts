@@ -1,24 +1,23 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { XmSharedModule } from '../shared/shared.module';
+import { XmDashboardModule } from '../xm-dashboard/xm-dashboard.module';
 import { HomeComponent } from './';
-import {HOME_ROUTE} from "./home.route";
-import {GateSharedModule} from "../shared/shared.module";
-import {DashboardModule} from "../dashboard/dashboard.module";
+import { HOME_ROUTE } from './home.route';
 
 @NgModule({
     imports: [
-        GateSharedModule,
-        DashboardModule,
-        RouterModule.forRoot([ HOME_ROUTE ], { useHash: true })
+        XmSharedModule,
+        RouterModule.forRoot([HOME_ROUTE], {useHash: false}),
+        XmDashboardModule
     ],
     declarations: [
-        HomeComponent,
+        HomeComponent
     ],
-    entryComponents: [
-    ],
-    providers: [
-    ],
+    entryComponents: [],
+    providers: [],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class GateHomeModule {}
+export class GateHomeModule {
+}

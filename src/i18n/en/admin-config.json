@@ -1,0 +1,76 @@
+{
+    "admin-config": {
+        "common": {
+            "save": "Save",
+            "cancel": "Cancel",
+            "menu": {
+                "title": "Configuration",
+                "dashboard-mng": "Dashboards Config",
+                "specification-mng": "Specifications",
+                "mini": {
+                    "dashboard-mng": "D",
+                    "specification-mng": "S"
+                }
+            },
+            "fields": {
+                "id": "ID",
+                "name": "Name",
+                "owner": "Owner",
+                "typeKey": "Type Key",
+                "config": "Config",
+                "layout": "Layout",
+                "selector": "Selector"
+            }
+        },
+        "dashboard-detail-dialog": {
+            "add": {
+                "title": "Add a new dashboard",
+                "success": "Success"
+            },
+            "edit": {
+                "title": "Edit a dashboard",
+                "success": "Success"
+            }
+        },
+        "dashboard-list-card": {
+            "title": "Dashboards"
+        },
+        "specification-mng": {
+            "loading": "loading specification...",
+            "validate": "Validate",
+            "ui": {
+                "title": "UI",
+                "save": "Update UI specification"
+            },
+            "entity": {
+                "title": "Entity",
+                "save": "Update Entity specification"
+            },
+            "timeline": {
+                "title": "Timeline",
+                "save": "Update Timeline specification"
+            },
+            "uaa": {
+                "title": "UAA",
+                "save": "Save UAA specification"
+            },
+            "uaa-login": {
+                "title": "Login",
+                "save": "Save Login specification"
+            }
+        },
+        "widget-detail-dialog": {
+            "add": {
+                "title": "Add a new widget",
+                "success": "Success"
+            },
+            "edit": {
+                "title": "Edit a widget",
+                "success": "Success"
+            }
+        },
+        "widget-list-card": {
+            "title": "Widgets"
+        }
+    }
+}

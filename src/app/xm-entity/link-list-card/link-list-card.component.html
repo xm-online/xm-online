@@ -1,0 +1,70 @@
+<div class="card">
+  <div class="card-header card-header-icon card-header-primary">
+    <div class="card-icon">
+      <i class="material-icons">{{isBackLink ? 'link' : linkSpec.icon}}</i>
+    </div>
+    <h4 class="card-title">{{linkSpec.name | i18nName: principal}}</h4>
+  </div>
+
+  <div class="card-body">
+    <div class="text-center">
+      <div class="btn-group" *ngIf="modes.length > 1">
+        <button mat-raised-button
+                type="button"
+                class="btn btn-primary btn-sm btn-round"
+                [disabled]="mode === 'list'"
+                (click)="mode = 'list';">
+          <span jhiTranslate="xm-entity.link-list-card.list-view">List view</span>
+        </button>
+        <button mat-raised-button
+                type="button"
+                class="btn btn-primary btn-sm btn-round"
+                [disabled]="mode === 'tree'"
+                (click)="mode = 'tree';">
+          <span jhiTranslate="xm-entity.link-list-card.tree-view">Tree view</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="table-responsive" *ngIf="mode == 'list'">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th></th>
+          <th><span jhiTranslate="xm-entity.common.fields.name">Name</span></th>
+          <th><span jhiTranslate="xm-entity.common.fields.description">Description</span></th>
+          <th *ngIf="!isBackLink"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let link of links">
+          <td>
+            <div class="xm-avatar-img-container">
+              <img src="{{link.target.avatarUrl ? link.target.avatarUrl : './assets/img/placeholder.png'}}">
+              <i class="material-icons" *ngIf="linkSpec.icon && !link.target.avatarUrl">{{linkSpec.icon}}</i>
+            </div>
+          </td>
+          <td>
+            <a routerLink="/application/{{link.target.typeKey}}/{{link.target.id}}" title="{{link.target.key}}">
+              {{link.target.name}}
+            </a>
+          </td>
+          <td>{{link.target.description}}</td>
+          <td *ngIf="!isBackLink">
+            <a role="button" class="text-muted" (click)="onRemove(link)" *permitted="'LINK.DELETE'">
+              <i class="material-icons">close</i>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row" *ngIf="mode === 'tree'">
+      <div class="col-md-12">
+        <xm-link-list-tree-section class="tree" [links]="treeRootLinks" [linkSpec]="linkSpec">
+        </xm-link-list-tree-section>
+      </div>
+    </div>
+  </div>
+</div>

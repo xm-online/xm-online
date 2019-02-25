@@ -1,27 +1,29 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-import { trigger, state, style, animate, transition } from '@angular/animations';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Http } from '@angular/http';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { HttpClient } from '@angular/common/http';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import 'rxjs/add/operator/map';
-
+import {
+    formLayout, getJsfWidgets, addValidationComponent,
+    addValidationComponentToLayout, processValidationMessages
+} from '../../shared/jsf-extention/jsf-attributes-helper';
 import { Examples } from './example-schemas.model';
-import {JhiLanguageService} from "ng-jhipster";
+import { Principal } from '../../shared/auth/principal.service';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
-    selector: 'demo',
+    selector: 'xm-form-playground',
     templateUrl: './form-playground.component.html',
     animations: [
         trigger('expandSection', [
-            state('in', style({ height: '*' })),
+            state('in', style({height: '*'})),
             transition(':enter', [
-                style({ height: 0 }), animate(100),
+                style({height: 0}), animate(100),
             ]),
             transition(':leave', [
-                style({ height: '*' }),
-                animate(100, style({ height: 0 })),
+                style({height: '*'}),
+                animate(100, style({height: 0})),
             ]),
         ]),
     ],
@@ -34,11 +36,11 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
         'bootstrap-3': 'Bootstrap 3 framework',
         'no-framework': 'No Framework (plain HTML controls)',
     };
-    selectedSet: string = 'ng2jsf';
-    selectedSetName: string = '';
-    selectedExample: string = 'ng2jsf-flex-layout';
-    selectedExampleName: string = 'Flexbox layout';
-    selectedFramework: string = 'material-design';
+    selectedSet = 'ng2jsf';
+    selectedSetName = '';
+    selectedExample = 'ng2jsf-flex-layout';
+    selectedExampleName = 'Flexbox layout';
+    selectedFramework = 'material-design';
     visible: { [item: string]: boolean } = {
         options: true,
         schema: true,
@@ -46,15 +48,15 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
         output: true
     };
 
-    formActive: boolean = false;
+    formActive = false;
     jsonFormSchema: string;
-    jsonFormValid: boolean = false;
-    jsonFormStatusMessage: string = 'Loading form...';
+    jsonFormValid = false;
+    jsonFormStatusMessage = 'Loading form...';
     jsonFormObject: any;
     jsonFormOptions: any = {
         addSubmit: true, // Add a submit button if layout does not have one
         loadExternalAssets: true, // Load external css and JavaScript for frameworks
-        formDefaults: { feedback: true }, // Show inline feedback icons
+        formDefaults: {feedback: true}, // Show inline feedback icons
         debug: false,
         returnEmptyFields: false,
     };
@@ -69,13 +71,14 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
         autoScrollEditorIntoView: true,
     };
 
-    constructor(
-        private jhiLanguageService: JhiLanguageService,
-        private route: ActivatedRoute,
-        private router: Router,
-        private http: Http,
-    ) {
-        this.jhiLanguageService.addLocation('form-playground');
+    widgets = {};
+    formLayout: Function;
+
+    constructor(private route: ActivatedRoute,
+                private principal: Principal,
+                private http: HttpClient) {
+        this.widgets = getJsfWidgets();
+        this.formLayout = formLayout;
     }
 
     ngOnInit() {
@@ -105,12 +108,6 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        //  Init Bootstrap Select Picker
-        setTimeout(function() {
-            if ($('.selectpicker').length !== 0) {
-                $('.selectpicker').selectpicker();
-            }
-        }, 10);
     }
 
     onSubmit(data: any) {
@@ -138,32 +135,31 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
     }
 
     get prettyValidationErrors() {
-        if (!this.formValidationErrors) { return null; }
+        if (!this.formValidationErrors) {
+            return null;
+        }
         let prettyValidationErrors = '';
-        for (let error of this.formValidationErrors) {
+        for (const error of this.formValidationErrors) {
             prettyValidationErrors += (error.dataPath.length ?
-                    error.dataPath.slice(1) + ' ' + error.message : error.message) + '\n';
+                error.dataPath.slice(1) + ' ' + error.message : error.message) + '\n';
         }
         return prettyValidationErrors;
     }
 
-    loadSelectedExample(
-        event, file
-    ) {
-        this.http
-            .get('assets/example-schemas/' + file + '.json')
-            .map(schema => schema.text())
-            .subscribe(schema => {
-                this.jsonFormSchema = schema;
-                this.generateForm(this.jsonFormSchema);
-            });
+    loadSelectedExample(event, file) {
+        this.http.get(`assets/example-schemas/${file}.json`, {responseType: 'text'}).subscribe(schema => {
+            this.jsonFormSchema = schema;
+            this.generateForm(this.jsonFormSchema);
+        });
         // this.resizeAceEditor();
     }
 
     // Display the form entered by the user
     // (runs whenever the user changes the jsonform object in the ACE input field)
     generateForm(newFormString: string) {
-        if (!newFormString) { return; }
+        if (!newFormString) {
+            return;
+        }
         this.jsonFormStatusMessage = 'Loading form...';
         this.formActive = false;
         this.liveFormData = {};
@@ -176,15 +172,21 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
 
             // Parse entered content as JSON
             this.jsonFormObject = JSON.parse(newFormString);
+            this.jsonFormObject.form = addValidationComponent(this.jsonFormObject.form);
+            this.jsonFormObject.layout = addValidationComponentToLayout(this.jsonFormObject.layout);
+            processValidationMessages(this.jsonFormObject);
             this.jsonFormValid = true;
         } catch (jsonError) {
             try {
 
                 // If entered content is not valid JSON,
                 // parse as JavaScript instead to include functions
-                let newFormObject: any = null;
+                const newFormObject: any = null;
                 eval('newFormObject = ' + newFormString);
                 this.jsonFormObject = newFormObject;
+                this.jsonFormObject.form = addValidationComponent(this.jsonFormObject.form);
+                this.jsonFormObject.layout = addValidationComponentToLayout(this.jsonFormObject.layout);
+                processValidationMessages(this.jsonFormObject);
                 this.jsonFormValid = true;
             } catch (javascriptError) {
 
@@ -198,7 +200,6 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
             }
         }
         this.formActive = true;
-        console.log('generateForm' + this.formActive);
     }
 
     toggleVisible(item: string) {

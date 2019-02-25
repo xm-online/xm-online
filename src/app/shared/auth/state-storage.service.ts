@@ -1,27 +1,41 @@
 import { Injectable } from '@angular/core';
-import { SessionStorageService } from 'ng2-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
+
+const PREV_STATE = 'previousState';
+const DEST_STATE = 'previousState';
 
 @Injectable()
 export class StateStorageService {
+
+
     constructor(
         private $sessionStorage: SessionStorageService
     ) {}
 
     getPreviousState() {
-        return this.$sessionStorage.retrieve('previousState');
+        return this.$sessionStorage.retrieve(PREV_STATE);
     }
 
     resetPreviousState() {
-        this.$sessionStorage.clear('previousState');
+        this.$sessionStorage.clear(PREV_STATE);
+    }
+
+    resetDestinationState() {
+      this.$sessionStorage.clear(DEST_STATE);
+    }
+
+    resetAllStates() {
+      this.resetPreviousState();
+      this.resetDestinationState();
     }
 
     storePreviousState(previousStateName, previousStateParams) {
         const previousState = { 'name': previousStateName, 'params': previousStateParams };
-        this.$sessionStorage.store('previousState', previousState);
+        this.$sessionStorage.store(PREV_STATE, previousState);
     }
 
     getDestinationState() {
-        return this.$sessionStorage.retrieve('destinationState');
+        return this.$sessionStorage.retrieve(DEST_STATE);
     }
 
     storeUrl(url: string) {
@@ -43,6 +57,6 @@ export class StateStorageService {
                 'name': fromState.name,
              }
         };
-        this.$sessionStorage.store('destinationState', destinationInfo);
+        this.$sessionStorage.store(DEST_STATE, destinationInfo);
     }
 }

@@ -1,0 +1,40 @@
+.role-matrix-table .checkbox {
+  width: auto;
+}
+.inline-container div {
+  display: inline-block;
+  margin: 0 10px 10px;
+}
+.inline-container div:first-child {
+  margin: 0;
+}
+.col-close {
+  color: #a8a8a8;
+  padding-left: 2px;
+}
+a:hover .col-close {
+  color: #000000;
+  transform: scale(1.1);
+}
+
+.remove-from-table {
+    font-size: 14px;
+    color: #000000;
+    position: relative;
+    display: inline-block;
+    padding: 0 20px 0 0;
+
+    > .material-icons {
+        font-size: 14px;
+        color: #666;
+        position: absolute;
+        top: 3px;
+        right: 0;
+    }
+
+    &:hover {
+        > .material-icons {
+            opacity: .7;
+        }
+    }
+}

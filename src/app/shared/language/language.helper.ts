@@ -1,37 +1,40 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, ActivatedRouteSnapshot } from '@angular/router';
-import { TranslateService, TranslationChangeEvent, LangChangeEvent } from 'ng2-translate/ng2-translate';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject ,  Observable } from 'rxjs';
+import { getBrowserLang } from './../shared-libs.module';
 
 import { LANGUAGES } from './language.constants';
-import {Observable} from "rxjs/Observable";
-import {EventManager, TranslatePartialLoader} from "ng-jhipster";
-import {XmConfigService} from '../../admin/configuration/config.service';
-import {CustomTranslatePartialLoader} from './language.loader';
+import {XmApplicationConfigService} from '../spec/xm-config.service';
+import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class JhiLanguageHelper {
+    renderer: Renderer2 = null;
+    private _language: BehaviorSubject<string>;
 
     constructor(
         private translateService: TranslateService,
+        // tslint:disable-next-line: no-unused-variable
+        private rootRenderer: RendererFactory2,
+        private appConfig: XmApplicationConfigService,
         private titleService: Title,
-        private router: Router,
-        private xmConfigService: XmConfigService,
-        private eventManager: EventManager,
-        private customTranslatePartialLoader: CustomTranslatePartialLoader,
+        private router: Router
     ) {
-        this.init();
-        customTranslatePartialLoader.init();
+        const appCfg = this.appConfig.getAppConfig();
+        const startLanguage = (appCfg && appCfg.defaultLang) ? appCfg.defaultLang : getBrowserLang();
+        this._language = new BehaviorSubject<string>(startLanguage);
+        this.renderer = rootRenderer.createRenderer(document.querySelector('html'), null);
+        this.translateService.onLangChange.subscribe((event: LangChangeEvent) => this.handleLanguageChangeEvent(event));
     }
 
     getAll(): Promise<any> {
-        return this.xmConfigService.getUiConfig().map(uiConfig => {
-            if (uiConfig && uiConfig.langs) {
-                return uiConfig.langs;
-            } else {
-                return LANGUAGES;
-            }
-        }).toPromise();
+        return Promise.resolve(LANGUAGES);
+    }
+
+    get language(): Observable<string> {
+        return this._language.asObservable();
     }
 
     /**
@@ -42,47 +45,31 @@ export class JhiLanguageHelper {
      * 3. 'global.title'
      */
     updateTitle(titleKey?: string) {
-        let trans = [],
-            routeSnapshot: ActivatedRouteSnapshot = this.router.routerState.snapshot.root,
-            title = this.getPageTitle(routeSnapshot, 'pageTitle', true),
-            subTitle = this.getPageTitle(routeSnapshot, 'pageSubTitle'),
-            subTitleTrans = this.getPageTitle(routeSnapshot, 'pageSubTitleTrans'),
-            subSubTitle = this.getPageTitle(routeSnapshot, 'pageSubSubTitle')
-        ;
-        trans.push(this.translateService.get(title));
-
-        if (subTitle || subTitleTrans) {
-            trans.push(subTitleTrans ? this.translateService.get(subTitleTrans) : Promise.resolve(subTitle));
+        if (!titleKey) {
+            titleKey = this.getPageTitle(this.router.routerState.snapshot.root);
         }
 
-        subSubTitle && trans.push(Observable.of(subSubTitle));
-
-        Observable.forkJoin(trans)
-            .subscribe((result: string[]) => {
-                let title: string = result.join(" - ");
-                if (!/translation-not-found/.test(title)) {
-                    this.titleService.setTitle(title);
-                    this.eventManager.broadcast({name: 'pageTitleModification', content: title});
-                }
-            })
-        ;
-    }
-
-    private init() {
-        this.translateService.onTranslationChange.subscribe((event: TranslationChangeEvent) => {
-            this.updateTitle();
-        });
-
-        this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
-            this.updateTitle();
+        this.translateService.get(titleKey).subscribe(title => {
+            this.titleService.setTitle(title);
         });
     }
 
-    private getPageTitle(routeSnapshot: ActivatedRouteSnapshot, name: string, isMain?: boolean) {
-        let title = routeSnapshot.data && routeSnapshot.data[name];
-        return routeSnapshot.firstChild ?
-            this.getPageTitle(routeSnapshot.firstChild, name, isMain) :
-            (isMain ? title || 'global.title' : title);
+    private handleLanguageChangeEvent(event: LangChangeEvent): void {
+        if (!environment.production) {
+            console.log('JhiLanguageHelper  onLangChange: event=%o _language: %s',
+                event, this._language.getValue());
+        }
+        this._language.next(event.lang);
+        this.renderer.setAttribute(document.querySelector('html'), 'lang', event.lang);
+        this.updateTitle();
+    }
+
+    private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
+        let title: string =
+            routeSnapshot.data && routeSnapshot.data['pageTitle'] ? routeSnapshot.data['pageTitle'] : 'jhipsterSampleApplicationApp';
+        if (routeSnapshot.firstChild) {
+            title = this.getPageTitle(routeSnapshot.firstChild) || title;
+        }
+        return title;
     }
 }
-

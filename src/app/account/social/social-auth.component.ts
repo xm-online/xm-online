@@ -1,34 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { AuthService, LoginService } from '../../shared';
 import { CookieService } from 'angular2-cookie/core';
-import {EventManager} from "ng-jhipster";
+import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
+
+import { AuthService, LoginComponent, LoginService } from '../../shared';
+import { StateStorageService } from '../../shared/auth/state-storage.service';
+import { XmConfigService } from '../../shared/spec/config.service';
+import { XM_EVENT_LIST } from '../../xm.constants';
+
+const SOCIAL_AUTH = 'social-authentication';
 
 @Component({
-    selector: 'xm-auth',
+    selector: 'xm-social-auth',
     templateUrl: '../../shared/login/login.component.html'
 })
-export class SocialAuthComponent implements OnInit {
+export class SocialAuthComponent extends LoginComponent implements OnInit {
 
-    constructor(
-        private Auth: AuthService,
-        private loginService: LoginService,
-        private cookieService: CookieService,
-        private eventManager: EventManager,
-        private router: Router
-    ) {
+    constructor(protected eventManager: JhiEventManager,
+                protected xmConfigService: XmConfigService,
+                protected loginService: LoginService,
+                protected stateStorageService: StateStorageService,
+                protected elementRef: ElementRef,
+                protected router: Router,
+                protected alertService: JhiAlertService,
+                protected Auth: AuthService,
+                protected cookieService: CookieService) {
+        super(eventManager, xmConfigService, loginService, stateStorageService, elementRef, router, alertService);
     }
 
     ngOnInit() {
-        let token = this.cookieService.get('social-authentication');
+        const token = this.cookieService.get(SOCIAL_AUTH);
         if (token) {
             this.loginService.loginWithToken(token, false).then(() => {
-                this.cookieService.remove('social-authentication');
+                this.cookieService.remove(SOCIAL_AUTH);
                 this.Auth.authorize(true)
                     .then(
                         () => {
-                            this.eventManager.broadcast({name: 'authenticationSuccess'});
+                            this.eventManager.broadcast({name: XM_EVENT_LIST.XM_SUCCESS_AUTH});
                             this.router.navigate(['dashboard']);
                         },
                         () => this.router.navigate([''])

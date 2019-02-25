@@ -1,11 +1,5 @@
-import {
-    Component,
-    Input,
-    Output,
-    EventEmitter,
-    ChangeDetectionStrategy, OnInit,
-} from '@angular/core';
-import {NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, } from '@angular/core';
+import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 
 declare let $: any;
 
@@ -40,9 +34,9 @@ export class XmAlertComponent implements OnInit {
             icon: 'add',
             message: message
 
-        },{
+        }, {
             type: type,
-            timer: 4000,
+            timer: 5000,
             z_index: 2000,
             placement: {
                 from: 'top',

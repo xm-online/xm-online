@@ -1,0 +1,210 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "md-pro-angular-cli": {
+            "root": "",
+            "sourceRoot": "src",
+            "projectType": "application",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist",
+                        "index": "src/index.html",
+                        "main": "src/main.ts",
+                        "tsConfig": "src/tsconfig.app.json",
+                        "polyfills": "src/polyfills.ts",
+                        "assets": [
+                            "src/assets",
+                            "src/login",
+                            "src/i18n",
+                            "src/swagger-ui",
+                            "src/robots.txt"
+                        ],
+                        "styles": [
+                            "node_modules/angular-calendar/scss/angular-calendar.scss",
+                            "node_modules/ng-pick-datetime/assets/style/picker.min.css",
+                            "node_modules/sweetalert2/src/sweetalert2.scss",
+                            "src/assets/css/leaflet.css",
+                            "src/assets/css/leaflet.draw.css",
+                            "src/assets/css/simplemde.min.css",
+                            "src/assets/css/mat-dashboard-2.1.1.min.css",
+                            "node_modules/snazzy-info-window/dist/snazzy-info-window.css",
+                            "src/assets/scss/xm-styles.scss",
+                            "src/assets/scss/theme-override.scss"
+                        ],
+                        "scripts": [
+                            "node_modules/hammerjs/hammer.min.js",
+                            "node_modules/jquery/dist/jquery.js",
+                            "node_modules/popper.js/dist/umd/popper.js",
+                            "node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js",
+                            "node_modules/arrive/src/arrive.js",
+                            "node_modules/moment/moment.js",
+                            "node_modules/chartist/dist/chartist.js",
+                            "node_modules/chartist-plugin-zoom/dist/chartist-plugin-zoom.js",
+                            "node_modules/twitter-bootstrap-wizard/jquery.bootstrap.wizard.js",
+                            "node_modules/bootstrap-notify/bootstrap-notify.js",
+                            "node_modules/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js",
+                            "node_modules/nouislider/distribute/nouislider.min.js",
+                            "node_modules/bootstrap-select/dist/js/bootstrap-select.js",
+                            "node_modules/datatables/media/js/jquery.dataTables.js",
+                            "node_modules/datatables.net-bs/js/dataTables.bootstrap.js",
+                            "node_modules/datatables.net-responsive/js/dataTables.responsive.js",
+                            "node_modules/fullcalendar/dist/fullcalendar.js",
+                            "node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.js",
+                            "node_modules/jasny-bootstrap/dist/js/jasny-bootstrap.min.js",
+                            "node_modules/jvectormap/jquery-jvectormap.min.js",
+                            "node_modules/jvectormap/lib/jquery-mousewheel.js",
+                            "node_modules/jvectormap/tests/assets/jquery-jvectormap-map.js",
+                            "node_modules/jvectormap/tests/assets/jquery-jvectormap-world-mill-en.js",
+                            "node_modules/sweetalert2/dist/sweetalert2.js",
+                            "node_modules/jquery-validation/dist/jquery.validate.min.js",
+                            "node_modules/leaflet/dist/leaflet.js",
+                            "node_modules/leaflet.gridlayer.googlemutant/Leaflet.GoogleMutant.js",
+                            "node_modules/leaflet-draw/dist/leaflet.draw.js",
+                            "node_modules/oboe/dist/oboe-browser.js",
+                            "node_modules/yamljs/dist/yaml.js",
+                            "node_modules/ajv/dist/ajv.min.js"
+                        ],
+                        "lazyModules": [
+                            "src/app/ext-commons/ext-common/ext-common.module",
+                            "src/app/ext-commons/ext-common-entity/ext-common-entity.module",
+                            "src/app/ext-commons/ext-common-csp/ext-common-csp.module"
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.prod.ts"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "md-pro-angular-cli:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "md-pro-angular-cli:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "md-pro-angular-cli:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "src/test.ts",
+                        "karmaConfig": "./karma.conf.js",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "src/tsconfig.spec.json",
+                        "scripts": [
+                            "node_modules/hammerjs/hammer.min.js",
+                            "node_modules/jquery/dist/jquery.js",
+                            "node_modules/popper.js/dist/umd/popper.js",
+                            "node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js",
+                            "node_modules/arrive/src/arrive.js",
+                            "node_modules/moment/moment.js",
+                            "node_modules/chartist/dist/chartist.js",
+                            "node_modules/chartist-plugin-zoom/dist/chartist-plugin-zoom.js",
+                            "node_modules/twitter-bootstrap-wizard/jquery.bootstrap.wizard.js",
+                            "node_modules/bootstrap-notify/bootstrap-notify.js",
+                            "node_modules/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js",
+                            "node_modules/nouislider/distribute/nouislider.min.js",
+                            "node_modules/bootstrap-select/dist/js/bootstrap-select.js",
+                            "node_modules/datatables/media/js/jquery.dataTables.js",
+                            "node_modules/datatables.net-bs/js/dataTables.bootstrap.js",
+                            "node_modules/datatables.net-responsive/js/dataTables.responsive.js",
+                            "node_modules/fullcalendar/dist/fullcalendar.js",
+                            "node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.js",
+                            "node_modules/jasny-bootstrap/dist/js/jasny-bootstrap.min.js",
+                            "node_modules/jvectormap/jquery-jvectormap.min.js",
+                            "node_modules/jvectormap/lib/jquery-mousewheel.js",
+                            "node_modules/jvectormap/tests/assets/jquery-jvectormap-map.js",
+                            "node_modules/jvectormap/tests/assets/jquery-jvectormap-world-mill-en.js",
+                            "node_modules/sweetalert2/dist/sweetalert2.js",
+                            "node_modules/jquery-validation/dist/jquery.validate.min.js",
+                            "node_modules/leaflet/dist/leaflet.js",
+                            "node_modules/leaflet.gridlayer.googlemutant/Leaflet.GoogleMutant.js",
+                            "node_modules/leaflet-draw/dist/leaflet.draw.js",
+                            "node_modules/oboe/dist/oboe-browser.js",
+                            "node_modules/yamljs/dist/yaml.js",
+                            "node_modules/ajv/dist/ajv.min.js"
+                        ],
+                        "styles": [
+                            "node_modules/snazzy-info-window/dist/snazzy-info-window.css"
+                        ],
+                        "assets": [
+                            "src/assets",
+                            "src/login",
+                            "src/i18n",
+                            "src/swagger-ui",
+                            "src/robots.txt"
+                        ]
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "src/tsconfig.app.json",
+                            "src/tsconfig.spec.json"
+                        ],
+                        "exclude": []
+                    }
+                }
+            }
+        },
+        "md-pro-angular-cli-e2e": {
+            "root": "e2e",
+            "sourceRoot": "e2e",
+            "projectType": "application",
+            "architect": {
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "./protractor.conf.js",
+                        "devServerTarget": "md-pro-angular-cli:serve"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [],
+                        "exclude": []
+                    }
+                }
+            }
+        }
+    },
+    "defaultProject": "md-pro-angular-cli",
+    "schematics": {
+        "@schematics/angular:component": {
+            "prefix": "xm",
+            "styleext": "css"
+        },
+        "@schematics/angular:directive": {
+            "prefix": "xm"
+        }
+    }
+}

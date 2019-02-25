@@ -1,0 +1,8 @@
+<div *ngIf="options.isShowCoordinates">
+  <span *ngIf="latitude">Latitude: {{latitude}}</span>
+  <span *ngIf="longitude">Longitude: {{longitude}}</span>
+</div>
+
+<div *ngIf="options.isShowMap">
+  <div [id]="mapId" class="map"></div>
+</div>

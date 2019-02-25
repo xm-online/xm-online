@@ -1,0 +1,22 @@
+.editor-toolbar,
+.CodeMirror-wrap
+{
+  z-index: 10 !important;
+}
+
+.editor-toolbar {
+
+  .fa-question-circle {
+    display: none;
+  }
+}
+
+.wdt-md {
+
+  &:not(.wdt-md-edit) {
+    .editor-toolbar,
+    .editor-statusbar {
+      display: none;
+    }
+  }
+}

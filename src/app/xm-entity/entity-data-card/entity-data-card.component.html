@@ -1,0 +1,39 @@
+<div class="card" *ngIf="jsfAttributes?.schema">
+  <div *ngIf="jsfAttributes?.entity?.formHeaderTitle &&
+              jsfAttributes?.entity?.formHeaderIconName; then
+              hasHeaderConfig else
+              hasNotHeaderConfig;">
+  </div>
+
+  <div class="card-body min-height">
+  <xm-loader [showLoader]="showLoader"></xm-loader>
+    <json-schema-form [framework]="'material-design'"
+                      [schema]="jsfAttributes.schema"
+                      [layout]="jsfAttributes.layout | i18nJsf :principal"
+                      [form]="jsfAttributes.form | i18nJsf :principal"
+                      [data]="jsfAttributes.data"
+                      [options]="jsfAttributes.options | i18nJsf :principal"
+                      [widgets]="jsfAttributes.widgets"
+                      (formLayout)="jsfAttributes.formLayout"
+                      (onSubmit)="onSubmitForm($event)"
+                      *ngIf="jsfAttributes?.schema">
+    </json-schema-form>
+  </div>
+</div>
+
+<ng-template #hasHeaderConfig>
+  <div class="card-header card-header-icon card-header-primary">
+    <div class="card-icon">
+      <i class="material-icons">{{jsfAttributes.entity.formHeaderIconName}}</i>
+    </div>
+    <h4 class="card-title">{{jsfAttributes.entity.formHeaderTitle | i18nName: principal}}</h4>
+  </div>
+</ng-template>
+<ng-template #hasNotHeaderConfig>
+  <div class="card-header card-header-icon card-header-primary">
+    <div class="card-icon">
+      <i class="material-icons">info_outline</i>
+    </div>
+    <h4 class="card-title" jhiTranslate="xm-entity.entity-data-card.title">Data</h4>
+  </div>
+</ng-template>

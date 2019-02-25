@@ -1,0 +1,19 @@
+<div class="card wdt-md" [ngClass]="{'wdt-md-edit': isEditMode}">
+  <a class="header-action" href="javascript: void(0);" *ngIf="isEditMode" (click)="onSave()">
+    <i class="material-icons">save</i>
+  </a>
+  <a class="header-action" href="javascript: void(0);" *ngIf="!isEditMode" (click)="onEditMode()">
+    <i class="material-icons">edit</i>
+  </a>
+  <div class="card-header card-header-icon card-header-primary">
+    <div class="card-icon">
+      <i class="material-icons">format_color_text</i>
+    </div>
+    <h4 class="card-title">
+      {{name}}
+    </h4>
+  </div>
+  <div class="card-body">
+    <textarea id="xm-widget-md" rows="10"></textarea>
+  </div>
+</div>

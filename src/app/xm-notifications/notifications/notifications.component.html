@@ -1,0 +1,30 @@
+<ul class="navbar-nav navbar-right xm-notifications-container" *ngIf="config">
+  <li class="nav-item dropdown">
+    <a class="nav-link"
+       href="#pablo"
+       id="navbarDropdownMenuLink"
+       data-toggle="dropdown"
+       aria-haspopup="true"
+       aria-expanded="false">
+      <i class="material-icons">notifications</i>
+      <span class="notification" *ngIf="notificationsCount">{{ notificationsCount }}</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right xm-notifications" aria-labelledby="navbarDropdownMenuLink">
+      <ng-container *ngFor="let item of notifications; let i = index">
+        <a class="dropdown-item notification-item"
+           [ngClass]="{'hasDate' : item.updateDate}"
+           (click)="onNavigate(item, $event)"
+           *ngIf="i <= showCount">
+          <span *ngIf="!config.showAsHtml">{{ item.label }}</span>
+          <div *ngIf="config.showAsHtml" [innerHTML]="item.label"></div>
+          <span class="update-date" *ngIf="item.updateDate">{{ item.updateDate | date}}</span>
+          <span class="close-notification material-icons" (click)="onRemoveItem($event, item);">close</span>
+        </a>
+      </ng-container>
+
+      <div class="notifications-actions text-right">
+        <a class="show-all" href="javascript: void(0);"><span class="text-primary" jhiTranslate="xm-notifications.showAll" *ngIf="redirectUrl" (click)="viewAll(redirectUrl)">View all</span></a>
+      </div>
+    </div>
+  </li>
+</ul>

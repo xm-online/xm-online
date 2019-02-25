@@ -1,0 +1,40 @@
+<ng-container *ngIf="pockets$ | async as fetchedPockets">
+  <ng-container
+    *ngIf="fetchedPockets; then resultPockets; else noPocketsData"
+  ></ng-container>
+
+  <ng-template #resultPockets>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th><span jhiTranslate="xm-balance.common.fields.label">Label</span></th>
+          <th><span jhiTranslate="xm-balance.common.fields.start-date">Start date</span></th>
+          <th><span jhiTranslate="xm-balance.common.fields.end-date">End date</span></th>
+          <th><span jhiTranslate="xm-balance.common.fields.amount">Amount</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let pocket of fetchedPockets">
+          <td>
+            {{pocket.label}}
+          </td>
+          <td>
+            {{pocket.startDateTime | date:'yyyy-MM-dd HH:mm'}}
+          </td>
+          <td>
+            {{pocket.endDateTime | date:'yyyy-MM-dd HH:mm'}}
+          </td>
+          <td>
+            {{pocket.amount}}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-template>
+
+  <ng-template #noPocketsData>
+    <no-data [show]="true"></no-data>
+  </ng-template>
+</ng-container>

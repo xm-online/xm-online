@@ -1,0 +1,81 @@
+<div class="card widget-card-weather">
+  <div class="card-header card-header-icon card-header-primary">
+    <div class="card-icon">
+      <i class="material-icons">beach_access</i>
+    </div>
+    <h4 class="card-title">{{weather.location?.city}} ({{weather.location?.country}})</h4>
+  </div>
+  <div class="card-body">
+    <xm-loader [showLoader]="showLoader"></xm-loader>
+
+    <div class="row" *ngIf="!showLoader">
+
+      <div class="col-xs-6 col-sm-6" [ngSwitch]="weather.type">
+        <div *ngSwitchCase="'sun'">
+          <div class="weather-icon sun-shower">
+            <div class="weather-cloud"></div>
+            <div class="weather-sun">
+              <div class="weather-rays"></div>
+            </div>
+            <div class="weather-rain"></div>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'sunny'">
+          <div class="weather-icon weather-sunny">
+            <div class="weather-sun">
+              <div class="weather-rays"></div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'storm'">
+          <div class="weather-icon weather-thunder-storm">
+            <div class="weather-cloud"></div>
+            <div class="weather-lightning">
+              <div class="weather-bolt"></div>
+              <div class="weather-bolt"></div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'cloud'">
+          <div class="weather-icon weather-cloudy">
+            <div class="weather-cloud"></div>
+            <div class="weather-cloud"></div>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'rain'">
+          <div class="weather-icon weather-rainy">
+            <div class="weather-cloud"></div>
+            <div class="weather-rain"></div>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'flurry'">
+          <div class="weather-icon weather-flurries">
+            <div class="weather-cloud"></div>
+            <div class="weather-snow">
+              <div class="weather-flake"></div>
+              <div class="weather-flake"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-6">
+        <div class="weather-temp">{{weather.item?.condition?.temp}}&deg;C</div>
+
+        <div class="weather-condition">
+          {{weather.atmosphere?.humidity}}%
+          <span class="weather-caption" jhiTranslate="ext-common.weather-widget.humidity">Humidity</span>
+        </div>
+        <div class="weather-condition">{{weather.wind?.speed}}
+          <span jhiTranslate="ext-common.weather-widget.ms">m/s</span>
+          <span class="weather-caption" jhiTranslate="ext-common.weather-widget.wind-speed">Wind speed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

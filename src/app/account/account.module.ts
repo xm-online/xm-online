@@ -1,14 +1,13 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {
     Activate,
     Password,
     PasswordResetInit,
     PasswordResetFinish,
-    PasswordStrengthBarComponent,
     SignUpComponent,
     ActivateComponent,
     PasswordComponent,
@@ -18,13 +17,13 @@ import {
     SocialRegisterComponent,
     SocialAuthComponent,
 } from './';
-import {accountState} from "./account.route";
-import {GateSharedModule} from "../shared/shared.module";
+import {accountState} from './account.route';
+import {XmSharedModule} from '../shared/shared.module';
 
 
 @NgModule({
     imports: [
-        GateSharedModule,
+        XmSharedModule,
         RouterModule.forRoot(accountState, { useHash: false })
     ],
     declarations: [
@@ -33,7 +32,6 @@ import {GateSharedModule} from "../shared/shared.module";
         ActivateComponent,
         SignUpComponent,
         PasswordComponent,
-        PasswordStrengthBarComponent,
         PasswordResetInitComponent,
         PasswordResetFinishComponent,
         SettingsComponent

@@ -1,0 +1,20 @@
+<div class="card" *ngIf="balances && balances.length > 0">
+  <div class="card-header card-header-icon card-header-primary">
+    <div class="card-icon">
+      <i class="material-icons">attach_money</i>
+    </div>
+    <h4 class="card-title" jhiTranslate="xm-balance.balance-list-card.title">Balances</h4>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-6 balance-section" #balanceSections (click)="onClickDetail(balance.id)"
+           *ngFor="let balance of balances">
+        <div class="ct-chart" [id]="'balance-pie-' + balance.id"></div>
+        <div>
+          <p class="balance-name">{{getBalanceSpec(balance).name | i18nName :principal}}</p>
+          <h5 class="balance-amount">{{balance.amount}} {{getMeasureSpec(balance).name | i18nName :principal}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

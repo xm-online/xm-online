@@ -1,69 +1,111 @@
 <div class="row" *ngIf="settingsAccount">
-  <div class="col-md-8 col-md-offset-2">
+  <div class="col-md-8 offset-md-2">
     <div class="card">
-      <div class="card-header card-header-icon" data-background-color="primary">
-        <i class="material-icons">settings_applications</i>
-      </div>
-      <div class="card-content">
+      <div class="card-header card-header-icon card-header-primary">
+        <div class="card-icon">
+          <i class="material-icons">settings_applications</i>
+        </div>
         <h4 class="card-title" jhiTranslate="settings.form.general">General info</h4>
-
+      </div>
+      <div class="card-body">
         <form name="form" role="form" (ngSubmit)="save()" #settingsForm="ngForm" novalidate>
           <div class="alert alert-success" *ngIf="success" jhiTranslate="settings.messages.success">
             <strong>Settings saved!</strong>
           </div>
-          <div class="form-group label-floating">
-            <label class="control-label" for="firstName" jhiTranslate="global.form.firstname">First Name</label>
-            <input type="text" class="form-control" id="firstName" name="firstName"
-                   [(ngModel)]="settingsAccount.firstName" minlength=1 maxlength=50 #firstNameInput="ngModel" required>
-            <div *ngIf="firstNameInput.dirty && firstNameInput.invalid">
-              <small class="form-text text-danger"
-                     *ngIf="firstNameInput.errors.required"
-                     jhiTranslate="global.messages.validate.firstname.required">
-                Your first name is required.
-              </small>
-              <small class="form-text text-danger"
-                     *ngIf="firstNameInput.errors.minlength"
-                     jhiTranslate="global.messages.validate.firstname.minlength">
-                Your first name is required to be at least 1 character.
-              </small>
-              <small class="form-text text-danger"
-                     *ngIf="firstNameInput.errors.maxlength"
-                     jhiTranslate="global.messages.validate.firstname.maxlength">
-                Your first name cannot be longer than 50 characters.
-              </small>
-            </div>
-          </div>
-          <div class="form-group label-floating">
-            <label class="control-label" for="lastName" jhiTranslate="global.form.lastname">Last Name</label>
-            <input type="text" class="form-control" id="lastName" name="lastName"
-                   [(ngModel)]="settingsAccount.lastName" minlength=1 maxlength=50 #lastNameInput="ngModel" required>
-            <div *ngIf="lastNameInput.dirty && lastNameInput.invalid">
-              <small class="form-text text-danger"
-                     *ngIf="lastNameInput.errors.required" jhiTranslate="global.messages.validate.lastname.required">
-                Your last name is required.
-              </small>
-              <small class="form-text text-danger"
-                     *ngIf="lastNameInput.errors.minlength"
-                     jhiTranslate="global.messages.validate.lastname.minlength">
-                Your last name is required to be at least 1 character.
-              </small>
-              <small class="form-text text-danger"
-                     *ngIf="lastNameInput.errors.maxlength"
-                     jhiTranslate="global.messages.validate.lastname.maxlength">
-                Your last name cannot be longer than 50 characters.
-              </small>
-            </div>
+          <div class="form-group">
+            <mat-form-field>
+              <input matInput
+                     type="text"
+                     id="firstName"
+                     name="firstName"
+                     [(ngModel)]="settingsAccount.firstName"
+                     minlength=1
+                     maxlength=50
+                     #firstNameInput="ngModel"
+                     required
+                     placeholder="{{'global.form.firstname' | translate}}">
+              <mat-error *ngIf="firstNameInput.hasError('required')">
+                <span jhiTranslate="global.messages.validate.firstname.required">
+                  Your first name is required.
+                </span>
+              </mat-error>
+              <mat-error *ngIf="firstNameInput.hasError('minlength')">
+                <span jhiTranslate="global.messages.validate.firstname.minlength">
+                  Your first name is required to be at least 1 character.
+                </span>
+              </mat-error>
+              <mat-error *ngIf="firstNameInput.hasError('maxlength')">
+                <span jhiTranslate="global.messages.validate.firstname.maxlength">
+                  Your first name cannot be longer than 50 characters.
+                </span>
+              </mat-error>
+            </mat-form-field>
           </div>
           <div class="form-group">
-            <select class="form-control selectpicker" id="langKey" name="langKey" data-style="btn btn-primary btn-round"
-                    [(ngModel)]="settingsAccount.langKey" data-size="4">
-              <option *ngFor="let language of languages" [value]="language">{{language | findLanguageFromKey}}</option>
-            </select>
+            <mat-form-field>
+              <input matInput
+                     type="text"
+                     id="lastName"
+                     name="lastName"
+                     [(ngModel)]="settingsAccount.lastName"
+                     minlength=1
+                     maxlength=50
+                     #lastNameInput="ngModel"
+                     required
+                     placeholder="{{'global.form.lastname' | translate}}">
+              <mat-error *ngIf="lastNameInput.hasError('required')">
+                <span jhiTranslate="global.messages.validate.lastname.required">
+                  Your last name is required.
+                </span>
+              </mat-error>
+              <mat-error *ngIf="lastNameInput.hasError('minlength')">
+                <span jhiTranslate="global.messages.validate.lastname.minlength">
+                  Your last name is required to be at least 1 character.
+                </span>
+              </mat-error>
+              <mat-error *ngIf="lastNameInput.hasError('maxlength')">
+                <span jhiTranslate="global.messages.validate.lastname.maxlength">
+                  Your last name cannot be longer than 50 characters.
+                </span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group" *ngIf="languages && languages.length > 1">
+            <mat-form-field>
+              <mat-select [(ngModel)]="settingsAccount.langKey"
+                          name="langKey"
+                          id="langKey"
+                          placeholder="{{'xm-entity.entity-detail-dialog.add.choose-type' | translate}}"
+                          required>
+                <mat-option *ngFor="let language of languages"
+                            [value]="language">
+                  {{language | findLanguageFromKey}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
 
+          <ng-container *ngIf="utcTime && time">
+            <div class="form-group">
+              <div>
+                <b>{{'settings.form.utc-time' | translate}}</b>
+                {{utcTime | xmDateTime: false : '+00:00'}}
+              </div>
+              <div>
+                <b>{{'settings.form.local-time' | translate}}</b>
+                {{time | xmDateTime}}
+              </div>
+              <div>
+                <b>{{'settings.form.offset-time' | translate}}</b>
+                {{timeZoneOffset}}
+              </div>
+            </div>
+          </ng-container>
+
           <div class="text-right">
-            <button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary"
-                    jhiTranslate="settings.form.button">Save
+            <button mat-raised-button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary"
+                    *xmPermitted="['ACCOUNT.UPDATE']">
+              <span jhiTranslate="settings.form.button">Save</span>
             </button>
           </div>
         </form>
@@ -72,13 +114,62 @@
   </div>
 </div>
 
-<div class="row" *ngIf="settingsAccount">
-  <div class="col-md-8 col-md-offset-2">
+<div class="row" *xmPermitted="['ACCOUNT.TFA.DISABLE']">
+  <div class="col-md-8 offset-md-2">
     <div class="card">
-      <div class="card-header card-header-icon" data-background-color="primary">
-        <i class="material-icons">settings_applications</i>
+      <div class="card-header card-header-icon card-header-primary">
+        <div class="card-icon">
+          <i class="material-icons">verified_user</i>
+        </div>
+        <h4 class="card-title" jhiTranslate="settings.security.name">Security</h4>
       </div>
-      <div class="card-content">
+      <div class="card-body">
+        <form name="securityCfgForm" role="form" (ngSubmit)="updateSecuritySettings()" #settingsForm="ngForm" novalidate>
+          <div class="alert alert-success" *ngIf="securityChanged" jhiTranslate="settings.messages.success">
+            <strong>Settings saved!</strong>
+          </div>
+          <div class="form-group">
+            <mat-checkbox color="primary" [(ngModel)]="tfaEnabled"
+                          name="twoFAStatus">
+              {{'settings.security.twoFAStatus' | translate}}
+            </mat-checkbox>
+          </div>
+          <div class="form-group">
+            <mat-checkbox color="primary" [(ngModel)]="autoLogoutEnabled"
+                          name="autoLogout">
+              {{'settings.security.autoLogout' | translate}}
+            </mat-checkbox>
+
+            <mat-form-field>
+              <input matInput
+                     type="number"
+                     id="autoLogoutTime"
+                     name="autoLogoutTime"
+                     [(ngModel)]="autoLogoutTime"
+                     [disabled]="!autoLogoutEnabled"
+                     placeholder="seconds">
+            </mat-form-field>
+          </div>
+          <div class="text-right">
+            <button mat-raised-button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary">
+              <span jhiTranslate="settings.form.button">Save</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *xmPermitted="['TENANT.LOGIN.GET_LIST']">
+  <div class="col-md-8 offset-md-2">
+    <div class="card">
+      <div class="card-header card-header-icon card-header-primary">
+        <div class="card-icon">
+          <i class="material-icons">settings_applications</i>
+        </div>
+      </div>
+      <div class="card-body">
         <h4 class="card-title" jhiTranslate="settings.form.logins">Logins</h4>
         <xm-user-login-form [user]="settingsAccount"></xm-user-login-form>
       </div>

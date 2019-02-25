@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActivate } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
+import { JhiPaginationUtil } from 'ng-jhipster';
 
-import { UserRouteAccessService } from '../shared';
-import { PaginationUtil } from 'ng-jhipster';
-
+import { UserRouteAccessService, ITEMS_PER_PAGE } from '../shared';
 import { ApplicationComponent } from './application.component';
-import { EntityDeletePopupComponent } from './entity-delete-dialog.component';
-import { EntityPopupComponent } from './entity-dialog.component';
 import { EntityDetailComponent } from './entity-detail.component';
 
 @Injectable()
 export class ApplicationResolvePagingParams implements Resolve<any> {
 
-    constructor(private paginationUtil: PaginationUtil) {}
+    constructor(private paginationUtil: JhiPaginationUtil) {
+    }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const page = route.queryParams['page'] ? route.queryParams['page'] : '1';
         const sort = route.queryParams['sort'] ? route.queryParams['sort'] : 'id,asc';
+        const size = route.queryParams.size && parseInt(route.queryParams.size, 10) || ITEMS_PER_PAGE;
         return {
+            size: size,
             page: this.paginationUtil.parsePage(page),
             predicate: this.paginationUtil.parsePredicate(sort),
             ascending: this.paginationUtil.parseAscending(sort)
@@ -34,6 +34,10 @@ export const applicationRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
+            privileges: {
+                condition: 'AND',
+                value: ['XMENTITY_SPEC.GET', 'XMENTITY.GET_LIST']
+            },
             pageTitle: 'global.menu.applications.application'
         },
         canActivate: [UserRouteAccessService]
@@ -46,38 +50,17 @@ export const applicationRoute: Routes = [
             pageTitle: 'global.menu.applications.application'
         },
         canActivate: [UserRouteAccessService]
-    }
-];
-
-export const entityPopupRoute: Routes = [
-    {
-        path: 'application/:key/entity-new',
-        component: EntityPopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'xm.xmEntity.detail.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
     },
     {
-        path: 'application/:key/:id/edit',
-        component: EntityPopupComponent,
+        path: 'search',
+        component: ApplicationComponent,
+        resolve: {
+            'pagingParams': ApplicationResolvePagingParams
+        },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'xm.xmEntity.detail.title'
+            pageTitle: 'xm.xmEntity.search'
         },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    },
-    {
-        path: 'application/:key/:id/delete',
-        component: EntityDeletePopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'xm.xmEntity.detail.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
+        canActivate: [UserRouteAccessService]
     }
 ];

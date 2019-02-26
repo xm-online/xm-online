@@ -194,7 +194,12 @@ export class Principal {
     }
 
     getName(): String {
-        return this.isIdentityResolved() ? [this.userIdentity.firstName, this.userIdentity.lastName].join(' ') : null;
+        if (!this.isIdentityResolved()) {return null}
+        if (this.userIdentity.firstName ||  this.userIdentity.lastName) {
+            return [this.userIdentity.firstName, this.userIdentity.lastName].join(' ');
+        } else {
+            return this.userIdentity.logins[0].login;
+        }
     }
 
     getLangKey(): string {

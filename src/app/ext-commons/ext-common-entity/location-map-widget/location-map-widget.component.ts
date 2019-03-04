@@ -1,5 +1,7 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 import { buildMapId, buildPinSymbol } from '../../../shared/helpers/google-map-helper';
 import { XmEntity, XmEntityService } from '../../../xm-entity/';
@@ -20,6 +22,7 @@ export class LocationMapWidgetComponent implements OnInit {
     groups: any[];
     currentGroup: any;
     markerClusterer: any;
+    gMapApiReady$ = new BehaviorSubject<boolean>(false);
 
     constructor(private xmEntityService: XmEntityService) {
     }
@@ -42,11 +45,20 @@ export class LocationMapWidgetComponent implements OnInit {
             query: this.currentGroup.query,
             size: this.currentGroup.size ? this.currentGroup.size : 20
         }).subscribe(
-            (res: HttpResponse<XmEntity[]>) =>
-                this.onShowMap(res.body),
+            (res: HttpResponse<XmEntity[]>) => {
+                this.gMapApiReady$
+                    .pipe(
+                        filter(status => status === true)
+                    )
+                    .subscribe(() => this.onShowMap(res.body))
+            },
             (res: Response) =>
                 console.log('Error')
         );
+    }
+
+    onAfterGMapApiInit() {
+        this.gMapApiReady$.next(true);
     }
 
     onShowMap(data: any[]) {

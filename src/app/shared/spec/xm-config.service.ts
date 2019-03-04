@@ -37,10 +37,6 @@ export class XmApplicationConfigService {
             } else {
                 this.applyTheme(DEFAULT_THEME);
             }
-
-            if (data && data.hasOwnProperty('googleApiKey')) {
-                this.applyMapsGoogleApis(data.googleApiKey ? data.googleApiKey : '');
-            }
         });
     }
 
@@ -73,13 +69,4 @@ export class XmApplicationConfigService {
         head.appendChild(link);
         link.addEventListener('load', () => this.setResolved(true));
     }
-
-    private applyMapsGoogleApis(key: string) {
-        const head = document.head || document.getElementsByTagName('head') [0];
-        const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${key}&libraries=geometry`;
-        head.appendChild(script);
-        console.log('init google map ', script.src);
-    }
-
 }

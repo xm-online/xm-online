@@ -15,6 +15,8 @@
         {{group.name}}
       </button>
     </div>
-    <div [id]="mapId" class="map"></div>
+    <ng-template xmGMapApiInit (gMapApiReady)="onAfterGMapApiInit()">
+      <div [id]="mapId" class="map"></div>
+    </ng-template>
   </div>
 </div>

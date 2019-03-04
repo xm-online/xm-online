@@ -37,7 +37,12 @@
              [attr.aria-labelledby]="'heading-' + location.id"
         >
           <h5 class="mt-4" *ngIf="location">{{getPrintAddress(location)}}</h5>
-          <div id="{{'location-map-' + location.id}}" class="map" *ngIf="location.latitude && location.longitude"></div>
+
+          <ng-container *ngIf="locationMaps.hasOwnProperty(location.id)">
+            <ng-template xmGMapApiInit (gMapApiReady)="onAfterGMapApiInit(location)">
+              <div id="{{'location-map-' + location.id}}" class="map" *ngIf="location.latitude && location.longitude"></div>
+            </ng-template>
+          </ng-container>
         </div>
       </div>
     </div>

@@ -1,17 +1,18 @@
-import {ChangeDetectorRef, Component, Input, OnInit, AfterViewInit, ViewChild} from '@angular/core';
-import {FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {TranslateService} from '@ngx-translate/core';
-import {JhiEventManager} from 'ng-jhipster';
-import {XmConfigService} from '../../shared';
-import {Principal} from '../../shared/auth/principal.service';
-import {LocationSpec} from '../shared/location-spec.model';
-import {Location} from '../shared/location.model';
-import {LocationService} from '../shared/location.service';
-import {XmEntity} from '../shared/xm-entity.model';
-import {ISO3166_CODES} from './iso-3166-codes';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { ChangeDetectorRef, Component, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
+import { JhiEventManager } from 'ng-jhipster';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+
+import { XmConfigService } from '../../shared';
+import { Principal } from '../../shared/auth/principal.service';
+import { LocationSpec } from '../shared/location-spec.model';
+import { Location } from '../shared/location.model';
+import { LocationService } from '../shared/location.service';
+import { XmEntity } from '../shared/xm-entity.model';
+import { ISO3166_CODES } from './iso-3166-codes';
 
 declare let swal: any;
 declare let google: any;
@@ -26,7 +27,7 @@ export interface CountryOption {
     templateUrl: './location-detail-dialog.component.html',
     styleUrls: ['./location-detail-dialog.component.scss']
 })
-export class LocationDetailDialogComponent implements OnInit, AfterViewInit {
+export class LocationDetailDialogComponent implements OnInit {
     @Input() xmEntity: XmEntity;
     @Input() location: Location = new Location();
     @Input() locationSpecs: LocationSpec[];
@@ -140,7 +141,7 @@ export class LocationDetailDialogComponent implements OnInit, AfterViewInit {
         });
     }
 
-    ngAfterViewInit() {
+    onAfterGMapApiInit() {
         this.locationMap = this.loadMap();
         this.locationMarker = this.loadMarker();
         this.applyMapHandlers();

@@ -109,6 +109,7 @@
                 "remove-error": "Not removed. Try again."
             },
             "refresh": "Refresh",
+            "open": "Open",
             "filters-show": "Show filters",
             "filters-hide": "Hide filters"
         },

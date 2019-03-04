@@ -41,6 +41,8 @@ export * from './privilege/privilege.service';
 export * from './privilege/privilege.directive';
 export * from './privilege/xmPrivilege.directive';
 
+export * from './g-map/xmGMapApiInit.directive'
+
 export * from './services/parse-by-path.service';
 
 export * from './components/loader/loader.component';

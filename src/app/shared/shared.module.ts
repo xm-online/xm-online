@@ -35,7 +35,8 @@ import {
     XmConfigService,
     XmConfirmDialogComponent,
     XmPasswordNeededComponent,
-    XmPrivilegeDirective
+    XmPrivilegeDirective,
+    XmGMapApiInitDirective
 } from './';
 import { PrivacyAndTermsDialogComponent } from './components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
 import { AceEditorDirective } from './directives/ace-editor.directive';
@@ -91,6 +92,7 @@ import { DigitOnlyDirective } from './directives/digit-only.directive';
         NoDataComponent,
         PermitDirective,
         XmPrivilegeDirective,
+        XmGMapApiInitDirective,
         PasswordStrengthBarComponent,
         XmPasswordNeededComponent,
         XmConfirmDialogComponent,
@@ -172,6 +174,7 @@ import { DigitOnlyDirective } from './directives/digit-only.directive';
         DigitOnlyDirective,
         PermitDirective,
         XmPrivilegeDirective,
+        XmGMapApiInitDirective,
         PasswordStrengthBarComponent,
         XmPasswordNeededComponent,
         XmConfirmDialogComponent,

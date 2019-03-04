@@ -41,7 +41,7 @@ export class AttachmentCardComponent implements OnInit {
     }
 
     isImage(): boolean {
-        return this.attachment.valueContentType.startsWith('image');
+        return this.attachment.hasOwnProperty('valueContentType') && this.attachment.valueContentType.startsWith('image');
     }
 
     loadImage() {

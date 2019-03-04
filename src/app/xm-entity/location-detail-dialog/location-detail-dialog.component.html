@@ -162,7 +162,9 @@
 
       <div class="row">
         <div class="col-12">
-          <div class="location-detail-dialog__map"></div>
+          <ng-template xmGMapApiInit (gMapApiReady)="onAfterGMapApiInit()">
+            <div class="location-detail-dialog__map"></div>
+          </ng-template>
         </div>
       </div>
     </div>

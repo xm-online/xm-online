@@ -1,17 +1,17 @@
-import { HttpResponse } from '@angular/common/http';
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateService } from '@ngx-translate/core';
-import { JhiEventManager } from 'ng-jhipster';
+import {HttpResponse} from '@angular/common/http';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {TranslateService} from '@ngx-translate/core';
+import {JhiEventManager} from 'ng-jhipster';
 
-import { Subscription } from 'rxjs';
-import { Principal } from '../../shared/auth/principal.service';
-import { LocationDetailDialogComponent } from '../location-detail-dialog/location-detail-dialog.component';
-import { LocationSpec } from '../shared/location-spec.model';
-import { Location } from '../shared/location.model';
-import { LocationService } from '../shared/location.service';
-import { XmEntity } from '../shared/xm-entity.model';
-import { XmEntityService } from '../shared/xm-entity.service';
+import {Subscription} from 'rxjs';
+import {Principal} from '../../shared/auth/principal.service';
+import {LocationDetailDialogComponent} from '../location-detail-dialog/location-detail-dialog.component';
+import {LocationSpec} from '../shared/location-spec.model';
+import {Location} from '../shared/location.model';
+import {LocationService} from '../shared/location.service';
+import {XmEntity} from '../shared/xm-entity.model';
+import {XmEntityService} from '../shared/xm-entity.service';
 
 declare let $: any;
 declare let google: any;
@@ -101,17 +101,23 @@ export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onCollapseMap(location: Location) {
-        setTimeout(() => {
-            if (this.locationMaps.hasOwnProperty(location.id)) {
+        if (this.locationMaps.hasOwnProperty(location.id)) {
+            setTimeout(() => {
                 google.maps.event.trigger(this.locationMaps[location.id], 'resize');
-            } else {
-                this.locationMaps[location.id] = LocationListCardComponent.loadMap(location);
-            }
+            }, 50);
+        } else {
+            this.locationMaps[location.id] = undefined;
+        }
+    }
+
+    onAfterGMapApiInit(location: Location) {
+        setTimeout(() => {
+            this.locationMaps[location.id] = LocationListCardComponent.loadMap(location);
         }, 50);
     }
 
     onManage(location) {
-        const modalRef = this.modalService.open(LocationDetailDialogComponent, { size: 'lg', backdrop: 'static'});
+        const modalRef = this.modalService.open(LocationDetailDialogComponent, {size: 'lg', backdrop: 'static'});
         modalRef.componentInstance.xmEntity = this.xmEntity;
         modalRef.componentInstance.locationSpecs = this.locationSpecs;
         modalRef.componentInstance.location = Object.assign({}, location);

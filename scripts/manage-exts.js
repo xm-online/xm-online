@@ -22,5 +22,5 @@ fs.readFile('config.angular.json', function (err, data) {
     const CURRENT_LAZY_ARRAY = json["projects"]["md-pro-angular-cli"]["architect"]["build"]["options"][KEY_LAZY];
     LAZY_ARRAY.map(l => CURRENT_LAZY_ARRAY.push(l));
     json["projects"]["md-pro-angular-cli"]["architect"]["build"]["options"][KEY_LAZY] = CURRENT_LAZY_ARRAY;
-    fs.writeFile("angular.json", JSON.stringify(json, null, 4), ()=> {console.log('done!')});
+    fs.writeFile("angular.json", JSON.stringify(json, null, 4), ()=> {console.log('Extensions processed!')});
 });

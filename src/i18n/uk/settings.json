@@ -3,13 +3,21 @@
         "form": {
             "general": "Загальна інформація",
             "button": "Зберегти",
-            "logins": "Логіни"
+            "logins": "Логіни",
+            "utc-time": "UTC-час: ",
+            "local-time": "Місцевий час: ",
+            "offset-time": "Зміщення часового поясу: "
         },
         "messages": {
             "success": "<strong>Налаштування збережено!</strong>",
             "logins": {
                 "success": "<strong>Логін збережений!</strong>"
             }
+        },
+        "security" : {
+            "name" : "Параметри безпеки",
+            "twoFAStatus" : "Двофакторна аутентифікація",
+            "autoLogout" : "Авто вихід"
         }
     }
 }

@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+  <h4 class="modal-title text-left" jhiTranslate="xm-balance.balance-detail-dialog.title">Balance detail</h4>
+</div>
+<div class="modal-body">
+  <div class="table-responsive" *ngIf="pockets?.length">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th><span jhiTranslate="xm-balance.common.fields.label">Label</span></th>
+        <th><span jhiTranslate="xm-balance.common.fields.start-date">Start date</span></th>
+        <th><span jhiTranslate="xm-balance.common.fields.end-date">End date</span></th>
+        <th><span jhiTranslate="xm-balance.common.fields.amount">Amount</span></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let pocket of pockets">
+        <td>
+          {{pocket.label}}
+        </td>
+        <td>
+          {{pocket.startDateTime | date:'yyyy-MM-dd HH:mm'}}
+        </td>
+        <td>
+          {{pocket.endDateTime | date:'yyyy-MM-dd HH:mm'}}
+        </td>
+        <td>
+          {{pocket.amount}}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <no-data [show]="!pockets?.length"></no-data>
+</div>
+<div class="modal-footer">
+  <button mat-raised-button
+          type="button"
+          class="btn"
+          data-dismiss="modal"
+          (click)="onCancel()">
+    <span jhiTranslate="xm-balance.common.cancel">Cancel</span>
+  </button>
+</div>

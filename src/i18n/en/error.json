@@ -1,6 +1,39 @@
 {
     "error": {
         "403": "You are not authorized to access the page.",
-        "title": "Error page!"
-    }
+        "title": "Error page!",
+        "wallet.not.active": "Wallet not active!",
+        "not.enough.credits": "Not enough credits!"
+    },
+    "errors": {
+        "error.internalServerError": "Internal server error",
+        "privilegeOperationWrong": "Operation not supported '{{ name }}'!",
+        "privilegeInsufficient": "Insufficient privileges '{{ name }}'!",
+        "accessDenied": "Access denied",
+        "internalServerError": "Internal server error",
+        "server.not.reachable": "Server not reachable",
+        "url.not.found": "Not found",
+        "NotNull": "Field {{ fieldName }} cannot be empty!",
+        "Size": "Field {{ fieldName }} does not meet min/max size requirements!",
+        "userexists": "Login name already used!",
+        "emailexists": "Email is already in use!",
+        "idexists": "A new {{ entityName }} cannot already have an ID",
+        "invalid_request": "Invalid request",
+        "invalid_client": "Invalid client",
+        "invalid_grant": "Invalid grant",
+        "unauthorized_client": "Unauthorized client",
+        "unsupported_grant_type": "Unsupported grant type",
+        "invalid_scope": "Invalid scope",
+        "insufficient_scope": "Insufficient scope",
+        "invalid_token": "Invalid token",
+        "redirect_uri_mismatch": "Redirect uri mismatch",
+        "unsupported_response_type": "Unsupported response type",
+        "access_denied": "Access denied",
+        "validation": "Input parameters error",
+        "notfound": "Resource not found",
+        "error.business": "Forwarding error",
+        "unauthorized": "Unauthorized",
+        "session_expired": "Session expired. Please login."
+    },
+    "Unauthorized": "Need authorization!"
 }

@@ -1,0 +1,38 @@
+.frame-height {
+    height: calc(100vh - 250px);
+    overflow: hidden;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    cursor: move;
+}
+
+.actions {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    z-index: 2;
+
+    button {
+        background-color: rgba(#000, .4) !important;
+        color: #fff !important;
+        .material-icons {
+            font-size: 27px;
+        }
+    }
+}
+
+#canvas {
+    position: absolute;
+}
+
+.custom-modal-footer {
+    position: absolute;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    max-width: 100%;
+    right: 12px;
+    bottom: 10px;
+    z-index: 2;
+}

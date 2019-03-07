@@ -1,23 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { JhiHealthService } from './health.service';
-import {UseGlobalTranslations} from "../../shared/language/use.global.location";
-import {JhiLanguageService} from "ng-jhipster";
 
 @Component({
     selector: 'xm-health-modal',
     templateUrl: './health-modal.component.html'
 })
-@UseGlobalTranslations()
-export class JhiHealthModalComponent {
+export class JhiHealthModalComponent implements OnInit {
 
     currentHealth: any;
+    aceEditorOptions: any = {
+        highlightActiveLine: false,
+        maxLines: 1000,
+        printMargin: false,
+        showGutter: false,
+        autoScrollEditorIntoView: true
+    };
+    editorValue: string;
 
-    constructor(private healthService: JhiHealthService,
-                public activeModal: NgbActiveModal,
-                private jhiLanguageService: JhiLanguageService) {
-        this.jhiLanguageService.addLocation('health');
+    constructor(public activeModal: NgbActiveModal,
+                private healthService: JhiHealthService) {
+    }
+
+    ngOnInit() {
+        this.editorValue = JSON.stringify(this.currentHealth, null, 4) || null;
     }
 
     baseName(name) {

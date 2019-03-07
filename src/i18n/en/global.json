@@ -1,5 +1,22 @@
 {
     "global": {
+        "common" : {
+            "cancel": "Cancel",
+            "accept": "Accept",
+            "are-you-sure": "Are you sure?",
+            "yes-exit": "Yes, exit!"
+        },
+        "shared": {
+            "privacy-and-terms-dialog": {
+                "title": "Privacy and Terms",
+                "i-agree": "I agree to Terms of Service and processing of my information as described in the Privacy Policy"
+            },
+            "ext-md-editor": {
+                "placeholder": "Click edit to change the description in the field",
+                "placeholder-empty": "Field is empty! Click edit to add a description in the field",
+                "save-button": "Save changes"
+            }
+        },
         "messages": {
             "validate": {
                 "newpassword": {
@@ -61,12 +78,14 @@
             "oldpassword": "Old password",
             "firstname": "First name",
             "lastname": "Last name",
-            "login": "Login"
+            "login": "Login",
+            "otp": "One Time Password"
         },
         "field": {
             "id": "ID"
         },
         "all": "All",
+        "item-count": "Showing {{first}} - {{second}} of {{total}} items.",
         "menu": {
             "account": {
                 "mini": {
@@ -76,6 +95,7 @@
                 },
                 "settings": "Settings",
                 "password": "Password",
+                "passwordSetup": "Invitation to the system",
                 "logout": "Sign out",
                 "profile": "Profile"
             },
@@ -83,30 +103,39 @@
                 "main": "Dashboards"
             },
             "applications": {
-                "main": "Applications"
+                "main": "Applications",
+                "application": "Application"
             },
             "admin": {
                 "main": "Administration",
                 "mini": {
                     "gateway": "G",
+                    "dashboard": "D",
+                    "rolesManagement": "R",
+                    "rolesMatrix": "R",
                     "userManagement": "U",
+                    "clientManagement": "C",
                     "metrics": "M",
                     "health": "H",
                     "audits": "A",
                     "logs": "L",
                     "formPlayground": "F",
-                    "configuration": "C",
+                    "maintenance": "M",
                     "translation": "T",
                     "apidocs": "A"
                 },
                 "gateway": "Gateway",
-                "userManagement": "User management",
+                "dashboard": "Dashboard",
+                "rolesManagement": "Roles Management",
+                "rolesMatrix": "Roles Matrix",
+                "userManagement": "User Management",
+                "clientManagement": "Client management",
                 "metrics": "Metrics",
                 "health": "Health",
                 "audits": "Audits",
                 "logs": "Logs",
                 "formPlayground": "Form Playground",
-                "configuration": "Configuration",
+                "maintenance": "Maintenance",
                 "translation": "Translation",
                 "apidocs": "API"
             },
@@ -127,7 +156,22 @@
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             }
         },
-        "new": "New"
+        "new": "New",
+        "perPage": "items per page",
+        "noData": "No data!",
+        "actionPerformed" : "Action performed",
+        "rest-select-placeholder-search": "Search",
+        "rest-select-placeholder-noresults": "No results found"
+    },
+    "mat": {
+        "paginator": {
+            "itemsPerPageLabel": "Items per page:",
+            "firstPageLabel": "First page",
+            "lastPageLabel": "Last page",
+            "nextPageLabel": "Next page",
+            "previousPageLabel": "Previous page",
+            "of": "of"
+        }
     },
     "entity": {
         "delete": {
@@ -145,15 +189,23 @@
         },
         "detail": {
             "square": "Square: {{square}} m"
-        }
+        },
+        "search": "Search",
+        "add": "Add"
     },
     "xm": {
         "xmEntity": {
             "listView": "List view",
             "treeView": "Tree view"
+        },
+        "delete": {
+            "question": "Are you sure you want to delete [ <b>{{name}}</b> ]?"
         }
     },
     "error": {
+        "privilegeOperationWrong": "Operation not supported '{{ name }}'!",
+        "privilegeInsufficient": "Insufficient privileges '{{ name }}'!",
+        "accessDenied": "Access denied",
         "internalServerError": "Internal server error",
         "server.not.reachable": "Server not reachable",
         "url.not.found": "Not found",
@@ -173,6 +225,10 @@
         "redirect_uri_mismatch": "Redirect uri mismatch",
         "unsupported_response_type": "Unsupported response type",
         "access_denied": "Access denied",
-        "validation": "Input parameters error"
+        "validation": "Input parameters error",
+        "notfound": "Resource not found",
+        "business": "Forwarding error",
+        "unauthorized": "Unauthorized",
+        "session_expired": "Session expired. Please login."
     }
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { JhiLanguageService } from 'ng-jhipster';
 
 import { Principal } from '../../shared';
 import { Password } from './password.service';
@@ -7,9 +6,13 @@ import { ChangePassword } from './password.model';
 
 @Component({
     selector: 'xm-password',
-    templateUrl: './password.component.html'
+    templateUrl: './password.component.html',
+    styleUrls: ['./password.component.scss']
 })
 export class PasswordComponent implements OnInit {
+
+    isShowPassword = false;
+    isShowNewPassword = false;
     doNotMatch: string;
     error: string;
     success: string;
@@ -17,11 +20,9 @@ export class PasswordComponent implements OnInit {
     password: ChangePassword;
 
     constructor(
-        private jhiLanguageService: JhiLanguageService,
         private passwordService: Password,
         private principal: Principal
     ) {
-        this.jhiLanguageService.addLocation('password');
         this.password = new ChangePassword();
     }
 

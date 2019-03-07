@@ -1,0 +1,11 @@
+<ng-template #confirmDialog>
+    <form [formGroup]="form" novalidate (submit)="onSubmit()">
+        <div class="modal-header">
+            <h4 class="modal-title text-left">Exit platform?</h4>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn" (click)="onDismiss()">dismiss</button>
+            <button type="submit" class="btn btn-primary">Yes</button>
+        </div>
+    </form>
+</ng-template>

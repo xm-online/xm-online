@@ -1,37 +1,77 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable ,  Subject } from 'rxjs';
 import { AccountService } from './account.service';
+import { SUPER_ADMIN } from './auth.constants';
+import { JhiAlertService } from 'ng-jhipster';
+import { shareReplay, takeUntil } from 'rxjs/operators';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 
-@Injectable()
+import { XmEntity } from '../../xm-entity';
+
+import * as moment from 'moment';
+
+const CACHE_SIZE = 1;
+const EXPIRES_DATE_FIELD = 'authenticationTokenexpiresDate';
+
+@Injectable({ providedIn: 'root' })
 export class Principal {
     private userIdentity: any;
     private authenticated = false;
     private authenticationState = new Subject<any>();
     private promise: Promise<any>;
 
-    constructor(
-        private account: AccountService
-    ) {}
+    private reload$ = new Subject<void>();
+    private xmProfileCache$: Observable<XmEntity>;
 
-    authenticate(identity) {
-        this.userIdentity = identity;
-        this.authenticated = identity !== null;
+    constructor(
+        private account: AccountService,
+        private alertService: JhiAlertService,
+        private $localStorage: LocalStorageService,
+        private $sessionStorage: SessionStorageService) {
+        this.checkTokenAndForceIdentity();
+    }
+
+    logout() {
+        this.userIdentity = null;
+        this.authenticated = false;
         this.authenticationState.next(this.userIdentity);
     }
 
     hasAnyAuthority(authorities: string[]): Promise<boolean> {
-        if (!this.authenticated || !this.userIdentity || !this.userIdentity.authorities) {
+        if (!this.authenticated || !this.userIdentity || !this.userIdentity.roleKey) {
             return Promise.resolve(false);
         }
 
-        for (let i = 0; i < authorities.length; i++) {
-            if (this.userIdentity.authorities.indexOf(authorities[i]) !== -1) {
-                return Promise.resolve(true);
-            }
+        return Promise.resolve(true);
+    }
+
+    hasPrivilegesInline(privileges: string[] = [], privilegesOperation: string = 'OR'): any {
+        if (!this.authenticated || !this.userIdentity || !this.userIdentity.privileges) {
+            return false;
         }
 
-        return Promise.resolve(false);
+        if (SUPER_ADMIN === this.userIdentity.roleKey) {
+            return true;
+        }
+
+        if (privilegesOperation === 'OR') {
+            for (let i = privileges.length; i--;) {
+                if (this.userIdentity.privileges.indexOf(privileges[i]) !== -1) {
+                    return true;
+                }
+            }
+            return false;
+        } else if (privilegesOperation === 'AND') {
+            return privileges.filter(el => this.userIdentity.privileges.indexOf(el) === -1);
+        } else {
+            this.alertService.warning('error.privilegeOperationWrong', {name: privilegesOperation});
+            return false;
+        }
+
+    }
+
+    hasPrivileges(privileges: string[] = [], privilegesOperation: string = 'OR'): Promise<any> {
+        return Promise.resolve(this.hasPrivilegesInline(privileges, privilegesOperation));
     }
 
     hasAuthority(authority: string): Promise<boolean> {
@@ -39,8 +79,8 @@ export class Principal {
             return Promise.resolve(false);
         }
 
-        return this.identity().then((id) => {
-            return Promise.resolve(id.authorities && id.authorities.indexOf(authority) !== -1);
+        return this.identity().then((result) => {
+            return Promise.resolve(result.roleKey && result.roleKey === authority);
         }, () => {
             return Promise.resolve(false);
         });
@@ -65,25 +105,37 @@ export class Principal {
                 }
 
                 // retrieve the userIdentity data from the server, update the identity object, and then resolve.
-                this.account.get().toPromise()
-                    .then((account) => {
+                this.account
+                    .get()
+                    .toPromise()
+                    .then(response => {
+                        const account = response.body;
                         this.promise = null;
                         if (account) {
+                            if (account.permissions) {
+                                account.privileges = account.permissions.reduce((result, el) => {
+                                    if (el.enabled) {
+                                        result.push(el.privilegeKey);
+                                    }
+                                    return result;
+                                }, []);
+                            }
                             this.userIdentity = account;
                             this.authenticated = true;
+                            account.timeZoneOffset = this.setTimezoneOffset();
                         } else {
                             this.userIdentity = null;
                             this.authenticated = false;
                         }
                         this.authenticationState.next(this.userIdentity);
                         resolve(this.userIdentity);
-                    }).catch((err) => {
+                    }).catch(err => {
                         this.promise = null;
                         if (mockUser) {
                             this.userIdentity = {
                                 firstName: 'NoName',
                                 lastName: 'NoName',
-                                authorities: ['ROLE_USER']
+                                roleKey: 'ROLE_USER'
                             };
                             this.authenticated = true;
                             this.authenticationState.next(this.userIdentity);
@@ -92,19 +144,35 @@ export class Principal {
                             this.userIdentity = null;
                             this.authenticated = false;
                             this.authenticationState.next(this.userIdentity);
-                            throw (err);
+                            resolve(this.userIdentity);
                         }
                     });
             });
         }
     }
 
-    isAuthenticated(): boolean {
-        return this.authenticated;
+    /**
+     * Returns user XM Profile
+     * @param force
+     */
+    getXmEntityProfile(force?: boolean): Observable<XmEntity> {
+        if (force) {
+            this.reload$.next();
+            this.xmProfileCache$ = null;
+        }
+
+        if (!this.xmProfileCache$) {
+            this.xmProfileCache$ = this.loadProfile().pipe(
+                takeUntil(this.reload$),
+                shareReplay(CACHE_SIZE)
+            );
+        }
+
+        return this.xmProfileCache$;
     }
 
-    isIdentityResolved(): boolean {
-        return this.userIdentity !== undefined;
+    isAuthenticated(): boolean {
+        return this.authenticated;
     }
 
     getAuthenticationState(): Observable<any> {
@@ -112,14 +180,63 @@ export class Principal {
     }
 
     getImageUrl(): String {
-        return this.isIdentityResolved() ? this.userIdentity.imageUrl : null;
+        if (this.isIdentityResolved()) {
+            if ('null' === this.userIdentity.imageUrl) {
+                return null;
+            }
+            return this.userIdentity.imageUrl;
+        }
+        return null;
+    }
+
+    getUserKey(): string {
+        return this.isIdentityResolved() ? this.userIdentity.userKey : null;
     }
 
     getName(): String {
-        return this.isIdentityResolved() ? this.userIdentity.firstName : null;
+        if (!this.isIdentityResolved()) {return null}
+        if (this.userIdentity.firstName ||  this.userIdentity.lastName) {
+            return [this.userIdentity.firstName, this.userIdentity.lastName].join(' ');
+        } else {
+            return this.userIdentity.logins[0].login;
+        }
     }
 
     getLangKey(): string {
         return this.isIdentityResolved() ? this.userIdentity.langKey : null;
     }
+
+    setLangKey(langKey: string) {
+        if (this.isIdentityResolved()) {
+            this.userIdentity.langKey = langKey;
+        }
+    }
+
+    setTimezoneOffset(): string {
+        // for now setting offset from browser
+        return moment().format('Z');
+    }
+
+    private checkTokenAndForceIdentity() {
+        /* This method forcing identity on page load when user has token but identity does not inits */
+        const tokeExDate = this.$localStorage.retrieve(EXPIRES_DATE_FIELD) ||
+            this.$sessionStorage.retrieve(EXPIRES_DATE_FIELD);
+        const now = new Date();
+        if (tokeExDate > now) {
+            this.identity();
+        }
+    }
+
+    /**
+     * True if resolved. Inner helper method.
+     * @returns {boolean}
+     */
+    private isIdentityResolved(): boolean {
+        return this.userIdentity;
+    }
+
+    private loadProfile(): Observable<XmEntity> {
+        return this.account.getProfile();
+    }
+
 }

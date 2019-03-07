@@ -2,5 +2,36 @@
     "error": {
         "403": "Ви не маєте дозволу на доступ до цієї сторінки.",
         "title": "Сторінка помилки!"
-    }
+    },
+    "errors": {
+        "error.internalServerError": "Внутрішня помилка сервера",
+        "privilegeOperationWrong": "Операція не підтримується '{{ name }}'!",
+        "privilegeInsufficient": "Недостатньо привілеїв '{{ name }}'!",
+        "accessDenied": "Доступ заборонено",
+        "internalServerError": "Внутрішня помилка сервера",
+        "server.not.reachable": "Сервер недоступний",
+        "url.not.found": "Не знайдено",
+        "NotNull": "Поле {{fieldName}} не може бути порожнім!",
+        "Size": "Поле {{fieldName}} не відповідає мінімальному / максовому розміру!",
+        "userexists": "Ім&#39;я входу вже використовується!",
+        "emailexists": "Електронна пошта вже використовується!",
+        "idexists": "Новий {{entityName}} не може вже мати ідентифікатор",
+        "invalid_request": "Невірний запит",
+        "invalid_client": "Недійсний клієнт",
+        "invalid_grant": "Недійсний грант",
+        "unauthorized_client": "Неавторизований клієнт",
+        "unsupported_grant_type": "Непідтримуваний тип гранту",
+        "invalid_scope": "Неправильний обсяг",
+        "insufficient_scope": "Недостатній обсяг",
+        "invalid_token": "Неприпустимий маркер",
+        "redirect_uri_mismatch": "Переспрямовувати uri невідповідність",
+        "unsupported_response_type": "Непідтримуваний тип відповіді",
+        "access_denied": "Доступ заборонено",
+        "validation": "Помилка вхідних параметрів",
+        "notfound": "Ресурс не знайдено",
+        "error.business": "Помилка переадресації",
+        "unauthorized": "Необхідна авторизація",
+        "session_expired": "Сесія закінчилася. Будь ласка, увійдіть"
+    },
+    "Unauthorized": "Потрібна авторизація!"
 }

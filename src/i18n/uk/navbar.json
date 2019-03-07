@@ -1,6 +1,8 @@
 {
     "navbar": {
         "toggleNotification": "Переключити навігацію",
-        "notification": "Сповіщення"
+        "notification": "Сповіщення",
+        "search": "Пошук"
     }
 }
+

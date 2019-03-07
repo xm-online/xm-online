@@ -1,0 +1,48 @@
+<form class="m-0" name="commentForm" role="form" novalidate (ngSubmit)="onConfirmSave()" #commentForm="ngForm">
+  <div class="modal-header">
+    <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+    <h4 class="modal-title text-left">
+      <span jhiTranslate="xm-entity.comment-detail-dialog.title">Add new comment for the</span> [<b>{{xmEntity.name}}</b>]
+    </h4>
+  </div>
+  <div class="modal-body">
+    <xm-loader [showLoader]="showLoader"></xm-loader>
+    <div class="form-group" [hidden]="!(commentSpecs?.length > 1)">
+      <mat-form-field>
+        <mat-select [(ngModel)]="comment.typeKey"
+                    id="field_typeKey"
+                    name="typeKey"
+                    placeholder="{{'xm-entity.comment-detail-dialog.choose-type' | translate}}"
+                    [disabled]="commentSpecs?.length == 1">
+          <mat-option *ngFor="let commentSpec of commentSpecs" [value]="commentSpec.key">
+            {{(commentSpec.name | i18nName: principal)?.toUpperCase()}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <textarea matInput
+                  name="comment"
+                  [(ngModel)]="comment.message"
+                  required
+                  #commentBody="ngModel"
+                  rows="4"
+                  placeholder="{{'xm-entity.common.fields.message' | translate}}">
+        </textarea>
+        <mat-error *ngIf="commentBody.hasError('required')">
+          <span jhiTranslate="xm-entity.common.validation.required">This field is required.</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()">
+      <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
+    </button>
+    <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="commentForm.form.invalid || showLoader">
+      <span jhiTranslate="xm-entity.common.save">Save</span>
+    </button>
+  </div>
+</form>

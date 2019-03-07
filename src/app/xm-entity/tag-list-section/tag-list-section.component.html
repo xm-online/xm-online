@@ -1,0 +1,13 @@
+<div class="xm-sources-tags" *ngIf="tagSpecs?.length > 0">
+  <div class="holder">
+    <tag-input theme="filled-theme"
+               [placeholder]="'xm-entity.tag-list-section.type-tag' | translate"
+               [secondaryPlaceholder]="'xm-entity.tag-list-section.type-tag' | translate"
+               [identifyBy]="'id'"
+               [displayBy]="'name'"
+               [(ngModel)]='tags'
+               (onAdd)="onAdd($event)"
+               (onRemove)="onRemove($event)">
+    </tag-input>
+  </div>
+</div>

@@ -1,0 +1,342 @@
+.card {
+    min-height: 128px;
+}
+
+.tab-content {
+    margin: 0;
+}
+
+.delete-entity-button {
+    cursor: pointer;
+}
+
+.filter-inline {
+    cursor: pointer;
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.th-hidden {
+    opacity: 0;
+    visibility: hidden;
+
+    &:last-child {
+        width: 30px;
+    }
+}
+
+@mixin flexbox {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+%flexbox { @include flexbox; }
+
+@mixin flex-direction($value: row) {
+    @if $value == row-reverse {
+        -webkit-box-direction: reverse;
+        -webkit-box-orient: horizontal;
+    } @else if $value == column {
+        -webkit-box-direction: normal;
+        -webkit-box-orient: vertical;
+    } @else if $value == column-reverse {
+        -webkit-box-direction: reverse;
+        -webkit-box-orient: vertical;
+    } @else {
+        -webkit-box-direction: normal;
+        -webkit-box-orient: horizontal;
+    }
+    -webkit-flex-direction: $value;
+    -moz-flex-direction: $value;
+    -ms-flex-direction: $value;
+    flex-direction: $value;
+}
+
+@mixin flex-dir($args...) { @include flex-direction($args...); }
+
+@mixin flex-wrap($value: nowrap) {
+    -webkit-flex-wrap: $value;
+    -moz-flex-wrap: $value;
+    @if $value == nowrap {
+        -ms-flex-wrap: none;
+    } @else {
+        -ms-flex-wrap: $value;
+    }
+    flex-wrap: $value;
+}
+
+@mixin flex-flow($values: (row nowrap)) {
+    -webkit-flex-flow: $values;
+    -moz-flex-flow: $values;
+    -ms-flex-flow: $values;
+    flex-flow: $values;
+}
+
+@mixin order($int: 0) {
+    -webkit-box-ordinal-group: $int + 1;
+    -webkit-order: $int;
+    -moz-order: $int;
+    -ms-flex-order: $int;
+    order: $int;
+}
+
+@mixin flex-grow($int: 0) {
+    -webkit-box-flex: $int;
+    -webkit-flex-grow: $int;
+    -moz-flex-grow: $int;
+    -ms-flex-positive: $int;
+    flex-grow: $int;
+}
+
+@mixin flex-shrink($int: 1) {
+    -webkit-flex-shrink: $int;
+    -moz-flex-shrink: $int;
+    -ms-flex-negative: $int;
+    flex-shrink: $int;
+}
+
+@mixin flex-basis($value: auto) {
+    -webkit-flex-basis: $value;
+    -moz-flex-basis: $value;
+    -ms-flex-preferred-size: $value;
+    flex-basis: $value;
+}
+
+@mixin justify-content($value: flex-start) {
+    @if $value == flex-start {
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+    } @else if $value == flex-end {
+        -webkit-box-pack: end;
+        -ms-flex-pack: end;
+    } @else if $value == space-between {
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+    } @else if $value == space-around {
+        -ms-flex-pack: distribute;
+    } @else {
+        -webkit-box-pack: $value;
+        -ms-flex-pack: $value;
+    }
+    -webkit-justify-content: $value;
+    -moz-justify-content: $value;
+    justify-content: $value;
+}
+
+@mixin flex-just($args...) { @include justify-content($args...); }
+
+@mixin align-items($value: stretch) {
+    @if $value == flex-start {
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+    } @else if $value == flex-end {
+        -webkit-box-align: end;
+        -ms-flex-align: end;
+    } @else {
+        -webkit-box-align: $value;
+        -ms-flex-align: $value;
+    }
+    -webkit-align-items: $value;
+    -moz-align-items: $value;
+    align-items: $value;
+}
+
+@mixin align-self($value: auto) {
+    -webkit-align-self: $value;
+    -moz-align-self: $value;
+    @if $value == flex-start {
+        -ms-flex-item-align: start;
+    } @else if $value == flex-end {
+        -ms-flex-item-align: end;
+    } @else {
+        -ms-flex-item-align: $value;
+    }
+    align-self: $value;
+}
+
+@mixin align-content($value: stretch) {
+    -webkit-align-content: $value;
+    -moz-align-content: $value;
+    @if $value == flex-start {
+        -ms-flex-line-pack: start;
+    } @else if $value == flex-end {
+        -ms-flex-line-pack: end;
+    } @else {
+        -ms-flex-line-pack: $value;
+    }
+    align-content: $value;
+}
+
+.xm-pagination-container {
+    @include flexbox;
+    @include flex-wrap(wrap);
+    @include align-items(center);
+    padding: 0 0 8px 0;
+    .spacer {
+        @include flex-grow(1);
+    }
+
+    @media all and (max-width: 490px) {
+        .spacer {
+            display: none;
+        }
+    }
+}
+
+.xm-pagination-part {
+    &.pager-part {
+        margin: 0 10px;
+    }
+
+    @media all and (max-width: 490px) {
+        width: 100%;
+        &.pager-part {
+            margin: 0;
+        }
+    }
+}
+
+.xm-table-options {
+    float: right;
+    position: relative;
+    cursor: pointer;
+    background-color: transparent;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    text-align: center;
+
+    >span {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+
+        >i {
+            line-height: 30px;
+        }
+    }
+
+    &:hover {
+        background-color: #eee;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        right: 0 !important;
+        top: 100% !important;
+        float: none !important;
+        left: auto !important;
+
+        >li {
+            >a{
+                color: #333 !important;
+            }
+
+            &:hover {
+                >a{
+                    color: #fff !important;
+                }
+            }
+        }
+    }
+
+    .dropdown-toggle {
+        &:after {
+            display: none !important;
+        }
+    }
+}
+
+.xm-state {
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 280px;
+    min-width: 90px;
+    text-overflow: ellipsis;
+}
+
+.has-refresh-button {
+    .card-title {
+        padding-right: 50px;
+    }
+
+    .card-header-tabs {
+        width: calc(100% - 75px);
+    }
+}
+
+.xm-refresh-data {
+    position: absolute;
+    right: 12px;
+    top: -37px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 4;
+}
+
+.xm-filters {
+    position: absolute;
+    right: 52px;
+    top: -37px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 4;
+}
+
+.xm-functions {
+    position: absolute;
+    right: 52px;
+    top: -37px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 4;
+}
+
+@media (max-width: 767px) {
+    .table-responsive.sm-overflow .xm-table-options {
+        width: auto !important;
+        height: auto !important;
+    }
+    .table-responsive.sm-overflow .xm-table-options>span {
+        display: none;
+    }
+    .table-responsive.sm-overflow .xm-table-options .dropdown-menu {
+        position: relative !important;
+        top: 20px !important;
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+@media (min-width: 768px) {
+    .table-responsive.sm-overflow {
+        overflow: visible;
+    }
+}
+

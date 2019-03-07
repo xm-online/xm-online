@@ -6,12 +6,19 @@
         "messages": {
             "error": {
                 "authentication": "<strong>Не вдалося ввійти!</strong> Будь ласка, перевірте свої облікові дані та повторіть спробу."
+            },
+            "otp": {
+                "notification": "Please enter one time password from email"
             }
         },
         "form": {
             "password": "Пароль",
             "rememberMe": "Пам&#39;ятай мене",
-            "button": "Увійти"
+            "button": "Увійти",
+            "otpValidateCancel": "Cancel",
+            "otpValidateButton": "Send OTP",
+            "show-password": "Показати пароль",
+            "hide-password": "Приховати пароль"
         },
         "password": {
             "forgot": "Ви забули свій пароль?"

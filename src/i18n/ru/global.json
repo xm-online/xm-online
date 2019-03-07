@@ -1,5 +1,22 @@
 {
     "global": {
+        "common" : {
+            "cancel": "Отменить",
+            "accept": "Принять",
+            "are-you-sure": "Вы уверены?",
+            "yes-exit": "Да, выйти!"
+        },
+        "shared": {
+            "privacy-and-terms-dialog": {
+                "title": "Конфиденциальность и Условия",
+                "i-agree": "Я согласен с Условиями Обслуживания и обработкой своей информации, как описано в Политике Конфиденциальности"
+            },
+            "ext-md-editor": {
+                "placeholder": "Нажмите кнопку редактировать чтобы изменить описание в поле",
+                "placeholder-empty": "Поле пустое! Нажмите кнопку редактировать чтобы добавить описание в поле",
+                "save-button": "Сохранить изменения"
+            }
+        },
         "messages": {
             "validate": {
                 "newpassword": {
@@ -61,12 +78,14 @@
             "oldpassword": "Старый пароль",
             "firstname": "Имя",
             "lastname": "Фамилия",
-            "login": "Логин"
+            "login": "Логин",
+            "otp": "One Time Password"
         },
         "field": {
             "id": "ID"
         },
         "all": "Все",
+        "item-count": "Отображено {{first}} - {{second}} из {{total}} элементов.",
         "menu": {
             "account": {
                 "mini": {
@@ -76,6 +95,7 @@
                 },
                 "settings": "Настройки",
                 "password": "Пароль",
+                "passwordSetup": "Приглашение в систему",
                 "logout": "Выйти",
                 "profile": "Профиль"
             },
@@ -83,30 +103,38 @@
                 "main": "Панели управления"
             },
             "applications": {
-                "main": "Приложения"
+                "main": "Приложения",
+                "application": "Приложение"
             },
             "admin": {
                 "main": "Администрирование",
                 "mini": {
                     "gateway": "Ш",
-                    "userManagement": "У",
+                    "rolesManagement": "Р",
+                    "rolesMatrix": "Р",
+                    "userManagement": "П",
+                    "clientManagement": "К",
                     "metrics": "М",
                     "health": "С",
                     "audits": "А",
                     "logs": "Л",
                     "formPlayground": "И",
-                    "configuration": "Н",
+                    "maintenance": "О",
                     "translation": "П",
                     "apidocs": "A"
                 },
                 "gateway": "Шлюз",
+                "dashboard": "Панель управления",
+                "rolesManagement": "Управление ролями",
+                "rolesMatrix": "Матрица ролей",
                 "userManagement": "Управление пользователями",
+                "clientManagement": "Управление клиентами",
                 "metrics": "Метрики",
                 "health": "Состояние",
                 "audits": "Аудит",
                 "logs": "Логи",
                 "formPlayground": "Игровая площадка форм",
-                "configuration": "Настройки",
+                "maintenance": "Обслуживание",
                 "translation": "Переводы",
                 "apidocs": "API"
             },
@@ -127,7 +155,22 @@
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             }
         },
-        "new": "Новый"
+        "new": "Новый",
+        "perPage": "элементов на странице",
+        "noData": "Нет данных!",
+        "actionPerformed" : "Action performed",
+        "rest-select-placeholder-search": "Поиск",
+        "rest-select-placeholder-noresults": "Ничего не найдено"
+    },
+    "mat": {
+        "paginator": {
+            "itemsPerPageLabel": "Показывать по:",
+            "firstPageLabel": "Первая страница",
+            "lastPageLabel": "Последняя страница",
+            "nextPageLabel": "Следующая страница",
+            "previousPageLabel": "Предыдущая страница",
+            "of": "c"
+        }
     },
     "entity": {
         "delete": {
@@ -145,15 +188,23 @@
         },
         "detail": {
             "square": "Площадь: {{square}} м"
-        }
+        },
+        "search": "Поиск",
+        "add": "Добавить"
     },
     "xm": {
         "xmEntity": {
             "listView": "В виде списка",
             "treeView": "В виде дерева"
+        },
+        "delete": {
+            "question": "Вы уверены что хотите удалить [ <b>{{name}}</b> ]?"
         }
     },
     "error": {
+        "privilegeOperationWrong": "Тип операції не підтримує '{{ name }}'!",
+        "privilegeInsufficient": "Недостатньо привілеї '{{ name }}'!",
+        "accessDenied": "Доступ запрещен",
         "internalServerError": "Внутренняя ошибка сервера",
         "server.not.reachable": "Сервер не доступен",
         "url.not.found": "Не найдено",
@@ -164,7 +215,7 @@
         "idexists": "Новый {{entityName}} не может иметь данный ID",
         "invalid_request": "Неверный запрос",
         "invalid_client": "Недопустимый клиент",
-        "invalid_grant": "Invalid grant",
+        "invalid_grant": "Недействительный грант",
         "unauthorized_client": "Неавторизованный клиент",
         "unsupported_grant_type": "Неподдерживаемый тип прав",
         "invalid_scope": "Invalid scope",
@@ -173,6 +224,10 @@
         "redirect_uri_mismatch": "Неверный URL перенаправления",
         "unsupported_response_type": "Неподдерживаемый тип ответа",
         "access_denied": "Доступ закрыт",
-        "validation": "Неверные входящие параметры"
+        "validation": "Неверные входящие параметры",
+        "notfound": "Запрашиваемый ресурс не найден",
+        "business": "Ошибка переадресации",
+        "unauthorized": "Необходима авторизация",
+        "session_expired": "Сессия истекла. Пожалуйста, войдите."
     }
 }

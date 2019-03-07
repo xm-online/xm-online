@@ -1,22 +1,9 @@
-<form ngNoForm action="{{ providerURL }}" method="POST">
+<form ngNoForm action="{{ 'uaa/social/signin/' + providerId }}" method="POST">
+  <button mat-raised-button type="submit" [ngClass]="icon.class" [class.has-image]="icon.src">
+    <i [ngClass]="icon.style" *ngIf="icon.style"></i>
+    <img [src]="icon.src" *ngIf="icon.src">
+  </button>
 
-    <!--Facebook-->
-    <button *ngIf="provider == 'facebook'" type="submit" class="btn btn-just-icon btn-round btn-facebook">
-        <i class="fa fa-facebook"></i>
-    </button>
-    <!--Twitter-->
-    <button *ngIf="provider == 'twitter'" type="submit" class="btn btn-just-icon btn-round btn-twitter">
-        <i class="fa fa-twitter"></i>
-    </button>
-    <!--Google +-->
-    <button *ngIf="provider == 'google'" type="submit" class="btn btn-just-icon btn-round btn-google">
-        <i class="fa fa-google-plus"></i>
-    </button>
-    <!--Linkedin-->
-    <button *ngIf="provider == 'linkedin'" type="submit" class="btn btn-just-icon btn-round btn-linkedin">
-        <i class="fa fa-linkedin"></i>
-    </button>
-
-    <input name="scope" type="hidden" value="{{ providerSetting }}"/>
-    <input name="_csrf" type="hidden" value="{{ csrf }}"/>
+  <input name="scope" type="hidden" value="{{scope}}"/>
+  <input name="_csrf" type="hidden" value="{{csrf}}"/>
 </form>

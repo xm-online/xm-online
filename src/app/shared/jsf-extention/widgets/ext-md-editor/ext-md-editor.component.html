@@ -1,0 +1,32 @@
+<div class="ext-md-editor">
+  <div class="ext-md-editor__header">
+    <div class="ext-md-editor__message" *ngIf="controlValue?.length else emptyMessage">
+      {{ 'global.shared.ext-md-editor.placeholder' | translate }} <b>{{ options?.title }}</b>!
+    </div>
+    <ng-template #emptyMessage>
+      <div class="ext-md-editor__message">
+        {{ 'global.shared.ext-md-editor.placeholder-empty' | translate }} <b>{{ options?.title }}</b>!
+      </div>
+    </ng-template>
+
+    <div class="ext-md-editor__actions">
+      <div class="ext-md-editor__actions-action">
+        <button type="button" mat-icon-button (click)="onToggleEditor()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ext-md-editor__editor" *ngIf="isEditable">
+    <td-text-editor [options]="editorOptions" [value]="componentText" #mdEditor></td-text-editor>
+
+    <div class="ext-md-editor__editor-actions">
+      <div class="ext-md-editor__editor-actions-action">
+        <button type="button" mat-raised-button color="primary" class="btn" (click)="onSaveMd()">
+          {{ 'global.shared.ext-md-editor.save-button' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

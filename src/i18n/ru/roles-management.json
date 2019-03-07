@@ -1,0 +1,46 @@
+{
+    "rolesManagement": {
+        "home": {
+            "labelCreate": "Создание новой роли",
+            "labelEdit": "Редактирование роли",
+            "title": "Роли"
+        },
+        "delete": {
+            "question": "Вы действительно хотите удалить роль '{{ roleKey }}'?"
+        },
+        "detail": {
+            "title": "Роль",
+            "permissions": "права доступа"
+        },
+        "chooseRole": "Выберите роль",
+        "key": "Имя",
+        "basedOn": "Основано на",
+        "description": "Описание",
+        "createdBy": "Создано",
+        "createdDate": "Дата создания",
+        "lastModifiedBy": "Модифицировано",
+        "lastModifiedDate": "Дата модификации",
+        "ok": "Ok",
+        "variables": "Допустимые переменные",
+        "permission": {
+            "checkAll": "Отметить все",
+            "privilegeKey": "Ключ привилегии",
+            "msName": "Название МС",
+            "permit": "Разрешить",
+            "permitted": "разрешенные",
+            "notPermitted": "неразрешенные",
+            "permittedAny": "хотябы один",
+            "onForbid": "При запрете",
+            "resourceCondition": "Условия ресурса",
+            "envCondition": "Условия окружения",
+            "createCondition": "Создание условия",
+            "editCondition": "Редактирование условия",
+            "condition": "Условие",
+            "conditionResourceInfo": "1. используйте SpEL функциональность<br>2. используйте # перед переменной<br>3. #subject.role, #subject.userKey, #subject.login переменные доступны",
+            "conditionEnvInfo": "1. используйте SpEL функциональность<br>2. используйте # перед переменной<br>3. #subject.role, #subject.userKey, #subject.login переменные доступны<br>4. #env['ipAddress'] переменная доступна"
+        },
+        "matrix": {
+            "title": "Матрица ролей"
+        }
+    }
+}

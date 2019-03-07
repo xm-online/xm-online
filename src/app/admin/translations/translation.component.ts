@@ -1,20 +1,15 @@
-import {AfterViewInit, Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Http} from '@angular/http';
-import {JhiLanguageService} from 'ng-jhipster';
-import {TranslationService} from './translation.service';
-import {UseGlobalTranslations} from '../../shared/language/use.global.location';
-import * as JSZip from 'jszip';
-import { LocalStorageService } from 'ng2-webstorage';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as FileSaver from 'file-saver';
-import {XmConfigService} from '../configuration/config.service';
+import * as JSZip from 'jszip';
+import { LocalStorageService } from 'ngx-webstorage';
+import { XmConfigService } from '../../shared/spec/config.service';
+import { TranslationService } from './translation.service';
 
 @Component({
     selector: 'xm-translation',
     templateUrl: './translation.component.html',
     styles: []
 })
-@UseGlobalTranslations()
 export class TranslationComponent implements OnInit, AfterViewInit {
 
     localization: any = {};
@@ -118,7 +113,6 @@ export class TranslationComponent implements OnInit, AfterViewInit {
     }
 
     onChangePropery($event, property, lang) {
-        console.log($event.target.value);
         property.langs[lang] = $event.target.value;
         this.saveState();
     }
@@ -130,13 +124,11 @@ export class TranslationComponent implements OnInit, AfterViewInit {
             langs: {en: missedTranslation.defaultValue}
         });
         this.saveState();
-    } 
+    }
 
     translate(property, lang) {
-//        this.service.translateSingle();
         this.service.translate(lang, property.langs['en'])
         .done(result => {
-            console.log(result.data.translations[0].translatedText);
             property.langs[lang] = result.data.translations[0].translatedText;
         });
         this.saveState();
@@ -215,7 +207,6 @@ export class TranslationComponent implements OnInit, AfterViewInit {
             }
 
             this.missedTranslations = rezArray;
-            console.log(this.missedTranslations);
         });
     };
 
@@ -267,7 +258,6 @@ export class TranslationComponent implements OnInit, AfterViewInit {
                 // see FileSaver.js
                 FileSaver.saveAs(content, "i18n.zip");
             });
-
     }
 
 

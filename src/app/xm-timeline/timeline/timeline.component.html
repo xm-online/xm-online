@@ -1,0 +1,67 @@
+<div class="container-fluid" *ngIf="timelinePage && timelinePage.timelines?.length > 0">
+  <div class="header text-center" *ngIf="showTimelineHeader">
+    <h3 class="title text-muted" jhiTranslate="xm-timeline.timeline.title">Timeline</h3>
+  </div>
+  <div>
+    <xm-loader [showLoader]="showLoader"></xm-loader>
+
+    <div style="display: flex; flex-direction: row; align-items: center;">
+      <div *ngIf="filter?.states?.length" class="btn-group empty-style" style="margin-right: 20px">
+        <button mat-raised-button
+                class="btn btn-primary btn-sm btn-round"
+                [class.disabled]="!currentSearch"
+                (click)="applyFastSearch('')">
+          <span jhiTranslate="global.all">All</span>
+        </button>
+        <button mat-raised-button
+                class="btn btn-primary btn-sm btn-round"
+                [class.disabled]="currentSearch === item.state"
+                (click)="applyFastSearch(item.state)"
+                *ngFor="let item of filter.states">
+          {{item.name}}
+        </button>
+      </div>
+    </div>
+
+    <ul class="timeline timeline-simple">
+      <li class="timeline-inverted"
+          *ngFor="let tl of timelinePage.timelines">
+        <div class="timeline-badge primary">
+          <i class="material-icons">history</i>
+        </div>
+        <div class="timeline-panel">
+          <div class="timeline-heading">
+            <h6>
+              {{tl.operationName}} {{timeAgo(tl.startDate)}}
+              <span jhiTranslate="xm-timeline.timeline.by">by</span>
+              {{tl.login}}
+            </h6>
+            <span class="badge badge-success" jhiTranslate="xm-timeline.timeline.success"
+                  *ngIf="tl.httpStatusCode < 300">
+              SUCCESS
+            </span>
+            <span class="badge badge-danger" jhiTranslate="xm-timeline.timeline.error"
+                  *ngIf="tl.httpStatusCode >= 300">
+              ERROR
+            </span>&nbsp;
+            <span class="badge badge-primary">{{tl.startDate | date:'dd/MM/yy HH:mm'}}</span>&nbsp;
+            <span class="badge badge-primary">{{tl.browser}}</span>&nbsp;
+            <span class="badge badge-primary">{{tl.opSystem}}</span>&nbsp;
+            <span class="badge badge-primary">{{tl.requestHeaders['x-forwarded-for']}}</span>&nbsp;
+          </div>
+          <div class="timeline-body" *ngIf="!template && (tl.requestBody || tl.responseBody)">
+            <span>{{tl.requestBody}}</span>&nbsp;
+            <span>{{tl.responseBody}}</span>
+          </div>
+          <div class="timeline-body" [innerHTML]="template(tl)"
+               *ngIf="template">
+          </div>
+        </div>
+      </li>
+    </ul>
+    <button type="submit" class="btn btn-primary btn-round" (click)="onNextPage(timelinePage.next)" [disabled]="showLoader"
+            *ngIf="timelinePage.next">
+      <span jhiTranslate="xm-timeline.timeline.more">more timeline events...</span>
+    </button>
+  </div>
+</div>

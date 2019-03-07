@@ -1,31 +1,24 @@
-<div class="row">
-  <div class="col-md-6">
-    <dynamic-widget *ngIf="defaultWidget" [class.one-col]="defaultWidget.config?.lotsCount==1" [widgetData]="{component: defaultWidget.component, inputs: {config: defaultWidget.config || {}}}"></dynamic-widget>
+<div *ngIf="defaultWidget" class="row default-row">
+  <div class="col-md-6 default-lef-col">
+    <xm-dynamic-widget [init]="{module: defaultWidget.module, component: defaultWidget.selector, config: defaultWidget.config}"
+                       *ngIf="defaultWidget.module">
+    </xm-dynamic-widget>
   </div>
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-header card-header-icon" data-background-color="primary" [hidden]="!isLoginFormView">
-        <i class="material-icons">person</i>
-      </div>
-      <div class="card-header card-header-icon" data-background-color="primary" [hidden]="isLoginFormView">
-        <i class="material-icons">person_add</i>
-      </div>
-      <div class="card-content">
-        <h4 class="card-title" jhiTranslate="login.title" [hidden]="!isLoginFormView">Sign in</h4>
-        <h4 class="card-title" jhiTranslate="register.title" [hidden]="isLoginFormView">Registration</h4>
-        <div class="text-center">
-          <div class="btn-group">
-            <button type="button" class="btn btn-primary btn-sm btn-round" [disabled]="isLoginFormView"
-                    (click)="changeMode()" jhiTranslate="login.signin">Sign-in
-            </button>
-            <button type="button" class="btn btn-primary btn-sm btn-round" [disabled]="!isLoginFormView"
-                    (click)="changeMode()" jhiTranslate="login.signup">Sign-up
-            </button>
-          </div>
-        </div>
-        <xm-login [hidden]="!isLoginFormView"></xm-login>
-        <xm-register [hidden]="isLoginFormView"></xm-register>
-      </div>
+  <div class="col-md-6 default-right-col">
+    <xm-dynamic-widget [init]="{module: signWidget.module, component: signWidget.selector, config: signWidget.config}"
+                       *ngIf="signWidget?.module">
+    </xm-dynamic-widget>
+
+    <dynamic-widget [widgetData]="{component: signWidget.component, inputs: {config: signWidget.config || {}}}"></dynamic-widget>
+  </div>
+</div>
+
+<div *ngIf="defaultLayout">
+  <div *ngFor="let row of defaultLayout" [className]="row.class">
+    <div *ngFor="let item of row?.content" [className]="item.class">
+      <xm-dynamic-widget [init]="{module: item.widget?.module, component: item.widget?.selector, config: item.widget?.config}"
+                         *ngIf="item.widget?.module">
+      </xm-dynamic-widget>
     </div>
   </div>
 </div>

@@ -1,28 +1,41 @@
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgJhipsterModule } from 'ng-jhipster';
-import { InfiniteScrollModule } from 'angular2-infinite-scroll';
-import {CustomTranslatePartialLoader} from './language/language.loader';
+
+export function getBrowserLang() {
+    const w: any = window;
+
+    if (typeof w === 'undefined' || typeof w.navigator === 'undefined') {
+        return undefined;
+    }
+    let browserLang = w.navigator.languages ? w.navigator.languages[0] : null;
+    browserLang = browserLang || w.navigator.language || w.navigator.browserLanguage || w.navigator.userLanguage;
+    if (browserLang.indexOf('-') !== -1) {
+        browserLang = browserLang.split('-') [0];
+    }
+    if (browserLang.indexOf('_') !== -1) {
+        browserLang = browserLang.split('_') [0];
+    }
+    return browserLang;
+}
 
 @NgModule({
     imports: [
         NgbModule.forRoot(),
         NgJhipsterModule.forRoot({
+            alertAsToast: false,
             i18nEnabled: true,
             defaultI18nLang: 'en'
-        }),
-        InfiniteScrollModule
+        })
     ],
     exports: [
         FormsModule,
-        HttpModule,
+        ReactiveFormsModule,
         CommonModule,
         NgbModule,
         NgJhipsterModule,
-        InfiniteScrollModule,
     ]
 })
-export class GateSharedLibsModule {}
+export class GateSharedLibsModule { }

@@ -1,0 +1,26 @@
+{
+    "clientManagement": {
+        "home": {
+            "createOrEditLabel": "Створіть або відредагуйте користувача",
+            "title": "Кліенти"
+        },
+        "delete": {
+            "question": "Ви впевнені, що хочете видалити користувача {{id}}?"
+        },
+        "detail": {
+            "title": "Кліент"
+        },
+        "clientId": "Ідентифікатор кліента",
+        "clientSecret": "Пароль кліента",
+        "roleKey": "Роль",
+        "description": "Опис",
+        "createdBy": "Створено",
+        "createdDate": "Дата створення",
+        "lastModifiedBy": "Змінено",
+        "lastModifiedDate": "Дата зміни",
+        "roles": "Ролі",
+        "role": "Роль",
+        "validityPeriod": "Термін дії",
+        "scopes-add": "Додати обсяги"
+    }
+}

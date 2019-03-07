@@ -1,38 +1,31 @@
-import {Injectable} from '@angular/core';
-import {Http, Response, RequestOptions, Headers, RequestOptionsArgs} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
-import {EventManager} from 'ng-jhipster';
-import {Principal} from 'app/shared';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Principal } from 'app/shared';
+import { JhiEventManager } from 'ng-jhipster';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 declare let $: any;
 
 @Injectable()
 export class TranslationService {
 
-    constructor(private http: Http,
-                private eventManager: EventManager,
+    constructor(private http: HttpClient,
+                private eventManager: JhiEventManager,
                 private principal: Principal) {
     }
 
     getFile(configPath: string): Observable<any> {
-        return this.http.get(configPath).map((res: Response) => {
-            return res.json();
-        });
-    }
-
-    private headers(): RequestOptions {
-        let headers = new Headers({ 'Content-Type': 'text/plain' });
-        let optArgs: RequestOptionsArgs = { headers: headers };
-        return new RequestOptions(optArgs);
+        return this.http.get(configPath).pipe(map((res: Response) => { return res.json(); }));
     }
 
     translate(target, q) {
-        let self = this;
-        let url = "https://www.googleapis.com/language/translate/v2";
-        let key = 'AIzaSyBqzZZrc4Wgc5nAH4mMZjnjBSdv-425qgU';
-        var jqxhr = $.ajax({
-            type: "POST",
-            url:`${url}?key=${key}`,
+        const self = this;
+        const url = 'https://www.googleapis.com/language/translate/v2';
+        const key = 'AIzaSyBqzZZrc4Wgc5nAH4mMZjnjBSdv-425qgU';
+        const jqxhr = $.ajax({
+            type: 'POST',
+            url: `${url}?key=${key}`,
             traditional: true,
             data: {
                 'source': 'en',
@@ -40,8 +33,8 @@ export class TranslationService {
                 'q': q
             }
         });
-        jqxhr.fail(function(error) {
-            self.eventManager.broadcast( {name: 'thirdpaty.httpError', content: error.responseJSON});
+        jqxhr.fail(function (error) {
+            self.eventManager.broadcast({name: 'thirdpaty.httpError', content: error.responseJSON});
         });
         return jqxhr;
     }

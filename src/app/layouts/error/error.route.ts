@@ -15,7 +15,8 @@ export const errorRoute: Routes = [
     component: ErrorComponent,
     data: {
       authorities: [],
-      pageTitle: 'error.title'
+      pageTitle: 'error.title',
+      error403: true
     },
   }
 ];

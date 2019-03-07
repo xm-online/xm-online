@@ -14,6 +14,7 @@
         "logins": "Логіни",
         "deactivated": "Деактивовано",
         "activated": "Активовано",
+        "autoLogout": "Auto logout",
         "firstName": "Ім&#39;я",
         "lastName": "Прізвище",
         "langKey": "Мова",
@@ -21,7 +22,13 @@
         "createdDate": "Створена дата",
         "lastModifiedBy": "Змінено на",
         "lastModifiedDate": "Змінена дата",
-        "profiles": "Профілі",
-        "userKey": "Ключ користувача"
+        "role": "Роль",
+        "userKey": "Ключ користувача",
+        "onlineUsers": "Користувачів онлайн: ",
+        "success": "Success",
+        "error": "Error",
+        "twoFAEnabled":"Two Factor authentication enabled",
+        "twoFADisabled":"Two Factor authentication disabled",
+        "search-by-login": "Шукати за логіном"
     }
 }

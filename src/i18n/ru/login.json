@@ -6,12 +6,19 @@
         "messages": {
             "error": {
                 "authentication": "<strong>Не удалось войти!</strong> Пожалуйста, проверьте ваши учетные данные и попробуйте еще раз."
+            },
+            "otp": {
+                "notification": "Please enter one time password from email"
             }
         },
         "form": {
             "password": "Пароль",
             "rememberMe": "Запомни меня",
-            "button": "Войти"
+            "button": "Войти",
+            "otpValidateCancel": "Cancel",
+            "otpValidateButton": "Send OTP",
+            "show-password": "Показать пароль",
+            "hide-password": "Скрыть пароль"
         },
         "password": {
             "forgot": "Вы забыли ваш пароль?"

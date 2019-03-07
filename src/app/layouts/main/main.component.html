@@ -2,20 +2,25 @@
 
 <xm-alerts></xm-alerts>
 <xm-alert-error></xm-alert-error>
+<xm-password-needed></xm-password-needed>
 
-<div class="wrapper">
-    <div class="sidebar" data-active-color="white" data-background-color="white">
-        <sidebar-cmp></sidebar-cmp>
-        <div class="sidebar-background"></div>
+<xm-loader [showLoader]="!(resolved$ | async)" [absolute]="true"></xm-loader>
+<div class="wrapper"
+     [ngClass]="{'xm-guest-layout': isGuestLayout, 'has-ackground' : guestBg}"
+     [style.backgroundImage]="guestBg">
+  <div class="sidebar" data-color="white" data-background-color="">
+    <xm-sidebar-cmp></xm-sidebar-cmp>
+    <div class="sidebar-background"></div>
+  </div>
+
+  <div class="main-panel" *ngIf="resolved$ | async">
+    <router-outlet name="navbar"></router-outlet>
+    <div class="main-content">
+      <div [class]="isGuestLayout ? 'container' : 'container-fluid'">
+        <router-outlet></router-outlet>
+      </div>
     </div>
-    <div class="main-panel">
-        <router-outlet name="navbar"></router-outlet>
-        <div class="main-content">
-            <div class="container-fluid">
-                <router-outlet></router-outlet>
-            </div>
-        </div>
-        <router-outlet name="popup"></router-outlet>
-        <xm-footer></xm-footer>
-    </div>
+    <router-outlet name="popup"></router-outlet>
+    <xm-footer></xm-footer>
+  </div>
 </div>

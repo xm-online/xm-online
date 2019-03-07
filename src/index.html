@@ -1,53 +1,45 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png" />
-    <link rel="icon" type="image/png" href="./assets/img/favicon.png" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>XM^online</title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-    <meta name="viewport" content="width=device-width" />
-    <!-- Bootstrap core CSS     -->
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/assets/css/simplemde.min.css" rel="stylesheet" />
-    <link href="/assets/css/leaflet.css" rel="stylesheet" />
-    <link href="/assets/css/leaflet.draw.css" rel="stylesheet" />
-    <!--  XM^online CSS    -->
-    <link href="/assets/css/xm.css" rel="stylesheet" />
-
-    <!--     Fonts and icons     -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
+  <base href='/'>
+  <meta charset="utf-8"/>
+  <link id="favicon" rel="icon" type="image/png"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=11"/>
+  <title>loading...</title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
+  <meta name="viewport" content="width=device-width"/>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
 </head>
+<body class="xm-body">
+<xm-main>
+  <div class="loader">
+    <svg class="circular" viewBox="25 25 50 50">
+      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle>
+    </svg>
+  </div>
+</xm-main>
 
-<body>
-    <base href='/'>
-    <xm-main>
-        <div class="loader">
-            <svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
-            </svg>
-        </div>
-    </xm-main>
-</body>
-<script>
-    (function () {
-        $.getJSON("/config/api/profile/webapp/settings-public.yml?toJson", {}, function(data) {
-            var settings = data;
-            var theme = settings.theme ? settings.theme : 'teal',
-                file = document.createElement('link'),
-                head = document.head || document.getElementsByTagName('head')[0];
-            file.type = 'text/css';
-            file.rel = 'stylesheet';
-            file.href = ['/assets/css/theme/material-', theme, '.css'].join("");
-            head.appendChild(file);
-        });
-
-    })();
-</script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQA399ap2SWlPwW46RPjuW2YlxtCDRqX0&libraries=geometry"></script>
-<script src="/assets/js/mtt-earth/three.min.js"></script>
-<script src="/assets/js/mtt-earth/Detector.js"></script>
+<script src="/assets/js/js-marker-clusterer/markerclusterer.js"></script>
 <script src="/assets/js/simplemde/simplemde.min.js"></script>
+<script src="/assets/js/markdown/marked.min.js"></script>
+<script src="/assets/js/qrcode/qrcode.min.js"></script>
+<script src="/assets/js/nomnoml/skanaar.vector.js"></script>
+<script src="/assets/js/nomnoml/underscore.min.js"></script>
+<script src="/assets/js/nomnoml/dagre.min.js"></script>
+<script src="/assets/js/nomnoml/nomnoml.js"></script>
+<script type="text/javascript">
+  /*var scriptsMap = [
+    'https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.3/es6-shim.min.js',
+    'https://unpkg.com/babel-standalone@6/babel.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/babili-standalone/0.0.8/babili.min.js'
+  ];*/
+  if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+    document.write('<script type="text/javascript" src="/assets/js/ie/es6-shim.min.js"><\/script>');
+    document.write('<script type="text/javascript" src="/assets/js/ie/babel.min.js"><\/script>');
+    document.write('<script type="text/javascript" src="/assets/js/ie/babili.min.js"><\/script>');
+  }
+</script>
+</body>
 </html>

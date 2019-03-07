@@ -1,0 +1,62 @@
+/**
+ XM Entity state
+ */
+.xm-state {
+    display: inline-block;
+    background: #e0e0e0;
+    padding: 0 12px;
+    border-radius: 32px;
+    font-size: 13px;
+
+    &.act-as-button {
+        opacity: 1;
+        transition: opacity, .2s, ease;
+        color: #fff;
+
+        &:hover {
+            cursor: pointer;
+            opacity: .8;
+        }
+
+        @media screen and (max-width: 420px) {
+            width: 100%;
+            display: block;
+        }
+    }
+
+    &.no-wrap {
+        white-space: nowrap;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.xm-state.xm-state-hover:hover {
+    background: #ccc;
+}
+
+.xm-state, .xm-state-icon {
+    height: 32px;
+    line-height: 32px;
+}
+
+.xm-state-icon {
+    display: block;
+    float: left;
+    background: #009587;
+    width: 32px;
+    border-radius: 50%;
+    text-align: center;
+    color: white;
+    margin: 0 8px 0 -12px;
+    padding: 4px 0;
+}
+
+.xm-states {
+    padding: 12px 0;
+}
+
+.xm-states.xm-state {
+    margin: 0 5px 3px 0;
+}

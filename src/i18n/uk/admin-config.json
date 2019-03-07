@@ -1,0 +1,76 @@
+{
+    "admin-config": {
+        "common": {
+            "save": "Зберегти",
+            "cancel": "Скасувати",
+            "menu": {
+                "title": "Конфігурація",
+                "dashboard-mng": "Конфігурація Панелі",
+                "specification-mng": "Специфікації",
+                "mini": {
+                    "dashboard-mng": "КП",
+                    "specification-mng": "С"
+                }
+            },
+            "fields": {
+                "id": "ID",
+                "name": "Назва",
+                "owner": "Власник",
+                "typeKey": "Код Типу",
+                "config": "Конфігурація",
+                "layout": "Розкладка",
+                "selector": "Селектор"
+            }
+        },
+        "dashboard-detail-dialog": {
+            "add": {
+                "title": "Додати нову панель",
+                "success": "Успішно"
+            },
+            "edit": {
+                "title": "Редагувати панель",
+                "success": "Успішно"
+            }
+        },
+        "dashboard-list-card": {
+            "title": "Панелі"
+        },
+        "specification-mng": {
+            "loading": "завантаження специфікації...",
+            "validate": "Перевірка",
+            "ui": {
+                "title": "Інтерфейс",
+                "save": "Оновити специфікацію Інтерфейсу"
+            },
+            "entity": {
+                "title": "Модель",
+                "save": "Оновити специфікацію Моделі"
+            },
+            "timeline": {
+                "title": "Історія",
+                "save": "Оновити специфікацію Історії"
+            },
+            "uaa": {
+                "title": "UAA",
+                "save": "Оновити специфікацію UAA"
+            },
+            "uaa-login": {
+                "title": "Логін",
+                "save": "Оновити специфікацію Логіна"
+            }
+        },
+        "widget-detail-dialog": {
+            "add": {
+                "title": "Додати новий віджет",
+                "success": "Успішно"
+            },
+            "edit": {
+                "title": "Редагувати віджет",
+                "success": "Успішно"
+            }
+        },
+        "widget-list-card": {
+            "title": "Віджети"
+        }
+    }
+}

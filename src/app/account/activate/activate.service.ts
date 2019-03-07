@@ -1,18 +1,17 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http, Response, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class Activate {
 
-    constructor(private http: Http) {}
+    constructor(private http: HttpClient) {
+    }
 
     get(key: string): Observable<any> {
-        const params: URLSearchParams = new URLSearchParams();
-        params.set('key', key);
-
-        return this.http.get('uaa/api/activate', {
-            search: params
-        }).map((res: Response) => res);
+        let params = new HttpParams();
+        params = params.set('key', key);
+        return this.http.get('uaa/api/activate', {params: params, observe: 'response'});
     }
+
 }

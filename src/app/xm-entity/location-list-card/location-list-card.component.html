@@ -1,0 +1,50 @@
+<div class="card">
+  <div class="card-header card-header-icon card-header-primary">
+    <div class="card-icon">
+      <i class="material-icons">place</i>
+    </div>
+    <h4 class="card-title" jhiTranslate="xm-entity.location-list-card.title">Locations</h4>
+  </div>
+  <div class="card-body">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
+      <div class="card-collapse mb-0" *ngFor="let location of locations">
+        <div class="card-header" role="tab" id="{{'heading-' + location.id" (click)="onCollapseMap(location)">
+          <a role="button"
+             data-toggle="collapse"
+             data-parent="#accordion"
+             href="{{'#collapse-' + location.id}}"
+             aria-expanded="false"
+             [attr.aria-controls]="'collapse-' + location.id"
+          >
+            <h4 class="panel-title">
+              <span class="row">
+                <span class="col">
+                  <em>({{getLocationSpec(location).name | i18nName: principal | uppercase}})</em>{{location | locationAddress}}
+                </span>
+                <span class="col-auto">
+                  <a (click)="onRemove(location)" class="d-inline"><i class="material-icons no-rotate">close</i></a>
+                  <a (click)="onManage(location)" class="d-inline"><i class="material-icons no-rotate">edit</i></a>
+                  <i class="material-icons">keyboard_arrow_down</i>
+                </span>
+              </span>
+            </h4>
+          </a>
+        </div>
+
+        <div id="{{'collapse-' + location.id}}"
+             class="collapse"
+             role="tabpanel"
+             [attr.aria-labelledby]="'heading-' + location.id"
+        >
+          <h5 class="mt-4" *ngIf="location">{{getPrintAddress(location)}}</h5>
+
+          <ng-container *ngIf="locationMaps.hasOwnProperty(location.id)">
+            <ng-template xmGMapApiInit (gMapApiReady)="onAfterGMapApiInit(location)">
+              <div id="{{'location-map-' + location.id}}" class="map" *ngIf="location.latitude && location.longitude"></div>
+            </ng-template>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

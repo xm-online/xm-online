@@ -1,14 +1,14 @@
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 
 import { GatewayRoute } from './gateway-route.model';
 
 @Injectable()
 export class GatewayRoutesService {
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
     findAll(): Observable<GatewayRoute[]> {
-        return this.http.get('api/gateway/routes/').map((res: Response) => res.json());
+        return this.http.get<GatewayRoute[]>('api/gateway/routes/');
     }
 }

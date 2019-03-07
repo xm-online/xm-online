@@ -4,9 +4,11 @@
             "title": "Reset password",
             "messages": {
                 "keymissing": "The reset key is missing.",
+                "keyused": "The request key was already used.",
+                "keyexpired": "The request key has expired.",
                 "info": "Choose a new password",
                 "error": "Your password couldn't be reset. Remember a password request is only valid for 24 hours.",
-                "success": "<strong>Your password has been reset.</strong> Please "
+                "success": "<strong>Your password has been reset.</strong> Please&nbsp;"
             },
             "form": {
                 "button": "Validate new password"
@@ -21,6 +23,17 @@
             },
             "form": {
                 "button": "Reset password"
+            }
+        },
+        "setup": {
+            "title": "Setup your password",
+            "messages": {
+                "info": "Create new password",
+                "error": "Your password couldn't be created. Remember a password request is only valid for 24 hours.",
+                "success": "<strong>Your password has been created.</strong> Please "
+            },
+            "form": {
+                "button": "Setup Password"
             }
         }
     }

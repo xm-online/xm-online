@@ -1,0 +1,17 @@
+<div class="btn-group" *ngIf="languages">
+  <button mat-raised-button
+          class="btn btn-primary btn-sm btn-round"
+          type="button"
+          [class.disabled]="currentLanguage === lang"
+          (click)="onChangeLanguage(lang)"
+          *ngFor="let lang of languages">
+    {{lang}}
+  </button>
+</div>
+
+<mat-form-field *ngIf="currentLanguage">
+  <input matInput
+         type="text"
+         [(ngModel)]="text"
+         (change)="onChangeText()">
+</mat-form-field>

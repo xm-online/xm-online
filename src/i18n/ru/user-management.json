@@ -14,6 +14,7 @@
         "logins": "Логины",
         "deactivated": "Неактивен",
         "activated": "Активен",
+        "autoLogout": "Auto logout",
         "firstName": "Имя",
         "lastName": "Фамилия",
         "langKey": "Язык",
@@ -21,7 +22,13 @@
         "createdDate": "Дата создания",
         "lastModifiedBy": "Изменено",
         "lastModifiedDate": "Дата изменения",
-        "profiles": "Профили",
-        "userKey": "Ключ пользователя"
+        "role": " Роль",
+        "userKey": "Ключ пользователя",
+        "onlineUsers": "Пользователей онлайн: ",
+        "success": "Success",
+        "error": "Error",
+        "twoFAEnabled":"Two Factor authentication enabled",
+        "twoFADisabled":"Two Factor authentication disabled",
+        "search-by-login": "Поиск по логину"
     }
 }

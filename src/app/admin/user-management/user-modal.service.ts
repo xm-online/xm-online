@@ -13,7 +13,7 @@ export class UserModalService {
         private userService: UserService
     ) {}
 
-    open(component: Component, userKey?: string): NgbModalRef {
+    open(component: any, userKey?: string): NgbModalRef {
         if (this.isOpen) {
             return;
         }

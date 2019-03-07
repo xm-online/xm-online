@@ -1,0 +1,25 @@
+<div class="card" *ngIf="calendars?.length > 0">
+  <div class="card-body ps-child">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <mat-form-field>
+            <mat-select [(ngModel)]="currentCalendar"
+                        name="calendarSpec"
+                        (selectionChange)="onCalendarChange(currentCalendar)">
+              <mat-option *ngFor="let calendar of calendars"
+                          [value]="calendar">
+                {{ calendar.name?.toUpperCase() }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div *ngFor="let calendar of calendars"
+         [id]="'xm-calendar-' + calendar.id"
+         [hidden]="calendar.id != currentCalendar.id">
+    </div>
+  </div>
+</div>

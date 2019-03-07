@@ -13,8 +13,10 @@
             "status": "Статус"
         },
         "status": {
-            "UP": "Вгору",
-            "DOWN": "ВНИЗ"
+            "UP": "UP",
+            "DOWN": "DOWN",
+            "UNKNOWN": "UNKNOWN",
+            "OUT_OF_SERVICE": "OUT_OF_SERVICE"
         },
         "refresh.button": "Оновити",
         "stacktrace": "Стаккрайс",
@@ -25,7 +27,19 @@
             "hystrix": "Hystrix",
             "diskSpace": "Дисковий простір",
             "mail": "Електронна пошта",
-            "consul": "Консул"
+            "consul": "Консул",
+            "binders": "Біндери",
+            "db": "База даних",
+            "elasticsearch": "Elastic Search",
+            "cassandra": "Cassandra",
+            "healthIndicator": "Health Indicator",
+            "cdb": "CDB",
+            "hlr": "HLR"
+        },
+        "options": {
+            "service-name": "Назва сервісу",
+            "instance-name": "Інстанс",
+            "done": "Закрити"
         }
     }
 }

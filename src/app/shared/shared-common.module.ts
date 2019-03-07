@@ -1,22 +1,17 @@
-import { NgModule, Sanitizer } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { TranslateService } from 'ng2-translate';
-import { AlertService } from 'ng-jhipster';
+import { registerLocaleData } from '@angular/common';
+import locale from '@angular/common/locales/en';
+
 import {
+    GateSharedLibsModule,
     JhiLanguageHelper,
+    ModulesLanguageHelper,
     FindLanguageFromKeyPipe,
     JhiAlertComponent,
     JhiAlertErrorComponent
 } from './';
 import {XmAlertComponent} from './alert/xm-alert.component';
-import {GateSharedLibsModule} from "./shared-libs.module";
-import {CustomTranslatePartialLoader} from './language/language.loader';
-
-export function alertServiceProvider(sanitizer: Sanitizer, translateService: TranslateService) {
-    // set below to true to make alerts look like toast
-    const isToast = false;
-    return new AlertService(sanitizer, isToast, translateService);
-}
 
 @NgModule({
     imports: [
@@ -30,20 +25,23 @@ export function alertServiceProvider(sanitizer: Sanitizer, translateService: Tra
     ],
     providers: [
         JhiLanguageHelper,
-        {
-            provide: AlertService,
-            useFactory: alertServiceProvider,
-            deps: [Sanitizer, TranslateService]
-        },
+        ModulesLanguageHelper,
         Title,
-        CustomTranslatePartialLoader
+        {
+            provide: LOCALE_ID,
+            useValue: 'en'
+        },
     ],
     exports: [
         GateSharedLibsModule,
         FindLanguageFromKeyPipe,
         JhiAlertComponent,
         JhiAlertErrorComponent,
-        XmAlertComponent,
+        XmAlertComponent
     ]
 })
-export class GateSharedCommonModule {}
+export class GateSharedCommonModule {
+    constructor() {
+        registerLocaleData(locale);
+    }
+}

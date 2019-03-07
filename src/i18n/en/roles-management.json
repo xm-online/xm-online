@@ -1,0 +1,46 @@
+{
+    "rolesManagement": {
+        "home": {
+            "labelCreate": "Create new Role",
+            "labelEdit": "Edit Role",
+            "title": "Roles"
+        },
+        "delete": {
+            "question": "Are you sure you want to delete Role '{{ roleKey }}'?"
+        },
+        "detail": {
+            "title": "Role",
+            "permissions": "permissions"
+        },
+        "chooseRole": "Choose role",
+        "key": "Key",
+        "basedOn": "Based On",
+        "description": "Description",
+        "createdBy": "Created by",
+        "createdDate": "Created date",
+        "lastModifiedBy": "Modified by",
+        "lastModifiedDate": "Modified date",
+        "ok": "Ok",
+        "variables": "Available variables",
+        "permission": {
+            "checkAll": "Check All",
+            "privilegeKey": "Privilege key",
+            "msName": "MS name",
+            "permit": "Permit",
+            "permitted": "permitted",
+            "notPermitted": "not permitted",
+            "permittedAny": "at least one",
+            "onForbid": "On Forbid",
+            "resourceCondition": "Resource Condition",
+            "envCondition": "Environment Condition",
+            "createCondition": "Create Condition",
+            "editCondition": "Edit Condition",
+            "condition": "Condition",
+            "conditionResourceInfo": "1. use SpEL functionality<br>2. use # before variable<br>3. #subject.role, #subject.userKey, #subject.login are available",
+            "conditionEnvInfo": "1. use SpEL functionality<br>2. use # before variable<br>3. #subject.role, #subject.userKey, #subject.login are available<br>4. #env['ipAddress'] is available"
+        },
+        "matrix": {
+            "title": "Roles Matrix"
+        }
+    }
+}

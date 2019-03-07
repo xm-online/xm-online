@@ -1,0 +1,19 @@
+{
+    "xm-balance": {
+        "common": {
+            "cancel": "Скасувати",
+            "fields": {
+                "label": "Позначка",
+                "start-date": "Дата початку",
+                "end-date": "Дата закінчення",
+                "amount": "Кількість"
+            }
+        },
+        "balance-detail-dialog": {
+            "title": "Деталізація балансу"
+        },
+        "balance-list-card": {
+            "title": "Баланси"
+        }
+    }
+}

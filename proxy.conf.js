@@ -1,23 +1,29 @@
 const PROXY_CONFIG = [
     {
         context: [
-            "/management",
-            "/uaa",
-            "/api",
             "/v2",
-            "/config/api",
+            "/management",
+            "/api",
+            "/uaa",
             "/config/v2",
-            "/entity/api",
+            "/config/api",
             "/entity/v2",
-            "/dashboard/api",
+            "/entity/api",
             "/dashboard/v2",
-            "/timeline/api",
+            "/dashboard/api",
             "/timeline/v2",
+            "/timeline/api",
+            "/balance/v2",
+            "/balance/api",
+            "/scheduler",
             "/websocket",
             "/swagger-ui",
-            "/swagger-resources"
+            "/swagger-resources",
+            "/wallet",
+            "/zendesk",
+            "/ldb"
         ],
-        target: "http://localhost:8080",
+        target: "http://xm.test.xm-online.com.ua",
         secure: false,
         changeOrigin: true,
         logLevel: "debug"

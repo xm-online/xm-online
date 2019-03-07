@@ -1,0 +1,19 @@
+<div class="xm-fab" *ngIf="xmEntity">
+  <div class="xm-fab-drop">
+    <button class="xm-fab-option" *ngIf="view.attachment" (click)="onAddAttachment()">
+      <i class="material-icons">attach_file</i>
+    </button>
+    <button class="xm-fab-option" *ngFor="let linkSpec of this.xmEntitySpec.links" (click)="onAddLink(linkSpec)">
+      <i class="material-icons">{{linkSpec.icon}}</i>
+    </button>
+    <button class="xm-fab-option" *ngIf="view.comment" (click)="onAddComment()">
+      <i class="material-icons">comment</i>
+    </button>
+    <button class="xm-fab-option" *ngIf="view.location" (click)="onAddALocation()">
+      <i class="material-icons">place</i>
+    </button>
+  </div>
+  <button mat-raised-button class="btn btn-primary btn-icon btn-just-icon btn-round btn-lg" (click)="onEdit()">
+    <i class="material-icons">edit</i>
+  </button>
+</div>

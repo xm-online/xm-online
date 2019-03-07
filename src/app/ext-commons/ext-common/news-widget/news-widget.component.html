@@ -1,0 +1,23 @@
+<div class="card" *ngIf="feed">
+  <div class="card-header card-header-icon card-header-primary">
+    <div class="card-icon">
+      <i class="material-icons">fiber_new</i>
+    </div>
+    <h4 class="card-title">{{name}}</h4>
+  </div>
+  <div class="card-body">
+    <div *ngFor="let item of feed.items | slice:0:size">
+      <h4><a [href]="item.link" target="_blank">{{item.title}}</a></h4>
+      <div [innerHTML]="item.description"></div>
+      <p>
+        <span>{{item.pubDate}}</span>
+        <span *ngFor="let category of item.categories">
+          <span class="badge">
+            {{category}}
+          </span>
+        </span>
+      </p>
+      <hr/>
+    </div>
+  </div>
+</div>

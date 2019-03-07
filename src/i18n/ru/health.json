@@ -14,7 +14,9 @@
         },
         "status": {
             "UP": "UP",
-            "DOWN": "DOWN"
+            "DOWN": "DOWN",
+            "UNKNOWN": "UNKNOWN",
+            "OUT_OF_SERVICE": "OUT_OF_SERVICE"
         },
         "refresh.button": "Обновить",
         "stacktrace": "Stacktrace",
@@ -25,7 +27,19 @@
             "hystrix": "Hystrix",
             "diskSpace": "Место на диске",
             "mail": "Email",
-            "consul": "Consul"
+            "consul": "Consul",
+            "binders": "Биндеры",
+            "db": "База данных",
+            "elasticsearch": "Elastic Search",
+            "cassandra": "Cassandra",
+            "healthIndicator": "Health Indicator",
+            "cdb": "CDB",
+            "hlr": "HLR"
+        },
+        "options": {
+            "service-name": "Название сервиса",
+            "instance-name": "Инстанс",
+            "done": "Закрыть"
         }
     }
 }

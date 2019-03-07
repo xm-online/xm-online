@@ -1,0 +1,180 @@
+<div class="location-detail-dialog">
+  <form *ngIf="xmEntity" [formGroup]="form" (ngSubmit)="onConfirmSave()">
+    <div class="modal-header">
+      <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+
+      <h4 class="modal-title text-left">
+        <span jhiTranslate="{{form.value.id ? 'xm-entity.location-detail-dialog.edit.title' : 'xm-entity.location-detail-dialog.add.title'}}">
+          {{ form.value.id ? 'Edit a location for the' : 'Add a new location for the' }}
+        </span>
+
+        [<b>{{xmEntity.name}}</b>]
+      </h4>
+    </div>
+
+    <div class="modal-body">
+      <xm-loader [showLoader]="showLoader"></xm-loader>
+
+      <input
+        *ngIf="form.value.id"
+        readonly
+        matInput
+        type="text"
+        formControlName="id"
+        style="display: none"
+      >
+
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field>
+            <mat-select
+              placeholder="{{'xm-entity.location-detail-dialog.choose-type' | translate}}"
+              formControlName="typeKey"
+            >
+              <mat-option *ngFor="let locationSpec of locationSpecs" [value]="locationSpec.key">
+                {{(locationSpec.name | i18nName: principal).toUpperCase()}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="name"
+              placeholder="{{'xm-entity.common.fields.name' | translate}}"
+            >
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field>
+            <mat-select
+              formControlName="countryKey"
+              placeholder="{{'xm-entity.location-detail-dialog.choose-country' | translate}}"
+            >
+              <ngx-mat-select-search
+                [formControl]="formCountrySearch"
+                [placeholderLabel]="'global.rest-select-placeholder-search' | translate"
+                [noEntriesFoundLabel]="'global.rest-select-placeholder-noresults' | translate"
+              ></ngx-mat-select-search>
+
+              <mat-option *ngFor="let option of filteredCountryOptions | async" [value]="option.key">
+                {{ option.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="zip"
+              placeholder="{{'xm-entity.common.fields.zip' | translate}}"
+            >
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="region"
+              placeholder="{{'xm-entity.common.fields.region' | translate}}"
+            >
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="city"
+              placeholder="{{'xm-entity.common.fields.city' | translate}}"
+            >
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="addressLine1"
+              placeholder="{{'xm-entity.common.fields.addressLine1' | translate}}"
+            >
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="addressLine2"
+              placeholder="{{'xm-entity.common.fields.addressLine2' | translate}}"
+            >
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md">
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="latitude"
+              placeholder="{{'xm-entity.common.fields.latitude' | translate}}"
+            >
+          </mat-form-field>
+        </div>
+        <div class="col-md">
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="longitude"
+              placeholder="{{'xm-entity.common.fields.longitude' | translate}}"
+            >
+          </mat-form-field>
+        </div>
+        <div class="col-md-auto">
+          <button
+            mat-icon-button
+            type="button"
+            class="btn btn-primary btn-icon btn-just-icon btn-round"
+            [disabled]="coordinatesInvalid"
+            (click)="applyCoordinates()"
+          >
+            <mat-icon>sync</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <ng-template xmGMapApiInit (gMapApiReady)="onAfterGMapApiInit()">
+            <div class="location-detail-dialog__map"></div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()">
+        <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
+      </button>
+      <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="!form.valid || showLoader">
+        <span jhiTranslate="xm-entity.common.save">Save</span>
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,18 +1,20 @@
-import {Component, OnInit, AfterViewInit, Renderer, ElementRef, ViewChild} from '@angular/core';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import {JhiLanguageService, EventManager} from 'ng-jhipster';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ReCaptchaComponent } from 'angular2-recaptcha';
+import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 
-import {Subscription} from 'rxjs/Subscription';
+import { XM_EVENT_LIST } from '../../xm.constants';
+import { PrivacyAndTermsDialogComponent } from '../components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
+import { XmConfigService } from '../spec/config.service';
 import { RegisterService } from './register.service';
-import {ReCaptchaComponent} from 'angular2-recaptcha';
-import {XmConfigService} from '../../admin/configuration/config.service';
 
 @Component({
     selector: 'xm-register',
     templateUrl: './register.component.html'
 })
-export class RegisterComponent implements OnInit, AfterViewInit {
+export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
 
+    @Input() config: any;
     @ViewChild(ReCaptchaComponent) captcha: ReCaptchaComponent;
 
     email: string;
@@ -30,68 +32,75 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     needCaptcha = false;
     language = 'en';
     publicKey;
+    socialConfig: [];
 
-
-    socialConfiguration: any = {};
-
-    constructor(
-        private jhiLanguageService: JhiLanguageService,
-        private xmConfigService: XmConfigService,
-        private registerService: RegisterService,
-        private elementRef: ElementRef,
-        private renderer: Renderer,
-        private eventManager: EventManager
-    ) {
-        let self = this;
-        this.jhiLanguageService.addLocation('register');
+    constructor(private jhiLanguageService: JhiLanguageService,
+                private xmConfigService: XmConfigService,
+                private registerService: RegisterService,
+                private eventManager: JhiEventManager,
+                private modalService: NgbModal) {
 
         this.jhiLanguageService.getCurrent().then(lang => {
-            self.language = lang;
-        });
-        this.registerService.isCaptchaNeed().subscribe(result => {
-            let json = result.json();
-            console.log(result, json);
-            this.needCaptcha = json.isCaptchaNeed;
-            this.publicKey = json.publicKey;
+            this.language = lang;
         });
 
-        this.xmConfigService.initSocialConfiguration(function(socialConfiguration) {
-            self.socialConfiguration = socialConfiguration;
+        this.registerService.isCaptchaNeed().subscribe(result => {
+            this.needCaptcha = result.isCaptchaNeed;
+            this.publicKey = result.publicKey;
         });
+
     }
 
     ngOnDestroy() {
     }
 
 
-
     ngOnInit() {
         this.success = false;
         this.registerAccount = {};
+        this.xmConfigService.getUiConfig().subscribe(config => {
+            this.socialConfig = config && config.social;
+        });
     }
 
     ngAfterViewInit() {
-        let htmlEl = this.elementRef.nativeElement.querySelector('#login');
-        htmlEl && this.renderer.invokeElementMethod(htmlEl, 'focus', []);
     }
 
     register() {
         if (this.registerAccount.password !== this.confirmPassword) {
             this.doNotMatch = 'ERROR';
         } else {
-            this.doNotMatch = null;
-            this.error = null;
-            this.errorUserExists = null;
-            this.errorEmailEmpty = null;
-            this.captchaRequired = null;
-            this.jhiLanguageService.getCurrent().then((key) => {
-                this.registerAccount.langKey = key;
-                this.makeLogins();
-                this.registerService.save(this.registerAccount).subscribe(() => {
-                    this.success = true;
-                }, (response) => this.processError(response));
-            });
+            if (this.config && this.config.privacyAndTermsEnabled) {
+                const modalRef = this.modalService.open(PrivacyAndTermsDialogComponent, {size: 'lg', backdrop: 'static'});
+                modalRef.componentInstance.config = this.config;
+                modalRef.result.then(r => {
+                    if (r === 'accept') {
+                        this.registration();
+                    }
+                }).catch(err => {
+                    console.log(err);
+                });
+            } else {
+                this.registration();
+            }
         }
+    }
+
+    private registration() {
+        this.doNotMatch = null;
+        this.error = null;
+        this.errorUserExists = null;
+        this.errorEmailEmpty = null;
+        this.captchaRequired = null;
+        this.jhiLanguageService.getCurrent().then((key) => {
+            this.registerAccount.langKey = key;
+            this.makeLogins();
+            this.registerService.save(this.registerAccount).subscribe(() => {
+                    this.success = true;
+                    this.eventManager.broadcast({name: XM_EVENT_LIST.XM_REGISTRATION, content: ''})
+                },
+                (response) => this.processError(response));
+        });
     }
 
     handleCorrectCaptcha($event) {
@@ -105,21 +114,18 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     private processError(response) {
         this.success = null;
-        console.log(response);
-        if (response.status === 400 && response._body === 'Login already in use') {
+        if (response.status === 400 && response.error.error === 'error.login.already.used') {
             this.errorUserExists = 'ERROR';
-        } else if (response.status === 400 && response._body === 'Email can\'t be empty') {
-            this.errorEmailEmpty = 'ERROR';
-        } else if (response.status === 400 && response.json().error === 'error.captcha.required') {
+        } else if (response.status === 400 && response.error.error === 'error.captcha.required') {
             this.captchaRequired = 'ERROR';
             this.needCaptcha = true;
             this.registerService.isCaptchaNeed().subscribe(result => {
-                this.publicKey = result.json().publicKey;
+                this.publicKey = result.publicKey;
             });
         } else {
             this.error = 'ERROR';
         }
-        if (this.captcha) this.captcha.reset();
+        if (this.captcha) {this.captcha.reset()};
     }
 
     private makeLogins() {
@@ -127,14 +133,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
         // email login
         this.registerAccount.logins.push({
-            typeKey: "LOGIN.EMAIL",
+            typeKey: 'LOGIN.EMAIL',
             login: this.email
         });
 
         // nickname login
         if (this.nickname) {
             this.registerAccount.logins.push({
-                typeKey: "LOGIN.NICKNAME",
+                typeKey: 'LOGIN.NICKNAME',
                 login: this.nickname
             });
         }
@@ -142,7 +148,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         // phone number login
         if (this.msisdn) {
             this.registerAccount.logins.push({
-                typeKey: "LOGIN.MSISDN",
+                typeKey: 'LOGIN.MSISDN',
                 login: this.msisdn
             });
         }

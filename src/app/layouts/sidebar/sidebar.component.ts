@@ -1,38 +1,44 @@
-import {Component, OnInit, ViewChild, Renderer, ElementRef} from '@angular/core';
-import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {LoginService} from '../../shared/login/login.service';
-import {JhiLanguageHelper} from '../../shared/language/language.helper';
-import {JhiLanguageService, EventManager} from 'ng-jhipster';
-import {XmEntitySpecService} from '../../shared/spec/spec.service';
-import {Principal} from '../../shared/auth/principal.service';
-import {ProfileService} from '../profiles/profile.service';
-import {Router} from '@angular/router';
 import {Location} from '@angular/common';
-import {DEBUG_INFO_ENABLED, VERSION} from '../../xm.constants';
-import {Response} from '@angular/http';
-import {DashboardService} from '../../entities/dashboard/dashboard.service';
-import {Dashboard} from '../../entities/dashboard/dashboard.model';
-import {Subscription} from "rxjs/Subscription";
-import {Observable} from "rxjs/Observable";
-import {XmConfigService} from "../../admin/configuration/config.service";
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {TranslateService} from '@ngx-translate/core';
+import {JhiEventManager, JhiLanguageService} from 'ng-jhipster';
+import {Subscription} from 'rxjs';
 
+import swal from 'sweetalert2';
 
-let misc: any = {
+import {ProfileService} from '../';
+import {ContextService, I18nNamePipe, JhiLanguageHelper, LoginService, Principal} from '../../shared/';
+import {XmConfigService} from '../../shared/spec/config.service';
+import {Dashboard, DashboardWrapperService} from '../../xm-dashboard';
+import {XmEntitySpecWrapperService} from '../../xm-entity';
+import {DEBUG_INFO_ENABLED, VERSION, XM_EVENT_LIST} from '../../xm.constants';
+import {transpilingForIE} from '../../shared/jsf-extention/jsf-attributes-helper';
+
+const misc: any = {
     navbar_menu_visible: 0,
     active_collapse: true,
-    disabled_collapse_init: 0,
+    disabled_collapse_init: 0
 };
 
 declare let $: any;
-let sidebarTimer;
 
 @Component({
     moduleId: module.id,
-    selector: 'sidebar-cmp',
-    templateUrl: './sidebar.component.html',
+    selector: 'xm-sidebar-cmp',
+    templateUrl: './sidebar.component.html'
 })
 
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
+
+    private authSubscription: Subscription;
+    private unauthSubscription: Subscription;
+    private dashboardSubscription: Subscription;
+    private contextSubscription: Subscription;
+    private toggleButton;
+
+    dashboardGroups: any[];
 
     inProduction: boolean;
     isNavbarCollapsed: boolean;
@@ -41,97 +47,181 @@ export class SidebarComponent implements OnInit {
     modalRef: NgbModalRef;
     version: string;
     applications: Promise<any[]>;
-    dashboards: any[];
+    dashboards: Dashboard[];
     location: Location;
-    private toggleButton;
-    private authSubscription: Subscription;
-    private dashboardSubscription: Subscription;
 
-    tenantName: string = "XM^online";
-    tenantLogoUrl: string = "../assets/img/logo-xm-online.png";
+    psMainPanel: any;
+
+    isApplicationExists: boolean;
+
+    tenantName: 'XM^online';
+    tenantLogoUrl: '../assets/img/logo-xm-online.png';
+    iconsInMenu: false;
 
     @ViewChild('navbar-cmp') button;
 
     constructor(private loginService: LoginService,
                 private languageHelper: JhiLanguageHelper,
                 private jhiLanguageService: JhiLanguageService,
-                private entitySpecService: XmEntitySpecService,
+                private xmEntitySpecWrapperService: XmEntitySpecWrapperService,
                 private principal: Principal,
                 private profileService: ProfileService,
                 private router: Router,
                 private element: ElementRef,
-                private dashboardService: DashboardService,
+                private dashboardWrapperService: DashboardWrapperService,
                 private xmConfigService: XmConfigService,
-                private eventManager: EventManager) {
+                private i18nNamePipe: I18nNamePipe,
+                private translateService: TranslateService,
+                private eventManager: JhiEventManager,
+                private contextService: ContextService) {
         this.version = DEBUG_INFO_ENABLED ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
-        this.jhiLanguageService.addLocation('home');
+        // this.jhiLanguageService.addLocation('home');
 
         this.registerChangeAuth();
         this.registerChangeInDashboards();
+        this.registerUnauthorized();
+        this.contextSubscription = this.eventManager.subscribe('CONTEXT_UPDATED', () => {
+            this.groupDashboards();
+            this.collapseTab();
+        });
     }
 
     ngOnInit() {
-        this.languageHelper.getAll().then((languages) => {
-            this.languages = languages;
-        });
-
-
         this.xmConfigService.getUiConfig().subscribe(result => {
+            this.languageHelper.getAll().then((languages) => {
+                this.languages = (result && result.langs) ? result.langs : languages;
+            });
             if (result['logoUrl']) {
                 this.tenantLogoUrl = result['logoUrl'];
             }
             if (result['name']) {
                 this.tenantName = result['name'];
             }
+            if (result['iconsInMenu']) {
+                this.iconsInMenu = result['iconsInMenu'];
+            }
 
-            this.tenantName = this.tenantName ? this.tenantName : "XM^online";
-            if (this.tenantName === "XM^online") {
-                this.tenantName += " " + this.version;
+            this.tenantName = this.tenantName ? this.tenantName : 'XM^online';
+            if (this.tenantName === 'XM^online') {
+                this.tenantName += ' ' + this.version;
+            }
+        }, error => {
+            console.log(error);
+            this.tenantLogoUrl = '../assets/img/logo-xm-online.png';
+            this.tenantName = 'XM^online';
+        });
+        this.principal.getAuthenticationState().subscribe(state => {
+            if (state) {
+                // no need to call this.loadData() only on manual refresh, otherwise method will be invoked by XM_EVENT_LIST.XM_SUCCESS_AUTH
+                this.loadData();
             }
         });
 
-        this.principal.identity().then(result => this.loadData());
     }
 
     ngOnDestroy() {
+        console.log('Destroy: sidebar');
+        this.applications = null;
+        this.dashboards = null;
         this.eventManager.destroy(this.authSubscription);
         this.eventManager.destroy(this.dashboardSubscription);
+        this.eventManager.destroy(this.unauthSubscription);
+        this.eventManager.destroy(this.contextSubscription);
+
+        if (this.psMainPanel) {
+            this.psMainPanel.destroy();
+        }
+    }
+
+    private registerUnauthorized() {
+        this.unauthSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_UNAUTHORIZED, () => {
+            this.logout(true);
+        });
     }
 
     private registerChangeAuth() {
-        this.authSubscription = this.eventManager.subscribe('authenticationSuccess', resp => this.loadData());
+        this.authSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, event => {
+            // console.log('Event: %o', event);
+            this.loadData();
+            // this.router.navigate([`/dashboard`, result[0].id])
+        });
     }
 
     private registerChangeInDashboards() {
-        this.dashboardSubscription = this.eventManager.subscribe('dashboardListModification', resp => this.getDashboards());
+        this.dashboardSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_DASHBOARD_LIST_MODIFICATION,
+            resp => this.getDashboards(true));
     }
 
     private loadData() {
-        this.profileService.getProfileInfo().subscribe((profileInfo) => {
-            this.inProduction = profileInfo.inProduction;
-            this.swaggerEnabled = profileInfo.swaggerEnabled;
-        });
+        // optimization, load data only if it is empty;
+        if (!this.dashboards || this.dashboards.length === 0) {
+            this.principal.hasPrivileges(['XMENTITY_SPEC.GET'])
+                .then(result => {
+                    if (result) {
+                        // no need to load applciations, if they are loaded
+                        if (!this.applications) {
+                            this.applications = this.xmEntitySpecWrapperService.spec(true).then(spec => {
+                                let applications = spec.types.filter(t => t.isApp)
+                                    .filter(t => this.principal.hasPrivilegesInline(['APPLICATION.' + t.key]));
+                                this.isApplicationExists = applications.length > 0;
+                                return applications;
+                            });
+                            // this.applications.then(() => this.collapseTab());
+                        }
+                    }
+                });
 
-        this.applications = this.entitySpecService.getAll({filter: 'APP'});
-        this.applications.then(() => this.collapseTab());
-        this.dashboardService.getAll().subscribe((result) => {
-                this.dashboards = result;
-                this.collapseTab();
-            });
+            this.principal.hasPrivileges(['DASHBOARD.GET_LIST'])
+                .then(result => {
+                    // no need to load dashboards, if they are loaded
+                    result && this.dashboardWrapperService.dashboards(true).then((dashboards) => {
+                        if (dashboards && dashboards.length) {
+                            this.dashboards = dashboards.sort((a, b) => this.sortDashboards(a, b))
+                        } else {
+                            this.dashboards = dashboards;
+                        }
+                        this.groupDashboards();
+                        this.collapseTab();
+                    });
+                });
+        }
+
     }
 
     isAuthenticated() {
         return this.principal.isAuthenticated();
     }
 
-    logout() {
-        this.loginService.logout();
-        this.router.navigate(['']);
+    logout(fast?: boolean) {
+
+        const logoutAction = () => {
+            this.loginService.logout();
+            this.applications = null;
+            this.dashboards = null;
+            this.router.navigate(['']);
+            this.xmEntitySpecWrapperService.clear();
+            $('body').addClass('xm-public-screen');
+        };
+
+        if (fast) {
+            logoutAction();
+        } else {
+            swal({
+                title: this.translateService.instant('global.common.are-you-sure'),
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonClass: 'btn mat-raised-button btn-primary',
+                cancelButtonClass: 'btn mat-raised-button',
+                confirmButtonText: this.translateService.instant('global.common.yes-exit'),
+                cancelButtonText: this.translateService.instant('global.common.cancel')
+            }).then((result) => result.value ? logoutAction() : console.log('Cancel'))
+        }
+
     }
 
-    getDashboards() {
-        this.dashboardService.getAll().subscribe((result) => {
+    getDashboards(force?: boolean) {
+        this.dashboardWrapperService.dashboards(force).then((result) => {
             this.dashboards = result;
             this.collapseTab();
         });
@@ -147,9 +237,9 @@ export class SidebarComponent implements OnInit {
 
     private collapseTab() {
         setTimeout(() => {
-            let sidebarMenuActive = $('.sidebar .nav-container .nav > li.active > a:not([data-toggle="collapse"])'),
-                $sidebarParent, collapseId
-            ;
+            const sidebarMenuActive = $('.sidebar .nav > li.active > a:not([data-toggle="collapse"])');
+            let $sidebarParent, collapseId;
+
             sidebarMenuActive && ($sidebarParent = sidebarMenuActive.parents('.collapse'));
             $sidebarParent && (collapseId = $sidebarParent.siblings('a').attr('href'));
             collapseId && $(collapseId).collapse('show');
@@ -157,15 +247,15 @@ export class SidebarComponent implements OnInit {
     }
 
     ngAfterViewInit() {
-        let navbar: HTMLElement = this.element.nativeElement;
+        const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
         if ($('body').hasClass('sidebar-mini')) {
             misc.sidebar_mini_active = true;
         }
         $('#minimizeSidebar').click(function () {
-            let $btn = $(this);
+            const $btn = $(this);
 
-            if (misc.sidebar_mini_active == true) {
+            if (misc.sidebar_mini_active === true) {
                 $('body').removeClass('sidebar-mini');
                 misc.sidebar_mini_active = false;
 
@@ -178,7 +268,7 @@ export class SidebarComponent implements OnInit {
             }
 
             // we simulate the window Resize so the charts will get updated in realtime.
-            let simulateWindowResize = setInterval(function () {
+            const simulateWindowResize = setInterval(function () {
                 window.dispatchEvent(new Event('resize'));
             }, 180);
 
@@ -187,21 +277,142 @@ export class SidebarComponent implements OnInit {
                 clearInterval(simulateWindowResize);
             }, 1000);
         });
+    }
 
-        let isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
-        if (isWindows) {
-            // if we are on windows OS we activate the perfectScrollbar function
-            let $sidebar = $('.sidebar-wrapper');
-            $sidebar.perfectScrollbar();
+    private sortById(a, b): number {
+        if (a.id > b.id) {
+            return -1
         }
-        isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
+        if (a.id < b.id) {
+            return 1
+        }
+        return 0;
+    }
 
-        if (isWindows) {
-            // if we are on windows OS we activate the perfectScrollbar function
-            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
-            $('html').addClass('perfect-scrollbar-on');
+    private sortByConfig(a, b): number {
+        const cfgA: any = a.config;
+        const cfgB: any = b.config;
+        if (cfgA && cfgA.orderIndex && cfgB && cfgB.orderIndex) {
+            if (cfgA.orderIndex > cfgB.orderIndex) {
+                return 1
+            }
+            if (cfgA.orderIndex < cfgB.orderIndex) {
+                return -1
+            }
+            return 0;
+        }
+        return 0;
+    }
+
+    private sortByName(a, b): number {
+        if (a.name > b.name) {
+            return 1
+        }
+        if (a.name < b.name) {
+            return -1
+        }
+        return 0;
+    }
+
+    private sortDashboards(a, b): number {
+        if (a && b) {
+            if (a.config && b.config) {
+                return this.sortByConfig(a, b);
+            } else {
+                if (a.name && b.name) {
+                    return this.sortByName(a, b);
+                } else {
+                    return this.sortById(a, b);
+                }
+            }
+        }
+        return 0;
+    }
+
+    private groupDashboards() {
+        this.dashboardGroups = [];
+        if (!this.dashboards) {
+            return;
+        }
+        for (const dashboard of this.dashboards.filter(d => this.checkCondition(d))) {
+            const menu = dashboard.config && dashboard.config.menu ? dashboard.config.menu : null;
+            const groupIsLink = menu && menu.groupIsLink ? menu.groupIsLink : false;
+            const orderIndex = menu && menu.group && menu.group.orderIndex ?
+                menu.group.orderIndex :
+                this.dashboards
+                    .filter(d => this.checkCondition(d))
+                    .length + 1;
+            let groupKey = !menu ? 'DASHBOARD' : menu.group.key;
+            const icon = menu && menu.group && menu.group.icon ? menu.group.icon : null;
+            if (groupIsLink) {
+                groupKey = dashboard.config && dashboard.config.slug ? dashboard.config.slug : null;
+            }
+            let group = this.dashboardGroups.filter(g => g.key === groupKey).shift();
+            if (!group) {
+                group = {
+                    key: groupKey,
+                    name: menu && menu.group ? menu.group.name : null,
+                    groupIsLink: groupIsLink,
+                    config: {
+                        orderIndex: orderIndex,
+                        icon: icon
+                    },
+                    dashboards: []
+                };
+                this.dashboardGroups.push(group);
+                this.dashboardGroups.sort((a, b) => this.sortDashboards(a, b));
+            }
+            group.dashboards.push(dashboard);
+            this.dashboardGroups.map(d => {
+                if (d.dashboards && d.dashboards.length > 0) {
+                    d.dashboards.sort((a, b) => this.sortDashboards(a, b));
+                }
+            });
+        }
+    }
+
+    private checkCondition(dashboard): boolean {
+        if (dashboard.config && dashboard.config.condition) {
+            try {
+                return !!(new Function('context', dashboard.config.condition))(this.contextService);
+            } catch (e) {
+                // console.log('--------------- e checkCondition', dashboard.config);
+                const code = transpilingForIE(dashboard.config.condition, this.contextService);
+                // console.log('--------------- code', code);
+                return !!(new Function('context', `return ${code}`))(this.contextService);
+            }
         } else {
-            $('html').addClass('perfect-scrollbar-off');
+            return true;
         }
+    }
+
+    getDashboardName(dashboard) {
+        let name = dashboard.name;
+        if (dashboard.config && dashboard.config.name) {
+            name = dashboard.config.name;
+        }
+        if (dashboard.config && dashboard.config.menu && dashboard.config.menu.name) {
+            name = dashboard.config.menu.name;
+        }
+        return this.i18nNamePipe.transform(name, this.principal);
+    }
+
+    getDashboardIcon(dashboard) {
+        let icon = '';
+        if (dashboard && dashboard.config && dashboard.config.icon) {
+            if (dashboard.config.icon === 'no-icon') {
+                icon = '';
+            } else {
+                icon = `<i class="material-icons m-0 w-30" style="width: 30px;">${dashboard.config.icon}</i>`
+            }
+        } else {
+            icon = this.getDashboardName(dashboard).charAt(0);
+        }
+        return icon;
+    }
+
+    getApplicationName(application) {
+        const name = application.pluralName ? application.pluralName : application.name;
+        return this.i18nNamePipe.transform(name, this.principal);
     }
 }

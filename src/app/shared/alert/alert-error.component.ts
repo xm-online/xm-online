@@ -1,105 +1,218 @@
 import { Component, OnDestroy } from '@angular/core';
-import { TranslateService } from 'ng2-translate';
-import { EventManager, AlertService } from 'ng-jhipster';
-import { Subscription } from 'rxjs/Rx';
-import {UseGlobalTranslations} from '../language/use.global.location';
+import { TranslateService } from '@ngx-translate/core';
+import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+
+import { ResponseConfig, ResponseConfigItem, ResponseContext } from './response-config.model';
+import { XmConfigService } from '../spec/config.service';
+import { I18nNamePipe } from '../language/i18n-name.pipe';
+import { Principal } from '../../shared/auth/principal.service';
+
+declare let swal: any;
+declare let $: any;
 
 @Component({
     selector: 'xm-alert-error',
     templateUrl: './alert-error.component.html'
 })
-@UseGlobalTranslations()
 export class JhiAlertErrorComponent implements OnDestroy {
 
     alerts: any[];
     cleanHttpErrorListener: Subscription;
+    rc: ResponseContext;
+    responseConfig: ResponseConfig;
 
-    constructor(private alertService: AlertService,
-                private eventManager: EventManager,
-                private translateService: TranslateService) {
+    /* tslint:disable */
+    constructor(private alertService: JhiAlertService,
+                private eventManager: JhiEventManager,
+                private principal: Principal,
+                protected router: Router,
+                private i18nNamePipe: I18nNamePipe,
+                private translateService: TranslateService,
+                private specService: XmConfigService) {
+        /* tslint:enable */
         this.alerts = [];
 
-        this.cleanHttpErrorListener = eventManager.subscribe('xm.httpError', (response) => {
-            let i;
-            const httpResponse = response.content;
-            switch (httpResponse.status) {
-                // connection refused, server not reachable
-                case 0:
-                    this.addErrorAlert('Server not reachable', 'error.server.not.reachable');
-                    break;
-
-                case 400:
-                    const arr = Array.from(httpResponse.headers._headers);
-                    const headers = [];
-                    for (i = 0; i < arr.length; i++) {
-                        if (arr[i][0].endsWith('app-error') || arr[i][0].endsWith('app-params')) {
-                            headers.push(arr[i][0]);
-                        }
-                    }
-                    headers.sort();
-                    let errorHeader = null;
-                    let entityKey = null;
-                    if (headers.length > 1) {
-                        errorHeader = httpResponse.headers.get(headers[0]);
-                        entityKey = httpResponse.headers.get(headers[1]);
-                    }
-                    if (errorHeader) {
-                        const entityName = translateService.instant('global.menu.entities.' + entityKey);
-                        this.addErrorAlert(errorHeader, errorHeader, { entityName });
-                    } else if (httpResponse.text() !== '' && httpResponse.json() && httpResponse.json().fieldErrors) {
-                        const fieldErrors = httpResponse.json().fieldErrors;
-                        for (i = 0; i < fieldErrors.length; i++) {
-                            const fieldError = fieldErrors[i];
-                            // convert 'something[14].other[4].id' to 'something[].other[].id' so translations can be written to it
-                            const convertedField = fieldError.field.replace(/\[\d*\]/g, '[]');
-                            const fieldName = translateService.instant('xm.' +
-                                fieldError.objectName + '.' + convertedField);
-                            this.addErrorAlert(
-                                'Field ' + fieldName + ' cannot be empty', 'error.' + fieldError.message, { fieldName });
-                        }
-                    } else if (httpResponse.text() !== '' && httpResponse.json() && httpResponse.json().message) {
-                        this.addErrorAlert(httpResponse.json().message, httpResponse.json().message, httpResponse.json().params);
-                    }  else if (httpResponse.text() !== '' && httpResponse.json() && httpResponse.json().error && httpResponse.json().error_description) {
-                        this.addErrorAlert(httpResponse.json().error_description, 'error.' + httpResponse.json().error);
+        this.cleanHttpErrorListener = eventManager.subscribe('xm.httpError', resp => {
+            const response = this.processResponse(resp);
+            this.specService.getUiConfig().subscribe(result => {
+                if (result &&
+                    result.responseConfig &&
+                    result.responseConfig.responses &&
+                    result.responseConfig.responses.length) {
+                    this.rc = new ResponseContext(response.content, response.request);
+                    this.responseConfig = new ResponseConfig(result.responseConfig.responses.map(e => {
+                        return new ResponseConfigItem(
+                            e.code,
+                            e.codePath,
+                            e.status,
+                            e.type,
+                            e.validationField,
+                            e.validationFieldsExtractor,
+                            e.outputMessage,
+                            e.condition,
+                            e.redirectUrl
+                        );
+                    }));
+                    const respConfigEl = this.responseConfig.getResponseConfigItem(this.rc);
+                    if (respConfigEl) {
+                        this.configAndSendError(respConfigEl, response);
                     } else {
-                        this.addErrorAlert(httpResponse.text());
+                        this.sendDefaultError(response);
                     }
-                    break;
+                } else {
+                    this.sendDefaultError(response);
+                }
+            });
+        });
+    }
 
-                case 404:
-                    this.addErrorAlert('Not found', 'error.url.not.found');
-                    break;
 
-                case 401:
-                    if (httpResponse.text() !== '' && httpResponse.json() && httpResponse.json().error) {
-                        if (httpResponse.json().error != 'invalid_token') {
-                          this.addErrorAlert('Unauthorized', 'error.' + httpResponse.json().error);
-                        }
-                    } else if (httpResponse.text() !== '' && httpResponse.json() && httpResponse.json().error_description){
-                        this.addErrorAlert('Unauthorized', httpResponse.json().error_description);
-                    } else {
-                        this.addErrorAlert(JSON.stringify(httpResponse)); // Fixme find a way to parse httpResponse
+    configAndSendError(config: ResponseConfigItem, response: any, params?: any) {
+        const title = this.processMessage(config.outputMessage ?
+            config.outputMessage :
+            null, response);
+        const messageSettings = config.type.split('.') || [];
+        switch (messageSettings[0]) {
+            case 'swal': {
+                swal({
+                    title: title,
+                    width: '42rem',
+                    type: messageSettings[1],
+                    buttonsStyling: false,
+                    confirmButtonClass: 'btn btn-primary'
+                }).then((result) => {
+                    if (result && config.redirectUrl) {
+                        const redirect = (config.redirectUrl === '/') ? '' : config.redirectUrl;
+                        this.router.navigate([redirect]);
                     }
-                    break;
-
-                default:
-                    if (httpResponse.text() !== '' && httpResponse.json() && httpResponse.json().error_description) {
-                        this.addErrorAlert(httpResponse.json().error_description, httpResponse.json().error_description);
-                    } else {
-                        this.addErrorAlert(JSON.stringify(httpResponse)); // Fixme find a way to parse httpResponse
-                    }
+                });
+                break;
             }
-        });
+            case 'ignore': {
+                break;
+            }
+            case 'validation': {
 
-        this.cleanHttpErrorListener = eventManager.subscribe('thirdpaty.httpError', (response) => {
-            this.addErrorAlert(response.content.error.message);
-        });
+                let errors = new Function('rc', config.validationFieldsExtractor)(this.rc);
+                for (let key in errors) {
+                    errors[key] = this.processMessage(errors[key] ? errors[key] : null, response);
+                }
+                this.eventManager.broadcast({name: 'xm.ValidationError', content: config, rc: this.rc, title: title, errors: errors});
+                break;
+            }
+            case 'alert': {
+                const type: any = messageSettings[1];
+                $.notify({
+                    message: title,
+                }, {
+                    type: messageSettings[1]
+                });
+                break;
+            }
+            default: {
+                console.error('Wrong responseConfigItem type - sending default error');
+                this.sendDefaultError(response);
+            }
+        }
+    }
+
+    processMessage(config, response) {
+        if (!config) {
+            return null;
+        }
+        switch (config.type) {
+            case 'TRANSLATION_KEY': {
+                return this.translateService.instant(config.value, {
+                    rc: this.rc
+                });
+            }
+            case 'TRANSLATION_KEY_PATH': {
+                return this.translateService.instant('errors.' + this.getFromPath(this.rc.response, config.value), {
+                    rc: this.rc
+                });
+            }
+            case 'MESSAGE_PATH': {
+                return this.getFromPath(this.rc.response.error, config.value);
+            }
+            case 'MESSAGE_OBJECT': {
+                return this.i18nNamePipe.transform(config.value, this.principal);
+            }
+            default: {
+                console.error('Wrong responseConfigItem outputMessage type - returning default message');
+                if (response.content.error !== '' && response.content.error.error) {
+                    return this.translateService.instant('errors.' + response.content.error.error);
+                } else {
+                    return this.translateService.instant('errors.' + response.content.error);
+                }
+            }
+        }
     }
 
     ngOnDestroy() {
         if (this.cleanHttpErrorListener !== undefined && this.cleanHttpErrorListener !== null) {
             this.eventManager.destroy(this.cleanHttpErrorListener);
             this.alerts = [];
+        }
+    }
+
+    sendDefaultError(response) {
+        let i;
+        const httpErrorResponse = response.content;
+        switch (httpErrorResponse.status) {
+            // connection refused, server not reachable
+            case 0:
+                this.addErrorAlert('Server not reachable', 'error.server.not.reachable');
+                break;
+
+            case 400:
+                const arr = httpErrorResponse.headers.keys();
+                let errorHeader = null;
+                let entityKey = null;
+                arr.forEach(entry => {
+                    if (entry.endsWith('app-error')) {
+                        errorHeader = httpErrorResponse.headers.get(entry);
+                    } else if (entry.endsWith('app-params')) {
+                        entityKey = httpErrorResponse.headers.get(entry);
+                    }
+                });
+                if (errorHeader) {
+                    const entityName = this.translateService.instant('global.menu.entities.' + entityKey);
+                    this.addErrorAlert(errorHeader, errorHeader, {entityName});
+                } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.fieldErrors) {
+                    const fieldErrors = httpErrorResponse.error.fieldErrors;
+                    for (i = 0; i < fieldErrors.length; i++) {
+                        const fieldError = fieldErrors[i];
+                        // convert 'something[14].other[4].id' to 'something[].other[].id' so translations can be written to it
+                        const convertedField = fieldError.field.replace(/\[\d*\]/g, '[]');
+                        const fieldName = this.translateService.instant(
+                            'jhipsterSampleApplicationApp.' + fieldError.objectName + '.' + convertedField
+                        );
+                        this.addErrorAlert('Error on field "' + fieldName + '"', 'errors.' + fieldError.message, {fieldName});
+                    }
+                } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.error) {
+                    console.log(this.translateService.instant('errors.' + httpErrorResponse.error.error));
+                    this.addErrorAlert(
+                        'errors.' + httpErrorResponse.error.error_description,
+                        'errors.' + httpErrorResponse.error.error,
+                        httpErrorResponse.error.params
+                    );
+                } else {
+                    this.addErrorAlert('errors.' + httpErrorResponse.error);
+                }
+                break;
+
+            case 404:
+                this.addErrorAlert('Not found', 'errors.url.not.found');
+                break;
+
+            default:
+                if (httpErrorResponse.error !== '' && httpErrorResponse.error.error) {
+                    this.addErrorAlert('errors.' + httpErrorResponse.error.error);
+                } else {
+                    this.addErrorAlert('errors.' + httpErrorResponse.error);
+                }
         }
     }
 
@@ -112,11 +225,53 @@ export class JhiAlertErrorComponent implements OnDestroy {
                     msg: key,
                     params: data,
                     timeout: 5000,
-                    toast: this.alertService.isToast(),
+                    toast: true,
                     scoped: true
                 },
                 this.alerts
             )
         );
+    }
+
+    private processResponse (resp: any): any {
+        const requestType = resp.request.responseType;
+        const respType = resp.content.headers.get('content-type');
+        if (requestType === 'arraybuffer' && respType === 'application/json;charset=UTF-8') {
+            try {
+                const decodedString = String.fromCharCode.apply(null, new Uint8Array(resp.content.error));
+                const error = JSON.parse(decodedString);
+                resp.content.error = error;
+                return resp;
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        try {
+            const errorType = this.getVarType(resp.content.error);
+            if (errorType && errorType === 'string') {
+                resp.content.error = JSON.parse(resp.content.error);
+            }
+        } catch (e) {
+            console.error(e);
+        }
+        return resp;
+    }
+
+    private getVarType(variable: any): any {
+        return typeof variable;
+    }
+
+    private getFromPath(obj, path) {
+        let paths = path.split('.')
+            , current = obj
+            , i;
+        for (i = 0; i < paths.length; ++i) {
+            if (current[paths[i]] == undefined) {
+                return undefined;
+            } else {
+                current = current[paths[i]];
+            }
+        }
+        return current;
     }
 }

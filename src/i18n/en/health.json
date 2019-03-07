@@ -14,7 +14,9 @@
         },
         "status": {
             "UP": "UP",
-            "DOWN": "DOWN"
+            "DOWN": "DOWN",
+            "UNKNOWN": "UNKNOWN",
+            "OUT_OF_SERVICE": "OUT_OF_SERVICE"
         },
         "refresh.button": "Refresh",
         "stacktrace": "Stacktrace",
@@ -25,7 +27,19 @@
             "hystrix": "Hystrix",
             "diskSpace": "Disk space",
             "mail": "Email",
-            "consul": "Consul"
+            "consul": "Consul",
+            "binders": "Binders",
+            "db": "Database",
+            "elasticsearch": "Elastic Search",
+            "cassandra": "Cassandra",
+            "healthIndicator": "Health Indicator",
+            "cdb": "CDB",
+            "hlr": "HLR"
+        },
+        "options": {
+            "service-name": "Service name",
+            "instance-name": "Instance",
+            "done": "Close"
         }
     }
 }

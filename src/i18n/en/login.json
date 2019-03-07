@@ -6,12 +6,19 @@
         "messages": {
             "error": {
                 "authentication": "<strong>Failed to sign in!</strong> Please check your credentials and try again."
+            },
+            "otp": {
+                "notification": "Please enter one time password from email"
             }
         },
         "form": {
             "password": "Password",
             "rememberMe": "Remember me",
-            "button": "Sign in"
+            "button": "Sign in",
+            "otpValidateCancel": "Cancel",
+            "otpValidateButton": "Send OTP",
+            "show-password": "Show password",
+            "hide-password": "Hide password"
         },
         "password": {
             "forgot": "Did you forget your password?"

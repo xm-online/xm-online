@@ -1,78 +1,99 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Router} from '@angular/router';
-import {Location} from '@angular/common';
-import {Subscription} from 'rxjs/Subscription';
-import {EventManager, JhiLanguageService} from 'ng-jhipster';
+import { Location } from '@angular/common';
+import {
+    Component,
+    DoCheck,
+    ElementRef,
+    OnDestroy,
+    OnInit,
+    ViewChild
+} from '@angular/core';
+import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
+import { TranslateService } from '@ngx-translate/core';
+import { SessionStorageService } from 'ngx-webstorage';
 
-import {ProfileService} from '../profiles/profile.service'; // FIXME barrel doesn't work here
-import {JhiLanguageHelper, Principal} from '../../shared';
-
-import {VERSION, DEBUG_INFO_ENABLED} from '../../xm.constants';
+import { XmConfigService } from '../../shared/spec/config.service';
+import { JhiLanguageHelper, LANGUAGES, Principal } from '../../shared';
+import { DEBUG_INFO_ENABLED, VERSION } from '../../xm.constants';
 
 const misc: any = {
     navbar_menu_visible: 0,
     active_collapse: true,
-    disabled_collapse_init: 0,
+    disabled_collapse_init: 0
 };
 
 declare let $: any;
 
 @Component({
     selector: 'xm-navbar',
-    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.scss'],
+    templateUrl: './navbar.component.html'
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
-    title: string;
-    inProduction: boolean;
+    routeData: any = {};
     languages: any[];
-    swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
+    tenantName: string;
+    mobile_menu_visible: any = 0;
+    title: string;
+    tenantLogoUrl: '../assets/img/logo-xm-online.png';
+    private nativeElement: Node;
     private previousPath: string;
-    private backStep: number = 0;
+    private backStep = 0;
     private toggleButton;
     private sidebarVisible: boolean;
-    private pageTitleSubscription: Subscription;
 
     @ViewChild('navbar-cmp') button;
 
-    constructor(
-        private languageHelper: JhiLanguageHelper,
-        private jhiLanguageService: JhiLanguageService,
-        private principal: Principal,
-        private profileService: ProfileService,
-        private router: Router,
-        private element: ElementRef,
-        private eventManager: EventManager,
-        private location: Location,
-    ) {
+    constructor(private languageHelper: JhiLanguageHelper,
+                private jhiLanguageService: JhiLanguageService,
+                private principal: Principal,
+                private router: Router,
+                private translateService: TranslateService,
+                private element: ElementRef,
+                private eventManager: JhiEventManager,
+                private $sessionStorage: SessionStorageService,
+                private location: Location,
+                private xmConfigService: XmConfigService) {
         this.version = DEBUG_INFO_ENABLED ? 'v' + VERSION : '';
-        this.jhiLanguageService.addLocation('navbar');
-        this.registerChangeInPageTitle();
         this.registerPopState();
+        this.nativeElement = element.nativeElement;
+        this.sidebarVisible = false;
     }
 
     ngOnInit() {
-        this.languageHelper.getAll().then((languages) => {
-            this.languages = languages;
+        this.xmConfigService.getUiConfig().subscribe(result => {
+            this.tenantName = result['name'] ? result['name'] : 'XM^online';
+            if (this.tenantName === 'XM^online') {
+                this.tenantName += ' ' + this.version;
+            }
+            $('#favicon').attr('href', result['favicon'] ? result['favicon'] : './assets/img/favicon.png');
+            if (result['logoUrl']) {
+                this.tenantLogoUrl = result['logoUrl'];
+            }
+            this.languageHelper.getAll().then((languages) => {
+                this.languages = (result && result.langs) ? result.langs : languages;
+            });
         });
 
-        this.profileService.getProfileInfo().subscribe((profileInfo) => {
-            this.inProduction = profileInfo.inProduction;
-            this.swaggerEnabled = profileInfo.swaggerEnabled;
+        this.routeData = this.getRouteData(this.router.routerState.snapshot.root);
+        this.router.events.subscribe((event) => {
+            if (event instanceof NavigationEnd) {
+                this.routeData = this.getRouteData(this.router.routerState.snapshot.root);
+            }
         });
-
         const navbar: HTMLElement = this.element.nativeElement;
-        this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
+        this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
         if ($('body').hasClass('sidebar-mini')) {
             misc.sidebar_mini_active = true;
         }
         $('#minimizeSidebar').click(function () {
             const $btn = $(this);
 
-            if (misc.sidebar_mini_active == true) {
+            if (misc.sidebar_mini_active === true) {
                 $('body').removeClass('sidebar-mini');
                 misc.sidebar_mini_active = false;
 
@@ -85,7 +106,7 @@ export class NavbarComponent implements OnInit {
             }
 
             // we simulate the window Resize so the charts will get updated in realtime.
-            let simulateWindowResize = setInterval(function () {
+            const simulateWindowResize = setInterval(function () {
                 window.dispatchEvent(new Event('resize'));
             }, 180);
 
@@ -97,16 +118,29 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnDestroy() {
-        this.eventManager.destroy(this.pageTitleSubscription);
+    }
+
+    ngDoCheck() {
+        this.processTitle(this.routeData);
     }
 
     search(term: string) {
-        this.router.navigateByUrl('/search?query=' + term);
+        if (term) {
+            this.router.navigateByUrl('/search?query=' + term);
+        }
+
     }
 
     changeLanguage(languageKey: string) {
         this.jhiLanguageService.changeLanguage(languageKey);
-        this.eventManager.broadcast({ name: 'changeLanguage', content: languageKey})
+        this.translateService.getTranslation(languageKey).subscribe((res) => {
+            LANGUAGES.forEach((lang) => {
+                this.$sessionStorage.clear(lang);
+            });
+            this.$sessionStorage.store(languageKey, JSON.stringify(res));
+            this.$sessionStorage.store('currentLang', languageKey);
+        });
+        this.eventManager.broadcast({name: 'changeLanguage', content: languageKey})
     }
 
     isAuthenticated() {
@@ -118,30 +152,96 @@ export class NavbarComponent implements OnInit {
     }
 
     sidebarToggle() {
-        let toggleButton = this.toggleButton;
-        let body = document.getElementsByTagName('body')[0];
-
-        if (this.sidebarVisible) {
-            toggleButton.classList.remove('toggled');
-            this.sidebarVisible = false;
-            body.classList.remove('nav-open');
+        if (this.sidebarVisible === false) {
+            this.sidebarOpen();
         } else {
-            setTimeout(function () {
-                toggleButton.classList.add('toggled');
-            }, 500);
-            body.classList.add('nav-open');
-            this.sidebarVisible = true;
+            this.sidebarClose();
         }
     }
+
+    sidebarOpen() {
+        const _this = this;
+        const $toggle = document.getElementsByClassName('navbar-toggler')[0];
+        const toggleButton = this.toggleButton;
+        const body = document.getElementsByTagName('body')[0];
+        setTimeout(function(){
+            toggleButton.classList.add('toggled');
+        }, 500);
+        body.classList.add('nav-open');
+        setTimeout(function() {
+            $toggle.classList.add('toggled');
+        }, 430);
+
+        const $layer = document.createElement('div');
+        $layer.setAttribute('class', 'close-layer');
+
+
+        if (body.querySelectorAll('.main-panel')) {
+            document.getElementsByClassName('main-panel')[0].appendChild($layer);
+        } else if (body.classList.contains('off-canvas-sidebar')) {
+            document.getElementsByClassName('wrapper-full-page')[0].appendChild($layer);
+        }
+
+        setTimeout(function() {
+            $layer.classList.add('visible');
+        }, 100);
+
+        $layer.onclick = function() {
+            body.classList.remove('nav-open');
+            _this.mobile_menu_visible = 0;
+            _this.sidebarVisible = false;
+
+            $layer.classList.remove('visible');
+            setTimeout(function() {
+                $layer.remove();
+                $toggle.classList.remove('toggled');
+            }, 400);
+        }.bind(this);
+
+        body.classList.add('nav-open');
+        this.mobile_menu_visible = 1;
+        this.sidebarVisible = true;
+    };
+
+    sidebarClose() {
+        const $toggle = document.getElementsByClassName('navbar-toggler')[0];
+        const body = document.getElementsByTagName('body')[0];
+        this.toggleButton.classList.remove('toggled');
+        const $layer = document.createElement('div');
+        $layer.setAttribute('class', 'close-layer');
+
+        this.sidebarVisible = false;
+        body.classList.remove('nav-open');
+        if ($layer) {
+            $layer.remove();
+        }
+
+        setTimeout(function() {
+            $toggle.classList.remove('toggled');
+        }, 400);
+
+        this.mobile_menu_visible = 0;
+    };
 
     onBack() {
         this.previousPath = this.location.path();
         this.location.back();
     }
 
-    private registerChangeInPageTitle() {
-        this.pageTitleSubscription = this.eventManager.subscribe('pageTitleModification', resp => this.title = resp.content);
+    private getRouteData(routeSnapshot: ActivatedRouteSnapshot): string {
+        let rData;
+
+        if (routeSnapshot.data) {
+            rData = routeSnapshot.data;
+        }
+
+        if (routeSnapshot.firstChild) {
+            rData = this.getRouteData(routeSnapshot.firstChild) || this.routeData;
+        }
+
+        return rData;
     }
+
 
     private registerPopState() {
         this.location.subscribe(() => {
@@ -153,5 +253,17 @@ export class NavbarComponent implements OnInit {
                 }
             }
         });
+    }
+
+    private processTitle(routData: any): void {
+        let titlePart1, titlePart2, titlePart3, titlePart4, titlePart5, titlePart6, titlePart7;
+        titlePart1 = routData.pageTitle ?  this.translateService.instant(routData.pageTitle) : '';
+        titlePart2 = routData.pageSubTitle || routData.pageSubTitleTrans ? ' - ' : '';
+        titlePart3 = routData.pageSubTitle ? routData.pageSubTitle : '';
+        titlePart4 = routData.pageSubTitleTrans ?  this.translateService.instant(routData.pageSubTitleTrans) : '';
+        titlePart5 = routData.pageSubSubTitle || routData.pageSubSubTitleTrans ? ' - ' : '';
+        titlePart6 = routData.pageSubSubTitle ? routData.pageSubSubTitle : '';
+        titlePart7 = routData.pageSubSubTitleTrans ? this.translateService.instant(routData.pageSubSubTitleTrans) : '';
+        this.title = titlePart1 + titlePart2 + titlePart3 + titlePart4 + titlePart5 + titlePart6 + titlePart7;
     }
 }

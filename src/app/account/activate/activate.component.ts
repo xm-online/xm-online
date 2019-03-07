@@ -14,11 +14,9 @@ export class ActivateComponent implements OnInit {
     success: string;
     modalRef: NgbModalRef;
 
-    constructor(private jhiLanguageService: JhiLanguageService,
-                private activate: Activate,
+    constructor(private activate: Activate,
                 private route: ActivatedRoute,
                 private router: Router) {
-        this.jhiLanguageService.addLocation('activate');
     }
 
     ngOnInit() {

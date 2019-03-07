@@ -1,0 +1,51 @@
+<form class="m-0" name="deleteForm" #editForm="ngForm" novalidate (ngSubmit)="onSave()">
+    <div class="modal-header">
+        <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+        <h4 class="modal-title text-left">
+            <span *ngIf="isAddMode" jhiTranslate="rolesManagement.permission.createCondition">Create Condition</span>
+            <span *ngIf="!isAddMode" jhiTranslate="rolesManagement.permission.editCondition">Edit Condition</span>
+        </h4>
+    </div>
+
+    <div class="modal-body">
+        <p jhiTranslate="{{transInfo}}"></p>
+
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput
+                   type="text"
+                   [value]="permission.privilegeKey"
+                   placeholder="{{'rolesManagement.permission.privilegeKey' | translate}}"
+                   disabled>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field>
+            <textarea matInput
+                      name="condition"
+                      id="condition"
+                      [(ngModel)]="condition"
+                      [wordAutocomplete]="variables"
+                      rows="4"
+                      placeholder="{{'rolesManagement.permission.condition' | translate}}"></textarea>
+          </mat-form-field>
+        </div>
+
+        <div>
+            <label>
+                <span jhiTranslate="rolesManagement.variables">Variable(s)</span>:
+                <span *ngFor="let item of variables; last as last">{{item}}<span *ngIf="!last">, </span></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button mat-raised-button type="submit" class="btn btn-primary">
+            <i class="material-icons">done</i>&nbsp;<span jhiTranslate="rolesManagement.ok">Ok</span>
+        </button>
+    </div>
+</form>

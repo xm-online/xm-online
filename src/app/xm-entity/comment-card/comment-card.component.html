@@ -1,0 +1,16 @@
+<div class="card card-testimonial xm-comment-item">
+  <div class="icon">
+    <i class="material-icons">format_quote</i>
+  </div>
+  <div class="card-body">
+    <h5 class="card-description">{{comment.message}}</h5>
+  </div>
+  <div class="card-footer">
+    <h4 class="card-title">{{commentator?.firstName}} {{commentator?.lastName}}</h4>
+    <div class="card-avatar">
+      <img class="img" (error)="noImage = true" [hidden]="noImage"
+           src="{{commentator?.imageUrl ? commentator.imageUrl : './assets/img/anonymous.png'}}">
+      <img class="img" src="./assets/img/anonymous.png" [hidden]="!noImage">
+    </div>
+  </div>
+</div>

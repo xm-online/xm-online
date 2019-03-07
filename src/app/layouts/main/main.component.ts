@@ -1,104 +1,245 @@
-import { Component, OnInit } from '@angular/core';
-import {Router, NavigationEnd, NavigationStart} from '@angular/router';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { Idle } from 'idlejs/dist';
+import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
+import { SessionStorageService } from 'ngx-webstorage';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 
-import { JhiLanguageHelper } from '../../shared';
-import {EventManager, JhiLanguageService} from "ng-jhipster";
-import {Subscription} from "rxjs/Subscription";
-import {Principal} from "../../shared/auth/principal.service";
-import { TranslateService } from 'ng2-translate';
+import { environment } from '../../../environments/environment';
+import { JhiLanguageHelper, LANGUAGES } from '../../shared';
+import { Principal } from '../../shared/auth/principal.service';
+import { ModulesLanguageHelper } from '../../shared/language/modules-language.helper';
+import { LoginService } from '../../shared/login/login.service';
+import { XmConfigService } from '../../shared/spec/config.service';
+import { XmApplicationConfigService } from '../../shared/spec/xm-config.service';
+import {DEFAULT_LANG, XM_EVENT_LIST} from '../../xm.constants';
+import { getBrowserLang } from './../../shared/shared-libs.module';
 
-declare let $:any;
+declare let $: any;
 
 @Component({
     selector: 'xm-main',
     templateUrl: './main.component.html'
 })
-export class XmMainComponent implements OnInit {
-
-    showSidebar: boolean = true;
-    private authSucessSubscription: Subscription;
-    private unauthSubscription: Subscription;
+export class XmMainComponent implements OnInit, OnDestroy {
+    showSidebar = true;
+    config: any;
+    resolved$: BehaviorSubject<boolean>;
+    isIdleEnabled: boolean;
+    isGuestLayout: boolean;
+    guestBg: string;
+    authSucessSubscription: Subscription;
     private excludePaths: Array<string> = ['/reset/finish', '/activate', '/social-auth'];
     private excludePathsForViewSidebar: Array<string> = ['/social-auth'];
 
-    constructor(
-        private jhiLanguageHelper: JhiLanguageHelper,
-        private jhiLanguageService: JhiLanguageService,
-        private router: Router,
-        private translateService: TranslateService,
-        private principal: Principal,
-        private eventManager: EventManager
-    ) {
-        this.jhiLanguageService.setLocations(['global']);
-        this.registerAuthenticationSuccess();
-        this.registerUnauthorized();
+    constructor(private jhiLanguageHelper: JhiLanguageHelper,
+                private modulesLangHelper: ModulesLanguageHelper,
+                private jhiLanguageService: JhiLanguageService,
+                private configService: XmConfigService,
+                private xmConfigService: XmApplicationConfigService,
+                private translateService: TranslateService,
+                private router: Router,
+                private loginService: LoginService,
+                private principal: Principal,
+                private $sessionStorage: SessionStorageService,
+                private eventManager: JhiEventManager) {
+        this.resolved$ = new BehaviorSubject<boolean>(false);
+        this.xmConfigService.isResolved().subscribe((res: boolean) => this.resolved$.next(res));
     }
 
     ngOnInit() {
-        let body = document.getElementsByTagName('body')[0];
-        let isWindows = navigator.platform.indexOf('Win') > -1;
-        if (isWindows){
-            // if we are on windows OS we activate the perfectScrollbar function
-            body.classList.add("perfect-scrollbar-on");
-        } else {
-            body.classList.add("perfect-scrollbar-off");
-        }
+        this.prepareLayout();
+        this.registerAuthenticationSuccess();
+
+        // const envType = environment.production ? 'PROD' : 'TEST';
+        const body = document.getElementsByTagName('body')[0];
+        const isWindows = navigator.platform.indexOf('Win') > -1;
+
+        // if we are on windows OS we activate the perfectScrollbar function
+        body.classList.add(`perfect-scrollbar-${isWindows ? 'on' : 'off'}`);
 
         this.router.events.subscribe((event) => {
+            this.setBackground();
             if (event instanceof NavigationStart) {
-                this.showSidebar = this.excludePathsForViewSidebar.indexOf(event.url) == -1;
+                this.showSidebar = this.excludePathsForViewSidebar.indexOf(event.url) === -1;
             }
             if (event instanceof NavigationEnd) {
                 this.jhiLanguageHelper.updateTitle();
-
                 this.updateLang();
+                this.idleLogoutInit();
             }
+            // TODO rethink to use in json form condition
+            $.principal = this.principal;
         });
 
-        $.material.init();
-    }
+        // TODO #14219. workaround for dynamic expand height of textarea
+        $('body').on('keyup', '.textarea-auto-height textarea', function (ev) {
+            this.style.overflow = 'hidden';
+            this.style.height = '52px';
+            this.style.height = this.scrollHeight + 'px';
+        });
 
-    private updateLang() {
-        let langKey = this.principal.getLangKey();
-        if (langKey) {
-            console.log(langKey);
-            this.jhiLanguageService.changeLanguage(langKey);
-            this.jhiLanguageHelper.getAll().then(langs => {
-                if (langs && langs.length > 0 && langs.filter(lang => lang == langKey).length == 0) {
-                    console.log("Currect user lang in not configured in this tenant. Lang set to " + langs[0]);
-                    this.jhiLanguageService.changeLanguage(langs[0]);
-                }
+        $(window).resize(() => {
+            $('.textarea-auto-height textarea').each(function (pos, el) {
+                $(el).trigger('keyup');
             });
-        } else {
-            this.jhiLanguageHelper.getAll().then(langs => {
-                if (langs && langs.length > 0) {
-                    console.log(langs[0]);
-                    this.jhiLanguageService.changeLanguage(langs[0]);
+        });
+
+        if (!$.emptyString) {
+            $.emptyString = function(str) {
+                if (str || str === false) {
+                    return str;
+                } else {
+                    return '';
                 }
-            });
+            }
+        }
+
+        if (!$.wrapArray) {
+            $.wrapArray = function(arr) {
+                if (!Array.isArray(arr)) {
+                    return $.emptyString(arr);
+                } else {
+                    const result = [];
+                    for (let i = 0; i < arr.length; i++) {
+                        result[i] = $.safe(arr[i]);
+
+                        if (arr.length === 1) {
+                            break;
+                        }
+
+                        result[i] = i === 0 ? result[i] + '"' : result[i];
+                        result[i] = i === arr.length - 1 ? '"' + result[i] : result[i];
+                        result[i] = i > 0 && i < arr.length - 1 ? '"' + result[i] + '"' : result[i];
+                    }
+                    console.log(`["${result}"]`);
+                    return result;
+                }
+            }
+        }
+
+        // using in json form dataSpec interpolation
+        // for avoid break dataSpec json
+        if (!$.safe) {
+            $.safe = function(str) {
+                if (!(typeof str === 'string')) {
+                    return str;
+                }
+
+                return $.emptyString(str).replace(/\\n/g, '\\n')
+                    .replace(/\\'/g, '\\\'')
+                    .replace(/\\"/g, '\\"')
+                    .replace(/\\&/g, '\\&')
+                    .replace(/\\r/g, '\\r')
+                    .replace(/\\t/g, '\\t')
+                    .replace(/\\b/g, '\\b')
+                    .replace(/\\f/g, '\\f');
+            }
         }
     }
 
+    private async updateLang() {
+        const langKey = this.getLangFromProfileOrSession();
+        if (langKey) {
+            (!environment.production) && console.log('apply start language from Profile %s', langKey);
+            this.setLanguage(langKey);
+        } else {
+            const cfgLang = await this.getDefaultLanguageConfiguration();
+            this.setLanguage(cfgLang);
+        }
+    }
+
+    private getLangFromProfileOrSession(): string {
+        return this.modulesLangHelper.getLangKey();
+    }
+
+    private async getDefaultLanguageConfiguration() {
+        const jhiLangCFG = await this.jhiLanguageHelper.getAll();
+        const uiCfg = await this.configService.getUiConfig().toPromise();
+        const availableLanguages = (uiCfg && uiCfg.langs) ? uiCfg.langs : jhiLangCFG;
+
+        if (!availableLanguages) {
+            console.log('No UI Language CFG or JHI cfg found');
+            return DEFAULT_LANG;
+        }
+        // Return UI Default form CONFIG --> Browser if supported by CFG --> or [0] from supported;
+        return availableLanguages.includes(uiCfg.defaultLang) ? uiCfg.defaultLang
+            : availableLanguages.includes(getBrowserLang()) ? getBrowserLang()
+                : availableLanguages[0];
+
+    }
+
+    private setLanguage (lang: string = DEFAULT_LANG): void {
+        (!environment.production) && console.log('apply start language %s', lang);
+        this.jhiLanguageService.changeLanguage(lang);
+        this.translateService.setDefaultLang(lang);
+        this.principal.setLangKey(lang);
+        this.storeTranslates(lang);
+        this.eventManager.broadcast({name: XM_EVENT_LIST.XM_CHANGE_LANGUAGE, content: lang});
+    }
+
     ngOnDestroy() {
-        this.eventManager.destroy(this.authSucessSubscription);
-        this.eventManager.destroy(this.unauthSubscription);
+        this.authSucessSubscription ? this.authSucessSubscription.unsubscribe() : console.log('No authSucessSubscription');
     }
 
     private registerAuthenticationSuccess() {
-        this.authSucessSubscription = this.eventManager.subscribe('authenticationSuccess', (message) => this.principal.identity());
-    }
-
-    private registerUnauthorized() {
-        this.unauthSubscription = this.eventManager.subscribe('xm.unauthorized', (response) => {
-            $("ngb-modal-window").click();
-            const path = this.router.routerState.snapshot.url;
-            for (const exPath of this.excludePaths) {
-                if (path.startsWith(exPath)) {
-                    return;
-                }
-            }
-            this.router.navigate(['']);
+        this.authSucessSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, (message) => {
+            this.principal.identity();
+            this.isGuestLayout = false;
         });
     }
 
+    private idleLogoutInit(): void {
+        const authenticated = this.principal.isAuthenticated();
+        this.configService.getUiConfig().subscribe(config => {
+            this.config = config ? config : null;
+            if (this.config && this.config.idleLogout && authenticated && !this.isIdleEnabled) {
+                this.isIdleEnabled = true;
+                const idle = new Idle()
+                    .whenNotInteractive()
+                    .within(parseFloat(this.config.idleLogout), 1000)
+                    .do(() => {
+                        this.loginService.logout();
+                        this.isIdleEnabled = false;
+                    })
+                    .start();
+            }
+        });
+    }
+
+    private storeTranslates(langKey: string): void {
+        this.translateService.getTranslation(langKey).subscribe((res) => {
+            LANGUAGES.forEach((lang) => {
+                this.$sessionStorage.clear(lang);
+            });
+            this.$sessionStorage.store(langKey, JSON.stringify(res));
+            this.$sessionStorage.store('currentLang', langKey);
+        })
+    }
+
+    private prepareLayout() {
+        this.isGuestLayout = true;
+        this.principal.getAuthenticationState().subscribe(auth => {
+            if (!auth) {
+                this.isGuestLayout = true;
+            } else {
+                this.isGuestLayout = false;
+            }
+        }, error => {
+            console.log(error);
+            this.isGuestLayout = false;
+        });
+    }
+
+    private setBackground() {
+        if (this.config && this.config.loginScreenBg) {
+            const currentRoute = this.router.url;
+            if (currentRoute === '/') {
+                this.guestBg = 'url(' + this.config.loginScreenBg + ')';
+            } else {
+                this.guestBg = null;
+            }
+        }
+    }
 }

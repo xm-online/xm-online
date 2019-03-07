@@ -16,23 +16,21 @@ export class LogsComponent implements OnInit {
     reverse: boolean;
 
     constructor(
-        private jhiLanguageService: JhiLanguageService,
         private logsService: LogsService
     ) {
         this.filter = '';
         this.orderProp = 'name';
         this.reverse = false;
-        this.jhiLanguageService.setLocations(['logs']);
     }
 
     ngOnInit() {
-        this.logsService.findAll().subscribe((loggers) => this.loggers = loggers);
+        this.logsService.findAll().subscribe((loggers) => this.loggers = loggers.body);
     }
 
     changeLevel(name: string, level: string) {
         const log = new Log(name, level);
         this.logsService.changeLevel(log).subscribe(() => {
-            this.logsService.findAll().subscribe((loggers) => this.loggers = loggers);
+            this.logsService.findAll().subscribe((loggers) => this.loggers = loggers.body);
         });
     }
 }

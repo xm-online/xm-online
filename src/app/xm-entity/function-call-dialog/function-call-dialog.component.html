@@ -1,0 +1,39 @@
+<form class="m-0" name="functionCallForm" (ngSubmit)="onConfirmFunctionCall()">
+  <div class="modal-header">
+    <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+    <h4 class="modal-title text-left" [innerHTML]="dialogTitle | i18nName : principal"></h4>
+  </div>
+  <div class="modal-body">
+    <xm-loader [showLoader]="showLoader"></xm-loader>
+    <json-schema-form class="json-form-hide-submit"
+                      [framework]="'material-design'"
+                      [schema]="jsfAttributes.schema"
+                      [layout]="jsfAttributes.layout | i18nJsf :principal"
+                      [form]="jsfAttributes.form | i18nJsf :principal"
+                      [data]="jsfAttributes.data"
+                      [options]="jsfAttributes.options | i18nJsf :principal"
+                      [widgets]="jsfAttributes.widgets"
+                      (formLayout)="jsfAttributes.formLayout"
+                      (onChanges)="onChangeForm($event)"
+                      (isValid)="isJsonFormValid = $event"
+                      *ngIf="jsfAttributes?.schema">
+    </json-schema-form>
+  </div>
+  <div class="modal-footer">
+    <button mat-raised-button
+            type="button"
+            class="btn mr-1"
+            data-dismiss="modal"
+            (click)="onCancel()">
+      <span *ngIf="jsfAttributes?.entity?.cancelName">{{jsfAttributes.entity.cancelName | i18nName: principal}}</span>
+      <span *ngIf="!jsfAttributes?.entity?.cancelName" jhiTranslate="xm-entity.common.cancel">Cancel</span>
+    </button>
+    <button mat-raised-button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="showLoader || !isJsonFormValid">
+      <span *ngIf="jsfAttributes?.entity?.saveName">{{jsfAttributes.entity.saveName | i18nName: principal}}</span>
+      <span *ngIf="!jsfAttributes?.entity?.saveName">{{buttonTitle | i18nName : principal}}</span>
+    </button>
+  </div>
+</form>

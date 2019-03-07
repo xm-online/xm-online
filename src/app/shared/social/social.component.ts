@@ -1,35 +1,22 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SocialService } from './social.service';
 import { CSRFService } from '../auth/csrf.service';
-import { JhiLanguageService } from 'ng-jhipster';
-
 @Component({
     selector: 'xm-social',
     templateUrl: './social.component.html',
-    styles: [`
-      form {
-        display: inline-block;
-      }
-    `]
+    styleUrls: [ './social.component.scss' ]
 })
 export class JhiSocialComponent implements OnInit {
-    @Input() provider: string;
-    label: string;
-    providerSetting: string;
-    providerURL: string;
+
+    @Input() providerId: string;
+    @Input() scope: string;
+    @Input() icon: any;
+
     csrf: string;
 
-    constructor(
-        private jhiLanguageService: JhiLanguageService,
-        private csrfService: CSRFService,
-        private socialService: SocialService
-    ) {}
+    constructor(private csrfService: CSRFService) {
+    }
 
     ngOnInit() {
-        this.jhiLanguageService.setLocations(['social', 'register', 'login', 'home']);
-        this.label = this.provider.charAt(0).toUpperCase() + this.provider.slice(1);
-        this.providerSetting = this.socialService.getProviderSetting(this.provider);
-        this.providerURL = this.socialService.getProviderURL(this.provider);
         this.csrf = this.csrfService.getCSRF();
     }
 }

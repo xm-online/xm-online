@@ -1,13 +1,20 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
+
+const CHECK_API = '/uaa/api/account/reset_password/check?key=';
 
 @Injectable()
 export class PasswordResetFinish {
 
-    constructor(private http: Http) {}
+    constructor(private http: HttpClient) {
+    }
 
     save(keyAndPassword: any): Observable<any> {
         return this.http.post('uaa/api/account/reset_password/finish', keyAndPassword);
+    }
+
+    check(keyAndPassword: any): Observable<any> {
+        return this.http.get(CHECK_API + keyAndPassword);
     }
 }

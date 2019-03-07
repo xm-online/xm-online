@@ -1,0 +1,205 @@
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-pills nav-pills-primary nav-pills-icons justify-content-center" role="tablist">
+      <li class="nav-item" *ngFor="let type of specificationTypes">
+        <a class="nav-link"
+           [class.active]="type.slug === currentSpecificationSlug"
+           role="tab" data-toggle="tab"
+           [routerLink]="['../' + type.slug]">
+          <i class="material-icons">{{type.icon}}</i>
+          <span jhiTranslate="admin-config.specification-mng.{{type.slug}}.title"></span>
+        </a>
+      </li>
+    </ul>
+
+    <div [ngSwitch]="currentSpecificationSlug">
+      <div *ngSwitchCase="'ui'">
+        <div class="card">
+          <div class="card-body">
+            <div class="text-center pb-3">
+              <button type="submit" class="btn btn-primary" (click)="updateUiConfig();"
+                      jhiTranslate="admin-config.specification-mng.ui.save">
+                Update UI specification
+              </button>
+            </div>
+            <div class="text-right">
+              <div xmAceEditor
+                   [text]="uiSpecificationIn"
+                   [options]="aceEditorOptions"
+                   [readOnly]="false"
+                   [mode]="'yaml'"
+                   [autoUpdateContent]="true"
+                   (textChanged)="onUiSpecificationChange($event)"
+                   [style.min-height]="'150px'"
+                   [style.width]="'100%'"
+                   style="overflow-x: auto; border: 1px solid lightgray;">
+                <span jhiTranslate="admin-config.specification-mng.loading">loading specification...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchCase="'entity'">
+        <div class="card">
+          <div class="card-body">
+            <div class="text-center pb-3">
+              <button type="submit" class="btn btn-primary mr-2" (click)="validateXmEntitySpec();"
+                      jhiTranslate="admin-config.specification-mng.validate"
+                      *ngIf="!isXmEntitySpecValid">
+                Validate
+              </button>
+              <button type="submit" class="btn btn-primary mr-2" (click)="updateEntityConfig();"
+                      jhiTranslate="admin-config.specification-mng.entity.save"
+                      *ngIf="isXmEntitySpecValid">
+                Update Entity specification
+              </button>
+
+              <button type="button"
+                      class="btn btn-icon btn-just-icon btn-primary ml-2"
+                      (click)="onShowConfigVisualizerDialog();">
+                <i class="material-icons">visibility</i>
+              </button>
+
+              <button type="button"
+                      class="btn btn-icon btn-just-icon btn-primary ml-2"
+                      (click)="onShowConfigStatesManagementDialog();">
+                <i class="material-icons">more</i>
+              </button>
+            </div>
+            <div class="text-center">
+              <div class="text-danger" [innerHtml]="entityValidation?.errorMessage"
+                   *ngIf="entityValidation && !entityValidation.valid" >
+              </div>
+            </div>
+            <div class="text-right">
+              <div xmAceEditor
+                   [text]="entitySpecificationIn"
+                   [options]="aceEditorOptions"
+                   [readOnly]="false"
+                   [mode]="'yaml'"
+                   [autoUpdateContent]="true"
+                   [gotoLine]="line"
+                   (textChanged)="onEntitySpecificationChange($event)"
+                   [style.min-height]="'200px'"
+                   [style.width]="'100%'"
+                   style="overflow-x: auto; border: 1px solid lightgray;">
+                <span jhiTranslate="admin-config.specification-mng.loading">loading specification...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchCase="'timeline'">
+        <div class="card">
+          <div class="card-body">
+            <div class="text-center pb-3">
+              <button type="submit" class="btn btn-primary" (click)="validateTimelineConfig();"
+                      jhiTranslate="admin-config.specification-mng.validate"
+                      *ngIf="!isTimelineSpecValid">
+                Validate
+              </button>
+              <button type="submit" class="btn btn-primary" (click)="updateTimelineConfig();"
+                      jhiTranslate="admin-config.specification-mng.timeline.save"
+                      *ngIf="isTimelineSpecValid">
+                Save Timeline specification
+              </button>
+              <div class="text-center">
+                <div class="text-danger" [innerHtml]="timelineValidation?.errorMessage"
+                     *ngIf="timelineValidation && !timelineValidation.valid" >
+                </div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div xmAceEditor
+                   [text]="timelineSpecificationIn"
+                   [options]="aceEditorOptions"
+                   [readOnly]="false"
+                   [mode]="'yaml'"
+                   [autoUpdateContent]="true"
+                   (textChanged)="onTimelineSpecificationChange($event)"
+                   [style.min-height]="'150px'"
+                   [style.width]="'100%'"
+                   style="overflow-x: auto; border: 1px solid lightgray;">
+                <span jhiTranslate="admin-config.specification-mng.loading">loading specification...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchCase="'uaa-login'">
+        <div class="card">
+          <div class="card-body">
+            <div class="text-center pb-3">
+              <button type="submit" class="btn btn-primary" (click)="validateLoginsSpecification();"
+                      jhiTranslate="admin-config.specification-mng.validate"
+                      *ngIf="!isUaaLoginSpecValid">
+                Validate
+              </button>
+              <button type="submit" class="btn btn-primary" (click)="updateLoginsSpecification();"
+                      jhiTranslate="admin-config.specification-mng.uaa-login.save"
+                      *ngIf="isUaaLoginSpecValid">
+                Save Login specification
+              </button>
+              <div class="text-center">
+                <div class="text-danger" [innerHtml]="loginsValidation?.errorMessage"
+                     *ngIf="loginsValidation && !loginsValidation.valid" >
+                </div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div xmAceEditor
+                   [text]="loginsSpecificationIn"
+                   [options]="aceEditorOptions"
+                   [readOnly]="false"
+                   [mode]="'yaml'"
+                   [autoUpdateContent]="true"
+                   (textChanged)="onLoginsSpecificationChange($event)"
+                   [style.min-height]="'150px'"
+                   [style.width]="'100%'"
+                   style="overflow-x: auto; border: 1px solid lightgray;">
+                <span jhiTranslate="admin-config.specification-mng.loading">loading specification...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchCase="'uaa'">
+        <div class="card">
+          <div class="card-body">
+            <div class="text-center pb-3">
+              <button type="submit" class="btn btn-primary" (click)="validateUaaSpecification();"
+                      jhiTranslate="admin-config.specification-mng.validate"
+                      *ngIf="!isUaaSpecValid">
+                Validate
+              </button>
+              <button type="submit" class="btn btn-primary" (click)="updateUaaSpecification();"
+                      jhiTranslate="admin-config.specification-mng.uaa.save"
+                      *ngIf="isUaaSpecValid">
+                Save UAA specification
+              </button>
+              <div class="text-center">
+                <div class="text-danger" [innerHtml]="uaaValidation?.errorMessage"
+                     *ngIf="uaaValidation && !uaaValidation.valid" >
+                </div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div xmAceEditor
+                   [text]="uaaSpecificationIn"
+                   [options]="aceEditorOptions"
+                   [readOnly]="false"
+                   [mode]="'yaml'"
+                   [autoUpdateContent]="true"
+                   (textChanged)="onUaaSpecificationChange($event)"
+                   [style.min-height]="'150px'"
+                   [style.width]="'100%'"
+                   style="overflow-x: auto; border: 1px solid lightgray;">
+                <span jhiTranslate="admin-config.specification-mng.loading">loading specification...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

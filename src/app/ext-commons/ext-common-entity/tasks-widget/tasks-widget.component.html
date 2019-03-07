@@ -1,0 +1,45 @@
+<div class="card">
+  <div class="card-header card-header-tabs card-header-primary">
+    <span class="nav-tabs-title"><span>{{config?.name ? config?.name : 'Tasks'}}</span>:</span>
+    <ul class="nav nav-tabs" data-tabs="tabs">
+      <li class="nav-item" *ngFor="let task of tasks; index as i; first as isFirst"
+          [ngClass]="{active: i == activeId}">
+        <a class="nav-link" [ngClass]="{active: i == activeId}" data-toggle="tab" href="{{'#task-group-' + i}}" (click)="setActive(i)">
+          {{task.title}}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="card-body">
+    <div class="tab-content">
+      <div class="tab-pane" *ngFor="let task of tasks; index as i; first as isFirst" id="{{'task-group-' + i}}"
+           [ngClass]="{active: i == activeId}">
+        <table class="table">
+          <tbody>
+          <tr *ngFor="let item of task.list">
+            <td>
+              <div class="form-group">
+                <mat-checkbox color="primary" class="mat-label-m-0" [(ngModel)]="item.isChecked"
+                              (click)="onChange(item)"
+                              name="optionsCheckboxes">
+                </mat-checkbox>
+              </div>
+            </td>
+            <td>{{item.title}}</td>
+            <td class="td-actions text-right">
+              <button class="btn btn-just-icon btn-link btn-primary mat-raised-button mr-1" rel="tooltip" type="button"
+                      data-original-title="Edit Task" (click)="onEdit(item)">
+                <i class="material-icons">edit</i>
+              </button>
+              <button class="btn btn-just-icon btn-link btn-danger mat-raised-button" rel="tooltip" type="button"
+                      data-original-title="Remove" (click)="onRemove(item)">
+                <i class="material-icons">close</i>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

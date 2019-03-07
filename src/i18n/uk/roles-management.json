@@ -1,0 +1,46 @@
+{
+    "rolesManagement": {
+        "home": {
+            "labelCreate": "Створити нову роль",
+            "labelEdit": "Редагувати роль",
+            "title": "Ролі"
+        },
+        "delete": {
+            "question": "Ви впевнені, що хочете видалити роль '{{ roleKey }}'?"
+        },
+        "detail": {
+            "title": "Роль",
+            "permissions": "права доступу"
+        },
+        "chooseRole": "Виберіть роль",
+        "key": "Ім'я",
+        "basedOn": "На основі",
+        "description": "Опис",
+        "createdBy": "Створено",
+        "createdDate": "Дата створення",
+        "lastModifiedBy": "Змінено",
+        "lastModifiedDate": "Дата зміни",
+        "ok": "Ok",
+        "variables": "Доступні змінні",
+        "permission": {
+            "checkAll": "Відзначити всі",
+            "privilegeKey": "Ключ привілею",
+            "msName": "Назва МС",
+            "permit": "Дозвіл",
+            "permitted": "дозволенi",
+            "notPermitted": "недозволенi",
+            "permittedAny": "принаймні один",
+            "onForbid": "При забороні",
+            "resourceCondition": "Умови ресурсу",
+            "envCondition": "Умови середовища",
+            "createCondition": "Створення умови",
+            "editCondition": "Редагування умови",
+            "condition": "Умова",
+            "conditionResourceInfo": "1. використовуйте SpEL функцiональнiсть<br>2. використовуйте # перед змiнною<br>3. #subject.role, #subject.userKey, #subject.login змiннi доступнi",
+            "conditionEnvInfo": "1. використовуйте SpEL функцiональнiсть<br>2. використовуйте # перед змiнною<br>3. #subject.role, #subject.userKey, #subject.login змiннi доступнi<br>4. #env['ipAddress'] змiнна доступна"
+        },
+        "matrix": {
+            "title": "Матриця ролей"
+        }
+    }
+}

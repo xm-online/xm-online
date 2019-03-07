@@ -3,13 +3,21 @@
         "form": {
             "general": "General info",
             "button": "Save",
-            "logins": "Logins"
+            "logins": "Logins",
+            "utc-time": "UTC time: ",
+            "local-time": "Local time: ",
+            "offset-time": "Timezone offset: "
         },
         "messages": {
             "success": "<strong>Settings saved!</strong>",
             "logins": {
                 "success": "<strong>Logins saved!</strong>"
             }
+        },
+        "security" : {
+            "name" : "Security settings",
+            "twoFAStatus" : "Two Factor Authentication",
+            "autoLogout" : "Auto logout"
         }
     }
 }

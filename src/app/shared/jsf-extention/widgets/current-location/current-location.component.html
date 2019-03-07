@@ -1,0 +1,10 @@
+<div *ngIf="options.isShowCoordinates">
+  <span *ngIf="latitude">Latitude: {{latitude}}</span>
+  <span *ngIf="longitude">Longitude: {{longitude}}</span>
+</div>
+
+<div *ngIf="options.isShowMap">
+  <ng-template xmGMapApiInit (gMapApiReady)="onAfterGMapApiInit()">
+    <div [id]="mapId" class="map"></div>
+  </ng-template>
+</div>

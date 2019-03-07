@@ -1,0 +1,17 @@
+.loader {
+  z-index: 1000;
+}
+.center-loader {
+  position: relative;
+}
+
+.absolute-self {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin: -30px 0 0 -30px;
+}
+
+.center-loader .loader {
+  top: 35px;
+}

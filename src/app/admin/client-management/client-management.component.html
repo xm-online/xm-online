@@ -1,0 +1,98 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-header-icon card-header-primary">
+        <div class="card-icon">
+          <i class="material-icons">perm_data_setting</i>
+        </div>
+        <h4 class="card-title" jhiTranslate="clientManagement.home.title">Clients</h4>
+      </div>
+
+      <div class="card-body">
+        <xm-loader [showLoader]="showLoader"></xm-loader>
+        <div class="material-datatables table-responsive" *ngIf="list?.length">
+          <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%"
+                 style="width:100%">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+              <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+              <th jhiSortBy="clientId"><span jhiTranslate="clientManagement.clientId">Client Id</span> <span
+                class="fa fa-sort"></span></th>
+              <th jhiSortBy="roleKey"><span jhiTranslate="clientManagement.roleKey">Role Key</span> <span
+                class="fa fa-sort"></span></th>
+              <th><span jhiTranslate="clientManagement.description">Description</span></th>
+              <th jhiSortBy="createdBy"><span jhiTranslate="clientManagement.createdBy">Created By</span> <span
+                class="fa fa-sort"></span></th>
+              <th jhiSortBy="createdDate"><span jhiTranslate="clientManagement.createdDate">Created Date</span> <span
+                class="fa fa-sort"></span></th>
+              <th jhiSortBy="lastModifiedBy"><span
+                jhiTranslate="clientManagement.lastModifiedBy">Last Modified By</span> <span class="fa fa-sort"></span>
+              </th>
+              <th jhiSortBy="lastModifiedDate"><span
+                jhiTranslate="clientManagement.lastModifiedDate">Last Modified Date</span> <span
+                class="fa fa-sort"></span></th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let client of list; trackBy: trackIdentity">
+              <td>
+                {{client.id}}
+              </td>
+              <td>{{client.clientId}}</td>
+              <td>{{client.roleKey}}</td>
+              <td>{{client.description}}</td>
+              <td>{{client.createdBy}}</td>
+              <td>{{client.createdDate | xmDateTime}}</td>
+              <td>{{client.lastModifiedBy}}</td>
+              <td>{{client.lastModifiedDate | xmDateTime}}</td>
+              <td class="text-right nowrap">
+                <a href="javascript: void(0);"
+                   (click)="onEdit(client)"
+                   *xmPermitted="['CLIENT.UPDATE']">
+                  <i class="material-icons">edit</i>
+                </a>
+                <a class="ml-1"
+                   href="javascript: void(0);"
+                   (click)="onDelete(client)"
+                   *xmPermitted="['CLIENT.DELETE']">
+                  <i class="material-icons">close</i>
+                </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row align-items-center list-pagination" *ngIf="list?.length">
+          <div class="col-auto">
+            <xm-per-page [(itemsPerPage)]="itemsPerPage" (onChange)="transition()"></xm-per-page>
+          </div>
+          <div class="col-auto">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+          </div>
+          <div class="col-sm"></div>
+          <div class="col-auto">
+            <ngb-pagination [collectionSize]="totalItems"
+                            [pageSize]="itemsPerPage"
+                            [maxSize]="5"
+                            [(page)]="page"
+                            (pageChange)="loadPage(page)"
+            ></ngb-pagination>
+          </div>
+        </div>
+
+        <no-data [show]="!list?.length"></no-data>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="xm-fab">
+  <button mat-raised-button
+          class="btn btn-primary btn-icon btn-just-icon btn-round btn-lg"
+          (click)="onAdd()"
+          *xmPermitted="['CLIENT.CREATE']">
+    <i class="material-icons">add</i>
+  </button>
+</div>

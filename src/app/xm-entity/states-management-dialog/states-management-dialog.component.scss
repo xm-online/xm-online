@@ -1,0 +1,34 @@
+::ng-deep {
+    .states-management {
+        &__results {
+            overflow-y: auto;
+        }
+    }
+    .status-distribution {
+        min-width: 100%;
+
+        &__cell {
+            min-width: 95px;
+        }
+
+        tr {
+            background: transparent;
+            transition: background 0.3s;
+
+            &:not(:first-child) {
+                &:hover {
+                    background: #cccccc;
+                }
+            }
+
+            td {
+                border: 2px dashed #999999;
+                padding: 5px 10px;
+
+                &.active {
+                    background: #999999;
+                }
+            }
+        }
+    }
+}

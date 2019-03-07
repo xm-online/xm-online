@@ -1,0 +1,109 @@
+<div class="text-center">
+  <button class="btn btn-linkedin btn-round">
+    <span jhiTranslate="xm-entity.functions.linkedin-profile.button">Extract LinkedIn profile</span>
+  </button>
+</div>
+<div *ngIf="profile">
+  <div>
+    <div *ngIf="profile.fullName">
+      <label for="field_title" jhiTranslate="xm-entity.functions.linkedin-profile.title">Title</label>
+      <p id="field_title">{{profile.fullName}}</p>
+    </div>
+    <div *ngIf="profile.location">
+      <label for="field_location" jhiTranslate="xm-entity.functions.linkedin-profile.location">Location</label>
+      <p id="field_location">{{profile.location}}</p>
+    </div>
+    <div *ngIf="profile.current">
+      <label for="field_current" jhiTranslate="xm-entity.functions.linkedin-profile.current">Current</label>
+      <p id="field_current">{{profile.current}}</p>
+    </div>
+    <div *ngIf="profile.summary">
+      <label for="field_summary" jhiTranslate="xm-entity.functions.linkedin-profile.summary">Summary</label>
+      <p id="field_summary">{{profile.summary}}</p>
+    </div>
+    <hr />
+  </div>
+  <div *ngIf="profile.recommendations && profile.recommendations.length">
+    <h4 jhiTranslate="xm-entity.functions.linkedin-profile.recommendations">Recommendations</h4>
+    <ul>
+      <li *ngFor="let dataItem of profile.recommendations">
+        <xm-linkedin-data-item [dataItem]="dataItem"></xm-linkedin-data-item>
+      </li>
+    </ul>
+    <hr />
+  </div>
+  <div *ngIf="profile.experience?.current?.length">
+    <h4 jhiTranslate="xm-entity.functions.linkedin-profile.experience-current">Current Experience</h4>
+    <div *ngFor="let dataItem of profile.experience.current">
+      <xm-linkedin-data-item [dataItem]="dataItem"></xm-linkedin-data-item>
+      <hr />
+    </div>
+  </div>
+  <div *ngIf="profile.experience?.past?.length">
+    <h4 jhiTranslate="xm-entity.functions.linkedin-profile..experience-past">Past Experience</h4>
+    <div *ngFor="let dataItem of profile.experience.past">
+      <xm-linkedin-data-item [dataItem]="dataItem"></xm-linkedin-data-item>
+      <hr />
+    </div>
+  </div>
+  <div *ngIf="profile.volunteering && profile.volunteering.length">
+    <h4 jhiTranslate="xxm-entity.functions.linkedin-profile.volunteer">Volunteer Causes</h4>
+    <div *ngFor="let dataItem of profile.volunteering">
+      <xm-linkedin-data-item [dataItem]="dataItem"></xm-linkedin-data-item>
+      <hr />
+    </div>
+  </div>
+  <div *ngIf="profile.languages && profile.languages.length">
+    <h4 jhiTranslate="xm-entity.functions.linkedin-profile.languages">Languages</h4>
+    <ul>
+      <li *ngFor="let item of profile.languages">{{item}}</li>
+    </ul>
+    <hr />
+  </div>
+  <div *ngIf="profile.certifications && profile.certifications.length">
+    <h4 jhiTranslate="xm-entity.functions.linkedin-profile.certifications">Certifications</h4>
+    <div *ngFor="let dataItem of profile.certifications">
+      <xm-linkedin-data-item [dataItem]="dataItem"></xm-linkedin-data-item>
+      <hr />
+    </div>
+  </div>
+  <div *ngIf="profile.awards && profile.awards.length">
+    <h4 jhiTranslate="xm-entity.functions.linkedin-profile.awards">Awards</h4>
+    <div *ngFor="let dataItem of profile.awards">
+      <xm-linkedin-data-item [dataItem]="dataItem"></xm-linkedin-data-item>
+      <hr />
+    </div>
+  </div>
+  <div *ngIf="profile.skills && profile.skills.length">
+    <h4 jhiTranslate="xm-entity.functions.linkedin-profile.skills">Skills</h4>
+    <h5>
+      <span *ngFor="let skill of profile.skills">
+        <span class="badge badge-primary">{{skill}}</span>
+      </span>
+    </h5>
+    <hr />
+  </div>
+  <div *ngIf="profile.interests && profile.interests.length">
+    <h4 jhiTranslate="xm-entity.functions.linkedin-profile.interests">Interests</h4>
+    <h5>
+      <span *ngFor="let interest of profile.interests">
+        <span class="badge badge-primary">{{interest}}</span>
+      </span>
+    </h5>
+    <hr />
+  </div>
+  <div *ngIf="profile.project && profile.projects.length">
+    <h4 jhiTranslate="xm-entity.functions.linkedin-profile.projects">Projects</h4>
+    <div *ngFor="let dataItem of profile.project">
+      <xm-linkedin-data-item [dataItem]="dataItem"></xm-linkedin-data-item>
+      <hr />
+    </div>
+  </div>
+  <div *ngIf="profile.education && profile.education.length">
+    <h4 jhiTranslate="xm-entity.functions.linkedin-profile.education">Education</h4>
+    <div *ngFor="let dataItem of profile.education">
+      <xm-linkedin-data-item [dataItem]="dataItem"></xm-linkedin-data-item>
+      <hr />
+    </div>
+  </div>
+</div>

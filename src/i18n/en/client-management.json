@@ -1,0 +1,26 @@
+{
+    "clientManagement": {
+        "home": {
+            "createOrEditLabel": "Create or edit a client",
+            "title": "Clients"
+        },
+        "delete": {
+            "question": "Are you sure you want to delete client {{ id }}?"
+        },
+        "detail": {
+            "title": "Client"
+        },
+        "clientId": "Client Id",
+        "clientSecret": "Client Secret",
+        "roleKey": "Role",
+        "description": "Description",
+        "createdBy": "Created By",
+        "createdDate": "Created Date",
+        "lastModifiedBy": "Modified By",
+        "lastModifiedDate": "Modified Date",
+        "roles": "Roles",
+        "role": "Role",
+        "validityPeriod": "Validity period",
+        "scopes-add": "Add scopes"
+    }
+}

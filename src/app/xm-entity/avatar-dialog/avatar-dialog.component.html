@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+  <h4 class="modal-title text-left" jhiTranslate="xm-entity.common.change-avatar">Change Avatar</h4>
+</div>
+<div class="modal-body">
+  <div class="text-center">
+    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+      <div>
+        <span class="btn mat-raised-button btn-primary btn-round btn-file">
+            <span class="fileinput-new" jhiTranslate="xm-entity.common.add-avatar">Add Avatar</span>
+            <span class="fileinput-exists" jhiTranslate="xm-entity.common.change-avatar">Change Avatar</span>
+            <input type="file" name="..." (change)="onFileChange($event)"/>
+        </span>
+      </div>
+      <div class="fileinput-exists">
+        <img-cropper #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()">
+    <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
+  </button>
+  <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="showLoader || !data.image" (click)="onSave()">
+    <span jhiTranslate="xm-entity.common.save">Save</span>
+  </button>
+</div>

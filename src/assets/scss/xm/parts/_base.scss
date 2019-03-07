@@ -1,0 +1,237 @@
+/*
+** Style scroll bar
+*/
+::-webkit-scrollbar {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+::-webkit-scrollbar:vertical {
+    width: 10px;
+}
+::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+::-webkit-scrollbar:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb {
+    background: #777;
+    -webkit-border-radius: 100px;
+    background-clip: padding-box;
+    border: 2px solid rgba(0, 0, 0, 0);
+}
+::-webkit-scrollbar-thumb:vertical {
+    min-height: 10px;
+}
+::-webkit-scrollbar-thumb:horizontal {
+    min-width: 10px;
+}
+::-webkit-scrollbar-thumb:vertical:active {
+    background: #777;
+    -webkit-border-radius: 100px;
+}
+
+body {
+    &.xm-body {
+        font-size: 14px;
+    }
+
+    .sidebar {
+        &-wrapper {
+            height: calc(100vh - 70px) !important;
+        }
+    }
+}
+
+.share-container {
+
+  .xm-sb-caption {
+    display: inline-block;
+  }
+}
+
+.one-col {
+  .widget-col {
+    width: 100% !important;
+  }
+}
+
+.bootstrap-select {
+  background: none !important;
+  margin-top: 0;
+}
+
+.json-form-hide-submit {
+  submit-widget, material-button-widget {
+    display: none;
+  }
+}
+
+.btn-back {
+  margin-left: 15px;
+}
+
+.navbar {
+  .navbar-minimize {
+    padding: 0 0 0 15px;
+  }
+}
+.xm-disabled {
+  user-select: none !important;
+  pointer-events: none !important;
+  opacity: 0.5 !important;
+  color: rgba(0, 0, 0, 0.26) !important;
+  cursor: not-allowed !important;
+
+  no-data {
+    display: none;
+  }
+}
+
+xm-per-page {
+    position: relative;
+    top: -1px;
+}
+
+.json-schema-form {
+    margin-bottom: 0;
+}
+
+.word-break {
+  word-wrap: break-word;
+  word-break: break-all;
+  word-break: break-word;
+}
+
+.checkbox.changed {
+
+  .checkbox-material:before {
+    opacity: 0.1;
+  }
+}
+
+.form-control + .form-text {
+  opacity: 0;
+}
+.form-control.ng-touched.ng-dirty.ng-invalid + .form-text {
+  opacity: 1;
+}
+
+.btn {
+    &:before {
+        content: "";
+        display: none;
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin: -10px 0 0 -10px;
+    }
+
+    &:after {
+        content: "";
+        display: none;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin: -10px 0 0 -10px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        border-color: #fff transparent #fff transparent;
+        animation: lds-dual-ring 1.2s linear infinite;
+    }
+
+    &.loading {
+        color: transparent !important;
+        position: relative;
+
+        &:before, &:after {
+            display: block;
+        }
+
+        &.dark-loader {
+            &:after {
+                border: 2px solid #222;
+                border-color: #222 transparent #222 transparent;
+            }
+        }
+    }
+
+    &[disabled] {
+        cursor: not-allowed;
+    }
+}
+
+.no-label-margin {
+    label {
+        margin: 0;
+    }
+}
+
+.xm-nav-logo {
+    display: none;
+
+    img {
+        display: block;
+        margin: 0 auto;
+        max-width: 42px;
+        max-height: 42px;
+    }
+
+    .logo-text {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 18px;
+        color: #3c4858;
+        white-space: nowrap;
+        font-weight: 400;
+        line-height: 30px;
+        overflow: hidden;
+        width: 165px;
+        margin: 0 0 0 10px;
+
+        @media (max-width: 480px) {
+            display: none;
+        }
+    }
+}
+
+.xm-guest-layout {
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .main-panel {
+        width: 100%;
+        transition: none;
+    }
+
+    &.has-ackground {
+        .navbar.navbar-transparent {
+            background: #fff !important;
+            box-shadow: 0 2px 2px 0 rgba(0,0,0, .1);
+            border-radius: 0;
+        }
+    }
+
+    .xm-nav-logo {
+        display: block;
+        padding-right: 15px;
+        border-right: 1px solid rgba(#000, .2);
+    }
+
+    .sidebar, .sidbar-toggle, .drawer-toggle {
+        display: none !important;
+    }
+}
+
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

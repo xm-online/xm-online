@@ -1,0 +1,51 @@
+<div class="card" *ngIf="xmEntity && xmEntitySpec" [ngSwitch]="isAvatarEnabled">
+  <div class="card-header card-header-icon card-header-primary text-left">
+    <ng-container *ngSwitchCase="false">
+      <div class="card-icon" *ngIf="xmEntitySpec.icon">
+        <i class="material-icons">{{xmEntitySpec.icon}}</i>
+      </div>
+    </ng-container>
+    <h4 class="card-title"><b>{{xmEntitySpec.name | i18nName: principal}}</b> - {{xmEntity.name}}</h4>
+  </div>
+
+  <div class="container-fluid text-left mt-3 mb-3">
+    <div class="row">
+      <div class="col-auto text-center" *ngSwitchCase="true">
+        <div class="avatar-container-card">
+          <img src="{{xmEntity.avatarUrl ? xmEntity.avatarUrl : './assets/img/placeholder.png'}}">
+          <i class="material-icons" *ngIf="xmEntitySpec.icon && !xmEntity.avatarUrl">{{xmEntitySpec.icon}}</i>
+          <button role="button"
+                  class="btn btn-sm btn-just-icon btn-round btn-icon edit-avatar"
+                  (click)="onAvatarChangeClick()">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="col flex-grow-1">
+        <div *ngIf="xmEntity?.description">
+          <p class="description m-0" [innerHTML]="formatDescription(xmEntity.description)"></p>
+        </div>
+
+        <div class="mt-3" *ngIf="xmEntitySpec?.ratings">
+          <xm-rating-list-section [xmEntityId]="xmEntity.id" [ratingSpecs]="xmEntitySpec?.ratings">
+          </xm-rating-list-section>
+        </div>
+
+        <div class="mt-3" *ngIf="xmEntitySpec?.tags">
+          <xm-tag-list-section [xmEntityId]="xmEntity.id" [tagSpecs]="xmEntitySpec?.tags"></xm-tag-list-section>
+        </div>
+      </div>
+    </div>
+
+    <xm-function-list-section
+      [xmEntity]="xmEntity"
+      [xmEntityId]="xmEntity.id"
+      [functionSpecs]="xmEntitySpec.functions"
+      [nextStates]="getNextStates()"
+      [stateSpec]="getState()"
+      [xmEntitySpec]="xmEntitySpec"
+      *ngIf="xmEntity || (getNextStates()?.length || xmEntitySpec.functions)" >
+    </xm-function-list-section>
+  </div>
+</div>

@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiLanguageService } from 'ng-jhipster';
 
 import { UserModalService } from './user-modal.service';
 import { User } from '../../shared';
@@ -16,11 +15,12 @@ export class UserLoginMgmtDialogComponent implements OnInit {
     user: User;
 
     constructor(
-        private jhiLanguageService: JhiLanguageService
     ) {}
 
     ngOnInit() {
-        this.jhiLanguageService.setLocations(['user-management']);
+    }
+
+    clear() {
     }
 }
 

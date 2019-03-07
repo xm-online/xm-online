@@ -1,0 +1,40 @@
+<div class="card">
+  <div class="card-header card-header-primary card-header-icon" [hidden]="!isLoginFormView">
+    <div class="card-icon">
+      <i class="material-icons">person</i>
+    </div>
+    <h4 class="card-title" jhiTranslate="ext-common.sign-in-up-widget.sign-in">
+      Sign in
+    </h4>
+  </div>
+  <div class="card-header card-header-primary card-header-icon" [hidden]="isLoginFormView">
+    <div class="card-icon">
+      <i class="material-icons">person_add</i>
+    </div>
+    <h4 class="card-title" jhiTranslate="ext-common.sign-in-up-widget.sign-up">
+      Sign up
+    </h4>
+  </div>
+  <div class="card-body">
+    <div class="text-center">
+      <div class="btn-group" *ngIf="config?.signUpEnabled">
+        <button mat-raised-button
+                type="button"
+                class="btn btn-primary btn-sm btn-round"
+                [disabled]="isLoginFormView"
+                (click)="changeMode()">
+          <span jhiTranslate="ext-common.sign-in-up-widget.sign-in">Sign in</span>
+        </button>
+        <button mat-raised-button
+                type="button"
+                class="btn btn-primary btn-sm btn-round"
+                [disabled]="!isLoginFormView"
+                (click)="changeMode()">
+          <span jhiTranslate="ext-common.sign-in-up-widget.sign-up">Sign up</span>
+        </button>
+      </div>
+    </div>
+    <xm-login [successRegistration]="successRegistration" *ngIf="isLoginFormView"></xm-login>
+    <xm-register [config]="config" *ngIf="!isLoginFormView"></xm-register>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+{
+    "xm-balance": {
+        "common": {
+            "cancel": "Cancel",
+            "fields": {
+                "label": "Label",
+                "start-date": "Start date",
+                "end-date": "End date",
+                "amount": "Amount"
+            }
+        },
+        "balance-detail-dialog": {
+            "title": "Balance detail"
+        },
+        "balance-list-card": {
+            "title": "Balances"
+        }
+    }
+}

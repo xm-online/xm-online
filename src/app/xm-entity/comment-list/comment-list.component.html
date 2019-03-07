@@ -1,0 +1,18 @@
+<div class="mb-4" *ngFor="let commentSpec of commentSpecs">
+  <ng-container *ngIf="comments?.length > 0">
+    <div class="text-center">
+      <h3 class="title">
+        <span class="text-muted">{{commentSpec.name | i18nName: principal}}</span>
+      </h3>
+    </div>
+    <div class="row" *ngFor="let comment of comments">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8">
+        <xm-comment-card [comment]="comment"></xm-comment-card>
+      </div>
+      <div class="col-md-2">
+      </div>
+    </div>
+  </ng-container>
+</div>

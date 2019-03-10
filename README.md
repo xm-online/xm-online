@@ -1,4 +1,4 @@
-# XM^online 2 - General Single Page Application based on the Angular (xm-webapp)
+# XM^online 2 - General Single Page Application (xm-webapp)
 
 ## Prerequisites:
 * Git - [https://git-scm.com/downloads](https://git-scm.com/downloads)

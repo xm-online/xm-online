@@ -1,30 +1,36 @@
-# MdProAngularCli
+# XM^online 2 - General Single Page Application based on the Angular (xm-webapp)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-rc.2.
+## Prerequisites:
+* Git - [https://git-scm.com/downloads](https://git-scm.com/downloads)
+* NPM - [https://www.npmjs.com/get-npm](https://www.npmjs.com/get-npm)
+* Idea (optional)
+  * please check Settings | Editor | Code Style | TypeScript | Spaces | Within | ES6 import/export braces
 
-## Development server
+## How to start
+* Checkout code from the repository:
+```
+git clone https://github.com/xm-online/xm-webapp
+cd xm-webapp/
+```
+* Add extensions (optional):
+```
+cd src/app/ext/
+git clone <repo with extension>
+```
+* Change API endpoint in the file `proxy.conf.js` (optional):
+value for the parameter `target`
+* Install all dependencies:
+```
+npm install
+```
+* Build i18n resources and register extensions (optional):
+```
+npm run prebuild
+```
+* Start web application:
+```
+npm start
+```
 
-Run `npm run start-local` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-Note! Server will start with generic `proxy.conf.js`. Do not modify this file.
-To start local tenant development, create `local.proxy.conf.js` and make local proxy configuration there. `local.proxy.conf.js` added to `.gitignore`.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Contribution
+* [Playbook for Front end developers](https://github.com/xm-online/xm-online/wiki/Playbook-for-Front-end-developers)

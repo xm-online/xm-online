@@ -5,6 +5,8 @@ import 'brace/mode/json';
 import 'brace/mode/yaml';
 import 'brace/theme/chrome';
 
+import { environment } from '../../../environments/environment';
+
 declare var ace: any;
 
 @Directive({
@@ -45,26 +47,26 @@ export class AceEditorDirective {
     }
 
     initEvents() {
-        this.editor.on('change', () => {
-            const newVal = this.editor.getValue();
-            if (newVal === this.oldText) {
-                return;
-            }
-            if (typeof this.oldText !== 'undefined') {
-                this.textChanged.emit(newVal);
-            }
-            this.oldText = newVal;
+        this.editor.on('change', (e) => {
+            this.updateValue(e);
         });
-        this.editor.on('keypress', () => {
-            const newVal = this.editor.getValue();
-            if (newVal === this.oldText) {
-                return;
-            }
-            if (typeof this.oldText !== 'undefined') {
-                this.textChanged.emit(newVal);
-            }
-            this.oldText = newVal;
+        this.editor.on('keypress', (e) => {
+            this.updateValue(e);
         });
+        this.editor.on('paste', (e) => {
+            this.updateValue(e);
+        });
+    }
+
+    private updateValue(e): void {
+        const newVal = this.editor.getValue();
+        if (newVal === this.oldText) {
+            return;
+        }
+        if (typeof this.oldText !== 'undefined') {
+            this.textChanged.emit(newVal);
+        }
+        this.oldText = newVal;
     }
 
     @Input() set options(options: any) {

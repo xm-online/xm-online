@@ -5,7 +5,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { Principal } from '../../../shared/auth/principal.service';
 import { Dashboard, DashboardService } from '../../../xm-dashboard';
-import {environment} from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 
 declare let swal: any;
 

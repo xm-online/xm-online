@@ -18,6 +18,8 @@ export class EntityOptions {
                 public currentQuery?: string,
                 public name?: any,
                 public fastSearch?: FastSearchSpec[],
+                public hideDelete?: boolean,
+                public noDeepLink?: boolean,
                 public fields?: FieldOptions[],
                 public page?: number,
                 public previousPage?: number,

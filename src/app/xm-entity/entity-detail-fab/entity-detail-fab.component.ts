@@ -25,7 +25,7 @@ export class EntityDetailFabComponent implements OnInit, OnChanges, OnDestroy {
     @Input() xmEntitySpec: XmEntitySpec;
     @Input() spec: Spec;
 
-    view: any = {};
+    view = {attachment: false, location: false, link: false, comment: false};
 
     constructor(private eventManager: JhiEventManager,
                 private modalService: NgbModal) {
@@ -51,9 +51,9 @@ export class EntityDetailFabComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private detectViewBtns() {
-        this.view.attachment = !!(this.xmEntitySpec.attachments);
-        this.view.location = !!(this.xmEntitySpec.locations);
-        this.view.link = !!(this.xmEntitySpec.links);
+        this.view.attachment = !!(this.xmEntitySpec.attachments && this.xmEntitySpec.attachments.length);
+        this.view.location = !!(this.xmEntitySpec.locations && this.xmEntitySpec.locations.length);
+        this.view.link = !!(this.xmEntitySpec.links && this.xmEntitySpec.links.length);
         this.view.comment = !!(this.xmEntitySpec.comments);
     }
 

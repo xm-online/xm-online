@@ -1,0 +1,11 @@
+<div class="xm-maintenance-view" *ngIf="show">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col text-center">
+        <img class="technical-img" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMjAzIDIwMy4zIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyMDMgMjAzLjM7IiB4bWw6c3BhY2U9InByZXNlcnZlIj48c3R5bGUgdHlwZT0idGV4dC9jc3MiPi5zdDB7ZmlsbDojQ0VDQ0NDO308L3N0eWxlPjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xNzMsNzIuNFYzMC45aC00MS41TDEwMi4yLDEuNUw3Mi44LDMwLjlIMzEuM3Y0MS41TDIsMTAxLjdMMzEuMywxMzF2NDEuNWg0MS41bDI5LjMsMjkuM2wyOS4zLTI5LjNIMTczVjEzMWwyOS4zLTI5LjNMMTczLDcyLjR6IE0xMDIuMiwxNjIuNmMtMzMuNiwwLTYwLjktMjcuMy02MC45LTYwLjlzMjcuMy02MC45LDYwLjktNjAuOVMxNjMsNjguMSwxNjMsMTAxLjdTMTM1LjgsMTYyLjYsMTAyLjIsMTYyLjZ6Ii8+PGc+PHBhdGggY2xhc3M9InN0MCIgZD0iTTEwMC4zLDEzNmMtMjYuMSwwLTMzLjYtMjIuOS0zMy43LTIzLjFjLTAuNS0xLjYsMC40LTMuMywyLTMuOGMxLjYtMC41LDMuMywwLjQsMy44LDEuOWMwLjMsMC44LDYuNCwxOC45LDI4LDE4LjljMjEuNSwwLDI2LjYtMTgsMjYuOC0xOC44YzAuNC0xLjYsMi4xLTIuNSwzLjctMi4xYzEuNiwwLjQsMi42LDIuMSwyLjEsMy43QzEzMi44LDExMywxMjYuNSwxMzYsMTAwLjMsMTM2eiIvPjwvZz48Y2lyY2xlIGNsYXNzPSJzdDAiIGN4PSI4NSIgY3k9IjkxLjUiIHI9IjUuNSIvPjxjaXJjbGUgY2xhc3M9InN0MCIgY3g9IjExNS4xIiBjeT0iOTEuNSIgcj0iNS41Ii8+PC9zdmc+">
+        <div class="technical-message" [innerHtml]="'global.common.maintenance-message' | translate"></div>
+        <div class="technical-description" [innerHtml]="'global.common.maintenance-description' | translate"></div>
+      </div>
+    </div>
+  </div>
+</div>

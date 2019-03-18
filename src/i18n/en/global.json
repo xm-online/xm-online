@@ -81,7 +81,8 @@
             "firstname": "First name",
             "lastname": "Last name",
             "login": "Login",
-            "otp": "One Time Password"
+            "otp": "One Time Password",
+            "language": "Language"
         },
         "field": {
             "id": "ID"

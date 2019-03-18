@@ -81,7 +81,8 @@
             "firstname": "Имя",
             "lastname": "Фамилия",
             "login": "Логин",
-            "otp": "One Time Password"
+            "otp": "One Time Password",
+            "language": "Язык"
         },
         "field": {
             "id": "ID"

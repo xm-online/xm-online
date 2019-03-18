@@ -81,7 +81,8 @@
             "firstname": "Ім'я",
             "lastname": "Прізвище",
             "login": "Увійти",
-            "otp": "One Time Password"
+            "otp": "One Time Password",
+            "language": "Мова"
         },
         "field": {
             "id": "Ідентифікатор"

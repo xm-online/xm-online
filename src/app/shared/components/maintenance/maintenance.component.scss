@@ -1,0 +1,34 @@
+.xm-maintenance-view {
+    background-color: #eee;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+
+    >.container-fluid {
+        height: 100%;
+
+        >.row {
+            height: 100%;
+        }
+    }
+
+    .technical-img {
+        width: 220px;
+        height: 220px;
+        display: block;
+        margin: 0 auto 40px auto;
+    }
+
+    .technical-message {
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 30px;
+    }
+
+    .technical-description {
+        font-size: 16px;
+        line-height: 24px;
+        margin: 20px 0;
+    }
+}

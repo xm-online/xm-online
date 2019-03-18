@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Idle } from 'idlejs/dist';
 import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import { JhiLanguageHelper, LANGUAGES } from '../../shared';
@@ -13,7 +13,7 @@ import { ModulesLanguageHelper } from '../../shared/language/modules-language.he
 import { LoginService } from '../../shared/login/login.service';
 import { XmConfigService } from '../../shared/spec/config.service';
 import { XmApplicationConfigService } from '../../shared/spec/xm-config.service';
-import {DEFAULT_LANG, XM_EVENT_LIST} from '../../xm.constants';
+import { DEFAULT_LANG, XM_EVENT_LIST } from '../../xm.constants';
 import { getBrowserLang } from './../../shared/shared-libs.module';
 
 declare let $: any;
@@ -32,6 +32,7 @@ export class XmMainComponent implements OnInit, OnDestroy {
     authSucessSubscription: Subscription;
     private excludePaths: Array<string> = ['/reset/finish', '/activate', '/social-auth'];
     private excludePathsForViewSidebar: Array<string> = ['/social-auth'];
+    isMaintenanceProgress$: BehaviorSubject<boolean>;
 
     constructor(private jhiLanguageHelper: JhiLanguageHelper,
                 private modulesLangHelper: ModulesLanguageHelper,
@@ -45,7 +46,9 @@ export class XmMainComponent implements OnInit, OnDestroy {
                 private $sessionStorage: SessionStorageService,
                 private eventManager: JhiEventManager) {
         this.resolved$ = new BehaviorSubject<boolean>(false);
+        this.isMaintenanceProgress$ = new BehaviorSubject<boolean>(false);
         this.xmConfigService.isResolved().subscribe((res: boolean) => this.resolved$.next(res));
+        this.xmConfigService.isMaintenanceProgress().subscribe((res: boolean) => this.isMaintenanceProgress$.next(res));
     }
 
     ngOnInit() {

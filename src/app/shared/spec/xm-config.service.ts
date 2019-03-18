@@ -17,9 +17,11 @@ export class XmApplicationConfigService {
 
     private appConfig;
     public resolved$: BehaviorSubject<boolean>;
+    public maintenance$: BehaviorSubject<boolean>;
 
     constructor(private http: HttpClient) {
         this.resolved$ = new BehaviorSubject<boolean>(false);
+        this.maintenance$ = new BehaviorSubject<boolean>(false);
     }
 
     public loadAppConfig() {
@@ -37,6 +39,9 @@ export class XmApplicationConfigService {
             } else {
                 this.applyTheme(DEFAULT_THEME);
             }
+        }, err => {
+            console.error(err);
+            this.setMaintenanceProgress(true);
         });
     }
 
@@ -46,6 +51,14 @@ export class XmApplicationConfigService {
 
     public setResolved(newValue: boolean): void {
         this.resolved$.next(newValue);
+    }
+
+    public isMaintenanceProgress(): Observable<boolean> {
+        return this.maintenance$.asObservable();
+    }
+
+    public setMaintenanceProgress(newValue: boolean): void {
+        this.maintenance$.next(newValue);
     }
 
     getAppConfig() {

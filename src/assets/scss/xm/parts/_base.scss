@@ -82,6 +82,10 @@ body {
   color: rgba(0, 0, 0, 0.26) !important;
   cursor: not-allowed !important;
 
+  > xm-loader {
+      opacity: 1 !important;
+  }
+
   no-data {
     display: none;
   }

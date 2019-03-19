@@ -128,7 +128,7 @@
                 </td>
                 <td [ngSwitch]="field.field" *ngFor="let field of item.fields">
                   <div *ngSwitchCase="'name'">
-                    <div *ngIf="options?.noDeepLink; then entryHasNotLink else entryHasLink"></div>
+                    <div *ngIf="(options?.noDeepLink || item?.noDeepLink); then entryHasNotLink else entryHasLink"></div>
                     <ng-template #entryHasLink>
                       <a href="javascript: void(0);" (click)="onNavigate(item, xmEntity)">
                         {{getFieldValue(xmEntity, field.field)}}
@@ -177,7 +177,7 @@
                     {{field.action.name | i18nName: principal}}
                   </button>
                 </td>
-                <td *ngIf="item.typeKey != 'RESOURCE.XM-TENANT' && !(options.hideExport)">
+                <td *ngIf="item.typeKey != 'RESOURCE.XM-TENANT' && !(options?.hideDelete) && !(item?.hideDelete)">
                   <a href="javascript: void(0);" (click)="onRemove(xmEntity)">
                     <i class="material-icons">close</i>
                   </a>

@@ -69,7 +69,7 @@ http {
 	}
 
 
-	location ~ ^/($BE_ENDPOINTS) {
+	location ~ ^/({{be_endpoints}}) {
 	    proxy_pass      http://{{be_host}}:{{be_port}}$request_uri;
 	    proxy_redirect off;
 	    include /etc/nginx/proxy_params;

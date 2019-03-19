@@ -69,7 +69,7 @@ http {
 	}
 
 
-	location ~ ^/(v2|management|api|uaa|audit|config/(api|v2|management)|entity|dashboard/(api|v2|management)|timeline|balance|wallet|zendesk|escrow|ldb|otp|communication|hlr|customer|scheduler|stp|activation|foris|websocket|swagger-resources|publicregistry) {
+	location ~ ^/({{be_endpoints}}) {
 	    proxy_pass      http://{{be_host}}:{{be_port}}$request_uri;
 	    proxy_redirect off;
 	    include /etc/nginx/proxy_params;

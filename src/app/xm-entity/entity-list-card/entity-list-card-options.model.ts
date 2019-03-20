@@ -36,6 +36,7 @@ export class FieldOptions {
     constructor(public field?: string,
                 public title?: any,
                 public hiddenTitle?: boolean,
+                public useKeyword?: boolean,
                 public func?: string,
                 public action?: ActionOptions,
                 public actions?: ActionsOptions[],

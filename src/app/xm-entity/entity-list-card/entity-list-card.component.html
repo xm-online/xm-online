@@ -109,7 +109,9 @@
               <thead>
               <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
                 <th></th>
-                <th *ngFor="let field of item.fields" [jhiSortBy]="field.field" [ngClass]="{'th-hidden' : field.hiddenTitle}">
+                <th *ngFor="let field of item.fields"
+                    [jhiSortBy]="field.useKeyword ? field.field + '.keyword' : field.field"
+                    [ngClass]="{'th-hidden' : field.hiddenTitle}">
                   <span *ngIf="field.title">{{field.title | i18nName :principal}}</span>
                   <span class="fa fa-sort" *ngIf="field.title"></span>
                 </th>

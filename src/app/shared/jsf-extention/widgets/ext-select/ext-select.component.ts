@@ -3,8 +3,8 @@ import {AfterViewInit, ChangeDetectorRef, Component, forwardRef, Inject, Input, 
 import { FormControl, FormGroup } from '@angular/forms';
 import {JsonSchemaFormComponent, JsonSchemaFormService} from 'angular2-json-schema-form';
 import { MatSelect, VERSION } from '@angular/material';
-import {BehaviorSubject, forkJoin, merge, Observable, of, ReplaySubject, Subject} from 'rxjs';
-import {filter, map, take, takeUntil, tap, switchMap, mergeMap} from 'rxjs/operators';
+import {BehaviorSubject, of, ReplaySubject, Subject} from 'rxjs';
+import {filter, map, take, takeUntil, tap, mergeMap} from 'rxjs/operators';
 
 import { Principal } from '../../../auth/principal.service';
 import { I18nNamePipe } from '../../../language/i18n-name.pipe';
@@ -25,7 +25,7 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input() layoutNode: any;
 
     options: ExtSelectOptions;
-    elements: any;
+    elements: any = [];
     controlValue: any;
     controlLabel: any;
     disabled$ = new BehaviorSubject<boolean>(false);
@@ -54,7 +54,6 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.layoutNode.dataType === 'array') {
             this.controlValue = this.controlValue[0];
         }
-        this.elements = [];
     }
 
     ngAfterViewInit() {
@@ -97,6 +96,7 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
                         return cloneOptions;
                     }),
                     tap(options => this.fetchData(options)),
+                    tap(() => this.jsf.updateValue(this, null)),
                     takeUntil(this._onDestroy)
                 ).subscribe(() => {})
             });

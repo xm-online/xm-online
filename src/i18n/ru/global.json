@@ -1,6 +1,7 @@
 {
     "global": {
         "common" : {
+            "set": "Задать",
             "cancel": "Отменить",
             "accept": "Принять",
             "are-you-sure": "Вы уверены?",

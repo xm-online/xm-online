@@ -4,6 +4,7 @@ import { CookieService, CookieOptions } from 'angular2-cookie/core';
 import { ReCaptchaModule } from 'angular2-recaptcha';
 import { MarkdownModule } from 'ngx-markdown';
 import { CovalentTextEditorModule } from '@covalent/text-editor';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 import {
     AccountService,
@@ -46,6 +47,7 @@ import { XmDateTimePipe } from './helpers/xm-date-time.pipe';
 import { XmEntityStateSpecPipe } from './helpers/xm-entity-state-spec.pipe';
 import { MultilingualInputComponent } from './jsf-extention/widgets/multilingual-input/multilingual-input.component';
 import { DatetimeUtcComponent } from './jsf-extention/widgets/datetime-utc/datetime-utc.component';
+import { DatetimePickerComponent } from './jsf-extention/widgets/datetime-picker/datetime-picker.component';
 import { CurrentLocationComponent } from './jsf-extention/widgets/current-location/current-location.component';
 import { ExtAutocompleteService } from './jsf-extention/widgets/ext-autocomplete/ext-autocomplete-service';
 import { ExtAutocompleteComponent } from './jsf-extention/widgets/ext-autocomplete/ext-autocomplete.component';
@@ -70,7 +72,9 @@ import { DigitOnlyDirective } from './directives/digit-only.directive';
         ReCaptchaModule,
         MarkdownModule.forChild(),
         MatModule,
-        CovalentTextEditorModule
+        CovalentTextEditorModule,
+        OwlDateTimeModule,
+        OwlNativeDateTimeModule
     ],
     declarations: [
         AceEditorDirective,
@@ -107,6 +111,7 @@ import { DigitOnlyDirective } from './directives/digit-only.directive';
         ExtMdEditorComponent,
         MultilingualInputComponent,
         DatetimeUtcComponent,
+        DatetimePickerComponent,
         PrivacyAndTermsDialogComponent
     ],
     entryComponents: [
@@ -123,6 +128,7 @@ import { DigitOnlyDirective } from './directives/digit-only.directive';
         ExtMdEditorComponent,
         MultilingualInputComponent,
         DatetimeUtcComponent,
+        DatetimePickerComponent,
         PrivacyAndTermsDialogComponent
     ],
     providers: [
@@ -190,7 +196,8 @@ import { DigitOnlyDirective } from './directives/digit-only.directive';
         ExtMdEditorComponent,
         MultilingualInputComponent,
         MatModule,
-        DatetimeUtcComponent
+        DatetimeUtcComponent,
+        DatetimePickerComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

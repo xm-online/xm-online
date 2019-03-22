@@ -1,6 +1,7 @@
 {
     "global": {
         "common" : {
+            "set": "Set",
             "cancel": "Cancel",
             "accept": "Accept",
             "are-you-sure": "Are you sure?",

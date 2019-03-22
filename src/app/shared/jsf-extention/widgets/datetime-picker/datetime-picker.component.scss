@@ -1,0 +1,29 @@
+.xm-datetime-picker {
+    position: relative;
+
+    .to-display {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        margin: -7px 0 0 0;
+        white-space: nowrap;
+        overflow: hidden;
+        max-width: 85%;
+    }
+
+    .abs {
+        z-index: 2;
+        opacity: 0;
+    }
+
+    .picker-trigger {
+        height: 28px;
+        width: 28px;
+        min-width: 28px;
+        margin: 0;
+    }
+
+    .error {
+        position: relative !important;
+    }
+}

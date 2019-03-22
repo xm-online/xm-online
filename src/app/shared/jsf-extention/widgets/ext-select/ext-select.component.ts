@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, forwardRef, Inject, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { JsonSchemaFormService } from 'angular2-json-schema-form';
+import {JsonSchemaFormComponent, JsonSchemaFormService} from 'angular2-json-schema-form';
 import { MatSelect, VERSION } from '@angular/material';
-import { ReplaySubject ,  Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import {BehaviorSubject, of, ReplaySubject, Subject} from 'rxjs';
+import {filter, map, take, takeUntil, tap, mergeMap} from 'rxjs/operators';
 
 import { Principal } from '../../../auth/principal.service';
 import { I18nNamePipe } from '../../../language/i18n-name.pipe';
@@ -25,22 +25,27 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input() layoutNode: any;
 
     options: ExtSelectOptions;
-    elements: any;
+    elements: any = [];
     controlValue: any;
     controlLabel: any;
+    disabled$ = new BehaviorSubject<boolean>(false);
+    private regTemplateLiteral: RegExp = /@{\w+}/g;
+    public cacheOptionsUrl: string | null;
     public elementCtrl: FormControl = new FormControl();
     public elementFilterCtrl: FormControl = new FormControl();
     public filteredElements: ReplaySubject<Element[]> = new ReplaySubject<Element[]>(1);
     @ViewChild('singleSelect') singleSelect: MatSelect;
     private _onDestroy = new Subject<void>();
 
-    constructor(private jsf: JsonSchemaFormService,
-                private http: HttpClient,
-                private selectService: ExtSelectService,
-                private i18nNamePipe: I18nNamePipe,
-                private changeDetectorRef: ChangeDetectorRef,
-                public principal: Principal) {
-    }
+    constructor(
+        @Inject(forwardRef(() => JsonSchemaFormComponent)) private _parent: JsonSchemaFormComponent,
+        private jsf: JsonSchemaFormService,
+        private http: HttpClient,
+        private selectService: ExtSelectService,
+        private i18nNamePipe: I18nNamePipe,
+        private changeDetectorRef: ChangeDetectorRef,
+        public principal: Principal
+    ) {}
 
     ngOnInit() {
         this.options = this.layoutNode.options || {};
@@ -49,12 +54,52 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.layoutNode.dataType === 'array') {
             this.controlValue = this.controlValue[0];
         }
-        this.elements = [];
-        this.fetchData(options);
     }
 
     ngAfterViewInit() {
-        // this.setInitialValue();
+        if (!this.options.url || !this.regTemplateLiteral.test(this.options.url)) {
+            this.fetchData(this.options);
+            return
+        }
+
+        const savedLiteralsValue = {};
+
+        this.disabled$.next(true);
+        this.options.url
+            .match(this.regTemplateLiteral)
+            .map(literal => {savedLiteralsValue[literal] = null; return literal})
+            .map(result => result.replace(/@{|}/g, ''))
+            .forEach(eLiteral => {
+                let currentFieldName: string;
+
+                of(eLiteral).pipe(
+                    filter(fieldLiteral => !!fieldLiteral),
+                    tap(fieldName => currentFieldName = fieldName),
+                    mergeMap(fieldName => this._parent.jsf.formGroup.get(fieldName).valueChanges),
+                    tap(() => this.disabled$.next(true)),
+                    filter(fieldValue => !!fieldValue),
+                    tap(fieldValue => savedLiteralsValue[`@{${currentFieldName}}`] = fieldValue),
+                    map(() => savedLiteralsValue),
+                    filter(literalsValue => Object.values(literalsValue).findIndex(val => !val) === -1),
+                    tap(() => this.disabled$.next(false)),
+                    map(literalsValue => {
+                        let optionsUrl = this.options.url;
+                        Object.keys(literalsValue)
+                            .forEach(literal => optionsUrl = optionsUrl.replace(literal, literalsValue[literal]));
+                        return optionsUrl;
+                    }),
+                    filter(optionsUrl => optionsUrl !== this.cacheOptionsUrl),
+                    tap(optionsUrl => this.cacheOptionsUrl = optionsUrl),
+                    map((optionsUrl: string) => {
+                        const cloneOptions = Object.assign({}, this.options);
+                        cloneOptions.url = optionsUrl;
+                        return cloneOptions;
+                    }),
+                    tap(options => this.fetchData(options)),
+                    tap(() => this.jsf.updateValue(this, null)),
+                    takeUntil(this._onDestroy)
+                ).subscribe(() => {})
+            });
     }
 
     ngOnDestroy() {
@@ -70,6 +115,7 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
             .subscribe(() => {
                 this.filterElements();
             });
+
     }
 
     private setInitialValue() {
@@ -127,7 +173,9 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.initOptionList();
             });
         } else {
-            this.selectService.fetchData(this.options).subscribe(elements => {
+            if (!this.options.url && !this.regTemplateLiteral.test(this.options.url)) {return}
+
+            this.selectService.fetchData(options).subscribe(elements => {
                 this.elements = elements;
                 this.initOptionList();
                 this.changeDetectorRef.detectChanges();

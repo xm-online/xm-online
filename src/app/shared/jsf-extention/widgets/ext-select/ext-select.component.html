@@ -3,7 +3,7 @@
     <mat-select [(ngModel)]="elementCtrl"
                 (selectionChange)="updateValue($event)"
                 [placeholder]="options['title'] ? options['title'] : ''"
-                [disabled]="options['readonly']"
+                [disabled]="(disabled$ | async) || options['readonly']"
                 #singleSelect>
       <ngx-mat-select-search [formControl]="elementFilterCtrl"
                              placeholderLabel="{{'global.rest-select-placeholder-search' | translate}}"

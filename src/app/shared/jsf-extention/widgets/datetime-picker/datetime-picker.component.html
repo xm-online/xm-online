@@ -1,0 +1,25 @@
+<mat-form-field class="xm-datetime-picker" [floatLabel]="options['floatLabel']">
+  <div class="to-display">{{controlValueDisplayed}}</div>
+  <input matInput
+         class="abs"
+         [name]="controlName"
+         [placeholder]="options['title']"
+         #controlName="ngModel"
+         [owlDateTimeTrigger]="picker"
+         [owlDateTime]="picker"
+         [(ngModel)]="controlValue"
+         (dateTimeChange)="updateValue($event)"
+         [required]="options['required']"
+         [disabled]="options['readonly']">
+  <button mat-button
+          type="button"
+          class="btn btn-sm btn-link btn-icon btn-just-icon picker-trigger"
+          [owlDateTimeTrigger]="picker"
+          matSuffix>
+    <mat-icon>event</mat-icon>
+  </button>
+  <owl-date-time [panelClass]="options['themeColor']"
+                 [pickerType]="options?.pickerType ? options['pickerType'] : 'both'"
+                 #picker></owl-date-time>
+  <mat-error class="error" [innerHTML]="options['errorMessage']"></mat-error>
+</mat-form-field>

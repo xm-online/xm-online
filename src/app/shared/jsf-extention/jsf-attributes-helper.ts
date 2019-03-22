@@ -7,6 +7,7 @@ import { ValidationComponent } from './widgets/validation-component/validation-c
 import { MultilingualInputComponent } from './widgets/multilingual-input/multilingual-input.component';
 import { DatetimeUtcComponent } from './widgets/datetime-utc/datetime-utc.component';
 import { ExtMdEditorComponent } from './widgets/ext-md-editor/ext-md-editor.component';
+import { DatetimePickerComponent } from './widgets/datetime-picker/datetime-picker.component';
 
 declare const $: any;
 declare let Babili: any;
@@ -25,7 +26,8 @@ export const getJsfWidgets = () => {
         'validation-component': ValidationComponent,
         'ext-textarea': ExtTextareaComponent,
         'multilingual-input': MultilingualInputComponent,
-        'datetime-utc': DatetimeUtcComponent
+        'datetime-utc': DatetimeUtcComponent,
+        'datetime-picker': DatetimePickerComponent
     };
 };
 

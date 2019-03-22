@@ -19,9 +19,9 @@ export class DatetimePickerComponent implements OnInit {
 
     @Input() layoutNode: any;
 
-    protected controlValue: any;
-    protected controlValueDisplayed: any;
-    public options: DatetimePickerOptionsModel;
+    controlValue: any;
+    controlValueDisplayed: any;
+    options: DatetimePickerOptionsModel;
 
     constructor(private jsf: JsonSchemaFormService,
                 private translateService: TranslateService,

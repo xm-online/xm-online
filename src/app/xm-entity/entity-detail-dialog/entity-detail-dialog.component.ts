@@ -98,7 +98,7 @@ export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
                     // TODO: error processing
                     (err) => this.onConfirmError(err));
         } else {
-            this.xmEntity.stateKey = this.selectedXmEntitySpec.states ?
+            this.xmEntity.stateKey = this.selectedXmEntitySpec.states && this.selectedXmEntitySpec.states.length ?
                 Object.assign([], this.selectedXmEntitySpec.states).shift().key : null;
             this.xmEntityService.create(this.xmEntity).pipe(finalize(() => this.showLoader = false))
                 .subscribe(() => this.onSaveSuccess(),

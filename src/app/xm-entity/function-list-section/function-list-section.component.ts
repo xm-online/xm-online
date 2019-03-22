@@ -114,9 +114,21 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
         return this.functionSpecs && this.functionSpecs.filter(fs => !!this.customFunctions[fs.key]);
     }
 
+    private allowedByState(functionSpec: FunctionSpec, stateKey: string): boolean {
+        if (!functionSpec.allowedStateKeys || !functionSpec.allowedStateKeys.length || !stateKey) {
+            return true;
+        }
+        if (functionSpec.allowedStateKeys.includes('NEVER')) {
+            return false;
+        }
+        return functionSpec.allowedStateKeys.includes(stateKey);
+    }
+
     private getDefaultFunctions(): FunctionSpec[] {
+        const stateKey = this.xmEntity ? this.xmEntity.stateKey : null;
         return this.functionSpecs && this.functionSpecs
             .filter(fs => !this.customFunctions[fs.key])
+            .filter(fs => this.allowedByState(fs, stateKey))
             .filter(fs => this.hasPrivilege(fs));
     }
 

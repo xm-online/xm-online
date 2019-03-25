@@ -33,6 +33,9 @@ export class XmMainComponent implements OnInit, OnDestroy {
     private excludePaths: Array<string> = ['/reset/finish', '/activate', '/social-auth'];
     private excludePathsForViewSidebar: Array<string> = ['/social-auth'];
     isMaintenanceProgress$: BehaviorSubject<boolean>;
+    userAutoLogoutEnabled: boolean;
+    userAutoLogoutSeconds: number;
+    idle: Idle;
 
     constructor(private jhiLanguageHelper: JhiLanguageHelper,
                 private modulesLangHelper: ModulesLanguageHelper,
@@ -194,21 +197,43 @@ export class XmMainComponent implements OnInit, OnDestroy {
     }
 
     private idleLogoutInit(): void {
-        const authenticated = this.principal.isAuthenticated();
+        this.userAutoLogoutEnabled = false;
+        this.userAutoLogoutSeconds = null;
+        if (this.idle) {
+            this.idle.stop();
+            this.idle = null;
+        }
+        this.isIdleEnabled = false;
         this.configService.getUiConfig().subscribe(config => {
-            this.config = config ? config : null;
-            if (this.config && this.config.idleLogout && authenticated && !this.isIdleEnabled) {
-                this.isIdleEnabled = true;
-                const idle = new Idle()
-                    .whenNotInteractive()
-                    .within(parseFloat(this.config.idleLogout), 1000)
-                    .do(() => {
-                        this.loginService.logout();
-                        this.isIdleEnabled = false;
-                    })
-                    .start();
-            }
+            this.principal.identity().then(account => {
+                if (account) {
+                    this.userAutoLogoutEnabled = account.autoLogoutEnabled || false;
+                    this.userAutoLogoutSeconds = account.autoLogoutTimeoutSeconds || null;
+                }
+                const authenticated = this.principal.isAuthenticated();
+                this.config = config ? config : null;
+                if (authenticated && !this.isIdleEnabled && this.userAutoLogoutEnabled && this.userAutoLogoutSeconds) {
+                    this.idleAction(this.userAutoLogoutSeconds);
+                    return false;
+                }
+                if (this.config && this.config.idleLogout && authenticated && !this.isIdleEnabled) {
+                    this.idleAction(this.config.idleLogout);
+                }
+            });
         });
+    }
+
+    private idleAction(time: any): void {
+        (!environment.production) && console.log('>>> init idle logout in ' + time);
+        this.isIdleEnabled = true;
+        this.idle = new Idle()
+            .whenNotInteractive()
+            .within(parseFloat(time), 1000)
+            .do(() => {
+                this.loginService.logout();
+                this.isIdleEnabled = false;
+            })
+            .start();
     }
 
     private storeTranslates(langKey: string): void {

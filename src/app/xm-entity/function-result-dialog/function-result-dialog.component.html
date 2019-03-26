@@ -1,0 +1,19 @@
+<form class="m-0" name="functionCallForm" (ngSubmit)="onConfirmFunctionCall()">
+  <div class="modal-header">
+    <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+    <h4 class="modal-title text-left" [innerHTML]="dialogTitle | i18nName : principal"></h4>
+  </div>
+  <div class="modal-body">
+    <xm-entity-data-card [xmEntity]="xmEntity" [xmEntitySpec]="functionSpec"></xm-entity-data-card>
+  </div>
+  <div class="modal-footer">
+    <button mat-raised-button
+            type="button"
+            class="btn mr-1"
+            data-dismiss="modal"
+            (click)="onCancel()">
+      <span *ngIf="jsfAttributes?.entity?.cancelName">{{jsfAttributes.entity.cancelName | i18nName: principal}}</span>
+      <span *ngIf="!jsfAttributes?.entity?.cancelName" jhiTranslate="xm-entity.common.cancel">Cancel</span>
+    </button>
+  </div>
+</form>

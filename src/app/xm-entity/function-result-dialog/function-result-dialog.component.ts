@@ -15,11 +15,11 @@ declare let swal: any;
 declare let $: any;
 
 @Component({
-    selector: 'xm-function-call-dialog',
-    templateUrl: './function-call-dialog.component.html',
-    styleUrls: ['./function-call-dialog.component.scss']
+    selector: 'xm-function-result-dialog',
+    templateUrl: './function-result-dialog.component.html',
+    styleUrls: ['./function-result-dialog.component.scss']
 })
-export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
+export class FunctionResultDialogComponent implements OnInit, AfterViewInit {
 
     @Input() xmEntity: XmEntity;
     @Input() functionSpec: FunctionSpec;

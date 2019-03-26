@@ -68,6 +68,7 @@ import {
 } from './';
 
 import {StateChangeDialogComponent} from './state-change-dialog/state-change-dialog.component';
+import {FunctionResultDialogComponent} from './function-result-dialog/function-result-dialog.component';
 
 @NgModule({
     imports: [
@@ -107,6 +108,7 @@ import {StateChangeDialogComponent} from './state-change-dialog/state-change-dia
         EntityListFabComponent,
         EntityStateComponent,
         FunctionCallDialogComponent,
+        FunctionResultDialogComponent,
         StateChangeDialogComponent,
         FunctionListSectionComponent,
         LinkDetailDialogComponent,
@@ -134,6 +136,7 @@ import {StateChangeDialogComponent} from './state-change-dialog/state-change-dia
         CommentDetailDialogComponent,
         EntityDetailDialogComponent,
         FunctionCallDialogComponent,
+        FunctionResultDialogComponent,
         StateChangeDialogComponent,
         LinkDetailDialogComponent,
         LocationDetailDialogComponent,

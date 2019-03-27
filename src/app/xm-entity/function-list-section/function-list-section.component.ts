@@ -202,25 +202,26 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
         });
     }
 
-    onCallFunction(functionSpec) {
+    onCallFunction(functionSpec: FunctionSpec) {
         const title = functionSpec.actionName ? functionSpec.actionName : functionSpec.name;
         const modalRef = this.modalService.open(FunctionCallDialogComponent, {backdrop: 'static'});
         modalRef.componentInstance.xmEntity = this.xmEntity || new XmEntity(this.xmEntityId || undefined);
         modalRef.componentInstance.functionSpec = functionSpec;
         modalRef.componentInstance.dialogTitle = title;
         modalRef.componentInstance.buttonTitle = title;
-        modalRef.componentInstance.onSuccess = (result) => {
-            console.log(result);
-            const resultModal = this.modalService.open(FunctionResultDialogComponent, {backdrop: 'static'});
-            resultModal.componentInstance.xmEntity = this.xmEntity || new XmEntity(this.xmEntityId || undefined);
-            resultModal.componentInstance.functionSpec = functionSpec;
-            resultModal.componentInstance.dialogTitle = title;
-            resultModal.componentInstance.buttonTitle = title;
-        };
+        if (functionSpec.showResponse) {
+            modalRef.componentInstance.onSuccess = (result) => {
+                const resultDialog = this.modalService.open(FunctionResultDialogComponent, {backdrop: 'static'});
+                resultDialog.componentInstance.xmEntity = this.xmEntity || new XmEntity(this.xmEntityId || undefined);
+                resultDialog.componentInstance.functionSpec = functionSpec;
+                resultDialog.componentInstance.dialogTitle = title;
+                resultDialog.componentInstance.buttonTitle = title;
+            };
+        }
         return modalRef;
     }
 
-    getFunctionContext(functionSpec): FunctionContext {
+    getFunctionContext(functionSpec: FunctionSpec): FunctionContext {
         return this.functionContexts && this.functionContexts.filter(fc => fc.typeKey === functionSpec.key).shift();
     }
 

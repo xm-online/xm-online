@@ -16,6 +16,15 @@ import {FormControl} from '@angular/forms';
 
 // declare var $: any;
 
+interface FormsConfig {
+    key: string;
+    title: string;
+    dataSpec: string;
+    dataForm: string;
+}
+
+
+
 @Component({
     selector: 'xm-form-playground',
     templateUrl: './form-playground.component.html',
@@ -33,6 +42,9 @@ import {FormControl} from '@angular/forms';
     ],
 })
 export class FormPlaygroundComponent implements OnInit, AfterViewInit {
+
+    private XM_TEMPLATE = `ng2jsf-xm-layout`;
+
     examples = Examples;
     frameworkList: any = ['material-design', 'bootstrap-3', 'no-framework'];
     frameworks: any = {
@@ -87,7 +99,8 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
     selectedSpec: string;
     selectedSpecKey$ = new Subject<string>();
 
-    selectedForm$ = new Subject<XmEntitySpec>();
+    xmEntityForms: FormsConfig[] = [];
+    xmEntityForms$ = new BehaviorSubject<FormsConfig[]>(this.xmEntityForms);
 
     formConfig$ = new BehaviorSubject<string>('');
 
@@ -149,11 +162,26 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
     }
 
     private updateXmFormTemplate(spec: XmEntitySpec) {
-        const fSpec = spec.dataSpec ? spec.dataSpec : '{}';
-        const fForm = spec.dataForm ? spec.dataForm : '[]';
-        this.getSchemaTemplate(`ng2jsf-xm-layout`).pipe(
-            map(tmpl => tmpl.replace('"schema": {}', `"schema": ${fSpec}`)),
-            map(tmpl => tmpl.replace('"layout": []', `"layout": ${fForm}`)),
+
+        const xmForms = [];
+
+        if (spec.dataSpec || spec.dataForm) {
+            const dataSpec = spec.dataSpec ? spec.dataSpec : '{}';
+            const dataForm = spec.dataForm ? spec.dataForm : '[]';
+            const item = {key: 'DATA', title: 'DATA', dataSpec, dataForm};
+            xmForms.push(item);
+        }
+
+        for (const index in spec.functions) {
+            const item = spec.functions[index];
+            if (item.inputSpec || item.inputForm) {
+                xmForms.push({key: item.key, title: item.name, dataSpec: item.inputSpec, dataForm: item.inputForm});
+            }
+        }
+
+        this.getSchemaTemplate(this.XM_TEMPLATE).pipe(
+            map(tmpl => tmpl.replace('"schema": {}', `"schema": {}}`)),
+            map(tmpl => tmpl.replace('"layout": []', `"layout": []]`)),
         ).subscribe(success => this.formConfig$.next(success))
     }
 
@@ -202,7 +230,7 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
 
     loadSelectedExample(event, file) {
         this.getSchemaTemplate(file).subscribe(schema => {
-            this.isXmForm = ('ng2jsf-xm-layout' === file);
+            this.isXmForm = (this.XM_TEMPLATE === file);
             this.jsonFormSchema = schema;
             this.formConfig$.next(schema);
             this.generateForm(this.jsonFormSchema);

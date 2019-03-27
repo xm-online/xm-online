@@ -98,6 +98,7 @@
     "ng2-select": "^2.0.0",
     "ng2-translate": "^5.0.0",
     "ngx-chips": "^1.6.5",
+    "ngx-google-places-autocomplete": "^2.0.3",
     "ngx-img-cropper": "^0.9.7",
     "ngx-markdown": "6.2.0",
     "ngx-mat-select-search": "^1.5.2",

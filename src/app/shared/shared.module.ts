@@ -64,6 +64,7 @@ import { MatModule } from '../mat.module';
 import { ValidationComponent } from './jsf-extention/widgets/validation-component/validation-component.component';
 import { XmCondition } from './helpers/xm-condition';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 @NgModule({
     imports: [
@@ -74,6 +75,7 @@ import { DigitOnlyDirective } from './directives/digit-only.directive';
         MatModule,
         CovalentTextEditorModule,
         OwlDateTimeModule,
+        GooglePlaceModule,
         OwlNativeDateTimeModule
     ],
     declarations: [
@@ -197,7 +199,8 @@ import { DigitOnlyDirective } from './directives/digit-only.directive';
         MultilingualInputComponent,
         MatModule,
         DatetimeUtcComponent,
-        DatetimePickerComponent
+        DatetimePickerComponent,
+        GooglePlaceModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

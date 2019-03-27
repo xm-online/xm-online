@@ -12,7 +12,6 @@ import {
 import { TagInputModule } from 'ngx-chips';
 import { ImageCropperModule } from 'ngx-img-cropper';
 import { RatingModule } from 'ngx-rating';
-
 import { XmSharedModule } from '../shared/shared.module';
 import {
     AreaComponent,

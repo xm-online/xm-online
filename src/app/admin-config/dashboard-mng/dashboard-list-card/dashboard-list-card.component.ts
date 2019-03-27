@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +11,7 @@ import { Dashboard } from '../../../xm-dashboard/shared/dashboard.model';
 import { DashboardService } from '../../../xm-dashboard/shared/dashboard.service';
 import { BaseAdminConfigListComponent } from '../../base-admin-config-list.component';
 import { DashboardDetailDialogComponent } from '../dashboard-detail-dialog/dashboard-detail-dialog.component';
+
 
 @Component({
     selector: 'xm-dashboard-list-card',
@@ -24,6 +26,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
     showLoader: boolean;
 
     constructor(protected dashboardService: DashboardService,
+                private sanitizer: DomSanitizer,
                 protected modalService: NgbModal,
                 protected activatedRoute: ActivatedRoute,
                 protected alertService: JhiAlertService,
@@ -72,6 +75,39 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
                 name: this.eventModify,
                 content: {id: 'delete', msg: `Dashboard ${id} deleted`}
             }));
+    }
+
+    exportDashboardsAndWidgets(): void {
+        const mappedList = [];
+        this.list.map((b, i) => {
+            this.dashboardService.find(b.id).subscribe(result => {
+                const dashboard = result.body || {};
+                delete dashboard.id;
+                if (dashboard.widgets && dashboard.widgets.length > 0) {
+                    dashboard.widgets.map(w => {
+                        delete w.id;
+                        delete w.dashboard;
+                    });
+                }
+                mappedList.push(dashboard);
+                if ((i + 1) === this.list.length) {
+                    this.saveJson(mappedList);
+                }
+            });
+        });
+    }
+
+    private saveJson(data: any): void {
+        if (data && data.length === 0) {console.log('qwewqe')}
+        const a = window.document.createElement('a');
+        const theJSON = JSON.stringify(data);
+        const blob = new Blob([theJSON], { type: 'text/json' });
+        const url = window.URL.createObjectURL(blob);
+        a.href = window.URL.createObjectURL(blob);
+        a.download = 'dashboards.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
     }
 
     protected deleteItem(d: Dashboard) {

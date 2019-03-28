@@ -9,9 +9,9 @@ import {
 } from '../../shared/jsf-extention/jsf-attributes-helper';
 import { Examples } from './example-schemas.model';
 import { Principal } from '../../shared/auth/principal.service';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
-import {XmEntitySpec, XmEntitySpecWrapperService} from '../../xm-entity';
-import {map, startWith, tap, flatMap} from 'rxjs/operators';
+import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
+import {FunctionSpec, XmEntitySpec, XmEntitySpecWrapperService} from '../../xm-entity';
+import {map, startWith, tap} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
 
 // declare var $: any;
@@ -151,38 +151,33 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
                 map(value => this._filterSpec(value))
             );
 
-        this.spec$ = this.selectedSpecKey$.asObservable().pipe(
+        /*this.spec$ = this.selectedSpecKey$.asObservable().pipe(
             tap(console.log),
             map(specKey => this.specs.filter(spec => spec.key === specKey).shift()),
             // tap(spec => this.spec = spec),
             tap(spec => this.updateXmFormTemplate(spec))
-        );
+        );*/
 
 
     }
 
-    private updateXmFormTemplate(spec: XmEntitySpec) {
-
+    private updateXmFormTemplate(spec: XmEntitySpec): FormsConfig[] {
         const xmForms = [];
-
         if (spec.dataSpec || spec.dataForm) {
             const dataSpec = spec.dataSpec ? spec.dataSpec : '{}';
             const dataForm = spec.dataForm ? spec.dataForm : '[]';
-            const item = {key: 'DATA', title: 'DATA', dataSpec, dataForm};
+            const item = {key: 'dataForm', title: 'dataForm', dataSpec, dataForm};
             xmForms.push(item);
         }
+        xmForms.push(...spec.functions.map(item => this.functionSpecToFormConfig(item)));
+        return xmForms;
+    }
 
-        for (const index in spec.functions) {
-            const item = spec.functions[index];
-            if (item.inputSpec || item.inputForm) {
-                xmForms.push({key: item.key, title: item.name, dataSpec: item.inputSpec, dataForm: item.inputForm});
-            }
-        }
-
-        this.getSchemaTemplate(this.XM_TEMPLATE).pipe(
-            map(tmpl => tmpl.replace('"schema": {}', `"schema": {}}`)),
-            map(tmpl => tmpl.replace('"layout": []', `"layout": []]`)),
-        ).subscribe(success => this.formConfig$.next(success))
+    private functionSpecToFormConfig(item: FunctionSpec): FormsConfig {
+        return {key: item.key,
+            title: item.key,
+            dataSpec: item.inputSpec ? item.inputSpec : '{}',
+            dataForm: item.inputForm ? item.inputForm : '[]'}
     }
 
     ngAfterViewInit() {
@@ -290,9 +285,21 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
             .filter(option => option.key.toLowerCase().indexOf(value.toLowerCase()) === 0);
     }
 
-    onSaveSelectedSpecKey(value: string) {
-        console.log('Selected %s', value);
-        this.selectedSpecKey$.next(value)
+    onEntitySelect(value: string) {
+        this.xmEntityForms$.next([]);
+        this.xmEntitySpecWrapperService.xmSpecByKey(value).pipe(
+            map(spec => this.updateXmFormTemplate(spec))
+        ).subscribe(
+            data => this.xmEntityForms$.next(data),
+            error => console.log(error)
+        );
+    }
+
+    onSpecSelect(key: FormsConfig) {
+        this.getSchemaTemplate(this.XM_TEMPLATE).pipe(
+            map(tmpl => tmpl.replace('"schema": {}', `"schema": ${key.dataSpec}`)),
+            map(tmpl => tmpl.replace('"layout": []', `"layout": ${key.dataForm}`)),
+        ).subscribe(success => this.formConfig$.next(success))
     }
 
     toggleVisible(item: string) {

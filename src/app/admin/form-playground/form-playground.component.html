@@ -30,7 +30,7 @@
               ></ng-container>
               <ng-template #resultData>
                 <mat-select
-                  (selectionChange)="onSaveSelectedSpecKey($event.value)"
+                  (selectionChange)="onEntitySelect($event.value)"
                   [(ngModel)]="selectedSpec"
                   placeholder="{{'xm-entity.states-management-dialog.choose-state' | translate}}"
                 >
@@ -48,14 +48,16 @@
               <ng-template #noData><mat-panel>No data</mat-panel></ng-template>
             </mat-form-field>
 
-            <mat-form-field *ngIf="spec$ | async as fetchedSpec;">
+            <mat-form-field *ngIf="xmEntityForms$ | async as fetchedSpecs;">
               <ng-container
-                *ngIf="fetchedSpec; then resultData; else noData"
+                *ngIf="fetchedSpecs; then resultData; else noData"
               ></ng-container>
               <ng-template #resultData>
 
-                <mat-select>
-                  <mat-option>FORM</mat-option>
+                <mat-select (selectionChange)="onSpecSelect($event.value)">
+                  <mat-option *ngFor="let option of fetchedSpecs" [value]="option">
+                    {{ option.title }}
+                  </mat-option>
                 </mat-select>
 
               </ng-template>

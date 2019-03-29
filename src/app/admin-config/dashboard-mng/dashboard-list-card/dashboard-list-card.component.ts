@@ -5,13 +5,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import 'rxjs/add/observable/of';
 
 import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
 import { Dashboard } from '../../../xm-dashboard/shared/dashboard.model';
 import { DashboardService } from '../../../xm-dashboard/shared/dashboard.service';
 import { BaseAdminConfigListComponent } from '../../base-admin-config-list.component';
 import { DashboardDetailDialogComponent } from '../dashboard-detail-dialog/dashboard-detail-dialog.component';
-import {Observable} from 'rxjs';
+
 
 
 @Component({
@@ -33,6 +35,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
                 protected alertService: JhiAlertService,
                 protected eventManager: JhiEventManager,
                 protected parseLinks: JhiParseLinks,
+                protected dashService: DashboardService,
                 protected router: Router) {
         super(activatedRoute, alertService, eventManager, parseLinks, router);
         this.itemsPerPage = ITEMS_PER_PAGE;
@@ -108,16 +111,13 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
         const dashboardsArray = JSON.parse(event.target.result);
         for (let i = 0; i <= dashboardsArray.length;) {
             console.log(i);
-            i++;
+            this.setDashboard(dashboardsArray[i]).subscribe(res => i++);
         }
-        // this.setDashboard().subscribe(res => {
-        //
-        // })
     }
 
-    // private setDashboard(dashboard: any): Observable<any> {
-    //     return
-    // }
+    private setDashboard(dashboard: Dashboard): Observable<any> {
+        return this.dashboardService.create(dashboard);
+    }
 
     private saveJson(data: any): void {
         if (data && data.length === 0) {console.log('qwewqe')}

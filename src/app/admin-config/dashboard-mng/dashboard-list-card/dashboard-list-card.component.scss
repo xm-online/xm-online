@@ -1,0 +1,14 @@
+.export-actions {
+    margin-top: 17px;
+
+    .import-export-button {
+        margin: 0 1px;
+        padding-left: 5px;
+        padding-right: 10px;
+
+        mat-icon {
+            position: relative;
+            top: 3px;
+        }
+    }
+}

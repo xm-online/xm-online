@@ -33,7 +33,9 @@
             }
         },
         "dashboard-list-card": {
-            "title": "Панелі"
+            "title": "Панелі",
+            "export-action": "експорт в JSON",
+            "import-action": "імпорт з JSON"
         },
         "specification-mng": {
             "loading": "завантаження специфікації...",

@@ -11,6 +11,7 @@ import { Dashboard } from '../../../xm-dashboard/shared/dashboard.model';
 import { DashboardService } from '../../../xm-dashboard/shared/dashboard.service';
 import { BaseAdminConfigListComponent } from '../../base-admin-config-list.component';
 import { DashboardDetailDialogComponent } from '../dashboard-detail-dialog/dashboard-detail-dialog.component';
+import {Observable} from 'rxjs';
 
 
 @Component({
@@ -96,6 +97,27 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
             });
         });
     }
+
+    onInputChange(event) {
+        const reader = new FileReader();
+        reader.onload = (e) => this.onReaderLoad(e);
+        reader.readAsText(event.target.files[0]);
+    }
+
+    onReaderLoad(event): void {
+        const dashboardsArray = JSON.parse(event.target.result);
+        for (let i = 0; i <= dashboardsArray.length;) {
+            console.log(i);
+            i++;
+        }
+        // this.setDashboard().subscribe(res => {
+        //
+        // })
+    }
+
+    // private setDashboard(dashboard: any): Observable<any> {
+    //     return
+    // }
 
     private saveJson(data: any): void {
         if (data && data.length === 0) {console.log('qwewqe')}

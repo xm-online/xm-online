@@ -14,7 +14,7 @@ import { DashboardService } from '../../../xm-dashboard/shared/dashboard.service
 import { BaseAdminConfigListComponent } from '../../base-admin-config-list.component';
 import { DashboardDetailDialogComponent } from '../dashboard-detail-dialog/dashboard-detail-dialog.component';
 
-
+declare let swal: any;
 
 @Component({
     selector: 'xm-dashboard-list-card',
@@ -105,13 +105,22 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
         const reader = new FileReader();
         reader.onload = (e) => this.onReaderLoad(e);
         reader.readAsText(event.target.files[0]);
+        this.showLoader = true;
     }
 
     onReaderLoad(event): void {
         const dashboardsArray = JSON.parse(event.target.result);
         for (let i = 0; i <= dashboardsArray.length;) {
-            console.log(i);
-            this.setDashboard(dashboardsArray[i]).subscribe(res => i++);
+            this.setDashboard(dashboardsArray[i]).subscribe(
+            res => {
+                i++;
+                if (i === dashboardsArray.length) {
+                    this.alert('success', 'admin-config.dashboard-detail-dialog.add.success');
+                    this.loadAll()}
+            }, err => {
+                console.log(err);
+                this.showLoader = false;
+            });
         }
     }
 
@@ -130,6 +139,15 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+    }
+
+    private alert(type, key) {
+        swal({
+            type: type,
+            text: this.translateService.instant(key),
+            buttonsStyling: false,
+            confirmButtonClass: 'btn btn-primary'
+        });
     }
 
     protected deleteItem(d: Dashboard) {

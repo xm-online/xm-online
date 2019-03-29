@@ -21,7 +21,8 @@ const PROXY_CONFIG = [
             "/swagger-resources",
             "/wallet",
             "/zendesk",
-            "/ldb"
+            "/ldb",
+            "/document/api"
         ],
         target: "http://xm.test.xm-online.com.ua",
         secure: false,

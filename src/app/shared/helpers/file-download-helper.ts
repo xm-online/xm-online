@@ -18,6 +18,9 @@ export const saveFile = (blobContent: Blob, fileName: string, responceType: stri
  */
 export const getFileNameFromResponseContentDisposition = (res) => {
     const contentDisposition = res.headers.get('content-disposition') || '';
+    if (!contentDisposition) {
+        return '"untitled"';
+    }
     const matches = /filename=([^;]+)/ig.exec(contentDisposition);
     const fileName = (matches[1] || 'untitled').trim();
     return fileName;

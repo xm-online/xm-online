@@ -10,6 +10,8 @@ import { FunctionSpec } from '../shared/function-spec.model';
 import { FunctionService } from '../shared/function.service';
 import { XmEntity } from '../shared/xm-entity.model';
 import { getFileNameFromResponseContentDisposition, saveFile } from '../../shared/helpers/file-download-helper';
+import {BehaviorSubject, merge, Observable, of} from 'rxjs';
+import {catchError, filter, finalize, map, share, tap} from 'rxjs/operators';
 
 declare let swal: any;
 declare let $: any;
@@ -29,8 +31,9 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
 
     jsfAttributes: any;
     formData: any = {};
-    showLoader: boolean;
     isJsonFormValid = true;
+
+    showLoader$ = new BehaviorSubject<boolean>(false);
 
     constructor(private activeModal: NgbActiveModal,
                 private functionService: FunctionService,
@@ -46,9 +49,12 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
         // TODO think about correct way to work with context
         $.xmEntity = this.xmEntity;
         if (this.functionSpec) {
-            this.jsfAttributes = buildJsfAttributes(this.functionSpec.inputSpec, this.functionSpec.inputForm);
+            this.jsfAttributes = buildJsfAttributes(
+                this.functionSpec.inputSpec ? this.functionSpec.inputSpec : {},
+                this.functionSpec.inputForm ? this.functionSpec.inputForm : {});
         }
         $.xmEntity = null;
+        console.log('ngOnInit');
     }
 
     ngAfterViewInit() {
@@ -56,51 +62,50 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
     }
 
     onConfirmFunctionCall() {
-        this.showLoader = true;
+        this.showLoader$.next(true);
+        // this.showLoader = true;
         this.formData.xmEntity = this.xmEntity;
-        if (this.functionSpec.withEntityId) {
-            this.functionService.callWithEntityId(this.xmEntity.id, this.functionSpec.key, this.formData).subscribe((r: any) => {
-                    if (r.actionType && r.actionType === 'download') {
-                        this.saveAsFile(r);
-                    } else {
-                        this.eventManager.broadcast({name: XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS});
-                        this.eventManager.broadcast({name: 'xmEntityDetailModification'});
-                        this.activeModal.dismiss(true);
-                        this.onSuccessFunctionCall(r);
-                    }
-                },
-                // TODO: error processing
-                () => this.showLoader = false);
+        const eId = this.functionSpec.withEntityId ? this.xmEntity.id : null;
 
-        } else {
-            this.functionService.call(this.functionSpec.key, this.formData).subscribe((r: any) => {
-                    if (r.actionType && r.actionType === 'download') {
-                        this.saveAsFile(r);
-                    } else {
-                        this.eventManager.broadcast({name: XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS});
-                        this.eventManager.broadcast({name: 'xmEntityDetailModification'});
-                        this.activeModal.dismiss(true);
-                        this.onSuccessFunctionCall(r);
-                    }
-                },
-                // TODO: error processing
-                (err) => this.showLoader = false);
-        }
+        const apiCall$ = this.functionService.callEntityFunction(this.functionSpec.key, eId, this.formData).pipe(share());
 
-    }
+        const isSaveContent = (r) => r.actionType && r.actionType === 'download';
 
-    onSuccessFunctionCall(r: any) {
-        const data = r.body && r.body.data;
-        if (this.onSuccess) {
-            this.onSuccess(data, this.formData);
-        } else if (data && this.functionSpec.showResponse) {
-            swal({
-                type: 'success',
-                html: `<pre style="text-align: left"><code>${JSON.stringify(data, null, '  ')}</code></pre>`,
-                buttonsStyling: false,
-                confirmButtonClass: 'btn btn-primary'
-            });
-        }
+        // save attachment
+        const saveContent$ = apiCall$.pipe(
+            filter(response => isSaveContent(response)),
+            tap(response => this.saveAsFile(response)),
+        );
+
+        // if xmEntity function, send event notification
+        const sendModifyEvent$ = apiCall$.pipe(
+          filter(response => !isSaveContent(response) && !!eId),
+          tap(_ => this.eventManager.broadcast({name: XM_EVENT_LIST.XM_ENTITY_DETAIL_MODIFICATION})),
+        );
+
+        const sentCallSuccessEvent$ = apiCall$.pipe(
+            filter(response => !isSaveContent(response)),
+            tap(response => this.onSuccessFunctionCall(response)),
+            tap(_ => this.eventManager.broadcast({name: XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS})),
+        );
+
+        merge(saveContent$, sendModifyEvent$, sentCallSuccessEvent$).pipe(
+            finalize(() => this.cancelLoader()),
+            catchError((e) =>  this.handleError(e))
+        ).subscribe((val) => {});
+
+/*        this.functionService.callEntityFunction(this.functionSpec.key, eId, this.formData).subscribe((r: any) => {
+                if (r.actionType && r.actionType === 'download') {
+                    this.saveAsFile(r);
+                } else {
+                    this.eventManager.broadcast({name: XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS});
+                    this.eventManager.broadcast({name: XM_EVENT_LIST.XM_ENTITY_DETAIL_MODIFICATION});
+                    this.onSuccessFunctionCall(r);
+                }
+            },
+            // TODO: error processing
+            (e) =>  this.handleError(e),
+        () => this.cancelLoader());*/
     }
 
     onCancel() {
@@ -109,6 +114,41 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
 
     onChangeForm(data: any) {
         this.formData = data;
+    }
+
+    private handleError(e): Observable<any> {
+        this.cancelLoader();
+        return of();
+    }
+
+    private cancelLoader(): void {
+        this.showLoader$.next(false);
+    }
+
+    private onSuccessFunctionCall(r: any) {
+        const data = r.body && r.body.data;
+        console.log(data);
+        // if onSuccess handler passes, close popup and pass processing to function
+        if (this.onSuccess) {
+            this.activeModal.dismiss(true);
+            this.onSuccess(data, this.formData);
+        // if responce should be shown but there are no form provided
+        } else if (data && this.functionSpec.showResponse && !this.functionSpec.contextDataForm) {
+            this.activeModal.dismiss(true);
+            swal({
+                type: 'success',
+                html: `<pre style="text-align: left"><code>${JSON.stringify(data, null, '  ')}</code></pre>`,
+                buttonsStyling: false,
+                confirmButtonClass: 'btn btn-primary'
+            });
+        } else if (data && this.functionSpec.showResponse && this.functionSpec.contextDataForm) {
+            this.jsfAttributes = buildJsfAttributes(
+                this.functionSpec.contextDataSpec ? this.functionSpec.contextDataSpec : {},
+                this.functionSpec.contextDataForm ? this.functionSpec.contextDataForm : {});
+            this.onChangeForm(data);
+        } else {
+            this.activeModal.dismiss(true);
+        }
     }
 
     private saveAsFile(r) {

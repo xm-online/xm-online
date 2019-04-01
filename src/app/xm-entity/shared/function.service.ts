@@ -1,6 +1,6 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import {HttpClient, HttpResponse, HttpResponseBase} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable, of} from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from '../../xm.constants';
@@ -11,6 +11,17 @@ export class FunctionService {
     private resourceUrl = SERVER_API_URL + 'entity/api/functions';
 
     constructor(private http: HttpClient) {
+    }
+
+    callEntityFunction(functionKey: string, xmEntityId?: number, inputContext?: any): Observable<HttpResponse<any>> {
+        const copy = this.convert(inputContext);
+        if (functionKey === 'EFDEMO_RETURN') {
+            return of(new HttpResponse({body: {data: copy}}));
+        }
+        if (xmEntityId) {
+            return this.callWithEntityId(xmEntityId, functionKey, copy)
+        }
+        return this.call(functionKey, copy)
     }
 
     call(functionKey: string, inputContext?: any): Observable<HttpResponse<any>> {

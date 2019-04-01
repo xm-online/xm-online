@@ -19,7 +19,6 @@ import {XmEntityService} from '../shared/xm-entity.service';
 import {StateChangeDialogComponent} from '../state-change-dialog/state-change-dialog.component';
 import {Observable, of, ReplaySubject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {FunctionResultDialogComponent} from '../function-result-dialog/function-result-dialog.component';
 
 declare let swal: any;
 
@@ -209,15 +208,7 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
         modalRef.componentInstance.functionSpec = functionSpec;
         modalRef.componentInstance.dialogTitle = title;
         modalRef.componentInstance.buttonTitle = title;
-        if (functionSpec.showResponse) {
-            modalRef.componentInstance.onSuccess = (result) => {
-                const resultDialog = this.modalService.open(FunctionResultDialogComponent, {backdrop: 'static'});
-                resultDialog.componentInstance.xmEntity = this.xmEntity || new XmEntity(this.xmEntityId || undefined);
-                resultDialog.componentInstance.functionSpec = functionSpec;
-                resultDialog.componentInstance.dialogTitle = title;
-                resultDialog.componentInstance.buttonTitle = title;
-            };
-        }
+        console.log('onCallFunction');
         return modalRef;
     }
 

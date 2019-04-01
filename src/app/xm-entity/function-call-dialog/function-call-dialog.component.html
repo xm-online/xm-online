@@ -4,7 +4,7 @@
     <h4 class="modal-title text-left" [innerHTML]="dialogTitle | i18nName : principal"></h4>
   </div>
   <div class="modal-body">
-    <xm-loader [showLoader]="showLoader"></xm-loader>
+    <xm-loader [showLoader]="showLoader$ | async"></xm-loader>
     <json-schema-form class="json-form-hide-submit"
                       [framework]="'material-design'"
                       [schema]="jsfAttributes.schema"
@@ -31,7 +31,7 @@
     <button mat-raised-button
             type="submit"
             class="btn btn-primary"
-            [disabled]="showLoader || !isJsonFormValid">
+            [disabled]="(showLoader$ | async) || !isJsonFormValid">
       <span *ngIf="jsfAttributes?.entity?.saveName">{{jsfAttributes.entity.saveName | i18nName: principal}}</span>
       <span *ngIf="!jsfAttributes?.entity?.saveName">{{buttonTitle | i18nName : principal}}</span>
     </button>

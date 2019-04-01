@@ -3,6 +3,7 @@
         "common": {
             "save": "Save",
             "cancel": "Cancel",
+            "confirm": "Are you sure?",
             "menu": {
                 "title": "Configuration",
                 "dashboard-mng": "Dashboards Config",
@@ -33,7 +34,9 @@
             }
         },
         "dashboard-list-card": {
-            "title": "Dashboards"
+            "title": "Dashboards",
+            "export-action": "export in JSON",
+            "import-action": "import from JSON"
         },
         "specification-mng": {
             "loading": "loading specification...",

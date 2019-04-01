@@ -5,6 +5,25 @@
         <div class="card-icon">
           <i class="material-icons">dashboard</i>
         </div>
+
+        <div class="float-right export-actions">
+          <button mat-raised-button
+                  class="btn btn-sm btn-link import-export-button"
+                  type="button"
+                  (click)="exportDashboardsAndWidgets()">
+            <mat-icon>get_app</mat-icon>
+            {{'admin-config.dashboard-list-card.export-action' | translate}}
+          </button>
+          <button mat-raised-button
+                  class="btn btn-sm btn-link import-export-button"
+                  type="button"
+                  (click)="importInput.click()">
+            <mat-icon>publish</mat-icon>
+            {{'admin-config.dashboard-list-card.import-action' | translate}}
+          </button>
+          <input type="file" (input)="onInputChange($event)" hidden #importInput>
+        </div>
+
         <h4 class="card-title" jhiTranslate="admin-config.dashboard-list-card.title">Dashboards</h4>
       </div>
 

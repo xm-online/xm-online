@@ -3,6 +3,7 @@
         "common": {
             "save": "Save",
             "cancel": "Cancel",
+            "confirm": "Are you sure?",
             "menu": {
                 "title": "Configuration",
                 "dashboard-mng": "Dashboards Config",

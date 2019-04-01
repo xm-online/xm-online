@@ -1,4 +1,3 @@
-import { DomSanitizer } from '@angular/platform-browser';
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,12 +6,14 @@ import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import 'rxjs/add/observable/of';
+import { TranslateService } from '@ngx-translate/core';
 
 import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
 import { Dashboard } from '../../../xm-dashboard/shared/dashboard.model';
 import { DashboardService } from '../../../xm-dashboard/shared/dashboard.service';
 import { BaseAdminConfigListComponent } from '../../base-admin-config-list.component';
 import { DashboardDetailDialogComponent } from '../dashboard-detail-dialog/dashboard-detail-dialog.component';
+
 
 declare let swal: any;
 
@@ -29,13 +30,12 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
     showLoader: boolean;
 
     constructor(protected dashboardService: DashboardService,
-                private sanitizer: DomSanitizer,
                 protected modalService: NgbModal,
                 protected activatedRoute: ActivatedRoute,
                 protected alertService: JhiAlertService,
                 protected eventManager: JhiEventManager,
                 protected parseLinks: JhiParseLinks,
-                protected dashService: DashboardService,
+                protected translateService: TranslateService,
                 protected router: Router) {
         super(activatedRoute, alertService, eventManager, parseLinks, router);
         this.itemsPerPage = ITEMS_PER_PAGE;
@@ -105,23 +105,35 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
         const reader = new FileReader();
         reader.onload = (e) => this.onReaderLoad(e);
         reader.readAsText(event.target.files[0]);
-        this.showLoader = true;
     }
 
     onReaderLoad(event): void {
-        const dashboardsArray = JSON.parse(event.target.result);
-        for (let i = 0; i <= dashboardsArray.length;) {
-            this.setDashboard(dashboardsArray[i]).subscribe(
-            res => {
-                i++;
-                if (i === dashboardsArray.length) {
-                    this.alert('success', 'admin-config.dashboard-detail-dialog.add.success');
-                    this.loadAll()}
-            }, err => {
-                console.log(err);
-                this.showLoader = false;
-            });
-        }
+        swal({
+            type: 'warning',
+            text: this.translateService.instant('admin-config.common.confirm'),
+            buttonsStyling: false,
+            showCancelButton: true,
+            cancelButtonText: this.translateService.instant('admin-config.common.cancel'),
+            confirmButtonClass: 'btn btn-primary',
+            cancelButtonClass: 'btn'
+        }).then(confirm => {
+            if (confirm.value) {
+                this.showLoader = true;
+                const dashboardsArray = JSON.parse(event.target.result);
+                for (let i = 0; i < dashboardsArray.length; i++) {
+                    this.setDashboard(dashboardsArray[i]).subscribe(
+                        res => {
+                            if ((i + 1) === dashboardsArray.length) {
+                                this.alert('success', 'admin-config.dashboard-detail-dialog.add.success');
+                                this.loadAll();
+                            }
+                        }, err => {
+                            console.log(err);
+                            this.showLoader = false;
+                        });
+                }
+            }
+        });
     }
 
     private setDashboard(dashboard: Dashboard): Observable<any> {
@@ -129,7 +141,6 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
     }
 
     private saveJson(data: any): void {
-        if (data && data.length === 0) {console.log('qwewqe')}
         const a = window.document.createElement('a');
         const theJSON = JSON.stringify(data);
         const blob = new Blob([theJSON], { type: 'text/json' });

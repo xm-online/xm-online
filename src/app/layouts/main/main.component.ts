@@ -55,8 +55,11 @@ export class XmMainComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.prepareLayout();
-        this.registerAuthenticationSuccess();
+        this.configService.getUiConfig().subscribe(config => {
+            this.config = config ? config : null;
+            this.prepareLayout();
+            this.registerAuthenticationSuccess();
+        });
 
         // const envType = environment.production ? 'PROD' : 'TEST';
         const body = document.getElementsByTagName('body')[0];
@@ -204,14 +207,13 @@ export class XmMainComponent implements OnInit, OnDestroy {
             this.idle = null;
         }
         this.isIdleEnabled = false;
-        this.configService.getUiConfig().subscribe(config => {
+        if (this.principal.isAuthenticated()) {
             this.principal.identity().then(account => {
                 if (account) {
                     this.userAutoLogoutEnabled = account.autoLogoutEnabled || false;
                     this.userAutoLogoutSeconds = account.autoLogoutTimeoutSeconds || null;
                 }
                 const authenticated = this.principal.isAuthenticated();
-                this.config = config ? config : null;
                 if (authenticated && !this.isIdleEnabled && this.userAutoLogoutEnabled && this.userAutoLogoutSeconds) {
                     this.idleAction(this.userAutoLogoutSeconds);
                     return false;
@@ -220,7 +222,7 @@ export class XmMainComponent implements OnInit, OnDestroy {
                     this.idleAction(this.config.idleLogout);
                 }
             });
-        });
+        }
     }
 
     private idleAction(time: any): void {

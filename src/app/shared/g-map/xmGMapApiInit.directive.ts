@@ -1,4 +1,4 @@
-import { Directive, EventEmitter, OnDestroy, OnInit, Output, TemplateRef, ViewContainerRef } from '@angular/core';
+import {Directive, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewContainerRef} from '@angular/core';
 import { BehaviorSubject, ReplaySubject } from 'rxjs'
 import { map, takeUntil, tap } from 'rxjs/operators';
 
@@ -13,6 +13,8 @@ export class XmGMapApiInitDirective implements OnInit, OnDestroy {
     private statusLoaded = new BehaviorSubject(false);
 
     @Output() gMapApiReady = new EventEmitter<boolean>();
+    @Input() libraries: string[] = ['geometry'];
+
 
     constructor(
         private templateRef: TemplateRef<any>,
@@ -57,8 +59,11 @@ export class XmGMapApiInitDirective implements OnInit, OnDestroy {
 
     private loadGoogleMapApi(apiKey: string) {
         const scriptNode = document.createElement('script');
-        scriptNode.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=geometry`;
+        const apiLibraries = this.libraries.length ? `&libraries=${this.libraries.join(',')}` : '';
+
+        scriptNode.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}${apiLibraries}`;
         scriptNode.onload = () => this.statusLoaded.next(true);
+
         document.getElementsByTagName('head')[0].appendChild(scriptNode);
     }
 }

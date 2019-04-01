@@ -3,6 +3,7 @@
         "common": {
             "save": "Сохранить",
             "cancel": "Отменить",
+            "confirm": "Вы уверены?",
             "menu": {
                 "title": "Конфигурация",
                 "dashboard-mng": "Конфигураци Панели",
@@ -33,7 +34,9 @@
             }
         },
         "dashboard-list-card": {
-            "title": "Панели"
+            "title": "Панели",
+            "export-action": "экспорт в JSON",
+            "import-action": "импорт из JSON"
         },
         "specification-mng": {
             "loading": "загрузка спецификации...",

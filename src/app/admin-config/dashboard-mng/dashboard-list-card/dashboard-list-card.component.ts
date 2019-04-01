@@ -4,12 +4,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import 'rxjs/add/observable/of';
+import { TranslateService } from '@ngx-translate/core';
 
 import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
 import { Dashboard } from '../../../xm-dashboard/shared/dashboard.model';
 import { DashboardService } from '../../../xm-dashboard/shared/dashboard.service';
 import { BaseAdminConfigListComponent } from '../../base-admin-config-list.component';
 import { DashboardDetailDialogComponent } from '../dashboard-detail-dialog/dashboard-detail-dialog.component';
+
+
+declare let swal: any;
 
 @Component({
     selector: 'xm-dashboard-list-card',
@@ -29,6 +35,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
                 protected alertService: JhiAlertService,
                 protected eventManager: JhiEventManager,
                 protected parseLinks: JhiParseLinks,
+                protected translateService: TranslateService,
                 protected router: Router) {
         super(activatedRoute, alertService, eventManager, parseLinks, router);
         this.itemsPerPage = ITEMS_PER_PAGE;
@@ -72,6 +79,86 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
                 name: this.eventModify,
                 content: {id: 'delete', msg: `Dashboard ${id} deleted`}
             }));
+    }
+
+    exportDashboardsAndWidgets(): void {
+        const mappedList = [];
+        this.list.map((b, i) => {
+            this.dashboardService.find(b.id).subscribe(result => {
+                const dashboard = result.body || {};
+                delete dashboard.id;
+                if (dashboard.widgets && dashboard.widgets.length > 0) {
+                    dashboard.widgets.map(w => {
+                        delete w.id;
+                        delete w.dashboard;
+                    });
+                }
+                mappedList.push(dashboard);
+                if ((i + 1) === this.list.length) {
+                    this.saveJson(mappedList);
+                }
+            });
+        });
+    }
+
+    onInputChange(event) {
+        const reader = new FileReader();
+        reader.onload = (e) => this.onReaderLoad(e);
+        reader.readAsText(event.target.files[0]);
+    }
+
+    onReaderLoad(event): void {
+        swal({
+            type: 'warning',
+            text: this.translateService.instant('admin-config.common.confirm'),
+            buttonsStyling: false,
+            showCancelButton: true,
+            cancelButtonText: this.translateService.instant('admin-config.common.cancel'),
+            confirmButtonClass: 'btn btn-primary',
+            cancelButtonClass: 'btn'
+        }).then(confirm => {
+            if (confirm.value) {
+                this.showLoader = true;
+                const dashboardsArray = JSON.parse(event.target.result);
+                for (let i = 0; i < dashboardsArray.length; i++) {
+                    this.setDashboard(dashboardsArray[i]).subscribe(
+                        res => {
+                            if ((i + 1) === dashboardsArray.length) {
+                                this.alert('success', 'admin-config.dashboard-detail-dialog.add.success');
+                                this.loadAll();
+                            }
+                        }, err => {
+                            console.log(err);
+                            this.showLoader = false;
+                        });
+                }
+            }
+        });
+    }
+
+    private setDashboard(dashboard: Dashboard): Observable<any> {
+        return this.dashboardService.create(dashboard);
+    }
+
+    private saveJson(data: any): void {
+        const a = window.document.createElement('a');
+        const theJSON = JSON.stringify(data);
+        const blob = new Blob([theJSON], { type: 'text/json' });
+        const url = window.URL.createObjectURL(blob);
+        a.href = window.URL.createObjectURL(blob);
+        a.download = 'dashboards.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+    private alert(type, key) {
+        swal({
+            type: type,
+            text: this.translateService.instant(key),
+            buttonsStyling: false,
+            confirmButtonClass: 'btn btn-primary'
+        });
     }
 
     protected deleteItem(d: Dashboard) {

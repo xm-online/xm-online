@@ -1,16 +1,29 @@
-<div class="card card-testimonial xm-comment-item">
-  <div class="icon">
-    <i class="material-icons">format_quote</i>
-  </div>
-  <div class="card-body">
-    <h5 class="card-description">{{comment.message}}</h5>
-  </div>
-  <div class="card-footer">
-    <h4 class="card-title">{{commentator?.firstName}} {{commentator?.lastName}}</h4>
-    <div class="card-avatar">
-      <img class="img" (error)="noImage = true" [hidden]="noImage"
-           src="{{commentator?.imageUrl ? commentator.imageUrl : './assets/img/anonymous.png'}}">
-      <img class="img" src="./assets/img/anonymous.png" [hidden]="!noImage">
+<div class="comment-card">
+  <ng-container *ngIf="commentator$ | async as commentator">
+    <div class="comment-card__row">
+      <div class="comment-card__coll">
+        <div class="comment-card__avatar">
+          <img [src]="commentator.imageUrl !== 'null' && commentator.imageUrl !== '' ? commentator.imageUrl : './assets/img/anonymous.png'">
+        </div>
+      </div>
+
+      <div class="comment-card__coll">
+        <div class="comment-card__detail">
+          <div class="comment-card__detail-header">
+            <div class="comment-card__user-name">
+              {{commentator?.firstName}} {{commentator?.lastName}}
+            </div>
+            <div class="comment-card__date-published">
+              {{comment.entryDate | date: 'dd.MM.yyyy'}} - {{comment.entryDate | date: 'HH:mm'}}
+            </div>
+          </div>
+          <div class="comment-card__detail-content">
+            <div class="comment-card__message">
+              {{comment.message}}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </ng-container>
 </div>

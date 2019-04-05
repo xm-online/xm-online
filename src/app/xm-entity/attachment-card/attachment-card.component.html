@@ -17,10 +17,10 @@
   <div class="card-footer">
     <div class="stats">{{getFileSize(2)}}</div>
     <div class="navbar-right">
-      <a href="javascript: void(0);" role="button" (click)="onDownload()">
+      <a href="javascript: void(0);" role="button" (click)="onDownload()" *xmPermitted="['ATTACHMENT.GET_LIST.ITEM']">
         <i class="material-icons">file_download</i>
       </a>
-      <a href="javascript: void(0);" role="button" (click)="onRemove()">
+      <a href="javascript: void(0);" role="button" (click)="onRemove()" *xmPermitted="['ATTACHMENT.DELETE']">
         <i class="material-icons">close</i>
       </a>
     </div>

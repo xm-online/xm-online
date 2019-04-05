@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { User } from '../../shared/user/user.model';
-import { UserService } from '../../shared/user/user.service';
 import { Comment } from '../shared/comment.model';
-import {Principal} from '../../shared';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
+import { XmEntity } from '../../xm-entity/shared/xm-entity.model';
+import { XmEntityService } from '../../xm-entity/shared/xm-entity.service';
+import {map} from 'rxjs/operators';
 
 @Component({
     selector: 'xm-comment-card',
@@ -14,12 +14,12 @@ import {Observable} from 'rxjs';
 export class CommentCardComponent implements OnInit {
     @Input() comment: Comment;
 
-    commentator$: Observable<User>;
+    commentator$: Observable<XmEntity>;
 
-    constructor(private userService: UserService) {
+    constructor(private entityService: XmEntityService) {
     }
 
     ngOnInit() {
-        this.commentator$ = this.userService.find(this.comment.userKey);
+        this.commentator$ = this.entityService.getProfile(this.comment.userKey).pipe(map(responce => responce.body));
     }
 }

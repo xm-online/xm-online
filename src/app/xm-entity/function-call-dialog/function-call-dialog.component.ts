@@ -127,12 +127,11 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
 
     private onSuccessFunctionCall(r: any) {
         const data = r.body && r.body.data;
-        console.log(data);
         // if onSuccess handler passes, close popup and pass processing to function
         if (this.onSuccess) {
             this.activeModal.dismiss(true);
             this.onSuccess(data, this.formData);
-        // if responce should be shown but there are no form provided
+        // if response should be shown but there are no form provided
         } else if (data && this.functionSpec.showResponse && !this.functionSpec.contextDataForm) {
             this.activeModal.dismiss(true);
             swal({
@@ -145,7 +144,7 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
             this.jsfAttributes = buildJsfAttributes(
                 this.functionSpec.contextDataSpec ? this.functionSpec.contextDataSpec : {},
                 this.functionSpec.contextDataForm ? this.functionSpec.contextDataForm : {});
-            this.onChangeForm(data);
+            this.jsfAttributes.data = data;
         } else {
             this.activeModal.dismiss(true);
         }

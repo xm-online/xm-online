@@ -3,7 +3,7 @@
     <div class="comment-card__row">
       <div class="comment-card__coll">
         <div class="comment-card__avatar">
-          <img [src]="commentator.imageUrl !== 'null' && commentator.imageUrl !== '' ? commentator.imageUrl : './assets/img/anonymous.png'">
+          <img [src]="commentator?.data?.imageUrl ? commentator.data.imageUrl : './assets/img/anonymous.png'">
         </div>
       </div>
 
@@ -11,7 +11,7 @@
         <div class="comment-card__detail">
           <div class="comment-card__detail-header">
             <div class="comment-card__user-name">
-              {{commentator?.firstName}} {{commentator?.lastName}}
+              {{commentator?.data?.firstName}} {{commentator?.data?.lastName}}
             </div>
             <div class="comment-card__date-published">
               {{comment.entryDate | date: 'dd.MM.yyyy'}} - {{comment.entryDate | date: 'HH:mm'}}

@@ -7,7 +7,7 @@ import { XmEntitySpec } from '../shared/xm-entity-spec.model';
 import { XmEntity } from '../shared/xm-entity.model';
 import { JhiEventManager } from 'ng-jhipster';
 import { XM_EVENT_LIST } from '../../xm.constants';
-import {FunctionSpec} from '..';
+import { FunctionSpec } from '..';
 
 @Component({
     selector: 'xm-entity-card',

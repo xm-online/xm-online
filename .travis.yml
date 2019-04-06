@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+ - "8"
+script:
+ - set -e
+ - npm install --save-dev
+ - npm run prebuild
+ - npm run build-aot

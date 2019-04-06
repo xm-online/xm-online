@@ -202,6 +202,16 @@ export class Principal {
         }
     }
 
+    public getDetailName(): String[] {
+        if (!this.isIdentityResolved()) {return null}
+
+        return [
+            this.userIdentity.firstName ? this.userIdentity.firstName : this.userIdentity.logins[0].login,
+            this.userIdentity.lastName ? this.userIdentity.lastName : null
+        ]
+    }
+
+
     getLangKey(): string {
         return this.isIdentityResolved() ? this.userIdentity.langKey : null;
     }

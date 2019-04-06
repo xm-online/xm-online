@@ -22,8 +22,8 @@
                   <em>({{getLocationSpec(location).name | i18nName: principal | uppercase}})</em>{{location | locationAddress}}
                 </span>
                 <span class="col-auto">
-                  <a (click)="onRemove(location)" class="d-inline"><i class="material-icons no-rotate">close</i></a>
-                  <a (click)="onManage(location)" class="d-inline"><i class="material-icons no-rotate">edit</i></a>
+                  <a (click)="onRemove(location)" class="d-inline" *xmPermitted="['LOCATION.DELETE']"><i class="material-icons no-rotate">close</i></a>
+                  <a (click)="onManage(location)" class="d-inline" *xmPermitted="['LOCATION.UPDATE']"><i class="material-icons no-rotate">edit</i></a>
                   <i class="material-icons">keyboard_arrow_down</i>
                 </span>
               </span>

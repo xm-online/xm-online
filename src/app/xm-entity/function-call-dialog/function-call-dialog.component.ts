@@ -34,6 +34,7 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
     isJsonFormValid = true;
 
     showLoader$ = new BehaviorSubject<boolean>(false);
+    showSecondStep$ = new BehaviorSubject<boolean>(false);
 
     constructor(private activeModal: NgbActiveModal,
                 private functionService: FunctionService,
@@ -63,7 +64,7 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
 
     onConfirmFunctionCall() {
         this.showLoader$.next(true);
-        // this.showLoader = true;
+        // XXX think about this assignment
         this.formData.xmEntity = this.xmEntity;
         const eId = this.functionSpec.withEntityId ? this.xmEntity.id : null;
 
@@ -77,35 +78,23 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
             tap(response => this.saveAsFile(response)),
         );
 
-        // if xmEntity function, send event notification
+        // if !download xmEntity function, emit XM_ENTITY_DETAIL_MODIFICATION notification
         const sendModifyEvent$ = apiCall$.pipe(
           filter(response => !isSaveContent(response) && !!eId),
-          tap(_ => this.eventManager.broadcast({name: XM_EVENT_LIST.XM_ENTITY_DETAIL_MODIFICATION})),
+          tap(() => this.eventManager.broadcast({name: XM_EVENT_LIST.XM_ENTITY_DETAIL_MODIFICATION})),
         );
 
+        // if !download proceed with on success scenario and emit XM_FUNCTION_CALL_SUCCESS
         const sentCallSuccessEvent$ = apiCall$.pipe(
             filter(response => !isSaveContent(response)),
             tap(response => this.onSuccessFunctionCall(response)),
-            tap(_ => this.eventManager.broadcast({name: XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS})),
+            tap(() => this.eventManager.broadcast({name: XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS})),
         );
 
         merge(saveContent$, sendModifyEvent$, sentCallSuccessEvent$).pipe(
             finalize(() => this.cancelLoader()),
             catchError((e) =>  this.handleError(e))
-        ).subscribe((val) => {});
-
-/*        this.functionService.callEntityFunction(this.functionSpec.key, eId, this.formData).subscribe((r: any) => {
-                if (r.actionType && r.actionType === 'download') {
-                    this.saveAsFile(r);
-                } else {
-                    this.eventManager.broadcast({name: XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS});
-                    this.eventManager.broadcast({name: XM_EVENT_LIST.XM_ENTITY_DETAIL_MODIFICATION});
-                    this.onSuccessFunctionCall(r);
-                }
-            },
-            // TODO: error processing
-            (e) =>  this.handleError(e),
-        () => this.cancelLoader());*/
+        ).subscribe(() => {});
     }
 
     onCancel() {
@@ -141,6 +130,7 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
                 confirmButtonClass: 'btn btn-primary'
             });
         } else if (data && this.functionSpec.showResponse && this.functionSpec.contextDataForm) {
+            this.showSecondStep$.next(true);
             this.jsfAttributes = buildJsfAttributes(
                 this.functionSpec.contextDataSpec ? this.functionSpec.contextDataSpec : {},
                 this.functionSpec.contextDataForm ? this.functionSpec.contextDataForm : {});

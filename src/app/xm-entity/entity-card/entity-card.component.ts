@@ -5,6 +5,9 @@ import { Principal } from '../../shared/auth/principal.service';
 import { AvatarDialogComponent } from '../avatar-dialog/avatar-dialog.component';
 import { XmEntitySpec } from '../shared/xm-entity-spec.model';
 import { XmEntity } from '../shared/xm-entity.model';
+import { JhiEventManager } from 'ng-jhipster';
+import { XM_EVENT_LIST } from '../../xm.constants';
+import {FunctionSpec} from '..';
 
 @Component({
     selector: 'xm-entity-card',
@@ -19,7 +22,8 @@ export class EntityCardComponent implements OnInit {
     isAvatarEnabled: boolean;
 
     constructor(private modalService: NgbModal,
-                public principal: Principal) {
+                public principal: Principal,
+                private eventManager: JhiEventManager) {
     }
 
     ngOnInit() {
@@ -54,6 +58,51 @@ export class EntityCardComponent implements OnInit {
             nextState.actionName = n.name;
             return nextState;
         }) : null;
+    }
+
+    onRefresh(e) {
+        this.eventManager.broadcast({name: XM_EVENT_LIST.XM_ENTITY_DETAIL_MODIFICATION});
+    }
+
+    get commonFunctionSpec(): FunctionSpec[] {
+        return (this.xmEntitySpec && this.xmEntitySpec.functions) ?
+          this.xmEntitySpec
+              .functions
+              .filter(item => !item.withEntityId)
+              .filter(item => this.hasPrivilege(item))
+              .filter(item => this.allowedByState(item)) : [];
+    }
+
+    get entityFunctionSpec(): FunctionSpec[] {
+        return (this.xmEntitySpec && this.xmEntitySpec.functions) ?
+            this.xmEntitySpec
+                .functions
+                .filter(item => item.withEntityId)
+                .filter(item => this.hasPrivilege(item))
+                .filter(item => this.allowedByState(item, this.xmEntity.stateKey)) : [];
+    }
+
+    private allowedByState(functionSpec: FunctionSpec, stateKey?: string): boolean {
+        // if no allowedStateKeys - always allowed
+        if (!functionSpec.allowedStateKeys || !functionSpec.allowedStateKeys.length) {
+            return true;
+        }
+        // if includes NEVER - do not show
+        if (functionSpec.allowedStateKeys.includes('NEVER')) {
+            return false;
+        }
+
+        // if xmEntity function - validate entity state
+        if (functionSpec.withEntityId && stateKey) {
+            return functionSpec.allowedStateKeys.includes(stateKey);
+        }
+
+        return true;
+    }
+
+    private hasPrivilege(spec: FunctionSpec): boolean {
+        const priv = spec.withEntityId ? 'XMENTITY.FUNCTION.EXECUTE' : 'FUNCTION.CALL';
+        return this.principal.hasPrivilegesInline([priv, `${priv}.${spec.key}`]);
     }
 
 }

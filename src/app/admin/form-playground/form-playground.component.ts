@@ -151,14 +151,6 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
                 map(value => this._filterSpec(value))
             );
 
-        /*this.spec$ = this.selectedSpecKey$.asObservable().pipe(
-            tap(console.log),
-            map(specKey => this.specs.filter(spec => spec.key === specKey).shift()),
-            // tap(spec => this.spec = spec),
-            tap(spec => this.updateXmFormTemplate(spec))
-        );*/
-
-
     }
 
     private updateXmFormTemplate(spec: XmEntitySpec): FormsConfig[] {

@@ -50,9 +50,7 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
         // TODO think about correct way to work with context
         $.xmEntity = this.xmEntity;
         if (this.functionSpec) {
-            this.jsfAttributes = buildJsfAttributes(
-                this.functionSpec.inputSpec ? this.functionSpec.inputSpec : {},
-                this.functionSpec.inputForm ? this.functionSpec.inputForm : {});
+            this.jsfAttributes = buildJsfAttributes(this.functionSpec.inputSpec || {}, this.functionSpec.inputForm || {});
         }
         $.xmEntity = null;
         console.log('ngOnInit');

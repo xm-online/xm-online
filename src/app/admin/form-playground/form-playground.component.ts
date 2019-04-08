@@ -9,10 +9,10 @@ import {
 } from '../../shared/jsf-extention/jsf-attributes-helper';
 import { Examples } from './example-schemas.model';
 import { Principal } from '../../shared/auth/principal.service';
-import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
-import {FunctionSpec, XmEntitySpec, XmEntitySpecWrapperService} from '../../xm-entity';
-import {map, startWith, tap} from 'rxjs/operators';
-import {FormControl} from '@angular/forms';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { FunctionSpec, XmEntitySpec, XmEntitySpecWrapperService } from '../../xm-entity';
+import { map, startWith, tap } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 
 // declare var $: any;
 

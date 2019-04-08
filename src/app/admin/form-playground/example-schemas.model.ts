@@ -1,5 +1,6 @@
-export const Examples: any = {
+export const Examples = {
     schemas: [
+        {name: 'XMData', file: 'ng2jsf-xm-layout'},
         {name: 'Flexbox layout', file: 'ng2jsf-flex-layout'},
         {name: 'Simple Array', file: 'ng2jsf-simple-array'},
         {name: 'Data Only (no Schema or Layout)', file: 'ng2jsf-data-only'},

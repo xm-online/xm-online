@@ -9,6 +9,7 @@
       </div>
       <div class="card-body">
         <div class="form-group">
+
           <mat-form-field>
             <mat-select #file
                         (selectionChange)="loadSelectedExample($event, file.value)"
@@ -21,12 +22,55 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+
+          <div *ngIf="isXmForm">
+            <mat-form-field *ngIf="specs$ | async as fetchedSpecs;">
+              <ng-container
+                *ngIf="fetchedSpecs; then resultData; else noData"
+              ></ng-container>
+              <ng-template #resultData>
+                <mat-select
+                  (selectionChange)="onEntitySelect($event.value)"
+                  [(ngModel)]="selectedSpec"
+                  placeholder="{{'xm-entity.states-management-dialog.choose-state' | translate}}"
+                >
+                  <ngx-mat-select-search
+                    [formControl]="formSpecSearch"
+                    [placeholderLabel]="'global.rest-select-placeholder-search' | translate"
+                    [noEntriesFoundLabel]="'global.rest-select-placeholder-noresults' | translate"
+                  ></ngx-mat-select-search>
+
+                  <mat-option *ngFor="let option of filteredSpecOptions$ | async" [value]="option.key">
+                    {{ option.key }}
+                  </mat-option>
+                </mat-select>
+              </ng-template>
+              <ng-template #noData><mat-panel>No data</mat-panel></ng-template>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="xmEntityForms$ | async as fetchedSpecs;">
+              <ng-container
+                *ngIf="fetchedSpecs; then resultData; else noData"
+              ></ng-container>
+              <ng-template #resultData>
+
+                <mat-select (selectionChange)="onSpecSelect($event.value)">
+                  <mat-option *ngFor="let option of fetchedSpecs" [value]="option">
+                    {{ option.title }}
+                  </mat-option>
+                </mat-select>
+
+              </ng-template>
+              <ng-template #noData><mat-panel>No data</mat-panel></ng-template>
+            </mat-form-field>
+          </div>
+
         </div>
 
-        <div>
+        <div *ngIf="formConfig$ | async as formConfig">
           <div xmAceEditor
                *ngIf="visible.schema"
-               [text]="jsonFormSchema"
+               [text]="formConfig"
                [options]="aceEditorOptions"
                [readOnly]="false"
                [autoUpdateContent]="true"

@@ -3,6 +3,7 @@
         "common": {
             "save": "Save",
             "cancel": "Cancel",
+            "close": "Close",
             "search": "Search",
             "add": "Add",
             "add-avatar": "Add Avatar",

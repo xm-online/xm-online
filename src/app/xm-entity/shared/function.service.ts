@@ -13,6 +13,14 @@ export class FunctionService {
     constructor(private http: HttpClient) {
     }
 
+    callEntityFunction(functionKey: string, xmEntityId?: number, inputContext?: any): Observable<HttpResponse<any>> {
+        const copy = this.convert(inputContext);
+        if (xmEntityId) {
+            return this.callWithEntityId(xmEntityId, functionKey, copy)
+        }
+        return this.call(functionKey, copy)
+    }
+
     call(functionKey: string, inputContext?: any): Observable<HttpResponse<any>> {
         const copy = this.convert(inputContext);
         return this.http

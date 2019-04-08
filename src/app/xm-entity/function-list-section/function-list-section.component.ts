@@ -201,17 +201,18 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
         });
     }
 
-    onCallFunction(functionSpec) {
+    onCallFunction(functionSpec: FunctionSpec) {
         const title = functionSpec.actionName ? functionSpec.actionName : functionSpec.name;
         const modalRef = this.modalService.open(FunctionCallDialogComponent, {backdrop: 'static'});
         modalRef.componentInstance.xmEntity = this.xmEntity || new XmEntity(this.xmEntityId || undefined);
         modalRef.componentInstance.functionSpec = functionSpec;
         modalRef.componentInstance.dialogTitle = title;
         modalRef.componentInstance.buttonTitle = title;
+        console.log('onCallFunction');
         return modalRef;
     }
 
-    getFunctionContext(functionSpec): FunctionContext {
+    getFunctionContext(functionSpec: FunctionSpec): FunctionContext {
         return this.functionContexts && this.functionContexts.filter(fc => fc.typeKey === functionSpec.key).shift();
     }
 

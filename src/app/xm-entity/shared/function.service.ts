@@ -15,9 +15,6 @@ export class FunctionService {
 
     callEntityFunction(functionKey: string, xmEntityId?: number, inputContext?: any): Observable<HttpResponse<any>> {
         const copy = this.convert(inputContext);
-        if (functionKey === 'EFDEMO_RETURN') {
-            return of(new HttpResponse({body: {data: copy}}));
-        }
         if (xmEntityId) {
             return this.callWithEntityId(xmEntityId, functionKey, copy)
         }

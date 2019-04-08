@@ -1,6 +1,6 @@
-import {HttpClient, HttpResponse, HttpResponseBase} from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from '../../xm.constants';

@@ -52,6 +52,7 @@ import { CurrentLocationComponent } from './jsf-extention/widgets/current-locati
 import { ExtAutocompleteService } from './jsf-extention/widgets/ext-autocomplete/ext-autocomplete-service';
 import { ExtAutocompleteComponent } from './jsf-extention/widgets/ext-autocomplete/ext-autocomplete.component';
 import { ExtMultiSelectComponent } from './jsf-extention/widgets/ext-multi-select/ext-multi-select.component';
+import { ExtQuerySelectComponent } from './jsf-extention/widgets/ext-query-select/ext-query-select.component';
 import { ExtSelectService } from './jsf-extention/widgets/ext-select/ext-select-service';
 import { ExtSelectComponent } from './jsf-extention/widgets/ext-select/ext-select.component';
 import { ExtMdEditorComponent } from './jsf-extention/widgets/ext-md-editor/ext-md-editor.component';
@@ -109,6 +110,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
         ValidationComponent,
         ExtAutocompleteComponent,
         ExtMultiSelectComponent,
+        ExtQuerySelectComponent,
         ExtTextareaComponent,
         ExtMdEditorComponent,
         MultilingualInputComponent,
@@ -125,6 +127,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
         ExtSelectComponent,
         ExtAutocompleteComponent,
         ExtMultiSelectComponent,
+        ExtQuerySelectComponent,
         ValidationComponent,
         ExtTextareaComponent,
         ExtMdEditorComponent,
@@ -193,6 +196,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
         ExtSelectComponent,
         ExtAutocompleteComponent,
         ExtMultiSelectComponent,
+        ExtQuerySelectComponent,
         ValidationComponent,
         ExtTextareaComponent,
         ExtMdEditorComponent,

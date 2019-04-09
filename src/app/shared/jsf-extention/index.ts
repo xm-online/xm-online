@@ -1,5 +1,6 @@
 export * from './jsf-attributes-helper';
 
+export * from './widgets/ext-query-select/ext-query-select.component';
 export * from './widgets/current-location/current-location.component';
 export * from './widgets/current-location/current-location-options.model';
 export * from './widgets/ext-select/ext-select.component';

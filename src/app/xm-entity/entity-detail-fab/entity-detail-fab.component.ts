@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
-import { Subscription } from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
 
 import { AttachmentDetailDialogComponent } from '../attachment-detail-dialog/attachment-detail-dialog.component';
 import { CommentDetailDialogComponent } from '../comment-detail-dialog/comment-detail-dialog.component';
@@ -27,6 +27,9 @@ export class EntityDetailFabComponent implements OnInit, OnChanges, OnDestroy {
 
     view = {attachment: false, location: false, link: false, comment: false};
 
+    showEditOptions = false;
+    showEditSubOptions = false;
+
     constructor(private eventManager: JhiEventManager,
                 private modalService: NgbModal) {
         this.registerChangeInXmEntities();
@@ -50,11 +53,33 @@ export class EntityDetailFabComponent implements OnInit, OnChanges, OnDestroy {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
+    xmEditContext(): Function  {
+        return () => {
+            // this flag turns off
+            this.showEditOptions = true;
+            return this.showEditOptions;
+        };
+    }
+
+    xmAttachmentContext(): Function  {
+        return () => this.view.attachment;
+    }
+
+    xmLocationContext(): Function {
+        return () => this.view.location;
+    }
+
+    xmCommentContext(): Function  {
+        return () => this.view.comment;
+    }
+
     private detectViewBtns() {
         this.view.attachment = !!(this.xmEntitySpec.attachments && this.xmEntitySpec.attachments.length);
         this.view.location = !!(this.xmEntitySpec.locations && this.xmEntitySpec.locations.length);
         this.view.link = !!(this.xmEntitySpec.links && this.xmEntitySpec.links.length);
         this.view.comment = !!(this.xmEntitySpec.comments);
+        this.showEditSubOptions = this.view.attachment || this.view.location || this.view.link || this.view.comment ||
+            (this.xmEntitySpec  && this.xmEntitySpec.links && this.xmEntitySpec.links.length > 0);
     }
 
     onRefresh() {

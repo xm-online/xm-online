@@ -4,7 +4,7 @@
     <h4 class="modal-title text-left" [innerHTML]="dialogTitle | i18nName : principal"></h4>
   </div>
   <div class="modal-body">
-    <xm-loader [showLoader]="showLoader"></xm-loader>
+    <xm-loader [showLoader]="showLoader$ | async"></xm-loader>
     <json-schema-form class="json-form-hide-submit"
                       [framework]="'material-design'"
                       [schema]="jsfAttributes.schema"
@@ -19,21 +19,33 @@
                       *ngIf="jsfAttributes?.schema">
     </json-schema-form>
   </div>
-  <div class="modal-footer">
+  <div class="modal-footer" *ngIf="showSecondStep$ | async; else firstStep">
     <button mat-raised-button
             type="button"
             class="btn mr-1"
             data-dismiss="modal"
             (click)="onCancel()">
-      <span *ngIf="jsfAttributes?.entity?.cancelName">{{jsfAttributes.entity.cancelName | i18nName: principal}}</span>
-      <span *ngIf="!jsfAttributes?.entity?.cancelName" jhiTranslate="xm-entity.common.cancel">Cancel</span>
-    </button>
-    <button mat-raised-button
-            type="submit"
-            class="btn btn-primary"
-            [disabled]="showLoader || !isJsonFormValid">
-      <span *ngIf="jsfAttributes?.entity?.saveName">{{jsfAttributes.entity.saveName | i18nName: principal}}</span>
-      <span *ngIf="!jsfAttributes?.entity?.saveName">{{buttonTitle | i18nName : principal}}</span>
+      <span *ngIf="jsfAttributes?.entity?.closeName">{{jsfAttributes.entity.closeName | i18nName: principal}}</span>
+      <span *ngIf="!jsfAttributes?.entity?.closeName" jhiTranslate="xm-entity.common.close">Close</span>
     </button>
   </div>
+  <ng-template #firstStep>
+    <div class="modal-footer">
+      <button mat-raised-button
+              type="button"
+              class="btn mr-1"
+              data-dismiss="modal"
+              (click)="onCancel()">
+        <span *ngIf="jsfAttributes?.entity?.cancelName">{{jsfAttributes.entity.cancelName | i18nName: principal}}</span>
+        <span *ngIf="!jsfAttributes?.entity?.cancelName" jhiTranslate="xm-entity.common.cancel">Cancel</span>
+      </button>
+      <button mat-raised-button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="(showLoader$ | async) || !isJsonFormValid">
+        <span *ngIf="jsfAttributes?.entity?.saveName">{{jsfAttributes.entity.saveName | i18nName: principal}}</span>
+        <span *ngIf="!jsfAttributes?.entity?.saveName">{{buttonTitle | i18nName : principal}}</span>
+      </button>
+    </div>
+  </ng-template>
 </form>

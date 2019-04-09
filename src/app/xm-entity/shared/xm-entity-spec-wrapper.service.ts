@@ -80,7 +80,7 @@ export class XmEntitySpecWrapperService {
         return this.specv2().pipe(
             defaultIfEmpty({types: []}),
             flatMap((spec) => spec.types),
-            filter(xmSpec => typeKey === xmSpec.typeKey)
+            filter(xmSpec => typeKey === xmSpec.key)
         )
     }
 

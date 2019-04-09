@@ -164,7 +164,11 @@
         "perPage": "items per page",
         "noData": "No data!",
         "actionPerformed" : "Action performed",
-        "rest-select-placeholder-search": "Search",
+        "rest-select-placeholder-search": {
+            "prefix": "Enter a search query (at least",
+            "suffix": "characters)"
+        },
+        "rest-select-search-more": "More results are available. Refine your search query!",
         "rest-select-placeholder-noresults": "No results found"
     },
     "mat": {

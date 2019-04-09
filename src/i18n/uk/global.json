@@ -163,7 +163,11 @@
         "perPage": "елементів на сторінці",
         "noData": "Немає даних!",
         "actionPerformed" : "Action performed",
-        "rest-select-placeholder-search": "Пошук",
+        "rest-select-placeholder-search": {
+            "prefix": "Введіть пошуковий запит (не менше",
+            "suffix": "символів)"
+        },
+        "rest-select-search-more": "Доступні ще результати. Уточніть пошуковий запит!",
         "rest-select-placeholder-noresults": "Нічого не знайдено"
     },
     "mat": {

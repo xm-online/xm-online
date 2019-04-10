@@ -163,7 +163,11 @@
         "perPage": "элементов на странице",
         "noData": "Нет данных!",
         "actionPerformed" : "Action performed",
-        "rest-select-placeholder-search": "Поиск",
+        "rest-select-placeholder-search": {
+            "prefix": "Введите поисковый запрос (не менее",
+            "suffix": "символов)"
+        },
+        "rest-select-search-more": "Доступны еще результаты. Уточните поисковый запрос!",
         "rest-select-placeholder-noresults": "Ничего не найдено"
     },
     "mat": {

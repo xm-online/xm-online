@@ -8,6 +8,7 @@ import { MultilingualInputComponent } from './widgets/multilingual-input/multili
 import { DatetimeUtcComponent } from './widgets/datetime-utc/datetime-utc.component';
 import { ExtMdEditorComponent } from './widgets/ext-md-editor/ext-md-editor.component';
 import { DatetimePickerComponent } from './widgets/datetime-picker/datetime-picker.component';
+import { ExtQuerySelectComponent } from './widgets/ext-query-select/ext-query-select.component';
 
 declare const $: any;
 declare let Babili: any;
@@ -22,6 +23,7 @@ export const getJsfWidgets = () => {
         'rest-select': ExtSelectComponent, // Backward compatibility
         'current-location': CurrentLocationComponent,
         'ext-select': ExtSelectComponent,
+        'ext-query-select': ExtQuerySelectComponent,
         'ext-multi-select': ExtMultiSelectComponent,
         'validation-component': ValidationComponent,
         'ext-textarea': ExtTextareaComponent,

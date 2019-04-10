@@ -27,3 +27,17 @@
   overflow: hidden;
   border-radius: 50%;
 }
+
+::ng-deep {
+    .card {
+        &-menu {
+            position: absolute;
+            z-index: 10;
+            right: 0;
+            top: 0;
+        }
+        &-header {
+            margin-right: 40px !important;
+        }
+    }
+}

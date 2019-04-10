@@ -84,6 +84,12 @@ export class XmEntityService {
             map((res: HttpResponse<XmEntity>) => this.convertResponse(res)));
     }
 
+    getProfileByKey(key: string, req?: any): Observable<HttpResponse<XmEntity>> {
+        const options = createRequestOption(req);
+        return this.http.get<XmEntity>(`${this.resourceProfileUrl}/${key}`, {params: options, observe: 'response'}).pipe(
+            map((res: HttpResponse<XmEntity>) => this.convertResponse(res)));
+    }
+
     changeState(id: number, stateKey: string, inputContext?: any): Observable<HttpResponse<XmEntity>> {
         const copy = inputContext ? this.convertFormData(inputContext) : null;
         return this.http.put<XmEntity>(`${this.resourceUrl}/${id}/states/${stateKey}`, copy, {observe: 'response'}).pipe(

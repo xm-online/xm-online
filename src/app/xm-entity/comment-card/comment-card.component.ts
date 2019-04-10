@@ -4,7 +4,7 @@ import { Comment } from '../shared/comment.model';
 import { Observable } from 'rxjs';
 import { XmEntity } from '../../xm-entity/shared/xm-entity.model';
 import { XmEntityService } from '../../xm-entity/shared/xm-entity.service';
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'xm-comment-card',
@@ -20,6 +20,6 @@ export class CommentCardComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.commentator$ = this.entityService.getProfile(this.comment.userKey).pipe(map(responce => responce.body));
+        this.commentator$ = this.entityService.getProfileByKey(this.comment.userKey).pipe(map(responce => responce.body));
     }
 }

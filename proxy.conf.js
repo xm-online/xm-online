@@ -22,7 +22,8 @@ const PROXY_CONFIG = [
             "/wallet",
             "/zendesk",
             "/ldb",
-            "/document/api"
+            "/document/api",
+            "/communication-bulk/ws"
         ],
         target: "http://xm.test.xm-online.com.ua",
         secure: false,

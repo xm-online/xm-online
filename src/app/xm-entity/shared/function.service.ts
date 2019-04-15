@@ -10,6 +10,15 @@ export class FunctionService {
 
     private resourceUrl = SERVER_API_URL + 'entity/api/functions';
 
+    private resourceEntityUrl = (id, key) => SERVER_API_URL + `entity/api/xm-entities/${id}/functions/${key}`;
+
+    /**
+     * There are no well defined field in spec to mark FILE UPLOAD startegy (base64, blob, arraybuffer) so for now everything started like
+     * `EXPORT-ARRAYBUFFER-` will be processed as `responseType: 'arraybuffer'`
+     * @param key function key
+     */
+    private isExportFunction = (key = '') => key.toUpperCase().startsWith('EXPORT-ARRAYBUFFER-');
+
     constructor(private http: HttpClient) {
     }
 
@@ -23,15 +32,36 @@ export class FunctionService {
 
     call(functionKey: string, inputContext?: any): Observable<HttpResponse<any>> {
         const copy = this.convert(inputContext);
-        return this.http
-            .post(this.resourceUrl + '/' + functionKey, copy, {observe: 'response', responseType: 'text'})
-            .pipe(map((res: HttpResponse<any>) => this.convertResponse(res)));
+        const url = this.resourceUrl + '/' + functionKey;
+        if (this.isExportFunction(functionKey)) {
+            return this.callXmDownloadFunction(url, copy);
+        }
+        return this.callXmFunction(url, copy);
     }
 
     callWithEntityId(xmEntityId: number, functionKey: string, inputContext?: any): Observable<HttpResponse<any>> {
         const copy = this.convert(inputContext);
+        const url = this.resourceEntityUrl(xmEntityId, functionKey);
+        if (this.isExportFunction(functionKey)) {
+            return this.callXmDownloadFunction(url, copy);
+        }
+        return this.callXmFunction(url, copy);
+    }
+
+    private callXmFunction(url: string, inputContext: any = {}): Observable<HttpResponse<any>> {
         return this.http
-            .post(`entity/api/xm-entities/${xmEntityId}/functions/${functionKey}`, copy, {observe: 'response', responseType: 'text'})
+            .post(url, inputContext, {observe: 'response', responseType: 'text'})
+            .pipe(map((res: HttpResponse<any>) => this.convertResponse(res)));
+    }
+
+    /**
+     * Function is used to tune angular downlaod to process responseType: 'arraybuffer'
+     * @param url - resource url
+     * @param inputContext - resource context
+     */
+    private callXmDownloadFunction(url: string, inputContext: any = {}): Observable<HttpResponse<any>> {
+        return this.http
+            .post(url, inputContext, {observe: 'response', responseType: 'arraybuffer'})
             .pipe(map((res: HttpResponse<any>) => this.convertResponse(res)));
     }
 

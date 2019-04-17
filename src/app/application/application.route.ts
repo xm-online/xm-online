@@ -59,6 +59,9 @@ export const applicationRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
+            privileges: {
+                value: ['XMENTITY.SEARCH', 'XMENTITY.SEARCH.QUERY']
+            },
             pageTitle: 'xm.xmEntity.search'
         },
         canActivate: [UserRouteAccessService]

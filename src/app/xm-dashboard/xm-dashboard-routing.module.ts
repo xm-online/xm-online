@@ -9,6 +9,9 @@ const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent,
         data: {
+            privileges: {
+                value: ['DASHBOARD.GET_LIST']
+            },
             pageTitle: 'global.menu.admin.dashboard'
         },
         canActivate: [UserRouteAccessService]

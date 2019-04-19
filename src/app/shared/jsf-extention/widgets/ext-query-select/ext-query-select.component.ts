@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, forwardRef, Inject, Input, OnInit} from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime, filter, map, switchMap, tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {debounceTime, filter, map, startWith, switchMap, tap} from 'rxjs/operators';
+import {BehaviorSubject, combineLatest, merge, Observable} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { JsonSchemaFormService } from 'angular2-json-schema-form';
+import {JsonSchemaFormComponent, JsonSchemaFormService} from 'angular2-json-schema-form';
 import * as _ from 'lodash';
 
 interface ISelectSettings {
@@ -37,9 +37,16 @@ export class ExtQuerySelectComponent implements OnInit {
     public loading$ = new BehaviorSubject<boolean>(false);
     public maxDisplayedOptions = 50;
 
+    controlValue: any;
+    controlName: any;
+
+    private initialValue$: Observable<ISelectOption[]>;
+    private searchValues$: Observable<ISelectOption[]>;
+
     @Input() layoutNode: any;
 
     constructor(
+        @Inject(forwardRef(() => JsonSchemaFormComponent)) private _parent: JsonSchemaFormComponent,
         private jsf: JsonSchemaFormService,
         private http: HttpClient
     ) {
@@ -54,38 +61,61 @@ export class ExtQuerySelectComponent implements OnInit {
             url: '',
             readonly: false
         }, this.layoutNode.options || {});
+
         this.jsf.initializeControl(this);
 
-        this.options$ = this.queryCtrl.valueChanges
+        console.log('---> %o', this.layoutNode);
+        console.log('---> %o', this.checkedOption);
+
+        console.log('---> %o', this.controlValue);
+        console.log('---> %o', this.controlName);
+        console.log('---> %o', this._parent.data);
+
+        this.initialValue$ = this.fetchOptions({id: this.controlValue}).pipe(
+            map( list => list.length ? list : []),
+            tap(list => console.log('--->', list))
+            // tap(item => this.checkedOption.setValue(item.value, {label: item.label}))
+        );
+
+        this.searchValues$ = this.queryCtrl.valueChanges
             .pipe(
                 filter(val => val.length > Number(this.settings.minQueryLength)),
                 tap(() => this.checkedOption.reset('')),
                 tap(() => this.loading$.next(true)),
                 debounceTime(this.settings.debounceTime),
-                switchMap(query => this.fetchOptions(query)),
+                switchMap(query => this.fetchOptions({searchQuery: query})),
+                tap(console.log),
                 tap(() => this.loading$.next(false)),
             );
 
+        this.options$ = merge(this.initialValue$, this.searchValues$)
+            .pipe(
+                tap(list => console.log('--!!!!->', list)),
+                tap(list => this.checkedOption.setValue(list[0].value))
+            );
+
+        /*this.options$.pipe(
+            combineLatest(this.initialValue$, this.searchValues$)
+        );*/
+
         this.checkedOption.valueChanges
             .pipe(
+                tap(console.log),
                 tap(val => this.jsf.updateValue(this, val))
             )
             .subscribe(() => {})
     }
 
-    fetchOptions(query: string): Observable<ISelectOption[]> {
-        return this.http.get(this.settings.url, {
-            params: {
-                searchQuery: query
-            }
-        }).pipe(
-            map(response => _.get(response, this.settings.arrayField, [])),
-            map(options => options.map(option => {
-                return {
-                    label: _.get(option, this.settings.labelField, null),
-                    value: _.get(option, this.settings.valueField, null)
-                }
-            })),
+    private fetchOptions(query: any): Observable<ISelectOption[]> {
+        return this.http.get(this.settings.url, {params: query})
+            .pipe(
+                map(response => _.get(response, this.settings.arrayField, [])),
+                map(options => options.map(option => {
+                    return {
+                        label: _.get(option, this.settings.labelField, null),
+                        value: _.get(option, this.settings.valueField, null)
+                    }
+                })),
             map(options => options.filter(option => option.label !== null && option.value !== null)),
             map(options => options.length ? options : [])
         )

@@ -1,9 +1,9 @@
-import {Component, forwardRef, Inject, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import {debounceTime, filter, map, startWith, switchMap, tap} from 'rxjs/operators';
-import {BehaviorSubject, combineLatest, merge, Observable} from 'rxjs';
+import { debounceTime, filter, finalize, map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, iif, merge, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import {JsonSchemaFormComponent, JsonSchemaFormService} from 'angular2-json-schema-form';
+import { JsonSchemaFormService } from 'angular2-json-schema-form';
 import * as _ from 'lodash';
 
 interface ISelectSettings {
@@ -38,7 +38,6 @@ export class ExtQuerySelectComponent implements OnInit {
     public maxDisplayedOptions = 50;
 
     controlValue: any;
-    controlName: any;
 
     private initialValue$: Observable<ISelectOption[]>;
     private searchValues$: Observable<ISelectOption[]>;
@@ -46,7 +45,6 @@ export class ExtQuerySelectComponent implements OnInit {
     @Input() layoutNode: any;
 
     constructor(
-        @Inject(forwardRef(() => JsonSchemaFormComponent)) private _parent: JsonSchemaFormComponent,
         private jsf: JsonSchemaFormService,
         private http: HttpClient
     ) {
@@ -64,17 +62,16 @@ export class ExtQuerySelectComponent implements OnInit {
 
         this.jsf.initializeControl(this);
 
-        console.log('---> %o', this.layoutNode);
-        console.log('---> %o', this.checkedOption);
-
-        console.log('---> %o', this.controlValue);
-        console.log('---> %o', this.controlName);
-        console.log('---> %o', this._parent.data);
-
-        this.initialValue$ = this.fetchOptions({id: this.controlValue}).pipe(
+        const initialData$ = this.fetchOptions({id: this.controlValue}).pipe(
+            tap(() => this.loading$.next(true)),
             map( list => list.length ? list : []),
-            tap(list => console.log('--->', list))
-            // tap(item => this.checkedOption.setValue(item.value, {label: item.label}))
+            finalize(() =>  this.loading$.next(false))
+        );
+
+        this.initialValue$ = of(this.controlValue).pipe(
+            mergeMap(value => iif(() => !!value,  initialData$, of([]))),
+            filter(list => !!list.length),
+            tap(list => this.checkedOption.setValue(list[0].value))
         );
 
         this.searchValues$ = this.queryCtrl.valueChanges
@@ -90,13 +87,8 @@ export class ExtQuerySelectComponent implements OnInit {
 
         this.options$ = merge(this.initialValue$, this.searchValues$)
             .pipe(
-                tap(list => console.log('--!!!!->', list)),
-                tap(list => this.checkedOption.setValue(list[0].value))
+                tap(list => console.log('--!!!!->', list))
             );
-
-        /*this.options$.pipe(
-            combineLatest(this.initialValue$, this.searchValues$)
-        );*/
 
         this.checkedOption.valueChanges
             .pipe(

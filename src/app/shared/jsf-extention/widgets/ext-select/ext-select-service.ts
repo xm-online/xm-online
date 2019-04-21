@@ -9,12 +9,6 @@ import { ExtSelectOptions } from './ext-select-options.model';
 @Injectable()
 export class ExtSelectService {
 
-    constructor(
-        private http: HttpClient,
-        private principal: Principal,
-        private i18nNamePipe: I18nNamePipe
-    ) {}
-
     public static byString(o, s) {
         s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
         s = s.replace(/^\./, '');           // strip a leading dot
@@ -29,6 +23,13 @@ export class ExtSelectService {
         }
         return o;
     }
+
+    constructor(
+        private http: HttpClient,
+        private principal: Principal,
+        private i18nNamePipe: I18nNamePipe
+    ) {}
+
 
     fetchData(options: ExtSelectOptions) {
         return this.http.get(options.url, {observe: 'response'}).pipe(

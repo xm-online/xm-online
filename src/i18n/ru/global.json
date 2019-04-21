@@ -164,6 +164,7 @@
         "noData": "Нет данных!",
         "actionPerformed" : "Action performed",
         "rest-select-placeholder-search": {
+            "simple": "Введите поисковый запрос",
             "prefix": "Введите поисковый запрос (не менее",
             "suffix": "символов)"
         },

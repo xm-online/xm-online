@@ -7,7 +7,7 @@
                 [disabled]="options['readonly']"
                 #multiSelect>
       <ngx-mat-select-search [formControl]="elementMultiFilterCtrl"
-                             placeholderLabel="{{'global.rest-select-placeholder-search' | translate}}"
+                             placeholderLabel="{{'global.rest-select-placeholder-search.simple' | translate}}"
                              noEntriesFoundLabel="{{'global.rest-select-placeholder-noresults' | translate}}"></ngx-mat-select-search>
       <mat-option disabled *ngIf="options?.placeholder">{{options?.placeholder | i18nName: principal}}</mat-option>
       <mat-option *ngFor="let element of filteredElementsMulti | async"

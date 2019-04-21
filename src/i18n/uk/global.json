@@ -164,6 +164,7 @@
         "noData": "Немає даних!",
         "actionPerformed" : "Action performed",
         "rest-select-placeholder-search": {
+            "simple": "Введіть пошуковий запит",
             "prefix": "Введіть пошуковий запит (не менше",
             "suffix": "символів)"
         },

@@ -1,15 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import {AfterViewInit, ChangeDetectorRef, Component, forwardRef, Inject, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, forwardRef, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import {JsonSchemaFormComponent, JsonSchemaFormService} from 'angular2-json-schema-form';
+import { JsonSchemaFormComponent, JsonSchemaFormService } from 'angular2-json-schema-form';
 import { MatSelect, VERSION } from '@angular/material';
-import {BehaviorSubject, of, ReplaySubject, Subject} from 'rxjs';
-import {filter, map, take, takeUntil, tap, mergeMap} from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, ReplaySubject, Subject } from 'rxjs';
+import { filter, map, take, takeUntil, tap, mergeMap, finalize } from 'rxjs/operators';
 
 import { Principal } from '../../../auth/principal.service';
 import { I18nNamePipe } from '../../../language/i18n-name.pipe';
 import { ExtSelectOptions } from './ext-select-options.model';
 import { ExtSelectService } from './ext-select-service';
+import { environment } from '../../../../../environments/environment';
 
 interface Element {
     label: any;
@@ -49,7 +50,9 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnInit() {
         this.options = this.layoutNode.options || {};
-        const options: any = this.options;
+        if (!environment.production) {
+            console.log('[dbg] initial -> %o', this.options)
+        }
         this.jsf.initializeControl(this);
         if (this.layoutNode.dataType === 'array') {
             this.controlValue = this.controlValue[0];
@@ -96,7 +99,7 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
                         return cloneOptions;
                     }),
                     tap(options => this.fetchData(options)),
-                    tap(() => this.jsf.updateValue(this, null)),
+                    tap(() => this.jsf.updateValue(this, this.controlValue)),
                     takeUntil(this._onDestroy)
                 ).subscribe(() => {})
             });
@@ -116,14 +119,6 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.filterElements();
             });
 
-    }
-
-    private setInitialValue() {
-        this.filteredElements
-            .pipe(take(1), takeUntil(this._onDestroy))
-            .subscribe(() => {
-                this.singleSelect.compareWith = (a: Element, b: Element) => a.value === b.value;
-            });
     }
 
     private filterElements() {
@@ -175,14 +170,19 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
         } else {
             if (!this.options.url && !this.regTemplateLiteral.test(this.options.url)) {return}
 
-            this.selectService.fetchData(options).subscribe(elements => {
-                this.elements = elements;
-                this.initOptionList();
-                this.changeDetectorRef.detectChanges();
-            }, error => {
-                console.error(error);
-            });
+            this.fetchOptions(options).pipe(
+                tap(items => !environment.production && console.log('[dbg] ext-select -> ', items)),
+                tap(items => this.elements = items),
+                tap( () => this.initOptionList()),
+                finalize(() => this.changeDetectorRef.detectChanges())
+            ).subscribe(
+                () => {},
+                error => console.error(error));
         }
+    }
+
+    private fetchOptions(options: any): Observable <any[]> {
+        return this.selectService.fetchData(options);
     }
 
     updateValue(event) {

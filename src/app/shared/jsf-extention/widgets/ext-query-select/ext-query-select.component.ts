@@ -91,7 +91,7 @@ export class ExtQuerySelectComponent implements OnInit, OnDestroy {
                 tap(() => this.checkedOption.reset('')),
                 tap(() => this.loading$.next(true)),
                 debounceTime(this.settings.debounceTime),
-                switchMap(query => this.fetchOptions({searchQuery: query})),
+                switchMap(query => this.fetchOptions({searchQuery: btoa(query)})),
                 tap((list) => !environment.production && console.log('[dbg] listFromSearch ->', list)),
                 tap(() => this.loading$.next(false)),
             );

@@ -9,6 +9,7 @@ import { DatetimeUtcComponent } from './widgets/datetime-utc/datetime-utc.compon
 import { ExtMdEditorComponent } from './widgets/ext-md-editor/ext-md-editor.component';
 import { DatetimePickerComponent } from './widgets/datetime-picker/datetime-picker.component';
 import { ExtQuerySelectComponent } from './widgets/ext-query-select/ext-query-select.component';
+import { environment } from '../../../environments/environment';
 
 declare const $: any;
 declare let Babili: any;
@@ -62,7 +63,9 @@ export const buildJsfAttributes = (spec: any, form: any) => {
 
     processValidationMessages(jsfAttributes);
 
-    console.log(jsfAttributes);
+    if (environment && !environment.production) {
+        console.log('[dbg] %o', jsfAttributes);
+    }
 
     return jsfAttributes;
 };
@@ -155,7 +158,7 @@ export const processValidationMessages = (jsfAttributes) => {
 
     traverce(jsfAttributes.schema, function(object, property) {
         if (property === 'type' && (object.type instanceof Array)) {
-            object.type = object.type.filter(it => it != 'null');
+            object.type = object.type.filter(it => it !== 'null');
             if (object.type.length === 1) {
                 object.type = object.type[0];
             }
@@ -183,14 +186,17 @@ export const processValidationMessages = (jsfAttributes) => {
         let field = jsfAttributes.schema || {};
         field = field['properties'] || {};
 
-        let path = key.split('.');
+        const path = key.split('.');
         for(let i in path) {
             field = field[path[i]];
         }
 
         validations.filter(key => object.hasOwnProperty(key)).forEach(it => field[it] = object[it]);
 
-        console.log(jsfAttributes.schema);
+        if (environment && !environment.production) {
+            console.log('[dbg] %o', jsfAttributes.schema);
+        }
+
     });
 
 };
@@ -256,7 +262,7 @@ const extractData = (input: any) => {
 
 const processDataFieldExpressions = (data: any) => {
     for (let i in data) {
-        if (data[i] !== null && typeof(data[i]) == 'object') {
+        if (data[i] !== null && typeof(data[i]) === 'object') {
             processDataFieldExpressions(data[i]);
         } else {
             data[i] = new Function('expression', 'return ' + data[i])()

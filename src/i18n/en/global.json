@@ -165,6 +165,7 @@
         "noData": "No data!",
         "actionPerformed" : "Action performed",
         "rest-select-placeholder-search": {
+            "simple": "Enter a search query",
             "prefix": "Enter a search query (at least",
             "suffix": "characters)"
         },

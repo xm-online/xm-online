@@ -87,11 +87,12 @@ export class ExtQuerySelectComponent implements OnInit, OnDestroy {
         // process search events
         this.searchValues$ = this.queryCtrl.valueChanges
             .pipe(
+                tap((val) => !environment.production && console.log(`[dbg] serachValue=${val} -> ${this.valueToTransport(val)}`)),
                 filter(val => val.length > Number(this.settings.minQueryLength)),
                 tap(() => this.checkedOption.reset('')),
                 tap(() => this.loading$.next(true)),
                 debounceTime(this.settings.debounceTime),
-                switchMap(query => this.fetchOptions({searchQuery: btoa(query)})),
+                switchMap(query => this.fetchOptions({searchQuery: this.valueToTransport(query)})),
                 tap((list) => !environment.production && console.log('[dbg] listFromSearch ->', list)),
                 tap(() => this.loading$.next(false)),
             );
@@ -111,6 +112,10 @@ export class ExtQuerySelectComponent implements OnInit, OnDestroy {
                 takeUntil(this.destroyed$)
             )
             .subscribe(() => {})
+    }
+
+    private valueToTransport(val: string): string {
+        return btoa(unescape(encodeURIComponent(val)));
     }
 
     private fetchOptions(query: any): Observable<ISelectOption[]> {

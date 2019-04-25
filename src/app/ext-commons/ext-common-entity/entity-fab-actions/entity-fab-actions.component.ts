@@ -22,6 +22,7 @@ const ENTITY_SELECTED = 'xm-entity-selected';
 export class EntityFabActionsComponent implements OnInit, OnDestroy {
 
     selectedEntity: Subscription;
+    createEntity: Subscription;
     config: any;
     buttons: any [] = [];
     mainButton: any;
@@ -29,6 +30,9 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
     spec: Spec;
     selectedNode: XmEntity;
     fabButtonContext: any;
+    entityId: any;
+    entityType: string;
+    routingUrl: string;
 
     constructor(
         public principal: Principal,
@@ -48,6 +52,14 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
                 this.fabButtonContext = this.selectedNode;
             }
         });
+
+        this.createEntity = this.eventManager.subscribe(XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION, (event) => {
+            if (event) {
+                this.entityId = event.entityId;
+                this.entityType = event.entityType;
+            }
+        });
+
         this.principal.identity().then(role => {
             this.role = role.roleKey;
             this.buttons = this.config ? this.config.buttons : this.config;
@@ -60,9 +72,11 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.eventManager.destroy(this.selectedEntity);
+        this.eventManager.destroy(this.createEntity);
     }
 
     public onAddNew(item) {
+        this.routingUrl = item.routingUrl || null;
         if (!item.typeKey || !this.spec) {
             return false;
         }
@@ -90,13 +104,21 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
         modalRef.componentInstance.xmEntitySpec = this.getType(key);
         modalRef.componentInstance.spec = this.spec;
         modalRef.componentInstance.onSuccess = () => {
-            this.eventManager.broadcast({name: XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION });
-            swal({
-                type: 'success',
-                text: this.translateService.instant('ext-common-entity.entity-fab-actions.operation-success'),
-                buttonsStyling: false,
-                confirmButtonClass: 'btn btn-primary'
-            });
+            if (this.routingUrl) {
+                const path = `application/${this.entityType}/${this.entityId}`; // by default leads to application
+
+                this.routingUrl.match(/dashboard/)
+                    ? this.navigate(this.routingUrl, {id: this.entityId})
+                    : this.navigate(path, {});
+            } else {
+                this.eventManager.broadcast({name: XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION});
+                swal({
+                    type: 'success',
+                    text: this.translateService.instant('ext-common-entity.entity-fab-actions.operation-success'),
+                    buttonsStyling: false,
+                    confirmButtonClass: 'btn btn-primary'
+                });
+            }
         };
         return modalRef;
     }

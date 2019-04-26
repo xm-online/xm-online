@@ -126,7 +126,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
     search(term: string) {
         if (term) {
-            this.router.navigateByUrl('/search?query=' + term);
+            this.router.navigate(['/search'], {queryParams: { query: term}});
         }
 
     }

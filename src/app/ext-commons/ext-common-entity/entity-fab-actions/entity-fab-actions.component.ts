@@ -110,31 +110,24 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
                 this.routingUrl.match(/dashboard/)
                     ? this.navigate(this.routingUrl, {id: this.entityId})
                     : this.navigate(path, {});
-            } else {
-                this.eventManager.broadcast({name: XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION});
-                swal({
-                    type: 'success',
-                    text: this.translateService.instant('ext-common-entity.entity-fab-actions.operation-success'),
-                    buttonsStyling: false,
-                    confirmButtonClass: 'btn btn-primary'
-                });
+                return;
             }
+            this.eventManager.broadcast({name: XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION});
+            swal({
+                type: 'success',
+                text: this.translateService.instant('ext-common-entity.entity-fab-actions.operation-success'),
+                buttonsStyling: false,
+                confirmButtonClass: 'btn btn-primary'
+            });
         };
         return modalRef;
     }
 
     callFunctionAction(key: string, funcName: string): any {
         const entitySpec = this.spec.types.filter(x => x.key === key).shift();
-        console.log('%o', entitySpec);
-
-        /*if (!entitySpec || !this.selectedNode) {
-            console.log('No selected node');
-            return false;
-        }*/
 
         const functionSpecArray = entitySpec.functions || [];
         const functionSpec = functionSpecArray.filter(x => x.key === funcName).shift();
-        console.log("spec %o", functionSpec);
         const title = functionSpec.actionName ? functionSpec.actionName : functionSpec.name;
         const modalRef = this.modalService.open(FunctionCallDialogComponent, {backdrop: 'static'});
 

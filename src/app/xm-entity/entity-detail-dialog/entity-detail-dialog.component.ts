@@ -94,14 +94,14 @@ export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
         this.xmEntity.description = this.smartDescription.value;
         if (this.xmEntity.id !== undefined) {
             this.xmEntityService.update(this.xmEntity).pipe(finalize(() => this.showLoader = false))
-                .subscribe(() => this.onSaveSuccess(),
+                .subscribe((resp) => this.onSaveSuccess(resp.body),
                     // TODO: error processing
                     (err) => this.onConfirmError(err));
         } else {
             this.xmEntity.stateKey = this.selectedXmEntitySpec.states && this.selectedXmEntitySpec.states.length ?
                 Object.assign([], this.selectedXmEntitySpec.states).shift().key : null;
             this.xmEntityService.create(this.xmEntity).pipe(finalize(() => this.showLoader = false))
-                .subscribe(() => this.onSaveSuccess(),
+                .subscribe((resp) => this.onSaveSuccess(resp.body),
                     // TODO: error processing
                     (err) => this.onConfirmError(err));
         }
@@ -113,10 +113,12 @@ export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
         this.showLoader = false;
     }
 
-    private onSaveSuccess() {
+    private onSaveSuccess(entity: XmEntity) {
         // TODO: use constant for the broadcast and analyse listeners
         this.eventManager.broadcast({
-            name: this.isEdit ? 'xmEntityDetailModification' : 'xmEntityListModification'
+            name: this.isEdit ? 'xmEntityDetailModification' : 'xmEntityListModification',
+            entityId: entity.id,
+            entityType: entity.typeKey
         });
         this.activeModal.dismiss(true);
         if (this.onSuccess) {

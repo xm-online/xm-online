@@ -22,6 +22,7 @@ const ENTITY_SELECTED = 'xm-entity-selected';
 export class EntityFabActionsComponent implements OnInit, OnDestroy {
 
     selectedEntity: Subscription;
+    createEntity: Subscription;
     config: any;
     buttons: any [] = [];
     mainButton: any;
@@ -29,6 +30,9 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
     spec: Spec;
     selectedNode: XmEntity;
     fabButtonContext: any;
+    entityId: any;
+    entityType: string;
+    routingUrl: string;
 
     constructor(
         public principal: Principal,
@@ -48,6 +52,14 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
                 this.fabButtonContext = this.selectedNode;
             }
         });
+
+        this.createEntity = this.eventManager.subscribe(XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION, (event) => {
+            if (event) {
+                this.entityId = event.entityId;
+                this.entityType = event.entityType;
+            }
+        });
+
         this.principal.identity().then(role => {
             this.role = role.roleKey;
             this.buttons = this.config ? this.config.buttons : this.config;
@@ -60,9 +72,11 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.eventManager.destroy(this.selectedEntity);
+        this.eventManager.destroy(this.createEntity);
     }
 
     public onAddNew(item) {
+        this.routingUrl = item.routingUrl || null;
         if (!item.typeKey || !this.spec) {
             return false;
         }
@@ -90,7 +104,15 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
         modalRef.componentInstance.xmEntitySpec = this.getType(key);
         modalRef.componentInstance.spec = this.spec;
         modalRef.componentInstance.onSuccess = () => {
-            this.eventManager.broadcast({name: XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION });
+            if (this.routingUrl) {
+                const path = `application/${this.entityType}/${this.entityId}`; // by default leads to application
+
+                this.routingUrl.match(/dashboard/)
+                    ? this.navigate(this.routingUrl, {id: this.entityId})
+                    : this.navigate(path, {});
+                return;
+            }
+            this.eventManager.broadcast({name: XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION});
             swal({
                 type: 'success',
                 text: this.translateService.instant('ext-common-entity.entity-fab-actions.operation-success'),
@@ -103,16 +125,9 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
 
     callFunctionAction(key: string, funcName: string): any {
         const entitySpec = this.spec.types.filter(x => x.key === key).shift();
-        console.log('%o', entitySpec);
-
-        /*if (!entitySpec || !this.selectedNode) {
-            console.log('No selected node');
-            return false;
-        }*/
 
         const functionSpecArray = entitySpec.functions || [];
         const functionSpec = functionSpecArray.filter(x => x.key === funcName).shift();
-        console.log("spec %o", functionSpec);
         const title = functionSpec.actionName ? functionSpec.actionName : functionSpec.name;
         const modalRef = this.modalService.open(FunctionCallDialogComponent, {backdrop: 'static'});
 

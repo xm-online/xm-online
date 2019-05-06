@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
@@ -11,6 +11,8 @@ import { Notification } from '../shared/notification.model';
 import { DomSanitizer } from '@angular/platform-browser'
 
 declare let $: any;
+
+const DEFAULT_PRIVILEGES = ['XMENTITY.SEARCH', 'XMENTITY.SEARCH.QUERY', 'XMENTITY.SEARCH.TEMPLATE'];
 
 @Component({
     selector: 'xm-notifications',
@@ -29,12 +31,21 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     notifications: Notification[];
     redirectUrl: string;
     autoUpdateEnabled: boolean = null;
+    privileges: string[];
+
+    @HostListener('document:click', ['$event'])
+    clickout(event) {
+        if (!(this.eRef.nativeElement.contains(event.target))) {
+            this.isOpened = false;
+        }
+    }
 
     constructor(
         private xmConfigService: XmConfigService,
         private eventManager: JhiEventManager,
         private router: Router,
         private sanitized: DomSanitizer,
+        private eRef: ElementRef,
         private notificationsService: NotificationsService) {
         this.isOpened = false;
         this.notifications = [];
@@ -49,7 +60,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
             () => this.load());
 
         this.load();
-        this.initNotifications();
     }
 
     ngOnDestroy () {
@@ -60,6 +70,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     public load() {
         this.xmConfigService.getUiConfig().subscribe(config => {
             this.config = config.notifications ? config.notifications : null;
+            this.mapPrviliges(config.notifications);
             if (this.config) {
                 this.getNotifications(this.config);
             }
@@ -106,16 +117,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         this.isOpened = !this.isOpened;
     }
 
-    public initNotifications(): void {
-        const self = this;
-        const frame = $(window);
-        frame.on('click', function (event) {
-            if (!$(event.target).is('#xmNotificationToggle, #xmNotificationToggle *, .xm-notifications, .xm-notifications *')) {
-                self.isOpened = false;
-            }
-        });
-    }
-
     public viewAll(url) {
         this.router.navigate([url]);
         this.toggleNotifications();
@@ -134,6 +135,17 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         if (item) {
             this.router.navigate(['/application', item.typeKey, item.id]);
             this.toggleNotifications();
+        }
+    }
+
+    private mapPrviliges(config: any): void {
+        this.privileges = [];
+        if (config && config.privileges && config.privileges.length > 0) {
+            config.privileges.map(p => {
+                this.privileges.push(p);
+            });
+        } else {
+            this.privileges = DEFAULT_PRIVILEGES;
         }
     }
 }

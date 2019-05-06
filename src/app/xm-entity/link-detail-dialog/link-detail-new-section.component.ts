@@ -77,7 +77,9 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
         link.source = this.sourceXmEntity;
         link.typeKey = this.linkSpec.key;
         link.startDate = new Date().toISOString();
-        this.xmEntity.stateKey = this.xmEntitySpec.states ? this.xmEntitySpec.states.shift().key : null;
+        this.xmEntity.stateKey = (this.xmEntitySpec.states && this.xmEntitySpec.states.length > 0) ?
+            this.xmEntitySpec.states.shift().key :
+            null;
         this.xmEntity.sources = [link];
 
         this.xmEntityService.create(this.xmEntity).pipe(finalize(() => this.showLoader = false))

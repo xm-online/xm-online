@@ -35,6 +35,7 @@ export class Principal {
         this.userIdentity = null;
         this.authenticated = false;
         this.authenticationState.next(this.userIdentity);
+        this.resetCachedProfile();
     }
 
     hasAnyAuthority(authorities: string[]): Promise<boolean> {
@@ -157,8 +158,7 @@ export class Principal {
      */
     getXmEntityProfile(force?: boolean): Observable<XmEntity> {
         if (force) {
-            this.reload$.next();
-            this.xmProfileCache$ = null;
+            this.resetCachedProfile();
         }
 
         if (!this.xmProfileCache$) {
@@ -249,4 +249,9 @@ export class Principal {
         return this.account.getProfile();
     }
 
+
+    private resetCachedProfile() {
+        this.reload$.next();
+        this.xmProfileCache$ = null;
+    }
 }

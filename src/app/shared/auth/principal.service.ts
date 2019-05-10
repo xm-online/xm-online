@@ -112,6 +112,7 @@ export class Principal {
                     .then(response => {
                         const account = response.body;
                         this.promise = null;
+                        this.resetCachedProfile();
                         if (account) {
                             if (account.permissions) {
                                 account.privileges = account.permissions.reduce((result, el) => {
@@ -132,6 +133,7 @@ export class Principal {
                         resolve(this.userIdentity);
                     }).catch(err => {
                         this.promise = null;
+                        this.resetCachedProfile();
                         if (mockUser) {
                             this.userIdentity = {
                                 firstName: 'NoName',

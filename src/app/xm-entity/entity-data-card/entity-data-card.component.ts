@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
@@ -21,6 +21,8 @@ export class EntityDataCardComponent implements OnInit, OnChanges {
 
     @Input() xmEntity: XmEntity;
     @Input() xmEntitySpec: XmEntitySpec;
+    @Input() preventDefaultUpdateError?: boolean;
+    @Output() onSaveError = new EventEmitter<boolean>();
 
     jsfAttributes: any;
     showLoader: boolean;
@@ -55,7 +57,13 @@ export class EntityDataCardComponent implements OnInit, OnChanges {
                 this.xmEntity = Object.assign(this.xmEntity, res.body);
                 this.alert('success', 'xm-entity.entity-data-card.update-success');
             },
-            () => this.alert('error', 'xm-entity.entity-data-card.update-error')
+            (err) => {
+                if (!this.preventDefaultUpdateError) {
+                    this.alert('error', 'xm-entity.entity-data-card.update-error')
+                } else {
+                    this.onSaveError.emit(err);
+                }
+            }
         );
     }
 

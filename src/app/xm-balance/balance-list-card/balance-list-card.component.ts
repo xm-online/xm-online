@@ -28,7 +28,7 @@ export class BalanceListCardComponent implements OnInit {
     balances: Balance[];
     spec: Spec;
 
-    private static buildBalancePie(balance: Balance) {
+    protected static buildBalancePie(balance: Balance) {
         const max = balance.metrics.filter((m) => m.typeKey === 'MAX').shift();
         const total = max && max.value ? parseFloat(max.value) : balance.amount + 1;
         const options = {
@@ -52,18 +52,18 @@ export class BalanceListCardComponent implements OnInit {
         }, options);
     }
 
-    constructor(private balanceService: BalanceService,
-                private balanceSpecWrapperService: BalanceSpecWrapperService,
-                private metricService: MetricService,
-                private modalService: NgbModal,
-                public principal: Principal) {
+    constructor(protected balanceService: BalanceService,
+                protected balanceSpecWrapperService: BalanceSpecWrapperService,
+                protected metricService: MetricService,
+                protected modalService: NgbModal,
+                protected principal: Principal) {
     }
 
     ngOnInit() {
         this.load();
     }
 
-    private load() {
+    protected load() {
         this.balanceSpecWrapperService.spec().then((s) => {
             this.spec = s;
             if (s.types && s.types.filter((t) => t.entityTypeKey && t.entityTypeKey.includes(this.typeKey)).length) {

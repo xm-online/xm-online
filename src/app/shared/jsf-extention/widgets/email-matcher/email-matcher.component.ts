@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { debounceTime, tap } from 'rxjs/operators';
 
 import { Principal } from '../../../auth/principal.service';
+import { UUID } from 'angular2-uuid';
 
 @Component({
     selector: 'xm-ajsf-email-matcher',
@@ -22,13 +23,15 @@ export class EmailMatcherComponent implements OnInit {
     @Input() layoutNode: any;
 
     constructor(private jsf: JsonSchemaFormService, protected principal: Principal) {
+        this.controlNameOriginal = UUID.UUID();
+        this.controlNameMatcher = UUID.UUID();
     }
 
     ngOnInit() {
         this.options = this.layoutNode.options || {};
         this.jsf.initializeControl(this);
         if (this.controlValue) {
-            this.matcherControl.setValue(this.controlValue);
+            this.originalControl.setValue(this.controlValue);
             this.matcherControl.setValue(this.originalControl);
         }
         if (this.options['readonly']) {

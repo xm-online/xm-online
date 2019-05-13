@@ -10,6 +10,7 @@ import { ExtMdEditorComponent } from './widgets/ext-md-editor/ext-md-editor.comp
 import { DatetimePickerComponent } from './widgets/datetime-picker/datetime-picker.component';
 import { ExtQuerySelectComponent } from './widgets/ext-query-select/ext-query-select.component';
 import { environment } from '../../../environments/environment';
+import { EmailMatcherComponent } from './widgets/email-matcher/email-matcher.component';
 
 declare const $: any;
 declare let Babili: any;
@@ -30,7 +31,8 @@ export const getJsfWidgets = () => {
         'ext-textarea': ExtTextareaComponent,
         'multilingual-input': MultilingualInputComponent,
         'datetime-utc': DatetimeUtcComponent,
-        'datetime-picker': DatetimePickerComponent
+        'datetime-picker': DatetimePickerComponent,
+        'email-matcher': EmailMatcherComponent
     };
 };
 

@@ -22,7 +22,7 @@ export class EmailMatcherComponent implements OnInit {
     options: any;
     @Input() layoutNode: any;
 
-    constructor(private jsf: JsonSchemaFormService, protected principal: Principal) {
+    constructor(private jsf: JsonSchemaFormService, public principal: Principal) {
         this.controlNameOriginal = UUID.UUID();
         this.controlNameMatcher = UUID.UUID();
     }

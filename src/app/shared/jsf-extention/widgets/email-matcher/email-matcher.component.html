@@ -1,10 +1,10 @@
-<input
-  hidden
-  [name]="controlName"
-  [placeholder]="options['title']"
-  [required]="options['required']"
-  [disabled]="options['readonly']"
-  [(ngModel)]="controlValue">
+<input hidden
+       [name]="controlName"
+       [placeholder]="options['title']"
+       [required]="options['required']"
+       [pattern]="options['pattern']"
+       [disabled]="options['readonly']"
+       [(ngModel)]="controlValue">
 
 <mat-form-field [floatLabel]="options['floatLabel']">
   <input matInput

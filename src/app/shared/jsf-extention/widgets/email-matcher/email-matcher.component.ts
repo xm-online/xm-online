@@ -32,7 +32,7 @@ export class EmailMatcherComponent implements OnInit {
         this.jsf.initializeControl(this);
         if (this.controlValue) {
             this.originalControl.setValue(this.controlValue);
-            this.matcherControl.setValue(this.originalControl);
+            this.matcherControl.setValue(this.controlValue);
         }
         if (this.options['readonly']) {
             this.matcherControl.disable({onlySelf: true});

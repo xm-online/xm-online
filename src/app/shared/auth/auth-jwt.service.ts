@@ -162,6 +162,7 @@ export class AuthServerProvider {
             this.$sessionStorage.clear(TOKEN_STORAGE_KEY);
             this.$localStorage.clear(EXPIRES_DATE_FIELD);
             this.$sessionStorage.clear(EXPIRES_DATE_FIELD);
+            this.$sessionStorage.clear('widget:data');
             observer.next();
             observer.complete();
         });

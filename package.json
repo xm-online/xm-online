@@ -71,7 +71,7 @@
     "datatables.net-responsive": "^2.2.1",
     "eonasdan-bootstrap-datetimepicker": "4.17.47",
     "es6-shim": "^0.35.3",
-    "file-saver": "^1.3.3",
+    "file-saver": "^2.0.0",
     "font-awesome": "^4.7.0",
     "fs-extra": "^7.0.1",
     "fullcalendar": "^3.4.0",

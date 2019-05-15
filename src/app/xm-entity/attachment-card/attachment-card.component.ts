@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { Principal } from '../../shared/auth/principal.service';
-import { saveFile } from '../../shared/helpers/file-download-helper';
+import { saveFile, saveFileFromUrl } from '../../shared/helpers/file-download-helper';
 import { AttachmentSpec } from '../shared/attachment-spec.model';
 import { Attachment } from '../shared/attachment.model';
 import { AttachmentService } from '../shared/attachment.service';
@@ -47,6 +47,7 @@ export class AttachmentCardComponent implements OnInit {
     loadImage() {
         this.attachmentService.find(this.attachment.id).subscribe((attachmentResp: HttpResponse<Attachment>) => {
             if (attachmentResp.body.content && attachmentResp.body.content.value) {
+                this.attachment.body = attachmentResp.body;
                 this.imageSrc = `data:${attachmentResp.body.valueContentType};base64,` + attachmentResp.body.content.value;
             }
         });
@@ -80,17 +81,29 @@ export class AttachmentCardComponent implements OnInit {
     }
 
     onDownload() {
-        this.attachmentService.find(this.attachment.id).subscribe((attachmentResp: HttpResponse<Attachment>) => {
-            const byteString = atob(attachmentResp.body.content.value);
-            const ab = new ArrayBuffer(byteString.length);
-            const ia = new Uint8Array(ab);
-            for (let i = 0; i < byteString.length; i++) {
-                ia[i] = byteString.charCodeAt(i);
+        console.log(this.attachment);
+        if (this.attachment.contentUrl && !this.attachment.contentChecksum) {
+            saveFileFromUrl(this.attachment.contentUrl, this.attachment.name);
+        } else {
+            if (this.attachment.body && this.attachment.body.content &&  this.attachment.body.content.value) {
+                this.saveInnerAttachment(this.attachment.body);
+            } else {
+                this.attachmentService.find(this.attachment.id).subscribe(
+                    (attachmentResp: HttpResponse<Attachment>) => this.saveInnerAttachment(attachmentResp.body));
             }
-            const blob = new Blob([ab], {type: attachmentResp.body.valueContentType});
-            const filename = attachmentResp.body.contentUrl;
-            saveFile(blob, filename, attachmentResp.body.valueContentType);
-        });
+        }
+    }
+
+    private saveInnerAttachment(body) {
+        const byteString = atob(body.content.value);
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+        const blob = new Blob([ab], {type: body.valueContentType});
+        const filename = body.contentUrl;
+        saveFile(blob, filename, body.valueContentType);
     }
 
     onRemove() {

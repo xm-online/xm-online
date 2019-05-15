@@ -13,6 +13,8 @@ export class Attachment implements BaseEntity {
                 public valueContentType?: string,
                 public valueContentSize?: number,
                 public content?: Content,
-                public xmEntity?: XmEntity) {
+                public contentChecksum?: string,
+                public xmEntity?: XmEntity,
+                public body?: any) {
     }
 }

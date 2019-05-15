@@ -1,4 +1,4 @@
-import { saveAs } from 'file-saver/FileSaver';
+import { saveAs } from 'file-saver';
 
 /**
  * Saves a file by opening file-save-as dialog in the browser
@@ -9,6 +9,16 @@ import { saveAs } from 'file-saver/FileSaver';
 export const saveFile = (blobContent: Blob, fileName: string, responceType: string) => {
     const blob = new Blob([blobContent], {type: responceType ? responceType : 'application/octet-stream'});
     saveAs(blob, fileName);
+};
+
+/**
+ * Saves a file by opening file-save-as dialog in the browser
+ * using file-save library.
+ * @param fileUrl
+ * @param fileName name file should be saved as
+ */
+export const saveFileFromUrl = (url: string, fileName: string) => {
+    saveAs(url, fileName);
 };
 
 /**

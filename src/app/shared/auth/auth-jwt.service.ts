@@ -25,6 +25,8 @@ const _CONFIG_SETTINGS_API = 'config/api/profile/webapp/settings-public.yml?toJs
 
 const EXPIRES_DATE_FIELD = 'authenticationTokenexpiresDate';
 
+const WIDGET_DATA = 'widget:data';
+
 export const TOKEN_URL = _TOKEN_URL;
 export const CONFIG_SETTINGS_API = _CONFIG_SETTINGS_API;
 
@@ -107,6 +109,7 @@ export class AuthServerProvider {
 
     login(credentials): Observable<any> {
         let data = new HttpParams();
+        this.$sessionStorage.clear(WIDGET_DATA);
 
         if (credentials && !credentials.grant_type) {
             data = data.append('grant_type', 'password');
@@ -129,6 +132,7 @@ export class AuthServerProvider {
     }
 
     loginWithToken(jwt, rememberMe) {
+        this.$sessionStorage.clear(WIDGET_DATA);
         if (jwt) {
             this.storeAuthenticationToken(jwt, rememberMe);
             return Promise.resolve(jwt);
@@ -162,6 +166,7 @@ export class AuthServerProvider {
             this.$sessionStorage.clear(TOKEN_STORAGE_KEY);
             this.$localStorage.clear(EXPIRES_DATE_FIELD);
             this.$sessionStorage.clear(EXPIRES_DATE_FIELD);
+            this.$sessionStorage.clear(WIDGET_DATA);
             observer.next();
             observer.complete();
         });

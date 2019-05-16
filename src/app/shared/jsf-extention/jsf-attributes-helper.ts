@@ -11,6 +11,7 @@ import { DatetimePickerComponent } from './widgets/datetime-picker/datetime-pick
 import { ExtQuerySelectComponent } from './widgets/ext-query-select/ext-query-select.component';
 import { environment } from '../../../environments/environment';
 import { EmailMatcherComponent } from './widgets/email-matcher/email-matcher.component';
+import { TextSectionComponent } from './widgets/text-section/text-section.component';
 
 declare const $: any;
 declare let Babili: any;
@@ -32,7 +33,8 @@ export const getJsfWidgets = () => {
         'multilingual-input': MultilingualInputComponent,
         'datetime-utc': DatetimeUtcComponent,
         'datetime-picker': DatetimePickerComponent,
-        'email-matcher': EmailMatcherComponent
+        'email-matcher': EmailMatcherComponent,
+        'text-section': TextSectionComponent
     };
 };
 

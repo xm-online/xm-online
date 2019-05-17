@@ -4,12 +4,13 @@
             <h1 jhiTranslate="activate.title">Activation</h1>
 
             <div class="alert alert-success" *ngIf="success">
-                <span jhiTranslate="activate.messages.success"><strong>Your user has been activated.</strong> Please </span>
+                <span jhiTranslate="activate.messages.success"><strong>Your user has been activated.</strong> Please </span>&nbsp;
                 <a class="alert-link" (click)="login()" jhiTranslate="activate.messages.link">sign in</a>.
             </div>
 
-            <div class="alert alert-danger" *ngIf="error" jhiTranslate="activate.messages.error">
-                <strong>Your user could not be activated.</strong> Please use the registration form to sign up.
+            <div class="alert alert-danger" *ngIf="error">
+                <span jhiTranslate="activate.messages.error"><strong>Your user could not be activated.</strong> Please use the registration form to sign up.</span>&nbsp;
+                <a class="alert-link" (click)="register()" jhiTranslate="activate.messages.register">Register</a>.
             </div>
 
         </div>

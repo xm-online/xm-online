@@ -118,7 +118,7 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
             .subscribe(() => {
                 this.filterElements();
             });
-        this.jsf.updateValue(this, this.controlValue);
+        if (this.controlValue) {this.jsf.updateValue(this, this.controlValue)}
     }
 
     private filterElements() {

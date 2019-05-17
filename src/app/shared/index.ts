@@ -57,5 +57,6 @@ export * from './password-strength-bar/password-strength-bar.component';
 
 export * from './directives/word-autocomplete.directive';
 export * from './directives/focus.directive';
+export * from './directives/input-prevent-paste.directive';
 
 export * from './shared-libs.module';

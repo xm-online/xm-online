@@ -15,6 +15,7 @@ import {
     CSRFService,
     FocusDirective,
     HasAnyAuthorityDirective,
+    InputPreventPasteDirective,
     I18nJsfPipe,
     I18nNamePipe,
     JhiSocialComponent,
@@ -48,6 +49,7 @@ import { XmEntityStateSpecPipe } from './helpers/xm-entity-state-spec.pipe';
 import { MultilingualInputComponent } from './jsf-extention/widgets/multilingual-input/multilingual-input.component';
 import { DatetimeUtcComponent } from './jsf-extention/widgets/datetime-utc/datetime-utc.component';
 import { DatetimePickerComponent } from './jsf-extention/widgets/datetime-picker/datetime-picker.component';
+import { EmailMatcherComponent } from './jsf-extention/widgets/email-matcher/email-matcher.component';
 import { CurrentLocationComponent } from './jsf-extention/widgets/current-location/current-location.component';
 import { ExtAutocompleteService } from './jsf-extention/widgets/ext-autocomplete/ext-autocomplete-service';
 import { ExtAutocompleteComponent } from './jsf-extention/widgets/ext-autocomplete/ext-autocomplete.component';
@@ -95,6 +97,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
         LoaderComponent,
         WordAutocompleteDirective,
         FocusDirective,
+        InputPreventPasteDirective,
         DigitOnlyDirective,
         PerPageComponent,
         NoDataComponent,
@@ -116,6 +119,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
         MultilingualInputComponent,
         DatetimeUtcComponent,
         DatetimePickerComponent,
+        EmailMatcherComponent,
         PrivacyAndTermsDialogComponent
     ],
     entryComponents: [
@@ -134,6 +138,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
         MultilingualInputComponent,
         DatetimeUtcComponent,
         DatetimePickerComponent,
+        EmailMatcherComponent,
         PrivacyAndTermsDialogComponent
     ],
     providers: [
@@ -185,6 +190,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
         MaintenanceComponent,
         WordAutocompleteDirective,
         FocusDirective,
+        InputPreventPasteDirective,
         DigitOnlyDirective,
         PermitDirective,
         XmPrivilegeDirective,
@@ -204,6 +210,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
         MatModule,
         DatetimeUtcComponent,
         DatetimePickerComponent,
+        EmailMatcherComponent,
         GooglePlaceModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

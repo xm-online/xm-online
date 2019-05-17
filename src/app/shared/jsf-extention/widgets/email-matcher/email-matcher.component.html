@@ -1,0 +1,37 @@
+<input hidden
+       [name]="controlName"
+       [placeholder]="options['title']"
+       [required]="options['required']"
+       [pattern]="options['pattern']"
+       [disabled]="options['readonly']"
+       [(ngModel)]="controlValue">
+
+<mat-form-field [floatLabel]="options['floatLabel']">
+  <input matInput
+         name="{{controlNameOriginal}}"
+         [formControl]="originalControl"
+         [placeholder]="options['title']"
+         [pattern]="options['pattern']"
+         [required]="options['required']">
+  <mat-error class="error" *ngIf="originalControl.hasError('required')" [title]="options?.validationMessages?.required || ''">
+    {{options?.validationMessages?.required || ''}}
+  </mat-error>
+  <mat-error class="error" *ngIf="originalControl.hasError('pattern')" [title]="options?.validationMessages?.pattern || ''">
+    {{options?.validationMessages?.pattern || ''}}
+  </mat-error>
+</mat-form-field>
+
+<mat-form-field [floatLabel]="options['floatLabel']">
+  <input matInput
+         xmInputPreventPaste
+         name="{{controlNameMatcher}}"
+         [placeholder]="options['matcherTitle'] | i18nName: principal"
+         [required]="options['required']"
+         [formControl]="matcherControl">
+  <mat-error class="error" *ngIf="matcherControl.hasError('required')" [title]="options?.validationMessages?.required || ''">
+    {{options?.validationMessages?.required || ''}}
+  </mat-error>
+  <mat-error class="error" *ngIf="matcherControl.hasError('not-match')" [title]="options?.validationMessages?.notMatch || ''">
+    {{options?.validationMessages?.notMatch || ''}}
+  </mat-error>
+</mat-form-field>

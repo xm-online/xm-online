@@ -31,7 +31,7 @@
           <button (click)="initPasswordReset()"
                   routerLink="/administration/user-management"
                   class="btn btn-info" [disabled]="pwdResetDisabled()">
-            <span>ResetPassword</span>
+            <span>{{'reset.request.form.button' | translate}}</span>
           </button>
         </div>
       </div>

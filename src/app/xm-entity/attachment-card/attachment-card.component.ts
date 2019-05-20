@@ -84,7 +84,6 @@ export class AttachmentCardComponent implements OnInit {
         console.log(this.attachment);
         if (this.attachment.contentUrl && !this.attachment.contentChecksum) {
             saveFileFromUrl(this.attachment.contentUrl, this.attachment.name);
-            // saveFileFromUrl('https://picsum.photos/id/436/1920/1080', this.attachment.name);
         } else {
             if (this.attachment.body && this.attachment.body.content &&  this.attachment.body.content.value) {
                 this.saveInnerAttachment(this.attachment.body);

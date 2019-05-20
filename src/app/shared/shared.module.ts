@@ -50,6 +50,7 @@ import { MultilingualInputComponent } from './jsf-extention/widgets/multilingual
 import { DatetimeUtcComponent } from './jsf-extention/widgets/datetime-utc/datetime-utc.component';
 import { DatetimePickerComponent } from './jsf-extention/widgets/datetime-picker/datetime-picker.component';
 import { EmailMatcherComponent } from './jsf-extention/widgets/email-matcher/email-matcher.component';
+import { TextSectionComponent } from './jsf-extention/widgets/text-section/text-section.component';
 import { CurrentLocationComponent } from './jsf-extention/widgets/current-location/current-location.component';
 import { ExtAutocompleteService } from './jsf-extention/widgets/ext-autocomplete/ext-autocomplete-service';
 import { ExtAutocompleteComponent } from './jsf-extention/widgets/ext-autocomplete/ext-autocomplete.component';
@@ -120,6 +121,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
         DatetimeUtcComponent,
         DatetimePickerComponent,
         EmailMatcherComponent,
+        TextSectionComponent,
         PrivacyAndTermsDialogComponent
     ],
     entryComponents: [
@@ -139,6 +141,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
         DatetimeUtcComponent,
         DatetimePickerComponent,
         EmailMatcherComponent,
+        TextSectionComponent,
         PrivacyAndTermsDialogComponent
     ],
     providers: [
@@ -211,6 +214,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
         DatetimeUtcComponent,
         DatetimePickerComponent,
         EmailMatcherComponent,
+        TextSectionComponent,
         GooglePlaceModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

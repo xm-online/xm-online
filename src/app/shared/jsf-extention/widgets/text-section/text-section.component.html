@@ -1,0 +1,12 @@
+<ng-container *ngIf="options['staticContent'] && options['staticContent']['value']">
+  <div [ngClass]="options['staticContent']['class'] || 'mat-form-field-wrapper'"
+       [innerHTML]="options['staticContent']['value'] | i18nName: principal"
+       [ngStyle]="options['staticContent']['styles']">
+  </div>
+</ng-container>
+<ng-container *ngIf="options['dynamicContent'] && calculatedContent">
+  <div [ngClass]="options['dynamicContent']['class'] || 'mat-form-field-wrapper'"
+       [innerHTML]="calculatedContent"
+       [ngStyle]="options['dynamicContent']['styles']">
+  </div>
+</ng-container>

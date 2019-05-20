@@ -1,9 +1,11 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
-import {FunctionService, XmEntity, XmEntityService} from '../../../xm-entity/';
-import {catchError, map, tap} from 'rxjs/operators';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import { FunctionService, XmEntity, XmEntityService} from '../../../xm-entity/';
+import { catchError, map, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+
+import * as _ from 'lodash';
 
 interface IStatFunction {
     type: 'query' | 'function',
@@ -63,9 +65,8 @@ export class StatsWidgetComponent implements OnInit {
     private executeFunction(iFunction: IStatFunction): Observable<string | number> {
         return this.functionService.call(iFunction.name, {}).pipe(
             map(resp => resp.body),
-            map(body => (body && body.data) ? body.data : (iFunction.errorValue ? iFunction.errorValue : '?')),
-            map(data => (data.widget) ? data.widget : (iFunction.errorValue ? iFunction.errorValue : '?')),
-            map(widget => (widget.value) ? widget.value : (iFunction.errorValue ? iFunction.errorValue : '?')),
+            map(body => this.getWidgetValue(body, iFunction)),
+            tap(value => console.log(value)),
             catchError(e => of(iFunction.errorValue ? iFunction.errorValue : '?'))
         )
     }
@@ -79,6 +80,12 @@ export class StatsWidgetComponent implements OnInit {
             map((resp: HttpResponse<XmEntity[]>) => resp.headers.get('X-Total-Count')),
             catchError(e => of(iFunction.errorValue ? iFunction.errorValue : '?'))
         )
+    }
+
+    private getWidgetValue(data: any, iFunction: IStatFunction): any {
+        if (_.has(data, 'data.widget.value')) { return _.get(data, 'data.widget.value') };
+        if (_.has(data, 'data.amount')) { return _.get(data, 'data.amount') };
+        return iFunction.defaultValue;
     }
 
 }

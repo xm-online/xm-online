@@ -50,6 +50,20 @@
             white-space: nowrap;
         }
     }
+    
+    .nav {
+        .caret {
+            top: 0;
+        }
+    }
+
+    .truncated {
+        font-style: inherit;
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 .sidebar .sidebar-wrapper .user .user-info [data-toggle=collapse]~div>ul>li>a .sidebar-mini, .sidebar .sidebar-wrapper>.nav [data-toggle=collapse]~div>ul>li>a .sidebar-mini {

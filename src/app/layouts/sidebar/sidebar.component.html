@@ -22,7 +22,7 @@
     <div class="user-info">
       <a data-toggle="collapse" href="#collapseExample" class="collapsed">
         <span class="user-name">
-            {{principal.getName()}}
+            <em class="truncated pr-4">{{principal.getName()}}</em>
             <b class="caret"></b>
         </span>
       </a>
@@ -61,8 +61,8 @@
               <ng-template #tmplIcon><i class="material-icons">{{ group.config.icon }}</i></ng-template>
               <ng-template #tmplNoIcon><i class="material-icons">dashboard</i></ng-template>
               <p>
-                <span jhiTranslate="global.menu.dashboards.main" *ngIf="group.key === 'DASHBOARD'">Dashboard</span>
-                <span *ngIf="group.key !== 'DASHBOARD'">{{group.name | i18nName:principal}}</span>
+                <span class="truncated pr-3" *ngIf="group.key === 'DASHBOARD'">{{'global.menu.dashboards.main' | translate}}</span>
+                <span class="truncated pr-3" *ngIf="group.key !== 'DASHBOARD'">{{group.name | i18nName:principal}}</span>
                 <b class="caret"></b>
               </p>
             </a>
@@ -103,7 +103,7 @@
       <ng-container *permitted="'XMENTITY_SPEC.GET'">
         <a class="nav-link" data-toggle="collapse" href="#applications" *ngIf="isApplicationExists">
           <i class="material-icons">apps</i>
-          <p><span jhiTranslate="global.menu.applications.main">Applications</span><b class="caret"></b></p>
+          <p><span class="truncated pr-3">{{'global.menu.applications.main' | translate}}</span><b class="caret"></b></p>
         </a>
       </ng-container>
       <div class="collapse" id="applications">
@@ -128,7 +128,7 @@
     <li class="nav-item" *ngSwitchCase="true" routerLinkActive="active">
       <a class="nav-link" data-toggle="collapse" href="#configuration" *permitted="'DASHBOARD.CREATE'">
         <i class="material-icons">tune</i>
-        <p><span jhiTranslate="admin-config.common.menu.title">Configuration</span><b class="caret"></b></p>
+        <p><span class="truncated pr-3">{{'admin-config.common.menu.title' | translate}}</span><b class="caret"></b></p>
       </a>
       <div class="collapse" id="configuration">
         <ul class="nav">
@@ -154,7 +154,7 @@
       <a class="nav-link" data-toggle="collapse" href="#administrations"
          *permitted="['ROUTE.GET_LIST', 'ROLE.GET_LIST', 'ROLE.MATRIX.GET', 'USER.GET_LIST', 'CLIENT.GET_LIST']">
         <i class="material-icons">settings</i>
-        <p><span jhiTranslate="global.menu.admin.main">Administration</span><b class="caret"></b></p>
+        <p><span class="truncated pr-3">{{'global.menu.admin.main' | translate}}</span><b class="caret"></b></p>
       </a>
       <div class="collapse" id="administrations">
         <ul class="nav">

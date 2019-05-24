@@ -118,7 +118,6 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
             .subscribe(() => {
                 this.filterElements();
             });
-        if (this.controlValue) {this.jsf.updateValue(this, this.controlValue)}
     }
 
     private filterElements() {
@@ -176,7 +175,7 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
                 tap( () => this.initOptionList()),
                 finalize(() => this.changeDetectorRef.detectChanges())
             ).subscribe(
-                () => {},
+                () => {if (this.controlValue) {this.jsf.updateValue(this, this.controlValue)}},
                 error => console.error(error));
         }
     }

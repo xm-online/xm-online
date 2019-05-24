@@ -42,6 +42,7 @@ services:
             - xm2
         volumes:
             - ./:/docker-entrypoint-initdb.d/
+            - pg-data:/var/lib/postgresql/data
         environment:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=postgres
@@ -92,6 +93,8 @@ services:
         environment:
             - "ES_JAVA_OPTS=-Xms512m -Xmx1024m" 
         command: -Enetwork.host=0.0.0.0 -Ediscovery.type=single-node
+        volumes:
+            - es-data:/usr/share/elasticsearch/data
         deploy:
           placement:
             constraints: [node.role == manager]
@@ -236,7 +239,11 @@ services:
             replicas: 1
             restart_policy:
                 condition: on-failure
-   
+
+volumes:
+  pg-data:
+  es-data:
+
 networks:
     xm2:
         driver: overlay

@@ -62,11 +62,11 @@ http {
 	    try_files $uri /index.html;
 	}
 
-	location /NBUStatService/v1/statdirectory/exchange {
-	    proxy_pass https://bank.gov.ua;
-	    proxy_redirect off;
-	    include /etc/nginx/proxy_params;
-	}
+#	location /NBUStatService/v1/statdirectory/exchange {
+#	    proxy_pass https://bank.gov.ua;
+#	    proxy_redirect off;
+#	    include /etc/nginx/proxy_params;
+#	}
 
 
 	location ~ ^/({{be_endpoints}}) {

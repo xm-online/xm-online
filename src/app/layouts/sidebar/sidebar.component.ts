@@ -36,6 +36,8 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
     private unauthSubscription: Subscription;
     private dashboardSubscription: Subscription;
     private contextSubscription: Subscription;
+    private logoutSubscribtion: Subscription;
+
     private toggleButton;
 
     dashboardGroups: any[];
@@ -81,6 +83,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
         this.registerChangeAuth();
         this.registerChangeInDashboards();
         this.registerUnauthorized();
+        this.registerLogoutEvent();
         this.contextSubscription = this.eventManager.subscribe('CONTEXT_UPDATED', () => {
             this.groupDashboards();
             this.collapseTab();
@@ -128,10 +131,17 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
         this.eventManager.destroy(this.dashboardSubscription);
         this.eventManager.destroy(this.unauthSubscription);
         this.eventManager.destroy(this.contextSubscription);
+        this.eventManager.destroy(this.logoutSubscribtion);
 
         if (this.psMainPanel) {
             this.psMainPanel.destroy();
         }
+    }
+
+    private registerLogoutEvent() {
+        this.logoutSubscribtion = this.eventManager.subscribe(XM_EVENT_LIST.XM_LOGOUT, () => {
+            this.logout(true);
+        });
     }
 
     private registerUnauthorized() {

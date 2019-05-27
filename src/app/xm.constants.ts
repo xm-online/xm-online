@@ -15,6 +15,7 @@ enum _XM_EVENT_LIST  {
   XM_REGISTRATION = 'xmRegistration',
   XM_SUCCESS_AUTH = 'authenticationSuccess',
   XM_UNAUTHORIZED = 'xm.unauthorized',
+  XM_LOGOUT = 'xm.logout',
   XM_CHANGE_LANGUAGE = 'changeLanguage',
   XM_DASHBOARD_LIST_MODIFICATION = 'dashboardListModification',
   XM_USER_LIST_MODIFICATION = 'userListModification',

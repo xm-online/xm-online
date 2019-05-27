@@ -42,10 +42,15 @@ export class CommentDetailDialogComponent implements OnInit {
         this.comment.xmEntity = this.xmEntity;
         this.comment.entryDate = new Date().toISOString();
         this.comment.userKey = this.principal.getUserKey();
-        this.commentService.create(this.comment).subscribe(() => this.onSaveSuccess(),
-            // TODO: error processing
-            (err) => console.log(err),
+        this.commentService.create(this.comment)
+            .subscribe(() => this.onSaveSuccess(),
+            (err) => this.onError(err),
             () => this.showLoader = false);
+    }
+
+    private onError(e) {
+        console.log(e);
+        this.showLoader = false;
     }
 
     private onSaveSuccess() {

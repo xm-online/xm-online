@@ -9,6 +9,8 @@ import { Link } from '../shared/link.model';
 import { LinkService } from '../shared/link.service';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
+import { XmConfigService } from '../../shared';
+import { filter, map } from 'rxjs/operators';
 
 declare let swal: any;
 
@@ -28,16 +30,27 @@ export class LinkDetailSearchSectionComponent implements OnInit {
     page: number;
     total: number;
     showLoader: boolean;
+    linkSpecQuery: any;
 
     constructor(private activeModal: NgbActiveModal,
                 private xmEntityService: XmEntityService,
                 private linkService: LinkService,
                 private eventManager: JhiEventManager,
-                private translateService: TranslateService) {
+                private translateService: TranslateService,
+                private configService: XmConfigService) {
     }
 
     ngOnInit() {
+        this.getLinkSpecConfig().subscribe(res => this.linkSpecQuery = res || null);
         this.onSearch();
+    }
+
+    getLinkSpecConfig() {
+       return this.configService.getUiConfig().pipe(
+           map(res => res.applications.config.entities.find(entity => entity.typeKey === this.sourceXmEntity.typeKey) || {}),
+           filter(entity => entity.hasOwnProperty('links')),
+           map(entity => entity.links.find(link => link.key === this.linkSpec.key)['filterQuery'])
+        );
     }
 
     onSearch() {
@@ -55,6 +68,7 @@ export class LinkDetailSearchSectionComponent implements OnInit {
         this.showLoader = true;
         this.xmEntityService.search({
             query: `(typeKey:${this.linkSpec.typeKey}* OR typeKey:${this.linkSpec.typeKey})`
+                + (this.linkSpecQuery ? ` AND ${this.linkSpecQuery}` : '')
                 + (this.searchQuery ? ` AND ${this.searchQuery}` : ''),
             size: 5,
             page: this.page

@@ -1,9 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-
-import { UserModalService } from './user-modal.service';
 import { User } from '../../shared';
 
 @Component({
@@ -12,41 +9,14 @@ import { User } from '../../shared';
 })
 export class UserLoginMgmtDialogComponent implements OnInit {
 
-    user: User;
+    @Input() user: User;
 
-    constructor(
-    ) {}
-
-    ngOnInit() {
-    }
-
-    clear() {
-    }
-}
-
-@Component({
-    selector: 'xm-user-login-dialog',
-    template: ''
-})
-export class UserLoginDialogComponent implements OnInit, OnDestroy {
-
-    modalRef: NgbModalRef;
-    routeSub: any;
-
-    constructor(
-        private route: ActivatedRoute,
-        private userModalService: UserModalService
-    ) {}
+    constructor(public activeModal: NgbActiveModal) {}
 
     ngOnInit() {
-        this.routeSub = this.route.params.subscribe((params) => {
-            if ( params['userKey'] ) {
-                this.modalRef = this.userModalService.open(UserLoginMgmtDialogComponent, params['userKey']);
-            }
-        });
     }
 
-    ngOnDestroy() {
-        this.routeSub.unsubscribe();
+    close() {
+        this.activeModal.dismiss();
     }
 }

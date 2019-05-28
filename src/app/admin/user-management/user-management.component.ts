@@ -9,6 +9,7 @@ import { BaseAdminListComponent } from '../admin.service';
 import { UserMgmtDialogComponent } from './user-management-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserMgmtDeleteDialogComponent } from './user-management-delete-dialog.component';
+import { UserLoginMgmtDialogComponent } from './user-login-management-dialog.component';
 
 
 @Component({
@@ -184,6 +185,11 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
     private onEdit(user) {
         const modalRef = this.modalService.open(UserMgmtDialogComponent, { backdrop: 'static', size: 'lg' });
         modalRef.componentInstance.selectedUser = user;
+    }
+
+    private onLoginEdit(user) {
+        const modalRef = this.modalService.open(UserLoginMgmtDialogComponent, { backdrop: 'static', size: 'lg' });
+        modalRef.componentInstance.user = user;
     }
 
     private onDelete(user) {

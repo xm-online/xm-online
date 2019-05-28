@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
+
 import { User, UserService } from '../../shared';
 import { XM_EVENT_LIST } from '../../../app/xm.constants';
 

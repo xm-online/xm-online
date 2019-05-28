@@ -1,12 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
-import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
-
-import { UserModalService } from './user-modal.service';
-import { JhiLanguageHelper, User, UserService } from '../../shared';
 import { ViewChild } from '@angular/core';
+
+import { JhiLanguageHelper, User, UserService } from '../../shared';
 import { RoleService } from '../../shared/role/role.service';
 import { XM_EVENT_LIST } from '../../../app/xm.constants';
 import { XmConfigService } from '../../shared/spec/config.service';
@@ -22,6 +19,7 @@ export class UserMgmtDialogComponent implements OnInit {
     authorities: any[];
     showLoader: Boolean;
     @ViewChild('userLoginForm') userLoginForm;
+    @Input() selectedUser: User;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -33,6 +31,11 @@ export class UserMgmtDialogComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        if (this.selectedUser) {
+            this.user = this.selectedUser;
+        } else {
+            this.user = new User();
+        }
         this.roleService.getRoles().subscribe(roles => {
             this.authorities = roles.map(role => role.roleKey).sort();
         });
@@ -50,7 +53,6 @@ export class UserMgmtDialogComponent implements OnInit {
     save() {
         this.showLoader = true;
         this.user.id || this.userLoginForm.createLogins();
-        console.log(this.user);
         this.userService[this.user.id ? 'update' : 'create'](this.user)
             .subscribe((response) => this.onSaveSuccess(response),
                 (err) => console.log(err),
@@ -62,33 +64,4 @@ export class UserMgmtDialogComponent implements OnInit {
         this.activeModal.dismiss(result);
     }
 
-}
-
-@Component({
-    selector: 'xm-user-dialog',
-    template: ''
-})
-export class UserDialogComponent implements OnInit, OnDestroy {
-
-    modalRef: NgbModalRef;
-    routeSub: any;
-
-    constructor(
-        private route: ActivatedRoute,
-        private userModalService: UserModalService
-    ) {}
-
-    ngOnInit() {
-        this.routeSub = this.route.params.subscribe((params) => {
-            if ( params['userKey'] ) {
-                this.modalRef = this.userModalService.open(UserMgmtDialogComponent, params['userKey']);
-            } else {
-                this.modalRef = this.userModalService.open(UserMgmtDialogComponent);
-            }
-        });
-    }
-
-    ngOnDestroy() {
-        this.routeSub.unsubscribe();
-    }
 }

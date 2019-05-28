@@ -6,6 +6,9 @@ import swal from 'sweetalert2';
 import { XM_EVENT_LIST } from '../../../app/xm.constants';
 import { Principal, RoleService, User, UserLogin, UserLoginService, UserService } from '../../shared';
 import { BaseAdminListComponent } from '../admin.service';
+import { UserMgmtDialogComponent } from './user-management-dialog.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserMgmtDeleteDialogComponent } from './user-management-delete-dialog.component';
 
 
 @Component({
@@ -29,6 +32,7 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
                 protected eventManager: JhiEventManager,
                 protected parseLinks: JhiParseLinks,
                 protected router: Router,
+                private modalService: NgbModal,
                 private userLoginService: UserLoginService,
                 private userService: UserService,
                 private roleService: RoleService,
@@ -171,5 +175,19 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
                     this.list = []
                 },
                 () => this.showLoader = false);
+    }
+
+    private onAdd() {
+        const modalRef = this.modalService.open(UserMgmtDialogComponent, { backdrop: 'static', size: 'lg' });
+    }
+
+    private onEdit(user) {
+        const modalRef = this.modalService.open(UserMgmtDialogComponent, { backdrop: 'static', size: 'lg' });
+        modalRef.componentInstance.selectedUser = user;
+    }
+
+    private onDelete(user) {
+        const modalRef = this.modalService.open(UserMgmtDeleteDialogComponent, { backdrop: 'static', size: 'lg' });
+        modalRef.componentInstance.user = user;
     }
 }

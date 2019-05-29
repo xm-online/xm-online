@@ -132,7 +132,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
         const terms = [];
         if (dataSpec) {
             dataSpec = JSON.parse(dataSpec);
-            Object.keys(dataSpec.properties).forEach(k => {
+            dataSpec.properties && Object.keys(dataSpec.properties).forEach(k => {
                 terms.push(`${k}: ${dataSpec.properties[k].type}`);
             });
         }

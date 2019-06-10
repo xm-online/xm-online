@@ -65,6 +65,10 @@ export class EntityDetailFabComponent implements OnInit, OnChanges, OnDestroy {
         return () => this.view.attachment;
     }
 
+    xmLinksContext(): Function {
+        return  () => this.view.link;
+    }
+
     xmLocationContext(): Function {
         return () => this.view.location;
     }

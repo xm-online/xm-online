@@ -24,7 +24,7 @@
              [(ngModel)]="username"
              (change)="floatLabel = false"
              xmFocus
-             placeholder="{{'global.form.login' | translate}}"
+             [placeholder]="loginLabel"
              [disabled]="isFormDisabled()"
              autocomplete="off">
     </mat-form-field>

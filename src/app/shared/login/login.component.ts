@@ -17,6 +17,7 @@ declare let $: any;
 export class LoginComponent implements OnInit, AfterViewInit {
 
     @Input() successRegistration: boolean;
+    @Input() loginLabel: string;
 
     isShowPassword = false;
     isDisabled: boolean;

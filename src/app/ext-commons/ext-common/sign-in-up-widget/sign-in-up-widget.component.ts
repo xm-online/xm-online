@@ -1,11 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {JhiEventManager, JhiLanguageService} from 'ng-jhipster';
-import {Subscription} from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 import { ModulesLanguageHelper } from '../../../shared/language/modules-language.helper';
-import {XM_EVENT_LIST} from '../../../xm.constants';
-import {XmConfigService} from '../../../shared';
-import {ActivatedRoute, Router} from '@angular/router';
+import { XM_EVENT_LIST } from '../../../xm.constants';
+import { I18nNamePipe, Principal, XmConfigService } from '../../../shared';
 
 @Component({
     selector: 'xm-sign-in-up-widget',
@@ -21,14 +22,18 @@ export class SignInUpWidgetComponent implements OnInit, OnDestroy {
     isLoginFormView = true;
     successRegistration = false;
     socialConfiguration: any;
+    loginLabel: string;
 
     constructor(
         private eventManager: JhiEventManager,
+        private translateService: TranslateService,
         private jhiLanguageService: JhiLanguageService,
         private modulesLangHelper: ModulesLanguageHelper,
         private xmConfigService: XmConfigService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        protected i18nNamePipe: I18nNamePipe,
+        protected principal: Principal
     ) {
     }
 
@@ -48,6 +53,8 @@ export class SignInUpWidgetComponent implements OnInit, OnDestroy {
                 this.isLoginFormView = !(params['type'] === 'registration');
             }
         });
+
+        this.loginLabel = this.checkLabel(this.config.loginLabel);
     }
 
     ngOnDestroy() {
@@ -64,4 +71,8 @@ export class SignInUpWidgetComponent implements OnInit, OnDestroy {
         });
     }
 
+    private checkLabel(label: any): string {
+        const DEFAULT_LABEL = this.translateService.instant('global.form.login');
+        return label ? this.i18nNamePipe.transform(label, this.principal) : DEFAULT_LABEL;
+    }
 }

@@ -3,9 +3,11 @@
     <button class="xm-fab-option" (click)="onAddAttachment()" *xmPermitted="['ATTACHMENT.CREATE']; context: xmAttachmentContext()">
       <i class="material-icons">attach_file</i>
     </button>
-    <button class="xm-fab-option" *ngFor="let linkSpec of this.xmEntitySpec.links" (click)="onAddLink(linkSpec)">
-      <i class="material-icons">{{linkSpec.icon}}</i>
-    </button>
+    <ng-container *xmPermitted="['LINK.CREATE']; context: xmLinksContext()">
+      <button class="xm-fab-option" *ngFor="let linkSpec of this.xmEntitySpec.links" (click)="onAddLink(linkSpec)">
+        <i class="material-icons">{{linkSpec.icon}}</i>
+      </button>
+    </ng-container>
     <button class="xm-fab-option" (click)="onAddComment()" *xmPermitted="['COMMENT.CREATE']; context: xmCommentContext()">
       <i class="material-icons">comment</i>
     </button>

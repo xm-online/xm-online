@@ -37,9 +37,9 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
     constructor(
         public principal: Principal,
         private router: Router,
-        private translateService: TranslateService,
-        private modalService: NgbModal,
-        private eventManager: JhiEventManager,
+        protected translateService: TranslateService,
+        protected modalService: NgbModal,
+        protected eventManager: JhiEventManager,
         protected xmEntitySpecWrapperService: XmEntitySpecWrapperService,
     ) {
         this.spec = null;

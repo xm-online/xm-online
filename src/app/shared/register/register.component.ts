@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     language = 'en';
     publicKey;
     socialConfig: [];
+    passwordConfig: any;
 
     constructor(private jhiLanguageService: JhiLanguageService,
                 private xmConfigService: XmConfigService,
@@ -48,7 +49,11 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
             this.needCaptcha = result.isCaptchaNeed;
             this.publicKey = result.publicKey;
         });
-
+        this.passwordConfig = {
+            minLength: 4,
+            maxLength: 50,
+            pattern: ''
+        }
     }
 
     ngOnDestroy() {
@@ -60,6 +65,9 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
         this.registerAccount = {};
         this.xmConfigService.getUiConfig().subscribe(config => {
             this.socialConfig = config && config.social;
+            if (config.passwordSettings) {
+                this.passwordConfig = config.passwordSettings;
+            }
         });
     }
 

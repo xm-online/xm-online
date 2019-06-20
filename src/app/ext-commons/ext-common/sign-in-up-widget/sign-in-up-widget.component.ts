@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { ModulesLanguageHelper } from '../../../shared/language/modules-language.helper';
 import { XM_EVENT_LIST } from '../../../xm.constants';
-import { I18nNamePipe, Principal, XmConfigService } from '../../../shared';
+import { XmConfigService } from '../../../shared';
 
 @Component({
     selector: 'xm-sign-in-up-widget',
@@ -31,10 +31,7 @@ export class SignInUpWidgetComponent implements OnInit, OnDestroy {
         private modulesLangHelper: ModulesLanguageHelper,
         private xmConfigService: XmConfigService,
         private route: ActivatedRoute,
-        private router: Router,
-        protected i18nNamePipe: I18nNamePipe,
-        protected principal: Principal
-    ) {
+        private router: Router) {
     }
 
     ngOnInit() {
@@ -46,6 +43,9 @@ export class SignInUpWidgetComponent implements OnInit, OnDestroy {
 
         this.changeLanguageSubscriber = this.eventManager.subscribe(XM_EVENT_LIST.XM_CHANGE_LANGUAGE, (event) => {
             this.jhiLanguageService.changeLanguage(event.content);
+            if (this.config && this.config.loginLabel) {
+                this.updateLabels(this.config.loginLabel, event.content);
+            }
         });
 
         this.route.queryParams.subscribe(params => {
@@ -53,8 +53,9 @@ export class SignInUpWidgetComponent implements OnInit, OnDestroy {
                 this.isLoginFormView = !(params['type'] === 'registration');
             }
         });
-
-        this.loginLabel = this.checkLabel(this.config.loginLabel);
+        if (this.config && this.config.loginLabel) {
+            this.updateLabels(this.config.loginLabel);
+        }
     }
 
     ngOnDestroy() {
@@ -71,8 +72,8 @@ export class SignInUpWidgetComponent implements OnInit, OnDestroy {
         });
     }
 
-    private checkLabel(label: any): string {
-        const DEFAULT_LABEL = this.translateService.instant('global.form.login');
-        return label ? this.i18nNamePipe.transform(label, this.principal) : DEFAULT_LABEL;
+    private updateLabels(label: any, currentLang?: string) {
+        const lang = currentLang ? currentLang : this.modulesLangHelper.getLangKey();
+        this.loginLabel = label[lang] || label;
     }
 }

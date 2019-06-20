@@ -1,0 +1,15 @@
+.upload-file {
+    ::ng-deep {
+        .mat-icon {
+            line-height: 22px;
+
+        }
+    }
+}
+
+.truncate {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

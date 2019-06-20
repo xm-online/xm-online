@@ -60,7 +60,8 @@
             },
             "error": {
                 "dontmatch": "Пароль и его подтверждение не совпадают!",
-                "captchaempty": "Пожалуйста, проверьте captcha."
+                "captchaempty": "Пожалуйста, проверьте captcha.",
+                "upload-fail": "Сервис загрузки недоступен!"
             },
             "info": {
                 "authenticated": {

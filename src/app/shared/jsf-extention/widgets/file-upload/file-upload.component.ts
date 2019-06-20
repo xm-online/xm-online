@@ -13,6 +13,7 @@ export class FileUploadComponent implements OnInit {
     options: any;
     controlValue: any;
     uploading = false;
+    uploadingError = false;
     file: any;
     @Input() layoutNode: any;
 
@@ -48,6 +49,7 @@ export class FileUploadComponent implements OnInit {
 
     private saveFile(formData: FormData, headers: HttpHeaders) {
         const apiUrl = this.options['url'] || null;
+        this.uploadingError = false;
         if (apiUrl) {
             this.uploading = true;
             this.httpClient
@@ -57,7 +59,7 @@ export class FileUploadComponent implements OnInit {
                 )
                 .subscribe(res => {
                     this.jsf.updateValue(this, res.data.key);
-                });
+                }, err => this.uploadingError = true);
         }
     }
 }

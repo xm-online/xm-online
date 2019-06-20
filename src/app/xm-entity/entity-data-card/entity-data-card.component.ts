@@ -48,10 +48,8 @@ export class EntityDataCardComponent implements OnInit, OnChanges {
     }
 
     onSubmitForm(data: any) {
-        console.log(data);
         this.showLoader = true;
         this.xmEntity.data = Object.assign({}, data);
-
         this.xmEntityService.update(this.xmEntity).pipe(finalize(() => this.showLoader = false))
             .subscribe(
             (res) => {

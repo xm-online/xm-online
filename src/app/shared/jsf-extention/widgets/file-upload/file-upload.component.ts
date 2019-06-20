@@ -58,8 +58,11 @@ export class FileUploadComponent implements OnInit {
                     finalize(() => this.uploading = false)
                 )
                 .subscribe(res => {
-                    this.jsf.updateValue(this, res.data.key);
-                }, err => this.uploadingError = true);
+                    this.jsf.updateValue(this, res['data']['key']);
+                }, err => {
+                    this.uploadingError = true;
+                    this.uploading = false;
+                });
         }
     }
 }

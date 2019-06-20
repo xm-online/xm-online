@@ -21,6 +21,7 @@
                     class="btn btn-sm btn-primary upload-file"
                     type="button"
                     (click)="uploadFile(file)"
+                    [disabled]="uploading || !file"
                     [class.loading]="uploading">
               <mat-icon>cloud_upload</mat-icon>
             </button>

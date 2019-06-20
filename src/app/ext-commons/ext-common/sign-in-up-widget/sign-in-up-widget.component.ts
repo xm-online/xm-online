@@ -74,6 +74,6 @@ export class SignInUpWidgetComponent implements OnInit, OnDestroy {
 
     private updateLabels(label: any, currentLang?: string) {
         const lang = currentLang ? currentLang : this.modulesLangHelper.getLangKey();
-        this.loginLabel = label[lang];
+        this.loginLabel = label[lang] || label;
     }
 }

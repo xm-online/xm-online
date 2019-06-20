@@ -24,7 +24,6 @@ export class FileUploadComponent implements OnInit {
     ngOnInit() {
         this.options = this.layoutNode.options || {};
         this.jsf.initializeControl(this);
-
     }
 
     updateFile(event) {
@@ -53,7 +52,7 @@ export class FileUploadComponent implements OnInit {
         if (apiUrl) {
             this.uploading = true;
             this.httpClient
-                .post(this.options['url'], formData, { headers: headers})
+                .post(apiUrl, formData, { headers: headers})
                 .pipe(
                     finalize(() => this.uploading = false)
                 )

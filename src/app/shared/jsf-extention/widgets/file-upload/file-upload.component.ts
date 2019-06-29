@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { HttpClient, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { JsonSchemaFormService } from 'angular2-json-schema-form';
-import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'xm-ajfs-file-upload',
@@ -12,12 +11,13 @@ export class FileUploadComponent implements OnInit {
 
     options: any;
     controlValue: any;
-    uploading = false;
     uploadingError = false;
+    progress: number;
     file: any;
     @Input() layoutNode: any;
 
     constructor(private jsf: JsonSchemaFormService,
+                private changeDetectorRef: ChangeDetectorRef,
                 private httpClient: HttpClient) {
     }
 
@@ -43,25 +43,60 @@ export class FileUploadComponent implements OnInit {
 
     resetFile() {
         this.file = null;
-        this.jsf.updateValue(this, null);
+        this.controlValue = null;
+        this.progress = null;
+        this.uploadingError = false;
+        this.jsf.updateValue(this, this.controlValue);
     }
 
     private saveFile(formData: FormData, headers: HttpHeaders) {
         const apiUrl = this.options['url'] || null;
         this.uploadingError = false;
         if (apiUrl) {
-            this.uploading = true;
             this.httpClient
-                .post(apiUrl, formData, { headers: headers})
-                .pipe(
-                    finalize(() => this.uploading = false)
+                .post(apiUrl, formData,
+                    {
+                        headers: headers,
+                        reportProgress: true,
+                        observe: 'events'
+                    }
                 )
-                .subscribe(res => {
-                    this.jsf.updateValue(this, res['data']['key']);
+                .subscribe(event => {
+                    switch (event.type) {
+                        case HttpEventType.UploadProgress:
+                           this.updateProgress(event);
+                           break;
+                        case HttpEventType.Response:
+                            this.updateData(event.body);
+                            break;
+                        default:
+                            this.handleError();
+                    }
                 }, err => {
-                    this.uploadingError = true;
-                    this.uploading = false;
+                    this.handleError(err)
                 });
         }
+    }
+
+    private updateProgress(event) {
+        this.progress = Math.round(100 * event.loaded / event.total);
+        this.registerChanges();
+    }
+
+    private updateData(response) {
+        this.jsf.updateValue(this, response['data']['key']);
+        this.progress = null;
+        this.registerChanges();
+    }
+
+    private handleError(err?: any) {
+        err && console.error(err);
+        this.uploadingError = true;
+        this.progress = null;
+        this.registerChanges();
+    }
+
+    private registerChanges(): void {
+        this.changeDetectorRef.detectChanges();
     }
 }

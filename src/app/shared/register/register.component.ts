@@ -35,6 +35,7 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     publicKey;
     socialConfig: [];
     passwordSettings: PasswordSpec;
+    patternMessage: string;
 
     constructor(private jhiLanguageService: JhiLanguageService,
                 private xmConfigService: XmConfigService,
@@ -62,9 +63,11 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
         this.xmConfigService.getUiConfig().subscribe(config => {
             this.socialConfig = config && config.social;
         });
-        this.xmConfigService.getPasswordConfig().subscribe((config: any) => {
-            this.makePasswordSettings(config);
-        });
+        this.xmConfigService
+            .getPasswordConfig()
+            .subscribe((config: any) => {
+                this.makePasswordSettings(config);
+            }, err => this.makePasswordSettings());
     }
 
     ngAfterViewInit() {
@@ -158,16 +161,10 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    private makePasswordSettings(config: any): void {
-        if (config) {
-            const CONFIG: PasswordSpec = config.passwordConfig;
-            this.passwordSettings = new PasswordSpec(
-                CONFIG.minLength || 4,
-                CONFIG.maxLength || 50,
-                CONFIG.pattern || '',
-                CONFIG.patternMessage || null);
-        } else {
-            this.passwordSettings = new PasswordSpec(4, 50, '', null);
+    private makePasswordSettings(config?: any): void {
+        this.passwordSettings = this.xmConfigService.mapPasswordSettings(config);
+        if (this.passwordSettings.patternMessage) {
+            this.patternMessage = this.xmConfigService.updatePatternMessage(this.passwordSettings.patternMessage)
         }
     }
 }

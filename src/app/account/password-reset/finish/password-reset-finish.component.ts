@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { JhiLanguageService } from 'ng-jhipster';
 
 import { PasswordResetFinish } from './password-reset-finish.service';
+import { PasswordSpec } from '../../../xm-entity/shared/password-spec.model';
+import { XmConfigService } from '../../../shared/spec/config.service';
 
 interface ResetPasswordFormConfig {
     formTitle: string,
@@ -29,6 +31,8 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     modalRef: NgbModalRef;
     key: string;
     config: ResetPasswordFormConfig;
+    passwordSettings: PasswordSpec;
+    patternMessage: string;
 
     constructor(
         private jhiLanguageService: JhiLanguageService,
@@ -36,6 +40,7 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
         private route: ActivatedRoute,
         private elementRef: ElementRef,
         private renderer: Renderer,
+        private xmConfigService: XmConfigService,
         private router: Router
     ) {
         this.config = {
@@ -70,6 +75,11 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
                 };
             }
         });
+        this.xmConfigService
+            .getPasswordConfig()
+            .subscribe((config: any) => {
+                this.makePasswordSettings(config);
+            }, err => this.makePasswordSettings());
         this.resetAccount = {};
         this.keyMissing = !this.key;
     }
@@ -96,5 +106,12 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
 
     login() {
         this.router.navigate([''])
+    }
+
+    private makePasswordSettings(config?: any): void {
+        this.passwordSettings = this.xmConfigService.mapPasswordSettings(config);
+        if (this.passwordSettings.patternMessage) {
+            this.patternMessage = this.xmConfigService.updatePatternMessage(this.passwordSettings.patternMessage)
+        }
     }
 }

@@ -127,9 +127,9 @@
              name="password"
              [(ngModel)]="registerAccount.password"
              #password="ngModel"
-             [minlength]="passwordSettings.minLength"
-             [maxlength]="passwordSettings.maxlength"
-             [pattern]="passwordSettings.pattern"
+             [minlength]="passwordSettings?.minLength"
+             [maxlength]="passwordSettings?.maxlength"
+             [pattern]="passwordSettings?.pattern"
              required
              placeholder="{{'global.form.newpassword' | translate}}">
 
@@ -146,7 +146,8 @@
       </mat-error>
       <mat-error
         *ngIf="password.hasError('pattern') && !(password.hasError('maxlength') || password.hasError('minlength'))">
-        {{'global.messages.validate.newpassword.password-pattern' | translate: passwordSettings}}
+        <span *ngIf="!passwordSettings.patternMessage">{{'global.messages.validate.newpassword.password-pattern' | translate: passwordSettings}}</span>
+        <span *ngIf="passwordSettings.patternMessage && patternMessage">{{patternMessage}}</span>
       </mat-error>
     </mat-form-field>
     <xm-password-strength-bar [passwordToCheck]="registerAccount.password"></xm-password-strength-bar>
@@ -159,9 +160,9 @@
              name="confirmPassword"
              [(ngModel)]="confirmPassword"
              #confirmPasswordInput="ngModel"
-             [minlength]="passwordSettings.minLength"
-             [maxlength]="passwordSettings.maxlength"
-             [pattern]="passwordSettings.pattern"
+             [minlength]="passwordSettings?.minLength"
+             [maxlength]="passwordSettings?.maxlength"
+             [pattern]="passwordSettings?.pattern"
              required
              placeholder="{{'global.form.confirmpassword' | translate}}">
 
@@ -179,7 +180,8 @@
       <mat-error
         *ngIf="confirmPasswordInput.hasError('pattern') &&
         !(confirmPasswordInput.hasError('minlength') || confirmPasswordInput.hasError('maxlength'))">
-        {{'global.messages.validate.confirmpassword.password-pattern' | translate: passwordSettings}}
+        <span *ngIf="!passwordSettings.patternMessage">{{'global.messages.validate.confirmpassword.password-pattern' | translate: passwordSettings}}</span>
+        <span *ngIf="passwordSettings.patternMessage && patternMessage">{{patternMessage}}</span>
       </mat-error>
     </mat-form-field>
   </div>

@@ -69,7 +69,8 @@
             },
             "error": {
                 "dontmatch": "The password and its confirmation do not match!",
-                "captchaempty": "Please check captcha."
+                "captchaempty": "Please check captcha.",
+                "upload-fail": "Upload service unavailable!"
             },
             "info": {
                 "authenticated": {

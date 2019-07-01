@@ -12,6 +12,7 @@ import { ExtQuerySelectComponent } from './widgets/ext-query-select/ext-query-se
 import { environment } from '../../../environments/environment';
 import { EmailMatcherComponent } from './widgets/email-matcher/email-matcher.component';
 import { TextSectionComponent } from './widgets/text-section/text-section.component';
+import { FileUploadComponent } from './widgets/file-upload/file-upload.component';
 
 declare const $: any;
 declare let Babili: any;
@@ -34,7 +35,8 @@ export const getJsfWidgets = () => {
         'datetime-utc': DatetimeUtcComponent,
         'datetime-picker': DatetimePickerComponent,
         'email-matcher': EmailMatcherComponent,
-        'text-section': TextSectionComponent
+        'text-section': TextSectionComponent,
+        'file-upload': FileUploadComponent
     };
 };
 

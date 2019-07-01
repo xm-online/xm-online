@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
+
 import { User, UserService } from '../../shared';
-import { UserModalService } from './user-modal.service';
-import {XM_EVENT_LIST} from '../../../app/xm.constants';
+import { XM_EVENT_LIST } from '../../../app/xm.constants';
 
 @Component({
     selector: 'xm-user-mgmt-delete-dialog',
@@ -13,7 +12,7 @@ import {XM_EVENT_LIST} from '../../../app/xm.constants';
 export class UserMgmtDeleteDialogComponent {
 
     showLoader: boolean;
-    user: User;
+    @Input() user: User;
 
     constructor(
         private userService: UserService,
@@ -35,34 +34,10 @@ export class UserMgmtDeleteDialogComponent {
                         content: {id: 'delete', msg: 'Deleted a user'}
                     });
                     this.activeModal.dismiss(true);
+                    this.eventManager.broadcast({ name: XM_EVENT_LIST.XM_USER_LIST_MODIFICATION, content: 'OK' });
                 },
                 (err) => console.log(err),
                 () => this.showLoader = false);
     }
 
-}
-
-@Component({
-    selector: 'xm-user-delete-dialog',
-    template: ''
-})
-export class UserDeleteDialogComponent implements OnInit, OnDestroy {
-
-    modalRef: NgbModalRef;
-    routeSub: any;
-
-    constructor(
-        private route: ActivatedRoute,
-        private userModalService: UserModalService
-    ) {}
-
-    ngOnInit() {
-        this.routeSub = this.route.params.subscribe((params) => {
-            this.modalRef = this.userModalService.open(UserMgmtDeleteDialogComponent, params['userKey']);
-        });
-    }
-
-    ngOnDestroy() {
-        this.routeSub.unsubscribe();
-    }
 }

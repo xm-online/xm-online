@@ -86,8 +86,7 @@
                       </div>
                     </td>
                     <td class="text-right">
-                      <a [routerLink]="[{ outlets: { popup: 'user-login-management/'+ user.userKey + '/edit'} }]"
-                         replaceUrl="true">
+                      <a href="javascript: void(0);" (click)="onLoginEdit(user)">
                         <i class="material-icons">perm_identity</i>
                       </a>
                     </td>
@@ -117,12 +116,13 @@
                 <a href="javascript: void(0);" *ngIf="user.activated" style="color: #4caf50" (click)="changeState(user)">
                   <i class="material-icons green">lock_open</i>
                 </a>
-                <a class="ml-1" [routerLink]="[{ outlets: { popup: 'user-management/'+ user.userKey + '/edit'} }]" replaceUrl="true"
+                <a class="ml-1" href="javascript: void(0);" (click)="onEdit(user)"
                    *permitted="'USER.UPDATE'">
                   <i class="material-icons">edit</i>
                 </a>
-                <a class="ml-1" [routerLink]="[{ outlets: { popup: 'user-management/'+ user.userKey + '/delete'} }]"
-                   replaceUrl="true" *permitted="'USER.DELETE'">
+                <a class="ml-1" href="javascript: void(0);"
+                   (click)="onDelete(user)"
+                   *permitted="'USER.DELETE'">
                   <i class="material-icons">delete</i>
                 </a>
               </td>
@@ -148,7 +148,6 @@
             </ngb-pagination>
           </div>
         </div>
-
         <no-data [show]="!list?.length"></no-data>
       </div>
     </div>
@@ -157,8 +156,7 @@
 
 <div class="xm-fab">
   <button mat-raised-button class="btn btn-primary btn-icon btn-just-icon btn-round btn-lg"
-          [routerLink]="[{ outlets: { popup: ['user-management-new'] } }]"
-          replaceUrl="true"
+          (click)="onAdd()"
           *permitted="'USER.CREATE'">
     <i class="material-icons">add</i>
   </button>

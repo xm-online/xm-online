@@ -60,6 +60,7 @@ import { ExtSelectService } from './jsf-extention/widgets/ext-select/ext-select-
 import { ExtSelectComponent } from './jsf-extention/widgets/ext-select/ext-select.component';
 import { ExtMdEditorComponent } from './jsf-extention/widgets/ext-md-editor/ext-md-editor.component';
 import { ExtTextareaComponent } from './jsf-extention/widgets/ext-textarea/ext-textarea.component';
+import { FileUploadComponent } from './jsf-extention/widgets/file-upload/file-upload.component';
 import { PasswordStrengthBarComponent } from './password-strength-bar/password-strength-bar.component';
 import { RoleService } from './role/role.service';
 import { GateSharedCommonModule } from './shared-common.module';
@@ -122,6 +123,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
         DatetimePickerComponent,
         EmailMatcherComponent,
         TextSectionComponent,
+        FileUploadComponent,
         PrivacyAndTermsDialogComponent
     ],
     entryComponents: [
@@ -142,6 +144,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
         DatetimePickerComponent,
         EmailMatcherComponent,
         TextSectionComponent,
+        FileUploadComponent,
         PrivacyAndTermsDialogComponent
     ],
     providers: [
@@ -215,6 +218,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
         DatetimePickerComponent,
         EmailMatcherComponent,
         TextSectionComponent,
+        FileUploadComponent,
         GooglePlaceModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

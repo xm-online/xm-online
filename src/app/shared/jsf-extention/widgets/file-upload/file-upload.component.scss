@@ -1,0 +1,73 @@
+.upload-file {
+    min-width: 42px !important;
+    width: 42px !important;
+    height: 42px !important;
+    line-height: 42px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 42px !important;
+
+    ::ng-deep {
+        .mat-icon {
+            line-height: 22px;
+        }
+    }
+}
+
+::ng-deep {
+    .mat-progress-spinner circle, .mat-spinner circle {
+        stroke: #fff !important;
+    }
+}
+
+.truncate {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.mat-error {
+    font-size: 75%;
+}
+
+.upload-area {
+    position: relative;
+    border: 2px dashed grey;
+    height: 42px;
+    line-height: 38px;
+
+    > input {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        font-size: 0;
+        color: transparent;
+    }
+}
+
+.upload-placeholder {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 5px;
+    font-size: 12px;
+}
+
+.mw-0 {
+    min-width: 0;
+}
+
+.progress-indicator {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -19px 0 0 -19px;
+}
+
+.progress-value {
+    font-size: 11px;
+}

@@ -3,10 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Resolve, RouterStateSnapshot, Rout
 import { JhiPaginationUtil } from 'ng-jhipster';
 
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
-import { UserLoginDialogComponent } from './user-login-management-dialog.component';
-import { UserDeleteDialogComponent } from './user-management-delete-dialog.component';
 import { UserMgmtDetailComponent } from './user-management-detail.component';
-import { UserDialogComponent } from './user-management-dialog.component';
 import { UserMgmtComponent } from './user-management.component';
 
 @Injectable()
@@ -56,21 +53,6 @@ export const userMgmtRoute: Routes = [
                 }
             },
             {
-                path: 'user-management-new',
-                component: UserDialogComponent,
-                outlet: 'popup'
-            },
-            {
-                path: 'user-management/:userKey/edit',
-                component: UserDialogComponent,
-                outlet: 'popup'
-            },
-            {
-                path: 'user-management/:userKey/delete',
-                component: UserDeleteDialogComponent,
-                outlet: 'popup'
-            },
-            {
                 path: 'user-management/:userKey',
                 component: UserMgmtDetailComponent,
                 data: {
@@ -78,11 +60,6 @@ export const userMgmtRoute: Routes = [
                     pageTitle: 'global.menu.admin.main',
                     pageSubTitleTrans: 'userManagement.detail.title'
                 }
-            },
-            {
-                path: 'user-login-management/:userKey/edit',
-                component: UserLoginDialogComponent,
-                outlet: 'popup'
             }
         ]
     }

@@ -7,6 +7,7 @@ import { XM_EVENT_LIST } from '../../xm.constants';
 import { PrivacyAndTermsDialogComponent } from '../components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
 import { XmConfigService } from '../spec/config.service';
 import { RegisterService } from './register.service';
+import { PasswordSpec } from '../../xm-entity/shared/password-spec.model';
 
 @Component({
     selector: 'xm-register',
@@ -33,7 +34,7 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     language = 'en';
     publicKey;
     socialConfig: [];
-    passwordConfig: any;
+    passwordSettings: PasswordSpec;
 
     constructor(private jhiLanguageService: JhiLanguageService,
                 private xmConfigService: XmConfigService,
@@ -49,11 +50,6 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
             this.needCaptcha = result.isCaptchaNeed;
             this.publicKey = result.publicKey;
         });
-        this.passwordConfig = {
-            minLength: 4,
-            maxLength: 50,
-            pattern: ''
-        }
     }
 
     ngOnDestroy() {
@@ -65,9 +61,9 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
         this.registerAccount = {};
         this.xmConfigService.getUiConfig().subscribe(config => {
             this.socialConfig = config && config.social;
-            if (config.passwordSettings) {
-                this.passwordConfig = config.passwordSettings;
-            }
+        });
+        this.xmConfigService.getPasswordConfig().subscribe((config: any) => {
+            this.makePasswordSettings(config);
         });
     }
 
@@ -159,6 +155,19 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
                 typeKey: 'LOGIN.MSISDN',
                 login: this.msisdn
             });
+        }
+    }
+
+    private makePasswordSettings(config: any): void {
+        if (config) {
+            const CONFIG: PasswordSpec = config.passwordConfig;
+            this.passwordSettings = new PasswordSpec(
+                CONFIG.minLength || 4,
+                CONFIG.maxLength || 50,
+                CONFIG.pattern || '',
+                CONFIG.patternMessage || null);
+        } else {
+            this.passwordSettings = new PasswordSpec(4, 50, '', null);
         }
     }
 }

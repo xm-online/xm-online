@@ -12,7 +12,7 @@ export class XmConfigService {
 
     private configUrl = 'config/api/profile';
     private configMaintenanceUrl = 'config/api/config';
-
+    private uaaPasswordConfigUrl = 'uaa/api/uaa/properties/settings-public';
     private elasticReindexUrl = '/entity/api/elasticsearch/index';
 
     private uiConfig;
@@ -52,6 +52,11 @@ export class XmConfigService {
 
     getConfig(configPath: string): Observable<string> {
         return this.http.get(this.configUrl + configPath, {responseType: 'text'}).pipe(
+            map((res: any) => { return res; }));
+    }
+
+    getPasswordConfig(): Observable<string> {
+        return this.http.get(this.uaaPasswordConfigUrl, {responseType: 'text'}).pipe(
             map((res: any) => { return res; }));
     }
 

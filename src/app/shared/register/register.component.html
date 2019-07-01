@@ -127,9 +127,9 @@
              name="password"
              [(ngModel)]="registerAccount.password"
              #password="ngModel"
-             [minlength]="passwordConfig.minLength"
-             [maxlength]="passwordConfig.maxlength"
-             [pattern]="passwordConfig.pattern"
+             [minlength]="passwordSettings.minLength"
+             [maxlength]="passwordSettings.maxlength"
+             [pattern]="passwordSettings.pattern"
              required
              placeholder="{{'global.form.newpassword' | translate}}">
 
@@ -139,14 +139,14 @@
         </span>
       </mat-error>
       <mat-error *ngIf="password.hasError('minlength')">
-        {{'global.messages.validate.newpassword.password-min-length' | translate: passwordConfig}}
+        {{'global.messages.validate.newpassword.password-min-length' | translate: passwordSettings}}
       </mat-error>
       <mat-error *ngIf="password.hasError('maxlength')">
-        {{'global.messages.validate.newpassword.password-min-length' | translate: passwordConfig}}
+        {{'global.messages.validate.newpassword.password-min-length' | translate: passwordSettings}}
       </mat-error>
       <mat-error
         *ngIf="password.hasError('pattern') && !(password.hasError('maxlength') || password.hasError('minlength'))">
-        {{'global.messages.validate.newpassword.password-pattern' | translate: passwordConfig}}
+        {{'global.messages.validate.newpassword.password-pattern' | translate: passwordSettings}}
       </mat-error>
     </mat-form-field>
     <xm-password-strength-bar [passwordToCheck]="registerAccount.password"></xm-password-strength-bar>
@@ -159,9 +159,9 @@
              name="confirmPassword"
              [(ngModel)]="confirmPassword"
              #confirmPasswordInput="ngModel"
-             [minlength]="passwordConfig.minLength"
-             [maxlength]="passwordConfig.maxlength"
-             [pattern]="passwordConfig.pattern"
+             [minlength]="passwordSettings.minLength"
+             [maxlength]="passwordSettings.maxlength"
+             [pattern]="passwordSettings.pattern"
              required
              placeholder="{{'global.form.confirmpassword' | translate}}">
 
@@ -171,15 +171,15 @@
         </span>
       </mat-error>
       <mat-error *ngIf="confirmPasswordInput.hasError('minlength')">
-        {{'global.messages.validate.confirmpassword.password-min-length' | translate: passwordConfig}}
+        {{'global.messages.validate.confirmpassword.password-min-length' | translate: passwordSettings}}
       </mat-error>
       <mat-error *ngIf="confirmPasswordInput.hasError('maxlength')">
-        {{'global.messages.validate.confirmpassword.password-min-length' | translate: passwordConfig}}
+        {{'global.messages.validate.confirmpassword.password-min-length' | translate: passwordSettings}}
       </mat-error>
       <mat-error
         *ngIf="confirmPasswordInput.hasError('pattern') &&
         !(confirmPasswordInput.hasError('minlength') || confirmPasswordInput.hasError('maxlength'))">
-        {{'global.messages.validate.confirmpassword.password-pattern' | translate: passwordConfig}}
+        {{'global.messages.validate.confirmpassword.password-pattern' | translate: passwordSettings}}
       </mat-error>
     </mat-form-field>
   </div>

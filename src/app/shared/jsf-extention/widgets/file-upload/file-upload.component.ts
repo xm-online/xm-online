@@ -62,15 +62,10 @@ export class FileUploadComponent implements OnInit {
                     }
                 )
                 .subscribe(event => {
-                    switch (event.type) {
-                        case HttpEventType.UploadProgress:
-                           this.updateProgress(event);
-                           break;
-                        case HttpEventType.Response:
-                            this.updateData(event.body);
-                            break;
-                        default:
-                            this.handleError();
+                    if (event.type === HttpEventType.UploadProgress) {
+                        this.updateProgress(event);
+                    } else if (event.type === HttpEventType.Response) {
+                        this.updateData(event.body);
                     }
                 }, err => {
                     this.handleError(err)

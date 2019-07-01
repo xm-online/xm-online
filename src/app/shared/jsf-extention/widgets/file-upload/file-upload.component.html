@@ -13,33 +13,66 @@
                [(ngModel)]="controlValue">
 
         <div class="row flex-nowrap align-items-center" *ngIf="!controlValue">
-          <div class="col" style="min-width: 0;">
-            <input type="file" class="file-input" (input)="updateFile($event)">
+          <div class="col mw-0">
+            <div class="row flex-nowrap align-items-center no-gutters picked-file" *ngIf="file">
+              <div class="col mw-0"
+                   title="{{file?.name}}, {{file?.size}}{{'xm-entity.attachment-card.volume.bytes' | translate}}">
+                <div class="upload-placeholder p-0">
+                  {{file?.name}}, {{file?.size}} {{'xm-entity.attachment-card.volume.bytes' | translate}}
+                </div>
+              </div>
+              <div class="col-auto">
+                <button mat-icon-button type="button" (click)="resetFile();" *ngIf="!progress">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="upload-area" *ngIf="!file">
+              <div class="upload-placeholder text-center">
+                {{'xm-entity.attachment-detail-dialog.upload' | translate}}
+              </div>
+
+              <input type="file"
+                     [title]="'xm-entity.attachment-detail-dialog.upload' | translate"
+                     class="file-input"
+                     (input)="updateFile($event)">
+            </div>
           </div>
-          <div class="col-auto">
+          <div class="col-auto pl-0">
             <button mat-raised-button
-                    class="btn btn-sm btn-primary upload-file"
+                    class="btn btn-primary upload-file"
                     type="button"
                     (click)="uploadFile(file)"
-                    [disabled]="uploading || !file"
-                    [class.loading]="uploading">
-              <mat-icon>cloud_upload</mat-icon>
+                    [disabled]="progress || !file">
+              <mat-icon *ngIf="!progress">cloud_upload</mat-icon>
+
+              <mat-progress-spinner class="progress-indicator"
+                                    [color]="'accent'"
+                                    [diameter]="38"
+                                    [strokeWidth]="2"
+                                    [mode]="'determinate'"
+                                    *ngIf="progress"
+                                    [value]="progress">
+
+              </mat-progress-spinner>
+              <span class="progress-value"  *ngIf="progress">{{progress}}%</span>
             </button>
           </div>
         </div>
 
         <div class="row flex-nowrap align-items-center" *ngIf="controlValue">
-          <div class="col" style="min-width: 0;">
+          <div class="col mw-0">
             <div class="truncate">{{controlValue}}</div>
           </div>
           <div class="col-auto">
-            <button mat-icon-button class="reset-file" type="button" (click)="resetFile()">
+            <button mat-icon-button type="button" (click)="resetFile()">
               <mat-icon>close</mat-icon>
             </button>
           </div>
         </div>
 
-        <div class="mat-error" *ngIf="uploadingError && !controlValue && !uploading">
+        <div class="mat-error" *ngIf="uploadingError && !controlValue">
           {{'global.messages.error.upload-fail' | translate}}
         </div>
       </div>

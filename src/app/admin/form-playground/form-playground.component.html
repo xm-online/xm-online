@@ -100,7 +100,7 @@
             *ngIf="formActive"
             [framework]="'material-design'"
             [schema]="jsonFormObject.schema"
-            [layout]="jsonFormObject.layout | i18nJsf :principal"
+            [layout]="jsonFormObject.layout.form | i18nJsf :principal"
             [data]="jsonFormObject.data"
             [options]="jsonFormObject.options | i18nJsf :principal"
             [form]="jsonFormObject.form | i18nJsf :principal"

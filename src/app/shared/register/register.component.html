@@ -128,7 +128,7 @@
              [(ngModel)]="registerAccount.password"
              #password="ngModel"
              [minlength]="passwordSettings?.minLength"
-             [maxlength]="passwordSettings?.maxlength"
+             [maxlength]="passwordSettings?.maxLength"
              [pattern]="passwordSettings?.pattern"
              required
              placeholder="{{'global.form.newpassword' | translate}}">
@@ -161,7 +161,7 @@
              [(ngModel)]="confirmPassword"
              #confirmPasswordInput="ngModel"
              [minlength]="passwordSettings?.minLength"
-             [maxlength]="passwordSettings?.maxlength"
+             [maxlength]="passwordSettings?.maxLength"
              [pattern]="passwordSettings?.pattern"
              required
              placeholder="{{'global.form.confirmpassword' | translate}}">

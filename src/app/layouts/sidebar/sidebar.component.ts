@@ -112,7 +112,6 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.tenantName += ' ' + this.version;
             }
             this.poweredByConfig = result.poweredBy || null;
-            console.log(this.poweredByConfig);
         }, error => {
             console.log(error);
             this.tenantLogoUrl = '../assets/img/logo-xm-online.png';

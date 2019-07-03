@@ -26,9 +26,7 @@
           </button>
         </div>
 
-        <div class="navbar-container-part title-part" *ngIf="routeData && title" [title]="title">
-          {{ title }}
-        </div>
+        <div class="navbar-container-part title-part" *ngIf="routeData && title" [title]="title" [innerHTML]="titleContent"></div>
 
         <div class="navbar-container-part search-part" *ngIf="isMobileMenu()">
           <form *ngSwitchCase="true" class="navbar-form navbar-right" role="search">

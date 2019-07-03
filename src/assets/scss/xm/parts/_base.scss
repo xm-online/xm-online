@@ -38,6 +38,10 @@ body {
     .sidebar {
         &-wrapper {
             height: calc(100vh - 70px) !important;
+
+            &.bottom-spacer  {
+                height: calc(100vh - 120px) !important;
+            }
         }
     }
 }

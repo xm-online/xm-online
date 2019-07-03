@@ -1,0 +1,12 @@
+<div class="row no-gutters flex-nowrap justify-content-center align-items-center xm-powered-by" *ngIf="config">
+  <div class="col-auto text-content" *ngIf="config.text">
+    <span class="truncate">{{config.text | i18nName: principal}}</span>
+  </div>
+  <div class="col-auto" *ngIf="config.redirectUrl">
+    <img [class.has-url]="config.redirectUrl"
+         [src]="config.imageUrl"
+         [title]="altText"
+         [alt]="altText"
+         (click)="redirect(config.redirectUrl)">
+  </div>
+</div>

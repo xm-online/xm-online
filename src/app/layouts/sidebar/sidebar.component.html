@@ -9,7 +9,7 @@
   </a>
 </div>
 
-<div class="sidebar-wrapper" [ngSwitch]="isAuthenticated()">
+<div class="sidebar-wrapper" [class.bottom-spacer]="poweredByConfig" [ngSwitch]="isAuthenticated()">
   <div *ngSwitchCase="true" class="user">
     <div class="photo">
       <span *ngIf="getImageUrl()">
@@ -242,3 +242,5 @@
     </li>
   </ul>
 </div>
+
+<xm-powered-by [config]="poweredByConfig"></xm-powered-by>

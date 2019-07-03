@@ -48,6 +48,7 @@ export * from './services/parse-by-path.service';
 export * from './components/loader/loader.component';
 export * from './components/xm-per-page/xm-per-page.component';
 export * from './components/no-data/no-data.component';
+export * from './components/powered-by/powered-by.component';
 export * from './components/maintenance/maintenance.component';
 export * from './components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
 export * from './components/xm-password-needed/xm-password-needed.component';

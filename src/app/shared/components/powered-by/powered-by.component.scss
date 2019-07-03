@@ -1,0 +1,31 @@
+.xm-powered-by {
+    height: 50px;
+    position: relative;
+    z-index: 2;
+    max-width: 100%;
+
+    .text-content {
+        min-width: 0;
+        max-width: 200px;
+    }
+
+    img {
+        display: block;
+        max-height: 40px;
+        max-width: 40px;
+        margin: 0 5px;
+    }
+
+    .has-url {
+        cursor: pointer;
+    }
+
+    .truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        vertical-align: middle;
+        max-width: 100%;
+    }
+}

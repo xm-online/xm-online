@@ -5,6 +5,7 @@
     },
     "errors": {
         "error.internalServerError": "Внутрішня помилка сервера",
+        "error.accessDenied": "Access denied",
         "privilegeOperationWrong": "Операція не підтримується '{{ name }}'!",
         "privilegeInsufficient": "Недостатньо привілеїв '{{ name }}'!",
         "accessDenied": "Доступ заборонено",

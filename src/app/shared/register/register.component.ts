@@ -7,6 +7,7 @@ import { XM_EVENT_LIST } from '../../xm.constants';
 import { PrivacyAndTermsDialogComponent } from '../components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
 import { XmConfigService } from '../spec/config.service';
 import { RegisterService } from './register.service';
+import { PasswordSpec } from '../../xm-entity/shared/password-spec.model';
 
 @Component({
     selector: 'xm-register',
@@ -33,6 +34,8 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     language = 'en';
     publicKey;
     socialConfig: [];
+    passwordSettings: PasswordSpec;
+    patternMessage: string;
 
     constructor(private jhiLanguageService: JhiLanguageService,
                 private xmConfigService: XmConfigService,
@@ -48,7 +51,6 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
             this.needCaptcha = result.isCaptchaNeed;
             this.publicKey = result.publicKey;
         });
-
     }
 
     ngOnDestroy() {
@@ -61,6 +63,11 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
         this.xmConfigService.getUiConfig().subscribe(config => {
             this.socialConfig = config && config.social;
         });
+        this.xmConfigService
+            .getPasswordConfig()
+            .subscribe((config: any) => {
+                this.makePasswordSettings(config);
+            }, err => this.makePasswordSettings());
     }
 
     ngAfterViewInit() {
@@ -151,6 +158,13 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
                 typeKey: 'LOGIN.MSISDN',
                 login: this.msisdn
             });
+        }
+    }
+
+    private makePasswordSettings(config?: any): void {
+        this.passwordSettings = this.xmConfigService.mapPasswordSettings(config);
+        if (this.passwordSettings.patternMessage) {
+            this.patternMessage = this.xmConfigService.updatePatternMessage(this.passwordSettings.patternMessage)
         }
     }
 }

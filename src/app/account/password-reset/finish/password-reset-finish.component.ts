@@ -2,8 +2,14 @@ import { Component, OnInit, AfterViewInit, Renderer, ElementRef } from '@angular
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JhiLanguageService } from 'ng-jhipster';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 import { PasswordResetFinish } from './password-reset-finish.service';
+import { PasswordSpec } from '../../../xm-entity/shared/password-spec.model';
+import { XmConfigService } from '../../../shared/spec/config.service';
+import { DEFAULT_AUTH_TOKEN, DEFAULT_CONTENT_TYPE } from '../../../xm.constants';
+import { AuthServerProvider } from '../../../shared';
 
 interface ResetPasswordFormConfig {
     formTitle: string,
@@ -29,13 +35,18 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     modalRef: NgbModalRef;
     key: string;
     config: ResetPasswordFormConfig;
+    passwordSettings: PasswordSpec;
+    patternMessage: string;
 
     constructor(
         private jhiLanguageService: JhiLanguageService,
         private passwordResetFinish: PasswordResetFinish,
         private route: ActivatedRoute,
+        private http: HttpClient,
+        private authServerProvider: AuthServerProvider,
         private elementRef: ElementRef,
         private renderer: Renderer,
+        private xmConfigService: XmConfigService,
         private router: Router
     ) {
         this.config = {
@@ -70,6 +81,9 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
                 };
             }
         });
+        this.getAccessToken().subscribe(() => {
+            this.checkPasswordSettings();
+        });
         this.resetAccount = {};
         this.keyMissing = !this.key;
     }
@@ -96,5 +110,32 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
 
     login() {
         this.router.navigate([''])
+    }
+
+    private checkPasswordSettings() {
+        this.xmConfigService
+            .getPasswordConfig()
+            .subscribe((config: any) => {
+                this.makePasswordSettings(config);
+            }, err => this.makePasswordSettings());
+    }
+
+    private getAccessToken() {
+        const data = new HttpParams().set('grant_type', 'client_credentials');
+        const headers = {
+            'Content-Type': DEFAULT_CONTENT_TYPE,
+            'Authorization': DEFAULT_AUTH_TOKEN
+        };
+        return this.http.post<any>('uaa/oauth/token', data, {headers: headers, observe: 'response'})
+            .pipe(map((resp) => {
+                this.authServerProvider.loginWithToken(resp.body.access_token, false);
+            }));
+    }
+
+    private makePasswordSettings(config?: any): void {
+        this.passwordSettings = this.xmConfigService.mapPasswordSettings(config);
+        if (this.passwordSettings.patternMessage) {
+            this.patternMessage = this.xmConfigService.updatePatternMessage(this.passwordSettings.patternMessage)
+        }
     }
 }

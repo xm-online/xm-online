@@ -2,7 +2,7 @@
     "activate": {
         "title": "Активация",
         "messages": {
-            "success": "<strong>Ваш аккаут был активиронан.</strong> Пожалуйста, ",
+            "success": "<strong>Ваш аккаут был активиронан.</strong> Пожалуйста,&nbsp;",
             "link": "войдите",
             "register": "Registration",
             "error": "<strong>Ваш аккаунт не может быть активирован.</strong> Пожалуйста, воспользуйтесь формой регистрации."

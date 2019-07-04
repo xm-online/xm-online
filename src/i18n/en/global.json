@@ -74,7 +74,7 @@
             },
             "info": {
                 "authenticated": {
-                    "prefix": "If you want to",
+                    "prefix": "If you want to ",
                     "link": "sign in",
                     "suffix": ", you can try the default accounts:"
                 }

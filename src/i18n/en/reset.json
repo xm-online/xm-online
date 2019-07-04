@@ -30,7 +30,7 @@
             "messages": {
                 "info": "Create new password",
                 "error": "Your password couldn't be created. Remember a password request is only valid for 24 hours.",
-                "success": "<strong>Your password has been created.</strong> Please "
+                "success": "<strong>Your password has been created.</strong> Please&nbsp;"
             },
             "form": {
                 "button": "Setup Password"

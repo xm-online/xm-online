@@ -15,8 +15,10 @@
             <xm-social *ngIf="success" provider="{{ provider }}"></xm-social>
             <br/>
             <div class="alert alert-warning">
-                <span jhiTranslate="global.messages.info.authenticated.prefix">If you want to </span>
-                <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">sign in</a><span jhiTranslate="global.messages.info.authenticated.suffix">, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
+                {{'global.messages.info.authenticated.prefix' | translate}}
+                <a class="alert-link" (click)="login()">{{'global.messages.info.authenticated.link' | translate}}</a>{{'global.messages.info.authenticated.suffix' | translate}}
+                <br/>- Administrator (login="admin" and password="admin")
+                <br/>- User (login="user" and password="user").
             </div>
         </div>
     </div>

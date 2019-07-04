@@ -4,8 +4,8 @@
             <h1 jhiTranslate="activate.title">Activation</h1>
 
             <div class="alert alert-success" *ngIf="success">
-                <span jhiTranslate="activate.messages.success"><strong>Your user has been activated.</strong> Please </span>&nbsp;
-                <a class="alert-link" (click)="login()" jhiTranslate="activate.messages.link">sign in</a>.
+                <span [innerHTML]="'activate.messages.success' | translate"></span>
+                <a class="alert-link" href="javascript: void(0);" (click)="login()">{{'activate.messages.link' | translate}}</a>.
             </div>
 
             <div class="alert alert-danger" *ngIf="error">

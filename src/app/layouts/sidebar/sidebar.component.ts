@@ -15,6 +15,7 @@ import {Dashboard, DashboardWrapperService} from '../../xm-dashboard';
 import {XmEntitySpecWrapperService} from '../../xm-entity';
 import {DEBUG_INFO_ENABLED, VERSION, XM_EVENT_LIST} from '../../xm.constants';
 import {transpilingForIE} from '../../shared/jsf-extention/jsf-attributes-helper';
+import { PoweredBy } from '../../shared/components/powered-by/powered-by.model';
 
 const misc: any = {
     navbar_menu_visible: 0,
@@ -59,6 +60,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
     tenantName: 'XM^online';
     tenantLogoUrl: '../assets/img/logo-xm-online.png';
     iconsInMenu: false;
+    poweredByConfig: PoweredBy;
 
     @ViewChild('navbar-cmp') button;
 
@@ -109,6 +111,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
             if (this.tenantName === 'XM^online') {
                 this.tenantName += ' ' + this.version;
             }
+            this.poweredByConfig = result.poweredBy || null;
         }, error => {
             console.log(error);
             this.tenantLogoUrl = '../assets/img/logo-xm-online.png';

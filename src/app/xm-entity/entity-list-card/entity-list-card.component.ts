@@ -188,11 +188,8 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
         this.load();
     }
 
-    onLoadPage(entityOptions: EntityOptions, page) {
-        if (page !== entityOptions.previousPage) {
-            entityOptions.previousPage = page;
-            this.loadEntities(entityOptions).subscribe(result => entityOptions.entities = result);
-        }
+    onLoadPage(entityOptions: EntityOptions) {
+        this.loadEntities(entityOptions).subscribe(result => entityOptions.entities = result);
     }
 
     onNavigate(entityOptions: EntityOptions, xmEntity: XmEntity) {

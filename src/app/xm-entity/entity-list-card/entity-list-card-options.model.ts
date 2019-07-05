@@ -22,7 +22,6 @@ export class EntityOptions {
                 public noDeepLink?: boolean,
                 public fields?: FieldOptions[],
                 public page?: number,
-                public previousPage?: number,
                 public xmEntitySpec?: XmEntitySpec,
                 public entities?: XmEntity[],
                 public totalItems?: any,

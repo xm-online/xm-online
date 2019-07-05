@@ -60,6 +60,10 @@
             "uaa-login": {
                 "title": "Login",
                 "save": "Save Login specification"
+            },
+            "tenant": {
+                "title": "Tenant",
+                "save": "Update Tenant specification"
             }
         },
         "widget-detail-dialog": {

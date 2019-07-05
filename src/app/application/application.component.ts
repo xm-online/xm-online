@@ -116,9 +116,6 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                         this.jhiLanguageHelper.updateTitle();
                     }
                 });
-                if (this.typeKey && this.spec) {
-                    this.load();
-                }
             });
         }, err => {
             console.log(err);

@@ -18,6 +18,7 @@ import { XmEntityService } from '../shared/xm-entity.service';
 import { EntityListCardOptions, EntityOptions } from './entity-list-card-options.model';
 import { XmEntitySpecWrapperService } from '../shared/xm-entity-spec-wrapper.service';
 import { XmEntitySpec } from '../shared/xm-entity-spec.model';
+import * as _ from 'lodash'
 
 declare let swal: any;
 
@@ -63,7 +64,9 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.options && changes.options.previousValue !== changes.options.currentValue) {
+        if (changes.options && !_.isEqual(changes.options.previousValue, changes.options.currentValue)) {
+            this.predicate = 'id';
+            this.reverse = false;
             this.load();
         }
     }

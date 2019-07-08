@@ -2,6 +2,7 @@ const PROXY_CONFIG = [
     {
         context: [
             "/v2",
+            "/otp",
             "/management",
             "/api",
             "/uaa",

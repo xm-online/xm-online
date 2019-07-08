@@ -7,6 +7,9 @@ import {XmConfigService} from '../../shared/spec/config.service';
 import {ConfigValidatorUtil} from './config-validator/config-validator.util';
 import {ConfigVisualizerDialogComponent} from './config-visualizer-dialog/config-visualizer-dialog.component';
 import {StatesManagementDialogComponent} from '../../xm-entity';
+import { finalize } from 'rxjs/operators';
+
+const TENANT_SPEC_PATH = '/tenant-config.yml';
 
 @Component({
     selector: 'xm-specification-mng',
@@ -32,10 +35,13 @@ export class SpecificationMngComponent implements OnInit {
         {slug: 'entity', icon: 'build'},
         {slug: 'timeline', icon: 'history'},
         {slug: 'uaa', icon: 'security'},
-        {slug: 'uaa-login', icon: 'fingerprint'}
+        {slug: 'uaa-login', icon: 'fingerprint'},
+        {slug: 'tenant', icon: 'ballot'}
     ];
     currentSpecificationSlug = 'ui';
 
+    isUiSpecValid = false;
+    isTenantSpecValid = false;
     isXmEntitySpecValid = false;
     isTimelineSpecValid = false;
     isUaaSpecValid = false;
@@ -52,6 +58,7 @@ export class SpecificationMngComponent implements OnInit {
     entitySpecificationIn: string;
     entitySpecificationOut: string;
     entityValidation: any;
+    uiSpecificationProgress: boolean;
 
     timelineSpecificationIn: string;
     timelineSpecificationOut: string;
@@ -63,6 +70,12 @@ export class SpecificationMngComponent implements OnInit {
 
     uiSpecificationIn: string;
     uiSpecificationOut: string;
+    uiValidation: any;
+
+    tenantSpecificationIn: string;
+    tenantSpecificationOut: string;
+    tenantValidation: any;
+    tenantSpecificationProgress: boolean;
 
     uaaSpecificationIn: string;
     uaaSpecificationOut: string;
@@ -75,6 +88,11 @@ export class SpecificationMngComponent implements OnInit {
                 private service: XmConfigService) {
         this.activatedRoute.params.subscribe((params) => {
             this.currentSpecificationSlug = params['slug'];
+
+            this.isTenantSpecValid = false;
+            this.tenantValidation = null;
+            this.isUiSpecValid = false;
+            this.uiValidation = null;
         });
     }
 
@@ -99,15 +117,73 @@ export class SpecificationMngComponent implements OnInit {
             this.uiSpecificationIn = result;
             this.uiSpecificationOut = result;
         });
+        this.service.getConfig(TENANT_SPEC_PATH).subscribe(result => {
+            this.tenantSpecificationIn = result;
+            this.tenantSpecificationOut = result;
+        });
 
     }
 
     onUiSpecificationChange(textChanged) {
         this.uiSpecificationOut = textChanged;
+        this.isUiSpecValid = false;
+        this.uiValidation = null;
+    }
+
+    onTenantSpecificationChange(textChanged) {
+        this.tenantSpecificationOut = textChanged;
+        this.isTenantSpecValid = false;
+        this.tenantValidation = null;
     }
 
     updateUiConfig() {
-        this.service.updateConfig('/webapp/settings-public.yml', this.uiSpecificationOut).subscribe(() => {
+        this.uiSpecificationProgress = true;
+        this.service
+            .updateConfig('/webapp/settings-public.yml', this.uiSpecificationOut)
+            .pipe(finalize(() => this.uiSpecificationProgress = false))
+            .subscribe(() => window.location.reload());
+    }
+
+    updateTenantConfig() {
+        this.tenantSpecificationProgress = true;
+        this.service
+            .updateConfig(TENANT_SPEC_PATH, this.tenantSpecificationOut)
+            .pipe(finalize(() => this.tenantSpecificationProgress = false))
+            .subscribe((res) => window.location.reload());
+    }
+
+    validateUiSpecification() {
+        const errors = ConfigValidatorUtil.validateYAML(this.uiSpecificationOut);
+        if (errors && errors.length) {
+            this.uiValidation = {errorMessage: ''};
+            for (const err of errors) {
+                this.uiValidation.errorMessage += err.message + (err.path ? ' path: ' + err.path : '') + '<br/>';
+                if (err.line) {
+                    this.line = err.line;
+                }
+            }
+        } else {
+            this.isUiSpecValid = true;
+        }
+    }
+
+    validateTenantSpecification() {
+        const errors = ConfigValidatorUtil.validateYAML(this.tenantSpecificationOut);
+        if (errors && errors.length) {
+            this.tenantValidation = {errorMessage: ''};
+            for (const err of errors) {
+                this.tenantValidation.errorMessage += err.message + (err.path ? ' path: ' + err.path : '') + '<br/>';
+                if (err.line) {
+                    this.line = err.line;
+                }
+            }
+        } else {
+            this.isTenantSpecValid = true;
+        }
+    }
+
+    updateEntityConfig() {
+        this.service.updateXmEntitySpec(this.entitySpecificationOut).subscribe(() => {
             window.location.reload();
         });
     }
@@ -131,12 +207,6 @@ export class SpecificationMngComponent implements OnInit {
         } else {
             this.isXmEntitySpecValid = true;
         }
-    }
-
-    updateEntityConfig() {
-        this.service.updateXmEntitySpec(this.entitySpecificationOut).subscribe(() => {
-            window.location.reload();
-        });
     }
 
     onTimelineSpecificationChange(textChanged) {

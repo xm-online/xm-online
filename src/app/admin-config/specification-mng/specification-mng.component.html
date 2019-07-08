@@ -17,10 +17,27 @@
         <div class="card">
           <div class="card-body">
             <div class="text-center pb-3">
-              <button type="submit" class="btn btn-primary" (click)="updateUiConfig();"
-                      jhiTranslate="admin-config.specification-mng.ui.save">
-                Update UI specification
+              <button type="button"
+                      class="btn btn-primary"
+                      (click)="updateUiConfig();"
+                      [class.loading]="uiSpecificationProgress"
+                      [disabled]="uiSpecificationProgress"
+                      *ngIf="isUiSpecValid">
+                {{'admin-config.specification-mng.ui.save' | translate}}
               </button>
+              <button type="button"
+                      class="btn btn-primary"
+                      (click)="validateUiSpecification();"
+                      *ngIf="!isUiSpecValid">
+                {{'admin-config.specification-mng.validate' | translate}}
+              </button>
+
+              <div class="text-center">
+                <div class="text-danger"
+                     [innerHtml]="uiValidation?.errorMessage"
+                     *ngIf="uiValidation && !uiValidation.valid" >
+                </div>
+              </div>
             </div>
             <div class="text-right">
               <div xmAceEditor
@@ -191,6 +208,48 @@
                    [mode]="'yaml'"
                    [autoUpdateContent]="true"
                    (textChanged)="onUaaSpecificationChange($event)"
+                   [style.min-height]="'150px'"
+                   [style.width]="'100%'"
+                   style="overflow-x: auto; border: 1px solid lightgray;">
+                <span jhiTranslate="admin-config.specification-mng.loading">loading specification...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchCase="'tenant'">
+        <div class="card">
+          <div class="card-body">
+            <div class="text-center pb-3">
+              <button type="button"
+                      class="btn btn-primary"
+                      (click)="updateTenantConfig();"
+                      [class.loading]="tenantSpecificationProgress"
+                      [disabled]="tenantSpecificationProgress"
+                      *ngIf="isTenantSpecValid">
+                {{'admin-config.specification-mng.tenant.save' | translate}}
+              </button>
+              <button type="button"
+                      class="btn btn-primary"
+                      (click)="validateTenantSpecification();"
+                      *ngIf="!isTenantSpecValid">
+                {{'admin-config.specification-mng.validate' | translate}}
+              </button>
+
+              <div class="text-center">
+                <div class="text-danger" [innerHtml]="tenantValidation?.errorMessage"
+                     *ngIf="tenantValidation && !tenantValidation.valid" >
+                </div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div xmAceEditor
+                   [text]="tenantSpecificationIn"
+                   [options]="aceEditorOptions"
+                   [readOnly]="false"
+                   [mode]="'yaml'"
+                   [autoUpdateContent]="true"
+                   (textChanged)="onTenantSpecificationChange($event)"
                    [style.min-height]="'150px'"
                    [style.width]="'100%'"
                    style="overflow-x: auto; border: 1px solid lightgray;">

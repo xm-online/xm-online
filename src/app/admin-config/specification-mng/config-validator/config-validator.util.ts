@@ -147,4 +147,15 @@ export class ConfigValidatorUtil {
         return errors;
     }
 
+    static validateYAML(content: string): ConfigError[] {
+        const errors = [];
+        let spec = null;
+        try {
+            spec = YAML.parse(content);
+        } catch (err) {
+            errors.push(new ConfigError(err.message, err.parsedLine, err.snippet));
+            return errors;
+        }
+        return errors;
+    }
 }

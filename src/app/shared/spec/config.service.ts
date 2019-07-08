@@ -53,6 +53,11 @@ export class XmConfigService {
             map((res: any) => { return res; }));
     }
 
+    updateTenantSpec(configPath: string, configContent: string): Observable<any> {
+        return this.http.put(this.configUrl + configPath, configContent, this.headers()).pipe(
+            map((res: any) => { return res; }));
+    }
+
     getConfig(configPath: string): Observable<string> {
         return this.http.get(this.configUrl + configPath, {responseType: 'text'}).pipe(
             map((res: any) => { return res; }));

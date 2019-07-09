@@ -12,7 +12,7 @@ import { XmEntity } from '../shared/xm-entity.model';
 import { getFileNameFromResponseContentDisposition, saveFile } from '../../shared/helpers/file-download-helper';
 import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { catchError, filter, finalize, share, tap } from 'rxjs/operators';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 declare let swal: any;
 declare let $: any;

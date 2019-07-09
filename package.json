@@ -25,9 +25,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "get-unwraped-labels": "node ./scripts/get-unwraped-labels.js",
-    "translations": "node ./scripts/translations.js",
-    "-theme": "node ./scripts/theme-generator.js",
-    "generate-theme-all": "node ./scripts/theme-generator.js all"
+    "translations": "node ./scripts/translations.js"
   },
   "private": true,
   "dependencies": {

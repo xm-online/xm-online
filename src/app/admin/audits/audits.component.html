@@ -36,30 +36,40 @@
                       <mat-datepicker #toDatePicker></mat-datepicker>
                     </mat-form-field>
                   </div>
-
-
                 </div>
 
+              <ng-container *ngIf="audits?.length > 0">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered">
-                        <thead>
-                        <tr>
-                            <th (click)="orderProp = 'timestamp'; reverse=!reverse"><span jhiTranslate="audits.table.header.date">Date</span></th>
-                            <th (click)="orderProp = 'principal'; reverse=!reverse"><span jhiTranslate="audits.table.header.principal">User</span></th>
-                            <th (click)="orderProp = 'type'; reverse=!reverse"><span jhiTranslate="audits.table.header.status">State</span></th>
-                            <th (click)="orderProp = 'data.message'; reverse=!reverse"><span jhiTranslate="audits.table.header.data">Extra data</span></th>
-                        </tr>
-                        </thead>
-                        <tr *ngFor="let audit of getAudits()">
-                            <td><span>{{audit.timestamp| date:'medium'}}</span></td>
-                            <td><small>{{audit.principal}}</small></td>
-                            <td>{{audit.type}}</td>
-                            <td>
-                                <span *ngIf="audit.data" ng-show="audit.data.message">{{audit.data.message}}</span>
-                                <span *ngIf="audit.data" ng-show="audit.data.remoteAddress"><span jhiTranslate="audits.table.data.remoteAddress">Remote Address</span> {{audit.data.remoteAddress}}</span>
-                            </td>
-                        </tr>
-                    </table>
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                      <th (click)="sortAudits(audits, 'timestamp')">
+                        <span jhiTranslate="audits.table.header.date">Date</span>
+                      </th>
+                      <th (click)="sortAudits(audits, 'principal')">
+                        <span jhiTranslate="audits.table.header.principal">User</span>
+                      </th>
+                      <th (click)="sortAudits(audits, 'type')">
+                        <span jhiTranslate="audits.table.header.status">State</span>
+                      </th>
+                      <th (click)="sortAudits(audits, 'data.remoteAddress')">
+                        <span jhiTranslate="audits.table.header.data">Extra data</span>
+                      </th>
+                    </tr>
+                    </thead>
+                    <tr *ngFor="let audit of audits">
+                      <td><span>{{audit.timestamp| date:'medium'}}</span></td>
+                      <td>
+                        <small>{{audit.principal}}</small>
+                      </td>
+                      <td>{{audit.type}}</td>
+                      <td>
+                        <span *ngIf="audit.data" ng-show="audit.data.message">{{audit.data.message}}</span>
+                        <span *ngIf="audit.data" ng-show="audit.data.remoteAddress"><span
+                          jhiTranslate="audits.table.data.remoteAddress">Remote Address</span> {{audit.data.remoteAddress}}</span>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
 
                 <div class="row align-items-center list-pagination" *ngIf="audits?.length">
@@ -80,6 +90,8 @@
                     </ngb-pagination>
                   </div>
                 </div>
+              </ng-container>
+
 
                 <no-data [show]="!audits?.length"></no-data>
             </div>

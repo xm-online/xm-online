@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { JhiParseLinks } from 'ng-jhipster';
+import { JhiOrderByPipe, JhiParseLinks } from 'ng-jhipster';
 
 import { Audit } from './audit.model';
 import { AuditsService } from './audits.service';
@@ -9,8 +9,9 @@ import { ITEMS_PER_PAGE } from '../../shared';
 declare let moment: any;
 
 @Component({
-  selector: 'xm-audit',
-  templateUrl: './audits.component.html'
+    selector: 'xm-audit',
+    templateUrl: './audits.component.html',
+    providers: [JhiOrderByPipe]
 })
 export class AuditsComponent implements OnInit {
     audits: Audit[];
@@ -27,16 +28,13 @@ export class AuditsComponent implements OnInit {
     constructor(
         private auditsService: AuditsService,
         private parseLinks: JhiParseLinks,
+        private orderByPipe: JhiOrderByPipe,
         private datePipe: DatePipe
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.page = 1;
         this.reverse = false;
         this.orderProp = 'timestamp';
-    }
-
-    getAudits() {
-        return this.sortAudits(this.audits);
     }
 
     loadPage(page: number) {
@@ -90,17 +88,8 @@ export class AuditsComponent implements OnInit {
         this.toDate = this.datePipe.transform(date, dateFormat);
     }
 
-    private sortAudits(audits: Audit[]) {
-        audits = audits.slice(0).sort((a, b) => {
-            if (a[this.orderProp] < b[this.orderProp]) {
-                return -1;
-            } else if ([b[this.orderProp] < a[this.orderProp]]) {
-                return 1;
-            } else {
-                return 0;
-            }
-        });
-
-        return this.reverse ? audits.reverse() : audits;
+    sortAudits(audits: Audit[], prop: string) {
+        this.reverse = !this.reverse;
+        return  this.orderByPipe.transform(audits, prop, this.reverse);
     }
 }

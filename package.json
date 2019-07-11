@@ -103,6 +103,7 @@
     "ngx-papaparse": "^3.0.2",
     "ngx-rating": "^0.0.9",
     "ngx-webstorage": "^2.0.1",
+    "nomnoml": "^0.6.0",
     "nouislider": "^9.2.0",
     "oboe": "^2.1.4",
     "popper.js": "1.14.1",

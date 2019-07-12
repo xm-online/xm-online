@@ -29,6 +29,7 @@
                             "node_modules/sweetalert2/src/sweetalert2.scss",
                             "src/assets/css/leaflet.css",
                             "src/assets/css/leaflet.draw.css",
+                            "src/assets/css/swagger-ui.css",
                             "src/assets/css/simplemde.min.css",
                             "src/assets/css/mat-dashboard-2.1.1.min.css",
                             "node_modules/snazzy-info-window/dist/snazzy-info-window.css",

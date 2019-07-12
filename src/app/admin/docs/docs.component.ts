@@ -22,7 +22,7 @@ export class JhiDocsComponent implements OnInit, AfterViewInit {
         this.http.get('/swagger-resources').subscribe((data) => {
             console.log(data);
             SwaggerUI({
-                dom_id: '#swagerTEMP',
+                dom_id: '#swaggerHolder',
                 supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
                 url: '/v2/api-docs',
                 docExpansion: 'none'

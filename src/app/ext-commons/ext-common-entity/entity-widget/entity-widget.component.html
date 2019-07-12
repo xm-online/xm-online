@@ -1,4 +1,3 @@
-Entity widget
 <ng-container *ngIf="xmEntity$ | async as fetchedXmEntity; else loading ">
   <ng-container
     *ngIf="fetchedXmEntity; then cardsData; else noData"

@@ -1,3 +1,4 @@
+Entity widget
 <ng-container *ngIf="xmEntity$ | async as fetchedXmEntity; else loading ">
   <ng-container
     *ngIf="fetchedXmEntity; then cardsData; else noData"
@@ -24,12 +25,19 @@
               [xmEntitySpec]="xmEntitySpec"
             ></xm-entity-data-card>
           </div>
-          <div *ngSwitchCase="'attachment-list'">
+          <div *ngSwitchCase="'attachment-grid'">
             <xm-attachment-list
               [xmEntityId]="fetchedXmEntity.id"
               [attachmentSpecs]="xmEntitySpec?.attachments"
               *ngIf="xmEntitySpec?.attachments">
             </xm-attachment-list>
+          </div>
+          <div *ngSwitchCase="'attachment-list'">
+            <xm-attachment-list-simplified
+              [xmEntityId]="fetchedXmEntity.id"
+              [attachmentSpecs]="xmEntitySpec?.attachments"
+              *ngIf="xmEntitySpec?.attachments">
+            </xm-attachment-list-simplified>
           </div>
           <div *ngSwitchCase="'location-list-card'">
             <xm-location-list-card

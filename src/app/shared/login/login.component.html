@@ -64,7 +64,7 @@
       </div>
     </div>
 
-    <div class="col-xs-12 col-md-6" *ngIf="!checkOTP">
+    <div class="col-xs-12 col-md-6" *ngIf="!checkOTP && !hideResetPasswordLink">
       <div class="form-group text-right">
         <a class="forgot-link" href="javascript: void(0);" (click)="requestResetPassword()" jhiTranslate="login.password.forgot">
           Did you forget your password?

@@ -1,2 +1,25 @@
-<iframe src="swagger-ui/index.html" width="100%" height="900" seamless
-    target="_top" title="Swagger UI" class="border-0"></iframe>
+<div class="xm-swagger-container card" *ngIf="swaggerResources">
+  <div class="container-fluid">
+    <div class="row align-items-center flex-nowrap">
+      <div class="col-6">
+        <div class="swag-title text-primary">
+          {{'swagger.select-component' | translate}}
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="swagger-ui">
+          <mat-form-field>
+            <mat-select name='swagRes'
+                        (selectionChange)="updateSwagger(currentResource)"
+                        [(ngModel)]="currentResource">
+              <mat-option *ngFor="let resource of swaggerResources" [value]="resource.location">
+                {{resource.name}} {{resource.location}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="swaggerHolder"></div>

@@ -1,7 +1,9 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import SwaggerUI from 'swagger-ui'
+import { AuthServerProvider } from '../../shared/auth/auth-jwt.service';
+
+import SwaggerUI from 'swagger-ui';
 
 @Component({
     selector: 'xm-docs',
@@ -13,7 +15,8 @@ export class JhiDocsComponent implements OnInit, AfterViewInit {
     currentResource: any;
 
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
+        private auth: AuthServerProvider
     ) {
     }
 
@@ -31,14 +34,23 @@ export class JhiDocsComponent implements OnInit, AfterViewInit {
     }
 
     updateSwagger(resource) {
-        console.log(resource);
-        SwaggerUI({
+        const authToken = this.auth.getToken();
+        const swagger  = new SwaggerUI({
             dom_id: '#swaggerHolder',
             supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
-            url: resource,
+            url: window.location.protocol + '//' + window.location.host + resource,
             docExpansion: 'none',
             apisSorter: 'alpha',
-            showRequestHeaders: false
+            showRequestHeaders: false,
+            validatorUrl: null,
+            configs: {
+                preFetch: function(req) {
+                    if (authToken) {
+                        req.headers['Authorization'] = 'Bearer ' + authToken;
+                    }
+                    return req;
+                }
+            },
         });
     }
 }

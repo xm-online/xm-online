@@ -10254,6 +10254,7 @@
 
 .swagger-ui .info .title {
     line-height: 1;
+    margin-bottom: 20px;
 }
 
 .swagger-ui .response-col_status {

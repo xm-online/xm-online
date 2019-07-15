@@ -45,9 +45,7 @@ export class JhiDocsComponent implements OnInit, AfterViewInit {
             validatorUrl: null,
             configs: {
                 preFetch: function(req) {
-                    if (authToken) {
-                        req.headers['Authorization'] = 'Bearer ' + authToken;
-                    }
+                    if (authToken) {req.headers['Authorization'] = 'Bearer ' + authToken}
                     return req;
                 }
             },

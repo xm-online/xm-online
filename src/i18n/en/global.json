@@ -249,5 +249,8 @@
         "business": "Forwarding error",
         "unauthorized": "Unauthorized",
         "session_expired": "Session expired. Please login."
+    },
+    "swagger": {
+        "select-component": "Select component"
     }
 }

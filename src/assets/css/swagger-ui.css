@@ -10235,6 +10235,12 @@
     padding-top: 5px
 }
 
+.swag-title {
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: -2px;
+}
+
 .swagger-ui .info {
     max-width: initial;
     margin: 0;

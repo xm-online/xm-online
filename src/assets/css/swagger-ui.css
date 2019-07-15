@@ -10225,7 +10225,6 @@
 
 
 /* XM - fixes */
-
 #logo {
     font-weight: 600;
     font-size: 30px;
@@ -10269,4 +10268,12 @@
 
 .swagger-ui .parameters-col_description {
     width: auto
+}
+
+.swagger-ui .loading-container .errors-wrapper .error .errors__title {
+    padding-right: 10px;
+}
+
+.swagger-ui .info .title small pre {
+    display: initial;
 }

@@ -4,7 +4,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Principal } from '../../../shared/auth/principal.service';
 import { saveFile } from '../../../shared/helpers/file-download-helper';
 
-declare let nomnoml: any;
+import * as nomnoml from 'nomnoml';
+
 declare let YAML: any;
 declare let skanaar: any;
 declare let _: any;

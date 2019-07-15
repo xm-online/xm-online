@@ -25,9 +25,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "get-unwraped-labels": "node ./scripts/get-unwraped-labels.js",
-    "translations": "node ./scripts/translations.js",
-    "-theme": "node ./scripts/theme-generator.js",
-    "generate-theme-all": "node ./scripts/theme-generator.js all"
+    "translations": "node ./scripts/translations.js"
   },
   "private": true,
   "dependencies": {
@@ -105,6 +103,7 @@
     "ngx-papaparse": "^3.0.2",
     "ngx-rating": "^0.0.9",
     "ngx-webstorage": "^2.0.1",
+    "nomnoml": "^0.6.0",
     "nouislider": "^9.2.0",
     "oboe": "^2.1.4",
     "popper.js": "1.14.1",

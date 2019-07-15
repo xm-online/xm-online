@@ -12,6 +12,7 @@ import { XmEntity } from '../shared/xm-entity.model';
 import { getFileNameFromResponseContentDisposition, saveFile } from '../../shared/helpers/file-download-helper';
 import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { catchError, filter, finalize, share, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 declare let swal: any;
 declare let $: any;
@@ -41,7 +42,8 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
                 private eventManager: JhiEventManager,
                 private contextService: ContextService,
                 public principal: Principal,
-                private ref: ChangeDetectorRef) {
+                private ref: ChangeDetectorRef,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -133,6 +135,13 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
                 this.functionSpec.contextDataSpec ? this.functionSpec.contextDataSpec : {},
                 this.functionSpec.contextDataForm ? this.functionSpec.contextDataForm : {});
             this.jsfAttributes.data = data;
+        // if contains a location header, go to location specified
+        } else if (r.headers.get('location')) {
+            this.activeModal.dismiss(true);
+            this.router.navigate(
+                 [r.headers.get('location')],
+                 {queryParams: data}
+            );
         } else {
             this.activeModal.dismiss(true);
         }

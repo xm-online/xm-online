@@ -33,6 +33,7 @@
             }
         },
         "attachment-card": {
+            "title": "Файли",
             "volume": {
                 "bytes": "байт",
                 "KB": "Кб",

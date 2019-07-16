@@ -81,7 +81,6 @@ export class AttachmentCardComponent implements OnInit {
     }
 
     onDownload() {
-        console.log(this.attachment);
         if (this.attachment.contentUrl && !this.attachment.contentChecksum) {
             saveFileFromUrl(this.attachment.contentUrl, this.attachment.name);
         } else {

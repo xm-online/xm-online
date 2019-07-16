@@ -37,11 +37,6 @@ import {AttachmentListBaseComponent} from './attachment-list-base.component';
                             <th><span jhiTranslate="xm-entity.common.fields.description">Description</span></th>
                             <th></th>
                             <th></th>
-                            <!--
-                            <th *ngFor="let field of fields">
-                                <span *ngIf="field">{{field | i18nName :principal}}</span>
-                            </th>
-                            -->
                         </tr>
                         </thead>
 
@@ -65,8 +60,6 @@ import {AttachmentListBaseComponent} from './attachment-list-base.component';
                                     <i class="material-icons">delete</i>
                                 </a>
                             </td>
-                            <!--<td *ngFor="let field of fields">
-                                {{ field == 'startDate' ? (xmEntity[field] | date) : xmEntity[field] }}-->
                         </tr>
                         </tbody>
                     </table>
@@ -74,10 +67,8 @@ import {AttachmentListBaseComponent} from './attachment-list-base.component';
             </ng-container>
 
         </div>
-    </div>`
+    </div>`,
+    styleUrls: ['./attachment-list.component.scss']
 })
 export class AttachmentListSimplifiedComponent extends AttachmentListBaseComponent {
-    public fields = [
-        'id', 'typeKey', 'name', 'contentUrl', 'valueContentSize', 'valueContentType', 'startDate'
-    ];
 }

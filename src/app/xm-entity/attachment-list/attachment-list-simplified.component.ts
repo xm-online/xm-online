@@ -22,9 +22,6 @@ import {AttachmentListBaseComponent} from './attachment-list-base.component';
                     <button mat-menu-item class="btn-sm" (click)="onRefresh()">
                         {{'xm-entity.entity-list-card.refresh' | translate}}
                     </button>
-                    <button mat-menu-item class="btn-sm" (click)="onRefresh()">
-                        {{'xm-entity.common.add' | translate}}
-                    </button>
                 </mat-menu>
             </div>
             <ng-container *ngIf="attachments">
@@ -50,7 +47,7 @@ import {AttachmentListBaseComponent} from './attachment-list-base.component';
                             </td>
                             <td>{{attachment.name}}</td>
                             <td>{{getAttachmentSpec(attachment)?.name | i18nName : principal}}</td>
-                            <td>{{getFileSize(attachment, 2)}}</td>
+                            <td>{{getFileSize(attachment, 2)}} ({{attachment.valueContentType}})</td>
                             <td>
                                 <a href="javascript: void(0);" (click)="onDownload(attachment)" *xmPermitted="['ATTACHMENT.GET_LIST.ITEM']">
                                     <i class="material-icons">cloud_download</i>

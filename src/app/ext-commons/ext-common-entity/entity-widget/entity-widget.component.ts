@@ -72,7 +72,7 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
 
             this.grid = this.config.grid ?
                 this.config.grid :
-                this.getGridLayout(entityUiConfig.attachments && entityUiConfig.attachments.view, detailLayoutType);
+                this.getGridLayout(entityUiConfig && entityUiConfig.attachments && entityUiConfig.attachments.view, detailLayoutType);
         });
     }
 
@@ -99,7 +99,7 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
             });
     }
 
-    // TODO: better typization
+    // TODO: improve types
     getGridLayout(attachmentsView: 'list'|undefined, detailLayoutType: string): any[] {
 
         let attachmentsComponent = 'attachment-grid';

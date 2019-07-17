@@ -33,6 +33,7 @@
             }
         },
         "attachment-card": {
+            "title": "Attachments",
             "volume": {
                 "bytes": "bytes",
                 "KB": "Kb",

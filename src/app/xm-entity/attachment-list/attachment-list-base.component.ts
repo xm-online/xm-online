@@ -9,31 +9,12 @@ import { HttpResponse } from '@angular/common/http';
 import { Principal } from '../../shared';
 import { AttachmentService } from '../shared/attachment.service';
 import { TranslateService } from '@ngx-translate/core';
-import {Content} from '..';
 import {saveFile, saveFileFromUrl} from '../../shared/helpers/file-download-helper';
+import {XM_EVENT_LIST} from '../../xm.constants';
 
 declare let swal: any;
 
-const ATTACHMENT_EVENT = 'attachmentListModification';
-
-class UIAttachment extends Attachment {
-    constructor(public id?: number,
-                public typeKey?: string,
-                public name?: string,
-                public contentUrl?: string,
-                public description?: string,
-                public startDate?: any,
-                public endDate?: any,
-                public valueContentType?: string,
-                public valueContentSize?: number,
-                public content?: Content,
-                public contentChecksum?: string,
-                public xmEntity?: XmEntity,
-                public body?: any) {
-        super(id, typeKey, name, contentUrl, description, startDate, endDate,
-            valueContentType, valueContentSize, content, contentChecksum, xmEntity, body);
-    }
-}
+const ATTACHMENT_EVENT = XM_EVENT_LIST.XM_ATTACHMENT_LIST_MODIFICATION;
 
 @Component({
   selector: 'xm-attachment-list-base',

@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { JhiEventManager } from 'ng-jhipster';
-import {Observable, Subscription} from 'rxjs';
-import {finalize, map, tap} from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 import { ContextService, XmConfigService } from '../../../shared';
-import {LinkSpec, Spec, XmEntity, XmEntityService, XmEntitySpec} from '../../../xm-entity';
+import { LinkSpec, Spec, XmEntity, XmEntityService, XmEntitySpec } from '../../../xm-entity';
 
 @Component({
     selector: 'xm-entity-widget',

@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {AttachmentListBaseComponent} from './attachment-list-base.component';
+import { Component } from '@angular/core';
+import { AttachmentListBaseComponent } from './attachment-list-base.component';
 
 @Component({
     selector: 'xm-attachment-list-simplified',

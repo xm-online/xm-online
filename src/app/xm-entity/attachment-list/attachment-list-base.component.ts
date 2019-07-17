@@ -9,8 +9,8 @@ import { HttpResponse } from '@angular/common/http';
 import { Principal } from '../../shared';
 import { AttachmentService } from '../shared/attachment.service';
 import { TranslateService } from '@ngx-translate/core';
-import {saveFile, saveFileFromUrl} from '../../shared/helpers/file-download-helper';
-import {XM_EVENT_LIST} from '../../xm.constants';
+import { saveFile, saveFileFromUrl } from '../../shared/helpers/file-download-helper';
+import { XM_EVENT_LIST } from '../../xm.constants';
 
 declare let swal: any;
 

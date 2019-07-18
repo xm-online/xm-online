@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { JhiEventManager } from 'ng-jhipster';
-import {Observable, Subscription} from 'rxjs';
-import {finalize, map, tap} from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 import { ContextService, XmConfigService } from '../../../shared';
-import {LinkSpec, Spec, XmEntity, XmEntityService, XmEntitySpec} from '../../../xm-entity';
+import { LinkSpec, Spec, XmEntity, XmEntityService, XmEntitySpec } from '../../../xm-entity';
 
 @Component({
     selector: 'xm-entity-widget',
@@ -12,32 +12,6 @@ import {LinkSpec, Spec, XmEntity, XmEntityService, XmEntitySpec} from '../../../
     styleUrls: ['./entity-widget.component.scss']
 })
 export class EntityWidgetComponent implements OnInit, OnDestroy {
-
-    GRID = {
-        'DEFAULT': [
-            {class: 'row',
-                content: [{class: 'col-sm-6', component: 'entity-card'}, {class: 'col-sm-6', component: 'entity-data-card'}]
-            },
-            {class: 'row', content: [{class: 'col-sm-12', component: 'function-list-card'}]},
-            {class: 'row', content: [{class: 'col-sm-12', component: 'attachment-list'}]},
-            {class: 'row', content: [{class: 'col-sm-12', component: 'location-list-card'}]},
-            {class: 'row', content: [{class: 'col-sm-12', component: 'link-list'}]},
-            {class: 'row', content: [{class: 'col-sm-12', component: 'comment-list'}]},
-            {class: 'row', content: [{class: 'col-sm-12', component: 'calendar-card'}]},
-            {class: 'row', content: [{class: 'col-sm-12', component: 'timeline'}]}
-        ],
-        'ALL-IN-ROW': [
-            {class: 'row', content: [{class: 'col-sm-12 col-xl-8 offset-xl-2', component: 'entity-card'}]},
-            {class: 'row', content: [{class: 'col-sm-12', component: 'entity-data-card'}]},
-            {class: 'row', content: [{class: 'col-sm-12', component: 'function-list-card'}]},
-            {class: 'row', content: [{class: 'col-sm-12', component: 'attachment-list'}]},
-            {class: 'row', content: [{class: 'col-sm-12', component: 'location-list-card'}]},
-            {class: 'row', content: [{class: 'col-sm-12', component: 'link-list'}]},
-            {class: 'row', content: [{class: 'col-sm-12', component: 'comment-list'}]},
-            {class: 'row', content: [{class: 'col-sm-12', component: 'calendar-card'}]},
-            {class: 'row', content: [{class: 'col-sm-12', component: 'timeline'}]}
-        ]
-    };
 
     config: any;
     grid: any;
@@ -96,7 +70,9 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
                 detailLayoutType = entityUiConfig.detailLayoutType;
             }
 
-            this.grid = this.config.grid ? this.config.grid : this.GRID[detailLayoutType];
+            this.grid = this.config.grid ?
+                this.config.grid :
+                this.getGridLayout(entityUiConfig && entityUiConfig.attachments && entityUiConfig.attachments.view, detailLayoutType);
         });
     }
 
@@ -121,5 +97,42 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
                 l.name = l.backName;
                 return l;
             });
+    }
+
+    // TODO: improve types
+    getGridLayout(attachmentsView: 'list'|undefined, detailLayoutType: string): any[] {
+
+        let attachmentsComponent = 'attachment-grid';
+
+        if (attachmentsView === 'list') {
+            attachmentsComponent = 'attachment-list';
+        }
+
+        if (detailLayoutType === 'ALL-IN-ROW') {
+            return [
+                {class: 'row', content: [{class: 'col-sm-12 col-xl-8 offset-xl-2', component: 'entity-card'}]},
+                {class: 'row', content: [{class: 'col-sm-12', component: 'entity-data-card'}]},
+                {class: 'row', content: [{class: 'col-sm-12', component: 'function-list-card'}]},
+                {class: 'row', content: [{class: 'col-sm-12', component: attachmentsComponent}]},
+                {class: 'row', content: [{class: 'col-sm-12', component: 'location-list-card'}]},
+                {class: 'row', content: [{class: 'col-sm-12', component: 'link-list'}]},
+                {class: 'row', content: [{class: 'col-sm-12', component: 'comment-list'}]},
+                {class: 'row', content: [{class: 'col-sm-12', component: 'calendar-card'}]},
+                {class: 'row', content: [{class: 'col-sm-12', component: 'timeline'}]}
+            ]
+        }
+
+        return [
+            {class: 'row',
+                content: [{class: 'col-sm-6', component: 'entity-card'}, {class: 'col-sm-6', component: 'entity-data-card'}]
+            },
+            {class: 'row', content: [{class: 'col-sm-12', component: 'function-list-card'}]},
+            {class: 'row', content: [{class: 'col-sm-12', component: attachmentsComponent}]},
+            {class: 'row', content: [{class: 'col-sm-12', component: 'location-list-card'}]},
+            {class: 'row', content: [{class: 'col-sm-12', component: 'link-list'}]},
+            {class: 'row', content: [{class: 'col-sm-12', component: 'comment-list'}]},
+            {class: 'row', content: [{class: 'col-sm-12', component: 'calendar-card'}]},
+            {class: 'row', content: [{class: 'col-sm-12', component: 'timeline'}]}
+        ]
     }
 }

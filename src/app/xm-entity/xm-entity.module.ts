@@ -67,6 +67,8 @@ import {
 } from './';
 
 import {StateChangeDialogComponent} from './state-change-dialog/state-change-dialog.component';
+import { AttachmentListSimplifiedComponent } from './attachment-list/attachment-list-simplified.component';
+import { AttachmentListBaseComponent } from './attachment-list/attachment-list-base.component';
 
 @NgModule({
     imports: [
@@ -123,7 +125,9 @@ import {StateChangeDialogComponent} from './state-change-dialog/state-change-dia
         TagListSectionComponent,
         EntityListFabComponent,
         LocationCardNamePipe,
-        StatesManagementDialogComponent
+        StatesManagementDialogComponent,
+        AttachmentListSimplifiedComponent,
+        AttachmentListBaseComponent
     ],
     entryComponents: [
         StatesManagementDialogComponent,
@@ -142,6 +146,7 @@ import {StateChangeDialogComponent} from './state-change-dialog/state-change-dia
         AreaComponent,
         AttachmentCardComponent,
         AttachmentListComponent,
+        AttachmentListSimplifiedComponent,
         CalendarCardComponent,
         CommentCardComponent,
         CommentListComponent,

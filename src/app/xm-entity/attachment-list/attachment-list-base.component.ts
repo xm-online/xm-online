@@ -10,7 +10,7 @@ import { Principal } from '../../shared';
 import { AttachmentService } from '../shared/attachment.service';
 import { TranslateService } from '@ngx-translate/core';
 import { saveFile, saveFileFromUrl } from '../../shared/helpers/file-download-helper';
-import { XM_EVENT_LIST } from '../../xm.constants';
+import { DEBUG_INFO_ENABLED, XM_EVENT_LIST } from '../../xm.constants';
 
 declare let swal: any;
 
@@ -26,8 +26,8 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
 
     @Input() xmEntityId: number;
     @Input() attachmentSpecs: AttachmentSpec[];
+    @Input() xmEntity: XmEntity;
 
-    xmEntity: XmEntity;
     attachments: Attachment[];
 
     constructor(private attachmentService: AttachmentService,
@@ -64,8 +64,23 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
 
     private load() {
         this.attachments = [];
+
+        if (!this.attachmentSpecs || !this.attachmentSpecs.length) {
+            if (DEBUG_INFO_ENABLED) {
+                console.log('DBG: no spec no call');
+            }
+            return
+        }
+
+        if (this.xmEntity && this.xmEntity.attachments) {
+            if (DEBUG_INFO_ENABLED) {
+                console.log('DBG: use existing data');
+            }
+            this.attachments = [...this.xmEntity.attachments];
+            return;
+        }
+
         this.xmEntityService.find(this.xmEntityId, {'embed': 'attachments'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
-            this.xmEntity = xmEntity.body;
             if (xmEntity.body.attachments) {
                 this.attachments = [...xmEntity.body.attachments];
             }

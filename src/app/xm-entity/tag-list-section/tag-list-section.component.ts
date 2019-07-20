@@ -9,7 +9,7 @@ import { Tag } from '../shared/tag.model';
 import { TagService } from '../shared/tag.service';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
-import {XM_EVENT_LIST} from '../../xm.constants';
+import {DEBUG_INFO_ENABLED, XM_EVENT_LIST} from '../../xm.constants';
 
 declare let swal: any;
 
@@ -49,6 +49,12 @@ export class TagListSectionComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private load() {
+        if (!this.tagSpecs || !this.tagSpecs.length) {
+            if (DEBUG_INFO_ENABLED) {
+                console.log('DBG: no spec no call');
+            }
+            return
+        }
         this.xmEntityService.find(this.xmEntityId, { 'embed': 'tags' }).subscribe((xmEntity: HttpResponse<XmEntity>) => {
             this.xmEntity = xmEntity.body;
             if (xmEntity.body.tags) {

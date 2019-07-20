@@ -28,6 +28,7 @@
             <xm-attachment-list
               [xmEntityId]="fetchedXmEntity.id"
               [attachmentSpecs]="xmEntitySpec?.attachments"
+              [xmEntity]="fetchedXmEntity"
               *ngIf="xmEntitySpec?.attachments">
             </xm-attachment-list>
           </div>
@@ -35,6 +36,7 @@
             <xm-attachment-list-simplified
               [xmEntityId]="fetchedXmEntity.id"
               [attachmentSpecs]="xmEntitySpec?.attachments"
+              [xmEntity]="fetchedXmEntity"
               *ngIf="xmEntitySpec?.attachments">
             </xm-attachment-list-simplified>
           </div>

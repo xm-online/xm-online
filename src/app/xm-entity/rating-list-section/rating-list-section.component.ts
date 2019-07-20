@@ -9,6 +9,7 @@ import { Vote } from '../shared/vote.model';
 import { VoteService } from '../shared/vote.service';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
+import { DEBUG_INFO_ENABLED } from '../../xm.constants';
 
 declare let swal: any;
 
@@ -42,6 +43,12 @@ export class RatingListSectionComponent implements OnInit, OnChanges {
     }
 
     private load() {
+        if (!this.ratingSpecs || !this.ratingSpecs.length) {
+            if (DEBUG_INFO_ENABLED) {
+                console.log('DBG: no spec no call');
+            }
+            return
+        }
         this.xmEntityService.find(this.xmEntityId, {'embed': 'ratings'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
             this.xmEntity = xmEntity.body;
             if (xmEntity.body.ratings) {

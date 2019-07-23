@@ -20,6 +20,9 @@ class MockedConfig extends Mock {
     isResolved(): Observable<Boolean> {
         return of(true);
     }
+    isMaintenanceProgress(): Observable<Boolean> {
+        return of(true);
+    }
 }
 
 describe('XmMainComponent', () => {

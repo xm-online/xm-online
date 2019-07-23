@@ -56,7 +56,7 @@ export class JhiLanguageHelper {
 
     private handleLanguageChangeEvent(event: LangChangeEvent): void {
         if (!environment.production) {
-            console.log('JhiLanguageHelper  onLangChange: event=%o _language: %s',
+            console.log('DBG JhiLanguageHelper  onLangChange: event=%o _language: %s',
                 event, this._language.getValue());
         }
         this._language.next(event.lang);

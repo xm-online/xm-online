@@ -13,6 +13,7 @@ import { Event } from '../shared/event.model';
 import { EventService } from '../shared/event.service';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
+import { DEBUG_INFO_ENABLED } from '../../xm.constants';
 
 declare let $: any;
 declare let swal: any;
@@ -51,6 +52,14 @@ export class CalendarCardComponent implements OnInit, OnChanges {
     }
 
     private load() {
+
+        if (!this.calendarSpecs || !this.calendarSpecs.length) {
+            if (DEBUG_INFO_ENABLED) {
+                console.log('DBG: no spec no call');
+            }
+            return
+        }
+
         this.xmEntityService.find(this.xmEntityId, {'embed': 'calendars.events'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
             this.xmEntity = xmEntity.body;
             if (xmEntity.body.calendars) {

@@ -19,13 +19,13 @@ export class XmEntitySpecWrapperService {
 
     constructor(private xmEntitySpecService: XmEntitySpecService) {
         if (!environment.production) {
-            console.log(`Creating XmEntitySpecWrapperService`);
+            console.log(`DBG Creating XmEntitySpecWrapperService`);
         }
     }
 
     spec(force?: boolean, mockSpec?: boolean): Promise<Spec> {
         if (!force && this.promise) {
-            if (!environment.production) {console.log('Promise from cache')}
+            if (!environment.production) {console.log('DBG Promise from cache')}
             return this.promise;
         } else {
             return this.promise = new Promise((resolve, reject) => {
@@ -41,7 +41,7 @@ export class XmEntitySpecWrapperService {
                     return;
                 }
 
-                if (!environment.production) {console.log('New Promise')}
+                if (!environment.production) {console.log('DBG New Promise')}
 
                 // retrieve the spec data from the server, update the _spec object, and then resolve.
                 this.xmEntitySpecService.get().toPromise().then((spec) => {
@@ -68,7 +68,7 @@ export class XmEntitySpecWrapperService {
 
     specv2(force?: boolean): Observable<Spec> {
         if (!this.cache$) {
-            if (!environment.production) {console.log('from cache$')}
+            if (!environment.production) {console.log('DBG from cache$')}
             this.cache$ = this.requestSpec().pipe(
                 shareReplay(CACHE_SIZE)
             )
@@ -86,7 +86,7 @@ export class XmEntitySpecWrapperService {
 
     clear() {
         if (!environment.production) {
-            console.log(`XmEntitySpecWrapperService.clear`);
+            console.log(`DBG XmEntitySpecWrapperService.clear`);
         }
         if (this.cache$) {
             this.cache$ = null;

@@ -5,6 +5,7 @@ import { map, tap } from 'rxjs/operators';
 
 import { ContextService, XmConfigService } from '../../../shared';
 import { LinkSpec, Spec, XmEntity, XmEntityService, XmEntitySpec } from '../../../xm-entity';
+import { DEBUG_INFO_ENABLED } from '../../../xm.constants';
 
 @Component({
     selector: 'xm-entity-widget',
@@ -34,6 +35,10 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.showLoader = true;
+        if (DEBUG_INFO_ENABLED) {
+            console.log(`DBG entity  e=%o`, this.xmEntity);
+            console.log(`DBG spec  e=%o`, this.spec);
+        }
         this.loadEntity();
     }
 
@@ -53,19 +58,20 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
             .pipe(
                 map(responce => responce.body),
                 tap((entity) => this.xmEntity = entity),
-                tap(() => this.xmEntitySpec = this.getXmEntitySpec()),
-                tap(() => this.backLinkSpecs = this.getBackLinkSpecs()),
-                tap(() => this.defineLayoutGrid())
+                tap((entity) => this.xmEntitySpec = this.getXmEntitySpec(entity.typeKey)),
+                tap(() => DEBUG_INFO_ENABLED ? console.log(`DBG spec = %o`, this.xmEntitySpec) : () => {} ),
+                tap((entity) => this.backLinkSpecs = this.getBackLinkSpecs(entity.typeKey)),
+                tap((entity) => this.defineLayoutGrid(entity.typeKey))
             )
     }
 
-    private defineLayoutGrid() {
+    private defineLayoutGrid(typeKey: string) {
         this.xmConfigService.getUiConfig().subscribe((config) => {
             const entityUiConfig = config && config.applications
                 && config.applications.config
                 && config.applications.config.entities
-                && config.applications.config.entities.filter(e => e.typeKey === this.xmEntity.typeKey).shift();
-            let detailLayoutType = this.getXmEntitySpec().dataSpec ? 'DEFAULT' : 'ALL-IN-ROW';
+                && config.applications.config.entities.filter(e => e.typeKey === typeKey).shift();
+            let detailLayoutType = this.getXmEntitySpec(typeKey).dataSpec ? 'DEFAULT' : 'ALL-IN-ROW';
             if (entityUiConfig && entityUiConfig.detailLayoutType) {
                 detailLayoutType = entityUiConfig.detailLayoutType;
             }
@@ -76,16 +82,17 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
         });
     }
 
-    getXmEntitySpec() {
-        return this.spec.types.filter(t => t.key === this.xmEntity.typeKey).shift();
+    getXmEntitySpec(typeKey: string) {
+        const vTypeKey = typeKey ? typeKey : this.xmEntity.typeKey;
+        return this.spec.types.filter(t => t.key === vTypeKey).shift();
     }
 
-    getBackLinkSpecs(): LinkSpec[] {
+    getBackLinkSpecs(typeKey: string): LinkSpec[] {
         const result = {};
         for (const xmEntitySpec of this.spec.types) {
             if (xmEntitySpec.links) {
                 for (const linkSpec of xmEntitySpec.links) {
-                    if (linkSpec.typeKey === this.xmEntity.typeKey) {
+                    if (linkSpec.typeKey === typeKey) {
                         result[linkSpec.key] = Object.assign({}, linkSpec);
                     }
                 }

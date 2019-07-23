@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Dashboard } from './dashboard.model';
 import { DashboardService } from './dashboard.service';
-import {environment} from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class DashboardWrapperService {
@@ -14,7 +14,7 @@ export class DashboardWrapperService {
     }
 
     dashboards(force?: boolean, mockDashboards?: boolean): Promise<Dashboard[]> {
-        if (!environment.production) {console.log(`Get dashboards: ${force}`)}
+        if (!environment.production) {console.log(`DBG Get dashboards: ${force}`)}
         if (!force && this.promise) {
             return this.promise;
         } else {

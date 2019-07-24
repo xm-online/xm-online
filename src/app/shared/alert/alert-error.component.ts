@@ -8,6 +8,7 @@ import { ResponseConfig, ResponseConfigItem, ResponseContext } from './response-
 import { XmConfigService } from '../spec/config.service';
 import { I18nNamePipe } from '../language/i18n-name.pipe';
 import { Principal } from '../../shared/auth/principal.service';
+import { DEBUG_INFO_ENABLED } from '../../xm.constants';
 
 declare let swal: any;
 declare let $: any;
@@ -36,7 +37,9 @@ export class JhiAlertErrorComponent implements OnDestroy {
 
         this.cleanHttpErrorListener = eventManager.subscribe('xm.httpError', resp => {
             const response = this.processResponse(resp);
-            console.log(`Error xm.httpError - ${response}`);
+            if (DEBUG_INFO_ENABLED) {
+                console.log(`Error xm.httpError - ${response}`);
+            }
             this.specService.getUiConfig().subscribe(result => {
                 if (result &&
                     result.responseConfig &&

@@ -23,10 +23,10 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     source: any;
     mouseDownPoint: any;
 
-    @ViewChild('canvas', {static: true}) canvas: ElementRef;
-    @ViewChild('downloadLink', {static: true}) downloadLink: ElementRef;
-    @ViewChild('downloadLinkSvg', {static: true}) downloadLinkSvg: ElementRef;
-    @ViewChild('canvasHolder', {static: true}) canvasHolder: ElementRef;
+    @ViewChild('canvas', {static: false}) canvas: ElementRef;
+    @ViewChild('downloadLink', {static: false}) downloadLink: ElementRef;
+    @ViewChild('downloadLinkSvg', {static: false}) downloadLinkSvg: ElementRef;
+    @ViewChild('canvasHolder', {static: false}) canvasHolder: ElementRef;
 
     constructor(private activeModal: NgbActiveModal,
                 public principal: Principal) {

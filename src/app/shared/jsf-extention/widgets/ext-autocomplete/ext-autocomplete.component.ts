@@ -33,7 +33,7 @@ export class ExtAutocompleteComponent implements OnInit {
     dataFields: any;
     selectedItem: any;
 
-    @ViewChild('emailRef', {static: true}) emailRef: ElementRef;
+    @ViewChild('emailRef', {static: false}) emailRef: ElementRef;
 
     constructor(private jsf: JsonSchemaFormService,
                 private http: HttpClient,

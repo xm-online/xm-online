@@ -62,7 +62,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
     iconsInMenu: false;
     poweredByConfig: PoweredBy;
 
-    @ViewChild('navbar-cmp', {static: true}) button;
+    @ViewChild('navbar-cmp', {static: false}) button;
 
     constructor(private loginService: LoginService,
                 private languageHelper: JhiLanguageHelper,

@@ -15,7 +15,7 @@ import { RoleService } from '../../shared/role/role.service';
 })
 export class RolesMatrixComponent implements OnInit {
 
-    @ViewChild('table', {static: true}) table: ElementRef;
+    @ViewChild('table', {static: false}) table: ElementRef;
 
     matrix: RoleMatrix;
     permissions: RoleMatrixPermission[];

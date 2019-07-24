@@ -26,7 +26,7 @@ export class ExtMultiSelectComponent implements OnInit, OnDestroy, AfterViewInit
     public elementMultiCtrl: any;
     public elementMultiFilterCtrl: FormControl = new FormControl();
     public filteredElementsMulti: ReplaySubject<Element[]> = new ReplaySubject<Element[]>(1);
-    @ViewChild('multiSelect', {static: true}) multiSelect: MatSelect;
+    @ViewChild('multiSelect', {static: false}) multiSelect: MatSelect;
     @Input() layoutNode: any;
     options: ExtMultiSelectOptions;
     elements: any;

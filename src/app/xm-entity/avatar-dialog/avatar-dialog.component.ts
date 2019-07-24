@@ -16,7 +16,7 @@ export class AvatarDialogComponent implements OnInit {
 
     @Input() xmEntity: XmEntity;
 
-    @ViewChild('cropper', {static: true}) cropper: ImageCropperComponent;
+    @ViewChild('cropper', {static: false}) cropper: ImageCropperComponent;
 
     cropperSettings: CropperSettings;
     data: any;

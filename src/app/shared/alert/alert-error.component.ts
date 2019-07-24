@@ -36,6 +36,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
 
         this.cleanHttpErrorListener = eventManager.subscribe('xm.httpError', resp => {
             const response = this.processResponse(resp);
+            console.log(`Error xm.httpError - ${response}`);
             this.specService.getUiConfig().subscribe(result => {
                 if (result &&
                     result.responseConfig &&
@@ -118,20 +119,18 @@ export class JhiAlertErrorComponent implements OnDestroy {
         }
     }
 
-    processMessage(config, response) {
+    private processMessage(config, response) {
         if (!config) {
             return null;
         }
         switch (config.type) {
             case 'TRANSLATION_KEY': {
-                return this.translateService.instant(config.value, {
-                    rc: this.rc
-                });
+                return this.translateService.instant(
+                    config.value, this.interpolationParams(response, this.rc));
             }
             case 'TRANSLATION_KEY_PATH': {
-                return this.translateService.instant('errors.' + this.getFromPath(this.rc.response, config.value), {
-                    rc: this.rc
-                });
+                return this.translateService.instant(
+                    'errors.' + this.getFromPath(this.rc.response, config.value), this.interpolationParams(response, this.rc));
             }
             case 'MESSAGE_PATH': {
                 return this.getFromPath(this.rc.response.error, config.value);
@@ -148,6 +147,13 @@ export class JhiAlertErrorComponent implements OnDestroy {
                 }
             }
         }
+    }
+
+    private interpolationParams(response, other) {
+        if (response && response.content && response.content.error && response.content.error.params) {
+            return Object.assign({}, response.content.error.params);
+        }
+        return {rc: other};
     }
 
     ngOnDestroy() {

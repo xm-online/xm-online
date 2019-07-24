@@ -9,7 +9,7 @@ import {TdTextEditorComponent} from '@covalent/text-editor';
 })
 
 export class ExtMdEditorComponent implements OnInit {
-    @ViewChild('mdEditor') private _textEditor: TdTextEditorComponent;
+    @ViewChild('mdEditor', {static: true}) private _textEditor: TdTextEditorComponent;
     @Input() layoutNode: any;
 
     controlValue: any;

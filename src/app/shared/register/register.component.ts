@@ -16,7 +16,7 @@ import { PasswordSpec } from '../../xm-entity/shared/password-spec.model';
 export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @Input() config: any;
-    @ViewChild(ReCaptchaComponent) captcha: ReCaptchaComponent;
+    @ViewChild(ReCaptchaComponent, {static: true}) captcha: ReCaptchaComponent;
 
     email: string;
     msisdn: string;

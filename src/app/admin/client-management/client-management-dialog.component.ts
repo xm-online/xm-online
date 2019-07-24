@@ -20,7 +20,7 @@ export class ClientMgmtDialogComponent implements OnInit {
     scopes: any[];
     authorities: any[];
     showLoader: Boolean;
-    @ViewChild('userLoginForm') userLoginForm;
+    @ViewChild('userLoginForm', {static: true}) userLoginForm;
 
     constructor(public activeModal: NgbActiveModal,
                 private languageHelper: JhiLanguageHelper,

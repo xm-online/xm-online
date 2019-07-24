@@ -8,7 +8,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 })
 export class XmConfirmDialogComponent implements OnInit {
 
-    @ViewChild('xmConfirmDialog') tpl: ElementRef;
+    @ViewChild('xmConfirmDialog', {static: true}) tpl: ElementRef;
     form: FormGroup;
     modal: NgbModalRef;
     showLoader: boolean;

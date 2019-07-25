@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { DEFAULT_AUTH_TOKEN, DEFAULT_CONTENT_TYPE } from '../../xm.constants';
 import { StateStorageService } from './state-storage.service';
 import { Principal } from './principal.service';
+import { CustomUriEncoder } from '../helpers/custom-uri-encoder';
 
 const TOKEN_STORAGE_KEY = 'WALLET-TOKEN';
 
@@ -108,7 +109,7 @@ export class AuthServerProvider {
     }
 
     login(credentials): Observable<any> {
-        let data = new HttpParams();
+        let data = new HttpParams({encoder: new CustomUriEncoder()});
         this.$sessionStorage.clear(WIDGET_DATA);
 
         if (credentials && !credentials.grant_type) {

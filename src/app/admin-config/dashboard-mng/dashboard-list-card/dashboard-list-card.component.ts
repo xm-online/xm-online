@@ -20,7 +20,7 @@ declare let swal: any;
 @Component({
     selector: 'xm-dashboard-list-card',
     templateUrl: './dashboard-list-card.component.html',
-    styleUrls: ['./dashboard-list-card.component.scss']
+    styleUrls: ['./dashboard-list-card.component.scss'],
 })
 export class DashboardListCardComponent extends BaseAdminConfigListComponent implements OnInit {
 
@@ -47,8 +47,8 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
             {
                 page: this.page - 1,
                 size: this.itemsPerPage,
-                sort: this.sort()
-            }
+                sort: this.sort(),
+            },
         ).pipe(finalize(() => this.showLoader = false))
             .subscribe((res: HttpResponse<Dashboard[]>) => {
                 this.totalItems = res.headers.get('X-Total-Count');
@@ -77,7 +77,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
             (err) => console.log(err),
             () => this.eventManager.broadcast({
                 name: this.eventModify,
-                content: {id: 'delete', msg: `Dashboard ${id} deleted`}
+                content: {id: 'delete', msg: `Dashboard ${id} deleted`},
             }));
     }
 
@@ -115,7 +115,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
             showCancelButton: true,
             cancelButtonText: this.translateService.instant('admin-config.common.cancel'),
             confirmButtonClass: 'btn btn-primary',
-            cancelButtonClass: 'btn'
+            cancelButtonClass: 'btn',
         }).then(confirm => {
             if (confirm.value) {
                 this.showLoader = true;
@@ -157,12 +157,12 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
             type: type,
             text: this.translateService.instant(key),
             buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary'
+            confirmButtonClass: 'btn btn-primary',
         });
     }
 
     protected deleteItem(d: Dashboard) {
-        this.onDeleteItem(d.id, d.name)
+        this.onDeleteItem(d.id, d.name);
     }
 
 }

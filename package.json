@@ -133,8 +133,8 @@
     "@types/bootstrap": "3.3.32",
     "@types/jasmine": "^2.8.16",
     "@types/jasminewd2": "^2.0.2",
-    "@types/node": "10.9.4",
     "@types/lodash": "^4.14.123",
+    "@types/node": "10.9.4",
     "codelyzer": "^4.4.2",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -144,9 +144,11 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "^5.4.2",
+    "rxjs-tslint": "^0.1.5",
     "ts-node": "~7.0.1",
     "tslint": "~5.10.0",
-    "rxjs-tslint": "^0.1.5",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-sonarts": "^1.9.0",
     "typescript": "3.2.4"
   }
 }

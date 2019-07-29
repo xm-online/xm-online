@@ -12,7 +12,7 @@ declare let swal: any;
 @Component({
   selector: 'xm-dashboard-detail-dialog',
   templateUrl: './dashboard-detail-dialog.component.html',
-  styleUrls: ['./dashboard-detail-dialog.component.scss']
+  styleUrls: ['./dashboard-detail-dialog.component.scss'],
 })
 export class DashboardDetailDialogComponent implements OnInit {
 
@@ -85,7 +85,7 @@ export class DashboardDetailDialogComponent implements OnInit {
             type: type,
             text: this.translateService.instant(key),
             buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary'
+            confirmButtonClass: 'btn btn-primary',
         });
     }
 

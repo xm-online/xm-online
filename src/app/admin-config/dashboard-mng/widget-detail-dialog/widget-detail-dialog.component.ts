@@ -11,7 +11,7 @@ declare let swal: any;
 @Component({
   selector: 'xm-widget-detail-dialog',
   templateUrl: './widget-detail-dialog.component.html',
-  styleUrls: ['./widget-detail-dialog.component.scss']
+  styleUrls: ['./widget-detail-dialog.component.scss'],
 })
 export class WidgetDetailDialogComponent implements OnInit {
 
@@ -74,7 +74,7 @@ export class WidgetDetailDialogComponent implements OnInit {
             type: type,
             text: this.translateService.instant(key),
             buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary'
+            confirmButtonClass: 'btn btn-primary',
         });
     }
 

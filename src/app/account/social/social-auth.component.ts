@@ -12,7 +12,7 @@ const SOCIAL_AUTH = 'social-authentication';
 
 @Component({
     selector: 'xm-social-auth',
-    templateUrl: '../../shared/login/login.component.html'
+    templateUrl: '../../shared/login/login.component.html',
 })
 export class SocialAuthComponent extends LoginComponent implements OnInit {
 

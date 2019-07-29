@@ -19,7 +19,7 @@ export class DashboardResolvePagingParams implements Resolve<any> {
             page: this.paginationUtil.parsePage(page),
             predicate: this.paginationUtil.parsePredicate(sort),
             ascending: this.paginationUtil.parseAscending(sort),
-            size: size
+            size: size,
         };
     }
 }
@@ -32,26 +32,26 @@ export const dashboardMngRoute: Routes = [
                 path: '',
                 component: DashboardListCardComponent,
                 resolve: {
-                    'pagingParams': DashboardResolvePagingParams
+                    'pagingParams': DashboardResolvePagingParams,
                 },
                 data: {
                     privileges: {value: ['DASHBOARD.GET_LIST']},
                     pageTitle: 'admin-config.common.menu.title',
-                    pageSubTitleTrans: 'admin-config.common.menu.dashboard-mng'
+                    pageSubTitleTrans: 'admin-config.common.menu.dashboard-mng',
                 }
             },
             {
                 path: ':id',
                 component: WidgetListCardComponent,
                 resolve: {
-                    'pagingParams': DashboardResolvePagingParams
+                    'pagingParams': DashboardResolvePagingParams,
                 },
                 data: {
                     privileges: {value: ['WIDGET.GET_LIST']},
                     pageTitle: 'admin-config.common.menu.title',
-                    pageSubTitleTrans: 'admin-config.common.menu.dashboard-mng'
-                }
-            }
-        ]
-    }
+                    pageSubTitleTrans: 'admin-config.common.menu.dashboard-mng',
+                },
+            },
+        ],
+    },
 ];

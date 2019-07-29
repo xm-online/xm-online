@@ -20,7 +20,7 @@ import { SpecificationMngComponent } from './specification-mng/specification-mng
         CommonModule,
         RouterModule.forChild(adminConfigState),
         XmSharedModule,
-        XmDashboardModule
+        XmDashboardModule,
     ],
     declarations: [
         DashboardDetailDialogComponent,
@@ -28,21 +28,22 @@ import { SpecificationMngComponent } from './specification-mng/specification-mng
         ConfigVisualizerDialogComponent,
         SpecificationMngComponent,
         WidgetDetailDialogComponent,
-        WidgetListCardComponent
+        WidgetListCardComponent,
     ],
     entryComponents: [
         DashboardDetailDialogComponent,
         ConfigVisualizerDialogComponent,
         SpecificationMngComponent,
-        WidgetDetailDialogComponent
+        WidgetDetailDialogComponent,
     ],
     providers: [
-        DashboardResolvePagingParams
+        DashboardResolvePagingParams,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class XmAdminConfigModule {
     constructor(private modulesLangHelper: ModulesLanguageHelper, private languageHelper: JhiLanguageHelper) {
-        this.languageHelper.language.subscribe((languageKey: string) => {this.modulesLangHelper.correctLang(languageKey)});
+        this.languageHelper
+            .language.subscribe((languageKey: string) => {this.modulesLangHelper.correctLang(languageKey); });
     }
 }

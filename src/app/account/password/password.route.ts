@@ -8,7 +8,7 @@ export const passwordRoute: Route = {
     component: PasswordComponent,
     data: {
         privileges: {value: ['ACCOUNT.PASSWORD.UPDATE']},
-        pageTitle: 'global.menu.account.password'
+        pageTitle: 'global.menu.account.password',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
 };

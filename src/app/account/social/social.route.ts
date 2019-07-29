@@ -9,9 +9,9 @@ export const socialRegisterRoute: Route = {
     component: SocialRegisterComponent,
     data: {
         authorities: [],
-        pageTitle: 'social.register.title'
+        pageTitle: 'social.register.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
 };
 
 export const socialAuthRoute: Route = {
@@ -19,7 +19,7 @@ export const socialAuthRoute: Route = {
     component: SocialAuthComponent,
     data: {
         authorities: [],
-        pageTitle: 'social.register.title'
+        pageTitle: 'social.register.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
 };

@@ -47,7 +47,7 @@ export class ConfigValidatorUtil {
                     if (property === name) {
                         result.push({
                             path: `${parent}.${name}`,
-                            value: object[property]
+                            value: object[property],
                         });
                     }
                 }

@@ -15,7 +15,7 @@ export const passwordSetupRoute: Route = {
         formButtonLabel: 'reset.setup.form.button',
     },
     authorities: [],
-    pageTitle: 'global.menu.account.passwordSetup'
+    pageTitle: 'global.menu.account.passwordSetup',
   },
-  canActivate: [UserRouteAccessService]
+  canActivate: [UserRouteAccessService],
 };

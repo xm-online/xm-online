@@ -1,255 +1,255 @@
 export const SCHEMA_SPEC = {
-    'properties': {
-        'types': {
-            'type': 'array',
-            'items': {
-                'properties': {
-                    'key': {
-                        'type': 'string'
+    properties: {
+        types: {
+            type: 'array',
+            items: {
+                properties: {
+                    key: {
+                        type: 'string',
                     },
-                    'name': {
-                        'type': 'object'
+                    name: {
+                        type: 'object',
                     },
-                    'isApp': {
-                        'type': 'boolean'
+                    isApp: {
+                        type: 'boolean',
                     },
-                    'isAbstract': {
-                        'type': 'boolean'
+                    isAbstract: {
+                        type: 'boolean',
                     },
-                    'icon': {
-                        'type': 'string'
+                    icon: {
+                        type: 'string',
                     },
-                    'dataSpec': {
-                        'type': 'string'
+                    dataSpec: {
+                        type: 'string',
                     },
-                    'dataForm': {
-                        'type': 'string'
+                    dataForm: {
+                        type: 'string',
                     },
-                    'functions': {
-                        'type': 'array',
-                        'items': {
-                            'properties': {
-                                'key': {
-                                    'type': 'string'
+                    functions: {
+                        type: 'array',
+                        items: {
+                            properties: {
+                                key: {
+                                    type: 'string',
                                 },
-                                'name': {
-                                    'type': 'object'
+                                name: {
+                                    type: 'object',
                                 },
-                                'actionName': {
-                                    'type': 'object'
+                                actionName: {
+                                    type: 'object',
                                 },
-                                'allowedStateKeys': {
-                                    'type': 'array'
+                                allowedStateKeys: {
+                                    type: 'array',
                                 },
-                                'withEntityId': {
-                                    'type': 'boolean'
+                                withEntityId: {
+                                    type: 'boolean',
                                 },
-                                'inputSpec': {
-                                    'type': 'string'
+                                inputSpec: {
+                                    type: 'string',
                                 },
-                                'inputForm': {
-                                    'type': 'string'
+                                inputForm: {
+                                    type: 'string',
                                 },
-                                'showResponse': {
-                                    'type': 'boolean'
+                                showResponse: {
+                                    type: 'boolean',
                                 },
-                                'contextDataSpec': {
-                                    'type': 'string'
+                                contextDataSpec: {
+                                    type: 'string',
                                 },
-                                'contextDataForm': {
-                                    'type': 'string'
+                                contextDataForm: {
+                                    type: 'string',
                                 },
-                                'saveFunctionContext': {
-                                    'type': 'boolean'
-                                }
+                                saveFunctionContext: {
+                                    type: 'boolean',
+                                },
                             },
-                            'required': ['key', 'name']
-                        }
+                            required: ['key', 'name'],
+                        },
                     },
-                    'attachments': {
-                        'type': 'array',
-                        'items': {
-                            'properties': {
-                                'key': {
-                                    'type': 'string'
+                    attachments: {
+                        type: 'array',
+                        items: {
+                            properties: {
+                                key: {
+                                    type: 'string',
                                 },
-                                'name': {
-                                    'type': 'object'
+                                name: {
+                                    type: 'object',
                                 },
-                                'contentTypes': {
-                                    'type': 'array'
+                                contentTypes: {
+                                    type: 'array',
                                 },
-                                'max': {
-                                    'type': 'number'
+                                max: {
+                                    type: 'number',
                                 },
-                                'size': {
-                                    'type': 'number'
-                                }
+                                size: {
+                                    type: 'number',
+                                },
                             },
-                            'required': ['key', 'name']
-                        }
+                            required: ['key', 'name'],
+                        },
                     },
-                    'calendars': {
-                        'type': 'array',
-                        'items': {
-                            'properties': {
-                                'key': {
-                                    'type': 'string'
+                    calendars: {
+                        type: 'array',
+                        items: {
+                            properties: {
+                                key: {
+                                    type: 'string',
                                 },
-                                'name': {
-                                    'type': 'object'
+                                name: {
+                                    type: 'object',
                                 },
-                                'events': {
-                                    'type': 'array'
-                                }
+                                events: {
+                                    type: 'array',
+                                },
                             },
-                            'required': ['key', 'name']
-                        }
+                            required: ['key', 'name'],
+                        },
                     },
-                    'links': {
-                        'type': 'array',
-                        'items': {
-                            'properties': {
-                                'key': {
-                                    'type': 'string'
+                    links: {
+                        type: 'array',
+                        items: {
+                            properties: {
+                                key: {
+                                    type: 'string',
                                 },
-                                'name': {
-                                    'type': 'object'
+                                name: {
+                                    type: 'object',
                                 },
-                                'backName': {
-                                    'type': 'object'
+                                backName: {
+                                    type: 'object',
                                 },
-                                'builderType': {
-                                    'type': 'string'
+                                builderType: {
+                                    type: 'string',
                                 },
-                                'typeKey': {
-                                    'type': 'string'
+                                typeKey: {
+                                    type: 'string',
                                 },
-                                'icon': {
-                                    'type': 'string'
+                                icon: {
+                                    type: 'string',
                                 },
-                                'max': {
-                                    'type': 'number'
-                                }
+                                max: {
+                                    type: 'number',
+                                },
                             },
-                            'required': ['key', 'name', 'builderType', 'typeKey']
-                        }
+                            required: ['key', 'name', 'builderType', 'typeKey'],
+                        },
                     },
-                    'locations': {
-                        'type': 'array',
-                        'items': {
-                            'properties': {
-                                'key': {
-                                    'type': 'string'
+                    locations: {
+                        type: 'array',
+                        items: {
+                            properties: {
+                                key: {
+                                    type: 'string',
                                 },
-                                'name': {
-                                    'type': 'object'
+                                name: {
+                                    type: 'object',
                                 },
-                                'max': {
-                                    'type': 'number'
-                                }
+                                max: {
+                                    type: 'number',
+                                },
                             },
-                            'required': ['key', 'name']
-                        }
+                            required: ['key', 'name'],
+                        },
                     },
-                    'ratings': {
-                        'type': 'array',
-                        'items': {
-                            'properties': {
-                                'key': {
-                                    'type': 'string'
+                    ratings: {
+                        type: 'array',
+                        items: {
+                            properties: {
+                                key: {
+                                    type: 'string',
                                 },
-                                'name': {
-                                    'type': 'object'
+                                name: {
+                                    type: 'object',
                                 },
-                                'style': {
-                                    'type': 'string'
+                                style: {
+                                    type: 'string',
                                 },
-                                'votes': {
-                                    'type': 'number'
-                                }
+                                votes: {
+                                    type: 'number',
+                                },
                             },
-                            'required': ['key', 'name']
-                        }
+                            required: ['key', 'name'],
+                        },
                     },
-                    'states': {
-                        'type': 'array',
-                        'items': {
-                            'properties': {
-                                'key': {
-                                    'type': 'string'
+                    states: {
+                        type: 'array',
+                        items: {
+                            properties: {
+                                key: {
+                                    type: 'string',
                                 },
-                                'name': {
-                                    'type': 'object'
+                                name: {
+                                    type: 'object',
                                 },
-                                'icon': {
-                                    'type': 'string'
+                                icon: {
+                                    type: 'string',
                                 },
-                                'color': {
-                                    'type': 'string'
+                                color: {
+                                    type: 'string',
                                 },
-                                'next': {
-                                    'type': 'array',
-                                    'items': {
-                                        'properties': {
-                                            'stateKey': {
-                                                'type': 'string'
+                                next: {
+                                    type: 'array',
+                                    items: {
+                                        properties: {
+                                            stateKey: {
+                                                type: 'string',
                                             },
-                                            'name': {
-                                                'type': 'object'
+                                            name: {
+                                                type: 'object',
                                             },
-                                            'actionName': {
-                                                'type': 'object'
+                                            actionName: {
+                                                type: 'object',
                                             },
-                                            'inputSpec': {
-                                                'type': 'string'
+                                            inputSpec: {
+                                                type: 'string',
                                             },
-                                            'inputForm': {
-                                                'type': 'string'
+                                            inputForm: {
+                                                type: 'string',
                                             },
-                                            'showResponse': {
-                                                'type': 'boolean'
-                                            }
-                                        }
+                                            showResponse: {
+                                                type: 'boolean',
+                                            },
+                                        },
                                     },
-                                    'required': ['stateKey']
-                                }
-                            },
-                            'required': ['key', 'name']
-                        }
-                    },
-                    'tags': {
-                        'type': 'array',
-                        'items': {
-                            'properties': {
-                                'key': {
-                                    'type': 'string'
+                                    required: ['stateKey'],
                                 },
-                                'name': {
-                                    'type': 'object'
-                                }
                             },
-                            'required': ['key', 'name']
-                        }
+                            required: ['key', 'name'],
+                        },
                     },
-                    'comments': {
-                        'type': 'array',
-                        'items': {
-                            'properties': {
-                                'key': {
-                                    'type': 'string'
+                    tags: {
+                        type: 'array',
+                        items: {
+                            properties: {
+                                key: {
+                                    type: 'string',
                                 },
-                                'name': {
-                                    'type': 'object'
-                                }
+                                name: {
+                                    type: 'object',
+                                },
                             },
-                            'required': ['key', 'name']
-                        }
-                    }
+                            required: ['key', 'name'],
+                        },
+                    },
+                    comments: {
+                        type: 'array',
+                        items: {
+                            properties: {
+                                key: {
+                                    type: 'string',
+                                },
+                                name: {
+                                    type: 'object',
+                                },
+                            },
+                            required: ['key', 'name'],
+                        },
+                    },
                 },
-                'required': ['key', 'name']
-            }
-        }
+                required: ['key', 'name'],
+            },
+        },
     },
-    'required': ['types']
+    required: ['types'],
 };

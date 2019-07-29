@@ -1,35 +1,35 @@
-import { Component, OnInit, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer } from '@angular/core';
 import { JhiLanguageService } from 'ng-jhipster';
 
 import { PasswordResetInit } from './password-reset-init.service';
 
 @Component({
     selector: 'xm-password-reset-init',
-    templateUrl: './password-reset-init.component.html'
+    templateUrl: './password-reset-init.component.html',
 })
 export class PasswordResetInitComponent implements OnInit, AfterViewInit {
-    error: string;
-    errorEmailNotExists: string;
-    resetAccount: any;
-    success: string;
+    public error: string;
+    public errorEmailNotExists: string;
+    public resetAccount: any;
+    public success: string;
 
     constructor(
         private passwordResetInit: PasswordResetInit,
         private elementRef: ElementRef,
-        private renderer: Renderer
+        private renderer: Renderer,
     ) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.resetAccount = {};
     }
 
-    ngAfterViewInit() {
-        let htmlEl = this.elementRef.nativeElement.querySelector('#email');
+    public ngAfterViewInit(): void {
+        const htmlEl = this.elementRef.nativeElement.querySelector('#email');
         htmlEl && this.renderer.invokeElementMethod(htmlEl, 'focus', []);
     }
 
-    requestReset() {
+    public requestReset(): void {
         this.error = null;
         this.errorEmailNotExists = null;
 

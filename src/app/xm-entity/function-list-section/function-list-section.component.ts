@@ -132,58 +132,33 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
             .filter(fs => this.hasPrivilege(fs));
     }
 
-    defaultChangeState(stateKey) {
-        swal({
-            title: this.translateService.instant('xm-entity.function-list-card.change-state.title'),
-            showCancelButton: true,
-            buttonsStyling: false,
-            confirmButtonClass: 'btn mat-raised-button btn-primary',
-            cancelButtonClass: 'btn mat-raised-button',
-            confirmButtonText: this.translateService.instant('xm-entity.function-list-card.change-state.button')
-        }).then((result) => {
-            if (result.value) {
-                this.xmEntityService.changeState(this.xmEntity ? this.xmEntity.id : this.xmEntityId, stateKey).subscribe(
-                    () => {
-                        this.eventManager.broadcast({
-                            name: 'xmEntityDetailModification'
-                        });
-                        this.alert('success', 'xm-entity.function-list-card.change-state.success');
-                    },
-                    () => this.alert('error', 'xm-entity.function-list-card.change-state.error')
-                );
-            }
-        });
-    }
-
     onChangeState(stateKey) {
         const nextSpec: NextSpec = this.stateSpec.next.filter(it => it.stateKey === stateKey)[0];
-
-        if (!nextSpec || !nextSpec.inputSpec) {
-            this.defaultChangeState(stateKey);
-        } else {
-
-            const action = this.translateService.instant('xm-entity.function-list-card.change-state.button');
-            let title = nextSpec.actionName ? nextSpec.actionName : nextSpec.name;
-            title = title ? title : this.translateService.instant('xm-entity.function-list-card.change-state.title');
-
-            const modalRef = this.modalService.open(StateChangeDialogComponent, {backdrop: 'static'});
-            modalRef.componentInstance.xmEntity = this.xmEntity;
-            modalRef.componentInstance.nextSpec = nextSpec;
-            modalRef.componentInstance.dialogTitle = title;
-            modalRef.componentInstance.buttonTitle = title;
-            modalRef.result.then((result) => {
-                console.log(result);
-            }, (reason) => {
-                console.log(reason);
-                if (reason === 'OK') {
-                    this.eventManager.broadcast({
-                        name: 'xmEntityDetailModification'
-                    });
-                }
-            });
-
-            return modalRef;
+        if (!nextSpec) {
+            // exceptional case: user should never be able to change state outside the state tree
+            throw new Error(`XM error: trying to change entity state from "${this.stateSpec.name}" to "${stateKey}", not allowed`);
         }
+
+        let title = this.translateService.instant('xm-entity.function-list-card.change-state.title');
+        title = nextSpec.actionName || nextSpec.name || title;
+
+        const modalRef = this.modalService.open(StateChangeDialogComponent, {backdrop: 'static'});
+        modalRef.componentInstance.xmEntity = this.xmEntity;
+        modalRef.componentInstance.nextSpec = nextSpec;
+        modalRef.componentInstance.dialogTitle = title;
+        modalRef.componentInstance.buttonTitle = title;
+        modalRef.result.then((result) => {
+            console.log(result);
+        }, (reason) => {
+            console.log(reason);
+            if (reason === 'OK') {
+                this.eventManager.broadcast({
+                    name: 'xmEntityDetailModification'
+                });
+            }
+        });
+
+        return modalRef;
     }
 
     getCurrentStateSpec(): StateSpec {

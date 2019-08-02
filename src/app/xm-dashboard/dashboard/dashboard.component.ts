@@ -118,7 +118,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     this.dashboard = dashboards.filter((d) => (d.config && d.config.slug === idOrSlug)
                         || d.id === parseInt(idOrSlug, 10)).shift();
                     // TODO temporary fix for override widget variables
-                    this.dashboard =  JSON.parse(JSON.stringify(this.dashboard ? this.dashboard : ''));
+                    this.dashboard =  JSON.parse(JSON.stringify(this.dashboard || ''));
                     if (this.dashboard && this.dashboard.id) {
                         this.loadDashboard(this.dashboard.id);
                     } else {

@@ -29,7 +29,9 @@ export class FileUploadComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.uploadProcess.unsubscribe();
+        if (this.uploadProcess) {
+            this.uploadProcess.unsubscribe();
+        }
     }
 
     updateFile(event) {

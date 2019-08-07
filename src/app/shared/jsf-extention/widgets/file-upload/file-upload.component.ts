@@ -49,7 +49,7 @@ export class FileUploadComponent implements OnInit, OnDestroy {
         if (this.options.tokenSource) {
             this.httpClient
                 .get(this.options.tokenSource)
-                .subscribe((resp) => {
+                .subscribe((resp: any) => {
                     const headers: HttpHeaders = new HttpHeaders({
                         'Authorization': resp.token_type + ' ' + resp.access_token
                     });

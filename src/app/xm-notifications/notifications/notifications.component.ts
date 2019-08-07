@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { NotificationsService } from '../shared/notifications.service';
-import { XmConfigService } from '../../shared';
+import { Principal, XmConfigService } from '../../shared';
 import { Notification } from '../shared/notification.model';
 
 import { DomSanitizer } from '@angular/platform-browser'
@@ -32,6 +32,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     redirectUrl: string;
     autoUpdateEnabled: boolean = null;
     privileges: string[];
+    updateInterval: number;
 
     @HostListener('document:click', ['$event'])
     clickout(event) {
@@ -46,6 +47,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         private router: Router,
         private sanitized: DomSanitizer,
         private eRef: ElementRef,
+        private principal: Principal,
         private notificationsService: NotificationsService) {
         this.isOpened = false;
         this.notifications = [];
@@ -58,8 +60,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
             () => this.load());
         this.entityEntityStateChange = this.eventManager.subscribe('xmEntityDetailModification',
             () => this.load());
-
-        this.load();
+        this.load(true);
     }
 
     ngOnDestroy () {
@@ -67,19 +68,23 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.entityEntityStateChange);
     }
 
-    public load() {
+    public load(initAutoUpdate?: boolean) {
         this.xmConfigService.getUiConfig().subscribe(config => {
             this.config = config.notifications ? config.notifications : null;
             this.mapPrviliges(config.notifications);
             if (this.config) {
                 this.getNotifications(this.config);
             }
-            if (this.config && this.config.autoUpdate && !this.autoUpdateEnabled) {
+            if (this.config && this.config.autoUpdate && !this.autoUpdateEnabled && initAutoUpdate) {
                 const self = this;
                 self.autoUpdateEnabled = true;
-                // @TODO should be redone with wesocets or somthing like that
-                setInterval(function () {
-                    self.getNotifications(self.config);
+                // @TODO should be redone with webocets
+                this.updateInterval = setInterval(function () {
+                    if (self.principal.isAuthenticated()) {
+                        self.getNotifications(self.config);
+                    } else {
+                        clearInterval(self.updateInterval);
+                    }
                 }, self.config.autoUpdate)
             }
         });

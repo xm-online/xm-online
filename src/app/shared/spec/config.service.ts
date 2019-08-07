@@ -131,7 +131,7 @@ export class XmConfigService {
         const DEFAULT_SETTINGS = new PasswordSpec(4, 50, '', null);
         if (!config) {return DEFAULT_SETTINGS}
         const CONFIG_PARSED = JSON.parse(config);
-        if (CONFIG_PARSED && CONFIG_PARSED.passwordSettings && CONFIG_PARSED.passwordSettings) {
+        if (CONFIG_PARSED && CONFIG_PARSED.passwordSettings) {
             const CONFIG: PasswordSpec = CONFIG_PARSED.passwordSettings;
             return new PasswordSpec(
                 CONFIG.minLength || 4,

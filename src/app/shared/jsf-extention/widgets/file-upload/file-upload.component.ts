@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { JsonSchemaFormService } from 'angular2-json-schema-form';
 
@@ -7,13 +7,15 @@ import { JsonSchemaFormService } from 'angular2-json-schema-form';
     templateUrl: 'file-upload.component.html',
     styleUrls: ['./file-upload.component.scss']
 })
-export class FileUploadComponent implements OnInit {
+export class FileUploadComponent implements OnInit, OnDestroy {
 
     options: any;
     controlValue: any;
     uploadingError = false;
     progress: number;
     file: any;
+    uploadProcess: any;
+
     @Input() layoutNode: any;
 
     constructor(private jsf: JsonSchemaFormService,
@@ -24,6 +26,12 @@ export class FileUploadComponent implements OnInit {
     ngOnInit() {
         this.options = this.layoutNode.options || {};
         this.jsf.initializeControl(this);
+    }
+
+    ngOnDestroy() {
+        if (this.uploadProcess) {
+            this.uploadProcess.unsubscribe();
+        }
     }
 
     updateFile(event) {
@@ -53,15 +61,14 @@ export class FileUploadComponent implements OnInit {
         const apiUrl = this.options['url'] || null;
         this.uploadingError = false;
         if (apiUrl) {
-            this.httpClient
+            this.uploadProcess = this.httpClient
                 .post(apiUrl, formData,
                     {
                         headers: headers,
                         reportProgress: true,
                         observe: 'events'
                     }
-                )
-                .subscribe(event => {
+                ).subscribe(event => {
                     if (event.type === HttpEventType.UploadProgress) {
                         this.updateProgress(event);
                     } else if (event.type === HttpEventType.Response) {

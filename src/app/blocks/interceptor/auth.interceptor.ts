@@ -22,7 +22,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
         const token = this.localStorage.retrieve('authenticationToken')
             || this.sessionStorage.retrieve('authenticationToken');
-        if (!!token) {
+        const noAuthHeader = !request.headers.get('Authorization');
+        if (!!token && noAuthHeader) {
             request = request.clone({
                 setHeaders: {
                     Authorization: 'Bearer ' + token

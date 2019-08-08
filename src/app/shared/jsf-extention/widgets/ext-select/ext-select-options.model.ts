@@ -7,6 +7,7 @@ export class ExtSelectOptions {
                 public valueField?: string,
                 public relatedFields?: any[],
                 public translations?: any,
-                public htmlClass?: any) {
+                public htmlClass?: any,
+                public required?: boolean) {
     }
 }

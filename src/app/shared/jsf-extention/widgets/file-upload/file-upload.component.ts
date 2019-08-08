@@ -44,9 +44,21 @@ export class FileUploadComponent implements OnInit, OnDestroy {
         if (!fileData) {return false}
         const file = fileData;
         const formData: FormData = new FormData();
-        const headers: HttpHeaders = new HttpHeaders();
         formData.append('file', file, file.name);
-        this.saveFile(formData, headers);
+
+        if (this.options.tokenSource) {
+            this.httpClient
+                .get(this.options.tokenSource)
+                .subscribe((resp: any) => {
+                    const headers: HttpHeaders = new HttpHeaders({
+                        'Authorization': resp.token_type + ' ' + resp.access_token
+                    });
+                    this.saveFile(formData, headers);
+                });
+        } else {
+            this.saveFile(formData);
+        }
+
     }
 
     resetFile() {
@@ -57,7 +69,7 @@ export class FileUploadComponent implements OnInit, OnDestroy {
         this.jsf.updateValue(this, this.controlValue);
     }
 
-    private saveFile(formData: FormData, headers: HttpHeaders) {
+    private saveFile(formData: FormData, headers?: HttpHeaders) {
         const apiUrl = this.options['url'] || null;
         this.uploadingError = false;
         if (apiUrl) {

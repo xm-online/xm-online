@@ -1,10 +1,12 @@
 <xm-loader [showLoader]="showLoader"></xm-loader>
 
-<div [className]="row.class" *ngFor="let row of dashboard?.layout?.grid">
-  <div [className]="item.class" *ngFor="let item of row?.content">
-    <xm-dynamic-widget [init]="{module: item.widget?.module, component: item.widget?.selector, config: item.widget?.config, spec: spec}"
-                       *ngIf="item.widget?.module && spec">
-    </xm-dynamic-widget>
+<div [className]="dashboard?.layout?.class || ''">
+  <div [className]="row.class || ''" *ngFor="let row of dashboard?.layout?.grid">
+    <div [className]="item.class || ''" *ngFor="let item of row?.content">
+      <xm-dynamic-widget [init]="{module: item.widget?.module, component: item.widget?.selector, config: item.widget?.config, spec: spec}"
+                         *ngIf="item.widget?.module && spec">
+      </xm-dynamic-widget>
+    </div>
   </div>
 </div>
 <no-data [show]="!dashboard?.layout?.grid?.length"></no-data>

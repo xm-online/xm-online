@@ -3,6 +3,7 @@
     [formControl]="checkedOption"
     [placeholder]="settings.title ? settings.title : ''"
     [disabled]="settings.readonly"
+    [required]="layoutNode.options?.required"
   >
     <ngx-mat-select-search
       [formControl]="queryCtrl"

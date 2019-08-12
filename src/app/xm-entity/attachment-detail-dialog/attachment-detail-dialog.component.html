@@ -60,7 +60,7 @@
     <div class="form-group text-center upload-area">
       <div *ngIf="!attachment.valueContentType">
         <span jhiTranslate="xm-entity.attachment-detail-dialog.upload">Click to upload or drop file here</span>
-        <input type="file" id="uploadFile" (change)="setFileData($event, nameCtrl)"/>
+        <input type="file" id="uploadFile" (change)="setFileData($event, nameCtrl)" [accept]="acceptedFileTypes">
         <input type="hidden" class="form-control" name="value" id="field_value" required
                [(ngModel)]="attachment.content.value"/>
         <input type="hidden" class="form-control" name="valueContentType" id="field_valueContentType"

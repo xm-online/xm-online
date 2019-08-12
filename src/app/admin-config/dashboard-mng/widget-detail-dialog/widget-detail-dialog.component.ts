@@ -71,7 +71,7 @@ export class WidgetDetailDialogComponent implements OnInit {
 
     private alert(type, key) {
         swal({
-            type: type,
+            type,
             text: this.translateService.instant(key),
             buttonsStyling: false,
             confirmButtonClass: 'btn btn-primary',

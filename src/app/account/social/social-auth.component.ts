@@ -42,7 +42,7 @@ export class SocialAuthComponent extends LoginComponent implements OnInit {
                         () => this.router.navigate(['']),
                     );
             }, () => {
-                this.router.navigate(['social-register'], {queryParams: {'success': 'false'}});
+                this.router.navigate(['social-register'], {queryParams: {success: 'false'}});
             });
         }
     }

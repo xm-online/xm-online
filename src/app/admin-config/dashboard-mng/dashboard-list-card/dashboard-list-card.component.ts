@@ -157,7 +157,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
 
     private alert(type, key) {
         swal({
-            type: type,
+            type,
             text: this.translateService.instant(key),
             buttonsStyling: false,
             confirmButtonClass: 'btn btn-primary',

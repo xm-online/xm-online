@@ -1,7 +1,7 @@
-import {Injectable, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {JhiAlertService, JhiEventManager, JhiParseLinks} from 'ng-jhipster';
-import {Subscription} from 'rxjs';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
 import swal from 'sweetalert2';
 
 import {ITEMS_PER_PAGE} from '../shared/constants/pagination.constants';

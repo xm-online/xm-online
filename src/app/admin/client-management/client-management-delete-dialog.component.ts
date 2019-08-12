@@ -18,7 +18,7 @@ export class ClientMgmtDeleteDialogComponent implements OnInit {
         private jhiLanguageService: JhiLanguageService,
         private clientService: ClientService,
         public activeModal: NgbActiveModal,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
     ) {
     }
 
@@ -38,7 +38,7 @@ export class ClientMgmtDeleteDialogComponent implements OnInit {
             .subscribe((response) => {
                     this.eventManager.broadcast({
                         name: 'clientListModification',
-                        content: {id: 'delete', msg: 'Deleted a client'}
+                        content: {id: 'delete', msg: 'Deleted a client'},
                     });
                     this.activeModal.dismiss(true);
                 },

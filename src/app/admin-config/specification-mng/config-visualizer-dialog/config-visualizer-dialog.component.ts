@@ -132,7 +132,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
         const terms = [];
         if (dataSpec) {
             dataSpec = JSON.parse(dataSpec);
-            dataSpec.properties && Object.keys(dataSpec.properties).forEach(k => {
+            dataSpec.properties && Object.keys(dataSpec.properties).forEach((k) => {
                 terms.push(`${k}: ${dataSpec.properties[k].type}`);
             });
         }
@@ -142,7 +142,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     private functionsToString(functions) {
         const terms = [];
         if (functions) {
-            functions.forEach(f => {
+            functions.forEach((f) => {
                 terms.push(`${f.key}()`);
             });
         }
@@ -152,10 +152,10 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     private statesToClassifiers(states) {
         const classifiers = [];
         if (states) {
-            states.forEach(s => {
+            states.forEach((s) => {
                 classifiers.push(`  [<state> ${s.key}]`);
                 if (s.next) {
-                    s.next.forEach(n => {
+                    s.next.forEach((n) => {
                         classifiers.push(`  [<state> ${s.key}]->[<state> ${n.stateKey}]`);
                     });
                 }
@@ -167,7 +167,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     private linksToClassifiers(links, typeKey) {
         const classifiers = [];
         if (links) {
-            links.map(l => l.typeKey).filter((v, i, a) => a.indexOf(v) === i).forEach(tk => {
+            links.map((l) => l.typeKey).filter((v, i, a) => a.indexOf(v) === i).forEach(tk => {
                 classifiers.push(`[${tk.split('.').pop()}]<-[${typeKey}]`);
             });
         }
@@ -177,7 +177,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     private getSource() {
         const spec = YAML.parse(this.entitySpecification);
         let source = '';
-        spec.types.forEach(t => {
+        spec.types.forEach((t) => {
             source += `${this.typeToString(t)}\n`;
         });
         source += '#fill: #f3f3f3; #b2dfdb\n';

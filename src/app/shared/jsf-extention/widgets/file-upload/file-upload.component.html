@@ -51,7 +51,7 @@
                                     [color]="'accent'"
                                     [diameter]="38"
                                     [strokeWidth]="2"
-                                    [mode]="'determinate'"
+                                    [mode]="(progress === 100) ? 'indeterminate' : 'determinate'"
                                     *ngIf="progress"
                                     [value]="progress">
 

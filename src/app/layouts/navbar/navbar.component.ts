@@ -47,7 +47,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     private toggleButton;
     private sidebarVisible: boolean;
 
-    @ViewChild('navbar-cmp') button;
+    @ViewChild('navbar-cmp', {static: false}) button;
 
     constructor(private languageHelper: JhiLanguageHelper,
                 private jhiLanguageService: JhiLanguageService,

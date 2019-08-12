@@ -18,7 +18,7 @@ export class UserMgmtDialogComponent implements OnInit {
     languages: any[];
     authorities: any[];
     showLoader: Boolean;
-    @ViewChild('userLoginForm') userLoginForm;
+    @ViewChild('userLoginForm', {static: false}) userLoginForm;
     @Input() selectedUser: User;
 
     constructor(

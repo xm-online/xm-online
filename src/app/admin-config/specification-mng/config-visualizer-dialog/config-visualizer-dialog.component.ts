@@ -13,7 +13,7 @@ declare let _: any;
 @Component({
     selector: 'xm-config-visualizer-dialog',
     templateUrl: './config-visualizer-dialog.component.html',
-    styleUrls: ['./config-visualizer-dialog.component.scss']
+    styleUrls: ['./config-visualizer-dialog.component.scss'],
 })
 export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
 
@@ -102,7 +102,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     mouseMove(e) {
         if (this.mouseDownPoint) {
             this.offset = skanaar.vector.diff({ x: e.pageX, y: e.pageY }, this.mouseDownPoint);
-            this.sourceChanged()
+            this.sourceChanged();
         }
     }
 

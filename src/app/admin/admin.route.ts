@@ -14,7 +14,7 @@ import {
     rolesMatrixRoute,
     rolesMgmtRoute,
     userMgmtRoute,
-    translationRoute
+    translationRoute,
 } from './';
 
 const ADMIN_ROUTES = [
@@ -37,10 +37,10 @@ const ADMIN_ROUTES = [
 export const adminState: Routes = [{
     path: '',
     data: {
-        authorities: ['ROLE_ADMIN']
+        authorities: ['ROLE_ADMIN'],
     },
     // canActivate: [UserRouteAccessService],
     canActivateChild: [UserRouteAccessService],
-    children: ADMIN_ROUTES
+    children: ADMIN_ROUTES,
 }
 ];

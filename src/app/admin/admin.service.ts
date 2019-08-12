@@ -29,7 +29,7 @@ export class BaseAdminListComponent implements OnInit, OnDestroy{
         protected alertService: JhiAlertService,
         protected eventManager: JhiEventManager,
         protected parseLinks: JhiParseLinks,
-        protected router: Router
+        protected router: Router,
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
@@ -68,7 +68,7 @@ export class BaseAdminListComponent implements OnInit, OnDestroy{
             {
               size: this.itemsPerPage,
               page: this.page,
-              sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+              sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc'),
             }
         });
         this.loadAll();
@@ -106,7 +106,7 @@ export class BaseAdminListComponent implements OnInit, OnDestroy{
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-raised-button btn-primary',
             cancelButtonClass: 'btn mat-raised-button',
-            confirmButtonText: 'Yes, delete!'
+            confirmButtonText: 'Yes, delete!',
         }).then((result) => result.value  ? this.deleteAction(id)
             : console.log('Cancel'));
     }

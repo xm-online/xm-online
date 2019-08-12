@@ -3,18 +3,19 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import {
-    MaterialDesignFramework,
-    MaterialDesignFrameworkModule,
     Framework,
     FrameworkLibraryService,
-    JsonSchemaFormModule, JsonSchemaFormService,
-    WidgetLibraryService
+    JsonSchemaFormModule,
+    JsonSchemaFormService,
+    MaterialDesignFramework, MaterialDesignFrameworkModule,
+    WidgetLibraryService,
 } from 'angular2-json-schema-form';
 
 import { JhiLanguageHelper } from '../shared';
 import { ModulesLanguageHelper } from '../shared/language/modules-language.helper';
 import { XmSharedModule } from '../shared/shared.module';
 
+import { TagInputModule } from 'ngx-chips';
 import {
     AuditsComponent,
     AuditsService,
@@ -48,15 +49,14 @@ import {
     UserMgmtDialogComponent,
     UserModalService,
     UserResolve,
-    UserResolvePagingParams
+    UserResolvePagingParams,
 } from './';
+import { XmConfigService } from './../shared/spec/config.service';
 import { adminState } from './admin.route';
-import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { FormPlaygroundComponent } from './form-playground/form-playground.component';
+import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { TranslationComponent } from './translations/translation.component';
 import { TranslationService } from './translations/translation.service';
-import { XmConfigService } from './../shared/spec/config.service';
-import { TagInputModule } from 'ngx-chips';
 
 @NgModule({
     imports: [
@@ -70,11 +70,11 @@ import { TagInputModule } from 'ngx-chips';
                 JsonSchemaFormService,
                 FrameworkLibraryService,
                 WidgetLibraryService,
-                {provide: Framework, useClass: MaterialDesignFramework, multi: true}
-            ]
+                {provide: Framework, useClass: MaterialDesignFramework, multi: true},
+            ],
         },
         FormsModule,
-        RouterModule.forChild(adminState)
+        RouterModule.forChild(adminState),
     ],
     declarations: [
         AuditsComponent,
@@ -113,7 +113,7 @@ import { TagInputModule } from 'ngx-chips';
         ClientMgmtDialogComponent,
         ClientMgmtDeleteDialogComponent,
         JhiHealthModalComponent,
-        JhiMetricsMonitoringModalComponent
+        JhiMetricsMonitoringModalComponent,
     ],
     providers: [
         BaseAdminListComponent,
@@ -128,12 +128,14 @@ import { TagInputModule } from 'ngx-chips';
         UserModalService,
         ClientResolvePagingParams,
         XmConfigService,
-        TranslationService
+        TranslationService,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class XmAdminModule {
     constructor(private modulesLangHelper: ModulesLanguageHelper, private languageHelper: JhiLanguageHelper) {
-        this.languageHelper.language.subscribe((languageKey: string) => {this.modulesLangHelper.correctLang(languageKey)});
+        this.languageHelper
+            .language
+            .subscribe((languageKey: string) => {this.modulesLangHelper.correctLang(languageKey); });
     }
 }

@@ -151,6 +151,5 @@
     "tslint-eslint-rules": "^5.4.0",
     "tslint-sonarts": "^1.9.0",
     "typescript": "3.4.5"
-
   }
 }

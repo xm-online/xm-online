@@ -6,7 +6,8 @@ const os = require('os');
 const lib = resolve(__dirname, '../src/app/ext');
 fs.readdirSync(lib).forEach(function (mod) {
     const modPath = join(lib, mod);
-    if (!fs.existsSync(join(modPath, 'package.json'))) return;
-    const npmCmd = os.platform().startsWith('win') ? 'npm.cmd' : 'npm';
-    cp.spawn(npmCmd, ['i'], {env: process.env, cwd: modPath, stdio: 'inherit'})
+    if (fs.existsSync(join(modPath, 'package.json'))) {
+        const npmCmd = os.platform().startsWith('win') ? 'npm.cmd' : 'npm';
+        cp.spawn(npmCmd, ['i'], {env: process.env, cwd: modPath, stdio: 'inherit'});
+    }
 });

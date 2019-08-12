@@ -35,7 +35,7 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
     public elementCtrl: FormControl = new FormControl();
     public elementFilterCtrl: FormControl = new FormControl();
     public filteredElements: ReplaySubject<Element[]> = new ReplaySubject<Element[]>(1);
-    @ViewChild('singleSelect') singleSelect: MatSelect;
+    @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
     private _onDestroy = new Subject<void>();
 
     constructor(

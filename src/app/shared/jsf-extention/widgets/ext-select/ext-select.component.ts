@@ -35,7 +35,7 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
     public elementCtrl: FormControl = new FormControl();
     public elementFilterCtrl: FormControl = new FormControl();
     public filteredElements: ReplaySubject<Element[]> = new ReplaySubject<Element[]>(1);
-    @ViewChild('singleSelect') singleSelect: MatSelect;
+    @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
     private _onDestroy = new Subject<void>();
 
     constructor(
@@ -160,7 +160,7 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
         if (options.enum) {
             options.enum.forEach(it => {
                 if (this.options.translations && this.options.translations[it]) {
-                    this.elements.push({label: this.i18nNamePipe.transform(it, this.principal), value: it});
+                    this.elements.push({label: this.i18nNamePipe.transform(this.options.translations[it], this.principal), value: it});
                 } else {
                     this.elements.push({label: it, value: it});
                 }

@@ -297,3 +297,17 @@ tag-input {
         }
     }
 }
+
+@media (max-width: 768px) {
+    .main-panel .main-content,
+    .container-fluid
+    {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .card-body {
+        padding-left: 2px !important;
+        padding-right: 2px !important;
+    }
+}

@@ -9,7 +9,7 @@ import { JhiEventManager } from 'ng-jhipster';
 })
 export class XmPasswordNeededComponent implements OnInit {
 
-    @ViewChild('passwordNeeded') tpl: ElementRef;
+    @ViewChild('passwordNeeded', {static: false}) tpl: ElementRef;
     form: FormGroup;
     modal: NgbModalRef;
     showLoader: boolean;

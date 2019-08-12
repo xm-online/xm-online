@@ -4,6 +4,7 @@
                 (selectionChange)="updateValue($event)"
                 [placeholder]="options['title'] ? options['title'] : ''"
                 [disabled]="(disabled$ | async) || options['readonly']"
+                [required]="options?.required"
                 #singleSelect>
       <ngx-mat-select-search [formControl]="elementFilterCtrl"
                              placeholderLabel="{{'global.rest-select-placeholder-search.simple' | translate}}"

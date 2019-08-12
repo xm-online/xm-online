@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { JsonSchemaFormService } from 'angular2-json-schema-form';
 
@@ -7,13 +7,15 @@ import { JsonSchemaFormService } from 'angular2-json-schema-form';
     templateUrl: 'file-upload.component.html',
     styleUrls: ['./file-upload.component.scss']
 })
-export class FileUploadComponent implements OnInit {
+export class FileUploadComponent implements OnInit, OnDestroy {
 
     options: any;
     controlValue: any;
     uploadingError = false;
     progress: number;
     file: any;
+    uploadProcess: any;
+
     @Input() layoutNode: any;
 
     constructor(private jsf: JsonSchemaFormService,
@@ -26,6 +28,12 @@ export class FileUploadComponent implements OnInit {
         this.jsf.initializeControl(this);
     }
 
+    ngOnDestroy() {
+        if (this.uploadProcess) {
+            this.uploadProcess.unsubscribe();
+        }
+    }
+
     updateFile(event) {
         if (event.target.files.length > 0) {
             this.file = event.target.files[0];
@@ -36,9 +44,21 @@ export class FileUploadComponent implements OnInit {
         if (!fileData) {return false}
         const file = fileData;
         const formData: FormData = new FormData();
-        const headers: HttpHeaders = new HttpHeaders();
         formData.append('file', file, file.name);
-        this.saveFile(formData, headers);
+
+        if (this.options.tokenSource) {
+            this.httpClient
+                .get(this.options.tokenSource)
+                .subscribe((resp: any) => {
+                    const headers: HttpHeaders = new HttpHeaders({
+                        'Authorization': resp.token_type + ' ' + resp.access_token
+                    });
+                    this.saveFile(formData, headers);
+                });
+        } else {
+            this.saveFile(formData);
+        }
+
     }
 
     resetFile() {
@@ -49,19 +69,18 @@ export class FileUploadComponent implements OnInit {
         this.jsf.updateValue(this, this.controlValue);
     }
 
-    private saveFile(formData: FormData, headers: HttpHeaders) {
+    private saveFile(formData: FormData, headers?: HttpHeaders) {
         const apiUrl = this.options['url'] || null;
         this.uploadingError = false;
         if (apiUrl) {
-            this.httpClient
+            this.uploadProcess = this.httpClient
                 .post(apiUrl, formData,
                     {
                         headers: headers,
                         reportProgress: true,
                         observe: 'events'
                     }
-                )
-                .subscribe(event => {
+                ).subscribe(event => {
                     if (event.type === HttpEventType.UploadProgress) {
                         this.updateProgress(event);
                     } else if (event.type === HttpEventType.Response) {

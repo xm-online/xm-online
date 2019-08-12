@@ -131,7 +131,7 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
 
         return [
             {class: 'row',
-                content: [{class: 'col-sm-6', component: 'entity-card'}, {class: 'col-sm-6', component: 'entity-data-card'}]
+                content: [{class: 'col-md-6', component: 'entity-card'}, {class: 'col-md-6', component: 'entity-data-card'}]
             },
             {class: 'row', content: [{class: 'col-sm-12', component: 'function-list-card'}]},
             {class: 'row', content: [{class: 'col-sm-12', component: attachmentsComponent}]},

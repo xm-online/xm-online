@@ -39,7 +39,7 @@ export class SocialAuthComponent extends LoginComponent implements OnInit {
                             this.eventManager.broadcast({name: XM_EVENT_LIST.XM_SUCCESS_AUTH});
                             this.router.navigate(['dashboard']);
                         },
-                        () => this.router.navigate([''])
+                        () => this.router.navigate(['']),
                     );
             }, () => {
                 this.router.navigate(['social-register'], {queryParams: {'success': 'false'}});

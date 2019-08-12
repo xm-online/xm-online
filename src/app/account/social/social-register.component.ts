@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { JhiLanguageService } from 'ng-jhipster';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { JhiLanguageService } from 'ng-jhipster';
 
 @Component({
     selector: 'xm-social-register',
-    templateUrl: './social-register.component.html'
+    templateUrl: './social-register.component.html',
 })
 export class SocialRegisterComponent implements OnInit  {
     success: boolean;

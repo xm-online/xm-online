@@ -2,18 +2,17 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
-import { finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import 'rxjs/add/observable/of';
-import { TranslateService } from '@ngx-translate/core';
+import { finalize } from 'rxjs/operators';
 
 import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
 import { Dashboard } from '../../../xm-dashboard/shared/dashboard.model';
 import { DashboardService } from '../../../xm-dashboard/shared/dashboard.service';
 import { BaseAdminConfigListComponent } from '../../base-admin-config-list.component';
 import { DashboardDetailDialogComponent } from '../dashboard-detail-dialog/dashboard-detail-dialog.component';
-
 
 declare let swal: any;
 
@@ -116,24 +115,28 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
             cancelButtonText: this.translateService.instant('admin-config.common.cancel'),
             confirmButtonClass: 'btn btn-primary',
             cancelButtonClass: 'btn',
-        }).then(confirm => {
+        }).then((confirm) => {
             if (confirm.value) {
                 this.showLoader = true;
                 const dashboardsArray = JSON.parse(event.target.result);
                 for (let i = 0; i < dashboardsArray.length; i++) {
                     this.setDashboard(dashboardsArray[i]).subscribe(
-                        res => {
+                        (res) => {
                             if ((i + 1) === dashboardsArray.length) {
                                 this.alert('success', 'admin-config.dashboard-detail-dialog.add.success');
                                 this.loadAll();
                             }
-                        }, err => {
+                        }, (err) => {
                             console.log(err);
                             this.showLoader = false;
                         });
                 }
             }
         });
+    }
+
+    protected deleteItem(d: Dashboard) {
+        this.onDeleteItem(d.id, d.name);
     }
 
     private setDashboard(dashboard: Dashboard): Observable<any> {
@@ -159,10 +162,6 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
             buttonsStyling: false,
             confirmButtonClass: 'btn btn-primary',
         });
-    }
-
-    protected deleteItem(d: Dashboard) {
-        this.onDeleteItem(d.id, d.name);
     }
 
 }

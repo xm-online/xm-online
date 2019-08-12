@@ -3,9 +3,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 
+import { environment } from '../../../../environments/environment';
 import { Principal } from '../../../shared/auth/principal.service';
 import { Dashboard, DashboardService } from '../../../xm-dashboard';
-import { environment } from '../../../../environments/environment';
 
 declare let swal: any;
 
@@ -69,15 +69,15 @@ export class DashboardDetailDialogComponent implements OnInit {
         }
     }
 
+    onCancel() {
+        this.activeModal.dismiss('cancel');
+    }
+
     private onSaveSuccess(key: string) {
         // TODO: use constant for the broadcast and analyse listeners
         this.eventManager.broadcast({name: 'dashboardListModification'});
         this.activeModal.dismiss(true);
         this.alert('success', key);
-    }
-
-    onCancel() {
-        this.activeModal.dismiss('cancel');
     }
 
     private alert(type, key) {

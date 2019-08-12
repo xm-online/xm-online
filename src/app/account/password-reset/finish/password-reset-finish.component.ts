@@ -3,6 +3,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, Renderer } from '@angular
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AuthServerProvider } from '../../../shared';
@@ -10,7 +11,6 @@ import { XmConfigService } from '../../../shared/spec/config.service';
 import { PasswordSpec } from '../../../xm-entity/shared/password-spec.model';
 import { DEFAULT_AUTH_TOKEN, DEFAULT_CONTENT_TYPE } from '../../../xm.constants';
 import { PasswordResetFinish } from './password-reset-finish.service';
-import { Observable } from 'rxjs';
 
 interface IResetPasswordFormConfig {
     formTitle: string;

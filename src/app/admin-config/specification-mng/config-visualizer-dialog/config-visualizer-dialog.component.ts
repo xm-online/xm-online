@@ -37,7 +37,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        setTimeout(() => {this.sourceChanged()}, 100);
+        setTimeout(() => {this.sourceChanged(); }, 100);
     }
 
     onCancel() {
@@ -67,12 +67,12 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
         canvasElement.style.height = h + 'px';
     }
 
-    magnifyViewport (diff) {
+    magnifyViewport(diff) {
         this.zoomLevel = Math.min(10, this.zoomLevel + diff);
         this.sourceChanged();
     }
 
-    resetViewport () {
+    resetViewport() {
         this.zoomLevel = 1;
         this.offset = {x: 0, y: 0};
         this.sourceChanged();
@@ -110,7 +110,6 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
         this.zoomLevel = Math.min(10, this.zoomLevel - (evant.deltaY < 0 ? -1 : 1));
         this.sourceChanged();
     }
-
 
     private typeToString(type) {
         let result = '';

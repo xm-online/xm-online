@@ -8,9 +8,9 @@ import { finalize } from 'rxjs/operators';
 import { JhiLanguageHelper } from '../../../shared/language/language.helper';
 import { Dashboard, Widget, WidgetService } from '../../../xm-dashboard';
 import { DashboardService } from '../../../xm-dashboard/shared/dashboard.service';
+import { XmEntity } from '../../../xm-entity';
 import { BaseAdminConfigListComponent } from '../../base-admin-config-list.component';
 import { WidgetDetailDialogComponent } from '../widget-detail-dialog/widget-detail-dialog.component';
-import { XmEntity } from '../../../xm-entity';
 
 @Component({
   selector: 'xm-widget-list-card',

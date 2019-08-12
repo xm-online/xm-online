@@ -8,6 +8,6 @@ export const auditsRoute: Route = {
     data: {
         privileges: {value: ['']},
         pageTitle: 'global.menu.admin.main',
-        pageSubTitleTrans: 'global.menu.admin.audits'
-    }
+        pageSubTitleTrans: 'global.menu.admin.audits',
+    },
 };

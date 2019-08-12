@@ -74,7 +74,7 @@ export class BaseAdminConfigListComponent implements OnInit, OnDestroy {
                     size: this.itemsPerPage,
                     page: this.page,
                     sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc'),
-                }
+                },
         });
         this.loadAll();
     }

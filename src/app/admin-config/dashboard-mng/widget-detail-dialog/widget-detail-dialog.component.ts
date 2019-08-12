@@ -58,15 +58,15 @@ export class WidgetDetailDialogComponent implements OnInit {
         }
     }
 
+    onCancel() {
+        this.activeModal.dismiss('cancel');
+    }
+
     private onSaveSuccess(key: string) {
         // TODO: use constant for the broadcast and analyse listeners
         this.eventManager.broadcast({name: 'widgetListModification'});
         this.activeModal.dismiss(true);
         this.alert('success', key);
-    }
-
-    onCancel() {
-        this.activeModal.dismiss('cancel');
     }
 
     private alert(type, key) {

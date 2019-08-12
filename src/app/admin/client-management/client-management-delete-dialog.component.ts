@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 
@@ -6,7 +6,7 @@ import { Client, ClientService } from '../../shared';
 
 @Component({
     selector: 'xm-client-mgmt-delete-dialog',
-    templateUrl: './client-management-delete-dialog.component.html'
+    templateUrl: './client-management-delete-dialog.component.html',
 })
 export class ClientMgmtDeleteDialogComponent implements OnInit {
 

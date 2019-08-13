@@ -27,6 +27,7 @@ export class AttachmentDetailDialogComponent implements OnInit {
     attachment: Attachment = new Attachment();
     showLoader: boolean;
     readOnlyInputs: boolean;
+    wrongFileType: string;
 
     constructor(private activeModal: NgbActiveModal,
                 private attachmentService: AttachmentService,
@@ -43,20 +44,31 @@ export class AttachmentDetailDialogComponent implements OnInit {
         this.readOnlyInputs = this.attachmentSpecs[0].isNameReadonly ? this.attachmentSpecs[0].isNameReadonly : true;
     }
 
+    get acceptedFileTypes() {
+        const attachmentSpec = this.attachmentSpecs.filter((att: any) => att.key === this.attachment.typeKey).shift();
+        return (attachmentSpec && attachmentSpec.contentTypes) ?
+            attachmentSpec.contentTypes : '';
+    }
+
     setFileData(event, nameCtrl) {
         if (event.target.files && event.target.files[0]) {
             const file = event.target.files[0];
-            this.attachment.contentUrl = file.name;
-            this.attachment.valueContentType = file.type;
 
             // Content type validation
             const attachmentSpec = this.attachmentSpecs.filter((att: any) => att.key === this.attachment.typeKey).shift();
             if (attachmentSpec && attachmentSpec.contentTypes) {
                 if (attachmentSpec.contentTypes.filter((type: string) => type === file.type).length <= 0) {
-                    // TODO: type validation
                     console.log('Not allowed content type ' + file.type);
+                    this.wrongFileType = file.type;
+                    return;
                 }
             }
+
+            this.wrongFileType = undefined;
+
+            this.attachment.contentUrl = file.name;
+            this.attachment.valueContentType = file.type;
+
             // Content assignment
             this.dataUtils.toBase64(file, (base64Data) => {
                 this.attachment.content.value = base64Data;

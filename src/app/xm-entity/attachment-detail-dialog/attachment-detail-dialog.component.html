@@ -79,6 +79,9 @@
         </a>
       </div>
     </div>
+    <small class="form-text text-danger" [hidden]="!wrongFileType">
+      <span>{{ "xm-entity.attachment-detail-dialog.wrong-type-error" | translate: { fileType: wrongFileType} }}</span>
+    </small>
   </div>
   <div class="modal-footer">
     <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()" [disabled]="showLoader">

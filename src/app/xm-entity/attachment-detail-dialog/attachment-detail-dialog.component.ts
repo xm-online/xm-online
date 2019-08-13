@@ -27,6 +27,7 @@ export class AttachmentDetailDialogComponent implements OnInit {
     attachment: Attachment = new Attachment();
     showLoader: boolean;
     readOnlyInputs: boolean;
+    wrongFileType: string;
 
     constructor(private activeModal: NgbActiveModal,
                 private attachmentService: AttachmentService,
@@ -58,9 +59,12 @@ export class AttachmentDetailDialogComponent implements OnInit {
             if (attachmentSpec && attachmentSpec.contentTypes) {
                 if (attachmentSpec.contentTypes.filter((type: string) => type === file.type).length <= 0) {
                     console.log('Not allowed content type ' + file.type);
+                    this.wrongFileType = file.type;
                     return;
                 }
             }
+
+            this.wrongFileType = undefined;
 
             this.attachment.contentUrl = file.name;
             this.attachment.valueContentType = file.type;

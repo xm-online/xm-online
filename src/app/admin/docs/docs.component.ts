@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { AuthServerProvider } from '../../shared/auth/auth-jwt.service';
 
-import SwaggerUI from 'swagger-ui';
+import { SwaggerUIBundle } from 'swagger-ui-dist';
 
 @Component({
     selector: 'xm-docs',
@@ -35,7 +35,7 @@ export class JhiDocsComponent implements OnInit, AfterViewInit {
 
     updateSwagger(resource) {
         const authToken = this.auth.getToken();
-        const swagger  = new SwaggerUI({
+        const swagger  = new SwaggerUIBundle({
             dom_id: '#swaggerHolder',
             supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
             url: window.location.protocol + '//' + window.location.host + resource,

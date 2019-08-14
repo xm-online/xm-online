@@ -107,6 +107,7 @@
     "nomnoml": "^0.6.0",
     "nouislider": "^9.2.0",
     "oboe": "^2.1.4",
+    "path": "^0.12.7",
     "popper.js": "1.14.1",
     "reflect-metadata": "^0.1.10",
     "rxjs": "^6.5.2",

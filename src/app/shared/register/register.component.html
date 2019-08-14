@@ -39,12 +39,13 @@
              #emailInput="ngModel"
              required
              xmFocus
+             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
              placeholder="{{'global.form.email' | translate}}">
 
       <mat-error *ngIf="emailInput.hasError('required')">
         <span jhiTranslate="global.messages.validate.email.required">Your email is required.</span>
       </mat-error>
-      <mat-error *ngIf="emailInput.hasError('invalid')">
+      <mat-error *ngIf="emailInput.hasError('pattern')">
         <span jhiTranslate="global.messages.validate.email.invalid">Your email is invalid.</span>
       </mat-error>
       <mat-error *ngIf="emailInput.hasError('minlength')">

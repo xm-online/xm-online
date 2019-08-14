@@ -1,5 +1,6 @@
 export class ExtSelectOptions {
     constructor(public placeholder?: string,
+                public title?: string,
                 public url?: string,
                 public sourceField?: string,
                 public arrayField?: string,
@@ -8,6 +9,7 @@ export class ExtSelectOptions {
                 public relatedFields?: any[],
                 public translations?: any,
                 public htmlClass?: any,
-                public required?: boolean) {
+                public required?: boolean,
+                public emptyPlaceholder?: string) {
     }
 }

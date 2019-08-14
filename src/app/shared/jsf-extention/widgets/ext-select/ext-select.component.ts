@@ -35,6 +35,8 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
     public elementCtrl: FormControl = new FormControl();
     public elementFilterCtrl: FormControl = new FormControl();
     public filteredElements: ReplaySubject<Element[]> = new ReplaySubject<Element[]>(1);
+    public placeholder: BehaviorSubject<string>;
+
     @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
     private _onDestroy = new Subject<void>();
 
@@ -57,6 +59,15 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.layoutNode.dataType === 'array') {
             this.controlValue = this.controlValue[0];
         }
+
+        this.placeholder = new BehaviorSubject<string>(this.options.title);
+        this.filteredElements.subscribe(elements => {
+            if (!elements.length) {
+                this.placeholder.next(this.options.emptyPlaceholder || this.options.title);
+            } else {
+                this.placeholder.next(this.options.title);
+            }
+        });
     }
 
     ngAfterViewInit() {
@@ -200,4 +211,6 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
         this.controlValue = event.value.value;
         this.controlLabel = event.value.label;
     }
+
+
 }

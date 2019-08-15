@@ -17,13 +17,12 @@ export class NotificationsService {
         private principal: Principal,
         private eventManager: JhiEventManager,
         private i18nNamePipe: I18nNamePipe
-    ) {
-    }
+    ) {}
 
     public getNotifications(options: any): Observable<any> {
         return this.http.get(options.resourceUrl, {observe: 'response'}).pipe(
             map((response: HttpResponse<any>) => {
-                this.totalCount = response.headers.get('X-Total-Count');
+                this.totalCount = Number(response.headers.get('X-Total-Count')) > 0 ? response.headers.get('X-Total-Count') : null;
                 let array: any = response.body;
                 array = array ? array : [];
                 let elements = [];

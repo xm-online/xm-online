@@ -4,7 +4,8 @@ import {Router} from '@angular/router';
 import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import {JhiEventManager, JhiLanguageService} from 'ng-jhipster';
-import {Subscription} from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import swal from 'sweetalert2';
 
@@ -12,10 +13,11 @@ import {ProfileService} from '../';
 import {ContextService, I18nNamePipe, JhiLanguageHelper, LoginService, Principal} from '../../shared/';
 import {XmConfigService} from '../../shared/spec/config.service';
 import {Dashboard, DashboardWrapperService} from '../../xm-dashboard';
-import {XmEntitySpecWrapperService} from '../../xm-entity';
+import { XmEntitySpecWrapperService } from '../../xm-entity';
 import {DEBUG_INFO_ENABLED, VERSION, XM_EVENT_LIST} from '../../xm.constants';
 import {transpilingForIE} from '../../shared/jsf-extention/jsf-attributes-helper';
 import { PoweredBy } from '../../shared/components/powered-by/powered-by.model';
+
 
 const misc: any = {
     navbar_menu_visible: 0,
@@ -42,6 +44,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
     private toggleButton;
 
     dashboardGroups: any[];
+    uiConfig: any;
 
     inProduction: boolean;
     isNavbarCollapsed: boolean;
@@ -58,6 +61,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
     isApplicationExists: boolean;
 
     tenantName: 'XM^online';
+    userDescription$: Observable<any>;
     tenantLogoUrl: '../assets/img/logo-xm-online.png';
     iconsInMenu: false;
     poweredByConfig: PoweredBy;
@@ -94,6 +98,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnInit() {
         this.xmConfigService.getUiConfig().subscribe(result => {
+            this.uiConfig = result;
             this.languageHelper.getAll().then((languages) => {
                 this.languages = (result && result.langs) ? result.langs : languages;
             });
@@ -117,13 +122,17 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
             this.tenantLogoUrl = '../assets/img/logo-xm-online.png';
             this.tenantName = 'XM^online';
         });
+
         this.principal.getAuthenticationState().subscribe(state => {
             if (state) {
                 // no need to call this.loadData() only on manual refresh, otherwise method will be invoked by XM_EVENT_LIST.XM_SUCCESS_AUTH
+                const sideBarMenu = this.uiConfig && this.uiConfig.sidebarMenu || null;
+                if (sideBarMenu) {
+                    this.userDescription$ = this.getUserDescription(sideBarMenu);
+                }
                 this.loadData();
             }
         });
-
     }
 
     ngOnDestroy() {
@@ -212,6 +221,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
             this.loginService.logout();
             this.applications = null;
             this.dashboards = null;
+            this.userDescription$ = null;
             this.router.navigate(['']);
             this.xmEntitySpecWrapperService.clear();
             $('body').addClass('xm-public-screen');
@@ -397,6 +407,26 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
         } else {
             return true;
         }
+    }
+
+    private getUserDescription(config: any): Observable<any> {
+        return this.principal
+            .getXmEntityProfile()
+            .pipe(
+                map((body) => {
+                    const descriptionPath =
+                        config.userProfile.descriptionPath && config.userProfile.descriptionPath.split('.');
+                    let value = body;
+                    for (const key of descriptionPath) {
+                        value = value[key];
+                    }
+                    return value;
+                })
+            );
+
+        this.userDescription$.subscribe((str) => {
+            console.log(str);
+        })
     }
 
     getDashboardName(dashboard) {

@@ -10,7 +10,7 @@
 </div>
 
 <div class="sidebar-wrapper" [class.bottom-spacer]="poweredByConfig" [ngSwitch]="isAuthenticated()">
-  <div *ngSwitchCase="true" class="user">
+  <div *ngSwitchCase="true" class="user" [class.has-user-description]="(userDescription$ | async)">
     <div class="photo">
       <span *ngIf="getImageUrl()">
         <img [src]="getImageUrl()" class="img-fluid rounded-circle" alt="Avatar">
@@ -23,6 +23,11 @@
       <a data-toggle="collapse" href="#collapseExample" class="collapsed">
         <span class="user-name">
             <em class="truncated pr-4">{{principal.getName()}}</em>
+            <em class="user-description text-muted truncated pr-4"
+                *ngIf="(userDescription$ | async)"
+                [title]="userDescription$ | async | i18nName: principal">
+              {{userDescription$ | async | i18nName: principal}}
+            </em>
             <b class="caret"></b>
         </span>
       </a>

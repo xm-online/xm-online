@@ -9,6 +9,9 @@ import { I18nNamePipe } from '../../shared/language/i18n-name.pipe';
 
 @Injectable()
 export class NotificationsService {
+
+    totalCount: string;
+
     constructor(
         private http: HttpClient,
         private principal: Principal,
@@ -20,6 +23,7 @@ export class NotificationsService {
     public getNotifications(options: any): Observable<any> {
         return this.http.get(options.resourceUrl, {observe: 'response'}).pipe(
             map((response: HttpResponse<any>) => {
+                this.totalCount = response.headers.get('X-Total-Count');
                 let array: any = response.body;
                 array = array ? array : [];
                 let elements = [];

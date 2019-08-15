@@ -59,7 +59,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     ngOnInit() {
         this.entityListActionSuccessSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS,
             () => this.load());
-        this.entityEntityListModificationSubscription = this.eventManager.subscribe('xmEntityListModification',
+        this.entityEntityListModificationSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION,
             () => this.load());
     }
 
@@ -77,6 +77,8 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     load() {
+        // TODO: move processing of options.entities to onChange hook.
+        //  Will options ever change after component initialization?
         if (this.options.entities) {
             this.list = this.options.entities.map(e => {
                 e.page = this.firstPage;
@@ -87,11 +89,18 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
                 }
                 return e;
             });
-            if (this.list.length) {
-                if (this.list[0].query) {
-                    this.list[0].currentQuery = this.list[0].query;
+            if (!this.list.length) {
+                return;
+            }
+
+            if (!this.list[this.activeItemId]) {
+               this.setActiveTab(0);
+            } else {
+                const activeItem = this.list[this.activeItemId];
+                if (activeItem.query) {
+                    activeItem.currentQuery = activeItem.query;
                 }
-                this.loadEntities(this.list[0]).subscribe(resp => this.list[0].entities = resp);
+                this.loadEntities(activeItem).subscribe(resp => activeItem.entities = resp);
             }
         }
     }
@@ -330,7 +339,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
                 this.xmEntityService.delete(xmEntity.id).subscribe(
                     () => {
                         this.eventManager.broadcast({
-                            name: 'xmEntityListModification'
+                            name: XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION
                         });
                         this.alert('success', 'xm-entity.entity-list-card.delete.remove-success');
                     },

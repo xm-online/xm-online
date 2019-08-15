@@ -11,6 +11,7 @@ import { Spec } from '../shared/spec.model';
 import { XmEntitySpec } from '../shared/xm-entity-spec.model';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
+import {XM_EVENT_LIST} from '../../xm.constants';
 
 @Component({
     selector: 'xm-entity-detail-dialog',
@@ -114,9 +115,9 @@ export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
     }
 
     private onSaveSuccess(entity: XmEntity) {
-        // TODO: use constant for the broadcast and analyse listeners
+        // TODO: analyse listeners
         this.eventManager.broadcast({
-            name: this.isEdit ? 'xmEntityDetailModification' : 'xmEntityListModification',
+            name: this.isEdit ? XM_EVENT_LIST.XM_ENTITY_DETAIL_MODIFICATION : XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION,
             entityId: entity.id,
             entityType: entity.typeKey
         });

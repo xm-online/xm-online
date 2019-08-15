@@ -112,7 +112,6 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
                     : this.navigate(path, {});
                 return;
             }
-            this.eventManager.broadcast({name: XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION});
             swal({
                 type: 'success',
                 text: this.translateService.instant('ext-common-entity.entity-fab-actions.operation-success'),

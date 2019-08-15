@@ -126,9 +126,9 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
         this.principal.getAuthenticationState().subscribe(state => {
             if (state) {
                 // no need to call this.loadData() only on manual refresh, otherwise method will be invoked by XM_EVENT_LIST.XM_SUCCESS_AUTH
-                const sideBarMenu = this.uiConfig && this.uiConfig.sidebarMenu || null;
-                if (sideBarMenu) {
-                    this.userDescription$ = this.getUserDescription(sideBarMenu);
+                const sideBarMenuConfig = this.uiConfig && this.uiConfig.sidebarMenu || null;
+                if (sideBarMenuConfig) {
+                    this.userDescription$ = this.getUserDescription(sideBarMenuConfig);
                 }
                 this.loadData();
             }
@@ -423,10 +423,6 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
                     return value;
                 })
             );
-
-        this.userDescription$.subscribe((str) => {
-            console.log(str);
-        })
     }
 
     getDashboardName(dashboard) {

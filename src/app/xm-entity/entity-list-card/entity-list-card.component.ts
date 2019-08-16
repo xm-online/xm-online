@@ -87,6 +87,11 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
                 if (e.filter) {
                     e['filterJsfAttributes'] = buildJsfAttributes(e.filter.dataSpec, e.filter.dataForm);
                 }
+                if (e.fields) { // Workaroud: server sorting doesn't work atm for nested "data" fields
+                    e.fields
+                        .filter(f => f.field && f.field.indexOf('data.') === 0)
+                        .map(f => f.sortable = false);
+                }
                 return e;
             });
             if (!this.list.length) {

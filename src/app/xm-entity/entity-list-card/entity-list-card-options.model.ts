@@ -39,7 +39,8 @@ export class FieldOptions {
                 public func?: string,
                 public action?: ActionOptions,
                 public actions?: ActionsOptions[],
-                public actionsListPrivileges?: string[]) {
+                public actionsListPrivileges?: string[],
+                public sortingOff?: boolean) {
     }
 }
 

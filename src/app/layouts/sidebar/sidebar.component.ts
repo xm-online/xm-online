@@ -4,8 +4,8 @@ import {Router} from '@angular/router';
 import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import {JhiEventManager, JhiLanguageService} from 'ng-jhipster';
-import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of, Subscription } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import swal from 'sweetalert2';
 
@@ -421,6 +421,9 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
                         value = value[key];
                     }
                     return value;
+                }),
+                catchError(error => {
+                    return of();
                 })
             );
     }

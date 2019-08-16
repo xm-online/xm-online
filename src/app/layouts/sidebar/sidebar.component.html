@@ -24,9 +24,9 @@
         <span class="user-name">
             <em class="truncated pr-4">{{principal.getName()}}</em>
             <em class="user-description text-muted truncated pr-4"
-                *ngIf="(userDescription$ | async)"
-                [title]="userDescription$ | async | i18nName: principal">
-              {{userDescription$ | async | i18nName: principal}}
+                *ngIf="(userDescription$ | async) as userDescription"
+                [title]="userDescription | i18nName: principal">
+              {{userDescription | i18nName: principal}}
             </em>
             <b class="caret"></b>
         </span>

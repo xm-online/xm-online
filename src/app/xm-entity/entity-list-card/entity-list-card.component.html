@@ -111,18 +111,17 @@
                 <th></th>
 
                 <ng-container *ngFor="let field of item.fields">
-                  <th *ngIf="!field.sortingOff"
+                  <th *ngIf="field.sortable === false"
+                      [ngClass]="{'th-hidden' : field.hiddenTitle}">
+                    <span *ngIf="field.title">{{field.title | i18nName :principal}}</span>
+                  </th>
+                  <th *ngIf="field.sortable !== false"
                       [jhiSortBy]="field.useKeyword ? field.field + '.keyword' : field.field"
                       [ngClass]="{'th-hidden' : field.hiddenTitle}">
                     <span *ngIf="field.title">{{field.title | i18nName :principal}}</span>
                     <span class="fa fa-sort" *ngIf="field.title"></span>
                   </th>
-                  <th *ngIf="field.sortingOff"
-                      [ngClass]="{'th-hidden' : field.hiddenTitle}">
-                    <span *ngIf="field.title">{{field.title | i18nName :principal}}</span>
-                  </th>
                 </ng-container>
-
 
                 <th *ngIf="item.typeKey != 'RESOURCE.XM-TENANT' && !(options.hideExport)"></th>
               </tr>

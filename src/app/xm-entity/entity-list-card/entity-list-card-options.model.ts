@@ -40,7 +40,7 @@ export class FieldOptions {
                 public action?: ActionOptions,
                 public actions?: ActionsOptions[],
                 public actionsListPrivileges?: string[],
-                public sortingOff?: boolean) {
+                public sortable?: boolean) {
     }
 }
 

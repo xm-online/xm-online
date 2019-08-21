@@ -119,7 +119,7 @@ export class ExtQuerySelectComponent implements OnInit, OnDestroy {
     }
 
     private fetchOptions(query: any): Observable<ISelectOption[]> {
-        return this.http.get(this.settings.url, {params: query})
+        return this.http.post(this.settings.url, query)
             .pipe(
                 map(response => _.get(response, this.settings.arrayField, [])),
                 map(options => options.map(option => {

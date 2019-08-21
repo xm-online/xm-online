@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime, filter, finalize, map, mergeMap, switchMap, takeUntil, tap } from 'rxjs/operators';
+import {catchError, debounceTime, filter, finalize, map, mergeMap, switchMap, takeUntil, tap} from 'rxjs/operators';
 import { BehaviorSubject, iif, merge, Observable, of, ReplaySubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { JsonSchemaFormService } from 'angular2-json-schema-form';
@@ -128,8 +128,9 @@ export class ExtQuerySelectComponent implements OnInit, OnDestroy {
                         value: _.get(option, this.settings.valueField, null)
                     }
                 })),
-            map(options => options.filter(option => option.label !== null && option.value !== null)),
-            map(options => options.length ? options : [])
-        )
+                map(options => options.filter(option => option.label !== null && option.value !== null)),
+                map(options => options.length ? options : []),
+                catchError(err => [])
+            )
     }
 }

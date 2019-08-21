@@ -130,7 +130,7 @@ export class ExtQuerySelectComponent implements OnInit, OnDestroy {
                 })),
                 map(options => options.filter(option => option.label !== null && option.value !== null)),
                 map(options => options.length ? options : []),
-                catchError(err => [])
+                catchError(err => of([]))
             )
     }
 }

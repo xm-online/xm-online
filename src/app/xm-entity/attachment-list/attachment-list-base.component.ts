@@ -11,8 +11,8 @@ import { AttachmentService } from '../shared/attachment.service';
 import { TranslateService } from '@ngx-translate/core';
 import { saveFile, saveFileFromUrl } from '../../shared/helpers/file-download-helper';
 import { DEBUG_INFO_ENABLED, XM_EVENT_LIST } from '../../xm.constants';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {AttachmentDetailDialogComponent} from '..';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AttachmentDetailDialogComponent } from '../attachment-detail-dialog/attachment-detail-dialog.component';
 
 declare let swal: any;
 

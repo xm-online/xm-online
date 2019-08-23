@@ -68,11 +68,11 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
                 tap((entity) => this.defineUiConfig()),
                 tap(entity => this.linkSpecs$.next(
                     this.xmEntitySpec && this.xmEntitySpec.links ?
-                        this.xmEntitySpec.links.map(spec => this.addInterfaceSpec(spec, 'target')) : []
+                        this.xmEntitySpec.links.map(spec => this.addInterfaceSpec(spec, 'target', this.entityUiConfig)) : []
                     )
                 ),
                 tap(entity => this.backLinkSpecs$.next(
-                    this.backLinkSpecs.map(spec => this.addInterfaceSpec(spec, 'source'))
+                    this.backLinkSpecs.map(spec => this.addInterfaceSpec(spec, 'source', this.entityUiConfig))
                 )),
                 tap((entity) => this.defineLayoutGrid(entity.typeKey))
             )
@@ -106,27 +106,14 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
         return this.spec.types.filter(t => t.key === vTypeKey).shift();
     }
 
-    // get sourceSpecs() {
-    //     return this.getBackLinkSpecs(this.xmEntity.typeKey).map(
-    //         spec => this.addInterfaceSpec(spec, 'source')
-    //     );
-    // }
-    // get targetSpecs() {
-    //     return this.xmEntitySpec && this.xmEntitySpec.links ?
-    //         this.xmEntitySpec.links.map(
-    //             spec => this.addInterfaceSpec(spec, 'target')
-    //         )
-    //         : [];
-    // }
+    private addInterfaceSpec(linkSpec: LinkSpec, type: 'target' | 'source', entityUiConfig: any): FullLinkSpec {
 
-    addInterfaceSpec(linkSpec: LinkSpec, type: 'target' | 'source'): FullLinkSpec {
-
-        const interfaceSpec = (this.entityUiConfig[type === 'target' ? 'targets' : 'sources'] || [])
+        const interfaceSpec = entityUiConfig && (entityUiConfig[type === 'target' ? 'targets' : 'sources'] || [])
             .filter(iSpec => iSpec.typeKey === linkSpec.key);
 
         return  {
             model: linkSpec,
-            interface: undefined
+            interface: interfaceSpec
         };
     }
 

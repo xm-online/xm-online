@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
 import { AttachmentListBaseComponent } from './attachment-list-base.component';
-import {AttachmentDetailDialogComponent, AttachmentService, XmEntityService} from '..';
-import {JhiEventManager} from 'ng-jhipster';
-import {TranslateService} from '@ngx-translate/core';
-import {Principal} from '../../shared';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'xm-attachment-list-simplified',

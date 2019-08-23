@@ -77,6 +77,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     load() {
+        console.log('OPTIONS', this.options);
         // TODO: move processing of options.entities to onChange hook.
         //  Will options ever change after component initialization?
         if (this.options.entities) {

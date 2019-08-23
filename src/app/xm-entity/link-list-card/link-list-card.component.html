@@ -1,9 +1,9 @@
 <div class="card">
   <div class="card-header card-header-icon card-header-primary">
     <div class="card-icon">
-      <i class="material-icons">{{isBackLink ? 'link' : linkSpec.icon}}</i>
+      <i class="material-icons">{{isBackLink ? 'link' : linkSpec.model.icon}}</i>
     </div>
-    <h4 class="card-title">{{linkSpec.name | i18nName: principal}}</h4>
+    <h4 class="card-title">{{linkSpec.model.name | i18nName: principal}}</h4>
   </div>
 
   <div class="card-body">
@@ -31,8 +31,10 @@
         <thead>
         <tr>
           <th></th>
-          <th><span jhiTranslate="xm-entity.common.fields.name">Name</span></th>
-          <th><span jhiTranslate="xm-entity.common.fields.description">Description</span></th>
+          <th *ngFor="let field of fields">
+            <span >{{field.title}}</span>
+          </th>
+<!--          <th><span jhiTranslate="xm-entity.common.fields.description">Description</span></th>-->
           <th *ngIf="!isBackLink"></th>
         </tr>
         </thead>
@@ -41,15 +43,17 @@
           <td>
             <div class="xm-avatar-img-container">
               <img src="{{link.target.avatarUrl ? link.target.avatarUrl : './assets/img/placeholder.png'}}">
-              <i class="material-icons" *ngIf="linkSpec.icon && !link.target.avatarUrl">{{linkSpec.icon}}</i>
+              <i class="material-icons" *ngIf="linkSpec.model.icon && !link.target.avatarUrl">{{linkSpec.model.icon}}</i>
             </div>
           </td>
-          <td>
-            <a routerLink="/application/{{link.target.typeKey}}/{{link.target.id}}" title="{{link.target.key}}">
-              {{link.target.name}}
-            </a>
+          <td *ngFor="let field of fields">
+<!--            TODO routerLink="/application/{{link.target.typeKey}}/{{link.target.id}}" title="{{link.target.key}}"-->
+
+              {{link.target[field.field]}}
+
           </td>
-          <td>{{link.target.description}}</td>
+
+<!--          <td>{{link.target.description}}</td>-->
           <td *ngIf="!isBackLink">
             <a role="button" class="text-muted" (click)="onRemove(link)" *permitted="'LINK.DELETE'">
               <i class="material-icons">close</i>
@@ -62,7 +66,7 @@
 
     <div class="row" *ngIf="mode === 'tree'">
       <div class="col-md-12">
-        <xm-link-list-tree-section class="tree" [links]="treeRootLinks" [linkSpec]="linkSpec">
+        <xm-link-list-tree-section class="tree" [links]="treeRootLinks" [linkSpec]="linkSpec.model">
         </xm-link-list-tree-section>
       </div>
     </div>

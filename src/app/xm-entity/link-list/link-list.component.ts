@@ -1,13 +1,13 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 
 import { Link } from '../shared/link.model';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
 import { JhiEventManager } from 'ng-jhipster';
 import { Subscription, Observable, of } from 'rxjs';
-import { LinkSpec } from '../shared/link-spec.model';
+import {FullLinkSpec, LinkSpec} from '../shared/link-spec.model';
 import {Principal} from '../../shared';
 
 @Component({
@@ -20,8 +20,8 @@ export class LinkListComponent implements OnInit, OnDestroy, OnChanges {
     private modificationSubscription: Subscription;
 
     @Input() xmEntityId: number;
-    @Input() linkSpecs: LinkSpec[];
-    @Input() backLinkSpecs: LinkSpec[];
+    @Input() linkSpecs: FullLinkSpec[];
+    @Input() backLinkSpecs: FullLinkSpec[];
 
     xmEntity: XmEntity;
     links: Link[];
@@ -62,9 +62,7 @@ export class LinkListComponent implements OnInit, OnDestroy, OnChanges {
         // IEVGEN. DO NOT REMOVE. This code here is because user could get targets but could not get sources or vise versa
         this.principal.hasPrivileges(['LINK.SOURCE.GET_LIST']).then(data => {
             if (data) {
-                for (const linkSpec of this.backLinkSpecs) {
-                    this.getSources(linkSpec).subscribe(items => this.links.push(...items));
-                }
+                this.getSources().subscribe(items => this.links.push(...items));
             }
         });
 
@@ -73,10 +71,14 @@ export class LinkListComponent implements OnInit, OnDestroy, OnChanges {
     /**
      * Get inverted sources
      */
-    private getSources(linkSpec: LinkSpec): Observable<Link[]> {
-        return this.xmEntityService.findLinkSourcesInverted('' + this.xmEntityId, [linkSpec.key], {sort: ['id,desc']})
+    private getSources(): Observable<Link[]> {
+        // console.log('this.backLinkSpecs', this.backLinkSpecs);
+        const keys = this.backLinkSpecs.map(spec => spec.model.key);
+
+        return this.xmEntityService.findLinkSourcesInverted('' + this.xmEntityId, keys, {sort: ['id,desc']})
             .pipe(
                 map(response => response.body),
+                tap(response => console.log('RESPONSE', response)),
                 map(items => items.map(item => this.inverseLink(item))),
                 catchError(err => of([]))
             )
@@ -87,6 +89,7 @@ export class LinkListComponent implements OnInit, OnDestroy, OnChanges {
      * @param item - inverted link
      */
     private inverseLink(item: Link): Link {
+        console.log('INVERT', item);
         const copy = Object.assign({}, item);
         copy.target = Object.assign({}, item.source);
         copy.source = null;
@@ -99,12 +102,12 @@ export class LinkListComponent implements OnInit, OnDestroy, OnChanges {
         return isTreeMode ? ['list', 'tree'] : ['list'];
     }
 
-    filterLinks(linkSpec: LinkSpec) {
+    filterLinks(linkSpec: LinkSpec): Link[] {
         return this.links ? this.links.filter(link => link.typeKey === linkSpec.key) : [];
     }
 
-    filterBackLinkSpecs() {
-        return this.backLinkSpecs ? this.backLinkSpecs.filter(backLinkSpec => this.filterLinks(backLinkSpec).length > 0) : [];
+    filterBackLinkSpecs(): FullLinkSpec[] {
+        return this.backLinkSpecs ? this.backLinkSpecs.filter(backLinkSpec => this.filterLinks(backLinkSpec.model).length > 0) : [];
     }
 
 }

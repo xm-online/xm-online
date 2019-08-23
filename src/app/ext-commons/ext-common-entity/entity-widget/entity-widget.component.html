@@ -49,8 +49,8 @@
           <div *ngSwitchCase="'link-list'">
             <xm-link-list
               [xmEntityId]="fetchedXmEntity.id"
-              [linkSpecs]="xmEntitySpec?.links"
-              [backLinkSpecs]="backLinkSpecs"
+              [linkSpecs]="linkSpecs$ | async"
+              [backLinkSpecs]="backLinkSpecs$ | async"
               *ngIf="xmEntitySpec?.links?.length > 0 || backLinkSpecs.length > 0">
             </xm-link-list>
           </div>

@@ -24,7 +24,9 @@ import { AttachmentListBaseComponent } from './attachment-list-base.component';
                     </button>
                 </mat-menu>
             </div>
-            <ng-container *ngIf="attachments">
+            <ng-container *ngIf="attachments?.length; then listTemplate; else emptyTemplate">
+            </ng-container>
+            <ng-template #listTemplate>
                 <div class="table-responsive sm-overflow">
                     <table class="table table-striped">
                         <thead>
@@ -61,8 +63,10 @@ import { AttachmentListBaseComponent } from './attachment-list-base.component';
                         </tbody>
                     </table>
                 </div>
-            </ng-container>
-
+            </ng-template>
+            <ng-template #emptyTemplate>
+                <no-data [hideImage]="true" [show]="true" [text]="'xm-entity.attachment-card.no-data'"></no-data>
+            </ng-template>
         </div>
     </div>`,
     styleUrls: ['./attachment-list.component.scss']

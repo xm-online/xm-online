@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { AttachmentListBaseComponent } from './attachment-list-base.component';
+import {AttachmentDetailDialogComponent, AttachmentService, XmEntityService} from '..';
+import {JhiEventManager} from 'ng-jhipster';
+import {TranslateService} from '@ngx-translate/core';
+import {Principal} from '../../shared';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'xm-attachment-list-simplified',
@@ -21,6 +26,10 @@ import { AttachmentListBaseComponent } from './attachment-list-base.component';
                 <mat-menu #entityListActions="matMenu">
                     <button mat-menu-item class="btn-sm" (click)="onRefresh()">
                         {{'xm-entity.entity-list-card.refresh' | translate}}
+                    </button>
+                    <button mat-menu-item class="btn-sm" (click)="onAddAttachment()"
+                            *xmPermitted="['ATTACHMENT.CREATE']; context: xmAttachmentContext()">
+                        {{'xm-entity.common.add' | translate}}
                     </button>
                 </mat-menu>
             </div>
@@ -72,4 +81,5 @@ import { AttachmentListBaseComponent } from './attachment-list-base.component';
     styleUrls: ['./attachment-list.component.scss']
 })
 export class AttachmentListSimplifiedComponent extends AttachmentListBaseComponent {
+
 }

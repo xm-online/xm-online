@@ -115,13 +115,14 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
     }
 
     private allowedByState(functionSpec: FunctionSpec, stateKey: string): boolean {
-        if (!functionSpec.allowedStateKeys || !functionSpec.allowedStateKeys.length || !stateKey) {
-            return true;
-        }
-        if (functionSpec.allowedStateKeys.includes('NEVER')) {
+        const keys = functionSpec.allowedStateKeys;
+        if (keys && keys.length && keys.includes('NEVER')) {
             return false;
         }
-        return functionSpec.allowedStateKeys.includes(stateKey);
+        if (!keys || !keys.length || !stateKey) {
+            return true;
+        }
+        return keys.includes(stateKey);
     }
 
     private getDefaultFunctions(): FunctionSpec[] {

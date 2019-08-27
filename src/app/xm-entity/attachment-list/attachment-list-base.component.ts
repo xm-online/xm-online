@@ -11,6 +11,8 @@ import { AttachmentService } from '../shared/attachment.service';
 import { TranslateService } from '@ngx-translate/core';
 import { saveFile, saveFileFromUrl } from '../../shared/helpers/file-download-helper';
 import { DEBUG_INFO_ENABLED, XM_EVENT_LIST } from '../../xm.constants';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AttachmentDetailDialogComponent } from '../attachment-detail-dialog/attachment-detail-dialog.component';
 
 declare let swal: any;
 
@@ -34,7 +36,8 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
                 private xmEntityService: XmEntityService,
                 private eventManager: JhiEventManager,
                 private translateService: TranslateService,
-                public principal: Principal) {
+                public principal: Principal,
+                private modalService: NgbModal) {
     }
 
     ngOnInit() {
@@ -51,15 +54,25 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
         this.eventManager.destroy(this.modificationSubscription);
     }
 
-    private registerListModify() {
-        this.modificationSubscription = this.eventManager.subscribe(ATTACHMENT_EVENT, (response) => {
-            console.log(response)
-            this.load()
+    onRefresh() {
+      this.load();
+    }
+
+    xmAttachmentContext(): Function  {
+        return () => (this.attachmentSpecs && this.attachmentSpecs.length);
+    }
+
+    onAddAttachment() {
+        return this.openDialog(AttachmentDetailDialogComponent, modalRef => {
+            modalRef.componentInstance.attachmentSpecs = this.attachmentSpecs;
         });
     }
 
-    onRefresh() {
-      this.load();
+    private openDialog(dialogClass, operation, options?) {
+        const modalRef = this.modalService.open(dialogClass, options ? options : {backdrop: 'static'});
+        modalRef.componentInstance.xmEntity = this.xmEntity;
+        operation(modalRef);
+        return modalRef;
     }
 
     private load() {
@@ -141,6 +154,15 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
                     (attachmentResp: HttpResponse<Attachment>) => this.saveInnerAttachment(attachmentResp.body));
             }
         }
+    }
+
+    private registerListModify() {
+        this.modificationSubscription = this.eventManager.subscribe(ATTACHMENT_EVENT, (response) => {
+            if (DEBUG_INFO_ENABLED) {
+                console.log(`DBG: $%o`, response);
+            }
+            this.load()
+        });
     }
 
     private saveInnerAttachment(body) {

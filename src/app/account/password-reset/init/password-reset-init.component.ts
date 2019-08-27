@@ -1,7 +1,7 @@
-import { Component, OnInit, AfterViewInit, Renderer, ElementRef } from '@angular/core';
-import { JhiLanguageService } from 'ng-jhipster';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 
 import { PasswordResetInit } from './password-reset-init.service';
+import { MatInput } from '@angular/material';
 
 @Component({
     selector: 'xm-password-reset-init',
@@ -13,10 +13,11 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
     resetAccount: any;
     success: string;
 
+    @ViewChild('emailInputElement', {static: false}) emailInputElement: MatInput;
+
+
     constructor(
-        private passwordResetInit: PasswordResetInit,
-        private elementRef: ElementRef,
-        private renderer: Renderer
+        private passwordResetInit: PasswordResetInit
     ) {
     }
 
@@ -25,8 +26,7 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        let htmlEl = this.elementRef.nativeElement.querySelector('#email');
-        htmlEl && this.renderer.invokeElementMethod(htmlEl, 'focus', []);
+        this.emailInputElement.focus();
     }
 
     requestReset() {

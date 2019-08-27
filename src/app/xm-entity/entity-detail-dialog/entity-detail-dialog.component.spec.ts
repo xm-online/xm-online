@@ -16,7 +16,7 @@ import { I18nNamePipe } from '../../shared/language/i18n-name.pipe';
 import { I18nJsfPipe } from '../../shared/language/i18n-jsf.pipe';
 import { XmEntityService } from '..';
 
-import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 
 describe('Entity detail dialog Component', () => {
     let component: EntityDetailDialogComponent;
@@ -31,6 +31,7 @@ describe('Entity detail dialog Component', () => {
                 MatSelectModule,
                 NoopAnimationsModule,
                 MatInputModule,
+                NgxWebstorageModule.forRoot(),
                 TranslateModule.forRoot()
             ],
             declarations: [
@@ -55,8 +56,6 @@ describe('Entity detail dialog Component', () => {
                     useValue: new JhiConfigService({defaultI18nLang: 'en', i18nEnabled: true})
                 },
                 JhiModuleConfig,
-                LocalStorageService,
-                SessionStorageService
             ],
             schemas: [
                 NO_ERRORS_SCHEMA

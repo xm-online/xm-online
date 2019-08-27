@@ -15,10 +15,7 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
 
     @ViewChild('emailInputElement', {static: false}) emailInputElement: MatInput;
 
-
-    constructor(
-        private passwordResetInit: PasswordResetInit
-    ) {
+    constructor(private passwordResetInit: PasswordResetInit) {
     }
 
     ngOnInit() {

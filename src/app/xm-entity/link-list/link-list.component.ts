@@ -77,7 +77,6 @@ export class LinkListComponent implements OnInit, OnDestroy, OnChanges {
         return this.xmEntityService.findLinkSourcesInverted('' + this.xmEntityId, keys, {sort: ['id,desc']})
             .pipe(
                 map(response => response.body),
-                tap(response => console.log('RESPONSE', response)),
                 map(items => items.map(item => this.inverseLink(item))),
                 catchError(err => of([]))
             )

@@ -72,7 +72,6 @@ export class LinkListComponent implements OnInit, OnDestroy, OnChanges {
      * Get inverted sources
      */
     private getSources(): Observable<Link[]> {
-        // console.log('this.backLinkSpecs', this.backLinkSpecs);
         const keys = this.backLinkSpecs.map(spec => spec.model.key);
 
         return this.xmEntityService.findLinkSourcesInverted('' + this.xmEntityId, keys, {sort: ['id,desc']})
@@ -89,7 +88,6 @@ export class LinkListComponent implements OnInit, OnDestroy, OnChanges {
      * @param item - inverted link
      */
     private inverseLink(item: Link): Link {
-        console.log('INVERT', item);
         const copy = Object.assign({}, item);
         copy.target = Object.assign({}, item.source);
         copy.source = null;

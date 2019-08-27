@@ -32,9 +32,8 @@
         <tr>
           <th></th>
           <th *ngFor="let field of fields">
-            <span >{{field.title}}</span>
+            <span >{{field.title | i18nName :principal}}</span>
           </th>
-<!--          <th><span jhiTranslate="xm-entity.common.fields.description">Description</span></th>-->
           <th *ngIf="!isBackLink"></th>
         </tr>
         </thead>
@@ -47,13 +46,14 @@
             </div>
           </td>
           <td *ngFor="let field of fields">
-<!--            TODO routerLink="/application/{{link.target.typeKey}}/{{link.target.id}}" title="{{link.target.key}}"-->
-
-              {{link.target[field.field]}}
-
+            <a *ngIf="field.field =='name'; else barePropertyText" routerLink="/application/{{link.target.typeKey}}/{{link.target.id}}" title="{{link.target.key}}">
+              {{ getObjectPropertyByPath(link.target, field.field) }}
+            </a>
+            <ng-template #barePropertyText>
+              {{ getObjectPropertyByPath(link.target, field.field) }}
+            </ng-template>
           </td>
 
-<!--          <td>{{link.target.description}}</td>-->
           <td *ngIf="!isBackLink">
             <a role="button" class="text-muted" (click)="onRemove(link)" *permitted="'LINK.DELETE'">
               <i class="material-icons">close</i>

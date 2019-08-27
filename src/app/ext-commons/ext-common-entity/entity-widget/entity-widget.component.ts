@@ -106,27 +106,14 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
         return this.spec.types.filter(t => t.key === vTypeKey).shift();
     }
 
-    // get sourceSpecs() {
-    //     return this.getBackLinkSpecs(this.xmEntity.typeKey).map(
-    //         spec => this.addInterfaceSpec(spec, 'source')
-    //     );
-    // }
-    // get targetSpecs() {
-    //     return this.xmEntitySpec && this.xmEntitySpec.links ?
-    //         this.xmEntitySpec.links.map(
-    //             spec => this.addInterfaceSpec(spec, 'target')
-    //         )
-    //         : [];
-    // }
-
     addInterfaceSpec(linkSpec: LinkSpec, type: 'target' | 'source'): FullLinkSpec {
 
         const interfaceSpec = (this.entityUiConfig[type === 'target' ? 'targets' : 'sources'] || [])
-            .filter(iSpec => iSpec.typeKey === linkSpec.key);
+            .filter(iSpec => iSpec.typeKey === linkSpec.key).shift();
 
         return  {
             model: linkSpec,
-            interface: undefined
+            interface: interfaceSpec
         };
     }
 
@@ -148,8 +135,6 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
                 l.name = l.backName;
                 return l;
             });
-
-        // return result;
     }
 
 

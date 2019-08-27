@@ -29,11 +29,11 @@ export class LinkListCardComponent implements OnInit, OnChanges {
 
     fields: FieldOptions[] = [
         {
-            title: 'xm-entity.common.fields.name', // TODO translate
+            title: { trKey: 'xm-entity.common.fields.name' },
             field: 'name'
         },
         {
-            title: 'xm-entity.common.fields.description', // TODO translate
+            title: { trKey: 'xm-entity.common.fields.description' },
             field: 'description'
         }
     ];
@@ -48,7 +48,6 @@ export class LinkListCardComponent implements OnInit, OnChanges {
         if (this.linkSpec.interface && this.linkSpec.interface.fields) {
             this.fields = this.linkSpec.interface.fields;
         }
-
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -91,6 +90,20 @@ export class LinkListCardComponent implements OnInit, OnChanges {
             buttonsStyling: false,
             confirmButtonClass: 'btn btn-primary'
         });
+    }
+
+    // example of path: "data.address.city"
+    getObjectPropertyByPath(obj: any, path: string) {
+        const pathParts = path.split('.');
+        let result: any = obj;
+
+        for (let i = 0; i < pathParts.length; i++) {
+            result = result[pathParts[i]];
+            if (result === undefined) {
+                break;
+            }
+        }
+        return result;
     }
 
 }

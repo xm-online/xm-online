@@ -68,11 +68,11 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
                 tap((entity) => this.defineUiConfig()),
                 tap(entity => this.linkSpecs$.next(
                     this.xmEntitySpec && this.xmEntitySpec.links ?
-                        this.xmEntitySpec.links.map(spec => this.addInterfaceSpec(spec, 'target')) : []
+                        this.xmEntitySpec.links.map(spec => this.addInterfaceSpec(spec, 'target', this.entityUiConfig)) : []
                     )
                 ),
                 tap(entity => this.backLinkSpecs$.next(
-                    this.backLinkSpecs.map(spec => this.addInterfaceSpec(spec, 'source'))
+                    this.backLinkSpecs.map(spec => this.addInterfaceSpec(spec, 'source', this.entityUiConfig))
                 )),
                 tap((entity) => this.defineLayoutGrid(entity.typeKey))
             )
@@ -106,9 +106,9 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
         return this.spec.types.filter(t => t.key === vTypeKey).shift();
     }
 
-    addInterfaceSpec(linkSpec: LinkSpec, type: 'target' | 'source'): FullLinkSpec {
+    private addInterfaceSpec(linkSpec: LinkSpec, type: 'target' | 'source', entityUiConfig: any): FullLinkSpec {
 
-        const interfaceSpec = (this.entityUiConfig[type === 'target' ? 'targets' : 'sources'] || [])
+        const interfaceSpec = entityUiConfig && (entityUiConfig[type === 'target' ? 'targets' : 'sources'] || [])
             .filter(iSpec => iSpec.typeKey === linkSpec.key).shift();
 
         return  {

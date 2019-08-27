@@ -34,6 +34,7 @@
         },
         "attachment-card": {
             "title": "Вложения",
+            "no-data": "Нет сохраненних вложений",
             "volume": {
                 "bytes": "байт",
                 "KB": "Кб",

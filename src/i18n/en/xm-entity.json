@@ -34,6 +34,7 @@
         },
         "attachment-card": {
             "title": "Attachments",
+            "no-data": "No files attached",
             "volume": {
                 "bytes": "bytes",
                 "KB": "Kb",

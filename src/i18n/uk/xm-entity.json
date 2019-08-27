@@ -34,6 +34,7 @@
         },
         "attachment-card": {
             "title": "Файли",
+            "no-data": "Ще не додано жодного файлу",
             "volume": {
                 "bytes": "байт",
                 "KB": "Кб",

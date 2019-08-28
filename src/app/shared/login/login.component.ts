@@ -103,8 +103,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
         rememberMe: this.rememberMe
       };
 
-      console.log('otpCredentials %o', credentials);
-
       const callBack = () => {};
 
       this.loginService.login(credentials, callBack).then((data) => {

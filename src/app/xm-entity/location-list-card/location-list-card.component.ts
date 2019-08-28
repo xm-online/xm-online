@@ -28,10 +28,12 @@ export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() xmEntityId: number;
     @Input() locationSpecs: LocationSpec[];
+    @Input() entityUiConfig: any;
 
     xmEntity: XmEntity;
     locations: Location[];
     locationMaps: any;
+    noDataText: any;
 
     private static loadMap(location: Location): any {
         if (location.latitude && location.longitude) {
@@ -62,6 +64,9 @@ export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnInit() {
         this.registerListModify();
+        if (this.entityUiConfig && this.entityUiConfig.locations && this.entityUiConfig.locations.noData) {
+            this.noDataText = this.entityUiConfig.locations.noData;
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {

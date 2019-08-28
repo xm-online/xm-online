@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Principal} from '../../../shared/auth/principal.service';
 
 @Component({
     selector: 'no-data',
@@ -13,12 +14,18 @@ import {Component, Input} from '@angular/core';
         }
     `]
 })
-export class NoDataComponent {
+export class NoDataComponent implements OnChanges {
 
     @Input() show: any;
     @Input() text: any;
     @Input() hideImage = false;
 
-    constructor() { }
+    constructor(public principal: Principal) { }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (!changes.text.currentValue) {
+            this.text = {trKey : 'global.noData'};
+        }
+    }
 
 }

@@ -31,6 +31,7 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
     @Input() xmEntity: XmEntity;
 
     attachments: Attachment[];
+    @Input() entityUiConfig: any;
 
     constructor(private attachmentService: AttachmentService,
                 private xmEntityService: XmEntityService,

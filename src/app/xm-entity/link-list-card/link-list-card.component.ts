@@ -3,10 +3,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { Principal } from '../../shared/auth/principal.service';
-import { LinkSpec } from '../shared/link-spec.model';
+import {FullLinkSpec, LinkSpec} from '../shared/link-spec.model';
 import { Link } from '../shared/link.model';
 import { LinkService } from '../shared/link.service';
 import { XmEntity } from '../shared/xm-entity.model';
+import {FieldOptions} from '../entity-list-card/entity-list-card-options.model';
 
 declare let swal: any;
 
@@ -19,12 +20,23 @@ export class LinkListCardComponent implements OnInit, OnChanges {
 
     @Input() xmEntity: XmEntity;
     @Input() links: Link[];
-    @Input() linkSpec: LinkSpec;
+    @Input() linkSpec: FullLinkSpec;
     @Input() modes: string[] = ['list'];
     @Input() isBackLink = false;
 
     mode = 'list';
     treeRootLinks: Link[];
+
+    fields: FieldOptions[] = [
+        {
+            title: { trKey: 'xm-entity.common.fields.name' },
+            field: 'name'
+        },
+        {
+            title: { trKey: 'xm-entity.common.fields.description' },
+            field: 'description'
+        }
+    ];
 
     constructor(private linkService: LinkService,
                 private eventManager: JhiEventManager,
@@ -33,6 +45,9 @@ export class LinkListCardComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
+        if (this.linkSpec.interface && this.linkSpec.interface.fields) {
+            this.fields = this.linkSpec.interface.fields;
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -75,6 +90,20 @@ export class LinkListCardComponent implements OnInit, OnChanges {
             buttonsStyling: false,
             confirmButtonClass: 'btn btn-primary'
         });
+    }
+
+    // example of path: "data.address.city"
+    getObjectPropertyByPath(obj: any, path: string) {
+        const pathParts = path.split('.');
+        let result: any = obj;
+
+        for (let i = 0; i < pathParts.length; i++) {
+            result = result[pathParts[i]];
+            if (result === undefined) {
+                break;
+            }
+        }
+        return result;
     }
 
 }

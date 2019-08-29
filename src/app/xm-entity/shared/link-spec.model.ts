@@ -1,4 +1,5 @@
 import { BaseSpec } from './../../shared';
+import {FieldOptions} from '../entity-list-card/entity-list-card-options.model';
 
 export class LinkSpec implements BaseSpec {
     constructor(public key?: string,
@@ -10,3 +11,17 @@ export class LinkSpec implements BaseSpec {
                 public max?: number) {
     }
 }
+
+export class LinkInterfaceSpec {
+    public typeKey: string;
+    public fields: FieldOptions[]
+}
+
+export class TargetInterfaceSpec extends LinkInterfaceSpec {}
+export class SourceInterfaceSpec extends LinkInterfaceSpec {}
+
+export class FullLinkSpec {
+    model: LinkSpec;
+    interface: LinkInterfaceSpec
+}
+

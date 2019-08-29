@@ -102,7 +102,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
             }))
             .subscribe(resp => {
                 this.notifications = resp;
-                this.updateCount(this.notifications);
+                this.updateCount();
                 this.redirectUrl = config.redirectUrl;
                 this.showCount = config.max ? parseFloat(config.max) - 1 : 5;
             });
@@ -113,7 +113,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         if (this.config && this.config.changeStateName) {
             this.notificationsService.markRead(item.id, this.config.changeStateName).subscribe(resp => {
                 this.notifications = this.notifications.filter(i => i !== item);
-                this.updateCount(this.notifications);
+                this.updateCount();
             });
         }
     }
@@ -127,8 +127,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         this.toggleNotifications();
     }
 
-    private updateCount(arr): void {
-        this.notificationsCount = arr.length;
+    private updateCount(): void {
+        this.notificationsCount = this.notificationsService.totalCount;
     }
 
     private onNavigate(item, event) {

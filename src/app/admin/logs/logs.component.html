@@ -1,27 +1,66 @@
-<div class="table-responsive" *ngIf="loggers">
-    <h2 jhiTranslate="logs.title">Logs</h2>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card logs-card">
+      <xm-loader [showLoader]="showLoader"></xm-loader>
+      <div class="card-header">
+        <h2 class="card-title" jhiTranslate="logs.title">Logs</h2>
 
-    <p jhiTranslate="logs.nbloggers" translateValues="{total: '{{ loggers.length }}'}">There are {{ loggers.length }} loggers.</p>
+        <p jhiTranslate="logs.nbloggers" translateValues="{total: '{{ (loggers$ | async)?.length }}'}">There are {{ (loggers$ | async)?.length || '0' }} loggers.</p>
+        <div class="row">
+          <div class="col-sm-2">
+            <mat-form-field>
+              <mat-select [(ngModel)]="selectedService"
+                          (selectionChange)="getLoggers()"
+                          placeholder="{{'metrics.options.service-name' | translate}}">
+                <mat-option *ngFor="let s of services" [value]="s.name">
+                  {{s.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-2">
+            <mat-form-field>
+              <input matInput placeholder="{{'logs.filter' | translate}}" type="text" [(ngModel)]="filter">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
 
-    <span jhiTranslate="logs.filter">Filter</span> <input type="text" [(ngModel)]="filter" class="form-control">
-
-    <table class="table table-condensed table-striped table-bordered">
-        <thead>
-        <tr title="click to order">
-            <th (click)="orderProp = 'name'; reverse=!reverse"><span jhiTranslate="logs.table.name">Name</span></th>
-            <th (click)="orderProp = 'level'; reverse=!reverse"><span jhiTranslate="logs.table.level">Level</span></th>
-        </tr>
-        </thead>
-
-        <tr *ngFor="let logger of (loggers | pureFilter:filter:'name' | orderBy:orderProp:reverse)">
-            <td><small>{{logger.name | slice:0:140}}</small></td>
-            <td>
-                <button (click)="changeLevel(logger.name, 'TRACE')" [ngClass]="(logger.level=='TRACE') ? 'btn-danger' : 'btn-default'" class="btn btn-sm">TRACE</button>
-                <button (click)="changeLevel(logger.name, 'DEBUG')" [ngClass]="(logger.level=='DEBUG') ? 'btn-warning' : 'btn-default'" class="btn btn-sm">DEBUG</button>
-                <button (click)="changeLevel(logger.name, 'INFO')" [ngClass]="(logger.level=='INFO') ? 'btn-info' : 'btn-default'" class="btn btn-sm">INFO</button>
-                <button (click)="changeLevel(logger.name, 'WARN')" [ngClass]="(logger.level=='WARN') ? 'btn-success' : 'btn-default'" class="btn btn-sm">WARN</button>
-                <button (click)="changeLevel(logger.name, 'ERROR')" [ngClass]="(logger.level=='ERROR') ? 'btn-primary' : 'btn-default'" class="btn btn-sm">ERROR</button>
-            </td>
-        </tr>
-    </table>
+      <div class="card-body">
+        <ng-container *ngIf="(loggers$ | async) as loggers">
+          <table class="table table-condensed table-striped table-bordered">
+            <thead>
+            <tr title="click to order">
+              <th (click)="orderProp = 'name'; reverse=!reverse"><span jhiTranslate="logs.table.name">Name</span></th>
+              <th (click)="orderProp = 'level'; reverse=!reverse"><span jhiTranslate="logs.table.level">Level</span>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let logger of loggers | pureFilter:filter:'name'">
+              <td class="text-left">{{logger.name | slice:0:140}}</td>
+              <td class="text-center">
+                <button (click)="changeLevel(logger.name, 'TRACE')"
+                        [ngClass]="(logger.level=='TRACE') ? 'btn-danger' : 'btn-default'" class="btn btn-sm">TRACE
+                </button>
+                <button (click)="changeLevel(logger.name, 'DEBUG')"
+                        [ngClass]="(logger.level=='DEBUG') ? 'btn-warning' : 'btn-default'" class="btn btn-sm">DEBUG
+                </button>
+                <button (click)="changeLevel(logger.name, 'INFO')"
+                        [ngClass]="(logger.level=='INFO') ? 'btn-info' : 'btn-default'" class="btn btn-sm">INFO
+                </button>
+                <button (click)="changeLevel(logger.name, 'WARN')"
+                        [ngClass]="(logger.level=='WARN') ? 'btn-success' : 'btn-default'" class="btn btn-sm">WARN
+                </button>
+                <button (click)="changeLevel(logger.name, 'ERROR')"
+                        [ngClass]="(logger.level=='ERROR') ? 'btn-primary' : 'btn-default'" class="btn btn-sm">ERROR
+                </button>
+              </td>
+            </tr>
+          </table>
+        </ng-container>
+        <no-data [show]="!((loggers$ | async)?.length > 0) && !showLoader"></no-data>
+      </div>
+    </div>
+  </div>
 </div>

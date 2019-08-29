@@ -50,7 +50,7 @@
             white-space: nowrap;
         }
     }
-    
+
     .nav {
         .caret {
             top: 0;
@@ -79,6 +79,27 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.sidebar {
+    .user.has-user-description {
+        .user-info {
+            .caret {
+                top: 18px;
+            }
+
+            > a {
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+        }
+    }
+
+    .user-description {
+        font-size: 12px;
+        margin-top: 2px;
+        line-height: 14px;
+    }
 }
 
 

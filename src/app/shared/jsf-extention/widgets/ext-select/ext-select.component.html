@@ -2,7 +2,7 @@
   <mat-form-field>
     <mat-select [(ngModel)]="elementCtrl"
                 (selectionChange)="updateValue($event)"
-                [placeholder]="options['title'] ? options['title'] : ''"
+                [placeholder]="placeholder | async"
                 [disabled]="(disabled$ | async) || options['readonly']"
                 [required]="options?.required"
                 #singleSelect>

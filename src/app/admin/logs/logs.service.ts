@@ -10,11 +10,11 @@ export class LogsService {
     constructor(private http: HttpClient) {
     }
 
-    changeLevel(log: Log): Observable<HttpResponse<any>> {
-        return this.http.put(SERVER_API_URL + 'management/logs', log, {observe: 'response'});
+    changeLevel(log: Log, service: string): Observable<HttpResponse<any>> {
+        return this.http.put(SERVER_API_URL + `${service}/management/logs`, log, {observe: 'response'});
     }
 
-    findAll(): Observable<HttpResponse<Log[]>> {
-        return this.http.get<Log[]>(SERVER_API_URL + 'management/logs', {observe: 'response'});
+    findByService(service: string): Observable<HttpResponse<Log[]>> {
+        return this.http.get<Log[]>(SERVER_API_URL + `${service}/management/logs`, {observe: 'response'});
     }
 }

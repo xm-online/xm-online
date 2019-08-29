@@ -145,6 +145,7 @@ export class AuthServerProvider {
     storeAuthenticationToken(jwt, rememberMe) {
         if (rememberMe) {
             this.$localStorage.store(AUTH_TOKEN, jwt);
+            this.$sessionStorage.store(AUTH_TOKEN, jwt);
         } else {
             this.$sessionStorage.store(AUTH_TOKEN, jwt);
         }
@@ -153,6 +154,7 @@ export class AuthServerProvider {
     storeRefreshToken(jwt, rememberMe) {
         if (rememberMe) {
             this.$localStorage.store(REFRESH_TOKEN, jwt);
+            this.$sessionStorage.store(REFRESH_TOKEN, jwt);
         } else {
             this.$sessionStorage.store(REFRESH_TOKEN, jwt);
         }

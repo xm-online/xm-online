@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiLanguageService } from 'ng-jhipster';
 
 @Component({
     selector: 'xm-social-register',
@@ -16,9 +15,7 @@ export class SocialRegisterComponent implements OnInit  {
 
     constructor(
         private route: ActivatedRoute,
-        private jhiLanguageService: JhiLanguageService,
     ) {
-        // this.jhiLanguageService.addLocation('social');
     }
 
     ngOnInit() {

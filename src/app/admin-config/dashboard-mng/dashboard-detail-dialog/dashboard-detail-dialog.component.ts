@@ -40,7 +40,7 @@ export class DashboardDetailDialogComponent implements OnInit {
 
     onConfigChange(textChanged) {
         if (!environment.production) {
-            console.log(`Changed text ${textChanged}`);
+            console.log(`Changed text ${textChanged}`); // tslint:disable-line
         }
         this.configStringOut = textChanged;
     }
@@ -57,14 +57,14 @@ export class DashboardDetailDialogComponent implements OnInit {
             this.dashboardService.update(this.dashboard).subscribe(
                 () => this.onSaveSuccess('admin-config.dashboard-detail-dialog.edit.success'),
                 // TODO: error processing
-                (err) => console.log(err),
+                (err) => console.log(err), // tslint:disable-line
                 () => this.showLoader = false);
         } else {
             this.dashboard.owner = this.principal.getUserKey();
             this.dashboardService.create(this.dashboard).subscribe(
                 () => this.onSaveSuccess('admin-config.dashboard-detail-dialog.add.success'),
                 // TODO: error processing
-                (err) => console.log(err),
+                (err) => console.log(err), // tslint:disable-line
                 () => this.showLoader = false);
         }
     }

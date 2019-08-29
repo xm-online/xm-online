@@ -47,13 +47,13 @@ export class WidgetDetailDialogComponent implements OnInit {
             this.widgetService.update(this.widget).subscribe(
                 () => this.onSaveSuccess('admin-config.widget-detail-dialog.edit.success'),
                 // TODO: error processing
-                (err) => console.log(err),
+                (err) => console.log(err), // tslint:disable-line
                 () => this.showLoader = false);
         } else {
             this.widgetService.create(this.widget).subscribe(
                 () => this.onSaveSuccess('admin-config.widget-detail-dialog.add.success'),
                 // TODO: error processing
-                (err) => console.log(err),
+                (err) => console.log(err), // tslint:disable-line
                 () => this.showLoader = false);
         }
     }

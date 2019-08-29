@@ -52,7 +52,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
             nomnoml.draw(canvasElement, this.source, scale);
             this.positionCanvas(canvasElement, superSampling, this.offset);
         } catch (e) {
-            console.log(e);
+            console.log(e); // tslint:disable-line
         }
     }
 
@@ -167,7 +167,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     private linksToClassifiers(links, typeKey) {
         const classifiers = [];
         if (links) {
-            links.map((l) => l.typeKey).filter((v, i, a) => a.indexOf(v) === i).forEach(tk => {
+            links.map((l) => l.typeKey).filter((v, i, a) => a.indexOf(v) === i).forEach((tk) => {
                 classifiers.push(`[${tk.split('.').pop()}]<-[${typeKey}]`);
             });
         }

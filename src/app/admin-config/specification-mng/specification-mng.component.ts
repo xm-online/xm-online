@@ -38,7 +38,7 @@ export class SpecificationMngComponent implements OnInit {
         {slug: 'uaa-login', icon: 'fingerprint'},
         {slug: 'tenant', icon: 'ballot'},
     ];
-    public currentSpecificationSlug: string = 'ui';
+    public currentSpecificationSlug: string;
 
     public isUiSpecValid: boolean;
     public isTenantSpecValid: boolean;
@@ -85,9 +85,9 @@ export class SpecificationMngComponent implements OnInit {
                 private router: Router,
                 private modalService: NgbModal,
                 private service: XmConfigService) {
+        // this.currentSpecificationSlug = 'ui';
         this.activatedRoute.params.subscribe((params) => {
             this.currentSpecificationSlug = params['slug'];
-
             this.isTenantSpecValid = false;
             this.tenantValidation = null;
             this.isUiSpecValid = false;

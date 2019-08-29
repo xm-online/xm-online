@@ -60,8 +60,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
     }
 
     onAddNew() {
-        const modalRef = this.modalService.open(DashboardDetailDialogComponent, {backdrop: 'static', size: 'lg'});
-        return modalRef;
+        return this.modalService.open(DashboardDetailDialogComponent, {backdrop: 'static', size: 'lg'});
     }
 
     onEdit(d: Dashboard) {
@@ -72,8 +71,8 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
 
     deleteAction(id: number) {
         this.dashboardService.delete(id).subscribe(
-            (resp) => console.log(resp),
-            (err) => console.log(err),
+            (resp) => console.log(resp), // tslint:disable-line
+            (err) => console.log(err), // tslint:disable-line
             () => this.eventManager.broadcast({
                 name: this.eventModify,
                 content: {id: 'delete', msg: `Dashboard ${id} deleted`},
@@ -83,11 +82,11 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
     exportDashboardsAndWidgets(): void {
         const mappedList = [];
         this.list.map((b, i) => {
-            this.dashboardService.find(b.id).subscribe(result => {
+            this.dashboardService.find(b.id).subscribe((result) => {
                 const dashboard = result.body || {};
                 delete dashboard.id;
                 if (dashboard.widgets && dashboard.widgets.length > 0) {
-                    dashboard.widgets.map(w => {
+                    dashboard.widgets.map((w) => {
                         delete w.id;
                         delete w.dashboard;
                     });
@@ -127,7 +126,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
                                 this.loadAll();
                             }
                         }, (err) => {
-                            console.log(err);
+                            console.log(err); // tslint:disable-line
                             this.showLoader = false;
                         });
                 }
@@ -147,7 +146,6 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
         const a = window.document.createElement('a');
         const theJSON = JSON.stringify(data);
         const blob = new Blob([theJSON], { type: 'text/json' });
-        const url = window.URL.createObjectURL(blob);
         a.href = window.URL.createObjectURL(blob);
         a.download = 'dashboards.json';
         document.body.appendChild(a);

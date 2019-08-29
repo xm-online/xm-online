@@ -43,7 +43,7 @@ export class ClientMgmtDeleteDialogComponent implements OnInit {
                     this.activeModal.dismiss(true);
                 },
                 (err) => {
-                    console.log(err);
+                    console.log(err); // tslint:disable-line
                     this.showLoader = false;
                 },
                 () => this.showLoader = false);

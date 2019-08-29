@@ -109,7 +109,7 @@ export class BaseAdminListComponent implements OnInit, OnDestroy {
             cancelButtonClass: 'btn mat-raised-button',
             confirmButtonText: 'Yes, delete!',
         }).then((result) => result.value  ? this.deleteAction(id)
-            : console.log('Cancel'));
+            : console.log('Cancel')); // tslint:disable-line
     }
 
     protected getPageAfterRemove(result) {

@@ -62,7 +62,7 @@ export class AuditsComponent implements OnInit {
                     this.links = this.parseLinks.parse(res.headers.get('link'));
                     this.totalItems = +res.headers.get('X-Total-Count');
                 },
-                (err) => console.log(err),
+                (err) => console.log(err), // tslint:disable-line
                 () => this.showLoader = false);
     }
 

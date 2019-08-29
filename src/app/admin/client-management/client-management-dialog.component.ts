@@ -18,7 +18,7 @@ export class ClientMgmtDialogComponent implements OnInit {
     languages: any[];
     scopes: any[];
     authorities: any[];
-    showLoader: Boolean;
+    showLoader: boolean;
     @ViewChild('userLoginForm', {static: false}) userLoginForm;
 
     constructor(public activeModal: NgbActiveModal,
@@ -71,7 +71,7 @@ export class ClientMgmtDialogComponent implements OnInit {
             .subscribe(
                 (response) => this.onSaveSuccess(response),
                 (err) => {
-                    console.log(err);
+                    console.log(err); // tslint:disable-line
                     this.showLoader = false;
                 },
                 () => this.showLoader = false);
@@ -79,7 +79,7 @@ export class ClientMgmtDialogComponent implements OnInit {
 
     protected setFormSources(sources: string[]): any[] {
         if (!sources) {return []; }
-        return sources.map((s) => {return {display: s, value: s}});
+        return sources.map((s) => {return {display: s, value: s}; });
     }
 
     private onSaveSuccess(result) {

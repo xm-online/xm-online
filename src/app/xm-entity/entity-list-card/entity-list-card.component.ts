@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
-import { Observable ,  Subscription, of } from 'rxjs';
-import {finalize, map, tap, catchError} from 'rxjs/operators';
+import { Observable, of, Subscription } from 'rxjs';
+import { catchError, finalize, map, tap } from 'rxjs/operators';
 
 import { ContextService, I18nNamePipe, ITEMS_PER_PAGE, Principal } from '../../shared';
 import { saveFile } from '../../shared/helpers/file-download-helper';
@@ -13,12 +13,13 @@ import { buildJsfAttributes, transpilingForIE } from '../../shared/jsf-extention
 import { XM_EVENT_LIST } from '../../xm.constants';
 import { FunctionCallDialogComponent } from '../function-call-dialog/function-call-dialog.component';
 import { Spec } from '../shared/spec.model';
+import { XmEntitySpecWrapperService } from '../shared/xm-entity-spec-wrapper.service';
+import { XmEntitySpec } from '../shared/xm-entity-spec.model';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
 import { EntityListCardOptions, EntityOptions } from './entity-list-card-options.model';
-import { XmEntitySpecWrapperService } from '../shared/xm-entity-spec-wrapper.service';
-import { XmEntitySpec } from '../shared/xm-entity-spec.model';
-import * as _ from 'lodash'
+
+import * as _ from 'lodash';
 
 declare let swal: any;
 
@@ -80,17 +81,17 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
         // TODO: move processing of options.entities to onChange hook.
         //  Will options ever change after component initialization?
         if (this.options.entities) {
-            this.list = this.options.entities.map(e => {
+            this.list = this.options.entities.map((e) => {
                 e.page = this.firstPage;
-                e.xmEntitySpec = this.spec.types.filter(t => t.key === e.typeKey).shift();
+                e.xmEntitySpec = this.spec.types.filter((t) => t.key === e.typeKey).shift();
                 e.currentQuery = e.currentQuery ? e.currentQuery : this.getDefaultSearch(e);
                 if (e.filter) {
                     e['filterJsfAttributes'] = buildJsfAttributes(e.filter.dataSpec, e.filter.dataForm);
                 }
                 if (e.fields) { // Workaroud: server sorting doesn't work atm for nested "data" fields
                     e.fields
-                        .filter(f => f.field && f.field.indexOf('data.') === 0)
-                        .map(f => f.sortable = false);
+                        .filter((f) => f.field && f.field.indexOf('data.') === 0)
+                        .map((f) => f.sortable = false);
                 }
                 return e;
             });
@@ -105,14 +106,14 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
                 if (activeItem.query) {
                     activeItem.currentQuery = activeItem.query;
                 }
-                this.loadEntities(activeItem).subscribe(resp => activeItem.entities = resp);
+                this.loadEntities(activeItem).subscribe((resp) => activeItem.entities = resp);
             }
         }
     }
 
     onRefresh() {
         this.filtersReset(this.list[this.activeItemId]);
-        this.loadEntities(this.list[this.activeItemId]).subscribe(result => {
+        this.loadEntities(this.list[this.activeItemId]).subscribe((result) => {
             this.list[this.activeItemId].entities = result;
         });
     }
@@ -132,7 +133,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
             typeKey: entityOptions.typeKey,
             page: entityOptions.page - 1,
             size: this.entitiesPerPage,
-            sort: [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')]
+            sort: [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')],
         };
         let method = 'query';
         if (entityOptions.currentQuery) {
@@ -147,10 +148,10 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
             }),
             map((xmEntities: HttpResponse<XmEntity[]>) => xmEntities.body),
             map((xmEntities: XmEntity[]) => {
-                return xmEntities.map(e => this.enrichEntity(e));
+                return xmEntities.map((e) => this.enrichEntity(e));
             }),
             catchError((err) => {
-                console.log(err);
+                console.log(err); // tslint:disable-line
                 this.showLoader = false;
                 return of([]);
             }),
@@ -162,10 +163,10 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
      * @param entity current entity
      */
     private enrichEntity(entity: XmEntity): XmEntity {
-        entity['type'] = this.spec.types.filter(t => t.key === entity.typeKey).shift();
+        entity['type'] = this.spec.types.filter((t) => t.key === entity.typeKey).shift();
         const states = entity['type'].states;
         if (states && states.length && entity.stateKey) {
-            entity['state'] = states.filter(s => s.key === entity.stateKey).shift();
+            entity['state'] = states.filter((s) => s.key === entity.stateKey).shift();
         }
         return entity;
     }
@@ -174,7 +175,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
         this.activeItemId = i;
         const entityOptions = this.list[i];
         entityOptions.currentQuery = entityOptions.query;
-        this.loadEntities(entityOptions).subscribe(result => this.list[i].entities = result);
+        this.loadEntities(entityOptions).subscribe((result) => this.list[i].entities = result);
     }
 
     getFieldValue(xmEntity: any = {}, path: string = '', field): any {
@@ -192,9 +193,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
             try {
                 return (new Function('value', `return ${field.func};`))(value);
             } catch (e) {
-                // console.log('--------------- e fieldValueToString', field.func);
                 const code = transpilingForIE(field.func, value);
-                // console.log('--------------- code', code);
                 return (new Function('value', `return ${code}`))(value);
             }
         }
@@ -206,14 +205,14 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onLoadPage(entityOptions: EntityOptions) {
-        this.loadEntities(entityOptions).subscribe(result => entityOptions.entities = result);
+        this.loadEntities(entityOptions).subscribe((result) => entityOptions.entities = result);
     }
 
     onNavigate(entityOptions: EntityOptions, xmEntity: XmEntity) {
         this.getRouterLink(entityOptions, xmEntity)
             .pipe(
-                finalize(() => this.contextService.put('xmEntityId', xmEntity.id))
-            ).subscribe(commands => this.router.navigate(commands));
+                finalize(() => this.contextService.put('xmEntityId', xmEntity.id)),
+            ).subscribe((commands) => this.router.navigate(commands));
     }
 
     private getRouterLink(entityOptions: EntityOptions, xmEntity: XmEntity): Observable<any[]> {
@@ -231,8 +230,8 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         return this.getSpec(entityOptions, xmEntity).pipe(
-             map(xmSpec => this.processXmSpec(xmSpec, xmEntity)),
-             catchError(() => [])
+             map((xmSpec) => this.processXmSpec(xmSpec, xmEntity)),
+             catchError(() => []),
         );
 
     }

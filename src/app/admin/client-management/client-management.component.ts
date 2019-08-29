@@ -41,7 +41,7 @@ export class ClientMgmtComponent extends BaseAdminListComponent {
         }).subscribe(
             (res) => this.list = this.onSuccess(res.body, res.headers),
             (err) => {
-                console.log(err);
+                console.log(err); // tslint:disable-line
                 this.onError(err);
                 this.showLoader = false;
             },

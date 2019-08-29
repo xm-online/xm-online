@@ -1,19 +1,19 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { JhiEventManager } from 'ng-jhipster';
 
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {JhiEventManager} from 'ng-jhipster';
-import {NgForm} from '@angular/forms';
-import {UserLoginService} from './user-login.service';
-import {UserLogin} from './user-login.model';
-import {UserService} from '../user.service';
-import {User} from '../user.model';
-import {AccountService} from '../../auth/account.service';
-import {Principal} from '../../auth/principal.service';
-import {XM_EVENT_LIST} from '../../../../app/xm.constants';
+import { XM_EVENT_LIST } from '../../../../app/xm.constants';
+import { AccountService } from '../../auth/account.service';
+import { Principal } from '../../auth/principal.service';
+import { User } from '../user.model';
+import { UserService } from '../user.service';
+import { UserLogin } from './user-login.model';
+import { UserLoginService } from './user-login.service';
 
 @Component({
     selector: 'xm-user-login-form',
-    templateUrl: './user-login-form.component.html'
+    templateUrl: './user-login-form.component.html',
 })
 export class UserLoginFormComponent implements OnChanges {
 
@@ -72,7 +72,7 @@ export class UserLoginFormComponent implements OnChanges {
 
     createLogins() {
         this.user.logins = [];
-        this.userLogins.filter(login => login.value).forEach(login => {
+        this.userLogins.filter((login) => login.value).forEach((login) => {
             this.user.logins.push(new UserLogin(login.id, login.key, null, login.value, false));
         });
     }
@@ -81,13 +81,13 @@ export class UserLoginFormComponent implements OnChanges {
         this.isSaving = false;
         this.userLogins = [];
 
-        this.userLoginService.getAllLogins().then(allLogins => {
-            Object.keys(allLogins).forEach(typeKey => {
+        this.userLoginService.getAllLogins().then((allLogins) => {
+            Object.keys(allLogins).forEach((typeKey) => {
                 this.userLogins.push({'key': typeKey, 'name': this.userLoginService.getName(typeKey)});
             });
             if (this.user.logins) {
-                this.user.logins.forEach(login => {
-                    let info = this.userLogins.find(info => info['key'] === login.typeKey);
+                this.user.logins.forEach((login) => {
+                    const info = this.userLogins.find((i) => i['key'] === login.typeKey);
                     if (info) {
                         info.value = login.login;
                         info.id = login.id;

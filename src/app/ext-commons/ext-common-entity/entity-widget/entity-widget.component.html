@@ -37,11 +37,13 @@
               [xmEntityId]="fetchedXmEntity.id"
               [attachmentSpecs]="xmEntitySpec?.attachments"
               [xmEntity]="fetchedXmEntity"
+              [entityUiConfig]="this.entityUiConfig"
               *ngIf="xmEntitySpec?.attachments">
             </xm-attachment-list-simplified>
           </div>
           <div *ngSwitchCase="'location-list-card'">
             <xm-location-list-card
+              [entityUiConfig]="this.entityUiConfig"
               [xmEntityId]="fetchedXmEntity.id" [locationSpecs]="xmEntitySpec?.locations"
               *ngIf="xmEntitySpec?.locations?.length">
             </xm-location-list-card>

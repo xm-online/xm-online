@@ -4,7 +4,7 @@ import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { ContextService, XmConfigService } from '../../../shared';
-import {FullLinkSpec, LinkInterfaceSpec, LinkSpec, Spec, XmEntity, XmEntityService, XmEntitySpec} from '../../../xm-entity';
+import {FullLinkSpec, LinkSpec, Spec, XmEntity, XmEntityService, XmEntitySpec} from '../../../xm-entity';
 import { DEBUG_INFO_ENABLED } from '../../../xm.constants';
 import {AttachmentsView, EntityDetailLayout, EntityUiConfig} from '../../../shared/spec/xm-ui-config-model';
 

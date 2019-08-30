@@ -1,5 +1,5 @@
 import { BaseSpec } from './../../shared';
-import {FieldOptions} from '../entity-list-card/entity-list-card-options.model';
+import {EntityLinkUiConfig} from '../../shared/spec/xm-ui-config-model';
 
 export class LinkSpec implements BaseSpec {
     constructor(public key?: string,
@@ -12,16 +12,11 @@ export class LinkSpec implements BaseSpec {
     }
 }
 
-export class LinkInterfaceSpec {
-    public typeKey: string;
-    public fields: FieldOptions[]
-}
-
-export class TargetInterfaceSpec extends LinkInterfaceSpec {}
-export class SourceInterfaceSpec extends LinkInterfaceSpec {}
+export class TargetInterfaceSpec extends EntityLinkUiConfig {}
+export class SourceInterfaceSpec extends EntityLinkUiConfig {}
 
 export class FullLinkSpec {
     model: LinkSpec;
-    interface: LinkInterfaceSpec
+    interface: EntityLinkUiConfig
 }
 

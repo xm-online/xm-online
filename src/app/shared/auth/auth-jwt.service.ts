@@ -35,7 +35,7 @@ export const CONFIG_SETTINGS_API = _CONFIG_SETTINGS_API;
 @Injectable()
 export class AuthServerProvider {
 
-    private updateTokenTimer : any;
+    private updateTokenTimer: any;
 
     constructor(
         private principal: Principal,

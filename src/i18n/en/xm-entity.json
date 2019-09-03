@@ -119,6 +119,13 @@
         "entity-list-fab": {
             "new-generated": "Generated!"
         },
+        "entity-detail-fab": {
+            "new-link": "Add new link",
+            "new-attachment": "Add new attachment",
+            "new-comment": "Add new comment",
+            "new-location": "Add new location",
+            "edit-entity": "Edit"
+        },
         "function-list-card": {
             "title": "Functions",
             "general-group": "General Functions",

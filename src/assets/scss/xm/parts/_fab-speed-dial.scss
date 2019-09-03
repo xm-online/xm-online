@@ -1,3 +1,18 @@
+@mixin transform($transforms) {
+    -webkit-transform: $transforms;
+    -moz-transform: $transforms;
+    -ms-transform: $transforms;
+    transform: $transforms;
+}
+@mixin rotate ($deg) {
+    @include transform(rotate(#{$deg}deg));
+}
+@mixin scale($scale) {
+    @include transform(scale($scale));
+}
+@mixin translate ($x, $y) {
+    @include transform(translate($x, $y));
+}
 /**
  XM fab speed dial
  */
@@ -65,6 +80,13 @@ body {
   transition-property: box-shadow, opacity, -webkit-transform;
   transition-property: box-shadow, opacity, transform;
   transition-property: box-shadow, opacity, transform, -webkit-transform;
+
+  &.fab-main-button {
+      width: 56px;
+      height: 56px;
+      margin-top: 0;
+      padding: 0;
+  }
 }
 .xm-fab button i {
   margin-top: 6px;
@@ -78,6 +100,28 @@ body {
   -webkit-transform: translateY(50px);
   transform: translateY(50px);
 }
+
+.xm-fab-option, .fab-main-button {
+    >.fab-title {
+        position: absolute;
+        right: 100%;
+        top: 50%;
+        @include translate(-10px, -50%);
+        background-color: rgba(#000, .6);
+        color: #fff;
+        padding: 4px 5px;
+        border-radius: 3px;
+        white-space: nowrap;
+        display: none;
+    }
+
+    &:hover {
+        >.fab-title {
+            display: block;
+        }
+    }
+}
+
 .xm-fab button.xm-fab-option:nth-last-child(1) {
   -webkit-transition-delay: 100ms;
   transition-delay: 100ms;

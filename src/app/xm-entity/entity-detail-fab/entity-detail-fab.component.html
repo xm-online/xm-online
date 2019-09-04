@@ -2,25 +2,30 @@
   <div class="xm-fab-drop">
     <button class="xm-fab-option" (click)="onAddAttachment()" *xmPermitted="['ATTACHMENT.CREATE']; context: xmAttachmentContext()">
       <i class="material-icons">attach_file</i>
+      <span class="fab-title" >{{ "xm-entity.entity-detail-fab.new-attachment" | translate }}</span>
     </button>
     <ng-container *xmPermitted="['LINK.CREATE']; context: xmLinksContext()">
       <button class="xm-fab-option" *ngFor="let linkSpec of this.xmEntitySpec.links" (click)="onAddLink(linkSpec)">
         <i class="material-icons">{{linkSpec.icon}}</i>
+        <span class="fab-title" >{{ "xm-entity.entity-detail-fab.new-link" | translate }}</span>
       </button>
     </ng-container>
     <button class="xm-fab-option" (click)="onAddComment()" *xmPermitted="['COMMENT.CREATE']; context: xmCommentContext()">
       <i class="material-icons">comment</i>
+      <span class="fab-title" >{{ "xm-entity.entity-detail-fab.new-comment" | translate }}</span>
     </button>
     <button class="xm-fab-option" (click)="onAddALocation()" *xmPermitted="['LOCATION.CREATE']; context: xmLocationContext()">
       <i class="material-icons">place</i>
+      <span class="fab-title" >{{ "xm-entity.entity-detail-fab.new-location" | translate }}</span>
     </button>
   </div>
 
-  <button mat-raised-button class="btn btn-primary btn-icon btn-just-icon btn-round btn-lg" (click)="onEdit()" *xmPermitted="['ENTITY.UPDATE']; context: xmEditContext()">
+  <button class="btn btn-primary xm-fab-button fab-main-button" (click)="onEdit()" *xmPermitted="['ENTITY.UPDATE']; context: xmEditContext()">
     <i class="material-icons">edit</i>
+    <span class="fab-title" >{{ "xm-entity.entity-detail-fab.edit-entity" | translate }}</span>
   </button>
 
-  <button mat-raised-button class="btn btn-primary btn-icon btn-just-icon btn-round btn-lg" *ngIf="!showEditOptions && showEditSubOptions">
+  <button class="btn btn-primary xm-fab-button fab-main-button" *ngIf="!showEditOptions && showEditSubOptions">
     <i class="material-icons">more_vert</i>
   </button>
 </div>

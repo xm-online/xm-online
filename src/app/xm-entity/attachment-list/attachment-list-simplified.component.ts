@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { AttachmentListBaseComponent } from './attachment-list-base.component';
 
 @Component({
@@ -69,12 +69,20 @@ import { AttachmentListBaseComponent } from './attachment-list-base.component';
                 </div>
             </ng-template>
             <ng-template #emptyTemplate>
-                <no-data [hideImage]="true" [show]="true" [text]="'xm-entity.attachment-card.no-data'"></no-data>
+                <no-data [hideImage]="true" [show]="true" [text]="noDataText"></no-data>
             </ng-template>
         </div>
     </div>`,
     styleUrls: ['./attachment-list.component.scss']
 })
-export class AttachmentListSimplifiedComponent extends AttachmentListBaseComponent {
+export class AttachmentListSimplifiedComponent extends AttachmentListBaseComponent implements OnInit {
 
+    noDataText: any;
+
+    ngOnInit() {
+        super.ngOnInit();
+        if (this.entityUiConfig.attachments && this.entityUiConfig.attachments.noData) {
+            this.noDataText = this.entityUiConfig.attachments.noData;
+        }
+    }
 }

@@ -1,48 +1,4 @@
-@mixin transform($transforms) {
-    -webkit-transform: $transforms;
-    -moz-transform: $transforms;
-    -ms-transform: $transforms;
-    transform: $transforms;
-}
-@mixin rotate ($deg) {
-    @include transform(rotate(#{$deg}deg));
-}
-@mixin scale($scale) {
-    @include transform(scale($scale));
-}
-@mixin translate ($x, $y) {
-    @include transform(translate($x, $y));
-}
-
 .xm-antity-fab-actions {
-    .fab-main-button {
-        width: 56px;
-        height: 56px;
-    }
-    .fab-main-button {
-        margin-top: 0;
-    }
-    .fab-link, .fab-main-button {
-        >.fab-title {
-            position: absolute;
-            right: 100%;
-            top: 50%;
-            @include translate(-10px, -50%);
-            background-color: rgba(#000, .6);
-            color: #fff;
-            padding: 4px 5px;
-            border-radius: 3px;
-            white-space: nowrap;
-            display: none;
-        }
-
-        &:hover {
-            >.fab-title {
-                display: block;
-            }
-        }
-    }
-
     .chars-like-icon {
         overflow: hidden;
         display: block;

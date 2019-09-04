@@ -119,6 +119,13 @@
         "entity-list-fab": {
             "new-generated": "Сгенерировано!"
         },
+        "entity-detail-fab": {
+            "new-link": "Добавить ссылку",
+            "new-attachment": "Добавить файл",
+            "new-comment": "Добавить комментарий",
+            "new-location": "Добавить локацию",
+            "edit-entity": "Редактировать"
+        },
         "function-list-card": {
             "title": "Функции",
             "general-group": "Общие Функции",

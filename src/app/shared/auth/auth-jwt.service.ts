@@ -35,6 +35,8 @@ export const CONFIG_SETTINGS_API = _CONFIG_SETTINGS_API;
 @Injectable()
 export class AuthServerProvider {
 
+    private updateTokenTimer: any;
+
     constructor(
         private principal: Principal,
         private http: HttpClient,
@@ -43,7 +45,8 @@ export class AuthServerProvider {
         private stateStorageService: StateStorageService,
         private router: Router,
     ) {
-        this.setAutoRefreshTokens();
+        const isRememberMe = this.$localStorage.retrieve(REFRESH_TOKEN) != null;
+        this.setAutoRefreshTokens(isRememberMe);
     }
 
     getToken() {
@@ -68,8 +71,8 @@ export class AuthServerProvider {
             const authenticationTokenexpiresDate = new Date().setSeconds(resp['expires_in']);
             this.$sessionStorage.store(EXPIRES_DATE_FIELD, authenticationTokenexpiresDate);
             this.storeRefreshToken(refreshToken, rememberMe);
-            setTimeout(() => {
-                this.refreshTokens();
+            this.updateTokenTimer = setTimeout(() => {
+                this.refreshTokens(rememberMe);
             }, (resp['expires_in'] - 60) * 1000);
         } else {
             console.log('Expected to get %s but got undefined', REFRESH_TOKEN); // tslint:disable-line
@@ -169,12 +172,14 @@ export class AuthServerProvider {
             this.$localStorage.clear(EXPIRES_DATE_FIELD);
             this.$sessionStorage.clear(EXPIRES_DATE_FIELD);
             this.$sessionStorage.clear(WIDGET_DATA);
+            clearTimeout(this.updateTokenTimer);
             observer.next();
             observer.complete();
         });
+
     }
 
-    private refreshTokens() {
+    private refreshTokens(rememberMe) {
         const headers = {
             'Authorization': DEFAULT_AUTH_TOKEN,
             'Content-Type': DEFAULT_CONTENT_TYPE,
@@ -188,15 +193,11 @@ export class AuthServerProvider {
 
         this.http.post<any>(TOKEN_URL, body, { headers: headers, observe: 'response'})
             .pipe(map((resp) => { return resp.body; }))
-            .subscribe((data) => {
-                if (data.access_token) {
-                    this.storeAuthenticationToken(data.access_token, false);
-                    const authenticationTokenexpiresDate = new Date().setSeconds(data.expires_in);
-                    this.$sessionStorage.store(EXPIRES_DATE_FIELD, authenticationTokenexpiresDate);
-                    this.setAutoRefreshTokens();
-                }
-            }, (error) => {
-                console.log('Refresh token fails: %o', error); // tslint:disable-line
+            .subscribe(data => {
+                this.storeAT(data, rememberMe);
+                this.storeRT(data, rememberMe);
+            }, error => {
+                console.log('Refresh token fails: %o', error);
                 this.logout().subscribe();
                 this.principal.logout();
                 this.router.navigate(['']);
@@ -204,19 +205,20 @@ export class AuthServerProvider {
 
     }
 
-    private setAutoRefreshTokens() {
+    private setAutoRefreshTokens(rememberMe) {
         if (this.getRefreshToken()) {
             const currentDate = new Date().setSeconds(0);
             const expiresdate = this.$sessionStorage.retrieve(EXPIRES_DATE_FIELD);
             if (currentDate < expiresdate) {
-                const expiresIn = (expiresdate - currentDate) / 1000 - 30;
-                setTimeout(() => {
+                const expires_in = (expiresdate - currentDate) / 1000 - 30;
+                // console.log('will refresh token after seconds', expires_in);
+                this.updateTokenTimer = setTimeout(() => {
                     if (this.getRefreshToken()) {
-                        this.refreshTokens();
+                        this.refreshTokens(rememberMe);
                     }
                 }, expiresIn * 1000);
             } else {
-                this.refreshTokens();
+                this.refreshTokens(rememberMe);
             }
         }
     }

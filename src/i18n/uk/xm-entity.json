@@ -120,6 +120,13 @@
         "entity-list-fab": {
             "new-generated": "Згенеровано!"
         },
+        "entity-detail-fab": {
+            "new-link": "Додати посилання",
+            "new-attachment": "Додати файл",
+            "new-comment": "Додати кометар",
+            "new-location": "Додати локацiю",
+            "edit-entity": "Редагувати"
+        },
         "function-list-card": {
             "title": "Функції",
             "general-group": "Загальні Функції",

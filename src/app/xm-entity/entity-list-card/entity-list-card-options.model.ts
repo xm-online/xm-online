@@ -21,6 +21,7 @@ export class EntityOptions {
                 public hideDelete?: boolean,
                 public noDeepLink?: boolean,
                 public fields?: FieldOptions[],
+                public noData?: any,
                 public page?: number,
                 public xmEntitySpec?: XmEntitySpec,
                 public entities?: XmEntity[],

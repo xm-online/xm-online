@@ -17,9 +17,11 @@ import { XmEntitySpecWrapperService } from '../shared/xm-entity-spec-wrapper.ser
 import { XmEntitySpec } from '../shared/xm-entity-spec.model';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
-import { EntityListCardOptions, EntityOptions } from './entity-list-card-options.model';
-
-import * as _ from 'lodash';
+import {EntityListCardOptions, EntityOptions, FieldOptions} from './entity-list-card-options.model';
+import { XmEntitySpecWrapperService } from '../shared/xm-entity-spec-wrapper.service';
+import { XmEntitySpec } from '../shared/xm-entity-spec.model';
+import * as _ from 'lodash'
+import {getFieldValue} from '../../shared/helpers/entity-list-helper';
 
 declare let swal: any;
 
@@ -178,26 +180,8 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
         this.loadEntities(entityOptions).subscribe((result) => this.list[i].entities = result);
     }
 
-    getFieldValue(xmEntity: any = {}, path: string = '', field): any {
-        const pathArr = path.split('.');
-        if (pathArr.length > 1) {
-            return this.getFieldValue(xmEntity[pathArr.shift()], pathArr.join('.'), field);
-        } else {
-            return xmEntity.hasOwnProperty(path) ? (xmEntity[path] instanceof Date
-                ? xmEntity[path].toISOString().replace(/T/, ' ').split('.').shift() : this.fieldValueToString(field, xmEntity[path])) : '';
-        }
-    }
-
-    fieldValueToString(field, value) {
-        if (field && field.func) {
-            try {
-                return (new Function('value', `return ${field.func};`))(value);
-            } catch (e) {
-                const code = transpilingForIE(field.func, value);
-                return (new Function('value', `return ${code}`))(value);
-            }
-        }
-        return value;
+    getFieldValue(xmEntity: any = {}, field: FieldOptions): any {
+        return getFieldValue(xmEntity, field);
     }
 
     transition() {

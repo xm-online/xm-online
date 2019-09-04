@@ -6,7 +6,7 @@
     <h4 class="card-title" jhiTranslate="xm-entity.location-list-card.title">Locations</h4>
   </div>
   <div class="card-body">
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false" *ngIf="locations.length; else emptyTemplate">
       <div class="card-collapse mb-0" *ngFor="let location of locations">
         <div class="card-header" role="tab" id="{{'heading-' + location.id" (click)="onCollapseMap(location)">
           <a role="button"
@@ -46,5 +46,8 @@
         </div>
       </div>
     </div>
+    <ng-template #emptyTemplate>
+      <no-data [text]="noDataText" [show]="true" [hideImage]="true"></no-data>
+    </ng-template>
   </div>
 </div>

@@ -19,8 +19,8 @@ fs.readFile('config.angular.json', function (err, data) {
         }
         return LOCAL_EXT_PATH + '/'+ p + '/module/' + p + '.module';
     });
-    const CURRENT_LAZY_ARRAY = json["projects"]["md-pro-angular-cli"]["architect"]["build"]["options"][KEY_LAZY];
+    const CURRENT_LAZY_ARRAY = json["projects"]["xm-webapp"]["architect"]["build"]["options"][KEY_LAZY];
     LAZY_ARRAY.map(l => CURRENT_LAZY_ARRAY.push(l));
-    json["projects"]["md-pro-angular-cli"]["architect"]["build"]["options"][KEY_LAZY] = CURRENT_LAZY_ARRAY;
+    json["projects"]["xm-webapp"]["architect"]["build"]["options"][KEY_LAZY] = CURRENT_LAZY_ARRAY;
     fs.writeFile("angular.json", JSON.stringify(json, null, 4), ()=> {console.log('Extensions processed!')});
 });

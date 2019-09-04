@@ -71,6 +71,7 @@ import { ValidationComponent } from './jsf-extention/widgets/validation-componen
 import { XmCondition } from './helpers/xm-condition';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
@@ -82,7 +83,8 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
         CovalentTextEditorModule,
         OwlDateTimeModule,
         GooglePlaceModule,
-        OwlNativeDateTimeModule
+        OwlNativeDateTimeModule,
+        TranslateModule
     ],
     declarations: [
         AceEditorDirective,
@@ -222,7 +224,8 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
         EmailMatcherComponent,
         TextSectionComponent,
         FileUploadComponent,
-        GooglePlaceModule
+        GooglePlaceModule,
+        TranslateModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

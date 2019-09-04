@@ -21,3 +21,4 @@ src/app/ext/*
 !src/app/ext/.gitkeep
 src/assets/css/ext/
 src/assets/img/ext/
+angular.json

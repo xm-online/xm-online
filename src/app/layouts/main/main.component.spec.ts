@@ -2,7 +2,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
-import { SessionStorageService } from 'ngx-webstorage';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 import { Observable, of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -10,7 +10,6 @@ import { JhiLanguageHelper, LoginService, ModulesLanguageHelper, XmConfigService
 import { Principal } from '../../shared/auth/principal.service';
 import { XmApplicationConfigService } from '../../shared/spec/xm-config.service';
 import { XmMainComponent } from './main.component';
-
 
 
 class Mock {
@@ -31,8 +30,10 @@ describe('XmMainComponent', () => {
             declarations: [
                 XmMainComponent
             ],
+            imports: [
+                NgxWebstorageModule.forRoot(),
+            ],
             providers: [
-                SessionStorageService,
                 JhiEventManager,
                 {
                     provide: JhiLanguageHelper,

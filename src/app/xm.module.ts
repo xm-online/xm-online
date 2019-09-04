@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JhiEventManager } from 'ng-jhipster';
 import { MarkdownModule } from 'ngx-markdown';
-import { LocalStorageService, Ng2Webstorage, SessionStorageService } from 'ngx-webstorage';
+import { LocalStorageService, NgxWebstorageModule, SessionStorageService } from 'ngx-webstorage';
 
 import { GateAccountModule } from './account/account.module';
 import { ApplicationModule } from './application/application.module';
@@ -46,7 +46,7 @@ const appInitializerFn = (appConfig: XmApplicationConfigService) => {
         BrowserModule,
         XmRoutingModule,
         LayoutRoutingModule,
-        Ng2Webstorage.forRoot({prefix: 'jhi', separator: '-'}),
+        NgxWebstorageModule.forRoot({prefix: 'jhi', separator: '-'}),
         XmSharedModule,
         HttpClientModule,
         BrowserAnimationsModule,

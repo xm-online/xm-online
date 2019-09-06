@@ -28,7 +28,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     config: any;
     isOpened: boolean;
     showCount: number;
-    notificationsCount: string;
     notifications: Notification[];
     redirectUrl: string;
     autoUpdateEnabled: boolean = null;
@@ -52,7 +51,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         private notificationsService: NotificationsService) {
         this.isOpened = false;
         this.notifications = [];
-        this.notificationsCount = null;
         this.config = null;
     }
 
@@ -69,6 +67,9 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.entityEntityStateChange);
     }
 
+    get notificationsCount(): number {
+        return this.notificationsService.totalCount;
+    }
     public load(initAutoUpdate?: boolean) {
         this.xmConfigService.getUiConfig().subscribe(config => {
             this.config = config.notifications ? config.notifications : null;
@@ -103,7 +104,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
             }))
             .subscribe(resp => {
                 this.notifications = resp;
-                this.updateCount();
                 this.redirectUrl = config.redirectUrl;
                 this.showCount = config.max ? parseFloat(config.max) - 1 : 5;
             });
@@ -114,7 +114,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         if (this.config && this.config.changeStateName) {
             this.notificationsService.markRead(item.id, this.config).subscribe(resp => {
                 this.notifications = this.notifications.filter(i => i !== item);
-                this.updateCount();
             });
         }
     }
@@ -126,10 +125,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     public viewAll(url) {
         this.router.navigate([url]);
         this.toggleNotifications();
-    }
-
-    private updateCount(): void {
-        this.notificationsCount = this.notificationsService.totalCount;
     }
 
     private onNavigate(item, event) {

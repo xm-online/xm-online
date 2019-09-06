@@ -11,7 +11,7 @@ import {FunctionService} from '../../xm-entity';
 @Injectable()
 export class NotificationsService {
 
-    totalCount: string;
+    totalCount: number;
 
     constructor(
         private http: HttpClient,
@@ -24,7 +24,7 @@ export class NotificationsService {
     public getNotifications(options: any): Observable<any> {
         return this.http.get(options.resourceUrl, {observe: 'response'}).pipe(
             map((response: HttpResponse<any>) => {
-                this.totalCount = Number(response.headers.get('X-Total-Count')) > 0 ? response.headers.get('X-Total-Count') : null;
+                this.totalCount = Number(response.headers.get('X-Total-Count')) || 0;
                 const array: any = response.body || [];
                 return array
                     .filter(e => e.stateKey === options.initialState)
@@ -58,6 +58,7 @@ export class NotificationsService {
         return action$.pipe(
             map((response: HttpResponse<any>) => {
                 this.eventManager.broadcast({name: 'notificationListUpdated'});
+                this.totalCount--;
                 return true;
             }));
     }

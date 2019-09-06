@@ -19,6 +19,16 @@
       "dom"
     ],
     "inlineSources": true,
-    "module": "esnext"
+    "module": "esnext",
+    "stripInternal": false,
+    //  "noUnusedParameters": false,
+    //  "noUnusedLocals": false,
+    //  "strictNullChecks": true,
+    //  "noImplicitReturns": true,
+    //  "strictFunctionTypes": true,
+    //  "noFallthroughCasesInSwitch": true,
+    //  "noImplicitAny": true,
+    //  "noImplicitThis": true,
+    "newLine": "lf"
   }
 }

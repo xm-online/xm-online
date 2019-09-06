@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig",
   "compilerOptions": {
+    "importHelpers": false,
     "outDir": "../out-tsc/spec",
     "types": [
       "jasmine",
@@ -14,5 +15,11 @@
   "include": [
     "./**/*.spec.ts",
     "./**/*.d.ts"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": false,
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "fullTemplateTypeCheck": true
+  }
 }

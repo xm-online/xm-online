@@ -11,6 +11,7 @@ import { Notification } from '../shared/notification.model';
 import { DomSanitizer } from '@angular/platform-browser'
 
 declare let $: any;
+import * as _ from 'lodash'
 
 const DEFAULT_PRIVILEGES = ['XMENTITY.SEARCH', 'XMENTITY.SEARCH.QUERY', 'XMENTITY.SEARCH.TEMPLATE'];
 
@@ -111,7 +112,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     public onRemoveItem(event, item): void {
         event.stopPropagation();
         if (this.config && this.config.changeStateName) {
-            this.notificationsService.markRead(item.id, this.config.changeStateName).subscribe(resp => {
+            this.notificationsService.markRead(item.id, this.config).subscribe(resp => {
                 this.notifications = this.notifications.filter(i => i !== item);
                 this.updateCount();
             });
@@ -138,7 +139,14 @@ export class NotificationsComponent implements OnInit, OnDestroy {
             return false;
         }
         if (item) {
-            this.router.navigate(['/application', item.typeKey, item.id]);
+            const typeKey = _.get(item, this.config.referenceTypeKeyPath);
+            const id = _.get(item, this.config.referenceIdPath);
+            if (!typeKey || !id) {
+                console.log('No entity found for notification ' + item.id);
+                return false;
+            }
+
+            this.router.navigate(['/application', typeKey, id]);
             this.toggleNotifications();
         }
     }

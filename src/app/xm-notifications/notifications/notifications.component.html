@@ -19,7 +19,7 @@
             <span *ngIf="!config.showAsHtml">{{ item.label }}</span>
             <div *ngIf="config.showAsHtml" [innerHTML]="item.label"></div>
             <span class="update-date" *ngIf="item.updateDate">{{ item.updateDate | date}}</span>
-            <span class="close-notification material-icons" (click)="onRemoveItem($event, item);" *permitted="['XMENTITY.STATE.UPDATE']">close</span>
+            <span class="close-notification material-icons" (click)="onRemoveItem($event, item);">close</span>
           </a>
         </ng-container>
 

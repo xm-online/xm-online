@@ -80,12 +80,12 @@ export class BalanceListCardComponent implements OnInit {
         });
     }
 
-    getMeasureSpec(balance: Balance) {
+    getMeasureSpec(balance: Balance): any {
         const balanceSpec = this.spec.types.filter((t) => t.key === balance.typeKey).shift();
         return this.spec.measures.filter((m) => m.key === balanceSpec.measureKey).shift();
     }
 
-    getBalanceSpec(balance: Balance) {
+    getBalanceSpec(balance: Balance): any {
         return this.spec.types.filter((t) => t.key === balance.typeKey).shift();
     }
 

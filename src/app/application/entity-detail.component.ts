@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { JhiLanguageHelper } from 'app/shared';
 import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
-import { I18nNamePipe, Principal } from '../shared';
+import { I18nNamePipe, JhiLanguageHelper, Principal } from '../shared';
 import { Spec, XmEntity, XmEntityService, XmEntitySpecWrapperService } from '../xm-entity';
 
 declare var $: any;

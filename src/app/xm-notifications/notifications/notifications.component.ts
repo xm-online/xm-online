@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { NotificationsService } from '../shared/notifications.service';
 import { Principal, XmConfigService } from '../../shared';
-import { Notification } from '../shared/notification.model';
+import {Notification, NotificationUiConfig} from '../shared/notification.model';
 
 import { DomSanitizer } from '@angular/platform-browser'
 
@@ -25,7 +25,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     private entityListModifications: Subscription;
     private entityEntityStateChange: Subscription;
 
-    config: any;
+    config: NotificationUiConfig;
     isOpened: boolean;
     showCount: number;
     notifications: Notification[];
@@ -72,8 +72,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     }
     public load(initAutoUpdate?: boolean) {
         this.xmConfigService.getUiConfig().subscribe(config => {
-            this.config = config.notifications ? config.notifications : null;
-            this.mapPrviliges(config.notifications);
+            this.config = <NotificationUiConfig>config.notifications;
+            this.mapPrviliges(this.config);
             if (this.config) {
                 this.getNotifications(this.config);
             }
@@ -92,7 +92,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         });
     }
 
-    public getNotifications(config) {
+    public getNotifications(config: NotificationUiConfig) {
         this.notificationsService.getNotifications(config).pipe(
             map((notifications: any) => {
                 notifications.forEach(notification => {
@@ -105,7 +105,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
             .subscribe(resp => {
                 this.notifications = resp;
                 this.redirectUrl = config.redirectUrl;
-                this.showCount = config.max ? parseFloat(config.max) - 1 : 5;
+                this.showCount = config.max ? config.max - 1 : 5;
             });
     }
 
@@ -146,7 +146,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         }
     }
 
-    private mapPrviliges(config: any): void {
+    private mapPrviliges(config: NotificationUiConfig): void {
         this.privileges = [];
         if (config && config.privileges && config.privileges.length > 0) {
             config.privileges.map(p => {

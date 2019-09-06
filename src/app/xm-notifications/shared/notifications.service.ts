@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { Principal } from '../../shared/auth/principal.service';
 import { I18nNamePipe } from '../../shared/language/i18n-name.pipe';
 import {FunctionService} from '../../xm-entity';
+import {NotificationUiConfig} from './notification.model';
 
 @Injectable()
 export class NotificationsService {
@@ -21,7 +22,7 @@ export class NotificationsService {
         private functionService: FunctionService
     ) {}
 
-    public getNotifications(options: any): Observable<any> {
+    public getNotifications(options: NotificationUiConfig): Observable<any> {
         return this.http.get(options.resourceUrl, {observe: 'response'}).pipe(
             map((response: HttpResponse<any>) => {
                 this.totalCount = Number(response.headers.get('X-Total-Count')) || 0;
@@ -45,7 +46,7 @@ export class NotificationsService {
             }));
     }
 
-    public markRead(id: number, config: any): Observable<any> {
+    public markRead(id: number, config: NotificationUiConfig): Observable<any> {
         const targetState = config.changeStateName;
         const targetFunction = config.changeStateFunction;
 

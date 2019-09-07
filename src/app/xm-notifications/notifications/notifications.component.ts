@@ -127,7 +127,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         this.toggleNotifications();
     }
 
-    private onNavigate(item, event) {
+    public onNavigate(item, event) {
         if (this.config.preventNavigation) {
             event.preventDefault();
             event.stopPropagation();

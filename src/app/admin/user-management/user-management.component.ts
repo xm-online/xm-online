@@ -64,7 +64,7 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
         });
     }
 
-    protected changeState(user) {
+    public changeState(user) {
         swal({
             title: user.activated ? `Block user?` : `Unblock user?`,
             showCancelButton: true,
@@ -178,21 +178,21 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
                 () => this.showLoader = false);
     }
 
-    private onAdd() {
+    public onAdd() {
         const modalRef = this.modalService.open(UserMgmtDialogComponent, { backdrop: 'static', size: 'lg' });
     }
 
-    private onEdit(user) {
+    public onEdit(user) {
         const modalRef = this.modalService.open(UserMgmtDialogComponent, { backdrop: 'static', size: 'lg' });
         modalRef.componentInstance.selectedUser = user;
     }
 
-    private onLoginEdit(user) {
+    public onLoginEdit(user) {
         const modalRef = this.modalService.open(UserLoginMgmtDialogComponent, { backdrop: 'static', size: 'lg' });
         modalRef.componentInstance.user = user;
     }
 
-    private onDelete(user) {
+    public onDelete(user) {
         const modalRef = this.modalService.open(UserMgmtDeleteDialogComponent, { backdrop: 'static', size: 'lg' });
         modalRef.componentInstance.user = user;
     }

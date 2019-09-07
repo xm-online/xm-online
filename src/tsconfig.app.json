@@ -16,11 +16,10 @@
     "./**/*.spec.ts"
   ],
   "angularCompilerOptions": {
-  //  "annotateForClosureCompiler": true,
-  //  "skipTemplateCodegen": true,
-  //  "strictMetadataEmit": true,
-  //  "fullTemplateTypeCheck": true,
-  //  "strictInjectionParameters": true,
-  //  "enableResourceInlining": true,
+    "annotateForClosureCompiler": true,
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   }
 }

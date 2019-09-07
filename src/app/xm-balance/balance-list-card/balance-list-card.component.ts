@@ -56,7 +56,7 @@ export class BalanceListCardComponent implements OnInit {
                 protected balanceSpecWrapperService: BalanceSpecWrapperService,
                 protected metricService: MetricService,
                 protected modalService: NgbModal,
-                protected principal: Principal) {
+                public principal: Principal) {
     }
 
     ngOnInit() {

@@ -80,7 +80,7 @@ export class WidgetListCardComponent extends BaseAdminConfigListComponent implem
             }));
     }
 
-    protected deleteItem(w: Widget) {
+    public deleteItem(w: Widget) {
         this.onDeleteItem(w.id, w.name)
     }
 

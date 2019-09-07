@@ -77,7 +77,7 @@ export class LocationDetailDialogComponent implements OnInit {
         });
     }
 
-    protected applyCoordinates(setCenter: boolean = true) {
+    public applyCoordinates(setCenter: boolean = true) {
         if (this.coordinatesInvalid || !this.locationMarker || !this.locationMap) {return}
 
         const LatLng = new google.maps.LatLng(this.form.controls.latitude.value, this.form.controls.longitude.value);
@@ -86,7 +86,7 @@ export class LocationDetailDialogComponent implements OnInit {
         if (setCenter) {this.locationMap.setCenter(LatLng)}
     }
 
-    protected get coordinatesInvalid(): boolean {
+    public get coordinatesInvalid(): boolean {
         return this.form.controls.latitude.invalid || this.form.controls.longitude.invalid
     }
 

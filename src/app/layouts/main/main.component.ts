@@ -216,7 +216,7 @@ export class XmMainComponent implements OnInit, OnDestroy {
                 const authenticated = this.principal.isAuthenticated();
                 if (authenticated && !this.isIdleEnabled && this.userAutoLogoutEnabled && this.userAutoLogoutSeconds) {
                     this.idleAction(this.userAutoLogoutSeconds);
-                    return false;
+                    return undefined;
                 }
                 if (this.config && this.config.idleLogout && authenticated && !this.isIdleEnabled) {
                     this.idleAction(this.config.idleLogout);

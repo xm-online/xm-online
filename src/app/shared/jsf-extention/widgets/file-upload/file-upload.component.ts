@@ -40,8 +40,8 @@ export class FileUploadComponent implements OnInit, OnDestroy {
         }
     }
 
-    uploadFile(fileData: any) {
-        if (!fileData) {return false}
+    uploadFile(fileData: any): void {
+        if (!fileData) {return undefined}
         const file = fileData;
         const formData: FormData = new FormData();
         formData.append('file', file, file.name);

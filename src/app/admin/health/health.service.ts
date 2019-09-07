@@ -37,6 +37,7 @@ export class JhiHealthService {
             const split = name.split('.');
             return split[0];
         }
+        return name;
     }
 
     getSubSystemName(name): string {
@@ -46,6 +47,7 @@ export class JhiHealthService {
             const remainder = split.join('.');
             return remainder ? ' - ' + remainder : '';
         }
+        return name;
     }
 
     /* private methods */

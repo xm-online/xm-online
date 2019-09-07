@@ -75,10 +75,10 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.createEntity);
     }
 
-    public onAddNew(item) {
+    public onAddNew(item): void {
         this.routingUrl = item.routingUrl || null;
         if (!item.typeKey || !this.spec) {
-            return false;
+            return;
         }
         if (item.funcKey && item.typeKey) {
             this.callFunctionAction(item.typeKey, item.funcKey);

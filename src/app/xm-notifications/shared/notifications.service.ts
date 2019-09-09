@@ -1,13 +1,13 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JhiEventManager } from 'ng-jhipster';
-import {iif, Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Principal } from '../../shared/auth/principal.service';
 import { I18nNamePipe } from '../../shared/language/i18n-name.pipe';
-import {FunctionService} from '../../xm-entity';
-import {NotificationUiConfig} from './notification.model';
+import { FunctionService, XmEntityService } from '../../xm-entity';
+import { NotificationUiConfig } from './notification.model';
 
 @Injectable()
 export class NotificationsService {
@@ -19,7 +19,8 @@ export class NotificationsService {
         private principal: Principal,
         private eventManager: JhiEventManager,
         private i18nNamePipe: I18nNamePipe,
-        private functionService: FunctionService
+        private functionService: FunctionService,
+        private entityService: XmEntityService
     ) {}
 
     public getNotifications(options: NotificationUiConfig): Observable<any> {
@@ -50,11 +51,9 @@ export class NotificationsService {
         const targetState = config.changeStateName;
         const targetFunction = config.changeStateFunction;
 
-        const apiUrl = `/entity/api/xm-entities/${id}/states/${targetState}`;
-
         const action$ = targetFunction ?
             this.functionService.callWithEntityId(id, targetFunction) :
-            this.http.put(apiUrl, {observe: 'response'});
+            this.entityService.changeState(id, targetState);
 
         return action$.pipe(
             map((response: HttpResponse<any>) => {

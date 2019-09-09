@@ -6,12 +6,12 @@ import { map } from 'rxjs/operators';
 
 import { NotificationsService } from '../shared/notifications.service';
 import { Principal, XmConfigService } from '../../shared';
-import {Notification, NotificationUiConfig} from '../shared/notification.model';
+import { Notification, NotificationUiConfig } from '../shared/notification.model';
 
 import { DomSanitizer } from '@angular/platform-browser'
 
 declare let $: any;
-import * as _ from 'lodash'
+import * as _ from 'lodash';
 
 const DEFAULT_PRIVILEGES = ['XMENTITY.SEARCH', 'XMENTITY.SEARCH.QUERY', 'XMENTITY.SEARCH.TEMPLATE'];
 

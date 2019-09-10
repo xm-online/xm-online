@@ -3,9 +3,10 @@
   "compilerOptions": {
     "importHelpers": true,
     "outDir": "./dist/out-tsc",
-    "baseUrl": "src",
+    "baseUrl": "./",
     "sourceMap": true,
-    "declaration": false,
+    "declaration": true,
+    "downlevelIteration": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -14,9 +15,10 @@
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
+      "es2018",
       "dom"
     ],
-    "module": "es2015"
+    "inlineSources": true,
+    "module": "esnext"
   }
 }

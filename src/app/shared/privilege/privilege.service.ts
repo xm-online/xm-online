@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { SUPER_ADMIN } from 'app/shared/auth/auth.constants';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Principal } from '../auth/principal.service';
 import { ParseByPathService } from '../services/parse-by-path.service';
+import { SUPER_ADMIN } from '../auth/auth.constants';
 
 @Injectable()
 export class PrivilegeService {

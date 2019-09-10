@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "md-pro-angular-cli": {
+        "xm-webapp": {
             "root": "",
             "sourceRoot": "src",
             "projectType": "application",
@@ -98,18 +98,18 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "md-pro-angular-cli:build"
+                        "browserTarget": "xm-webapp:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "md-pro-angular-cli:build:production"
+                            "browserTarget": "xm-webapp:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "md-pro-angular-cli:build"
+                        "browserTarget": "xm-webapp:build"
                     }
                 },
                 "test": {
@@ -175,34 +175,13 @@
                     }
                 }
             }
-        },
-        "md-pro-angular-cli-e2e": {
-            "root": "e2e",
-            "sourceRoot": "e2e",
-            "projectType": "application",
-            "architect": {
-                "e2e": {
-                    "builder": "@angular-devkit/build-angular:protractor",
-                    "options": {
-                        "protractorConfig": "./protractor.conf.js",
-                        "devServerTarget": "md-pro-angular-cli:serve"
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [],
-                        "exclude": []
-                    }
-                }
-            }
         }
     },
-    "defaultProject": "md-pro-angular-cli",
+    "defaultProject": "xm-webapp",
     "schematics": {
         "@schematics/angular:component": {
             "prefix": "xm",
-            "styleext": "css"
+            "styleext": "scss"
         },
         "@schematics/angular:directive": {
             "prefix": "xm"

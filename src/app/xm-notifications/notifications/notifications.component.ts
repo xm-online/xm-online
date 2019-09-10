@@ -6,11 +6,12 @@ import { map } from 'rxjs/operators';
 
 import { NotificationsService } from '../shared/notifications.service';
 import { Principal, XmConfigService } from '../../shared';
-import { Notification } from '../shared/notification.model';
+import { Notification, NotificationUiConfig } from '../shared/notification.model';
 
 import { DomSanitizer } from '@angular/platform-browser'
 
 declare let $: any;
+import * as _ from 'lodash';
 
 const DEFAULT_PRIVILEGES = ['XMENTITY.SEARCH', 'XMENTITY.SEARCH.QUERY', 'XMENTITY.SEARCH.TEMPLATE'];
 
@@ -24,10 +25,9 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     private entityListModifications: Subscription;
     private entityEntityStateChange: Subscription;
 
-    config: any;
+    config: NotificationUiConfig;
     isOpened: boolean;
     showCount: number;
-    notificationsCount: string;
     notifications: Notification[];
     redirectUrl: string;
     autoUpdateEnabled: boolean = null;
@@ -51,7 +51,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         private notificationsService: NotificationsService) {
         this.isOpened = false;
         this.notifications = [];
-        this.notificationsCount = null;
         this.config = null;
     }
 
@@ -68,10 +67,13 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.entityEntityStateChange);
     }
 
+    get notificationsCount(): number {
+        return this.notificationsService.totalCount;
+    }
     public load(initAutoUpdate?: boolean) {
         this.xmConfigService.getUiConfig().subscribe(config => {
-            this.config = config.notifications ? config.notifications : null;
-            this.mapPrviliges(config.notifications);
+            this.config = <NotificationUiConfig>config.notifications;
+            this.mapPrviliges(this.config);
             if (this.config) {
                 this.getNotifications(this.config);
             }
@@ -90,7 +92,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         });
     }
 
-    public getNotifications(config) {
+    public getNotifications(config: NotificationUiConfig) {
         this.notificationsService.getNotifications(config).pipe(
             map((notifications: any) => {
                 notifications.forEach(notification => {
@@ -102,18 +104,16 @@ export class NotificationsComponent implements OnInit, OnDestroy {
             }))
             .subscribe(resp => {
                 this.notifications = resp;
-                this.updateCount();
                 this.redirectUrl = config.redirectUrl;
-                this.showCount = config.max ? parseFloat(config.max) - 1 : 5;
+                this.showCount = config.max ? config.max - 1 : 5;
             });
     }
 
     public onRemoveItem(event, item): void {
         event.stopPropagation();
         if (this.config && this.config.changeStateName) {
-            this.notificationsService.markRead(item.id, this.config.changeStateName).subscribe(resp => {
+            this.notificationsService.markRead(item.id, this.config).subscribe(resp => {
                 this.notifications = this.notifications.filter(i => i !== item);
-                this.updateCount();
             });
         }
     }
@@ -127,10 +127,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         this.toggleNotifications();
     }
 
-    private updateCount(): void {
-        this.notificationsCount = this.notificationsService.totalCount;
-    }
-
     private onNavigate(item, event) {
         if (this.config.preventNavigation) {
             event.preventDefault();
@@ -138,12 +134,19 @@ export class NotificationsComponent implements OnInit, OnDestroy {
             return false;
         }
         if (item) {
-            this.router.navigate(['/application', item.typeKey, item.id]);
+            const typeKey = _.get(item, this.config.referenceTypeKeyPath);
+            const id = _.get(item, this.config.referenceIdPath);
+            if (!typeKey || !id) {
+                console.log('No entity found for notification ' + item.id);
+                return false;
+            }
+
+            this.router.navigate(['/application', typeKey, id]);
             this.toggleNotifications();
         }
     }
 
-    private mapPrviliges(config: any): void {
+    private mapPrviliges(config: NotificationUiConfig): void {
         this.privileges = [];
         if (config && config.privileges && config.privileges.length > 0) {
             config.privileges.map(p => {

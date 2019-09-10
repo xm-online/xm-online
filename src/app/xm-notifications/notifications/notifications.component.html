@@ -2,15 +2,16 @@
   <ul class="navbar-nav navbar-right xm-notifications-container" *permitted="privileges">
     <li class="nav-item dropdown">
       <a class="nav-link"
-         href="#pablo"
+         href="javascript: void(0);"
          id="navbarDropdownMenuLink"
-         data-toggle="dropdown"
-         aria-haspopup="true"
-         aria-expanded="false">
+         [attr.data-toggle]="notificationsCount ? 'dropdown' : null"
+         [attr.aria-haspopup]="notificationsCount ? 'true' : null"
+         [attr.aria-expanded]="notificationsCount ? 'false' : null"
+         >
         <i class="material-icons">notifications</i>
         <span class="notification" *ngIf="notificationsCount">{{ notificationsCount }}</span>
       </a>
-      <div class="dropdown-menu dropdown-menu-right xm-notifications" aria-labelledby="navbarDropdownMenuLink">
+      <div *ngIf="notificationsCount" class="dropdown-menu dropdown-menu-right xm-notifications" aria-labelledby="navbarDropdownMenuLink">
         <ng-container *ngFor="let item of notifications; let i = index">
           <a class="dropdown-item notification-item"
              [ngClass]="{'hasDate' : item.updateDate}"
@@ -19,7 +20,7 @@
             <span *ngIf="!config.showAsHtml">{{ item.label }}</span>
             <div *ngIf="config.showAsHtml" [innerHTML]="item.label"></div>
             <span class="update-date" *ngIf="item.updateDate">{{ item.updateDate | date}}</span>
-            <span class="close-notification material-icons" (click)="onRemoveItem($event, item);" *permitted="['XMENTITY.STATE.UPDATE']">close</span>
+            <span class="close-notification material-icons" (click)="onRemoveItem($event, item);">close</span>
           </a>
         </ng-container>
 

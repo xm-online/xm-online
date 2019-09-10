@@ -6,50 +6,59 @@ import { map } from 'rxjs/operators';
 
 import { Principal } from '../../shared/auth/principal.service';
 import { I18nNamePipe } from '../../shared/language/i18n-name.pipe';
+import { FunctionService, XmEntityService } from '../../xm-entity';
+import { NotificationUiConfig } from './notification.model';
 
 @Injectable()
 export class NotificationsService {
 
-    totalCount: string;
+    totalCount: number;
 
     constructor(
         private http: HttpClient,
         private principal: Principal,
         private eventManager: JhiEventManager,
-        private i18nNamePipe: I18nNamePipe
+        private i18nNamePipe: I18nNamePipe,
+        private functionService: FunctionService,
+        private entityService: XmEntityService
     ) {}
 
-    public getNotifications(options: any): Observable<any> {
+    public getNotifications(options: NotificationUiConfig): Observable<any> {
         return this.http.get(options.resourceUrl, {observe: 'response'}).pipe(
             map((response: HttpResponse<any>) => {
-                this.totalCount = Number(response.headers.get('X-Total-Count')) > 0 ? response.headers.get('X-Total-Count') : null;
-                let array: any = response.body;
-                array = array ? array : [];
-                let elements = [];
-                array.forEach(e => {
-                    if (e.stateKey === options.initialState) {
+                this.totalCount = Number(response.headers.get('X-Total-Count')) || 0;
+                const array: any = response.body || [];
+                return array
+                    .filter(e => e.stateKey === options.initialState)
+                    .map(e => {
                         let label = e;
                         if (options.labelPath) {
                             label = this.byString(e, options.labelPath);
                         }
                         label = this.i18nNamePipe.transform(label, this.principal);
-                        elements.push({
+                        return {
                             label: label,
                             id: e.id,
                             typeKey: e.typeKey,
-                            updateDate: options.showDate ? e.updateDate : null
-                        });
-                    }
-                });
-                return elements;
+                            updateDate: options.showDate ? e.updateDate : null,
+                            data: e.data
+                        };
+                    });
             }));
     }
 
-    public markRead(id: number, targetSate: string): Observable<any> {
-        const apiUrl = `/entity/api/xm-entities/${id}/states/${targetSate}`;
-        return this.http.put(apiUrl, {observe: 'response'}).pipe(
+    public markRead(id: number, config: NotificationUiConfig): Observable<any> {
+        const targetState = config.changeStateName;
+        const targetFunction = config.changeStateFunction;
+
+        const action$ = targetFunction ?
+            this.functionService.callWithEntityId(id, targetFunction) :
+            this.entityService.changeState(id, targetState);
+
+        return action$.pipe(
             map((response: HttpResponse<any>) => {
                 this.eventManager.broadcast({name: 'notificationListUpdated'});
+                this.totalCount--;
                 return true;
             }));
     }

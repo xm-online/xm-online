@@ -7,7 +7,9 @@ import { SessionStorageService } from 'ngx-webstorage';
 export class I18nNamePipe implements PipeTransform {
 
     translatesFormStorage: any;
-    constructor(private translateService: TranslateService, private $sessionStorage: SessionStorageService) {
+    constructor(private translateService: TranslateService,
+                private principal: Principal,
+                private $sessionStorage: SessionStorageService) {
         try {
             this.translatesFormStorage = JSON.parse($sessionStorage.retrieve(this.translateService.currentLang));
             this.translateService.setTranslation(this.translateService.currentLang, this.translatesFormStorage, true);
@@ -16,7 +18,7 @@ export class I18nNamePipe implements PipeTransform {
         }
     }
 
-    transform(name: any, principal: Principal): string {
+    transform(name: any, principal: Principal = this.principal): string {
         if (name && name['trKey']) {
             return this.translateService.instant(name['trKey']);
         } else if (name && name[principal.getLangKey()]) {

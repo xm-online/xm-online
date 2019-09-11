@@ -1,8 +1,7 @@
 import { BaseEntity } from './../../shared';
 
-export class Content implements BaseEntity {
-    constructor(public id?: number,
-                public valueContentType?: string,
-                public value?: any) {
-    }
+export interface Content extends BaseEntity {
+    id?: number;
+    valueContentType?: string;
+    value?: any;
 }

@@ -1,3 +1,5 @@
+export * from './shared';
+
 export * from './attachment-card/attachment-card.component';
 export * from './attachment-detail-dialog/attachment-detail-dialog.component';
 export * from './attachment-list/attachment-list.component';

@@ -89,10 +89,9 @@ export class BalanceListCardComponent implements OnInit {
         return this.spec.types.filter((t) => t.key === balance.typeKey).shift();
     }
 
-    onClickDetail(balanceId: number) {
+    public onClickDetail(balanceId: number): void {
         const modalRef = this.modalService.open(BalanceDetailDialogComponent, {backdrop: 'static'});
         modalRef.componentInstance.balanceId = balanceId;
-        return modalRef;
     }
 
 }

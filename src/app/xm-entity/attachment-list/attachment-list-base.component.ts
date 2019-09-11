@@ -64,8 +64,8 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
         return () => (this.attachmentSpecs && this.attachmentSpecs.length);
     }
 
-    onAddAttachment() {
-        return this.openDialog(AttachmentDetailDialogComponent, modalRef => {
+    public onAddAttachment(): void {
+        this.openDialog(AttachmentDetailDialogComponent, modalRef => {
             modalRef.componentInstance.attachmentSpecs = this.attachmentSpecs;
         });
     }

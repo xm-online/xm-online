@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -22,7 +22,7 @@ export class XmPasswordNeededComponent implements OnInit {
         this.form = fb.group({password: [null, Validators.required]});
     }
 
-    get password() {
+    get password(): AbstractControl {
         return this.form.get('password');
     }
 

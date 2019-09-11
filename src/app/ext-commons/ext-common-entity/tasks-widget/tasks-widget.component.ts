@@ -125,11 +125,10 @@ export class TasksWidgetComponent implements OnInit, OnDestroy {
         });
     }
 
-    onEdit(item) {
+    public onEdit(item): void {
         const modalRef = this.modalService.open(EntityDetailDialogComponent, {backdrop: 'static'});
         modalRef.componentInstance.xmEntity = Object.assign({}, item.xmEntity);
         modalRef.componentInstance.xmEntitySpec = this.getType(item.typeKey);
-        return modalRef;
     }
 
 }

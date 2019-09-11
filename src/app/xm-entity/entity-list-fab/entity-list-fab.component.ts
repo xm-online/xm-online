@@ -51,11 +51,10 @@ export class EntityListFabComponent implements OnInit {
         });
     }
 
-    onAddNew() {
+    public onAddNew(): void {
         const modalRef = this.modalService.open(EntityDetailDialogComponent, {backdrop: 'static'});
         modalRef.componentInstance.xmEntitySpec = this.xmEntitySpec;
         modalRef.componentInstance.spec = this.spec;
-        return modalRef;
     }
 
 }

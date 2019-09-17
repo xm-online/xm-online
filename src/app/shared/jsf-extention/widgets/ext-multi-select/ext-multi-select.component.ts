@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, Version, ViewChild } from '@angular/core';
 import { JsonSchemaFormService, removeRecursiveReferences, buildFormGroup } from 'angular2-json-schema-form';
 import { FormControl } from '@angular/forms';
 import { ReplaySubject ,  Subject } from 'rxjs';
@@ -21,7 +21,7 @@ interface Element {
     templateUrl: 'ext-multi-select.component.html'
 })
 export class ExtMultiSelectComponent implements OnInit, OnDestroy, AfterViewInit {
-    version = VERSION;
+    version: Version = VERSION;
 
     public elementMultiCtrl: any;
     public elementMultiFilterCtrl: FormControl = new FormControl();

@@ -60,15 +60,13 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
         return item.id;
     }
 
-    onAddNew() {
-        const modalRef = this.modalService.open(DashboardDetailDialogComponent, {backdrop: 'static', size: 'lg'});
-        return modalRef;
+    public onAddNew(): void {
+        this.modalService.open(DashboardDetailDialogComponent, {backdrop: 'static', size: 'lg'});
     }
 
-    onEdit(d: Dashboard) {
+    public onEdit(d: Dashboard): void {
         const modalRef = this.modalService.open(DashboardDetailDialogComponent, {backdrop: 'static', size: 'lg'});
         modalRef.componentInstance.dashboard = Object.assign({}, d);
-        return modalRef;
     }
 
     deleteAction(id: number) {

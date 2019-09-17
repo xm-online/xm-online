@@ -133,7 +133,7 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
             .filter(fs => this.hasPrivilege(fs));
     }
 
-    onChangeState(stateKey) {
+    public onChangeState(stateKey): void {
         const nextSpec: NextSpec = this.stateSpec.next.filter(it => it.stateKey === stateKey)[0];
         if (!nextSpec) {
             // exceptional case: user should never be able to change state outside the state tree
@@ -159,7 +159,6 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
             }
         });
 
-        return modalRef;
     }
 
     getCurrentStateSpec(): StateSpec {
@@ -177,7 +176,7 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
         });
     }
 
-    onCallFunction(functionSpec: FunctionSpec) {
+    public onCallFunction(functionSpec: FunctionSpec): void {
         const title = functionSpec.actionName ? functionSpec.actionName : functionSpec.name;
         const modalRef = this.modalService.open(FunctionCallDialogComponent, {backdrop: 'static'});
         modalRef.componentInstance.xmEntity = this.xmEntity || new XmEntity(this.xmEntityId || undefined);
@@ -185,7 +184,6 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
         modalRef.componentInstance.dialogTitle = title;
         modalRef.componentInstance.buttonTitle = title;
         console.log('onCallFunction');
-        return modalRef;
     }
 
     getFunctionContext(functionSpec: FunctionSpec): FunctionContext {

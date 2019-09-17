@@ -57,17 +57,15 @@ export class WidgetListCardComponent extends BaseAdminConfigListComponent implem
         return item.id;
     }
 
-    onAddNew() {
+    public onAddNew(): void {
         const modalRef = this.modalService.open(WidgetDetailDialogComponent, {backdrop: 'static', size: 'lg'});
         modalRef.componentInstance.dashboardId = this.dashboardId;
-        return modalRef;
     }
 
-    onEdit(w: Widget) {
+    public onEdit(w: Widget): void {
         const modalRef = this.modalService.open(WidgetDetailDialogComponent, {backdrop: 'static', size: 'lg'});
         modalRef.componentInstance.dashboardId = this.dashboardId;
         modalRef.componentInstance.widget = Object.assign({}, w);
-        return modalRef;
     }
 
     deleteAction(id: number) {

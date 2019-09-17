@@ -75,7 +75,7 @@ export class AvailableOfferingsWidgetComponent implements OnInit, OnDestroy {
         return offering ? offering.avatarUrl : null;
     }
 
-    onAction(offering) {
+   public onAction(offering): void {
         const modalRef = this.modalService.open(FunctionCallDialogComponent, {backdrop: 'static'});
         modalRef.componentInstance.xmEntity = offering;
         modalRef.componentInstance.functionSpec = {key: this.config.action.functionKey};
@@ -86,7 +86,6 @@ export class AvailableOfferingsWidgetComponent implements OnInit, OnDestroy {
             modalRef.componentInstance.dialogTitle = result;
         });
         modalRef.componentInstance.buttonTitle = this.config.action.name;
-        return modalRef;
     }
 
 }

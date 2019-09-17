@@ -1,12 +1,12 @@
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import {XmConfigService} from '../../shared/spec/config.service';
-import {ConfigValidatorUtil} from './config-validator/config-validator.util';
-import {ConfigVisualizerDialogComponent} from './config-visualizer-dialog/config-visualizer-dialog.component';
-import {StatesManagementDialogComponent} from '../../xm-entity';
+import { XmConfigService } from '../../shared/spec/config.service';
+import { ConfigValidatorUtil } from './config-validator/config-validator.util';
+import { ConfigVisualizerDialogComponent } from './config-visualizer-dialog/config-visualizer-dialog.component';
+import { StatesManagementDialogComponent } from '../../xm-entity';
 import { finalize } from 'rxjs/operators';
 
 const TENANT_SPEC_PATH = '/tenant-config.yml';
@@ -272,15 +272,14 @@ export class SpecificationMngComponent implements OnInit {
         });
     }
 
-    onShowConfigVisualizerDialog() {
+    public onShowConfigVisualizerDialog(): void {
         const modalRef = this.modalService
             .open(ConfigVisualizerDialogComponent, {size: 'lg', backdrop: 'static', windowClass: 'xm-modal-extra-large'});
         modalRef.componentInstance.entitySpecification = this.entitySpecificationOut;
-        return modalRef;
     }
 
-    onShowConfigStatesManagementDialog() {
-        return this.modalService
+    public onShowConfigStatesManagementDialog(): void {
+        this.modalService
             .open(StatesManagementDialogComponent, {
                 size: 'lg',
                 backdrop: 'static',

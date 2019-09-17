@@ -280,7 +280,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
         this.loadEntities(entityOptions).subscribe(resp => this.list[this.activeItemId].entities = resp);
     }
 
-    onAction(entityOptions: EntityOptions, xmEntity: XmEntity, action) {
+    public onAction(entityOptions: EntityOptions, xmEntity: XmEntity, action): void {
         if (action.handler) {
             action.handler(xmEntity);
             return;
@@ -297,7 +297,6 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
         modalRef.componentInstance.xmEntity = xmEntity;
         modalRef.componentInstance.functionSpec = entityOptions.xmEntitySpec.functions
             ? entityOptions.xmEntitySpec.functions.filter(f => f.key === action.functionKey).shift() : {key: action.functionKey};
-        return modalRef;
     }
 
     onFileExport(entityOptions: EntityOptions, exportType: string) {

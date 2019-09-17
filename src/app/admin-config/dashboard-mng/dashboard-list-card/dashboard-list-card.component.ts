@@ -137,10 +137,6 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
         });
     }
 
-    protected deleteItem(d: Dashboard) {
-        this.onDeleteItem(d.id, d.name);
-    }
-
     private setDashboard(dashboard: Dashboard): Observable<any> {
         return this.dashboardService.create(dashboard);
     }

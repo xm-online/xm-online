@@ -52,17 +52,17 @@ export class ClientMgmtComponent extends BaseAdminListComponent {
         return item.id;
     }
 
-    private onDelete(client) {
+    public onDelete(client) {
         const modalRef = this.modalService.open(ClientMgmtDeleteDialogComponent, { backdrop: 'static' });
         modalRef.componentInstance.selectedClient = client;
     }
 
-    private onEdit(client) {
+    public onEdit(client) {
         const modalRef = this.modalService.open(ClientMgmtDialogComponent, { backdrop: 'static' });
         modalRef.componentInstance.selectedClient = client;
     }
 
-    private onAdd() {
+    public onAdd() {
         this.modalService.open(ClientMgmtDialogComponent, { backdrop: 'static' });
     }
 }

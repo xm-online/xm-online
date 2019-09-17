@@ -179,7 +179,8 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                         fastSearch: config && config.fastSearch ? config.fastSearch : this.entityType.fastSearch,
                         fields: fields,
                         routerLink: config && config.routerLink ? config.routerLink : null,
-                        filter: config && config.filter ? config.filter : null
+                        filter: config && config.filter ? config.filter : null,
+                        noData: config && config.noData ? config.noData : null,
                     }
                 ]
             };

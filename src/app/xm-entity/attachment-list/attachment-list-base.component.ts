@@ -13,6 +13,7 @@ import { saveFile, saveFileFromUrl } from '../../shared/helpers/file-download-he
 import { DEBUG_INFO_ENABLED, XM_EVENT_LIST } from '../../xm.constants';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AttachmentDetailDialogComponent } from '../attachment-detail-dialog/attachment-detail-dialog.component';
+import {EntityUiConfig} from '../../shared/spec/xm-ui-config-model';
 
 declare let swal: any;
 
@@ -31,6 +32,7 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
     @Input() xmEntity: XmEntity;
 
     attachments: Attachment[];
+    @Input() entityUiConfig: EntityUiConfig;
 
     constructor(private attachmentService: AttachmentService,
                 private xmEntityService: XmEntityService,
@@ -62,8 +64,8 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
         return () => (this.attachmentSpecs && this.attachmentSpecs.length);
     }
 
-    onAddAttachment() {
-        return this.openDialog(AttachmentDetailDialogComponent, modalRef => {
+    public onAddAttachment(): void {
+        this.openDialog(AttachmentDetailDialogComponent, modalRef => {
             modalRef.componentInstance.attachmentSpecs = this.attachmentSpecs;
         });
     }

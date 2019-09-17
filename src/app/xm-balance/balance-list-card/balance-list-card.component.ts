@@ -56,7 +56,7 @@ export class BalanceListCardComponent implements OnInit {
                 protected balanceSpecWrapperService: BalanceSpecWrapperService,
                 protected metricService: MetricService,
                 protected modalService: NgbModal,
-                protected principal: Principal) {
+                public principal: Principal) {
     }
 
     ngOnInit() {
@@ -80,19 +80,18 @@ export class BalanceListCardComponent implements OnInit {
         });
     }
 
-    getMeasureSpec(balance: Balance) {
+    getMeasureSpec(balance: Balance): any {
         const balanceSpec = this.spec.types.filter((t) => t.key === balance.typeKey).shift();
         return this.spec.measures.filter((m) => m.key === balanceSpec.measureKey).shift();
     }
 
-    getBalanceSpec(balance: Balance) {
+    getBalanceSpec(balance: Balance): any {
         return this.spec.types.filter((t) => t.key === balance.typeKey).shift();
     }
 
-    onClickDetail(balanceId: number) {
+    public onClickDetail(balanceId: number): void {
         const modalRef = this.modalService.open(BalanceDetailDialogComponent, {backdrop: 'static'});
         modalRef.componentInstance.balanceId = balanceId;
-        return modalRef;
     }
 
 }

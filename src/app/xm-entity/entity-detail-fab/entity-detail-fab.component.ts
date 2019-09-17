@@ -90,34 +90,34 @@ export class EntityDetailFabComponent implements OnInit, OnChanges, OnDestroy {
         this.eventManager.broadcast({name: 'xmEntityDetailModification', content: {entity: this.xmEntity}});
     }
 
-    onAddAttachment() {
-        return this.openDialog(AttachmentDetailDialogComponent, modalRef => {
+    public onAddAttachment(): void {
+        this.openDialog(AttachmentDetailDialogComponent, modalRef => {
             modalRef.componentInstance.attachmentSpecs = this.xmEntitySpec.attachments;
         });
     }
 
-    onAddLink(linkSpec) {
-        return this.openDialog(LinkDetailDialogComponent, modalRef => {
+    public onAddLink(linkSpec): void {
+        this.openDialog(LinkDetailDialogComponent, modalRef => {
             modalRef.componentInstance.linkSpec = linkSpec;
             modalRef.componentInstance.sourceXmEntity = this.xmEntity;
             modalRef.componentInstance.spec = this.spec;
         });
     }
 
-    onAddComment() {
-        return this.openDialog(CommentDetailDialogComponent, modalRef => {
+    public onAddComment(): void {
+        this.openDialog(CommentDetailDialogComponent, modalRef => {
             modalRef.componentInstance.commentSpecs = this.xmEntitySpec.comments;
         });
     }
 
-    onAddALocation() {
-        return this.openDialog(LocationDetailDialogComponent, modalRef => {
+    public onAddALocation(): void {
+        this.openDialog(LocationDetailDialogComponent, modalRef => {
             modalRef.componentInstance.locationSpecs = this.xmEntitySpec.locations;
         }, {size: 'lg', backdrop: 'static'});
     }
 
-    onEdit() {
-        return this.openDialog(EntityDetailDialogComponent, modalRef => {
+    public onEdit(): void {
+        this.openDialog(EntityDetailDialogComponent, modalRef => {
             modalRef.componentInstance.xmEntity = Object.assign({}, this.xmEntity);
             modalRef.componentInstance.xmEntitySpec = this.xmEntitySpec;
         });

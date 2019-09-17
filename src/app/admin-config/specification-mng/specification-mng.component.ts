@@ -2,8 +2,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
 import { finalize } from 'rxjs/operators';
+
 import { XmConfigService } from '../../shared/spec/config.service';
 import { StatesManagementDialogComponent } from '../../xm-entity';
 import { ConfigValidatorUtil } from './config-validator/config-validator.util';
@@ -85,7 +85,6 @@ export class SpecificationMngComponent implements OnInit {
                 private router: Router,
                 private modalService: NgbModal,
                 private service: XmConfigService) {
-        // this.currentSpecificationSlug = 'ui';
         this.activatedRoute.params.subscribe((params) => {
             this.currentSpecificationSlug = params['slug'];
             this.isTenantSpecValid = false;
@@ -271,16 +270,15 @@ export class SpecificationMngComponent implements OnInit {
         });
     }
 
-    public onShowConfigVisualizerDialog(): any {
+    public onShowConfigVisualizerDialog(): void {
         const modalRef = this.modalService
             .open(ConfigVisualizerDialogComponent,
                 {size: 'lg', backdrop: 'static', windowClass: 'xm-modal-extra-large'});
         modalRef.componentInstance.entitySpecification = this.entitySpecificationOut;
-        return modalRef;
     }
 
-    public onShowConfigStatesManagementDialog(): any {
-        return this.modalService
+    public onShowConfigStatesManagementDialog(): void {
+        this.modalService
             .open(StatesManagementDialogComponent, {
                 size: 'lg',
                 backdrop: 'static',

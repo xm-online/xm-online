@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Principal } from 'app/shared';
 import { JhiAlertService, JhiOrderByPipe } from 'ng-jhipster';
 import { filter, finalize } from 'rxjs/operators';
 
 import { ITEMS_PER_PAGE } from '../../shared/constants/pagination.constants';
 import { RoleMatrix, RoleMatrixPermission } from '../../shared/role/role.model';
 import { RoleService } from '../../shared/role/role.service';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'xm-roles-matrix',
@@ -169,7 +169,7 @@ export class RolesMatrixComponent implements OnInit {
             );
     }
 
-    private isChanged(allItems) {
+    public isChanged(allItems) {
         this.hasChanges = false;
         allItems.forEach(e => {
             e.roles.forEach(r => {

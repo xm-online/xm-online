@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Principal } from 'app/shared';
 import { JhiEventManager } from 'ng-jhipster';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Principal } from '../../shared';
 
 declare let $: any;
 

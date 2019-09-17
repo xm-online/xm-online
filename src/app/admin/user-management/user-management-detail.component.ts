@@ -20,7 +20,7 @@ export class UserMgmtDetailComponent implements OnInit, OnDestroy {
     private routeData: any;
     private subscription: any;
     private routeDataSubscription: any;
-    protected userEmail: string;
+    public userEmail: string;
 
     constructor(
         private jhiLanguageHelper: JhiLanguageHelper,
@@ -68,7 +68,7 @@ export class UserMgmtDetailComponent implements OnInit, OnDestroy {
         this.location.back();
     }
 
-    protected initPasswordReset() {
+    public initPasswordReset() {
         swal({
             title: `Initiate password reset for ${this.userEmail}?`,
             showCancelButton: true,
@@ -91,7 +91,7 @@ export class UserMgmtDetailComponent implements OnInit, OnDestroy {
         return email;
     }
 
-    protected pwdResetDisabled(): boolean {
+    public pwdResetDisabled(): boolean {
         return !this.user.activated;
     }
 

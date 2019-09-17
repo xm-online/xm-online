@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import {finalize, map, startWith} from 'rxjs/operators';
 
 import { XmConfigService } from '../../shared';
 import { Principal } from '../../shared/auth/principal.service';
@@ -77,7 +77,7 @@ export class LocationDetailDialogComponent implements OnInit {
         });
     }
 
-    protected applyCoordinates(setCenter: boolean = true) {
+    public applyCoordinates(setCenter: boolean = true) {
         if (this.coordinatesInvalid || !this.locationMarker || !this.locationMap) {return}
 
         const LatLng = new google.maps.LatLng(this.form.controls.latitude.value, this.form.controls.longitude.value);
@@ -86,7 +86,7 @@ export class LocationDetailDialogComponent implements OnInit {
         if (setCenter) {this.locationMap.setCenter(LatLng)}
     }
 
-    protected get coordinatesInvalid(): boolean {
+    public get coordinatesInvalid(): boolean {
         return this.form.controls.latitude.invalid || this.form.controls.longitude.invalid
     }
 
@@ -181,17 +181,20 @@ export class LocationDetailDialogComponent implements OnInit {
     onConfirmSave() {
         this.showLoader = true;
         if (this.form.value.id) {
-            this.locationService.update(this.form.value).subscribe(
+            this.locationService.update(this.form.value).pipe(
+                finalize(() => this.showLoader = false)
+            ).subscribe(
                 () => this.onSaveSuccess('xm-entity.location-detail-dialog.edit.success'),
                 // TODO: error processing
-                (err) => console.log(err),
-                () => this.showLoader = false);
+                (err) => console.log(err));
         } else {
-            this.locationService.create(this.form.value).subscribe(
+            this.locationService.create(this.form.value).pipe(
+                finalize(() => this.showLoader = false)
+            )
+                .subscribe(
                 () => this.onSaveSuccess('xm-entity.location-detail-dialog.add.success'),
                 // TODO: error processing
-                (err) => console.log(err),
-                () => this.showLoader = false);
+                (err) => console.log(err));
         }
     }
 

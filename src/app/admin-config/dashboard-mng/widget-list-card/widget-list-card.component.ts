@@ -59,17 +59,15 @@ export class WidgetListCardComponent extends BaseAdminConfigListComponent implem
         return item.id;
     }
 
-    public onAddNew(): any {
+    public onAddNew(): void {
         const modalRef = this.modalService.open(WidgetDetailDialogComponent, {backdrop: 'static', size: 'lg'});
         modalRef.componentInstance.dashboardId = this.dashboardId;
-        return modalRef;
     }
 
-    public onEdit(w: Widget): any {
+    public onEdit(w: Widget): void {
         const modalRef = this.modalService.open(WidgetDetailDialogComponent, {backdrop: 'static', size: 'lg'});
         modalRef.componentInstance.dashboardId = this.dashboardId;
         modalRef.componentInstance.widget = Object.assign({}, w);
-        return modalRef;
     }
 
     public deleteAction(id: number): void {
@@ -83,7 +81,7 @@ export class WidgetListCardComponent extends BaseAdminConfigListComponent implem
             }));
     }
 
-    protected deleteItem(w: Widget): void {
+    public deleteItem(w: Widget) {
         this.onDeleteItem(w.id, w.name);
     }
 

@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import {RolesMatrixComponent} from "./roles-matrix.component";
+import { RolesMatrixComponent } from './roles-matrix.component';
 
 export const rolesMatrixRoute: Routes = [
     {

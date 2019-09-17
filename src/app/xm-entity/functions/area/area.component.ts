@@ -147,7 +147,7 @@ export class AreaComponent implements AfterViewInit {
         }
     }
 
-    onClickAddPolygon() {
+    public onClickAddPolygon(): void {
         const self = this;
         const modalRef = this.modalService.open(OsmPolygonDialogComponent, {backdrop: 'static'});
         modalRef.componentInstance.addPolygonInternal = (polygon) => {
@@ -159,7 +159,6 @@ export class AreaComponent implements AfterViewInit {
             self.saveFunction(self.drawnItems);
             self.map.fitBounds(this.drawnItems.getBounds(), {padding: [1, 1]});
         };
-        return modalRef;
     }
 
 }

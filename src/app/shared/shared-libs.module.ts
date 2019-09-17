@@ -23,7 +23,7 @@ export function getBrowserLang() {
 
 @NgModule({
     imports: [
-        NgbModule.forRoot(),
+        NgbModule,
         NgJhipsterModule.forRoot({
             alertAsToast: false,
             i18nEnabled: true,

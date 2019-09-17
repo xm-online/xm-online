@@ -35,10 +35,9 @@ export class EntityCardComponent implements OnInit {
             this.xmEntitySpec.states.filter((s) => s.key === this.xmEntity.stateKey).shift();
     }
 
-    onAvatarChangeClick() {
+    public onAvatarChangeClick(): void {
         const modalRef = this.modalService.open(AvatarDialogComponent, {backdrop: 'static'});
         modalRef.componentInstance.xmEntity = this.xmEntity;
-        return modalRef;
     }
 
     formatDescription(html) {

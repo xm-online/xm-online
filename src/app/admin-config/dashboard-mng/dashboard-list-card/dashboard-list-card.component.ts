@@ -59,14 +59,17 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
         return item.id;
     }
 
-    onAddNew() {
-        return this.modalService.open(DashboardDetailDialogComponent, {backdrop: 'static', size: 'lg'});
+    public onAddNew(): void {
+        this.modalService.open(DashboardDetailDialogComponent, {backdrop: 'static', size: 'lg'});
     }
 
-    onEdit(d: Dashboard) {
+    public onEdit(d: Dashboard): void {
         const modalRef = this.modalService.open(DashboardDetailDialogComponent, {backdrop: 'static', size: 'lg'});
         modalRef.componentInstance.dashboard = Object.assign({}, d);
-        return modalRef;
+    }
+
+    public deleteItem(d: Dashboard) {
+        this.onDeleteItem(d.id, d.name);
     }
 
     deleteAction(id: number) {
@@ -161,5 +164,4 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
             confirmButtonClass: 'btn btn-primary',
         });
     }
-
 }

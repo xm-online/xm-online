@@ -1,13 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Principal } from '../auth/principal.service';
 import { TranslateService } from '@ngx-translate/core';
 import { SessionStorageService } from 'ngx-webstorage';
-import { Principal } from '../auth/principal.service';
 
 @Pipe({name: 'i18nName'})
 export class I18nNamePipe implements PipeTransform {
 
-    private translatesFormStorage: any;
-    constructor(private translateService: TranslateService, private $sessionStorage: SessionStorageService) {
+    translatesFormStorage: any;
+    constructor(private translateService: TranslateService,
+                private principal: Principal,
+                private $sessionStorage: SessionStorageService) {
         try {
             this.translatesFormStorage = JSON.parse($sessionStorage.retrieve(this.translateService.currentLang));
             this.translateService.setTranslation(this.translateService.currentLang, this.translatesFormStorage, true);
@@ -16,10 +18,9 @@ export class I18nNamePipe implements PipeTransform {
         }
     }
 
-    public transform(name: any, principal: Principal): string {
-        const KEY = 'trKey';
-        if (name && name[KEY]) {
-            return this.translateService.instant(name[KEY]);
+    transform(name: any, principal: Principal = this.principal): string {
+        if (name && name['trKey']) {
+            return this.translateService.instant(name['trKey']);
         } else if (name && name[principal.getLangKey()]) {
             return name[principal.getLangKey()];
         } else if (name && name.en) {

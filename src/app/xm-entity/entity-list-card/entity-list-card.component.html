@@ -128,7 +128,7 @@
               </thead>
 
               <tbody>
-              <tr *ngFor="let xmEntity of item.entities; trackBy: trackId">
+              <tr *ngFor="let xmEntity of item.entities">
                 <td>
                   <div class="xm-avatar-img-container">
                     <img src="{{xmEntity.avatarUrl ? xmEntity.avatarUrl : './assets/img/placeholder.png'}}">
@@ -141,11 +141,11 @@
                     <div *ngIf="(options?.noDeepLink || item?.noDeepLink); then entryHasNotLink else entryHasLink"></div>
                     <ng-template #entryHasLink>
                       <a href="javascript: void(0);" (click)="onNavigate(item, xmEntity)">
-                        {{getFieldValue(xmEntity, field.field)}}
+                        {{getFieldValue(xmEntity, field)}}
                       </a>
                     </ng-template>
                     <ng-template #entryHasNotLink>
-                      {{getFieldValue(xmEntity, field.field)}}
+                      {{getFieldValue(xmEntity, field)}}
                     </ng-template>
                   </div>
                   <div *ngSwitchCase="'typeKey'">
@@ -180,7 +180,7 @@
                       {{xmEntity.state?.name | i18nName: principal}}
                     </div>
                   </div>
-                  <div *ngSwitchDefault [innerHtml]="getFieldValue(xmEntity, field.field, field)">
+                  <div *ngSwitchDefault [innerHtml]="getFieldValue(xmEntity, field)">
                   </div>
                   <button class="btn btn-primary btn-round btn-sm" (click)="onAction(item, xmEntity, field.action)"
                           *ngIf="field.action">
@@ -216,7 +216,7 @@
             </ngb-pagination>
           </div>
         </div>
-        <no-data [show]="!item.entities?.length"></no-data>
+        <no-data [show]="!item.entities?.length" [text]="item.noData"></no-data>
       </div>
     </div>
   </div>

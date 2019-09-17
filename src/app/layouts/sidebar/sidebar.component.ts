@@ -72,7 +72,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
                 private languageHelper: JhiLanguageHelper,
                 private jhiLanguageService: JhiLanguageService,
                 private xmEntitySpecWrapperService: XmEntitySpecWrapperService,
-                private principal: Principal,
+                public principal: Principal,
                 private profileService: ProfileService,
                 private router: Router,
                 private element: ElementRef,

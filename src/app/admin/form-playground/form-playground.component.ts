@@ -106,7 +106,7 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
 
     constructor(private xmEntitySpecWrapperService: XmEntitySpecWrapperService,
                 private route: ActivatedRoute,
-                private principal: Principal,
+                public principal: Principal,
                 private http: HttpClient) {
         this.widgets = getJsfWidgets();
         this.formLayout = formLayout;

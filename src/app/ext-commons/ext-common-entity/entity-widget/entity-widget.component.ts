@@ -4,8 +4,9 @@ import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { ContextService, XmConfigService } from '../../../shared';
-import {FullLinkSpec, LinkInterfaceSpec, LinkSpec, Spec, XmEntity, XmEntityService, XmEntitySpec} from '../../../xm-entity';
+import {FullLinkSpec, LinkSpec, Spec, XmEntity, XmEntityService, XmEntitySpec} from '../../../xm-entity';
 import { DEBUG_INFO_ENABLED } from '../../../xm.constants';
+import {AttachmentsView, EntityDetailLayout, EntityUiConfig} from '../../../shared/spec/xm-ui-config-model';
 
 @Component({
     selector: 'xm-entity-widget',
@@ -21,7 +22,7 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
     spec: Spec;
     backLinkSpecs: LinkSpec[];
     showLoader: boolean;
-    entityUiConfig: any;
+    entityUiConfig: EntityUiConfig;
 
     backLinkSpecs$ = new BehaviorSubject<FullLinkSpec[]>([]);
     linkSpecs$ = new BehaviorSubject<FullLinkSpec[]>([]);
@@ -68,11 +69,11 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
                 tap((entity) => this.defineUiConfig()),
                 tap(entity => this.linkSpecs$.next(
                     this.xmEntitySpec && this.xmEntitySpec.links ?
-                        this.xmEntitySpec.links.map(spec => this.addInterfaceSpec(spec, 'target', this.entityUiConfig)) : []
+                        this.xmEntitySpec.links.map(spec => this.addInterfaceSpec(spec, this.entityUiConfig)) : []
                     )
                 ),
                 tap(entity => this.backLinkSpecs$.next(
-                    this.backLinkSpecs.map(spec => this.addInterfaceSpec(spec, 'source', this.entityUiConfig))
+                    this.backLinkSpecs.map(spec => this.addInterfaceSpec(spec, this.entityUiConfig))
                 )),
                 tap((entity) => this.defineLayoutGrid(entity.typeKey))
             )
@@ -80,25 +81,24 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
 
     defineUiConfig() {
         this.xmConfigService.getUiConfig().subscribe((config) => {
-            this.entityUiConfig = config && config.applications
+            this.entityUiConfig = <EntityUiConfig>(config && config.applications
                 && config.applications.config
                 && config.applications.config.entities
-                && config.applications.config.entities.filter(e => e.typeKey === this.xmEntity.typeKey).shift();
+                && config.applications.config.entities.filter(e => e.typeKey === this.xmEntity.typeKey).shift());
         });
     }
 
     private defineLayoutGrid(typeKey: string) {
-        let detailLayoutType = this.getXmEntitySpec(typeKey).dataSpec ? 'DEFAULT' : 'ALL-IN-ROW';
+        let detailLayoutType: EntityDetailLayout = this.getXmEntitySpec(typeKey).dataSpec ? 'DEFAULT' : 'ALL-IN-ROW';
         if (this.entityUiConfig && this.entityUiConfig.detailLayoutType) {
             detailLayoutType = this.entityUiConfig.detailLayoutType;
         }
 
         this.grid = this.config.grid ?
             this.config.grid :
-            this.getGridLayout(this.entityUiConfig
+            this.getGridLayout(detailLayoutType, this.entityUiConfig
                 && this.entityUiConfig.attachments
-                && this.entityUiConfig.attachments.view,
-                detailLayoutType);
+                && this.entityUiConfig.attachments.view);
     }
 
     getXmEntitySpec(typeKey: string) {
@@ -106,9 +106,9 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
         return this.spec.types.filter(t => t.key === vTypeKey).shift();
     }
 
-    private addInterfaceSpec(linkSpec: LinkSpec, type: 'target' | 'source', entityUiConfig: any): FullLinkSpec {
+    private addInterfaceSpec(linkSpec: LinkSpec, entityUiConfig: EntityUiConfig): FullLinkSpec {
 
-        const interfaceSpec = entityUiConfig && (entityUiConfig[type === 'target' ? 'targets' : 'sources'] || [])
+        const interfaceSpec = entityUiConfig && entityUiConfig.links && (entityUiConfig.links.items || [])
             .filter(iSpec => iSpec.typeKey === linkSpec.key).shift();
 
         return  {
@@ -138,8 +138,7 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
     }
 
 
-    // TODO: improve types
-    getGridLayout(attachmentsView: 'list'|undefined, detailLayoutType: string): any[] {
+    getGridLayout(detailLayoutType: EntityDetailLayout, attachmentsView?: AttachmentsView): any[] {
 
         let attachmentsComponent = 'attachment-grid';
 

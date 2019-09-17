@@ -1,5 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, ChangeDetectorRef, Component, forwardRef, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    forwardRef,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Version,
+    ViewChild
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { JsonSchemaFormComponent, JsonSchemaFormService } from 'angular2-json-schema-form';
 import { MatSelect, VERSION } from '@angular/material';
@@ -22,7 +33,7 @@ interface Element {
     templateUrl: 'ext-select.component.html'
 })
 export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
-    version = VERSION;
+    version: Version = VERSION;
     @Input() layoutNode: any;
 
     options: ExtSelectOptions;

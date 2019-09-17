@@ -14,7 +14,7 @@ export class PoweredByComponent implements OnInit {
     @Input() config: PoweredBy;
     altText: string;
 
-    constructor(protected principal: Principal, protected i18nNamePipe: I18nNamePipe) {}
+    constructor(public principal: Principal, protected i18nNamePipe: I18nNamePipe) {}
 
     ngOnInit() {
         this.altText = this.config && this.config.altText ? this.i18nNamePipe.transform(this.config.altText, this.principal) : '';

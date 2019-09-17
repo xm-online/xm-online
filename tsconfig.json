@@ -19,6 +19,8 @@
       "dom"
     ],
     "inlineSources": true,
-    "module": "esnext"
+    "module": "esnext",
+    "stripInternal": false,
+    "newLine": "lf"
   }
 }

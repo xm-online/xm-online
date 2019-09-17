@@ -29,8 +29,8 @@ export class CustomerInfoWidgetComponent implements OnInit, OnDestroy {
     private attachmentsSubscription: Subscription;
     private resolveStrategy = 'role';
     private profileUpdateInterval = 30000;
-    protected attachments: Observable<Attachment[]>;
-    protected showAttachmentLoader = true;
+    public attachments: Observable<Attachment[]>;
+    public showAttachmentLoader = true;
 
     uploadFileEnabled = false;
     showCurrencies = false;

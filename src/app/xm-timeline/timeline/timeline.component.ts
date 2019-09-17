@@ -21,7 +21,7 @@ export class TimelineComponent implements OnInit, OnChanges, OnDestroy {
     @Input() limit: number;
     @Input() params: any;
     @Input() filter: any;
-    @Input() template: () => string;
+    @Input() template: (arg?: any) => string;
     @Input() config: any;
 
     // xmEntity: XmEntity;

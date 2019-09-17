@@ -24,7 +24,7 @@ export class AvailableOfferingsWidgetComponent implements OnInit, OnDestroy {
     rows: any[];
     noOfferings = false;
 
-    constructor(private principal: Principal,
+    constructor(public principal: Principal,
                 private eventManager: JhiEventManager,
                 private xmEntityService: XmEntityService,
                 private functionService: FunctionService,

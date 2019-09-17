@@ -161,7 +161,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
         });
     }
 
-    protected deleteItem(d: Dashboard) {
+    public deleteItem(d: Dashboard) {
         this.onDeleteItem(d.id, d.name)
     }
 

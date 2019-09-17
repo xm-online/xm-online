@@ -169,7 +169,7 @@ export class RolesMatrixComponent implements OnInit {
             );
     }
 
-    private isChanged(allItems) {
+    public isChanged(allItems) {
         this.hasChanges = false;
         allItems.forEach(e => {
             e.roles.forEach(r => {

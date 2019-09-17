@@ -106,15 +106,23 @@
             <td>
               {{missedTranslation.defaultValue}}
             </td>
+
             <td>
-              <div class="radio" *ngFor="let langFile of missedTranslation.langFiles;  let i = index;">
-                <label>
-                  <input type="radio" [name]="missedTranslation.key" checked="false" (click)="missedTranslation.targetFile = langFile">
-                  {{langFile}}
-                </label>
-              </div>
-              <button class="btn btn-primary" *ngIf="missedTranslation.targetFile" (click)="addTranslationToFile(i, missedTranslation)">Move to file</button>
+              <ng-container *ngFor="let langFile of missedTranslation.langFiles;  let i = index;">
+                <div class="radio">
+                  <label>
+                    <input type="radio" [name]="missedTranslation.key" checked="false"
+                           (click)="missedTranslation.targetFile = langFile">
+                    {{langFile}}
+                  </label>
+                </div>
+
+                <button class="btn btn-primary" *ngIf="missedTranslation.targetFile"
+                        (click)="addTranslationToFile(i, missedTranslation)">Move to file
+                </button>
+              </ng-container>
             </td>
+
           </tr>
           </tbody>
         </table>

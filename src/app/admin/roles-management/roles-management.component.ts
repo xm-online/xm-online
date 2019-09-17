@@ -110,16 +110,16 @@ export class RolesMgmtComponent implements OnInit, OnDestroy {
         }
     }
 
-    private onAdd() {
+    public onAdd() {
         this.modalService.open(RoleMgmtDialogComponent, { backdrop: 'static' });
     }
 
-    private onEdit(role) {
+    public onEdit(role) {
         const modalRef = this.modalService.open(RoleMgmtDialogComponent, { backdrop: 'static' });
         modalRef.componentInstance.selectedRole = role;
     }
 
-    private onDelete(role) {
+    public onDelete(role) {
         const modalRef = this.modalService.open(RoleMgmtDeleteDialogComponent, { backdrop: 'static' });
         modalRef.componentInstance.selectedRole = role;
     }

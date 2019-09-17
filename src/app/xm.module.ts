@@ -29,12 +29,13 @@ import { XmTimelineModule } from './xm-timeline/xm-timeline.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-const appInitializerFn = (appConfig: XmApplicationConfigService) => {
-    return () => {
+export function appInitializerFn(appConfig: XmApplicationConfigService): () => Promise<any> {
+    const r = function() {
         console.log('init app...');
         return appConfig.loadAppConfig();
     }
-};
+    return r;
+}
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, './i18n/', '.json');

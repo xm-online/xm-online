@@ -23,7 +23,7 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.emailInputElement.focus();
+        setTimeout(() => this.emailInputElement.focus(), 0);
     }
 
     requestReset() {

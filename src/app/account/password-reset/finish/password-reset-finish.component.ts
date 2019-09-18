@@ -1,9 +1,10 @@
-import { Component, OnInit, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JhiLanguageService } from 'ng-jhipster';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { MatInput } from '@angular/material';
 
 import { PasswordResetFinish } from './password-reset-finish.service';
 import { PasswordSpec } from '../../../xm-entity/shared/password-spec.model';
@@ -38,14 +39,14 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     passwordSettings: PasswordSpec;
     patternMessage: string;
 
+    @ViewChild('passwordInputElement', {static: false}) passwordInputElement: MatInput;
+
     constructor(
         private jhiLanguageService: JhiLanguageService,
         private passwordResetFinish: PasswordResetFinish,
         private route: ActivatedRoute,
         private http: HttpClient,
         private authServerProvider: AuthServerProvider,
-        private elementRef: ElementRef,
-        private renderer: Renderer,
         private xmConfigService: XmConfigService,
         private router: Router
     ) {
@@ -89,8 +90,7 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        let htmlEl = this.elementRef.nativeElement.querySelector('#password');
-        htmlEl && this.renderer.invokeElementMethod(htmlEl, 'focus', []);
+        setTimeout(() => this.passwordInputElement.focus(), 0);
     }
 
     finishReset() {

@@ -11,9 +11,9 @@ export const specificationMngRoute: Routes = [
                 data: {
                     privileges: {value: ['CONFIG.CLIENT.GET_LIST.ITEM']},
                     pageTitle: 'admin-config.common.menu.title',
-                    pageSubTitleTrans: 'admin-config.common.menu.specification-mng'
-                }
-            }
-        ]
-    }
+                    pageSubTitleTrans: 'admin-config.common.menu.specification-mng',
+                },
+            },
+        ],
+    },
 ];

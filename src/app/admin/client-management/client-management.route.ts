@@ -16,7 +16,7 @@ export class ClientResolvePagingParams implements Resolve<any> {
         return {
             page: this.paginationUtil.parsePage(page),
             predicate: this.paginationUtil.parsePredicate(sort),
-            ascending: this.paginationUtil.parseAscending(sort)
+            ascending: this.paginationUtil.parseAscending(sort),
         };
     }
 }
@@ -29,14 +29,14 @@ export const clientMgmtRoute: Routes = [
                 path: '',
                 component: ClientMgmtComponent,
                 resolve: {
-                    'pagingParams': ClientResolvePagingParams
+                    pagingParams: ClientResolvePagingParams,
                 },
                 data: {
                     privileges: {value: ['CLIENT.GET_LIST']},
                     pageTitle: 'global.menu.admin.main',
-                    pageSubTitleTrans: 'global.menu.admin.clientManagement'
-                }
-            }
-        ]
-    }
+                    pageSubTitleTrans: 'global.menu.admin.clientManagement',
+                },
+            },
+        ],
+    },
 ];

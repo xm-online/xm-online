@@ -3,21 +3,21 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
+import { filter, map } from 'rxjs/operators';
 
+import { XmConfigService } from '../../shared';
 import { LinkSpec } from '../shared/link-spec.model';
 import { Link } from '../shared/link.model';
 import { LinkService } from '../shared/link.service';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
-import { XmConfigService } from '../../shared';
-import { filter, map } from 'rxjs/operators';
 
 declare let swal: any;
 
 @Component({
     selector: 'xm-link-detail-search-section',
     templateUrl: './link-detail-search-section.component.html',
-    styleUrls: ['./link-detail-search-section.component.scss']
+    styleUrls: ['./link-detail-search-section.component.scss'],
 })
 export class LinkDetailSearchSectionComponent implements OnInit {
 
@@ -41,15 +41,15 @@ export class LinkDetailSearchSectionComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getLinkSpecConfig().subscribe(res => this.linkSpecQuery = res || null);
+        this.getLinkSpecConfig().subscribe((res) => this.linkSpecQuery = res || null);
         this.onSearch();
     }
 
     getLinkSpecConfig() {
        return this.configService.getUiConfig().pipe(
-           map(res => res.applications.config.entities.find(entity => entity.typeKey === this.sourceXmEntity.typeKey) || {}),
-           filter(entity => entity.hasOwnProperty('links')),
-           map(entity => entity.links.find(link => link.key === this.linkSpec.key)['filterQuery'])
+           map((res) => res.applications.config.entities.find((entity) => entity.typeKey === this.sourceXmEntity.typeKey) || {}),
+           filter((entity) => entity.hasOwnProperty('links')),
+           map((entity) => entity.links.find((link) => link.key === this.linkSpec.key)['filterQuery']),
         );
     }
 
@@ -76,7 +76,7 @@ export class LinkDetailSearchSectionComponent implements OnInit {
                 this.total = parseInt(xmEntities.headers.get('X-Total-Count'), 10);
                 this.searchXmEntities.push(...xmEntities.body);
             },
-            (err) => console.log(err),
+            (err) => console.log(err), // tslint:disable-line
             () => this.showLoader = false);
     }
 
@@ -95,16 +95,19 @@ export class LinkDetailSearchSectionComponent implements OnInit {
         this.linkService.create(link).subscribe(() => {
                 this.eventManager.broadcast({name: 'linkListModification'});
                 this.alert('success', 'xm-entity.link-detail-dialog.add.success');
-            }, () => {this.alert('error', 'xm-entity.link-detail-dialog.add.error'); this.showLoader = false},
+            }, () => {
+                this.alert('error', 'xm-entity.link-detail-dialog.add.error');
+                this.showLoader = false;
+            },
             () => this.activeModal.dismiss(true));
     }
 
-    private alert(type, key) {
+    private alert(type: string, key: string): void {
         swal({
-            type: type,
+            type,
             text: this.translateService.instant(key),
             buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary'
+            confirmButtonClass: 'btn btn-primary',
         });
     }
 

@@ -11,7 +11,7 @@ declare let swal: any;
 @Component({
   selector: 'xm-widget-detail-dialog',
   templateUrl: './widget-detail-dialog.component.html',
-  styleUrls: ['./widget-detail-dialog.component.scss']
+  styleUrls: ['./widget-detail-dialog.component.scss'],
 })
 export class WidgetDetailDialogComponent implements OnInit {
 
@@ -47,15 +47,19 @@ export class WidgetDetailDialogComponent implements OnInit {
             this.widgetService.update(this.widget).subscribe(
                 () => this.onSaveSuccess('admin-config.widget-detail-dialog.edit.success'),
                 // TODO: error processing
-                (err) => console.log(err),
+                (err) => console.log(err), // tslint:disable-line
                 () => this.showLoader = false);
         } else {
             this.widgetService.create(this.widget).subscribe(
                 () => this.onSaveSuccess('admin-config.widget-detail-dialog.add.success'),
                 // TODO: error processing
-                (err) => console.log(err),
+                (err) => console.log(err), // tslint:disable-line
                 () => this.showLoader = false);
         }
+    }
+
+    onCancel() {
+        this.activeModal.dismiss('cancel');
     }
 
     private onSaveSuccess(key: string) {
@@ -65,16 +69,12 @@ export class WidgetDetailDialogComponent implements OnInit {
         this.alert('success', key);
     }
 
-    onCancel() {
-        this.activeModal.dismiss('cancel');
-    }
-
     private alert(type, key) {
         swal({
-            type: type,
+            type,
             text: this.translateService.instant(key),
             buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary'
+            confirmButtonClass: 'btn btn-primary',
         });
     }
 

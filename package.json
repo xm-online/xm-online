@@ -155,6 +155,8 @@
     "rxjs-tslint": "^0.1.5",
     "ts-node": "~7.0.1",
     "tslint": "~5.10.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-sonarts": "^1.9.0",
     "typescript": "3.5.3"
   }
 }

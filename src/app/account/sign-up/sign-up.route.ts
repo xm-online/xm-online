@@ -8,7 +8,7 @@ export const registerRoute: Route = {
   component: SignUpComponent,
   data: {
     authorities: [],
-    pageTitle: 'register.title'
+    pageTitle: 'register.title',
   },
-  canActivate: [UserRouteAccessService]
+  canActivate: [UserRouteAccessService],
 };

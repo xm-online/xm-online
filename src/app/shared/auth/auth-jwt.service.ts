@@ -6,15 +6,15 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { DEFAULT_AUTH_TOKEN, DEFAULT_CONTENT_TYPE } from '../../xm.constants';
-import { StateStorageService } from './state-storage.service';
-import { Principal } from './principal.service';
 import { CustomUriEncoder } from '../helpers/custom-uri-encoder';
+import { Principal } from './principal.service';
+import { StateStorageService } from './state-storage.service';
 
 const TOKEN_STORAGE_KEY = 'WALLET-TOKEN';
 
 const DEFAULT_HEADERS = {
     'Content-Type': DEFAULT_CONTENT_TYPE,
-    'Authorization': DEFAULT_AUTH_TOKEN
+    'Authorization': DEFAULT_AUTH_TOKEN,
 };
 
 const REFRESH_TOKEN = 'refresh_token';
@@ -30,7 +30,6 @@ const WIDGET_DATA = 'widget:data';
 
 export const TOKEN_URL = _TOKEN_URL;
 export const CONFIG_SETTINGS_API = _CONFIG_SETTINGS_API;
-
 
 @Injectable()
 export class AuthServerProvider {
@@ -69,14 +68,13 @@ export class AuthServerProvider {
         const refreshToken = resp[REFRESH_TOKEN];
         if (refreshToken) {
             const authenticationTokenexpiresDate = new Date().setSeconds(resp['expires_in']);
-            // console.log('Expires in: ' + authenticationTokenexpiresDate);
             this.$sessionStorage.store(EXPIRES_DATE_FIELD, authenticationTokenexpiresDate);
             this.storeRefreshToken(refreshToken, rememberMe);
             this.updateTokenTimer = setTimeout(() => {
                 this.refreshTokens(rememberMe);
             }, (resp['expires_in'] - 60) * 1000);
         } else {
-            console.log('Expected to get %s but got undefined', REFRESH_TOKEN);
+            console.log('Expected to get %s but got undefined', REFRESH_TOKEN); // tslint:disable-line
         }
     }
 
@@ -184,7 +182,7 @@ export class AuthServerProvider {
         const headers = {
             'Authorization': DEFAULT_AUTH_TOKEN,
             'Content-Type': DEFAULT_CONTENT_TYPE,
-            'Accept': 'application/json'
+            'Accept': 'application/json',
         };
 
         const body = new HttpParams()
@@ -192,13 +190,13 @@ export class AuthServerProvider {
             .set('refresh_token', this.getRefreshToken())
         ;
 
-        this.http.post<any>(TOKEN_URL, body, { headers: headers, observe: 'response'})
+        this.http.post<any>(TOKEN_URL, body, { headers, observe: 'response'})
             .pipe(map((resp) => { return resp.body; }))
-            .subscribe(data => {
+            .subscribe((data) => {
                 this.storeAT(data, rememberMe);
                 this.storeRT(data, rememberMe);
-            }, error => {
-                console.log('Refresh token fails: %o', error);
+            }, (error) => {
+                console.log('Refresh token fails: %o', error); // tslint:disable-line
                 this.logout().subscribe();
                 this.principal.logout();
                 this.router.navigate(['']);
@@ -212,7 +210,6 @@ export class AuthServerProvider {
             const expiresdate = this.$sessionStorage.retrieve(EXPIRES_DATE_FIELD);
             if (currentDate < expiresdate) {
                 const expires_in = (expiresdate - currentDate) / 1000 - 30;
-                // console.log('will refresh token after seconds', expires_in);
                 this.updateTokenTimer = setTimeout(() => {
                     if (this.getRefreshToken()) {
                         this.refreshTokens(rememberMe);

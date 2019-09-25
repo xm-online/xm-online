@@ -1,30 +1,29 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { XmSharedModule } from '../shared/shared.module';
 import {
     Activate,
-    Password,
-    PasswordResetInit,
-    PasswordResetFinish,
-    SignUpComponent,
     ActivateComponent,
+    Password,
     PasswordComponent,
-    PasswordResetInitComponent,
+    PasswordResetFinish,
     PasswordResetFinishComponent,
+    PasswordResetInit,
+    PasswordResetInitComponent,
     SettingsComponent,
-    SocialRegisterComponent,
+    SignUpComponent,
     SocialAuthComponent,
+    SocialRegisterComponent,
 } from './';
 import {accountState} from './account.route';
-import {XmSharedModule} from '../shared/shared.module';
-
 
 @NgModule({
     imports: [
         XmSharedModule,
-        RouterModule.forRoot(accountState, { useHash: false })
+        RouterModule.forRoot(accountState, { useHash: false }),
     ],
     declarations: [
         SocialRegisterComponent,
@@ -34,15 +33,15 @@ import {XmSharedModule} from '../shared/shared.module';
         PasswordComponent,
         PasswordResetInitComponent,
         PasswordResetFinishComponent,
-        SettingsComponent
+        SettingsComponent,
     ],
     providers: [
         Activate,
         Password,
         PasswordResetInit,
         PasswordResetFinish,
-        NgbActiveModal
+        NgbActiveModal,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class GateAccountModule {}

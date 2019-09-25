@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 
@@ -6,7 +6,7 @@ import { Client, ClientService } from '../../shared';
 
 @Component({
     selector: 'xm-client-mgmt-delete-dialog',
-    templateUrl: './client-management-delete-dialog.component.html'
+    templateUrl: './client-management-delete-dialog.component.html',
 })
 export class ClientMgmtDeleteDialogComponent implements OnInit {
 
@@ -18,7 +18,7 @@ export class ClientMgmtDeleteDialogComponent implements OnInit {
         private jhiLanguageService: JhiLanguageService,
         private clientService: ClientService,
         public activeModal: NgbActiveModal,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
     ) {
     }
 
@@ -38,12 +38,12 @@ export class ClientMgmtDeleteDialogComponent implements OnInit {
             .subscribe((response) => {
                     this.eventManager.broadcast({
                         name: 'clientListModification',
-                        content: {id: 'delete', msg: 'Deleted a client'}
+                        content: {id: 'delete', msg: 'Deleted a client'},
                     });
                     this.activeModal.dismiss(true);
                 },
                 (err) => {
-                    console.log(err);
+                    console.log(err); // tslint:disable-line
                     this.showLoader = false;
                 },
                 () => this.showLoader = false);

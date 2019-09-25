@@ -2,12 +2,12 @@ import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { BehaviorSubject ,  Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { getBrowserLang } from './../shared-libs.module';
 
+import { environment } from '../../../environments/environment';
+import { XmApplicationConfigService } from '../spec/xm-config.service';
 import { LANGUAGES } from './language.constants';
-import {XmApplicationConfigService} from '../spec/xm-config.service';
-import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class JhiLanguageHelper {
@@ -49,13 +49,14 @@ export class JhiLanguageHelper {
             titleKey = this.getPageTitle(this.router.routerState.snapshot.root);
         }
 
-        this.translateService.get(titleKey).subscribe(title => {
+        this.translateService.get(titleKey).subscribe((title) => {
             this.titleService.setTitle(title);
         });
     }
 
     private handleLanguageChangeEvent(event: LangChangeEvent): void {
         if (!environment.production) {
+            // tslint:disable-next-line
             console.log('DBG JhiLanguageHelper  onLangChange: event=%o _language: %s',
                 event, this._language.getValue());
         }
@@ -66,7 +67,8 @@ export class JhiLanguageHelper {
 
     private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
         let title: string =
-            routeSnapshot.data && routeSnapshot.data['pageTitle'] ? routeSnapshot.data['pageTitle'] : 'jhipsterSampleApplicationApp';
+            routeSnapshot.data &&
+            routeSnapshot.data['pageTitle'] ? routeSnapshot.data['pageTitle'] : 'jhipsterSampleApplicationApp';
         if (routeSnapshot.firstChild) {
             title = this.getPageTitle(routeSnapshot.firstChild) || title;
         }

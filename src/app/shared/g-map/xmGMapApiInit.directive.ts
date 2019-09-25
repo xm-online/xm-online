@@ -1,11 +1,12 @@
-import {Directive, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewContainerRef} from '@angular/core';
-import { BehaviorSubject, ReplaySubject } from 'rxjs'
+import {
+    Directive, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewContainerRef } from '@angular/core';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
 
 import { XmConfigService } from '../spec/config.service';
 
 @Directive({
-    selector: '[xmGMapApiInit]'
+    selector: '[xmGMapApiInit]',
 })
 
 export class XmGMapApiInitDirective implements OnInit, OnDestroy {
@@ -14,7 +15,6 @@ export class XmGMapApiInitDirective implements OnInit, OnDestroy {
 
     @Output() gMapApiReady = new EventEmitter<boolean>();
     @Input() libraries: string[] = ['geometry'];
-
 
     constructor(
         private templateRef: TemplateRef<any>,
@@ -30,15 +30,15 @@ export class XmGMapApiInitDirective implements OnInit, OnDestroy {
             this.xmConfigService
                 .getConfigJson('/webapp/settings-public.yml?toJson')
                 .pipe(
-                    map(response => response.hasOwnProperty('googleApiKey') ? response['googleApiKey'] : ''),
+                    map((response) => response.hasOwnProperty('googleApiKey') ? response['googleApiKey'] : ''),
                     tap((apiKey) => this.loadGoogleMapApi(apiKey)),
-                    takeUntil(this.destroyed$)
-                ).subscribe(() => {})
+                    takeUntil(this.destroyed$),
+                ).subscribe(() => {});
         }
 
         this.statusLoaded.pipe(
-            tap(status => this.updateView(status)),
-            takeUntil(this.destroyed$)
+            tap((status) => this.updateView(status)),
+            takeUntil(this.destroyed$),
         ).subscribe(() => {});
     }
 

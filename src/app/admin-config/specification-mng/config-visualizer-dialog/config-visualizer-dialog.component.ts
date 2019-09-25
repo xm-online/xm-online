@@ -13,7 +13,7 @@ declare let _: any;
 @Component({
     selector: 'xm-config-visualizer-dialog',
     templateUrl: './config-visualizer-dialog.component.html',
-    styleUrls: ['./config-visualizer-dialog.component.scss']
+    styleUrls: ['./config-visualizer-dialog.component.scss'],
 })
 export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
 
@@ -37,7 +37,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        setTimeout(() => {this.sourceChanged()}, 100);
+        setTimeout(() => {this.sourceChanged(); }, 100);
     }
 
     onCancel() {
@@ -52,7 +52,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
             nomnoml.draw(canvasElement, this.source, scale);
             this.positionCanvas(canvasElement, superSampling, this.offset);
         } catch (e) {
-            console.log(e);
+            console.log(e); // tslint:disable-line
         }
     }
 
@@ -67,12 +67,12 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
         canvasElement.style.height = h + 'px';
     }
 
-    magnifyViewport (diff) {
+    magnifyViewport(diff) {
         this.zoomLevel = Math.min(10, this.zoomLevel + diff);
         this.sourceChanged();
     }
 
-    resetViewport () {
+    resetViewport() {
         this.zoomLevel = 1;
         this.offset = {x: 0, y: 0};
         this.sourceChanged();
@@ -102,7 +102,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     mouseMove(e) {
         if (this.mouseDownPoint) {
             this.offset = skanaar.vector.diff({ x: e.pageX, y: e.pageY }, this.mouseDownPoint);
-            this.sourceChanged()
+            this.sourceChanged();
         }
     }
 
@@ -110,7 +110,6 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
         this.zoomLevel = Math.min(10, this.zoomLevel - (evant.deltaY < 0 ? -1 : 1));
         this.sourceChanged();
     }
-
 
     private typeToString(type) {
         let result = '';
@@ -133,7 +132,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
         const terms = [];
         if (dataSpec) {
             dataSpec = JSON.parse(dataSpec);
-            dataSpec.properties && Object.keys(dataSpec.properties).forEach(k => {
+            dataSpec.properties && Object.keys(dataSpec.properties).forEach((k) => {
                 terms.push(`${k}: ${dataSpec.properties[k].type}`);
             });
         }
@@ -143,7 +142,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     private functionsToString(functions) {
         const terms = [];
         if (functions) {
-            functions.forEach(f => {
+            functions.forEach((f) => {
                 terms.push(`${f.key}()`);
             });
         }
@@ -153,10 +152,10 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     private statesToClassifiers(states) {
         const classifiers = [];
         if (states) {
-            states.forEach(s => {
+            states.forEach((s) => {
                 classifiers.push(`  [<state> ${s.key}]`);
                 if (s.next) {
-                    s.next.forEach(n => {
+                    s.next.forEach((n) => {
                         classifiers.push(`  [<state> ${s.key}]->[<state> ${n.stateKey}]`);
                     });
                 }
@@ -168,7 +167,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     private linksToClassifiers(links, typeKey) {
         const classifiers = [];
         if (links) {
-            links.map(l => l.typeKey).filter((v, i, a) => a.indexOf(v) === i).forEach(tk => {
+            links.map((l) => l.typeKey).filter((v, i, a) => a.indexOf(v) === i).forEach((tk) => {
                 classifiers.push(`[${tk.split('.').pop()}]<-[${typeKey}]`);
             });
         }
@@ -178,7 +177,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     private getSource() {
         const spec = YAML.parse(this.entitySpecification);
         let source = '';
-        spec.types.forEach(t => {
+        spec.types.forEach((t) => {
             source += `${this.typeToString(t)}\n`;
         });
         source += '#fill: #f3f3f3; #b2dfdb\n';

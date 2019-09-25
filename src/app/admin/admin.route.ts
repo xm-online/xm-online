@@ -4,17 +4,17 @@ import { UserRouteAccessService } from '../shared';
 import {
     auditsRoute,
     clientMgmtRoute,
-    maintenanceRoute,
     docsRoute,
     formPlaygroundRoute,
     gatewayRoute,
     healthRoute,
     logsRoute,
+    maintenanceRoute,
     metricsRoute,
     rolesMatrixRoute,
     rolesMgmtRoute,
+    translationRoute,
     userMgmtRoute,
-    translationRoute
 } from './';
 
 const ADMIN_ROUTES = [
@@ -30,17 +30,16 @@ const ADMIN_ROUTES = [
     ...userMgmtRoute,
     ...clientMgmtRoute,
     ...rolesMgmtRoute,
-    metricsRoute
+    metricsRoute,
 ];
 
-
 export const adminState: Routes = [{
-    path: '',
-    data: {
-        authorities: ['ROLE_ADMIN']
+        path: '',
+        data: {
+            authorities: ['ROLE_ADMIN'],
+        },
+        // canActivate: [UserRouteAccessService],
+        canActivateChild: [UserRouteAccessService],
+        children: ADMIN_ROUTES,
     },
-    // canActivate: [UserRouteAccessService],
-    canActivateChild: [UserRouteAccessService],
-    children: ADMIN_ROUTES
-}
 ];

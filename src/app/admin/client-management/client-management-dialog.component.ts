@@ -1,16 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
-import { ViewChild } from '@angular/core';
 
-import { JhiLanguageHelper, Client, ClientService } from '../../shared';
+import { Client, ClientService, JhiLanguageHelper } from '../../shared';
 import { RoleService } from '../../shared/role/role.service';
 import { XmConfigService } from '../../shared/spec/config.service';
 
 @Component({
     selector: 'xm-client-mgmt-dialog',
     styleUrls: ['../client-management/client-management-dialog.component.scss'],
-    templateUrl: './client-management-dialog.component.html'
+    templateUrl: './client-management-dialog.component.html',
 })
 export class ClientMgmtDialogComponent implements OnInit {
 
@@ -19,7 +18,7 @@ export class ClientMgmtDialogComponent implements OnInit {
     languages: any[];
     scopes: any[];
     authorities: any[];
-    showLoader: Boolean;
+    showLoader: boolean;
     @ViewChild('userLoginForm', {static: false}) userLoginForm;
 
     constructor(public activeModal: NgbActiveModal,
@@ -43,16 +42,16 @@ export class ClientMgmtDialogComponent implements OnInit {
                 this.selectedClient.lastModifiedBy,
                 this.selectedClient.lastModifiedDate,
                 this.selectedClient.accessTokenValiditySeconds,
-                this.setFormSources(this.selectedClient.scopes)
+                this.setFormSources(this.selectedClient.scopes),
             );
         } else {
             this.client = new Client();
         }
-        this.roleService.getRoles().subscribe(roles => {
-            this.authorities = roles.map(role => role.roleKey).sort();
+        this.roleService.getRoles().subscribe((roles) => {
+            this.authorities = roles.map((role) => role.roleKey).sort();
         });
         this.languageHelper.getAll().then((languages) => {
-            this.xmConfigService.getUiConfig().subscribe(config => {
+            this.xmConfigService.getUiConfig().subscribe((config) => {
                 this.languages = (config && config.langs) ? config.langs : languages;
             });
         });
@@ -67,20 +66,20 @@ export class ClientMgmtDialogComponent implements OnInit {
         this.showLoader = true;
         this.client.clientId = this.client.clientId.trim();
         this.client.description && (this.client.description = this.client.description.trim());
-        this.client.scopes = (this.scopes || []).map(it => it.value);
+        this.client.scopes = (this.scopes || []).map((it) => it.value);
         this.clientService[this.client.id ? 'update' : 'create'](this.client)
             .subscribe(
                 (response) => this.onSaveSuccess(response),
                 (err) => {
-                    console.log(err);
+                    console.log(err); // tslint:disable-line
                     this.showLoader = false;
                 },
                 () => this.showLoader = false);
     }
 
     protected setFormSources(sources: string[]): any[] {
-        if (!sources) {return []}
-        return sources.map(s => {return {display: s, value: s}});
+        if (!sources) {return []; }
+        return sources.map((s) => {return {display: s, value: s}; });
     }
 
     private onSaveSuccess(result) {

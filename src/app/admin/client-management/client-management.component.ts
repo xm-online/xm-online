@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 
 import { Client, ClientService } from '../../shared';
 import { BaseAdminListComponent } from '../admin.service';
+import { ClientMgmtDeleteDialogComponent } from './client-management-delete-dialog.component';
 import { ClientMgmtDialogComponent } from './client-management-dialog.component';
-import {ClientMgmtDeleteDialogComponent} from './client-management-delete-dialog.component';
 
 @Component({
     selector: 'xm-client-mgmt',
-    templateUrl: './client-management.component.html'
+    templateUrl: './client-management.component.html',
 })
 export class ClientMgmtComponent extends BaseAdminListComponent {
 
@@ -37,11 +37,11 @@ export class ClientMgmtComponent extends BaseAdminListComponent {
         this.clientService.query({
             page: this.page - 1,
             size: this.itemsPerPage,
-            sort: this.sort()
+            sort: this.sort(),
         }).subscribe(
             (res) => this.list = this.onSuccess(res.body, res.headers),
             (err) => {
-                console.log(err);
+                console.log(err); // tslint:disable-line
                 this.onError(err);
                 this.showLoader = false;
             },

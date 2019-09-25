@@ -2,12 +2,12 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { finalize } from 'rxjs/operators';
 
 import { XmConfigService } from '../../shared/spec/config.service';
+import { StatesManagementDialogComponent } from '../../xm-entity';
 import { ConfigValidatorUtil } from './config-validator/config-validator.util';
 import { ConfigVisualizerDialogComponent } from './config-visualizer-dialog/config-visualizer-dialog.component';
-import { StatesManagementDialogComponent } from '../../xm-entity';
-import { finalize } from 'rxjs/operators';
 
 const TENANT_SPEC_PATH = '/tenant-config.yml';
 
@@ -30,57 +30,56 @@ const TENANT_SPEC_PATH = '/tenant-config.yml';
 })
 export class SpecificationMngComponent implements OnInit {
 
-    specificationTypes = [
+    public specificationTypes: any[] = [
         {slug: 'ui', icon: 'view_quilt'},
         {slug: 'entity', icon: 'build'},
         {slug: 'timeline', icon: 'history'},
         {slug: 'uaa', icon: 'security'},
         {slug: 'uaa-login', icon: 'fingerprint'},
-        {slug: 'tenant', icon: 'ballot'}
+        {slug: 'tenant', icon: 'ballot'},
     ];
-    currentSpecificationSlug = 'ui';
+    public currentSpecificationSlug: string;
 
-    isUiSpecValid = false;
-    isTenantSpecValid = false;
-    isXmEntitySpecValid = false;
-    isTimelineSpecValid = false;
-    isUaaSpecValid = false;
-    isUaaLoginSpecValid = false;
+    public isUiSpecValid: boolean;
+    public isTenantSpecValid: boolean;
+    public isXmEntitySpecValid: boolean;
+    public isTimelineSpecValid: boolean;
+    public isUaaSpecValid: boolean;
+    public isUaaLoginSpecValid: boolean;
 
-    aceEditorOptions: any = {
+    public aceEditorOptions: any = {
         highlightActiveLine: true,
         maxLines: 10000000,
         printMargin: false,
-        autoScrollEditorIntoView: true
+        autoScrollEditorIntoView: true,
     };
-    line: number;
+    public line: number;
 
-    entitySpecificationIn: string;
-    entitySpecificationOut: string;
-    entityValidation: any;
-    uiSpecificationProgress: boolean;
+    public entitySpecificationIn: string;
+    public entitySpecificationOut: string;
+    public entityValidation: any;
+    public uiSpecificationProgress: boolean;
 
-    timelineSpecificationIn: string;
-    timelineSpecificationOut: string;
-    timelineValidation: any;
+    public timelineSpecificationIn: string;
+    public timelineSpecificationOut: string;
+    public timelineValidation: any;
 
-    loginsSpecificationIn: string;
-    loginsSpecificationOut: string;
-    loginsValidation: any;
+    public loginsSpecificationIn: string;
+    public loginsSpecificationOut: string;
+    public loginsValidation: any;
 
-    uiSpecificationIn: string;
-    uiSpecificationOut: string;
-    uiValidation: any;
+    public uiSpecificationIn: string;
+    public uiSpecificationOut: string;
+    public uiValidation: any;
 
-    tenantSpecificationIn: string;
-    tenantSpecificationOut: string;
-    tenantValidation: any;
-    tenantSpecificationProgress: boolean;
+    public tenantSpecificationIn: string;
+    public tenantSpecificationOut: string;
+    public tenantValidation: any;
+    public tenantSpecificationProgress: boolean;
 
-    uaaSpecificationIn: string;
-    uaaSpecificationOut: string;
-    uaaValidation: any;
-
+    public uaaSpecificationIn: string;
+    public uaaSpecificationOut: string;
+    public uaaValidation: any;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
@@ -88,7 +87,6 @@ export class SpecificationMngComponent implements OnInit {
                 private service: XmConfigService) {
         this.activatedRoute.params.subscribe((params) => {
             this.currentSpecificationSlug = params['slug'];
-
             this.isTenantSpecValid = false;
             this.tenantValidation = null;
             this.isUiSpecValid = false;
@@ -96,47 +94,47 @@ export class SpecificationMngComponent implements OnInit {
         });
     }
 
-    ngOnInit() {
-        this.service.getConfig('/entity/xmentityspec.yml').subscribe(result => {
+    public ngOnInit(): void {
+        this.service.getConfig('/entity/xmentityspec.yml').subscribe((result) => {
             this.entitySpecificationIn = result;
             this.entitySpecificationOut = result;
         });
-        this.service.getConfig('/timeline/timeline.yml').subscribe(result => {
+        this.service.getConfig('/timeline/timeline.yml').subscribe((result) => {
             this.timelineSpecificationIn = result;
             this.timelineSpecificationOut = result;
         });
-        this.service.getConfig('/uaa/logins.yml').subscribe(result => {
+        this.service.getConfig('/uaa/logins.yml').subscribe((result) => {
             this.loginsSpecificationIn = result;
             this.loginsSpecificationOut = result;
         });
-        this.service.getConfig('/uaa/uaa.yml').subscribe(result => {
+        this.service.getConfig('/uaa/uaa.yml').subscribe((result) => {
             this.uaaSpecificationIn = result;
             this.uaaSpecificationOut = result;
         });
-        this.service.getConfig('/webapp/settings-public.yml').subscribe(result => {
+        this.service.getConfig('/webapp/settings-public.yml').subscribe((result) => {
             this.uiSpecificationIn = result;
             this.uiSpecificationOut = result;
         });
-        this.service.getConfig(TENANT_SPEC_PATH).subscribe(result => {
+        this.service.getConfig(TENANT_SPEC_PATH).subscribe((result) => {
             this.tenantSpecificationIn = result;
             this.tenantSpecificationOut = result;
         });
 
     }
 
-    onUiSpecificationChange(textChanged) {
+    public onUiSpecificationChange(textChanged: any): void {
         this.uiSpecificationOut = textChanged;
         this.isUiSpecValid = false;
         this.uiValidation = null;
     }
 
-    onTenantSpecificationChange(textChanged) {
+    public onTenantSpecificationChange(textChanged: any): void {
         this.tenantSpecificationOut = textChanged;
         this.isTenantSpecValid = false;
         this.tenantValidation = null;
     }
 
-    updateUiConfig() {
+    public updateUiConfig(): void {
         this.uiSpecificationProgress = true;
         this.service
             .updateConfig('/webapp/settings-public.yml', this.uiSpecificationOut)
@@ -144,7 +142,7 @@ export class SpecificationMngComponent implements OnInit {
             .subscribe(() => window.location.reload());
     }
 
-    updateTenantConfig() {
+    public updateTenantConfig(): void {
         this.tenantSpecificationProgress = true;
         this.service
             .updateConfig(TENANT_SPEC_PATH, this.tenantSpecificationOut)
@@ -152,7 +150,7 @@ export class SpecificationMngComponent implements OnInit {
             .subscribe((res) => window.location.reload());
     }
 
-    validateUiSpecification() {
+    public validateUiSpecification(): void {
         const errors = ConfigValidatorUtil.validateYAML(this.uiSpecificationOut);
         if (errors && errors.length) {
             this.uiValidation = {errorMessage: ''};
@@ -167,7 +165,7 @@ export class SpecificationMngComponent implements OnInit {
         }
     }
 
-    validateTenantSpecification() {
+    public validateTenantSpecification(): void {
         const errors = ConfigValidatorUtil.validateYAML(this.tenantSpecificationOut);
         if (errors && errors.length) {
             this.tenantValidation = {errorMessage: ''};
@@ -182,19 +180,19 @@ export class SpecificationMngComponent implements OnInit {
         }
     }
 
-    updateEntityConfig() {
+    public updateEntityConfig(): void {
         this.service.updateXmEntitySpec(this.entitySpecificationOut).subscribe(() => {
             window.location.reload();
         });
     }
 
-    onEntitySpecificationChange(textChanged) {
+    public onEntitySpecificationChange(textChanged: any): void {
         this.isXmEntitySpecValid = false;
         this.entityValidation = null;
         this.entitySpecificationOut = textChanged;
     }
 
-    validateXmEntitySpec() {
+    public validateXmEntitySpec(): void {
         const errors = ConfigValidatorUtil.validate(this.entitySpecificationOut);
         if (errors && errors.length) {
             this.entityValidation = {errorMessage: ''};
@@ -209,63 +207,63 @@ export class SpecificationMngComponent implements OnInit {
         }
     }
 
-    onTimelineSpecificationChange(textChanged) {
+    public onTimelineSpecificationChange(textChanged: any): void {
         this.isTimelineSpecValid = false;
         this.timelineValidation = null;
         this.timelineSpecificationOut = textChanged;
     }
 
-    validateTimelineConfig() {
-        this.service.validateTimelineSpec(this.timelineSpecificationOut).subscribe(result => {
+    public validateTimelineConfig(): void {
+        this.service.validateTimelineSpec(this.timelineSpecificationOut).subscribe((result) => {
             this.timelineValidation = result;
             this.isTimelineSpecValid = !!this.timelineValidation.valid;
             this.renderValidationMessage(this.timelineValidation);
         });
     }
 
-    updateTimelineConfig() {
+    public updateTimelineConfig(): void {
         this.service.updateTimelineSpec(this.timelineSpecificationOut).subscribe(() => {
             this.isTimelineSpecValid = false;
             window.location.reload();
         });
     }
 
-    onLoginsSpecificationChange(textChanged) {
+    public onLoginsSpecificationChange(textChanged: any): void {
         this.isUaaLoginSpecValid = false;
         this.loginsValidation = null;
         this.loginsSpecificationOut = textChanged;
     }
 
-    validateLoginsSpecification() {
-        this.service.validateLoginsSpec(this.loginsSpecificationOut).subscribe(result => {
+    public validateLoginsSpecification(): void {
+        this.service.validateLoginsSpec(this.loginsSpecificationOut).subscribe((result) => {
             this.loginsValidation = result;
             this.isUaaLoginSpecValid = !!this.loginsValidation.valid;
             this.renderValidationMessage(this.loginsValidation);
         });
     }
 
-    updateLoginsSpecification() {
+    public updateLoginsSpecification(): void {
         this.service.updateLoginsSpec(this.loginsSpecificationOut).subscribe(() => {
             this.isUaaLoginSpecValid = false;
             window.location.reload();
         });
     }
 
-    onUaaSpecificationChange(textChanged) {
+    public onUaaSpecificationChange(textChanged: any): void {
         this.isUaaSpecValid = false;
         this.uaaValidation = null;
         this.uaaSpecificationOut = textChanged;
     }
 
-    validateUaaSpecification() {
-        this.service.validateUaaSpec(this.uaaSpecificationOut).subscribe(result => {
+    public validateUaaSpecification(): void {
+        this.service.validateUaaSpec(this.uaaSpecificationOut).subscribe((result) => {
             this.uaaValidation = result;
             this.isUaaSpecValid = !!this.uaaValidation.valid;
             this.renderValidationMessage(this.uaaValidation);
         });
     }
 
-    updateUaaSpecification() {
+    public updateUaaSpecification(): void {
         this.service.updateUaaSpec(this.uaaSpecificationOut).subscribe(() => {
             this.isUaaSpecValid = false;
             window.location.reload();
@@ -274,7 +272,8 @@ export class SpecificationMngComponent implements OnInit {
 
     public onShowConfigVisualizerDialog(): void {
         const modalRef = this.modalService
-            .open(ConfigVisualizerDialogComponent, {size: 'lg', backdrop: 'static', windowClass: 'xm-modal-extra-large'});
+            .open(ConfigVisualizerDialogComponent,
+                {size: 'lg', backdrop: 'static', windowClass: 'xm-modal-extra-large'});
         modalRef.componentInstance.entitySpecification = this.entitySpecificationOut;
     }
 
@@ -283,11 +282,11 @@ export class SpecificationMngComponent implements OnInit {
             .open(StatesManagementDialogComponent, {
                 size: 'lg',
                 backdrop: 'static',
-                windowClass: 'xm-modal-extra-large'
+                windowClass: 'xm-modal-extra-large',
             });
     }
 
-    private renderValidationMessage(validation: any) {
+    private renderValidationMessage(validation: any): void {
         const errorMessage = validation.errorMessage;
 
         const regexp = new RegExp('^(.*)\\(class');

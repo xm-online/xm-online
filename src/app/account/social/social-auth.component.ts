@@ -12,7 +12,7 @@ const SOCIAL_AUTH = 'social-authentication';
 
 @Component({
     selector: 'xm-social-auth',
-    templateUrl: '../../shared/login/login.component.html'
+    templateUrl: '../../shared/login/login.component.html',
 })
 export class SocialAuthComponent extends LoginComponent implements OnInit {
 
@@ -23,7 +23,7 @@ export class SocialAuthComponent extends LoginComponent implements OnInit {
                 protected elementRef: ElementRef,
                 protected router: Router,
                 protected alertService: JhiAlertService,
-                protected Auth: AuthService,
+                protected authService: AuthService,
                 protected cookieService: CookieService) {
         super(eventManager, xmConfigService, loginService, stateStorageService, elementRef, router, alertService);
     }
@@ -33,16 +33,16 @@ export class SocialAuthComponent extends LoginComponent implements OnInit {
         if (token) {
             this.loginService.loginWithToken(token, false).then(() => {
                 this.cookieService.remove(SOCIAL_AUTH);
-                this.Auth.authorize(true)
+                this.authService.authorize(true)
                     .then(
                         () => {
                             this.eventManager.broadcast({name: XM_EVENT_LIST.XM_SUCCESS_AUTH});
                             this.router.navigate(['dashboard']);
                         },
-                        () => this.router.navigate([''])
+                        () => this.router.navigate(['']),
                     );
             }, () => {
-                this.router.navigate(['social-register'], {queryParams: {'success': 'false'}});
+                this.router.navigate(['social-register'], {queryParams: {success: 'false'}});
             });
         }
     }

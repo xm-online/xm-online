@@ -1,33 +1,33 @@
 import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { JhiLanguageService } from 'ng-jhipster';
-import { Observable, Subscription ,  interval } from 'rxjs';
+import { interval, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Principal, AccountService, JhiLanguageHelper } from '../../shared';
+import { AccountService, JhiLanguageHelper, Principal } from '../../shared';
 import { XmConfigService } from '../../shared/spec/config.service';
 import { DEFAULT_LANG } from '../../xm.constants';
 
 @Component({
     selector: 'xm-settings',
-    templateUrl: './settings.component.html'
+    templateUrl: './settings.component.html',
 })
 export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    private _clockSubscription: Subscription;
+    public error: string;
+    public success: string;
+    public securityChanged: boolean;
+    public settingsAccount: any;
+    public languages: any[];
+    public tfaEnabled: boolean;
+    public autoLogoutEnabled: boolean;
+    public autoLogoutTime: number;
+    public clock: Observable<Date>;
+    public time: any;
+    public utcTime: any;
+    public timeZoneOffset: string;
 
-    error: string;
-    success: string;
-    securityChanged: boolean;
-    settingsAccount: any;
-    languages: any[];
-    tfaEnabled: boolean;
-    autoLogoutEnabled: boolean;
-    autoLogoutTime: number;
-    clock: Observable<Date>;
-    time: any;
-    utcTime: any;
-    timeZoneOffset: string;
+    private _clockSubscription: Subscription;
 
     constructor(private accountService: AccountService,
                 private xmConfigService: XmConfigService,
@@ -47,35 +47,36 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.xmConfig.getUiConfig().subscribe(
             (data) => {
                 this.languages = (data && data.langs) ? data.langs : [DEFAULT_LANG];
             },
             (err) => {
-                console.log(err);
-                this.languages = [DEFAULT_LANG]
-            }, () => console.log('Languages: %o', this.languages)
+                // tslint:disable-next-line
+                console.error(err);
+                this.languages = [DEFAULT_LANG];
+            }, () => console.log('Languages: %o', this.languages),// tslint:disable-line
         );
-        this.clock = interval(1000).pipe(map(tick => new Date()));
-        this._clockSubscription = this.getClock().subscribe(time => {
+        this.clock = interval(1000).pipe(map((tick) => new Date()));
+        this._clockSubscription = this.getClock().subscribe((time) => {
             this.time = this.utcTime = time;
         });
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this._clockSubscription.unsubscribe();
     }
 
-    getClock(): Observable<Date> {
+    public getClock(): Observable<Date> {
         return this.clock;
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.updateLang();
     }
 
-    updateLang() {
+    public updateLang(): void {
         if (!this.languages || !this.settingsAccount) {
             return;
         }
@@ -89,7 +90,7 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.settingsAccount.langKey = this.languages[0];
     }
 
-    save() {
+    public save(): void {
         this.accountService.save(this.settingsAccount).subscribe(() => {
             this.error = null;
             this.success = 'OK';
@@ -107,10 +108,27 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     }
 
+    public updateSecuritySettings(): void {
+
+        // LOGIN.EMAIL
+        if (this.tfaEnabled) {
+            this.accountService.enableTFA('email', this.findEmail(this.settingsAccount)).subscribe(() => {
+                this.securityChanged = true;
+                this.updatePrincipalIdentity();
+            });
+        } else {
+            this.accountService.disableTFA().subscribe(() => {
+                this.securityChanged = true;
+                this.updatePrincipalIdentity();
+            });
+        }
+
+    }
+
     private findEmail(account: any): string {
       if (account && account.logins) {
         for (const entry of account.logins) {
-          if (entry.typeKey = 'LOGIN.EMAIL') {
+          if (entry.typeKey === 'LOGIN.EMAIL') {
             return entry.login;
           }
         }
@@ -118,30 +136,13 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
       return '';
     }
 
-    updateSecuritySettings() {
-
-        // LOGIN.EMAIL
-        if (this.tfaEnabled) {
-          this.accountService.enableTFA('email', this.findEmail(this.settingsAccount)).subscribe(() => {
-              this.securityChanged = true;
-              this.updatePrincipalIdentity();
-          });
-        } else {
-          this.accountService.disableTFA().subscribe(() => {
-              this.securityChanged = true;
-              this.updatePrincipalIdentity();
-          });
-        }
-
-    }
-
-    private updatePrincipalIdentity() {
+    private updatePrincipalIdentity(): void {
       this.principal.identity(true).then((account) => {
         this.settingsAccount = this.copyAccount(account);
       });
     }
 
-    private copyAccount(account) {
+    private copyAccount(account: any): any {
         return {
             id: account.id,
             userKey: account.userKey,
@@ -155,7 +156,7 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
             refreshTokenValiditySeconds: account.refreshTokenValiditySeconds,
             tfaEnabled: account.tfaEnabled,
             autoLogoutEnabled: account.autoLogoutEnabled,
-            autoLogoutTime: account.autoLogoutTimeoutSeconds
+            autoLogoutTime: account.autoLogoutTimeoutSeconds,
         };
     }
 }

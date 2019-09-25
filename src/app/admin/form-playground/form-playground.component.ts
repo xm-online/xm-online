@@ -1,20 +1,18 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { map, startWith, tap } from 'rxjs/operators';
+import { Principal } from '../../shared/auth/principal.service';
 
 import {
-    formLayout, getJsfWidgets, addValidationComponent,
-    addValidationComponentToLayout, processValidationMessages
+    addValidationComponent, addValidationComponentToLayout, formLayout,
+    getJsfWidgets, processValidationMessages,
 } from '../../shared/jsf-extention/jsf-attributes-helper';
-import { Examples } from './example-schemas.model';
-import { Principal } from '../../shared/auth/principal.service';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { FunctionSpec, XmEntitySpec, XmEntitySpecWrapperService } from '../../xm-entity';
-import { map, startWith, tap } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
-
-// declare var $: any;
+import { Examples } from './example-schemas.model';
 
 interface FormsConfig {
     key: string;

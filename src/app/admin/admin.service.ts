@@ -1,12 +1,13 @@
-import {Injectable, OnDestroy, OnInit} from '@angular/core';
-import {ITEMS_PER_PAGE} from '../shared/constants/pagination.constants';
-import {ActivatedRoute, Router} from '@angular/router';
-import {JhiAlertService, JhiEventManager, JhiParseLinks} from 'ng-jhipster';
-import {Subscription} from 'rxjs';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
 import swal from 'sweetalert2';
 
+import {ITEMS_PER_PAGE} from '../shared/constants/pagination.constants';
+
 @Injectable()
-export class BaseAdminListComponent implements OnInit, OnDestroy{
+export class BaseAdminListComponent implements OnInit, OnDestroy {
 
     list: any[];
     page: any;
@@ -29,7 +30,7 @@ export class BaseAdminListComponent implements OnInit, OnDestroy{
         protected alertService: JhiAlertService,
         protected eventManager: JhiEventManager,
         protected parseLinks: JhiParseLinks,
-        protected router: Router
+        protected router: Router,
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
@@ -68,8 +69,8 @@ export class BaseAdminListComponent implements OnInit, OnDestroy{
             {
               size: this.itemsPerPage,
               page: this.page,
-              sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-            }
+              sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc'),
+            },
         });
         this.loadAll();
     }
@@ -106,15 +107,16 @@ export class BaseAdminListComponent implements OnInit, OnDestroy{
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-raised-button btn-primary',
             cancelButtonClass: 'btn mat-raised-button',
-            confirmButtonText: 'Yes, delete!'
+            confirmButtonText: 'Yes, delete!',
         }).then((result) => result.value  ? this.deleteAction(id)
-            : console.log('Cancel'));
+            : console.log('Cancel')); // tslint:disable-line
     }
 
     protected getPageAfterRemove(result) {
         if (result && result.content && result.content.id === 'delete' && this.page > 1) {
             this.queryCount--;
-            const length = parseInt(this.queryCount / this.itemsPerPage + '', 10) + (this.queryCount % this.itemsPerPage ? 1 : 0);
+            const length =
+                parseInt(this.queryCount / this.itemsPerPage + '', 10) + (this.queryCount % this.itemsPerPage ? 1 : 0);
             if (this.page > length) {
                 this.previousPage = null;
                 return length;

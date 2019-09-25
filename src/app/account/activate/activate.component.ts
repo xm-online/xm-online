@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
 
 import { Activate } from './activate.service';
 
 @Component({
     selector: 'xm-activate',
-    templateUrl: './activate.component.html'
+    templateUrl: './activate.component.html',
 })
 export class ActivateComponent implements OnInit {
-    error: string;
-    success: string;
-    modalRef: NgbModalRef;
+    public error: string;
+    public success: string;
+    public modalRef: NgbModalRef;
 
     constructor(private activate: Activate,
                 private route: ActivatedRoute,
                 private router: Router) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.route.queryParams.subscribe((params) => {
             this.activate.get(params['key']).subscribe(() => {
                 this.error = null;
@@ -31,12 +31,12 @@ export class ActivateComponent implements OnInit {
         });
     }
 
-    login() {
-        this.router.navigate([''])
+    public login(): void {
+        this.router.navigate(['']);
     }
 
-    register() {
-        this.router.navigate([''], { queryParams: { type: 'registration' } })
+    public register(): void {
+        this.router.navigate([''], { queryParams: { type: 'registration' } });
     }
 
 }

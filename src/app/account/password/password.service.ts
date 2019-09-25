@@ -10,7 +10,7 @@ export class Password {
     constructor(private http: HttpClient) {
     }
 
-    save(password: ChangePassword): Observable<any> {
+    public save(password: ChangePassword): Observable<any> {
         return this.http.post('uaa/api/account/change_password', password);
     }
 }

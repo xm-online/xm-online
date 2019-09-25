@@ -8,12 +8,43 @@ declare let YAML: any;
 
 export class ConfigValidatorUtil {
 
+    public static validate(content: string): ConfigError[] {
+        const errors = [];
+        let spec = null;
+        try {
+            spec = YAML.parse(content);
+        } catch (err) {
+            errors.push(new ConfigError(err.message, err.parsedLine, err.snippet));
+            return errors;
+        }
+
+        errors.push(...ConfigValidatorUtil.validateObjectBySchema(spec, SCHEMA_SPEC));
+        errors.push(...ConfigValidatorUtil.validateJsonAttributes(spec));
+        errors.push(...ConfigValidatorUtil.validateSpecAttributes(spec));
+        errors.push(...ConfigValidatorUtil.validateTypeKeysUniqueness(spec));
+        errors.push(...ConfigValidatorUtil.validateNextStates(spec));
+        errors.push(...ConfigValidatorUtil.validateLinkReferences(spec));
+        return errors;
+    }
+
+    public static validateYAML(content: string): ConfigError[] {
+        const errors = [];
+        let spec = null;
+        try {
+            spec = YAML.parse(content);
+        } catch (err) {
+            errors.push(new ConfigError(err.message, err.parsedLine, err.snippet));
+            return errors;
+        }
+        return errors;
+    }
+
     private static validateObjectBySchema(object: any, schema: any, path?: string): ConfigError[] {
         const errors = [];
         const validate = new AJV({allErrors: true}).compile(schema);
         const valid = validate(object);
         if (!valid) {
-            validate.errors.map(err => errors.push({
+            validate.errors.map((err) => errors.push({
                 message: err.message,
                 path: (path ? path : '') + err.dataPath}));
         }
@@ -25,7 +56,7 @@ export class ConfigValidatorUtil {
         try {
             JSON.parse(content);
         } catch (err) {
-            errors.push({message: err.message, path: path});
+            errors.push({message: err.message, path});
             return errors;
         }
         return errors;
@@ -38,7 +69,8 @@ export class ConfigValidatorUtil {
                 if (object[property] instanceof Array) {
                     for (const i in object[property]) {
                         if (object[property].hasOwnProperty(i)) {
-                            result.push(...ConfigValidatorUtil.findAttributes(object[property][i], name, `${parent}.${property}[${i}]`));
+                            const PARENT = `${parent}.${property}[${i}]`;
+                            result.push(...ConfigValidatorUtil.findAttributes(object[property][i], name, PARENT));
                         }
                     }
                 } else if (object[property] instanceof Object) {
@@ -47,7 +79,7 @@ export class ConfigValidatorUtil {
                     if (property === name) {
                         result.push({
                             path: `${parent}.${name}`,
-                            value: object[property]
+                            value: object[property],
                         });
                     }
                 }
@@ -78,8 +110,8 @@ export class ConfigValidatorUtil {
             try {
                 errors.push(...ConfigValidatorUtil.validateObjectBySchema(JSON.parse(a.value), SCHEMA, a.path));
             } catch (err) {
-                console.log(err);
-                console.log('valueRaw %o', a);
+                console.log(err); // tslint:disable-line
+                console.log('valueRaw %o', a); // tslint:disable-line
             }
         }
         return errors;
@@ -124,37 +156,6 @@ export class ConfigValidatorUtil {
                     errors.push({message: `link target error for key [${link.typeKey}] as not present`});
                 }
             }
-        }
-        return errors;
-    }
-
-    static validate(content: string): ConfigError[] {
-        const errors = [];
-        let spec = null;
-        try {
-            spec = YAML.parse(content);
-        } catch (err) {
-            errors.push(new ConfigError(err.message, err.parsedLine, err.snippet));
-            return errors;
-        }
-
-        errors.push(...ConfigValidatorUtil.validateObjectBySchema(spec, SCHEMA_SPEC));
-        errors.push(...ConfigValidatorUtil.validateJsonAttributes(spec));
-        errors.push(...ConfigValidatorUtil.validateSpecAttributes(spec));
-        errors.push(...ConfigValidatorUtil.validateTypeKeysUniqueness(spec));
-        errors.push(...ConfigValidatorUtil.validateNextStates(spec));
-        errors.push(...ConfigValidatorUtil.validateLinkReferences(spec));
-        return errors;
-    }
-
-    static validateYAML(content: string): ConfigError[] {
-        const errors = [];
-        let spec = null;
-        try {
-            spec = YAML.parse(content);
-        } catch (err) {
-            errors.push(new ConfigError(err.message, err.parsedLine, err.snippet));
-            return errors;
         }
         return errors;
     }

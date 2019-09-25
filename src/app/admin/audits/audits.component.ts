@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { JhiOrderByPipe, JhiParseLinks } from 'ng-jhipster';
 
+import { ITEMS_PER_PAGE } from '../../shared';
 import { Audit } from './audit.model';
 import { AuditsService } from './audits.service';
-import { ITEMS_PER_PAGE } from '../../shared';
 
 declare let moment: any;
 
 @Component({
     selector: 'xm-audit',
     templateUrl: './audits.component.html',
-    providers: [JhiOrderByPipe]
+    providers: [JhiOrderByPipe],
 })
 export class AuditsComponent implements OnInit {
     audits: Audit[];
@@ -29,7 +29,7 @@ export class AuditsComponent implements OnInit {
         private auditsService: AuditsService,
         private parseLinks: JhiParseLinks,
         private orderByPipe: JhiOrderByPipe,
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.page = 1;
@@ -55,14 +55,14 @@ export class AuditsComponent implements OnInit {
                 page: this.page - 1,
                 size: this.itemsPerPage,
                 fromDate: moment(this.fromDate).format('YYYY-MM-DD'),
-                toDate: moment(this.toDate).format('YYYY-MM-DD')
+                toDate: moment(this.toDate).format('YYYY-MM-DD'),
             })
             .subscribe((res) => {
                     this.audits = res.body;
                     this.links = this.parseLinks.parse(res.headers.get('link'));
                     this.totalItems = +res.headers.get('X-Total-Count');
                 },
-                (err) => console.log(err),
+                (err) => console.log(err), // tslint:disable-line
                 () => this.showLoader = false);
     }
 

@@ -3,16 +3,16 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 
+import { environment } from '../../../../environments/environment';
 import { Principal } from '../../../shared/auth/principal.service';
 import { Dashboard, DashboardService } from '../../../xm-dashboard';
-import { environment } from '../../../../environments/environment';
 
 declare let swal: any;
 
 @Component({
   selector: 'xm-dashboard-detail-dialog',
   templateUrl: './dashboard-detail-dialog.component.html',
-  styleUrls: ['./dashboard-detail-dialog.component.scss']
+  styleUrls: ['./dashboard-detail-dialog.component.scss'],
 })
 export class DashboardDetailDialogComponent implements OnInit {
 
@@ -40,7 +40,7 @@ export class DashboardDetailDialogComponent implements OnInit {
 
     onConfigChange(textChanged) {
         if (!environment.production) {
-            console.log(`Changed text ${textChanged}`);
+            console.log(`Changed text ${textChanged}`); // tslint:disable-line
         }
         this.configStringOut = textChanged;
     }
@@ -57,16 +57,20 @@ export class DashboardDetailDialogComponent implements OnInit {
             this.dashboardService.update(this.dashboard).subscribe(
                 () => this.onSaveSuccess('admin-config.dashboard-detail-dialog.edit.success'),
                 // TODO: error processing
-                (err) => console.log(err),
+                (err) => console.log(err), // tslint:disable-line
                 () => this.showLoader = false);
         } else {
             this.dashboard.owner = this.principal.getUserKey();
             this.dashboardService.create(this.dashboard).subscribe(
                 () => this.onSaveSuccess('admin-config.dashboard-detail-dialog.add.success'),
                 // TODO: error processing
-                (err) => console.log(err),
+                (err) => console.log(err), // tslint:disable-line
                 () => this.showLoader = false);
         }
+    }
+
+    onCancel() {
+        this.activeModal.dismiss('cancel');
     }
 
     private onSaveSuccess(key: string) {
@@ -76,16 +80,12 @@ export class DashboardDetailDialogComponent implements OnInit {
         this.alert('success', key);
     }
 
-    onCancel() {
-        this.activeModal.dismiss('cancel');
-    }
-
     private alert(type, key) {
         swal({
-            type: type,
+            type,
             text: this.translateService.instant(key),
             buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary'
+            confirmButtonClass: 'btn btn-primary',
         });
     }
 

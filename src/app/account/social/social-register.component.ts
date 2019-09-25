@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { JhiLanguageService } from 'ng-jhipster';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'xm-social-register',
-    templateUrl: './social-register.component.html'
+    templateUrl: './social-register.component.html',
 })
 export class SocialRegisterComponent implements OnInit  {
     success: boolean;
@@ -16,9 +15,7 @@ export class SocialRegisterComponent implements OnInit  {
 
     constructor(
         private route: ActivatedRoute,
-        private jhiLanguageService: JhiLanguageService
     ) {
-        // this.jhiLanguageService.addLocation('social');
     }
 
     ngOnInit() {

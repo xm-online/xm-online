@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 
 import { AuthServerProvider } from '../../shared/auth/auth-jwt.service';
 
@@ -7,7 +7,7 @@ import { SwaggerUIBundle } from 'swagger-ui-dist';
 
 @Component({
     selector: 'xm-docs',
-    templateUrl: './docs.component.html'
+    templateUrl: './docs.component.html',
 })
 export class JhiDocsComponent implements OnInit, AfterViewInit {
 
@@ -16,7 +16,7 @@ export class JhiDocsComponent implements OnInit, AfterViewInit {
 
     constructor(
         private http: HttpClient,
-        private auth: AuthServerProvider
+        private auth: AuthServerProvider,
     ) {
     }
 
@@ -44,10 +44,12 @@ export class JhiDocsComponent implements OnInit, AfterViewInit {
             showRequestHeaders: false,
             validatorUrl: null,
             configs: {
-                preFetch: function(req) {
-                    if (authToken) {req.headers['Authorization'] = 'Bearer ' + authToken}
+                preFetch: (req) => {
+                    if (authToken) {
+                        req.headers['Authorization'] = 'Bearer ' + authToken;
+                    }
                     return req;
-                }
+                },
             },
         });
     }

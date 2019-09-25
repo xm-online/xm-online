@@ -8,7 +8,7 @@ export const settingsRoute: Route = {
     component: SettingsComponent,
     data: {
         privileges: {value: ['ACCOUNT.GET_LIST.ITEM']},
-        pageTitle: 'global.menu.account.settings'
+        pageTitle: 'global.menu.account.settings',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
 };

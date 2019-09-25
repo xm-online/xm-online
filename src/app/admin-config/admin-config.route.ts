@@ -6,15 +6,15 @@ import { specificationMngRoute } from './specification-mng/specification-mng.rou
 
 const ADMIN_CONFIG_ROUTES = [
     ...dashboardMngRoute,
-    ...specificationMngRoute
+    ...specificationMngRoute,
 ];
 
 export const adminConfigState: Routes = [{
     path: '',
     data: {
-        authorities: ['ROLE_ADMIN']
+        authorities: ['ROLE_ADMIN'],
     },
     canActivateChild: [UserRouteAccessService],
-    children: ADMIN_CONFIG_ROUTES
-}
+    children: ADMIN_CONFIG_ROUTES,
+},
 ];

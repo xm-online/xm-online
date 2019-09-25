@@ -8,22 +8,23 @@ import { finalize } from 'rxjs/operators';
 import { JhiLanguageHelper } from '../../../shared/language/language.helper';
 import { Dashboard, Widget, WidgetService } from '../../../xm-dashboard';
 import { DashboardService } from '../../../xm-dashboard/shared/dashboard.service';
+import { XmEntity } from '../../../xm-entity';
 import { BaseAdminConfigListComponent } from '../../base-admin-config-list.component';
 import { WidgetDetailDialogComponent } from '../widget-detail-dialog/widget-detail-dialog.component';
 
 @Component({
   selector: 'xm-widget-list-card',
   templateUrl: './widget-list-card.component.html',
-  styleUrls: ['./widget-list-card.component.scss']
+  styleUrls: ['./widget-list-card.component.scss'],
 })
 export class WidgetListCardComponent extends BaseAdminConfigListComponent implements OnInit {
 
-    dashboardId: number;
-    list: Widget[];
-    eventModify = 'widgetListModification';
-    activatedRouteData;
+    public dashboardId: number;
+    public list: Widget[];
+    public eventModify: string;
+    public activatedRouteData: any;
 
-    showLoader: boolean;
+    public showLoader: boolean;
 
     constructor(protected dashboardService: DashboardService,
                 protected widgetService: WidgetService,
@@ -41,9 +42,10 @@ export class WidgetListCardComponent extends BaseAdminConfigListComponent implem
         this.activatedRoute.params.subscribe((params) => {
             this.dashboardId = params['id'];
         });
+        this.eventModify = 'widgetListModification';
     }
 
-    loadAll() {
+    public loadAll(): void {
         this.showLoader = true;
         this.dashboardService.find(this.dashboardId).pipe(finalize(() => this.showLoader = false))
             .subscribe((res: HttpResponse<Dashboard>) => {
@@ -53,7 +55,7 @@ export class WidgetListCardComponent extends BaseAdminConfigListComponent implem
             });
     }
 
-    trackIdentity(index, item) {
+    public trackIdentity(index: number | string, item:  XmEntity): number {
         return item.id;
     }
 
@@ -68,18 +70,19 @@ export class WidgetListCardComponent extends BaseAdminConfigListComponent implem
         modalRef.componentInstance.widget = Object.assign({}, w);
     }
 
-    deleteAction(id: number) {
-        this.widgetService.delete(id).subscribe(
-            (resp) => console.log(resp),
-            (err) => console.log(err),
-            () => this.eventManager.broadcast({
-                name: this.eventModify,
-                content: {id: 'delete', msg: `Widget ${id} deleted`}
+    public deleteAction(id: number): void {
+        this.widgetService
+            .delete(id)
+            .pipe(finalize(() => {
+                this.eventManager.broadcast({
+                    name: this.eventModify,
+                    content: {id: 'delete', msg: `Widget ${id} deleted`},
+                });
             }));
     }
 
     public deleteItem(w: Widget) {
-        this.onDeleteItem(w.id, w.name)
+        this.onDeleteItem(w.id, w.name);
     }
 
 }

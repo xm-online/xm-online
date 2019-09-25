@@ -212,7 +212,7 @@ export class CustomerInfoWidgetComponent implements OnInit, OnDestroy {
         this.profile.pipe(take(1)).subscribe(profile => {
             const modalRef = this.modalService.open(AttachmentDetailDialogComponent, {backdrop: 'static'});
             modalRef.componentInstance.xmEntity = profile;
-            modalRef.componentInstance.attachmentSpecs = [new AttachmentSpec('DOCUMENTS.ACCOUNT.USER', 'Documents')];
+            modalRef.componentInstance.attachmentSpecs = [{key: 'DOCUMENTS.ACCOUNT.USER', name: 'Documents'}];
         })
     }
 

@@ -1,5 +1,3 @@
-export * from './shared';
-
 export * from './attachment-card/attachment-card.component';
 export * from './attachment-detail-dialog/attachment-detail-dialog.component';
 export * from './attachment-list/attachment-list.component';
@@ -63,9 +61,9 @@ export * from './shared/location.service';
 export * from './shared/location-spec.model';
 export * from './shared/rating.model';
 export * from './shared/rating.service';
-export * from './shared/rating-spec.model'
-export * from './shared/spec.model'
-export * from './shared/state-spec.model'
+export * from './shared/rating-spec.model';
+export * from './shared/spec.model';
+export * from './shared/state-spec.model';
 export * from './shared/tag.model';
 export * from './shared/tag.service';
 export * from './shared/tag-spec.model';

@@ -32,7 +32,7 @@ export class AreaComponent implements AfterViewInit {
     constructor(private functionContextService: FunctionContextService,
                 private modalService: NgbModal) {
         this.mapId = buildMapId('area');
-        this.context = new FunctionContext();
+        this.context = {};
         this.context.key = this.mapId;
         this.context.typeKey = 'AREA';
     }

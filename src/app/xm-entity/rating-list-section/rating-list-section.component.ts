@@ -70,13 +70,24 @@ export class RatingListSectionComponent implements OnInit, OnChanges {
     getRatingByRatingSpec(ratingSpec: RatingSpec): Rating {
         const result = this.ratings ? this.ratings.filter((r) => r.typeKey === ratingSpec.key).shift() : null;
         if (!result) {
-            return new Rating(undefined, ratingSpec.key, 0, new Date().toJSON(), undefined, undefined, this.xmEntity);
+            return {
+                typeKey: ratingSpec.key,
+                value: 0,
+                startDate: new Date().toJSON(),
+                xmEntity: this.xmEntity,
+            };
         }
         return Object.assign({}, result);
     }
 
     onChange(voteValue: number, rating: Rating) {
-        const vote: Vote = new Vote(undefined, '', voteValue, '', new Date().toJSON(), undefined, this.xmEntity);
+        const vote: Vote = {
+            userKey: '',
+            value: voteValue,
+            message: '',
+            entryDate: new Date().toJSON(),
+            xmEntity: this.xmEntity,
+        };
         rating.value = this.recalculateRating(voteValue, rating);
         if (!rating.id) {
             this.addRating(rating, vote);

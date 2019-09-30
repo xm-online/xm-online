@@ -35,10 +35,10 @@ export class EntityCardCompactComponent extends EntityCardComponent implements O
 
     constructor(
         protected modalService: NgbModal,
-        protected principal: Principal,
+        public principal: Principal,
         protected eventManager: JhiEventManager,
         protected translateService: TranslateService,
-        private xmEntityService: XmEntityService,
+        protected xmEntityService: XmEntityService,
     ) {
         super(modalService, principal, eventManager);
     }

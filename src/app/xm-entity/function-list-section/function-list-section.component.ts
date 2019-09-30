@@ -56,7 +56,7 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
                 protected eventManager: JhiEventManager,
                 protected translateService: TranslateService,
                 protected contextService: ContextService,
-                protected principal: Principal) {
+                public principal: Principal) {
     }
 
     ngOnInit() {

@@ -23,7 +23,7 @@ export class EntityCardComponent implements OnInit {
 
     constructor(
         protected modalService: NgbModal,
-        protected principal: Principal,
+        public principal: Principal,
         protected eventManager: JhiEventManager,
     ) {}
 

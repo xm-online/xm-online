@@ -1,0 +1,82 @@
+<div class="mt-3" *ngIf="!listView">
+
+  <ng-container *ngIf="customFunctions$ | async as customFunctions">
+    <mat-tab-group *ngIf="customFunctions.length > 0; else statesAndFunctions"
+                   mat-stretch-tabs
+                   (selectedTabChange)="reinitMap($event)"
+                   animationDuration="0ms">
+      <mat-tab [label]="'xm-entity.function-list-card.general-group' | translate">
+        <ng-container *ngIf="true; then statesAndFunctions"></ng-container>
+      </mat-tab>
+
+      <mat-tab [label]="f.name | i18nName: principal"
+               *ngFor="let f of customFunctions; let i = index;"
+               [tabIndex]="f.key === 'AREA' ? 'AREA': i">
+        <div *ngIf="f.key === 'AREA'">
+          <xm-area [xmEntity]="xmEntity" [functionContext]="getFunctionContext(f)" *ngIf="initMap">
+          </xm-area>
+        </div>
+        <div *ngIf="f.key === 'EXTRACT-LINKEDIN-PROFILE' || f.key === 'ACCOUNT.EXTRACT-LINKEDIN-PROFILE'">
+          <xm-linkedin-profile [xmEntity]="xmEntity" [functionContext]="getFunctionContext(f)">
+          </xm-linkedin-profile>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </ng-container>
+
+  <ng-template #statesAndFunctions>
+    <ng-container>
+      <div class="container-fluid">
+        <div class="row mt-3 mb-3 text-left">
+          <div class="col" [class.limetedWidth]="nextStates?.length" *ngIf="xmEntity && nextStates?.length">
+            <p class="mb-2">{{'xm-entity.function-list-card.current-state' | translate}}</p>
+            <div class="mb-1"><xm-entity-state [stateSpec]="getCurrentStateSpec()"></xm-entity-state></div>
+          </div>
+
+          <ng-container *xmPermitted="['XMENTITY.STATE']">
+            <div class="col flex-grow-1" *ngIf="nextStates?.length">
+                <p class="mb-2">{{'xm-entity.function-list-card.next-states' | translate}}</p>
+                <div class="xm-state act-as-button no-wrap mr-1 mb-1"
+                     *ngFor="let nextState of nextStates"
+                     title="{{nextState.actionName | i18nName: principal}}"
+                     (click)="onChangeState(nextState.key)"
+                     [style.background]="nextState.color">
+                  <div class="xm-state-icon mr-0" [style.background]="'transparent'">
+                    <i class="material-icons">{{nextState.icon}}</i>
+                  </div>
+                  {{nextState.actionName | i18nName: principal}}
+                </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="defaultFunctions$ | async as defaultFunctions">
+      <div class="pb-3" *ngIf="defaultFunctions.length">
+        <div class="text-left">
+          <hr class="mt-0">
+          <p class="mb-2" *ngIf="xmEntityId">{{'xm-entity.function-list-card.other-functions' | translate}}</p>
+          <ng-container *ngFor="let functionSpec of defaultFunctions">
+            <button class="btn btn-sm btn-primary mr-1 mt-0 mb-1 ml-0 no-wrap func-btn"
+                    title="{{(functionSpec.actionName ? functionSpec.actionName : functionSpec.name) | i18nName: principal}}"
+                    (click)="onCallFunction(functionSpec)">
+              {{(functionSpec.actionName ? functionSpec.actionName : functionSpec.name) | i18nName: principal}}
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+
+  </ng-template>
+</div>
+
+<ng-container *ngIf="listView && defaultFunctions$ | async as defaultFunctions">
+  <div *ngIf="defaultFunctions.length">
+    <hr class="mt-0 mb-0">
+      <button mat-menu-item class="btn-sm" *ngFor="let functionSpec of defaultFunctions" (click)="onCallFunction(functionSpec)">
+        {{(functionSpec.actionName ? functionSpec.actionName : functionSpec.name) | i18nName: principal}}
+      </button>
+    <hr class="mt-0 mb-0">
+  </div>
+</ng-container>

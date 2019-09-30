@@ -23,6 +23,8 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
     backLinkSpecs: LinkSpec[];
     showLoader: boolean;
     entityUiConfig: EntityUiConfig;
+    // TODO for demo
+    tenant: string;
 
     backLinkSpecs$ = new BehaviorSubject<FullLinkSpec[]>([]);
     linkSpecs$ = new BehaviorSubject<FullLinkSpec[]>([]);
@@ -81,6 +83,8 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
 
     defineUiConfig() {
         this.xmConfigService.getUiConfig().subscribe((config) => {
+            // TODO for demo
+            this.tenant = config.name;
             this.entityUiConfig = <EntityUiConfig>(config && config.applications
                 && config.applications.config
                 && config.applications.config.entities
@@ -146,31 +150,34 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
             attachmentsComponent = 'attachment-list';
         }
 
-        if (detailLayoutType === 'ALL-IN-ROW') {
-            return [
-                {class: 'row', content: [{class: 'col-sm-12 col-xl-8 offset-xl-2', component: 'entity-card'}]},
-                {class: 'row', content: [{class: 'col-sm-12', component: 'entity-data-card'}]},
-                {class: 'row', content: [{class: 'col-sm-12', component: 'function-list-card'}]},
-                {class: 'row', content: [{class: 'col-sm-12', component: attachmentsComponent}]},
-                {class: 'row', content: [{class: 'col-sm-12', component: 'location-list-card'}]},
-                {class: 'row', content: [{class: 'col-sm-12', component: 'link-list'}]},
-                {class: 'row', content: [{class: 'col-sm-12', component: 'comment-list'}]},
-                {class: 'row', content: [{class: 'col-sm-12', component: 'calendar-card'}]},
-                {class: 'row', content: [{class: 'col-sm-12', component: 'timeline'}]}
-            ]
+        // TODO for demo
+        if (['XM Product Catalog', 'Cimdemo'].includes(this.tenant)) {
+            detailLayoutType = 'COMPACT';
         }
-
-        return [
-            {class: 'row',
-                content: [{class: 'col-md-6', component: 'entity-card'}, {class: 'col-md-6', component: 'entity-data-card'}]
-            },
+        
+        const grid = [
             {class: 'row', content: [{class: 'col-sm-12', component: 'function-list-card'}]},
             {class: 'row', content: [{class: 'col-sm-12', component: attachmentsComponent}]},
             {class: 'row', content: [{class: 'col-sm-12', component: 'location-list-card'}]},
             {class: 'row', content: [{class: 'col-sm-12', component: 'link-list'}]},
             {class: 'row', content: [{class: 'col-sm-12', component: 'comment-list'}]},
             {class: 'row', content: [{class: 'col-sm-12', component: 'calendar-card'}]},
-            {class: 'row', content: [{class: 'col-sm-12', component: 'timeline'}]}
-        ]
+            {class: 'row', content: [{class: 'col-sm-12', component: 'timeline'}]},
+        ];
+
+        if (detailLayoutType === 'ALL-IN-ROW') {
+            grid.unshift({class: 'row', content: [{class: 'col-sm-12', component: 'entity-data-card'}]});
+            grid.unshift({class: 'row', content: [{class: 'col-sm-12 col-xl-8 offset-xl-2', component: 'entity-card'}]});
+            return grid;
+        } else if (detailLayoutType === 'COMPACT') {
+            grid.unshift({class: 'row', content: [{class: 'col-sm-12', component: 'entity-card-compact'}]});
+            return grid;
+        }
+
+        grid.unshift({
+            class: 'row', content: [{class: 'col-md-6', component: 'entity-card'}, {class: 'col-md-6', component: 'entity-data-card'}],
+        });
+
+        return grid;
     }
 }

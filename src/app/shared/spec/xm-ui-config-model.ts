@@ -20,7 +20,7 @@ export class EntityLinkUiConfig {
     public fields: FieldOptions[];
 }
 
-export type EntityDetailLayout = 'DEFAULT' | 'ALL-IN-ROW';
+export type EntityDetailLayout = 'DEFAULT' | 'ALL-IN-ROW' | 'COMPACT';
 
 export class EntityUiConfig {
     public typeKey: string;

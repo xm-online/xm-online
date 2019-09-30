@@ -8,6 +8,7 @@ export * from './comment-card/comment-card.component';
 export * from './comment-detail-dialog/comment-detail-dialog.component';
 export * from './comment-list/comment-list.component';
 export * from './entity-card/entity-card.component';
+export * from './entity-card-compact/entity-card-compact.component';
 export * from './entity-data-card/entity-data-card.component';
 export * from './entity-detail-dialog/entity-detail-dialog.component';
 export * from './entity-detail-fab/entity-detail-fab.component';
@@ -16,6 +17,7 @@ export * from './entity-list-fab/entity-list-fab.component';
 export * from './entity-state/entity-state.component';
 export * from './function-call-dialog/function-call-dialog.component';
 export * from './function-list-section/function-list-section.component';
+export * from './function-list-section-compact/function-list-section-compact.component';
 export * from './functions/area/area.component';
 export * from './functions/area/osm-polygon-dialog.component';
 export * from './functions/area/overpass-api.service';
@@ -61,9 +63,9 @@ export * from './shared/location.service';
 export * from './shared/location-spec.model';
 export * from './shared/rating.model';
 export * from './shared/rating.service';
-export * from './shared/rating-spec.model'
-export * from './shared/spec.model'
-export * from './shared/state-spec.model'
+export * from './shared/rating-spec.model';
+export * from './shared/spec.model';
+export * from './shared/state-spec.model';
 export * from './shared/tag.model';
 export * from './shared/tag.service';
 export * from './shared/tag-spec.model';

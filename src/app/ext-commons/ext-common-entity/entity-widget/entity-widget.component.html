@@ -18,12 +18,21 @@
               [typeKey]="xmEntity.typeKey"
             ></xm-balance-list-card>
           </div>
+
+          <div *ngSwitchCase="'entity-card-compact'">
+            <xm-entity-card-compact
+                [xmEntity]="fetchedXmEntity"
+                [xmEntitySpec]="xmEntitySpec"
+            ></xm-entity-card-compact>
+          </div>
+
           <div *ngSwitchCase="'entity-data-card'">
             <xm-entity-data-card
               [xmEntity]="fetchedXmEntity"
               [xmEntitySpec]="xmEntitySpec"
             ></xm-entity-data-card>
           </div>
+
           <div *ngSwitchCase="'attachment-grid'">
             <xm-attachment-list
               [xmEntityId]="fetchedXmEntity.id"
@@ -32,6 +41,7 @@
               *ngIf="xmEntitySpec?.attachments">
             </xm-attachment-list>
           </div>
+
           <div *ngSwitchCase="'attachment-list'">
             <xm-attachment-list-simplified
               [xmEntityId]="fetchedXmEntity.id"
@@ -41,6 +51,7 @@
               *ngIf="xmEntitySpec?.attachments">
             </xm-attachment-list-simplified>
           </div>
+
           <div *ngSwitchCase="'location-list-card'">
             <xm-location-list-card
               [entityUiConfig]="this.entityUiConfig"
@@ -48,6 +59,7 @@
               *ngIf="xmEntitySpec?.locations?.length">
             </xm-location-list-card>
           </div>
+
           <div *ngSwitchCase="'link-list'">
             <xm-link-list
               [xmEntityId]="fetchedXmEntity.id"
@@ -56,6 +68,7 @@
               *ngIf="xmEntitySpec?.links?.length > 0 || backLinkSpecs.length > 0">
             </xm-link-list>
           </div>
+
           <div *ngSwitchCase="'comment-list'">
             <xm-comment-list
               [xmEntityId]="fetchedXmEntity.id"
@@ -63,6 +76,7 @@
               *ngIf="xmEntitySpec?.comments">
             </xm-comment-list>
           </div>
+
           <div *ngSwitchCase="'calendar-card'">
             <xm-calendar-card
               [xmEntityId]="fetchedXmEntity.id"
@@ -70,6 +84,7 @@
               *ngIf="xmEntitySpec?.calendars">
             </xm-calendar-card>
           </div>
+
           <div *ngSwitchCase="'timeline'">
             <xm-timeline [xmEntityId]="fetchedXmEntity?.id"
                          *xmPermitted="['TIMELINE.GET_LIST']">

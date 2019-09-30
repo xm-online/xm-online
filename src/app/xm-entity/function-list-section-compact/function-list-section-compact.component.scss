@@ -1,0 +1,21 @@
+.limetedWidth {
+    max-width: 160px;
+
+    @media screen and (max-width: 420px) {
+        max-width: 100%;
+    }
+}
+
+.no-wrap {
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.func-btn {
+    @media screen and (max-width: 420px) {
+        width: 100%;
+        display: block;
+    }
+}

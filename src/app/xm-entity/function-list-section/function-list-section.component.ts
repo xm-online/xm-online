@@ -51,11 +51,11 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
         'ACCOUNT.EXTRACT-LINKEDIN-PROFILE': LinkedinProfileComponent
     };
 
-    constructor(private xmEntityService: XmEntityService,
-                private modalService: NgbModal,
-                private eventManager: JhiEventManager,
-                private translateService: TranslateService,
-                private contextService: ContextService,
+    constructor(protected xmEntityService: XmEntityService,
+                protected modalService: NgbModal,
+                protected eventManager: JhiEventManager,
+                protected translateService: TranslateService,
+                protected contextService: ContextService,
                 public principal: Principal) {
     }
 

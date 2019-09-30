@@ -12,7 +12,7 @@ import { FunctionSpec } from '..';
 @Component({
     selector: 'xm-entity-card',
     templateUrl: './entity-card.component.html',
-    styleUrls: ['./entity-card.component.scss']
+    styleUrls: ['./entity-card.component.scss'],
 })
 export class EntityCardComponent implements OnInit {
 
@@ -21,10 +21,11 @@ export class EntityCardComponent implements OnInit {
 
     isAvatarEnabled: boolean;
 
-    constructor(private modalService: NgbModal,
-                public principal: Principal,
-                private eventManager: JhiEventManager) {
-    }
+    constructor(
+        protected modalService: NgbModal,
+        public principal: Principal,
+        protected eventManager: JhiEventManager,
+    ) {}
 
     ngOnInit() {
         this.isAvatarEnabled = this.xmEntitySpec.isAvatarEnabled ? this.xmEntitySpec.isAvatarEnabled : false;
@@ -65,11 +66,11 @@ export class EntityCardComponent implements OnInit {
 
     get commonFunctionSpec(): FunctionSpec[] {
         return (this.xmEntitySpec && this.xmEntitySpec.functions) ?
-          this.xmEntitySpec
-              .functions
-              .filter(item => !item.withEntityId)
-              .filter(item => this.hasPrivilege(item))
-              .filter(item => this.allowedByState(item)) : [];
+            this.xmEntitySpec
+                .functions
+                .filter(item => !item.withEntityId)
+                .filter(item => this.hasPrivilege(item))
+                .filter(item => this.allowedByState(item)) : [];
     }
 
     get entityFunctionSpec(): FunctionSpec[] {
@@ -81,7 +82,7 @@ export class EntityCardComponent implements OnInit {
                 .filter(item => this.allowedByState(item, this.xmEntity.stateKey)) : [];
     }
 
-    private allowedByState(functionSpec: FunctionSpec, stateKey?: string): boolean {
+    protected allowedByState(functionSpec: FunctionSpec, stateKey?: string): boolean {
         // if no allowedStateKeys - always allowed
         if (!functionSpec.allowedStateKeys || !functionSpec.allowedStateKeys.length) {
             return true;
@@ -99,7 +100,7 @@ export class EntityCardComponent implements OnInit {
         return true;
     }
 
-    private hasPrivilege(spec: FunctionSpec): boolean {
+    protected hasPrivilege(spec: FunctionSpec): boolean {
         const priv = spec.withEntityId ? 'XMENTITY.FUNCTION.EXECUTE' : 'FUNCTION.CALL';
         return this.principal.hasPrivilegesInline([priv, `${priv}.${spec.key}`]);
     }

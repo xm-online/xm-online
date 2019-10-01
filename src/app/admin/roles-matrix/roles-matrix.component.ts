@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { JhiAlertService, JhiOrderByPipe } from 'ng-jhipster';
-import { filter, finalize } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import { ITEMS_PER_PAGE } from '../../shared/constants/pagination.constants';
 import { RoleMatrix, RoleMatrixPermission } from '../../shared/role/role.model';

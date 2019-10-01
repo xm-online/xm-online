@@ -73,7 +73,6 @@ export class LocationCountriesWidgetComponent implements OnInit, AfterViewInit {
         if (breakCards === true) {
             // We break the cards headers if there is too much stress on them :-)
             $('[data-header-animation="true"]').each(function () {
-                const $fix_button = $(this);
                 const $card = $(this).parent('.card');
                 $card.find('.fix-broken-card').click(function () {
                     const $header = $(this).parent().parent().siblings('.card-header, .card-image');

@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs/operators';
 
@@ -82,7 +82,6 @@ export class SpecificationMngComponent implements OnInit {
     public uaaValidation: any;
 
     constructor(private activatedRoute: ActivatedRoute,
-                private router: Router,
                 private modalService: NgbModal,
                 private service: XmConfigService) {
         this.activatedRoute.params.subscribe((params) => {

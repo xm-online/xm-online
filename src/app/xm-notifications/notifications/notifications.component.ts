@@ -10,7 +10,6 @@ import { Notification, NotificationUiConfig } from '../shared/notification.model
 
 import { DomSanitizer } from '@angular/platform-browser'
 
-declare let $: any;
 import * as _ from 'lodash';
 
 const DEFAULT_PRIVILEGES = ['XMENTITY.SEARCH', 'XMENTITY.SEARCH.QUERY', 'XMENTITY.SEARCH.TEMPLATE'];

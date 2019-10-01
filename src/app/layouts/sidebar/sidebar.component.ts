@@ -3,13 +3,12 @@ import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from
 import {Router} from '@angular/router';
 import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
-import {JhiEventManager, JhiLanguageService} from 'ng-jhipster';
+import {JhiEventManager} from 'ng-jhipster';
 import { Observable, of, Subscription } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import swal from 'sweetalert2';
 
-import {ProfileService} from '../';
 import {ContextService, I18nNamePipe, JhiLanguageHelper, LoginService, Principal} from '../../shared/';
 import {XmConfigService} from '../../shared/spec/config.service';
 import {Dashboard, DashboardWrapperService} from '../../xm-dashboard';
@@ -41,7 +40,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
     private contextSubscription: Subscription;
     private logoutSubscribtion: Subscription;
 
-    private toggleButton;
+    public toggleButton;
 
     dashboardGroups: any[];
     uiConfig: any;
@@ -70,10 +69,8 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
 
     constructor(private loginService: LoginService,
                 private languageHelper: JhiLanguageHelper,
-                private jhiLanguageService: JhiLanguageService,
                 private xmEntitySpecWrapperService: XmEntitySpecWrapperService,
                 public principal: Principal,
-                private profileService: ProfileService,
                 private router: Router,
                 private element: ElementRef,
                 private dashboardWrapperService: DashboardWrapperService,
@@ -276,7 +273,6 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
             misc.sidebar_mini_active = true;
         }
         $('#minimizeSidebar').click(function () {
-            const $btn = $(this);
 
             if (misc.sidebar_mini_active === true) {
                 $('body').removeClass('sidebar-mini');

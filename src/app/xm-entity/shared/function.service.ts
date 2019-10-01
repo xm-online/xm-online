@@ -89,11 +89,4 @@ export class FunctionService {
         return Object.assign({}, inputContext);
     }
 
-    /**
-     * Convert a InputContext to a JSON which can be sent to the server.
-     */
-    private convertAndMarkAsFile(outputContext: any): any {
-        return Object.assign({}, outputContext);
-    }
-
 }

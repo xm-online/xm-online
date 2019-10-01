@@ -21,6 +21,7 @@
     "inlineSources": true,
     "module": "esnext",
     "stripInternal": false,
+    "noUnusedLocals": true,
     "newLine": "lf"
   }
 }

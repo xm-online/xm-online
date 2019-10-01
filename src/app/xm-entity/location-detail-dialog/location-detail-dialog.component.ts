@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
@@ -91,7 +91,6 @@ export class LocationDetailDialogComponent implements OnInit {
     }
 
     constructor(private activeModal: NgbActiveModal,
-                private cd: ChangeDetectorRef,
                 private locationService: LocationService,
                 private eventManager: JhiEventManager,
                 private translateService: TranslateService,

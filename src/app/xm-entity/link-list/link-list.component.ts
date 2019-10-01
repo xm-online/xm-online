@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import {catchError, map, tap} from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { Link } from '../shared/link.model';
 import { XmEntity } from '../shared/xm-entity.model';

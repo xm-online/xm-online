@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { JhiLanguageHelper } from '../../shared';
 import { RoleService } from '../../shared/role/role.service';
 import { Role } from '../../shared/role/role.model';
 
@@ -20,7 +19,6 @@ export class RoleMgmtDialogComponent implements OnInit {
 
     constructor(
         public activeModal: NgbActiveModal,
-        private languageHelper: JhiLanguageHelper,
         private roleService: RoleService,
         private eventManager: JhiEventManager
     ) {

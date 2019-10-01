@@ -30,7 +30,6 @@ export class XmMainComponent implements OnInit, OnDestroy {
     isGuestLayout: boolean;
     guestBg: string;
     authSucessSubscription: Subscription;
-    private excludePaths: Array<string> = ['/reset/finish', '/activate', '/social-auth'];
     private excludePathsForViewSidebar: Array<string> = ['/social-auth'];
     isMaintenanceProgress$: BehaviorSubject<boolean>;
     userAutoLogoutEnabled: boolean;

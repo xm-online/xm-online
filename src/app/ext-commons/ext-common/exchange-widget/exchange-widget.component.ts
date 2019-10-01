@@ -11,8 +11,6 @@ declare let $: any;
 })
 export class ExchangeWidgetComponent implements OnInit {
 
-    private currencyList: any[];
-
     isShowCalc = false;
     config: any;
 

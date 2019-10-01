@@ -3,7 +3,6 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatInput } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiLanguageService } from 'ng-jhipster';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -43,7 +42,6 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     @ViewChild('passwordInputElement', {static: false}) passwordInputElement: MatInput;
 
     constructor(
-        private jhiLanguageService: JhiLanguageService,
         private passwordResetFinish: PasswordResetFinish,
         private route: ActivatedRoute,
         private http: HttpClient,

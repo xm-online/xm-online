@@ -1,4 +1,4 @@
-import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
@@ -43,7 +43,6 @@ export class CustomerInfoWidgetComponent implements OnInit, OnDestroy {
 
 
     constructor(private fb: FormBuilder,
-                private injector: Injector,
                 private principal: Principal,
                 private alertService: JhiAlertService,
                 private eventManager: JhiEventManager,

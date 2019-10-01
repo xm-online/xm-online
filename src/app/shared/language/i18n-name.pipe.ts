@@ -11,7 +11,7 @@ export class I18nNamePipe implements PipeTransform {
                 private principal: Principal,
                 private $sessionStorage: SessionStorageService) {
         try {
-            this.translatesFormStorage = JSON.parse($sessionStorage.retrieve(this.translateService.currentLang));
+            this.translatesFormStorage = JSON.parse(this.$sessionStorage.retrieve(this.translateService.currentLang));
             this.translateService.setTranslation(this.translateService.currentLang, this.translatesFormStorage, true);
         } catch (e) {
             console.error(e);

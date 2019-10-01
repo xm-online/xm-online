@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiLanguageService } from 'ng-jhipster';
 
 import { JhiHealthService } from './health.service';
 import { JhiHealthModalComponent } from './health-modal.component';
@@ -22,7 +21,6 @@ export class JhiHealthCheckComponent implements OnInit {
     selectedInstanceStatus: string;
 
     constructor(
-        private jhiLanguageService: JhiLanguageService,
         private modalService: NgbModal,
         private healthService: JhiHealthService
     ) {

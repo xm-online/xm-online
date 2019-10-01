@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
 
 import { Client, ClientService } from '../../shared';
 
@@ -15,7 +15,6 @@ export class ClientMgmtDeleteDialogComponent implements OnInit {
     client: Client;
 
     constructor(
-        private jhiLanguageService: JhiLanguageService,
         private clientService: ClientService,
         public activeModal: NgbActiveModal,
         private eventManager: JhiEventManager,

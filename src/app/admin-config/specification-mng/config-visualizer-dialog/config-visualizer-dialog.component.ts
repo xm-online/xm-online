@@ -8,7 +8,6 @@ import * as nomnoml from 'nomnoml';
 
 declare let YAML: any;
 declare let skanaar: any;
-declare let _: any;
 
 @Component({
     selector: 'xm-config-visualizer-dialog',

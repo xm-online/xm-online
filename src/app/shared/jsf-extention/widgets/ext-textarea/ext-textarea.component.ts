@@ -3,11 +3,9 @@ import { JsonSchemaFormService } from 'angular2-json-schema-form';
 
 import { ExtTextareaOptions } from './ext-textarea-options.model';
 
-declare const google: any;
-
 @Component({
     selector: 'xm-ext-textarea-widget',
-    templateUrl: 'ext-textarea.component.html'
+    templateUrl: 'ext-textarea.component.html',
 })
 export class ExtTextareaComponent implements OnInit {
 

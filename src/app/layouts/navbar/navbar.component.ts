@@ -41,7 +41,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     title: string;
     titleContent: string;
     tenantLogoUrl: '../assets/img/logo-xm-online.png';
-    private nativeElement: Node;
+
     private previousPath: string;
     private backStep = 0;
     private toggleButton;
@@ -61,7 +61,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
                 private xmConfigService: XmConfigService) {
         this.version = DEBUG_INFO_ENABLED ? 'v' + VERSION : '';
         this.registerPopState();
-        this.nativeElement = element.nativeElement;
+
         this.sidebarVisible = false;
     }
 
@@ -92,7 +92,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
             misc.sidebar_mini_active = true;
         }
         $('#minimizeSidebar').click(function () {
-            const $btn = $(this);
 
             if (misc.sidebar_mini_active === true) {
                 $('body').removeClass('sidebar-mini');

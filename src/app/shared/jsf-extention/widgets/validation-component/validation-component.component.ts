@@ -1,15 +1,13 @@
 
-import {fromEvent as observableFromEvent,  Subscription, Observable } from 'rxjs';
+import {fromEvent as observableFromEvent,  Subscription } from 'rxjs';
 
 import {debounceTime} from 'rxjs/operators';
-import { ChangeDetectorRef, Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { JsonSchemaFormService } from 'angular2-json-schema-form';
 import { FormGroup, FormArray, AbstractControl } from '@angular/forms';
 
 
 import { JhiEventManager } from 'ng-jhipster';
-
-declare const $: any;
 
 @Component({
     selector: 'xm-validation-widget',
@@ -36,12 +34,12 @@ export class ValidationComponent implements OnInit, OnDestroy {
         this.click = observableFromEvent(document, 'click').pipe(
             debounceTime(10))
             .subscribe(e => {
-                let wasUpdated = false;
+                // let wasUpdated = false;
                 this.traverseControls(formGroup, (control: AbstractControl) => {
                     if (control.enabled && !control.untouched && !control.dirty) {
                         control.markAsDirty();
                         control.setValue(control.value);
-                        wasUpdated = true;
+                        // wasUpdated = true;
                     }
                     control.updateValueAndValidity({emitEvent: true});
                 });

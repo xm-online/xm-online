@@ -34,6 +34,7 @@ export class StateChangeDialogComponent implements OnInit {
     constructor(private activeModal: NgbActiveModal,
                 private xmEntityService: XmEntityService,
                 private translateService: TranslateService,
+                // @ts-ignore
                 private eventManager: JhiEventManager,
                 private contextService: ContextService,
                 public principal: Principal) {

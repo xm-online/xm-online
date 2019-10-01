@@ -17,7 +17,7 @@ export class ModulesLanguageHelper {
                 private appConfig: XmApplicationConfigService,
                 private $sessionStorage: SessionStorageService,
                 private principal: Principal) {
-        this.config = appConfig.getAppConfig();
+        this.config = this.appConfig.getAppConfig();
     }
 
     correctLang(langKey: string) {

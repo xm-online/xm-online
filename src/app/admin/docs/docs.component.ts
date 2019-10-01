@@ -35,7 +35,7 @@ export class JhiDocsComponent implements OnInit, AfterViewInit {
 
     updateSwagger(resource) {
         const authToken = this.auth.getToken();
-        const swagger  = new SwaggerUIBundle({
+        new SwaggerUIBundle({
             dom_id: '#swaggerHolder',
             supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
             url: window.location.protocol + '//' + window.location.host + resource,

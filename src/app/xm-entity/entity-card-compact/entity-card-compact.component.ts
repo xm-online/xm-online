@@ -4,12 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 
 import { Principal } from '../../shared/auth/principal.service';
-import { AvatarDialogComponent } from '../avatar-dialog/avatar-dialog.component';
-import { XmEntitySpec } from '../shared/xm-entity-spec.model';
-import { XmEntity } from '../shared/xm-entity.model';
 import { JhiEventManager } from 'ng-jhipster';
-import { XM_EVENT_LIST } from '../../xm.constants';
-import { FunctionSpec } from '..';
 import { EntityCardComponent } from '../entity-card/entity-card.component';
 import { RatingListSectionComponent } from '../rating-list-section/rating-list-section.component';
 import { XmEntityService } from '../shared/xm-entity.service';

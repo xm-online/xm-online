@@ -108,11 +108,11 @@ export class AreaComponent implements AfterViewInit {
 
         });
 
-        this.map.on('draw:edited', function (e) {
+        this.map.on('draw:edited', function () {
             self.saveFunction(self.drawnItems);
         });
 
-        this.map.on('draw:deleted', function (e) {
+        this.map.on('draw:deleted', function () {
             self.saveFunction(self.drawnItems);
         });
 

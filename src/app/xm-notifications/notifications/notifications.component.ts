@@ -112,7 +112,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     public onRemoveItem(event, item): void {
         event.stopPropagation();
         if (this.config && this.config.changeStateName) {
-            this.notificationsService.markRead(item.id, this.config).subscribe(resp => {
+            this.notificationsService.markRead(item.id, this.config).subscribe(() => {
                 this.notifications = this.notifications.filter(i => i !== item);
             });
         }

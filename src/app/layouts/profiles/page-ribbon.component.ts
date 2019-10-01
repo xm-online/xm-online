@@ -56,7 +56,7 @@ export class PageRibbonComponent implements OnInit, OnDestroy {
 
     private registerChangeAuth() {
       if (this.ribbonEnv) {
-        this.eventAuthSubscriber = this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, (message) => this.ngOnInit());
+        this.eventAuthSubscriber = this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, () => this.ngOnInit());
       }
     }
 }

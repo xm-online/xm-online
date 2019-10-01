@@ -21,6 +21,8 @@
     "inlineSources": true,
     "module": "esnext",
     "stripInternal": false,
-    "newLine": "lf"
+    "newLine": "lf",
+    "strictFunctionTypes": true,
+    "noFallthroughCasesInSwitch": true
   }
 }

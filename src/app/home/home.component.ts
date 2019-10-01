@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     registerAuthenticationSuccess() {
-        this.eventAuthSubscriber = this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, (message) => {
+        this.eventAuthSubscriber = this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, () => {
             this.principal.identity().then((account) => {
                 this.account = account;
             });

@@ -22,7 +22,7 @@ export class CommentCardComponent implements OnInit {
     ngOnInit() {
         this.commentator$ = this.entityService.getProfileByKey(this.comment.userKey).pipe(
             map(responce => responce.body),
-            catchError(e => of({}))
+            catchError(() => of({}))
         )
     }
 }

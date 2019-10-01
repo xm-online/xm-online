@@ -25,7 +25,7 @@ export class JhiDocsComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         this.http
-            .get('/swagger-resources')
+            .get<any[]>('/swagger-resources')
             .subscribe((data: any[]) => {
                 this.swaggerResources = data;
                 this.currentResource = this.swaggerResources[0].location;

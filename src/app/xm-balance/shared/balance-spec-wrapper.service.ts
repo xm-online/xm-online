@@ -16,7 +16,7 @@ export class BalanceSpecWrapperService {
         if (!force && this.promise) {
             return this.promise;
         } else {
-            return this.promise = new Promise((resolve, reject) => {
+            return this.promise = new Promise((resolve) => {
                 if (force === true) {
                     this._spec = undefined;
                 }

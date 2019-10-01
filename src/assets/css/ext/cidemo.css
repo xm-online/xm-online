@@ -1,5 +1,26 @@
 @import "../themes/material-cyan.css";
 
+.sidebar .nav p,
+body.xm-body
+{
+  font-size: 12px;
+}
+.xm-navbar-container .navbar-container-part.title-part {
+  font-size: 16px !important;
+}
+.table>thead>tr>th {
+  font-size: 0.95rem !important;
+}
+.card {
+  font-size: .775rem;
+}
+.card-custom .card-title {
+  font-size: 20px !important;
+}
+.h4, h4 {
+  font-size: 1.025rem;
+}
+
 .sidebar .nav {
   margin-top: 10px !important;
 }

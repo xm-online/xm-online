@@ -21,7 +21,7 @@ export interface XmEntity extends BaseEntity {
     endDate?: string | Date;
     avatarUrl?: string;
     description?: string;
-    data?: string | Date;
+    data?: any;
     removed?: boolean;
     attachments?: Attachment[];
     calendars?: Calendar[];

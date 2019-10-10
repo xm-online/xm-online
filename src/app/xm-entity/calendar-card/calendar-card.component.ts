@@ -68,11 +68,11 @@ export class CalendarCardComponent implements OnInit, OnChanges {
 
             const notIncludedSpecs = this.calendarSpecs.filter((cs) => this.calendars.filter((c) => c.typeKey === cs.key).length === 0);
             notIncludedSpecs.forEach((calendarSpec) => {
-                const calendar = new Calendar();
+                const calendar: Calendar = {};
                 calendar.name = this.i18nNamePipe.transform(calendarSpec.name, this.principal);
                 calendar.typeKey = calendarSpec.key;
                 calendar.startDate = new Date().toISOString();
-                calendar.xmEntity = new XmEntity();
+                calendar.xmEntity = {};
                 calendar.xmEntity.id = this.xmEntity.id;
                 calendar.xmEntity.typeKey = this.xmEntity.typeKey;
                 calendar.events = [];

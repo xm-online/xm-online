@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { AsyncSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { PasswordSpec } from '../../xm-entity/shared/password-spec.model';
 
 import { Principal } from '../auth/principal.service';
-import { XmApplicationConfigService } from './xm-config.service';
-import { PasswordSpec } from '../../xm-entity/shared/password-spec.model';
 import { ModulesLanguageHelper } from '../language/modules-language.helper';
+import { XmApplicationConfigService } from './xm-config.service';
 
 @Injectable()
 export class XmConfigService {
@@ -128,16 +128,22 @@ export class XmConfigService {
     }
 
     mapPasswordSettings(config?: any): PasswordSpec {
-        const DEFAULT_SETTINGS = new PasswordSpec(4, 50, '', null);
+        const DEFAULT_SETTINGS = {
+            minLength: 4,
+            maxLength: 50,
+            pattern: '',
+            patternMessage: null,
+        };
         if (!config) {return DEFAULT_SETTINGS}
         const CONFIG_PARSED = JSON.parse(config);
         if (CONFIG_PARSED && CONFIG_PARSED.passwordSettings) {
             const CONFIG: PasswordSpec = CONFIG_PARSED.passwordSettings;
-            return new PasswordSpec(
-                CONFIG.minLength || 4,
-                CONFIG.maxLength || 50,
-                CONFIG.pattern || '',
-                CONFIG.patternMessage || null);
+            return {
+                minLength: CONFIG.minLength || 4,
+                maxLength: CONFIG.maxLength || 50,
+                pattern: CONFIG.pattern || '',
+                patternMessage: CONFIG.patternMessage || null
+            };
         } else {
             return DEFAULT_SETTINGS;
         }

@@ -20,7 +20,7 @@ import {XM_EVENT_LIST} from '../../xm.constants';
 })
 export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
 
-    @Input() xmEntity: XmEntity = new XmEntity();
+    @Input() xmEntity: XmEntity = {};
     @Input() xmEntitySpec: XmEntitySpec;
     @Input() spec: Spec;
     @Input() onSuccess: any;

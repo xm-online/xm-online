@@ -29,7 +29,7 @@ export interface CountryOption {
 })
 export class LocationDetailDialogComponent implements OnInit {
     @Input() xmEntity: XmEntity;
-    @Input() location: Location = new Location();
+    @Input() location: Location = {};
     @Input() locationSpecs: LocationSpec[];
 
     form: FormGroup;
@@ -163,7 +163,7 @@ export class LocationDetailDialogComponent implements OnInit {
             addressLine2: [null],
             latitude: [null, [Validators.required, Validators.pattern(regCoordinate)]],
             longitude: [null, [Validators.required, Validators.pattern(regCoordinate)]],
-            xmEntity: this.fb.group(new XmEntity())
+            xmEntity: this.fb.group({})
         });
     }
 
@@ -171,7 +171,7 @@ export class LocationDetailDialogComponent implements OnInit {
         if (!this.location.typeKey && this.locationSpecs.length) {
             this.location.typeKey = this.locationSpecs[0].key;
         }
-        this.location.xmEntity = new XmEntity();
+        this.location.xmEntity = {};
         this.location.xmEntity.id = this.xmEntity.id;
         this.location.xmEntity.typeKey = this.xmEntity.typeKey;
 

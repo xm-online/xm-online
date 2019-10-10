@@ -10,30 +10,28 @@ import { Rating } from './rating.model';
 import { Tag } from './tag.model';
 import { Vote } from './vote.model';
 
-export class XmEntity implements BaseEntity {
-    constructor(public id?: number,
-                public key?: string,
-                public typeKey?: string,
-                public stateKey?: string,
-                public name?: string,
-                public startDate?: any,
-                public updateDate?: any,
-                public endDate?: any,
-                public avatarUrl?: string,
-                public description?: string,
-                public data?: any,
-                public removed?: boolean,
-                public attachments?: Attachment[],
-                public calendars?: Calendar[],
-                public locations?: Location[],
-                public ratings?: Rating[],
-                public tags?: Tag[],
-                public comments?: Comment[],
-                public votes?: Vote[],
-                public sources?: Link[],
-                public targets?: Link[],
-                public functionContexts?: FunctionContext[],
-                public events?: Event[]) {
-        this.removed = false;
-    }
+export interface XmEntity extends BaseEntity {
+    id?: number;
+    key?: string;
+    typeKey?: string;
+    stateKey?: string;
+    name?: string;
+    startDate?: string | Date;
+    updateDate?: string | Date;
+    endDate?: string | Date;
+    avatarUrl?: string;
+    description?: string;
+    data?: string | Date;
+    removed?: boolean;
+    attachments?: Attachment[];
+    calendars?: Calendar[];
+    locations?: Location[];
+    ratings?: Rating[];
+    tags?: Tag[];
+    comments?: Comment[];
+    votes?: Vote[];
+    sources?: Link[];
+    targets?: Link[];
+    functionContexts?: FunctionContext[];
+    events?: Event[];
 }

@@ -1,12 +1,11 @@
 import { BaseSpec } from './../../shared';
 
-export class AttachmentSpec implements BaseSpec {
-    constructor(public key?: string,
-                public name?: any,
-                public contentTypes?: string[],
-                public max?: number,
-                public size?: string,
-                public defaultFileName?: string,
-                public isNameReadonly?: boolean) {
-    }
+export interface AttachmentSpec extends BaseSpec {
+    key?: string,
+    name?: any,
+    contentTypes?: string[],
+    max?: number,
+    size?: string,
+    defaultFileName?: string,
+    isNameReadonly?: boolean
 }

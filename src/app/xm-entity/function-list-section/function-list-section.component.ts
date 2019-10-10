@@ -179,7 +179,7 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
     public onCallFunction(functionSpec: FunctionSpec): void {
         const title = functionSpec.actionName ? functionSpec.actionName : functionSpec.name;
         const modalRef = this.modalService.open(FunctionCallDialogComponent, {backdrop: 'static'});
-        modalRef.componentInstance.xmEntity = this.xmEntity || new XmEntity(this.xmEntityId || undefined);
+        modalRef.componentInstance.xmEntity = this.xmEntity || { id: this.xmEntityId || undefined};
         modalRef.componentInstance.functionSpec = functionSpec;
         modalRef.componentInstance.dialogTitle = title;
         modalRef.componentInstance.buttonTitle = title;

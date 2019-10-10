@@ -1,15 +1,15 @@
 import { HttpResponse } from '@angular/common/http';
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
+import { DEBUG_INFO_ENABLED, XM_EVENT_LIST } from '../../xm.constants';
 
 import { TagSpec } from '../shared/tag-spec.model';
 import { Tag } from '../shared/tag.model';
 import { TagService } from '../shared/tag.service';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
-import {DEBUG_INFO_ENABLED, XM_EVENT_LIST} from '../../xm.constants';
 
 declare let swal: any;
 
@@ -64,7 +64,12 @@ export class TagListSectionComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onAdd(xmTag: Tag) {
-        const tag: Tag = new Tag(undefined, 'DEFAULT', xmTag.name.toUpperCase(), new Date().toJSON(), this.xmEntity);
+        const tag: Tag = {
+            typeKey: 'DEFAULT',
+            name: xmTag.name.toUpperCase(),
+            startDate: new Date().toJSON(),
+            xmEntity: this.xmEntity,
+        };
         this.tagService.create(tag).subscribe(
             () => this.load(),
             () => {

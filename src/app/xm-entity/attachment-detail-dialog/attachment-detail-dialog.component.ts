@@ -24,7 +24,7 @@ export class AttachmentDetailDialogComponent implements OnInit {
     @Input() xmEntity: XmEntity;
     @Input() attachmentSpecs: AttachmentSpec[];
 
-    attachment: Attachment = new Attachment();
+    attachment: Attachment = {};
     showLoader: boolean;
     readOnlyInputs: boolean;
     wrongFileType: string;
@@ -39,7 +39,7 @@ export class AttachmentDetailDialogComponent implements OnInit {
 
     ngOnInit() {
         this.attachment.typeKey = this.attachmentSpecs[0].key;
-        this.attachment.content = new Content();
+        this.attachment.content = {};
         this.attachment.name = this.attachmentSpecs[0].defaultFileName ? this.attachmentSpecs[0].defaultFileName : '';
         this.readOnlyInputs = this.attachmentSpecs[0].isNameReadonly ? this.attachmentSpecs[0].isNameReadonly : true;
     }
@@ -89,7 +89,7 @@ export class AttachmentDetailDialogComponent implements OnInit {
 
     onConfirmSave() {
         this.showLoader = true;
-        this.attachment.xmEntity = new XmEntity();
+        this.attachment.xmEntity = {};
         this.attachment.xmEntity.id = this.xmEntity.id;
         this.attachment.xmEntity.typeKey = this.xmEntity.typeKey;
         this.attachment.startDate = new Date().toISOString();

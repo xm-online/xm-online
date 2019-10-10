@@ -120,9 +120,9 @@ export class ExtAutocompleteComponent implements OnInit {
         }
     }
 
-    private trySearch(text) {
+    private trySearch(text): void {
         this.selectedItem = null;
-        if (text.length < 3) {return false}
+        if (text.length < 3) { return; }
         this.filteredItems = [];
         if (!text) {this.assignCopy()}
         this.filteredItems = Object.assign([], this.elements).filter(

@@ -127,18 +127,18 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         this.toggleNotifications();
     }
 
-    public onNavigate(item, event) {
+    public onNavigate(item, event): void {
         if (this.config.preventNavigation) {
             event.preventDefault();
             event.stopPropagation();
-            return false;
+            return;
         }
         if (item) {
             const typeKey = _.get(item, this.config.referenceTypeKeyPath);
             const id = _.get(item, this.config.referenceIdPath);
             if (!typeKey || !id) {
                 console.log('No entity found for notification ' + item.id);
-                return false;
+                return;
             }
 
             this.router.navigate(['/application', typeKey, id]);

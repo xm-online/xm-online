@@ -38,7 +38,7 @@ export class JhiMetricsMonitoringModalComponent implements OnInit {
             this.threadDumpTimedWaiting + this.threadDumpBlocked;
     }
 
-    getBadgeClass(threadState) {
+    getBadgeClass(threadState): string {
         if (threadState === 'RUNNABLE') {
             return 'badge-success';
         } else if (threadState === 'WAITING') {
@@ -48,5 +48,6 @@ export class JhiMetricsMonitoringModalComponent implements OnInit {
         } else if (threadState === 'BLOCKED') {
             return 'badge-danger';
         }
+        return '';
     }
 }

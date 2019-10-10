@@ -46,9 +46,9 @@ export class UserLoginService {
         })
     }
 
-    getLogin(login: UserLogin) {
+    getLogin(login: UserLogin): string {
         if (!this.allLogins.hasOwnProperty(login.typeKey)) {
-            return;
+            return '';
         }
         return this.getName(login.typeKey) + ': ' + login.login;
     }

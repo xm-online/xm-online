@@ -21,6 +21,7 @@
     "inlineSources": true,
     "module": "esnext",
     "stripInternal": false,
+    "noImplicitReturns": true,
     "newLine": "lf",
     "strictFunctionTypes": true,
     "noFallthroughCasesInSwitch": true

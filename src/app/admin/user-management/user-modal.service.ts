@@ -13,9 +13,9 @@ export class UserModalService {
         private userService: UserService
     ) {}
 
-    open(component: any, userKey?: string): NgbModalRef {
+    open(component: any, userKey?: string): NgbModalRef | null {
         if (this.isOpen) {
-            return;
+            return null;
         }
         this.isOpen = true;
 
@@ -25,6 +25,7 @@ export class UserModalService {
                     this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true });
                     this.isOpen = false;
                 });
+            return null;
         } else {
             return this.userModalRef(component, new User());
         }

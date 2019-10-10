@@ -93,7 +93,7 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
 
         merge(saveContent$, sendModifyEvent$, sentCallSuccessEvent$).pipe(
             finalize(() => this.cancelLoader()),
-            catchError((e) =>  this.handleError(e))
+            catchError(() =>  this.handleError())
         ).subscribe(() => {});
     }
 
@@ -105,7 +105,7 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
         this.formData = data;
     }
 
-    private handleError(e): Observable<any> {
+    private handleError(): Observable<any> {
         this.cancelLoader();
         return of();
     }

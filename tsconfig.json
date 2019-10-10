@@ -22,6 +22,8 @@
     "module": "esnext",
     "stripInternal": false,
     "noImplicitReturns": true,
-    "newLine": "lf"
+    "newLine": "lf",
+    "strictFunctionTypes": true,
+    "noFallthroughCasesInSwitch": true
   }
 }

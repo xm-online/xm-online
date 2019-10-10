@@ -36,7 +36,7 @@ export class EntityDetailFabComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private registerChangeInXmEntities() {
-        this.eventSubscriber = this.eventManager.subscribe('xmEntityDetailModification', (response) => this.detectViewBtns());
+        this.eventSubscriber = this.eventManager.subscribe('xmEntityDetailModification', () => this.detectViewBtns());
     }
 
     ngOnInit() {

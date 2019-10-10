@@ -195,7 +195,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         let slugToGo = null;
         if (!environment.production) {console.log(`checkAndRedirect`)}
         this.dashboardWrapperService.dashboards().then((dashboards) => {
-            configSlugs.forEach((slug, i) => {
+            configSlugs.forEach((slug) => {
                 if (dashboards && dashboards.length) {
                     for (const d of dashboards) {
                         const dSlug = d && d.config && d.config.slug ? d.config.slug : null;

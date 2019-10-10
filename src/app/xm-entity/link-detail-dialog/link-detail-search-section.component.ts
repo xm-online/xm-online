@@ -24,7 +24,7 @@ export class LinkDetailSearchSectionComponent implements OnInit {
     @Input() linkSpec: LinkSpec;
     @Input() sourceXmEntity: XmEntity;
 
-    xmEntity: XmEntity = new XmEntity();
+    xmEntity: XmEntity = {};
     searchQuery: string;
     searchXmEntities: XmEntity[];
     page: number;
@@ -86,7 +86,7 @@ export class LinkDetailSearchSectionComponent implements OnInit {
 
     onAdd(targetXmEntity: XmEntity) {
         this.showLoader = true;
-        const link = new Link();
+        const link: Link = {};
         link.target = targetXmEntity;
         link.source = this.sourceXmEntity;
         link.typeKey = this.linkSpec.key;

@@ -83,7 +83,7 @@ export class XmMainComponent implements OnInit, OnDestroy {
         });
 
         // TODO #14219. workaround for dynamic expand height of textarea
-        $('body').on('keyup', '.textarea-auto-height textarea', function (ev) {
+        $('body').on('keyup', '.textarea-auto-height textarea', function () {
             this.style.overflow = 'hidden';
             this.style.height = '52px';
             this.style.height = this.scrollHeight + 'px';

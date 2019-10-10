@@ -21,7 +21,7 @@ export class CommentDetailDialogComponent implements OnInit {
     @Input() xmEntity: XmEntity;
     @Input() commentSpecs: CommentSpec[];
 
-    comment: Comment = new Comment;
+    comment: Comment = {};
     showLoader: boolean;
 
     constructor(private activeModal: NgbActiveModal,

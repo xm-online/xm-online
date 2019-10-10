@@ -119,7 +119,7 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
             .getPasswordConfig()
             .subscribe((config: any) => {
                 this.makePasswordSettings(config);
-            }, (err) => this.makePasswordSettings());
+            }, () => this.makePasswordSettings());
     }
 
     private getAccessToken(): Observable<any> {

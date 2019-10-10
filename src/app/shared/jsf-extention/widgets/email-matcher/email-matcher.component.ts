@@ -65,7 +65,7 @@ export class EmailMatcherComponent implements OnInit {
                     }
                 )
             )
-            .subscribe(value => {});
+            .subscribe(() => {});
     }
 
     registerMatcherChanger() {
@@ -73,7 +73,7 @@ export class EmailMatcherComponent implements OnInit {
             .valueChanges
             .pipe(
                 debounceTime(200),
-                tap((res) => {
+                tap(() => {
                         if (this.originalControl.value !== this.matcherControl.value) {
                             this.matcherSetError();
                             this.controlValue = '';
@@ -86,7 +86,7 @@ export class EmailMatcherComponent implements OnInit {
                     }
                 )
             )
-            .subscribe(value => {});
+            .subscribe(() => {});
     }
 
     private updateValue(value): void {

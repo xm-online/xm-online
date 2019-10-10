@@ -28,7 +28,7 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
     @Input() sourceXmEntity: XmEntity;
     @Input() spec: Spec;
 
-    xmEntity: XmEntity = new XmEntity();
+    xmEntity: XmEntity = {};
     xmEntitySpec: XmEntitySpec;
     availableSpecs: XmEntitySpec[];
     jsfAttributes: any;
@@ -72,7 +72,7 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
 
     onConfirmSave() {
         this.showLoader = true;
-        const link = new Link();
+        const link: Link = {};
         link.name = this.xmEntity.name;
         link.source = this.sourceXmEntity;
         link.typeKey = this.linkSpec.key;

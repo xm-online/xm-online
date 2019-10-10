@@ -33,7 +33,7 @@ export class UserLoginService {
         if (this.promise) {
             return this.promise;
         }
-        return this.promise = new Promise((resolve, reject) => {
+        return this.promise = new Promise((resolve) => {
             this.specService.getLoginsSpec().toPromise().then(
                 (result) => {
                     resolve(result.logins.reduce(function (map, obj) {

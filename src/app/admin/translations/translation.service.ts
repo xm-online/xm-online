@@ -16,7 +16,7 @@ export class TranslationService {
     }
 
     getFile(configPath: string): Observable<any> {
-        return this.http.get(configPath).pipe(map((res: Response) => { return res.json(); }));
+        return this.http.get<any>(configPath).pipe(map((res: Response) => res.json()));
     }
 
     translate(target, q) {

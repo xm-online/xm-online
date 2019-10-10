@@ -53,7 +53,7 @@ export class RolesMgmtComponent implements OnInit, OnDestroy {
     }
 
     private registerChangeInRoles() {
-        this.eventSubscriber = this.eventManager.subscribe('roleListModification', (response) => this.loadAll());
+        this.eventSubscriber = this.eventManager.subscribe('roleListModification', () => this.loadAll());
     }
 
     loadAll() {

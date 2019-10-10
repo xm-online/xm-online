@@ -56,7 +56,7 @@ export class NotificationsService {
             this.entityService.changeState(id, targetState);
 
         return action$.pipe(
-            map((response: HttpResponse<any>) => {
+            map(() => {
                 this.eventManager.broadcast({name: 'notificationListUpdated'});
                 this.totalCount--;
                 return true;

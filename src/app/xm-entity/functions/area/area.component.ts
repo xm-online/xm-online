@@ -32,7 +32,7 @@ export class AreaComponent implements AfterViewInit {
     constructor(private functionContextService: FunctionContextService,
                 private modalService: NgbModal) {
         this.mapId = buildMapId('area');
-        this.context = new FunctionContext();
+        this.context = {};
         this.context.key = this.mapId;
         this.context.typeKey = 'AREA';
     }
@@ -108,11 +108,11 @@ export class AreaComponent implements AfterViewInit {
 
         });
 
-        this.map.on('draw:edited', function (e) {
+        this.map.on('draw:edited', function () {
             self.saveFunction(self.drawnItems);
         });
 
-        this.map.on('draw:deleted', function (e) {
+        this.map.on('draw:deleted', function () {
             self.saveFunction(self.drawnItems);
         });
 

@@ -53,7 +53,7 @@ export class LinkListCardComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.links && this.valueToLength(changes.links.previousValue) !== this.valueToLength(changes.links.currentValue)) {
-            const link = new Link();
+            const link: Link = {};
             link.target = this.xmEntity;
             this.treeRootLinks = [link];
         }

@@ -147,7 +147,7 @@ export class SpecificationMngComponent implements OnInit {
         this.service
             .updateConfig(TENANT_SPEC_PATH, this.tenantSpecificationOut)
             .pipe(finalize(() => this.tenantSpecificationProgress = false))
-            .subscribe((res) => window.location.reload());
+            .subscribe(() => window.location.reload());
     }
 
     public validateUiSpecification(): void {

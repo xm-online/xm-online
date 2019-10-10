@@ -163,7 +163,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     private registerChangeAuth() {
-        this.authSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, event => {
+        this.authSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, () => {
             // console.log('Event: %o', event);
             this.loadData();
             // this.router.navigate([`/dashboard`, result[0].id])
@@ -172,7 +172,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
 
     private registerChangeInDashboards() {
         this.dashboardSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_DASHBOARD_LIST_MODIFICATION,
-            resp => this.getDashboards(true));
+            () => this.getDashboards(true));
     }
 
     private loadData() {
@@ -422,7 +422,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
                     }
                     return value;
                 }),
-                catchError(error => {
+                catchError(() => {
                     return of();
                 })
             );

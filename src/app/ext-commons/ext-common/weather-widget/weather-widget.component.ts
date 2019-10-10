@@ -21,7 +21,7 @@ export class WeatherWidgetComponent implements OnInit {
         this.weatherService.get(this.config.city).pipe(finalize(() => this.showLoader = false))
             .subscribe(
                 result => this.weather = result,
-                error => this.showLoader = false
+                () => this.showLoader = false
             );
     }
 

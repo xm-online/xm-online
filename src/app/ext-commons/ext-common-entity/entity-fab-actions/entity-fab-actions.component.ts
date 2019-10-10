@@ -138,7 +138,7 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
         modalRef.componentInstance.functionSpec = functionSpec;
         modalRef.componentInstance.dialogTitle = title;
         modalRef.componentInstance.buttonTitle = title;
-        modalRef.componentInstance.onSuccess = (funcResult) => {
+        modalRef.componentInstance.onSuccess = () => {
             this.eventManager.broadcast({name: XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS });
             swal({
                 type: 'success',

@@ -1,18 +1,17 @@
-import { BaseEntity } from './../../shared';
+import { BaseEntity } from '../../shared';
 import { XmEntity } from './xm-entity.model';
 
-export class Location implements BaseEntity {
-    constructor(public id?: number,
-                public typeKey?: string,
-                public countryKey?: string,
-                public longitude?: number,
-                public latitude?: number,
-                public name?: string,
-                public addressLine1?: string,
-                public addressLine2?: string,
-                public city?: string,
-                public region?: string,
-                public zip?: string,
-                public xmEntity?: XmEntity) {
-    }
+export interface Location extends BaseEntity {
+    id?: number;
+    typeKey?: string;
+    countryKey?: string;
+    longitude?: number;
+    latitude?: number;
+    name?: string;
+    addressLine1?: string;
+    addressLine2?: string;
+    city?: string;
+    region?: string;
+    zip?: string;
+    xmEntity?: XmEntity;
 }

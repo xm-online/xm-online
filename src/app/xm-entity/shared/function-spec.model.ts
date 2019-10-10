@@ -1,16 +1,15 @@
 import { BaseSpec } from './../../shared';
 
-export class FunctionSpec implements BaseSpec {
-    constructor(public key?: string,
-                public name?: any,
-                public actionName?: any,
-                public allowedStateKeys?: string[],
-                public withEntityId?: boolean,
-                public inputSpec?: string,
-                public inputForm?: string,
-                public contextDataSpec?: string,
-                public contextDataForm?: string,
-                public showResponse?: boolean,
-                public saveFunctionContext?: boolean) {
-    }
+export interface FunctionSpec extends BaseSpec {
+    key?: string,
+    name?: any,
+    actionName?: any,
+    allowedStateKeys?: string[],
+    withEntityId?: boolean,
+    inputSpec?: string,
+    inputForm?: string,
+    contextDataSpec?: string,
+    contextDataForm?: string,
+    showResponse?: boolean,
+    saveFunctionContext?: boolean
 }

@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
       const callBack = () => {};
 
-      this.loginService.login(credentials, callBack).then((data) => {
+      this.loginService.login(credentials, callBack).then(() => {
         this.isDisabled = false;
         this.loginSuccess();
       }).catch((err) => {

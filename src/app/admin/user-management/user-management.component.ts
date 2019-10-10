@@ -102,7 +102,7 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
             confirmButtonText: 'Yes, Enable'
         }).then((result) => result.value ?
             this.userService.enable2FA(user.userKey, this.getRegistrationEmail(user))
-                .subscribe(resp => {
+                .subscribe(() => {
                         user.tfaEnabled = true;
                         this.alertService.success('userManagement.twoFAEnabled')
                     },
@@ -124,7 +124,7 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
                         user.tfaEnabled = false;
                         this.alertService.success('userManagement.twoFADisabled')
                     },
-                    error => this.alertService.error(error)) :
+                    (error) => this.alertService.error(error)) :
             console.log('Cancel'));
     }
 

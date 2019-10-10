@@ -31,7 +31,7 @@ export class UserResolvePagingParams implements Resolve<any> {
             size: size,
             page: this.paginationUtil.parsePage(page),
             predicate: this.paginationUtil.parsePredicate(sort),
-            ascending: this.paginationUtil.parseAscending(sort)
+            ascending: this.paginationUtil.parseAscending(sort),
         };
     }
 }

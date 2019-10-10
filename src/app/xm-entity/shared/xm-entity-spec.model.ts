@@ -10,28 +10,26 @@ import { RatingSpec } from './rating-spec.model';
 import { StateSpec } from './state-spec.model';
 import { TagSpec } from './tag-spec.model';
 
-export class XmEntitySpec implements BaseSpec {
-    constructor(public key?: string,
-                public name?: any,
-                public isApp?: boolean,
-                public isAbstract?: boolean,
-                public isAvatarEnabled?: boolean,
-                public fastSearch?: FastSearchSpec[],
-                public icon?: string,
-                public dataSpec?: string,
-                public dataForm?: string,
-                public functions?: FunctionSpec[],
-                public attachments?: AttachmentSpec[],
-                public calendars?: CalendarSpec[],
-                public links?: LinkSpec[],
-                public locations?: LocationSpec[],
-                public ratings?: RatingSpec[],
-                public states?: StateSpec[],
-                public tags?: TagSpec[],
-                public comments?: CommentSpec[],
-                public pluralName?: string,
-                public nameValidationPattern?: string,
-                public descriptionPattern?: string) {
-
-    }
+export interface XmEntitySpec extends BaseSpec {
+    key?: string,
+    name?: any,
+    isApp?: boolean,
+    isAbstract?: boolean,
+    isAvatarEnabled?: boolean,
+    fastSearch?: FastSearchSpec[],
+    icon?: string,
+    dataSpec?: string,
+    dataForm?: string,
+    functions?: FunctionSpec[],
+    attachments?: AttachmentSpec[],
+    calendars?: CalendarSpec[],
+    links?: LinkSpec[],
+    locations?: LocationSpec[],
+    ratings?: RatingSpec[],
+    states?: StateSpec[],
+    tags?: TagSpec[],
+    comments?: CommentSpec[],
+    pluralName?: string,
+    nameValidationPattern?: string,
+    descriptionPattern?: string
 }

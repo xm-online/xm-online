@@ -28,7 +28,7 @@ export class XmEntitySpecWrapperService {
             if (!environment.production) {console.log('DBG Promise from cache')}
             return this.promise;
         } else {
-            return this.promise = new Promise((resolve, reject) => {
+            return this.promise = new Promise((resolve) => {
                 if (force === true) {
                     this._spec = undefined;
                 }
@@ -78,10 +78,10 @@ export class XmEntitySpecWrapperService {
 
     xmSpecByKey(typeKey: string): Observable<XmEntitySpec> {
         return this.specv2().pipe(
-            defaultIfEmpty({types: []}),
+            defaultIfEmpty({types: []} as Spec),
             flatMap((spec) => spec.types),
-            filter(xmSpec => typeKey === xmSpec.key)
-        )
+            filter((xmSpec) => typeKey === xmSpec.key),
+        );
     }
 
     clear() {

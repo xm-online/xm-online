@@ -47,6 +47,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         XmRoutingModule,
         LayoutRoutingModule,
         NgxWebstorageModule.forRoot({prefix: 'jhi', separator: '-'}),
+        XmSharedModule.forRoot(),
         XmSharedModule,
         HttpClientModule,
         BrowserAnimationsModule,
@@ -64,9 +65,9 @@ export function HttpLoaderFactory(http: HttpClient) {
                 loader: {
                     provide: TranslateLoader,
                     useFactory: HttpLoaderFactory,
-                    deps: [HttpClient]
-                }
-            }
+                    deps: [HttpClient],
+                },
+            },
         ),
         MarkdownModule.forRoot()
     ],

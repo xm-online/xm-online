@@ -54,7 +54,7 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
     }
 
     private registerModificationSubscription() {
-        this.modificationSubscription = this.eventManager.subscribe('xmEntityDetailModification', (response) => this.loadEntity());
+        this.modificationSubscription = this.eventManager.subscribe('xmEntityDetailModification', () => this.loadEntity());
     }
 
     private loadEntity() {
@@ -68,13 +68,13 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
                 tap((entity) => this.xmEntitySpec = this.getXmEntitySpec(entity.typeKey)),
                 tap(() => DEBUG_INFO_ENABLED ? console.log(`DBG spec = %o`, this.xmEntitySpec) : () => {} ),
                 tap((entity) => this.backLinkSpecs = this.getBackLinkSpecs(entity.typeKey)),
-                tap((entity) => this.defineUiConfig()),
-                tap(entity => this.linkSpecs$.next(
+                tap(() => this.defineUiConfig()),
+                tap(() => this.linkSpecs$.next(
                     this.xmEntitySpec && this.xmEntitySpec.links ?
                         this.xmEntitySpec.links.map(spec => this.addInterfaceSpec(spec, this.entityUiConfig)) : []
                     )
                 ),
-                tap(entity => this.backLinkSpecs$.next(
+                tap(() => this.backLinkSpecs$.next(
                     this.backLinkSpecs.map(spec => this.addInterfaceSpec(spec, this.entityUiConfig))
                 )),
                 tap((entity) => this.defineLayoutGrid(entity.typeKey))
@@ -154,7 +154,7 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
         if (['XM Product Catalog', 'Cimdemo'].includes(this.tenant)) {
             detailLayoutType = 'COMPACT';
         }
-        
+
         const grid = [
             {class: 'row', content: [{class: 'col-sm-12', component: 'function-list-card'}]},
             {class: 'row', content: [{class: 'col-sm-12', component: attachmentsComponent}]},

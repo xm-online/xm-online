@@ -1,15 +1,15 @@
-import { BaseEntity } from './../../shared';
+import { BaseEntity } from '../../shared';
 import { Event } from './event.model';
 import { XmEntity } from './xm-entity.model';
 
-export class Calendar implements BaseEntity {
-    constructor(public id?: number,
-                public typeKey?: string,
-                public name?: string,
-                public description?: string,
-                public startDate?: any,
-                public endDate?: any,
-                public events?: Event[],
-                public xmEntity?: XmEntity) {
-    }
+export interface Calendar extends BaseEntity {
+    id?: number;
+    typeKey?: string;
+    name?: string;
+    description?: string;
+    startDate?: string | Date;
+    endDate?: string | Date;
+    events?: Event[];
+    xmEntity?: XmEntity;
 }
+

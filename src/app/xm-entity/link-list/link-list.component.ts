@@ -33,7 +33,7 @@ export class LinkListComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private registerModificationSubscription() {
-        this.modificationSubscription = this.eventManager.subscribe('linkListModification', (response) => this.load());
+        this.modificationSubscription = this.eventManager.subscribe('linkListModification', () => this.load());
     }
 
     ngOnInit() {
@@ -78,7 +78,7 @@ export class LinkListComponent implements OnInit, OnDestroy, OnChanges {
             .pipe(
                 map(response => response.body),
                 map(items => items.map(item => this.inverseLink(item))),
-                catchError(err => of([]))
+                catchError(() => of([]))
             )
     }
 

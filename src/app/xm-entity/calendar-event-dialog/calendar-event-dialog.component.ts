@@ -29,7 +29,7 @@ export class CalendarEventDialogComponent implements OnInit {
     @Input() endDate: any;
     @Input() onAddEvent: (Event) => {};
 
-    event: Event = new Event();
+    event: Event = {};
     showLoader: boolean;
 
     constructor(private activeModal: NgbActiveModal,

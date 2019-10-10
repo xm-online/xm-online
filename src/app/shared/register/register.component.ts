@@ -67,7 +67,7 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
             .getPasswordConfig()
             .subscribe((config: any) => {
                 this.makePasswordSettings(config);
-            }, err => this.makePasswordSettings());
+            }, () => this.makePasswordSettings());
     }
 
     ngAfterViewInit() {

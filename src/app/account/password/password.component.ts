@@ -39,7 +39,7 @@ export class PasswordComponent implements OnInit {
                 .getPasswordConfig()
                 .subscribe((config: any) => {
                     this.makePasswordSettings(config);
-                }, (err) => this.makePasswordSettings());
+                }, () => this.makePasswordSettings());
         });
     }
 

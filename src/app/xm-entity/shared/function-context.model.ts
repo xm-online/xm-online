@@ -1,15 +1,15 @@
-import { BaseEntity } from './../../shared';
 import { XmEntity } from './xm-entity.model';
+import { BaseEntity } from '../../shared';
 
-export class FunctionContext implements BaseEntity {
-    constructor(public id?: number,
-                public key?: string,
-                public typeKey?: string,
-                public description?: string,
-                public startDate?: any,
-                public updateDate?: any,
-                public endDate?: any,
-                public data?: any,
-                public xmEntity?: XmEntity) {
-    }
+export interface FunctionContext extends BaseEntity {
+    id?: number;
+    key?: string;
+    typeKey?: string;
+    description?: string;
+    startDate?: string | Date;
+    updateDate?: string | Date;
+    endDate?: string | Date;
+    data?: any;
+    xmEntity?: XmEntity;
 }
+

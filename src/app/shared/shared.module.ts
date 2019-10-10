@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, ModuleWithProviders, NgModule } from '@angular/core';
 import { CookieService, CookieOptions } from 'angular2-cookie/core';
 import { ReCaptchaModule } from 'angular2-recaptcha';
 import { MarkdownModule } from 'ngx-markdown';
@@ -63,6 +63,7 @@ import { ExtMdEditorComponent } from './jsf-extention/widgets/ext-md-editor/ext-
 import { ExtTextareaComponent } from './jsf-extention/widgets/ext-textarea/ext-textarea.component';
 import { FileUploadComponent } from './jsf-extention/widgets/file-upload/file-upload.component';
 import { PasswordStrengthBarComponent } from './password-strength-bar/password-strength-bar.component';
+import { TranslatePipe } from './pipes/translate.pipe';
 import { RoleService } from './role/role.service';
 import { GateSharedCommonModule } from './shared-common.module';
 import { GateSharedLibsModule } from './shared-libs.module'
@@ -72,6 +73,18 @@ import { XmCondition } from './helpers/xm-condition';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { TranslateModule } from '@ngx-translate/core';
+
+const SERVICES_FOR_ROOT = [
+    TranslatePipe,
+];
+
+const PIPES = [
+    TranslatePipe,
+];
+
+const MODULES = [
+    TranslateModule,
+];
 
 @NgModule({
     imports: [
@@ -84,7 +97,7 @@ import { TranslateModule } from '@ngx-translate/core';
         OwlDateTimeModule,
         GooglePlaceModule,
         OwlNativeDateTimeModule,
-        TranslateModule
+        MODULES,
     ],
     declarations: [
         AceEditorDirective,
@@ -128,7 +141,8 @@ import { TranslateModule } from '@ngx-translate/core';
         EmailMatcherComponent,
         TextSectionComponent,
         FileUploadComponent,
-        PrivacyAndTermsDialogComponent
+        PrivacyAndTermsDialogComponent,
+        PIPES,
     ],
     entryComponents: [
         LoginComponent,
@@ -177,7 +191,8 @@ import { TranslateModule } from '@ngx-translate/core';
         PrivilegeService,
         ParseByPathService,
         PasswordStrengthBarComponent,
-        XmConfigService
+        XmConfigService,
+        PIPES,
     ],
     exports: [
         AceEditorDirective,
@@ -225,10 +240,14 @@ import { TranslateModule } from '@ngx-translate/core';
         TextSectionComponent,
         FileUploadComponent,
         GooglePlaceModule,
-        TranslateModule
+        PIPES,
+        MODULES,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
 export class XmSharedModule {
+ public static forRoot(): ModuleWithProviders<XmSharedModule> {
+        return  {ngModule: XmSharedModule, providers: SERVICES_FOR_ROOT};
+    }
 }

@@ -10,28 +10,28 @@ const routes: Routes = [
         component: DashboardComponent,
         data: {
             privileges: {
-                value: ['DASHBOARD.GET_LIST']
+                value: ['DASHBOARD.GET_LIST'],
             },
-            pageTitle: 'global.menu.admin.dashboard'
+            pageTitle: 'global.menu.admin.dashboard',
         },
-        canActivate: [UserRouteAccessService]
+        canActivate: [UserRouteAccessService],
     },
     {
         path: 'dashboard/:id',
         component: DashboardComponent,
         data: {
             privileges: {
-                value: ['DASHBOARD.GET_LIST.ITEM']
+                value: ['DASHBOARD.GET_LIST.ITEM'],
             },
-            pageTitle: 'global.menu.admin.dashboard'
+            pageTitle: 'global.menu.admin.dashboard',
         },
-        canActivate: [UserRouteAccessService]
-    }
+        canActivate: [UserRouteAccessService],
+    },
 ];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
 })
 export class XmDashboardRoutingModule {
 }

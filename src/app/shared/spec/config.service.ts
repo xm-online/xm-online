@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { AsyncSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PasswordSpec } from '../../xm-entity/shared/password-spec.model';
-import { Principal } from '../auth/principal.service';
 import { ModulesLanguageHelper } from '../language/modules-language.helper';
 import { XmApplicationConfigService } from './xm-config.service';
 

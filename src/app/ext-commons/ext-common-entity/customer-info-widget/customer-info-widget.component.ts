@@ -10,7 +10,6 @@ import {
     Attachment,
     AttachmentDetailDialogComponent,
     AttachmentService,
-    AttachmentSpec,
     XmEntityService
 } from '../../../xm-entity';
 import { XM_EVENT_LIST } from '../../../xm.constants';

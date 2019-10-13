@@ -19,7 +19,7 @@ export class XmPasswordNeededComponent implements OnInit {
     constructor(private fb: FormBuilder,
                 private modalService: NgbModal,
                 private eventManager: JhiEventManager) {
-        this.form = fb.group({password: [null, Validators.required]});
+        this.form = this.fb.group({password: [null, Validators.required]});
     }
 
     get password(): AbstractControl {

@@ -2,11 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 
 import { ModulesLanguageHelper } from '../../../shared/language/modules-language.helper';
 import { XM_EVENT_LIST } from '../../../xm.constants';
-import { XmConfigService } from '../../../shared';
 
 @Component({
     selector: 'xm-sign-in-up-widget',
@@ -21,15 +19,12 @@ export class SignInUpWidgetComponent implements OnInit, OnDestroy {
     config: any;
     isLoginFormView = true;
     successRegistration = false;
-    socialConfiguration: any;
     loginLabel: string;
 
     constructor(
         private eventManager: JhiEventManager,
-        private translateService: TranslateService,
         private jhiLanguageService: JhiLanguageService,
         private modulesLangHelper: ModulesLanguageHelper,
-        private xmConfigService: XmConfigService,
         private route: ActivatedRoute,
         private router: Router) {
     }

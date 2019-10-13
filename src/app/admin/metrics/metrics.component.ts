@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiLanguageService } from 'ng-jhipster';
-import { Subscription } from 'rxjs';
 import { finalize, take } from 'rxjs/operators';
 
 import { JhiMetricsMonitoringModalComponent } from './metrics-modal.component';
@@ -27,7 +25,6 @@ export class JhiMetricsMonitoringComponent implements OnInit {
     selectedInstance = '';
 
     constructor(
-        private jhiLanguageService: JhiLanguageService,
         private modalService: NgbModal,
         private metricsService: JhiMetricsService
     ) {

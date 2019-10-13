@@ -1,10 +1,9 @@
-import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { JhiLanguageService } from 'ng-jhipster';
 import { interval, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { AccountService, JhiLanguageHelper, Principal } from '../../shared';
+import { AccountService, Principal } from '../../shared';
 import { XmConfigService } from '../../shared/spec/config.service';
 import { DEFAULT_LANG } from '../../xm.constants';
 
@@ -30,11 +29,8 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
     private _clockSubscription: Subscription;
 
     constructor(private accountService: AccountService,
-                private xmConfigService: XmConfigService,
                 private principal: Principal,
-                private datePipe: DatePipe,
                 private jhiLanguageService: JhiLanguageService,
-                private languageHelper: JhiLanguageHelper,
                 private xmConfig: XmConfigService) {
         this.principal.identity().then((account) => {
             this.settingsAccount = this.copyAccount(account);

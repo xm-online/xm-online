@@ -16,9 +16,9 @@ export class XmConfirmDialogComponent implements OnInit {
     event: any;
 
     constructor(
-        private fb: FormBuilder
+        private fb: FormBuilder,
     ) {
-        this.form = fb.group({ password: [null, Validators.required] });
+        this.form = this.fb.group({ password: [null, Validators.required] });
     }
 
     ngOnInit() {

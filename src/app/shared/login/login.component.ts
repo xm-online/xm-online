@@ -168,7 +168,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
 
     private fixAutoFillFieldsChrome(): void {
-        const self = this;
         setTimeout(() => {
             try {
                 const autoFilled = document.querySelectorAll('input:-webkit-autofill');

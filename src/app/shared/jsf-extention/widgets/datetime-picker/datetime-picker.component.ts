@@ -29,7 +29,7 @@ export class DatetimePickerComponent implements OnInit {
                 private dateTimeAdapterLabels: OwlDateTimeIntl,
                 private modulesLanguageHelper: ModulesLanguageHelper,
                 public principal: Principal) {
-        dateTimeAdapter.setLocale(this.modulesLanguageHelper.getLangKey());
+        this.dateTimeAdapter.setLocale(this.modulesLanguageHelper.getLangKey());
     }
 
     ngOnInit() {

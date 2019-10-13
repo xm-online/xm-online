@@ -5,8 +5,6 @@ import 'brace/mode/json';
 import 'brace/mode/yaml';
 import 'brace/theme/chrome';
 
-import { environment } from '../../../environments/environment';
-
 declare var ace: any;
 
 @Directive({

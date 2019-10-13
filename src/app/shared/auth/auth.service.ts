@@ -1,16 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { Principal } from './principal.service';
-import { StateStorageService } from './state-storage.service';
 
 @Injectable()
 export class AuthService {
 
     constructor(
-        private principal: Principal,
-        private stateStorageService: StateStorageService,
-        private router: Router
+        private principal: Principal
     ) {}
 
     authorize(force) {

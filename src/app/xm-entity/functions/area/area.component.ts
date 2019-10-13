@@ -7,8 +7,6 @@ import { FunctionContextService } from '../../shared/function-context.service';
 import { XmEntity } from '../../shared/xm-entity.model';
 import { OsmPolygonDialogComponent } from './osm-polygon-dialog.component';
 
-declare let google: any;
-declare let window: any;
 declare let L: any;
 
 @Component({

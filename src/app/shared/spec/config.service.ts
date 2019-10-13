@@ -1,11 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JhiEventManager } from 'ng-jhipster';
 import { AsyncSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PasswordSpec } from '../../xm-entity/shared/password-spec.model';
-
-import { Principal } from '../auth/principal.service';
 import { ModulesLanguageHelper } from '../language/modules-language.helper';
 import { XmApplicationConfigService } from './xm-config.service';
 
@@ -23,9 +20,7 @@ export class XmConfigService {
     constructor(
         private http: HttpClient,
         private modulesLangHelper: ModulesLanguageHelper,
-        private appConfig: XmApplicationConfigService,
-        private eventManager: JhiEventManager,
-        private principal: Principal
+        private appConfig: XmApplicationConfigService
     ) {
     }
 

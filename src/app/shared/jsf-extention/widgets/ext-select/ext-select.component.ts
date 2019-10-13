@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import {
     AfterViewInit,
     ChangeDetectorRef,
@@ -15,7 +14,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { JsonSchemaFormComponent, JsonSchemaFormService } from 'angular2-json-schema-form';
 import { MatSelect, VERSION } from '@angular/material';
 import { BehaviorSubject, Observable, of, ReplaySubject, Subject } from 'rxjs';
-import { filter, map, take, takeUntil, tap, mergeMap, finalize } from 'rxjs/operators';
+import { filter, map, takeUntil, tap, mergeMap, finalize } from 'rxjs/operators';
 
 import { Principal } from '../../../auth/principal.service';
 import { I18nNamePipe } from '../../../language/i18n-name.pipe';
@@ -54,7 +53,6 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
     constructor(
         @Inject(forwardRef(() => JsonSchemaFormComponent)) private _parent: JsonSchemaFormComponent,
         private jsf: JsonSchemaFormService,
-        private http: HttpClient,
         private selectService: ExtSelectService,
         private i18nNamePipe: I18nNamePipe,
         private changeDetectorRef: ChangeDetectorRef,

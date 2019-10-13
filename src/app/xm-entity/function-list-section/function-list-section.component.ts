@@ -20,8 +20,6 @@ import {StateChangeDialogComponent} from '../state-change-dialog/state-change-di
 import {Observable, of, ReplaySubject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
-declare let swal: any;
-
 @Component({
     selector: 'xm-function-list-section',
     templateUrl: './function-list-section.component.html',
@@ -164,16 +162,6 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
     getCurrentStateSpec(): StateSpec {
         return this.xmEntitySpec.states &&
             this.xmEntitySpec.states.filter((s) => s.key === this.xmEntity.stateKey).shift();
-    }
-
-
-    private alert(type, key) {
-        swal({
-            type: type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary'
-        });
     }
 
     public onCallFunction(functionSpec: FunctionSpec): void {

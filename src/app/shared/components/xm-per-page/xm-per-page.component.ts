@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {JhiLanguageService} from "ng-jhipster";
 
 @Component({
     selector: 'xm-per-page',

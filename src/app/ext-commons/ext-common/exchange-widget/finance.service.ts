@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-declare let escape: any;
-declare let parseInt: any;
 
 @Injectable()
 export class FinanceService {

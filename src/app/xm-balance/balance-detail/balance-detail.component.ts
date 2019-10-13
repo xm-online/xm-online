@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {Pocket} from '..';
 import {PocketService} from '../shared/pocket.service';
@@ -15,7 +14,7 @@ export class BalanceDetailComponent implements OnInit {
     @Input() balanceId: number;
     pockets$: Observable<Pocket[]>;
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(
                 private pocketService: PocketService) {
     }
 

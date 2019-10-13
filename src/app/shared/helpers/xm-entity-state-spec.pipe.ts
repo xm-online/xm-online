@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Spec, XmEntitySpecWrapperService } from '../../xm-entity';
+import { Spec } from '../../xm-entity';
 
 @Pipe({name: 'xmEntityStateSpec'})
 export class XmEntityStateSpecPipe implements PipeTransform {
 
-    constructor(private xmEntitySpecWrapperService: XmEntitySpecWrapperService) {
+    constructor() {
     }
 
     transform(value: string, specKey: string, spec: Spec): any {

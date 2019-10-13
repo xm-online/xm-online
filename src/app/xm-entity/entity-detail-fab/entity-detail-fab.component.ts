@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
-import {BehaviorSubject, Subscription} from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { AttachmentDetailDialogComponent } from '../attachment-detail-dialog/attachment-detail-dialog.component';
 import { CommentDetailDialogComponent } from '../comment-detail-dialog/comment-detail-dialog.component';

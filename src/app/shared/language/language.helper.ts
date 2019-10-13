@@ -20,12 +20,12 @@ export class JhiLanguageHelper {
         private rootRenderer: RendererFactory2,
         private appConfig: XmApplicationConfigService,
         private titleService: Title,
-        private router: Router
+        private router: Router,
     ) {
         const appCfg = this.appConfig.getAppConfig();
         const startLanguage = (appCfg && appCfg.defaultLang) ? appCfg.defaultLang : getBrowserLang();
         this._language = new BehaviorSubject<string>(startLanguage);
-        this.renderer = rootRenderer.createRenderer(document.querySelector('html'), null);
+        this.renderer = this.rootRenderer.createRenderer(document.querySelector('html'), null);
         this.translateService.onLangChange.subscribe((event: LangChangeEvent) => this.handleLanguageChangeEvent(event));
     }
 

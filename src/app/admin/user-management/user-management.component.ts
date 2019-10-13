@@ -179,7 +179,7 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
     }
 
     public onAdd() {
-        const modalRef = this.modalService.open(UserMgmtDialogComponent, { backdrop: 'static', size: 'lg' });
+        this.modalService.open(UserMgmtDialogComponent, { backdrop: 'static', size: 'lg' });
     }
 
     public onEdit(user) {

@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { TimeAgoService, TimelineService } from '..';
 
-import { XmEntity } from '../../xm-entity';
 import { XM_EVENT_LIST } from '../../xm.constants';
 import { TimelinePage } from '../shared/timeline-page.model';
 

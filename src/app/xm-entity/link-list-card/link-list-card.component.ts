@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { Principal } from '../../shared/auth/principal.service';
-import {FullLinkSpec, LinkSpec} from '../shared/link-spec.model';
+import { FullLinkSpec } from '../shared/link-spec.model';
 import { Link } from '../shared/link.model';
 import { LinkService } from '../shared/link.service';
 import { XmEntity } from '../shared/xm-entity.model';

@@ -107,7 +107,6 @@ export class JhiAlertErrorComponent implements OnDestroy {
                 break;
             }
             case 'alert': {
-                const type: any = messageSettings[1];
                 $.notify({
                     message: title,
                 }, {

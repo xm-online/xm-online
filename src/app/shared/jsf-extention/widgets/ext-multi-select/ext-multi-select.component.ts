@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, Version, ViewChild } from '@angular/core';
 import { JsonSchemaFormService, removeRecursiveReferences, buildFormGroup } from 'angular2-json-schema-form';
 import { FormControl } from '@angular/forms';
@@ -34,7 +33,6 @@ export class ExtMultiSelectComponent implements OnInit, OnDestroy, AfterViewInit
     private _onDestroy = new Subject<void>();
 
     constructor(private jsf: JsonSchemaFormService,
-                private http: HttpClient,
                 private selectService: ExtSelectService,
                 private i18nNamePipe: I18nNamePipe,
                 private changeDetectorRef: ChangeDetectorRef,

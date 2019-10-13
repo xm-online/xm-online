@@ -8,7 +8,6 @@ import { AttachmentSpec } from '../shared/attachment-spec.model';
 import { Attachment } from '../shared/attachment.model';
 import { AttachmentService } from '../shared/attachment.service';
 import { XmEntity } from '../shared/xm-entity.model';
-import { Content } from '../shared/content.model';
 
 declare let swal: any;
 

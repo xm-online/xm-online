@@ -5,9 +5,9 @@ import { NgbPaginationConfig} from '@ng-bootstrap/ng-bootstrap';
 @Injectable()
 export class PaginationConfig {
     constructor(private config: NgbPaginationConfig) {
-        config.boundaryLinks = true;
-        config.maxSize = 5;
-        config.pageSize = ITEMS_PER_PAGE;
-        config.size = 'sm';
+        this.config.boundaryLinks = true;
+        this.config.maxSize = 5;
+        this.config.pageSize = ITEMS_PER_PAGE;
+        this.config.size = 'sm';
     }
 }

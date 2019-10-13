@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import {JhiLanguageService} from "ng-jhipster";
 import {Permission} from "../../shared/role/permission.model";
 
 @Component({

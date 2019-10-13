@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Principal } from '../../shared';
 
 declare let $: any;
 
@@ -11,8 +10,7 @@ declare let $: any;
 export class TranslationService {
 
     constructor(private http: HttpClient,
-                private eventManager: JhiEventManager,
-                private principal: Principal) {
+                private eventManager: JhiEventManager) {
     }
 
     getFile(configPath: string): Observable<any> {

@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { JsonSchemaFormService } from 'angular2-json-schema-form';
@@ -12,8 +11,6 @@ import { ExtAutocompleteService } from './ext-autocomplete-service';
 
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
-
-declare const $: any;
 
 @Component({
     selector: 'xm-ext-autocomplete-widget',
@@ -36,7 +33,6 @@ export class ExtAutocompleteComponent implements OnInit {
     @ViewChild('emailRef', {static: false}) emailRef: ElementRef;
 
     constructor(private jsf: JsonSchemaFormService,
-                private http: HttpClient,
                 private principal: Principal,
                 private autocompleteService: ExtAutocompleteService,
                 private i18nNamePipe: I18nNamePipe,

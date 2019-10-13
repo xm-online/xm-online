@@ -12,17 +12,13 @@ import { PaginationConfig } from './blocks/config/uib-pagination.config';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
 import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
-import { ErrorComponent, FooterComponent, NavbarComponent, PageRibbonComponent, ProfileService, XmMainComponent } from './layouts';
-import { SidebarModule } from './layouts/sidebar/sidebar.module';
+import { ProfileService, XmMainComponent } from './layouts';
+import { LayoutModule } from './layouts/layout.module';
 import { UserRouteAccessService } from './shared';
 import { XmSharedModule } from './shared/shared.module';
 import { XmApplicationConfigService } from './shared/spec/xm-config.service';
-import { XmBalanceModule } from './xm-balance/xm-balance.module';
 import { XmDashboardModule } from './xm-dashboard/xm-dashboard.module';
-import { XmEntityModule } from './xm-entity/xm-entity.module';
-import { XmNotificationsModule } from './xm-notifications/xm-notifications.module';
 import { XmRoutingModule } from './xm-routing.module';
-import { XmTimelineModule } from './xm-timeline/xm-timeline.module';
 
 export function appInitializerFn(appConfig: XmApplicationConfigService): () => Promise<any> {
     const r = function () {
@@ -38,18 +34,12 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 @NgModule({
     imports: [
         BrowserModule,
+        HttpClientModule,
         XmRoutingModule,
         NgxWebstorageModule.forRoot({prefix: 'jhi', separator: '-'}),
         XmSharedModule.forRoot(),
-        XmSharedModule,
-        HttpClientModule,
         BrowserAnimationsModule,
-        SidebarModule,
-        XmBalanceModule,
-        XmEntityModule,
         XmDashboardModule.forRoot(),
-        XmTimelineModule,
-        XmNotificationsModule,
         TranslateModule.forRoot({
                 loader: {
                     provide: TranslateLoader,
@@ -58,17 +48,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
                 },
             },
         ),
+        LayoutModule,
         MarkdownModule.forRoot(),
-    ],
-    declarations: [
-        XmMainComponent,
-        NavbarComponent,
-        ErrorComponent,
-        PageRibbonComponent,
-        FooterComponent,
-    ],
-    entryComponents: [
-        NavbarComponent,
     ],
     providers: [
         XmApplicationConfigService,

@@ -18,19 +18,19 @@ declare let swal: any;
 @Component({
     selector: 'xm-calendar-event-dialog',
     templateUrl: './calendar-event-dialog.component.html',
-    styleUrls: ['./calendar-event-dialog.component.scss']
+    styleUrls: ['./calendar-event-dialog.component.scss'],
 })
 export class CalendarEventDialogComponent implements OnInit {
 
-    @Input() xmEntity: XmEntity;
-    @Input() calendar: Calendar;
-    @Input() calendarSpec: CalendarSpec;
-    @Input() startDate: any;
-    @Input() endDate: any;
-    @Input() onAddEvent: (Event) => {};
+    @Input() public xmEntity: XmEntity;
+    @Input() public calendar: Calendar;
+    @Input() public calendarSpec: CalendarSpec;
+    @Input() public startDate: any;
+    @Input() public endDate: any;
+    @Input() public onAddEvent: (arg: Event) => void;
 
-    event: Event = {};
-    showLoader: boolean;
+    public event: Event = {};
+    public showLoader: boolean;
 
     constructor(private activeModal: NgbActiveModal,
                 private eventService: EventService,
@@ -40,22 +40,22 @@ export class CalendarEventDialogComponent implements OnInit {
                 public principal: Principal) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         setTimeout(() => {
             this.event.startDate = this.startDate;
             this.event.endDate = this.endDate;
         });
     }
 
-    onConfirmSave() {
+    public onConfirmSave(): void {
         this.showLoader = true;
         if (this.calendar.id) {
             this.event.calendar = this.calendar;
             this.eventService.create(this.event).pipe(finalize(() => this.showLoader = false))
                 .subscribe(
-                (eventResp: HttpResponse<Event>) => this.onSaveSuccess(this.calendar.id, eventResp.body),
-                (err) => console.log(err),
-                () => this.showLoader = false);
+                    (eventResp: HttpResponse<Event>) => this.onSaveSuccess(this.calendar.id, eventResp.body),
+                    (err) => console.log(err),
+                    () => this.showLoader = false);
         } else {
             const copy: Event = Object.assign({}, this.event);
             copy.startDate = this.dateUtils.toDate(this.event.startDate);
@@ -63,29 +63,30 @@ export class CalendarEventDialogComponent implements OnInit {
             this.calendar.events = [copy];
             this.calendarService.create(this.calendar).pipe(finalize(() => this.showLoader = false))
                 .subscribe(
-                (calendarResp: HttpResponse<Calendar>) => this.onSaveSuccess(calendarResp.body.id, calendarResp.body.events.shift()),
-                (err) => console.log(err),
-                () => this.showLoader = false);
+                    (calendarResp: HttpResponse<Calendar>) => this.onSaveSuccess(calendarResp.body.id,
+                        calendarResp.body.events.shift()),
+                    (err) => console.log(err),
+                    () => this.showLoader = false);
         }
     }
 
-    private onSaveSuccess(calendarId: number, event: Event) {
+    public onCancel(): void {
+        this.activeModal.dismiss('cancel');
+    }
+
+    private onSaveSuccess(calendarId: number, event: Event): void {
         this.activeModal.dismiss(true);
         this.alert('success', 'xm-entity.calendar-event-dialog.add.success');
         this.calendar.id = calendarId;
         this.onAddEvent(event);
     }
 
-    onCancel() {
-        this.activeModal.dismiss('cancel');
-    }
-
-    private alert(type, key) {
+    private alert(type: string, key: string): void {
         swal({
-            type: type,
+            type,
             text: this.translateService.instant(key),
             buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary'
+            confirmButtonClass: 'btn btn-primary',
         });
     }
 

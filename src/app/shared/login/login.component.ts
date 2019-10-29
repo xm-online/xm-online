@@ -4,10 +4,12 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { XM_EVENT_LIST } from '../../xm.constants';
+import { TERMS_ERROR, XM_EVENT_LIST } from '../../xm.constants';
 import { StateStorageService } from '../auth/state-storage.service';
 import { XmConfigService } from '../spec/config.service';
 import { LoginService } from './login.service';
+import { PrivacyAndTermsDialogComponent } from '../components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 declare let $: any;
 
@@ -35,15 +37,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
     floatLabel: boolean;
     sendingLogin: boolean;
     socialConfig: [];
-    public checkTerms: boolean;
+    public checkTermsOfConditions: boolean;
 
-    constructor(protected eventManager: JhiEventManager,
-                protected xmConfigService: XmConfigService,
-                protected loginService: LoginService,
-                protected stateStorageService: StateStorageService,
-                protected elementRef: ElementRef,
-                protected router: Router,
-                protected alertService: JhiAlertService) {
+    constructor(
+        protected eventManager: JhiEventManager,
+        protected xmConfigService: XmConfigService,
+        protected loginService: LoginService,
+        protected stateStorageService: StateStorageService,
+        protected elementRef: ElementRef,
+        protected router: Router,
+        protected alertService: JhiAlertService,
+        private modalService: NgbModal,
+    ) {
         this.checkOTP = false;
         this.credentials = {};
         this.otpValue = '';
@@ -66,7 +71,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 this.socialConfig = uiConfig && uiConfig.social;
                 this.hideRememberMe = uiConfig.hideRememberMe ? uiConfig.hideRememberMe : false;
                 this.hideResetPasswordLink = uiConfig.hideResetPasswordLink ? uiConfig.hideResetPasswordLink : false;
-                this.checkTerms = uaaConfig.isTermsOfConditionsEnabled || false;
+                this.checkTermsOfConditions = uaaConfig && uaaConfig.isTermsOfConditionsEnabled || false;
             });
     }
 
@@ -85,9 +90,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
 
     loginSuccess() {
-
       $('body').removeClass('xm-public-screen');
-
       if (this.router.url === '/register' || (/activate/.test(this.router.url)) ||
         this.router.url === '/finishReset' || this.router.url === '/requestReset') {
         this.router.navigate(['']);
@@ -95,7 +98,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
       this.eventManager.broadcast({
         name: XM_EVENT_LIST.XM_SUCCESS_AUTH,
-        content: 'Sending Authentication Success'
+        content: 'Sending Authentication Success',
       });
 
       // previousState was set in the authExpiredInterceptor before being redirected to login modal.
@@ -162,6 +165,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
               this.loginSuccess();
             }
         }).catch((err) => {
+            const errObj = err.error || null;
+            const termsErr =  errObj === TERMS_ERROR;
+            const termsToken = errObj.accept_token || null;
+
+            if (termsErr && termsToken) { this.pushTermsAccepting(); }
+
             this.authenticationError = true;
             this.successRegistration = false;
             this.isDisabled = false;
@@ -193,5 +202,23 @@ export class LoginComponent implements OnInit, AfterViewInit {
         const ui = this.xmConfigService.getUiConfig();
         const uaa = this.xmConfigService.getPasswordConfig();
         return forkJoin([ui, uaa]);
+    }
+
+    private pushTermsAccepting(): void {
+        const modalRef = this.modalService.open(PrivacyAndTermsDialogComponent, {size: 'lg', backdrop: 'static'});
+
+        // @todo rethink later on to use from config path
+        modalRef.componentInstance.config = {
+            privacyAndTerms: [
+                {en: '/public/terms-of-conditions/terms-of-conditions-en.md'},
+            ],
+        };
+        modalRef.result.then((r) => {
+            if (r === 'accept') {
+                this.login();
+            }
+        }, (err) => {
+            console.log(err);
+        });
     }
 }

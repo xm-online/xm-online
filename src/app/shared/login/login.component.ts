@@ -2,6 +2,8 @@ import { AfterViewInit, Component, ElementRef, Input, OnInit } from '@angular/co
 import { Router } from '@angular/router';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
+import { forkJoin, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { XM_EVENT_LIST } from '../../xm.constants';
 import { StateStorageService } from '../auth/state-storage.service';
 import { XmConfigService } from '../spec/config.service';
@@ -12,7 +14,7 @@ declare let $: any;
 @Component({
     selector: 'xm-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, AfterViewInit {
 
@@ -33,6 +35,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     floatLabel: boolean;
     sendingLogin: boolean;
     socialConfig: [];
+    public checkTerms: boolean;
 
     constructor(protected eventManager: JhiEventManager,
                 protected xmConfigService: XmConfigService,
@@ -50,11 +53,21 @@ export class LoginComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         $('body').addClass('xm-public-screen');
         this.isDisabled = false;
-        this.xmConfigService.getUiConfig().subscribe(config => {
-            this.socialConfig = config && config.social;
-            this.hideRememberMe = config.hideRememberMe ? config.hideRememberMe : false;
-            this.hideResetPasswordLink = config.hideResetPasswordLink ? config.hideResetPasswordLink : false;
-        });
+
+        this.getConfigs()
+            .pipe(
+                map((c) => {
+                    return {ui: c[0], uaa: c[1] ? c[1] : null};
+                }),
+            )
+            .subscribe((config) => {
+                const uiConfig = config && config.ui;
+                const uaaConfig = config && config.uaa;
+                this.socialConfig = uiConfig && uiConfig.social;
+                this.hideRememberMe = uiConfig.hideRememberMe ? uiConfig.hideRememberMe : false;
+                this.hideResetPasswordLink = uiConfig.hideResetPasswordLink ? uiConfig.hideResetPasswordLink : false;
+                this.checkTerms = uaaConfig.isTermsOfConditionsEnabled || false;
+            });
     }
 
     ngAfterViewInit() {
@@ -65,7 +78,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.credentials = {
             username: null,
             password: null,
-            rememberMe: true
+            rememberMe: true,
         };
         this.authenticationError = false;
         this.successRegistration = false;
@@ -95,12 +108,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
       }
     }
 
-    checkOtp() {
-
+    public checkOtp(): void {
       const credentials = {
         grant_type: 'tfa_otp_token',
         otp: this.otpValue,
-        rememberMe: this.rememberMe
+        rememberMe: this.rememberMe,
       };
 
       const callBack = () => {};
@@ -109,7 +121,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.isDisabled = false;
         this.loginSuccess();
       }).catch((err) => {
-        console.log(err);
         this.authenticationError = true;
         this.successRegistration = false;
         this.isDisabled = false;
@@ -136,7 +147,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           grant_type: 'password',
           username: this.username ? this.username.toLowerCase().trim() : '',
           password: this.password ? this.password.trim() : '',
-          rememberMe: this.rememberMe
+          rememberMe: this.rememberMe,
         };
 
         const callBack = () => {};
@@ -151,7 +162,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
               this.loginSuccess();
             }
         }).catch((err) => {
-            console.log(err);
             this.authenticationError = true;
             this.successRegistration = false;
             this.isDisabled = false;
@@ -177,5 +187,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
             } catch (e) {
             }
         }, 500);
+    }
+
+    private getConfigs(): Observable<any> {
+        const ui = this.xmConfigService.getUiConfig();
+        const uaa = this.xmConfigService.getPasswordConfig();
+        return forkJoin([ui, uaa]);
     }
 }

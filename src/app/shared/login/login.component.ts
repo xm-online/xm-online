@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         protected elementRef: ElementRef,
         protected router: Router,
         protected alertService: JhiAlertService,
-        private modalService: NgbModal,
+        protected modalService: NgbModal,
     ) {
         this.checkOTP = false;
         this.credentials = {};

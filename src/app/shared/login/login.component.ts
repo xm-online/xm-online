@@ -58,7 +58,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        console.warn(this.config);
         $('body').addClass('xm-public-screen');
         this.isDisabled = false;
 

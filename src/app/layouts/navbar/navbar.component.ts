@@ -16,6 +16,7 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { XmConfigService } from '../../shared/spec/config.service';
 import { JhiLanguageHelper, LANGUAGES, Principal } from '../../shared';
 import { DEBUG_INFO_ENABLED, VERSION } from '../../xm.constants';
+import { DashboardWrapperService } from '../../xm-dashboard';
 
 const misc: any = {
     navbar_menu_visible: 0,
@@ -41,6 +42,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     title: string;
     titleContent: string;
     tenantLogoUrl: '../assets/img/logo-xm-online.png';
+    public searchMask: string;
 
     private previousPath: string;
     private backStep = 0;
@@ -58,7 +60,8 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
                 private eventManager: JhiEventManager,
                 private $sessionStorage: SessionStorageService,
                 private location: Location,
-                private xmConfigService: XmConfigService) {
+                private xmConfigService: XmConfigService,
+                private dashboardWrapperService: DashboardWrapperService) {
         this.version = DEBUG_INFO_ENABLED ? 'v' + VERSION : '';
         this.registerPopState();
 
@@ -83,6 +86,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         this.routeData = this.getRouteData(this.router.routerState.snapshot.root);
         this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
+                this.getSearchMask();
                 this.routeData = this.getRouteData(this.router.routerState.snapshot.root);
             }
         });
@@ -225,6 +229,22 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     onBack() {
         this.previousPath = this.location.path();
         this.location.back();
+    }
+
+    public getSearchMask(): void {
+        this.dashboardWrapperService.dashboards()
+            .then((dashboards) => {
+                if (dashboards && dashboards.length) {
+                    return dashboards
+                        .filter((d) => (d.config && d.config.slug === this.getDashboardId())
+                            || d.id === parseInt(this.getDashboardId() as string, 10))
+                        .shift();
+                } else { return null; }
+            })
+            .then( (dashboard) => (dashboard && dashboard.config && dashboard.config.search)
+                ? dashboard.config.search
+                : null)
+            .then( (search) => this.searchMask = search && search.mask);
     }
 
     private getRouteData(routeSnapshot: ActivatedRouteSnapshot): string {

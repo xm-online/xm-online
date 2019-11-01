@@ -278,11 +278,13 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         return this.dashboardWrapperService.dashboards()
             .then((dashboards) => {
                 if (dashboards && dashboards.length) {
-                   return dashboards
+                    return dashboards
                         .filter((d) => (d.config && d.config.slug === idOrSlug) || d.id === parseInt(idOrSlug, 10))
                         .shift();
                 } else { return null; }
             })
-            .then( (dashboard) => dashboard.config && dashboard.config.search ? dashboard.config.search : null);
+            .then( (dashboard) => (dashboard && dashboard.config && dashboard.config.search)
+                ? dashboard.config.search
+                : null);
     }
 }

@@ -3,14 +3,16 @@
   <h4 class="modal-title text-left" jhiTranslate="global.shared.privacy-and-terms-dialog.title">Privacy and Terms</h4>
 </div>
 <div class="modal-body">
-  <markdown [src]="config?.privacyAndTerms[lang ? lang : 'en']"></markdown>
-  <div class="form-group checkbox">
-    <label>
-      <input id="iAgree" name="iAgree" type="checkbox" [(ngModel)]="iAgree">
-    </label>
-    <label for="iAgree">
-      <span jhiTranslate="global.shared.privacy-and-terms-dialog.i-agree">I agree</span>
-    </label>
+  <div class="xm-terms-viewer">
+    <markdown [src]="config?.privacyAndTerms[lang ? lang : 'en']"></markdown>
+    <div class="form-group checkbox accept-terms">
+      <label>
+        <input id="iAgree" name="iAgree" type="checkbox" [(ngModel)]="iAgree">
+      </label>
+      <label for="iAgree">
+        {{(config.privacyAndTermsAcceptLabel ? config.privacyAndTermsAcceptLabel : 'global.shared.privacy-and-terms-dialog.i-agree') | translate}}
+      </label>
+    </div>
   </div>
 </div>
 <div class="modal-footer">

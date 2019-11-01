@@ -34,7 +34,7 @@
         </button>
       </div>
     </div>
-    <xm-login [successRegistration]="successRegistration" [loginLabel]="loginLabel" *ngIf="isLoginFormView"></xm-login>
+    <xm-login [config]="config" [successRegistration]="successRegistration" [loginLabel]="loginLabel" *ngIf="isLoginFormView"></xm-login>
     <xm-register [config]="config" *ngIf="!isLoginFormView"></xm-register>
   </div>
 </div>

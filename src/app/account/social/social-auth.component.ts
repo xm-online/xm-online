@@ -7,6 +7,7 @@ import { AuthService, LoginComponent, LoginService } from '../../shared';
 import { StateStorageService } from '../../shared/auth/state-storage.service';
 import { XmConfigService } from '../../shared/spec/config.service';
 import { XM_EVENT_LIST } from '../../xm.constants';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 const SOCIAL_AUTH = 'social-authentication';
 
@@ -23,9 +24,19 @@ export class SocialAuthComponent extends LoginComponent implements OnInit {
                 protected elementRef: ElementRef,
                 protected router: Router,
                 protected alertService: JhiAlertService,
+                protected modalService: NgbModal,
                 protected authService: AuthService,
                 protected cookieService: CookieService) {
-        super(eventManager, xmConfigService, loginService, stateStorageService, elementRef, router, alertService);
+        super(
+            eventManager,
+            xmConfigService,
+            loginService,
+            stateStorageService,
+            elementRef,
+            router,
+            alertService,
+            modalService,
+        );
     }
 
     ngOnInit() {

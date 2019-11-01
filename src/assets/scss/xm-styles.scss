@@ -434,3 +434,21 @@ xm-available-offerings-widget {
         max-width: 80% !important;
     }
 }
+
+.xm-terms-viewer {
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    .accept-terms {
+        position: relative;
+        padding: 0 0 0 20px;
+
+        input[type=checkbox] {
+            position: absolute;
+            left: 0;
+            top: 4px;
+        }
+    }
+}

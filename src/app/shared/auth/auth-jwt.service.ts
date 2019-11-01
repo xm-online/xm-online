@@ -56,6 +56,16 @@ export class AuthServerProvider {
         return this.$localStorage.retrieve(REFRESH_TOKEN) || this.$sessionStorage.retrieve(REFRESH_TOKEN);
     }
 
+    public acceptTermsAndConditions(tocOneTimeToken: string): Observable<any> {
+        const headers = {
+            'Authorization': DEFAULT_AUTH_TOKEN,
+            'Content-Type': DEFAULT_CONTENT_TYPE,
+            'Accept': 'application/json',
+        };
+        return this.http
+            .post(`/uaa/api/users/accept-terms-of-conditions/${tocOneTimeToken}`, {}, {headers});
+    }
+
     private storeAT(resp: any, rememberMe: boolean): string {
         const accessToken = resp[ACCESS_TOKEN];
         if (accessToken) {

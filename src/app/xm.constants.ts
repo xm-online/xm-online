@@ -5,6 +5,7 @@ const _DEFAULT_CONTENT_TYPE = 'application/x-www-form-urlencoded';
 const _DEFAULT_AUTH_TOKEN = 'Basic d2ViYXBwOndlYmFwcA==';
 
 const _DEFAULT_LANG = 'en';
+const _TERMS_ERROR = 'needAcceptTermsOfConditions';
 
 /**
  * System event dictionary
@@ -30,6 +31,7 @@ export const VERSION = _VERSION;
 export const DEBUG_INFO_ENABLED = _DEBUG_INFO_ENABLED;
 
 export const DEFAULT_LANG = _DEFAULT_LANG;
+export const TERMS_ERROR = _TERMS_ERROR;
 
 export const XM_EVENT_LIST = _XM_EVENT_LIST;
 

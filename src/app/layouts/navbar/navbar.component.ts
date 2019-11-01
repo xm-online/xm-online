@@ -66,7 +66,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     ngOnInit() {
-        this.xmConfigService.getUiConfig().subscribe(result => {
+        this.xmConfigService.getUiConfig().subscribe((result) => {
             this.tenantName = result['name'] ? result['name'] : 'XM^online';
             if (this.tenantName === 'XM^online') {
                 this.tenantName += ' ' + this.version;
@@ -126,9 +126,8 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
     search(term: string) {
         if (term) {
-            this.router.navigate(['/search'], {queryParams: { query: term}});
+            this.router.navigate(['/search'], {queryParams: {query: term, dashboardId: this.getDashboardId()}});
         }
-
     }
 
     changeLanguage(languageKey: string) {
@@ -273,5 +272,12 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         titlePart6 = `<span class="title-part-6">${titlePart6}</span>`;
         titlePart7 = `<span class="title-part-7">${titlePart7}</span>`;
         this.titleContent = titlePart1 + titlePart2 + titlePart3 + titlePart4 + titlePart5 + titlePart6 + titlePart7;
+    }
+
+    private getDashboardId(): number | string | void {
+        if (this.location.path(false).includes('dashboard')) {
+            const url = this.location.path(false).split('/');
+            return  url[url.indexOf('dashboard') + 1];
+        }
     }
 }

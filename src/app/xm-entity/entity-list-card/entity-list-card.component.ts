@@ -31,11 +31,9 @@ declare let swal: any;
 })
 export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
 
-    private entityListActionSuccessSubscription: Subscription;
-    private entityEntityListModificationSubscription: Subscription;
-
-    @Input() spec: Spec;
-    @Input() options: EntityListCardOptions;
+    @Input() public spec: Spec;
+    @Input() public options: EntityListCardOptions;
+    @Input() public searchTemplateParams: any;
 
     isShowFilterArea = false;
     list: EntityOptions[];
@@ -45,6 +43,9 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     reverse: boolean;
     showLoader: boolean;
     firstPage = 1;
+
+    private entityListActionSuccessSubscription: Subscription;
+    private entityEntityListModificationSubscription: Subscription;
 
     constructor(private xmEntitySpecWrapperService: XmEntitySpecWrapperService,
                 private xmEntityService: XmEntityService,
@@ -59,11 +60,12 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
+        console.log(this);
         this.entityListActionSuccessSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS,
             () => this.load());
         this.entityEntityListModificationSubscription =
             this.eventManager.subscribe(XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION,
-            () => this.load());
+                () => this.load());
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -102,7 +104,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
             }
 
             if (!this.list[this.activeItemId]) {
-               this.setActiveTab(0);
+                this.setActiveTab(0);
             } else {
                 const activeItem = this.list[this.activeItemId];
                 if (activeItem.query) {
@@ -130,18 +132,9 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private loadEntities(entityOptions: EntityOptions): Observable<XmEntity[]> {
+        console.log(entityOptions);
         this.showLoader = true;
-        const options: any = {
-            typeKey: entityOptions.typeKey,
-            page: entityOptions.page - 1,
-            size: this.entitiesPerPage,
-            sort: [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')],
-        };
-        let method = 'query';
-        if (entityOptions.currentQuery) {
-            options.query = entityOptions.currentQuery;
-            method = 'search';
-        }
+        const {options, method}: any = this.getQueryOptions(entityOptions);
 
         return this.xmEntityService[method](options).pipe(
             tap((xmEntities: HttpResponse<XmEntity[]>) => {
@@ -158,6 +151,33 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
                 return of([]);
             }),
             finalize(() => this.showLoader = false));
+    }
+
+    private getQueryOptions(entityOptions: EntityOptions): any {
+        let options: any;
+        let method = 'query';
+
+        if (this.searchTemplateParams) {
+            options = {
+                'template': this.searchTemplateParams.templateName,
+                'templateParams[page]': entityOptions.page - 1,
+                'templateParams[size]': this.entitiesPerPage,
+                'templateParams[sort]': [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')],
+            };
+            method = 'searchByTemplate';
+        } else {
+            options = {
+                typeKey: entityOptions.typeKey,
+                page: entityOptions.page - 1,
+                size: this.entitiesPerPage,
+                sort: [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')],
+            };
+            if (entityOptions.currentQuery) {
+                options.query = entityOptions.currentQuery;
+                method = 'search';
+            }
+        }
+        return {options, method};
     }
 
     /**
@@ -214,8 +234,8 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         return this.getSpec(entityOptions, xmEntity).pipe(
-             map((xmSpec) => this.processXmSpec(xmSpec, xmEntity)),
-             catchError(() => []),
+            map((xmSpec) => this.processXmSpec(xmSpec, xmEntity)),
+            catchError(() => []),
         );
 
     }

@@ -10,6 +10,7 @@ import { Spec, XmEntitySpecWrapperService } from '../xm-entity';
 import { EntityListCardOptions } from '../xm-entity/entity-list-card/entity-list-card-options.model';
 import { environment } from '../../environments/environment';
 import { LIST_DEFAULT_FIELDS } from '../shared/constants/default-lists-fields.constants';
+import { DashboardWrapperService } from '../xm-dashboard';
 
 @Component({
     selector: 'xm-entity',
@@ -42,6 +43,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     entityType: any;
     types: any;
     spec: Spec;
+    searchParams: any;
 
     spec$: Observable<Spec>;
 
@@ -62,11 +64,14 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                 protected router: Router,
                 protected modalService: NgbModal,
                 protected eventManager: JhiEventManager,
-                protected i18nNamePipe: I18nNamePipe) {
+                protected i18nNamePipe: I18nNamePipe,
+                protected dashboardWrapperService: DashboardWrapperService) {
         this.searchQuery = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : '';
     }
 
     ngOnInit() {
+
+        console.log(this);
 
         if (!environment.production) {
             console.log('ApplicationComponent.ngOnInit')
@@ -110,7 +115,11 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                     if (params['query']) {
                         this.isSearch = true;
                         this.searchQuery = params['query'];
-                        this.load();
+                        this.getSearchConfig(params.dashboardId)
+                            .then((val) => {
+                                this.searchParams = val;
+                                this.load();
+                            });
 
                         this.routeData.pageSubTitle = `[${params['query']}]`;
                         this.jhiLanguageHelper.updateTitle();
@@ -129,7 +138,9 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     load() {
         this.translateService.get(this.defaultFieldsKeys).subscribe(() => {
             const defaultFields = this.buildDefaultFields();
-            this.buildOptions(defaultFields);
+            this.searchParams && this.searchParams.fields
+                ? this.buildOptions(this.searchParams.fields)
+                : this.buildOptions(defaultFields);
         });
     }
 
@@ -155,6 +166,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     }
 
     protected buildOptions(defaultFields) {
+        console.log(this.searchParams);
         const config = this.getListConfig();
         const fields = config && config.fields ? config.fields : defaultFields;
 
@@ -164,10 +176,10 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                     {
                         currentQuery: (config ? config.query : '') + this.searchQuery,
                         name: `[${this.searchQuery}]`,
-                        fields: fields,
-                        routerLink: config && config.routerLink ? config.routerLink : null
-                    }
-                ]
+                        fields,
+                        routerLink: config && config.routerLink ? config.routerLink : null,
+                    },
+                ],
             };
         } else {
             this.entityType = this.getType(this.typeKey) || '';
@@ -261,4 +273,16 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         return spec.types.filter(t => t.key === typeKey).shift();
     }
 
+    private getSearchConfig(idOrSlug: any): Promise<any> {
+
+        return this.dashboardWrapperService.dashboards()
+            .then((dashboards) => {
+                if (dashboards && dashboards.length) {
+                   return dashboards
+                        .filter((d) => (d.config && d.config.slug === idOrSlug) || d.id === parseInt(idOrSlug, 10))
+                        .shift();
+                } else { return null; }
+            })
+            .then( (dashboard) => dashboard.config && dashboard.config.search ? dashboard.config.search : null);
+    }
 }

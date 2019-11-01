@@ -171,7 +171,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             const termsErr =  errObj && errObj.error === TERMS_ERROR;
             const termsToken = errObj.oneTimeToken || null;
             if (termsErr && termsToken) { this.pushTermsAccepting(termsToken); }
-            this.authenticationError = true;
+            this.authenticationError = !termsErr;
             this.successRegistration = false;
             this.isDisabled = false;
             this.sendingLogin = false;

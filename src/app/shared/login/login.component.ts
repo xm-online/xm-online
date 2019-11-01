@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     @Input() successRegistration: boolean;
     @Input() loginLabel: string;
+    @Input() public config: any;
 
     isShowPassword = false;
     isDisabled: boolean;
@@ -37,6 +38,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     floatLabel: boolean;
     sendingLogin: boolean;
     socialConfig: [];
+
     public checkTermsOfConditions: boolean;
 
     constructor(
@@ -56,6 +58,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+        console.warn(this.config);
         $('body').addClass('xm-public-screen');
         this.isDisabled = false;
 
@@ -166,11 +169,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
             }
         }).catch((err) => {
             const errObj = err.error || null;
-            const termsErr =  errObj === TERMS_ERROR;
-            const termsToken = errObj.accept_token || null;
-
-            if (termsErr && termsToken) { this.pushTermsAccepting(); }
-
+            const termsErr =  errObj && errObj.error === TERMS_ERROR;
+            const termsToken = errObj.oneTimeToken || null;
+            if (termsErr && termsToken) { this.pushTermsAccepting(termsToken); }
             this.authenticationError = true;
             this.successRegistration = false;
             this.isDisabled = false;
@@ -204,21 +205,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
         return forkJoin([ui, uaa]);
     }
 
-    private pushTermsAccepting(): void {
+    private pushTermsAccepting(token: string): void {
         const modalRef = this.modalService.open(PrivacyAndTermsDialogComponent, {size: 'lg', backdrop: 'static'});
-
-        // @todo rethink later on to use from config path
-        modalRef.componentInstance.config = {
-            privacyAndTerms: [
-                {en: '/public/terms-of-conditions/terms-of-conditions-en.md'},
-            ],
-        };
+        modalRef.componentInstance.config = this.config;
+        modalRef.componentInstance.termsToken = token;
         modalRef.result.then((r) => {
             if (r === 'accept') {
                 this.login();
             }
-        }, (err) => {
-            console.log(err);
         });
     }
 }

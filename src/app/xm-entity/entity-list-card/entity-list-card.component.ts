@@ -60,7 +60,6 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
-        console.log(this);
         this.entityListActionSuccessSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS,
             () => this.load());
         this.entityEntityListModificationSubscription =
@@ -132,7 +131,6 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private loadEntities(entityOptions: EntityOptions): Observable<XmEntity[]> {
-        console.log(entityOptions);
         this.showLoader = true;
         const {options, method}: any = this.getQueryOptions(entityOptions);
 

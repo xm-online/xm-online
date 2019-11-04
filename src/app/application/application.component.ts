@@ -71,8 +71,6 @@ export class ApplicationComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
 
-        console.log(this);
-
         if (!environment.production) {
             console.log('ApplicationComponent.ngOnInit')
         }
@@ -166,7 +164,6 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     }
 
     protected buildOptions(defaultFields) {
-        console.log(this.searchParams);
         const config = this.getListConfig();
         const fields = config && config.fields ? config.fields : defaultFields;
 

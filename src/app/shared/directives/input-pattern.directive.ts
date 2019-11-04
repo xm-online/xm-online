@@ -12,7 +12,7 @@ export class InputPatternDirective {
     constructor(private el: ElementRef) {}
 
     @HostListener('keydown', [ '$event' ])
-    protected onKeyDown(event: KeyboardEvent): any {
+    public onKeyDown(event: KeyboardEvent): any {
         this.regex = new RegExp(this.regexp);
         if (this.specialKeys.includes(event.key) || event.ctrlKey === true) {
             return;

@@ -30,14 +30,11 @@ declare let swal: any;
     styleUrls: ['./entity-list-card.component.scss']
 })
 export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
-
-    private entityListActionSuccessSubscription: Subscription;
-    private entityEntityListModificationSubscription: Subscription;
-
     @Input() spec: Spec;
-    @Input() options: EntityListCardOptions;
 
+    @Input() options: EntityListCardOptions;
     isShowFilterArea = false;
+
     list: EntityOptions[];
     activeItemId = 0;
     entitiesPerPage: any;
@@ -45,6 +42,10 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     reverse: boolean;
     showLoader: boolean;
     firstPage = 1;
+    public showPagination: boolean;
+
+    private entityListActionSuccessSubscription: Subscription;
+    private entityEntityListModificationSubscription: Subscription;
 
     constructor(private xmEntitySpecWrapperService: XmEntitySpecWrapperService,
                 private xmEntityService: XmEntityService,
@@ -147,6 +148,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
             tap((xmEntities: HttpResponse<XmEntity[]>) => {
                 entityOptions.totalItems = xmEntities.headers.get('X-Total-Count');
                 entityOptions.queryCount = entityOptions.totalItems;
+                this.showPagination = (this.entitiesPerPage < entityOptions.totalItems);
             }),
             map((xmEntities: HttpResponse<XmEntity[]>) => xmEntities.body),
             map((xmEntities: XmEntity[]) => {

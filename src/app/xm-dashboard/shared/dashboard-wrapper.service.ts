@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 
+import { from, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 import { Dashboard } from './dashboard.model';
 import { DashboardService } from './dashboard.service';
-import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class DashboardWrapperService {
@@ -54,8 +56,25 @@ export class DashboardWrapperService {
         }
     }
 
-    public getDashboardByIdOrSlug(idOrSlug: number | string) {
-
+    public getDashboardByIdOrSlug(idOrSlug: number | string, force?: boolean): Observable<Dashboard> {
+        if (!force && this._dashboards && this._dashboards.length) {
+            return of(this._dashboards
+                .filter((d) => (d.config && d.config.slug === idOrSlug)
+                    || d.id === parseInt(idOrSlug as string, 10))
+                .shift());
+        } else {
+            return from(this.dashboards(force))
+                .pipe(
+                    map( (dashboards) => {
+                        if (dashboards && dashboards.length) {
+                            return dashboards
+                                .filter((d) => (d.config && d.config.slug === idOrSlug)
+                                    || d.id === parseInt(idOrSlug as string, 10))
+                                .shift();
+                        } else { return {} as Dashboard; }
+                    }),
+                );
+        }
     }
 
 }

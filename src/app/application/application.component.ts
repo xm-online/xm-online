@@ -4,13 +4,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { Observable ,  Subscription } from 'rxjs';
+import {map} from 'rxjs/operators';
 
-import { I18nNamePipe, JhiLanguageHelper, Principal, XmConfigService } from '../shared';
-import { Spec, XmEntitySpecWrapperService } from '../xm-entity';
-import { EntityListCardOptions } from '../xm-entity/entity-list-card/entity-list-card-options.model';
 import { environment } from '../../environments/environment';
+import { I18nNamePipe, JhiLanguageHelper, Principal, XmConfigService } from '../shared';
 import { LIST_DEFAULT_FIELDS } from '../shared/constants/default-lists-fields.constants';
 import { DashboardWrapperService } from '../xm-dashboard';
+import { Spec, XmEntitySpecWrapperService } from '../xm-entity';
+import { EntityListCardOptions } from '../xm-entity/entity-list-card/entity-list-card-options.model';
 
 @Component({
     selector: 'xm-entity',
@@ -114,8 +115,8 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                         this.isSearch = true;
                         this.searchQuery = params['query'];
                         this.getSearchConfig(params.dashboardId)
-                            .then((val) => {
-                                this.searchParams = val;
+                            .subscribe((config) => {
+                                this.searchParams = config;
                                 this.load();
                             });
 
@@ -270,18 +271,10 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         return spec.types.filter(t => t.key === typeKey).shift();
     }
 
-    private getSearchConfig(idOrSlug: any): Promise<any> {
-
-        return this.dashboardWrapperService.dashboards()
-            .then((dashboards) => {
-                if (dashboards && dashboards.length) {
-                    return dashboards
-                        .filter((d) => (d.config && d.config.slug === idOrSlug) || d.id === parseInt(idOrSlug, 10))
-                        .shift();
-                } else { return null; }
-            })
-            .then( (dashboard) => (dashboard && dashboard.config && dashboard.config.search)
-                ? dashboard.config.search
-                : null);
+    private getSearchConfig(idOrSlug: any): Observable<any> {
+        return this.dashboardWrapperService.getDashboardByIdOrSlug(idOrSlug).pipe(
+            map( (dash) => dash && dash.config),
+            map( (config) => config && config.search),
+        );
     }
 }

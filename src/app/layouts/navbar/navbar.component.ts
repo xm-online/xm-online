@@ -5,18 +5,18 @@ import {
     ElementRef,
     OnDestroy,
     OnInit,
-    ViewChild
+    ViewChild,
 } from '@angular/core';
 import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 import { TranslateService } from '@ngx-translate/core';
+import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
 
-import { XmConfigService } from '../../shared/spec/config.service';
 import { JhiLanguageHelper, LANGUAGES, Principal } from '../../shared';
-import { DEBUG_INFO_ENABLED, VERSION } from '../../xm.constants';
+import { XmConfigService } from '../../shared/spec/config.service';
 import { DashboardWrapperService } from '../../xm-dashboard';
+import { DEBUG_INFO_ENABLED, VERSION } from '../../xm.constants';
 
 const misc: any = {
     navbar_menu_visible: 0,
@@ -232,19 +232,12 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     public getSearchMask(): void {
-        this.dashboardWrapperService.dashboards()
-            .then((dashboards) => {
-                if (dashboards && dashboards.length) {
-                    return dashboards
-                        .filter((d) => (d.config && d.config.slug === this.getDashboardId())
-                            || d.id === parseInt(this.getDashboardId() as string, 10))
-                        .shift();
-                } else { return null; }
-            })
-            .then( (dashboard) => (dashboard && dashboard.config && dashboard.config.search)
-                ? dashboard.config.search
-                : null)
-            .then( (search) => this.searchMask = search && search.mask);
+        this.dashboardWrapperService.getDashboardByIdOrSlug(this.getDashboardId(), true)
+            .subscribe( (dash) => {
+                if (dash && dash.config && dash.config.search && dash.config.search.mask) {
+                    this.searchMask = dash.config.search.mask;
+                }
+            });
     }
 
     private getRouteData(routeSnapshot: ActivatedRouteSnapshot): string {
@@ -294,10 +287,10 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         this.titleContent = titlePart1 + titlePart2 + titlePart3 + titlePart4 + titlePart5 + titlePart6 + titlePart7;
     }
 
-    private getDashboardId(): number | string | void {
+    private getDashboardId(): number | string {
         if (this.location.path(false).includes('dashboard')) {
             const url = this.location.path(false).split('/');
             return  url[url.indexOf('dashboard') + 1];
-        }
+        } else { return ''; }
     }
 }

@@ -198,7 +198,7 @@
           </div>
         </ng-container>
 
-        <div class="row align-items-center list-pagination" *ngIf="item?.entities?.length">
+        <div class="row align-items-center list-pagination" *ngIf="item?.entities?.length && showPagination">
           <div class="col-auto mt-1 mb-1">
             <xm-per-page [(itemsPerPage)]="entitiesPerPage" (onChange)="transition()"></xm-per-page>
           </div>

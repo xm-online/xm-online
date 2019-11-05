@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { from, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { from, iif, Observable, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Dashboard } from './dashboard.model';
 import { DashboardService } from './dashboard.service';
@@ -15,8 +15,8 @@ export class DashboardWrapperService {
     constructor(private dashboardService: DashboardService) {
     }
 
-    dashboards(force?: boolean, mockDashboards?: boolean): Promise<Dashboard[]> {
-        if (!environment.production) {console.log(`DBG Get dashboards: ${force}`)}
+    public dashboards(force?: boolean, mockDashboards?: boolean): Promise<Dashboard[]> {
+        if (!environment.production) { console.log(`DBG Get dashboards: ${force}`); }
         if (!force && this.promise) {
             return this.promise;
         } else {
@@ -56,25 +56,26 @@ export class DashboardWrapperService {
         }
     }
 
-    public getDashboardByIdOrSlug(idOrSlug: number | string, force?: boolean): Observable<Dashboard> {
-        if (!force && this._dashboards && this._dashboards.length) {
-            return of(this._dashboards
-                .filter((d) => (d.config && d.config.slug === idOrSlug)
-                    || d.id === parseInt(idOrSlug as string, 10))
-                .shift());
-        } else {
-            return from(this.dashboards(force))
-                .pipe(
-                    map( (dashboards) => {
-                        if (dashboards && dashboards.length) {
-                            return dashboards
-                                .filter((d) => (d.config && d.config.slug === idOrSlug)
-                                    || d.id === parseInt(idOrSlug as string, 10))
-                                .shift();
-                        } else { return {} as Dashboard; }
-                    }),
-                );
-        }
-    }
+    public getDashboardByIdOrSlug(idOrSlug: number | string, force?: boolean): Observable<Dashboard | undefined> {
 
+        const predicate = (d: Dashboard) => (d.config && d.config.slug === idOrSlug) ||
+            d.id === parseInt(idOrSlug as string, 10);
+
+        const getDash = (dashboards: Dashboard[]) => dashboards.filter(predicate).shift();
+
+        // if present, use existing
+        if (!force && this._dashboards && this._dashboards.length) {
+            return of(getDash(this._dashboards));
+        }
+
+        // else, get dashboards and process result
+        return from(this.dashboards(force))
+                .pipe(
+                    mergeMap((dashboards) => iif(
+                        () => dashboards && dashboards.length > 0,
+                        of(getDash(dashboards)),
+                        of(getDash([]))),
+                ));
+
+    }
 }

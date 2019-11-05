@@ -13,6 +13,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
 
+import { iif, Observable, of } from 'rxjs';
+import { mergeMap, tap } from 'rxjs/operators';
 import { JhiLanguageHelper, LANGUAGES, Principal } from '../../shared';
 import { XmConfigService } from '../../shared/spec/config.service';
 import { DashboardWrapperService } from '../../xm-dashboard';
@@ -21,7 +23,7 @@ import { DEBUG_INFO_ENABLED, VERSION } from '../../xm.constants';
 const misc: any = {
     navbar_menu_visible: 0,
     active_collapse: true,
-    disabled_collapse_init: 0
+    disabled_collapse_init: 0,
 };
 
 declare let $: any;
@@ -29,7 +31,7 @@ declare let $: any;
 @Component({
     selector: 'xm-navbar',
     styleUrls: ['./navbar.component.scss'],
-    templateUrl: './navbar.component.html'
+    templateUrl: './navbar.component.html',
 })
 export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
@@ -42,7 +44,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     title: string;
     titleContent: string;
     tenantLogoUrl: '../assets/img/logo-xm-online.png';
-    public searchMask: string;
+    public searchMask = '';
 
     private previousPath: string;
     private backStep = 0;
@@ -68,7 +70,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         this.sidebarVisible = false;
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.xmConfigService.getUiConfig().subscribe((result) => {
             this.tenantName = result['name'] ? result['name'] : 'XM^online';
             if (this.tenantName === 'XM^online') {
@@ -84,12 +86,16 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         });
 
         this.routeData = this.getRouteData(this.router.routerState.snapshot.root);
+
         this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
-                this.getSearchMask();
+                this.getSearchMask().pipe(
+                    tap((mask) => this.searchMask = mask),
+                ).subscribe();
                 this.routeData = this.getRouteData(this.router.routerState.snapshot.root);
             }
         });
+
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
         if ($('body').hasClass('sidebar-mini')) {
@@ -121,20 +127,20 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         });
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
     }
 
-    ngDoCheck() {
+    public ngDoCheck(): void {
         this.processTitle(this.routeData);
     }
 
-    search(term: string) {
+    public search(term: string): void {
         if (term) {
             this.router.navigate(['/search'], {queryParams: {query: term, dashboardId: this.getDashboardId()}});
         }
     }
 
-    changeLanguage(languageKey: string) {
+    public changeLanguage(languageKey: string): void {
         this.jhiLanguageService.changeLanguage(languageKey);
         this.translateService.getTranslation(languageKey).subscribe((res) => {
             LANGUAGES.forEach((lang) => {
@@ -143,18 +149,18 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
             this.$sessionStorage.store(languageKey, JSON.stringify(res));
             this.$sessionStorage.store('currentLang', languageKey);
         });
-        this.eventManager.broadcast({name: 'changeLanguage', content: languageKey})
+        this.eventManager.broadcast({name: 'changeLanguage', content: languageKey});
     }
 
-    isAuthenticated() {
+    public isAuthenticated(): boolean {
         return this.principal.isAuthenticated();
     }
 
-    isMobileMenu() {
+    public isMobileMenu(): boolean {
         return $(window).width() > 991;
     }
 
-    sidebarToggle() {
+    public sidebarToggle(): void {
         if (this.sidebarVisible === false) {
             this.sidebarOpen();
         } else {
@@ -162,12 +168,12 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         }
     }
 
-    sidebarOpen() {
+    public sidebarOpen(): void {
         const _this = this;
         const $toggle = document.getElementsByClassName('navbar-toggler')[0];
         const toggleButton = this.toggleButton;
         const body = document.getElementsByTagName('body')[0];
-        setTimeout(function(){
+        setTimeout(function() {
             toggleButton.classList.add('toggled');
         }, 500);
         body.classList.add('nav-open');
@@ -177,7 +183,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
         const $layer = document.createElement('div');
         $layer.setAttribute('class', 'close-layer');
-
 
         if (body.querySelectorAll('.main-panel')) {
             document.getElementsByClassName('main-panel')[0].appendChild($layer);
@@ -204,9 +209,9 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         body.classList.add('nav-open');
         this.mobile_menu_visible = 1;
         this.sidebarVisible = true;
-    };
+    }
 
-    sidebarClose() {
+    public sidebarClose(): void {
         const $toggle = document.getElementsByClassName('navbar-toggler')[0];
         const body = document.getElementsByTagName('body')[0];
         this.toggleButton.classList.remove('toggled');
@@ -224,20 +229,20 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         }, 400);
 
         this.mobile_menu_visible = 0;
-    };
+    }
 
-    onBack() {
+    public onBack(): void {
         this.previousPath = this.location.path();
         this.location.back();
     }
 
-    public getSearchMask(): void {
-        this.dashboardWrapperService.getDashboardByIdOrSlug(this.getDashboardId(), true)
-            .subscribe( (dash) => {
-                if (dash && dash.config && dash.config.search && dash.config.search.mask) {
-                    this.searchMask = dash.config.search.mask;
-                }
-            });
+    private getSearchMask(): Observable<string> {
+        const condition = (dash) => dash && dash.config && dash.config.search && dash.config.search.mask;
+        return this.dashboardWrapperService.getDashboardByIdOrSlug(this.getDashboardId(), true)
+            .pipe(
+                // get 1 or '' depending from condition
+                mergeMap((dashboard) => iif(condition(dashboard), of(dashboard.config.search.mask), of(''))),
+            );
     }
 
     private getRouteData(routeSnapshot: ActivatedRouteSnapshot): string {
@@ -254,8 +259,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         return rData;
     }
 
-
-    private registerPopState() {
+    private registerPopState(): void {
         this.location.subscribe(() => {
             if (this.location.isCurrentPathEqualTo(this.previousPath)) {
                 if (++this.backStep < 10) {
@@ -268,14 +272,13 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     private processTitle(routData: any): void {
-        let titlePart1, titlePart2, titlePart3, titlePart4, titlePart5, titlePart6, titlePart7;
-        titlePart1 = routData.pageTitle ?  this.translateService.instant(routData.pageTitle) : '';
-        titlePart2 = routData.pageSubTitle || routData.pageSubTitleTrans ? ' - ' : '';
-        titlePart3 = routData.pageSubTitle ? routData.pageSubTitle : '';
-        titlePart4 = routData.pageSubTitleTrans ?  this.translateService.instant(routData.pageSubTitleTrans) : '';
-        titlePart5 = routData.pageSubSubTitle || routData.pageSubSubTitleTrans ? ' - ' : '';
-        titlePart6 = routData.pageSubSubTitle ? routData.pageSubSubTitle : '';
-        titlePart7 = routData.pageSubSubTitleTrans ? this.translateService.instant(routData.pageSubSubTitleTrans) : '';
+        let titlePart1 = routData.pageTitle ?  this.translateService.instant(routData.pageTitle) : '';
+        let titlePart2 = routData.pageSubTitle || routData.pageSubTitleTrans ? ' - ' : '';
+        let titlePart3 = routData.pageSubTitle ? routData.pageSubTitle : '';
+        let titlePart4 = routData.pageSubTitleTrans ?  this.translateService.instant(routData.pageSubTitleTrans) : '';
+        let titlePart5 = routData.pageSubSubTitle || routData.pageSubSubTitleTrans ? ' - ' : '';
+        let titlePart6 = routData.pageSubSubTitle ? routData.pageSubSubTitle : '';
+        let titlePart7 = routData.pageSubSubTitleTrans ? this.translateService.instant(routData.pageSubSubTitleTrans) : '';
         this.title = titlePart1 + titlePart2 + titlePart3 + titlePart4 + titlePart5 + titlePart6 + titlePart7;
         titlePart1 = `<span class="title-part-1">${titlePart1}</span>`;
         titlePart2 = `<span class="title-part-2">${titlePart2}</span>`;

@@ -54,4 +54,8 @@ export class DashboardWrapperService {
         }
     }
 
+    public getDashboardByIdOrSlug(idOrSlug: number | string) {
+
+    }
+
 }

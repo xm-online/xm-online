@@ -9,15 +9,15 @@ import { HOME_ROUTE } from './home.route';
 @NgModule({
     imports: [
         XmSharedModule,
-        RouterModule.forRoot([HOME_ROUTE], {useHash: false}),
-        XmDashboardModule
+        RouterModule.forChild([HOME_ROUTE]),
+        XmDashboardModule,
     ],
     declarations: [
-        HomeComponent
+        HomeComponent,
     ],
     entryComponents: [],
     providers: [],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class GateHomeModule {
 }

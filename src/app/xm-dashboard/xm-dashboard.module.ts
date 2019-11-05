@@ -1,31 +1,37 @@
 import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, ModuleWithProviders, NgModule } from '@angular/core';
 
 import { XmSharedModule } from '../shared/shared.module';
 import { DashboardService, DashboardWrapperService, DynamicWidgetComponent, WidgetService } from './';
-import { XmDashboardRoutingModule } from './xm-dashboard-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
-
+import { XmDashboardRoutingModule } from './xm-dashboard-routing.module';
 
 @NgModule({
     imports: [
         CommonModule,
         XmSharedModule,
-        XmDashboardRoutingModule
+        XmDashboardRoutingModule,
     ],
     declarations: [
         DynamicWidgetComponent,
-        DashboardComponent
+        DashboardComponent,
     ],
     exports: [
-        DynamicWidgetComponent
+        DynamicWidgetComponent,
     ],
     providers: [
-        DashboardService,
-        DashboardWrapperService,
-        WidgetService
+        WidgetService,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class XmDashboardModule {
+    public static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: XmDashboardModule,
+            providers: [
+                DashboardService,
+                DashboardWrapperService,
+            ],
+        };
+    }
 }

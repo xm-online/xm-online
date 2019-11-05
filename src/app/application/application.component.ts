@@ -4,13 +4,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { Observable ,  Subscription } from 'rxjs';
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { I18nNamePipe, JhiLanguageHelper, Principal, XmConfigService } from '../shared';
 import { LIST_DEFAULT_FIELDS } from '../shared/constants/default-lists-fields.constants';
 import { DashboardWrapperService } from '../xm-dashboard';
-import { Spec, XmEntitySpecWrapperService } from '../xm-entity';
+import { Spec, XmEntitySpec, XmEntitySpecWrapperService } from '../xm-entity';
 import { EntityListCardOptions } from '../xm-entity/entity-list-card/entity-list-card-options.model';
 
 @Component({
@@ -99,7 +99,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                 this.routeParamsSubscription = this.activatedRoute.params.subscribe((params) => {
                     if (params['key']) {
                         this.typeKey = params['key'];
-                        this.spec$.subscribe(s => {
+                        this.spec$.subscribe((s) => {
                             this.entityType = this.getTypeFromSpec(s, this.typeKey);
                             this.load();
 
@@ -125,7 +125,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                     }
                 });
             });
-        }, err => {
+        }, (err) => {
             console.log(err);
         });
 
@@ -147,24 +147,24 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         return [
             {
                 field: 'name',
-                title: this.translateService.instant(LIST_DEFAULT_FIELDS['name'])
+                title: this.translateService.instant(LIST_DEFAULT_FIELDS['name']),
             },
             {
                 field: 'typeKey',
-                title: this.translateService.instant(LIST_DEFAULT_FIELDS['typeKey'])
+                title: this.translateService.instant(LIST_DEFAULT_FIELDS['typeKey']),
             },
             {
                 field: 'startDate',
-                title: this.translateService.instant(LIST_DEFAULT_FIELDS['startDate'])
+                title: this.translateService.instant(LIST_DEFAULT_FIELDS['startDate']),
             },
             {
                 field: 'stateKey',
-                title: this.translateService.instant(LIST_DEFAULT_FIELDS['stateKey'])
-            }
-        ]
+                title: this.translateService.instant(LIST_DEFAULT_FIELDS['stateKey']),
+            },
+        ];
     }
 
-    protected buildOptions(defaultFields) {
+    protected buildOptions(defaultFields): void {
         const config = this.getListConfig();
         const fields = config && config.fields ? config.fields : defaultFields;
 
@@ -180,19 +180,19 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                 ],
             };
         } else {
-            this.entityType = this.getType(this.typeKey) || '';
+            this.entityType = this.getTypeFromSpec(this.spec, this.typeKey) || '';
             this.options = {
                 entities: [
                     {
                         typeKey: this.typeKey,
                         name: this.entityType.pluralName ? this.entityType.pluralName : this.entityType.name,
                         fastSearch: config && config.fastSearch ? config.fastSearch : this.entityType.fastSearch,
-                        fields: fields,
+                        fields,
                         routerLink: config && config.routerLink ? config.routerLink : null,
                         filter: config && config.filter ? config.filter : null,
                         noData: config && config.noData ? config.noData : null,
-                    }
-                ]
+                    },
+                ],
             };
         }
     }
@@ -216,7 +216,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
             const entitiesConfig = this.uiConfig.applications && this.uiConfig.applications.config &&
                 this.uiConfig.applications.config.entities;
             if (entitiesConfig) {
-                return entitiesConfig.filter(c => c.typeKey === this.typeKey).shift();
+                return entitiesConfig.filter((c) => c.typeKey === this.typeKey).shift();
             }
         }
         return null;
@@ -236,7 +236,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                 size: this.itemsPerPage,
                 search: this.searchQuery,
                 sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-            }
+            },
         }).then(() => this.load());
     }
 
@@ -247,7 +247,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
             queryParams: {
                 page: this.page,
                 sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-            }
+            },
         }).then(() => this.load());
     }
 
@@ -263,12 +263,8 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         }
     }
 
-    getType(typeKey: string) {
-        return this.spec.types.filter(t => t.key === typeKey).shift();
-    }
-
-    getTypeFromSpec(spec: any, typeKey: string) {
-        return spec.types.filter(t => t.key === typeKey).shift();
+    private getTypeFromSpec(spec: Spec, typeKey: string): XmEntitySpec | undefined {
+        return spec.types.filter((t) => t.key === typeKey).shift();
     }
 
     private getSearchConfig(idOrSlug: any): Observable<any> {

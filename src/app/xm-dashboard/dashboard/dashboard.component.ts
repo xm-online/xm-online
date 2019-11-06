@@ -66,6 +66,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.routeData = data;
         });
         this.routeSubscription = this.route.params.subscribe(params => {
+            console.log('-------------- dashboard--------', params);
             if (params.id) {
                 this.load(params.id);
             } else {

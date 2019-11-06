@@ -73,6 +73,7 @@ import { XmCondition } from './helpers/xm-condition';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { TranslateModule } from '@ngx-translate/core';
+import { InputPatternDirective } from './directives/input-pattern.directive';
 
 const SERVICES_FOR_ROOT = [
     TranslatePipe,
@@ -143,6 +144,7 @@ const MODULES = [
         FileUploadComponent,
         PrivacyAndTermsDialogComponent,
         PIPES,
+        InputPatternDirective,
     ],
     entryComponents: [
         LoginComponent,
@@ -242,6 +244,7 @@ const MODULES = [
         GooglePlaceModule,
         PIPES,
         MODULES,
+        InputPatternDirective,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

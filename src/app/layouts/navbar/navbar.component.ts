@@ -89,10 +89,13 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
         this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
-                this.getSearchMask().pipe(
-                    tap((mask) => this.searchMask = mask),
-                ).subscribe();
                 this.routeData = this.getRouteData(this.router.routerState.snapshot.root);
+
+                if (this.getDashboardId()) {
+                    this.getSearchMask().pipe(
+                        tap((mask) => this.searchMask = mask),
+                    ).subscribe();
+                }
             }
         });
 
@@ -237,11 +240,11 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     private getSearchMask(): Observable<string> {
-        const condition = (dash) => dash && dash.config && dash.config.search && dash.config.search.mask;
-        return this.dashboardWrapperService.getDashboardByIdOrSlug(this.getDashboardId(), true)
+        const condition = (dash) => !!(dash && dash.config && dash.config.search && dash.config.search.mask);
+        return this.dashboardWrapperService.getDashboardByIdOrSlug(this.getDashboardId())
             .pipe(
                 // get 1 or '' depending from condition
-                mergeMap((dashboard) => iif(condition(dashboard), of(dashboard.config.search.mask), of(''))),
+                mergeMap((dashboard) => iif(() => condition(dashboard), of(dashboard.config.search.mask), of(''))),
             );
     }
 
@@ -299,6 +302,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
             const url = this.location.path(false).split('/');
             return  url[url.indexOf('dashboard') + 1];
         }
-        return '';
+        return null;
     }
 }

@@ -43,6 +43,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     reverse: boolean;
     showLoader: boolean;
     firstPage = 1;
+    public showPagination: boolean;
 
     private entityListActionSuccessSubscription: Subscription;
     private entityEntityListModificationSubscription: Subscription;
@@ -64,7 +65,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
             () => this.load());
         this.entityEntityListModificationSubscription =
             this.eventManager.subscribe(XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION,
-                () => this.load());
+            () => this.load());
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -138,6 +139,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
             tap((xmEntities: HttpResponse<XmEntity[]>) => {
                 entityOptions.totalItems = xmEntities.headers.get('X-Total-Count');
                 entityOptions.queryCount = entityOptions.totalItems;
+                this.showPagination = (this.entitiesPerPage < entityOptions.totalItems);
             }),
             map((xmEntities: HttpResponse<XmEntity[]>) => xmEntities.body),
             map((xmEntities: XmEntity[]) => {

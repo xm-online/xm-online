@@ -1,6 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { XmSharedModule } from '../shared/shared.module';
@@ -18,12 +17,12 @@ import {
     SocialAuthComponent,
     SocialRegisterComponent,
 } from './';
-import {accountState} from './account.route';
+import { accountState } from './account.route';
 
 @NgModule({
     imports: [
         XmSharedModule,
-        RouterModule.forRoot(accountState, { useHash: false }),
+        RouterModule.forChild(accountState),
     ],
     declarations: [
         SocialRegisterComponent,
@@ -44,4 +43,5 @@ import {accountState} from './account.route';
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class GateAccountModule {}
+export class GateAccountModule {
+}

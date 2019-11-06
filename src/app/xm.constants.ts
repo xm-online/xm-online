@@ -1,4 +1,7 @@
-const _VERSION = '2.0.0';
+// @ts-ignore
+import { version } from '../../package.json';
+
+const _VERSION = version;
 const _DEBUG_INFO_ENABLED = true;
 
 const _DEFAULT_CONTENT_TYPE = 'application/x-www-form-urlencoded';
@@ -24,8 +27,8 @@ enum _XM_EVENT_LIST  {
   XM_ENTITY_DETAIL_MODIFICATION = 'xmEntityDetailModification',
   XM_REFRESH_TIMELINE = XM_ENTITY_DETAIL_MODIFICATION,
   XM_ATTACHMENT_LIST_MODIFICATION = 'attachmentListModification',
-  XM_ENTITY_LIST_MODIFICATION = 'xmEntityListModification'
-};
+  XM_ENTITY_LIST_MODIFICATION = 'xmEntityListModification',
+}
 
 export const VERSION = _VERSION;
 export const DEBUG_INFO_ENABLED = _DEBUG_INFO_ENABLED;

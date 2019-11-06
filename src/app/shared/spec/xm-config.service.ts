@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { VERSION } from '../../../app/xm.constants';
 
 const THEME_STARTEGY = {
     DEFAULT: 'THEME',
     THEME: 'THEME',
-    TENANT_ONLY: 'TENANT_ONLY'
+    TENANT_ONLY: 'TENANT_ONLY',
 };
 const DEFAULT_THEME_NAME = 'teal';
 const DEFAULT_THEME = `/assets/css/themes/material-${DEFAULT_THEME_NAME}.css`;
@@ -13,11 +14,10 @@ const DEFAULT_THEME = `/assets/css/themes/material-${DEFAULT_THEME_NAME}.css`;
 @Injectable()
 export class XmApplicationConfigService {
 
-    private configUrl = 'config/api/profile/webapp/settings-public.yml?toJson';
-
-    private appConfig;
     public resolved$: BehaviorSubject<boolean>;
     public maintenance$: BehaviorSubject<boolean>;
+    private configUrl = 'config/api/profile/webapp/settings-public.yml?toJson';
+    private appConfig;
 
     constructor(private http: HttpClient) {
         this.resolved$ = new BehaviorSubject<boolean>(false);
@@ -34,7 +34,7 @@ export class XmApplicationConfigService {
                 themeName = data.theme ? data.theme : DEFAULT_THEME_NAME;
                 themeStrategy = data.themeStrategy ? data.themeStrategy : THEME_STARTEGY.DEFAULT;
                 const themePath = this.resolveThemePath(themeStrategy, themeName);
-                console.log('apply theme name=%s strategy=%s path=%s', themeName, themeStrategy, themePath);
+                console.log('version=%s apply theme name=%s strategy=%s path=%s', VERSION, themeName, themeStrategy, themePath);
                 this.applyTheme(themePath);
             } else {
                 this.applyTheme(DEFAULT_THEME);

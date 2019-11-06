@@ -21,7 +21,8 @@ import { XmDashboardModule } from './xm-dashboard/xm-dashboard.module';
 import { XmRoutingModule } from './xm-routing.module';
 
 export function appInitializerFn(appConfig: XmApplicationConfigService): () => Promise<any> {
-    const r = function () {
+    // tslint:disable-next-line:only-arrow-functions
+    const r = function(): Promise<void> {
         return appConfig.loadAppConfig();
     };
     return r;

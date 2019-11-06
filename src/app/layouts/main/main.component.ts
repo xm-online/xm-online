@@ -20,7 +20,7 @@ declare let $: any;
 
 @Component({
     selector: 'xm-main',
-    templateUrl: './main.component.html'
+    templateUrl: './main.component.html',
 })
 export class XmMainComponent implements OnInit, OnDestroy {
     showSidebar = true;

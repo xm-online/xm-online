@@ -79,6 +79,12 @@ export class LinkDetailSearchSectionComponent implements OnInit {
             () => this.activeModal.dismiss(true));
     }
 
+    public onSearch(): void {
+        this.searchXmEntities = [];
+        this.page = 0;
+        this.load();
+    }
+
     private load(): void {
         this.showLoader = true;
         this.xmEntityService.search({
@@ -102,12 +108,6 @@ export class LinkDetailSearchSectionComponent implements OnInit {
             filter((entity) => entity.hasOwnProperty('links')),
             map((entity) => entity.links.find((link) => link.key === this.linkSpec.key)['filterQuery']),
         );
-    }
-
-    private onSearch(): void {
-        this.searchXmEntities = [];
-        this.page = 0;
-        this.load();
     }
 
     private alert(type: string, key: string): void {

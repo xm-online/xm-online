@@ -15,6 +15,6 @@
         {{element.label}}
       </mat-option>
     </mat-select>
-    <mat-hint align="end">{{options.description}}</mat-hint>
+    <mat-hint *ngIf="options?.description" align="end">{{options.description}}</mat-hint>
   </mat-form-field>
 </div>

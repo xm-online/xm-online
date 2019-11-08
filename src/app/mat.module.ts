@@ -25,11 +25,11 @@ import {
     MatSlideToggleModule,
     MatSnackBarModule,
     MatSortModule,
+    MatStepperModule,
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatStepperModule
 } from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
@@ -67,7 +67,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
         MatTabsModule,
         MatToolbarModule,
         MatTooltipModule,
-        NgxMatSelectSearchModule
+        NgxMatSelectSearchModule,
     ],
     exports: [
         MatAutocompleteModule,
@@ -101,7 +101,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
         MatTabsModule,
         MatToolbarModule,
         MatTooltipModule,
-        NgxMatSelectSearchModule
-    ]
+        NgxMatSelectSearchModule,
+    ],
 })
 export class MatModule { }

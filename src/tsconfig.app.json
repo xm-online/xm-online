@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig",
   "compilerOptions": {
+    "resolveJsonModule": true,
     "outDir": "../out-tsc/app",
     "types": []
   },

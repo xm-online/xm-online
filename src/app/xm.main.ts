@@ -8,4 +8,4 @@ if (module['hot']) {
     module['hot'].accept();
 }
 
-platformBrowserDynamic().bootstrapModule(XmModule);
+platformBrowserDynamic().bootstrapModule(XmModule).finally(() => {});

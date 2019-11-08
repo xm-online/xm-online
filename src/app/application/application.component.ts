@@ -4,12 +4,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { Observable ,  Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { I18nNamePipe, JhiLanguageHelper, Principal, XmConfigService } from '../shared';
-import { Spec, XmEntitySpecWrapperService } from '../xm-entity';
-import { EntityListCardOptions } from '../xm-entity/entity-list-card/entity-list-card-options.model';
 import { environment } from '../../environments/environment';
+import { I18nNamePipe, JhiLanguageHelper, Principal, XmConfigService } from '../shared';
 import { LIST_DEFAULT_FIELDS } from '../shared/constants/default-lists-fields.constants';
+import { DashboardWrapperService } from '../xm-dashboard';
+import { Spec, XmEntitySpec, XmEntitySpecWrapperService } from '../xm-entity';
+import { EntityListCardOptions } from '../xm-entity/entity-list-card/entity-list-card-options.model';
 
 @Component({
     selector: 'xm-entity',
@@ -42,6 +44,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     entityType: any;
     types: any;
     spec: Spec;
+    searchParams: any;
 
     spec$: Observable<Spec>;
 
@@ -62,7 +65,8 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                 protected router: Router,
                 protected modalService: NgbModal,
                 protected eventManager: JhiEventManager,
-                protected i18nNamePipe: I18nNamePipe) {
+                protected i18nNamePipe: I18nNamePipe,
+                protected dashboardWrapperService: DashboardWrapperService) {
         this.searchQuery = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : '';
     }
 
@@ -95,7 +99,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                 this.routeParamsSubscription = this.activatedRoute.params.subscribe((params) => {
                     if (params['key']) {
                         this.typeKey = params['key'];
-                        this.spec$.subscribe(s => {
+                        this.spec$.subscribe((s) => {
                             this.entityType = this.getTypeFromSpec(s, this.typeKey);
                             this.load();
 
@@ -110,14 +114,18 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                     if (params['query']) {
                         this.isSearch = true;
                         this.searchQuery = params['query'];
-                        this.load();
+                        this.getSearchConfig(params.dashboardId)
+                            .subscribe((config) => {
+                                this.searchParams = config;
+                                this.load();
+                            });
 
                         this.routeData.pageSubTitle = `[${params['query']}]`;
                         this.jhiLanguageHelper.updateTitle();
                     }
                 });
             });
-        }, err => {
+        }, (err) => {
             console.log(err);
         });
 
@@ -129,7 +137,9 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     load() {
         this.translateService.get(this.defaultFieldsKeys).subscribe(() => {
             const defaultFields = this.buildDefaultFields();
-            this.buildOptions(defaultFields);
+            this.searchParams && this.searchParams.fields
+                ? this.buildOptions(this.searchParams.fields)
+                : this.buildOptions(defaultFields);
         });
     }
 
@@ -137,24 +147,24 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         return [
             {
                 field: 'name',
-                title: this.translateService.instant(LIST_DEFAULT_FIELDS['name'])
+                title: this.translateService.instant(LIST_DEFAULT_FIELDS['name']),
             },
             {
                 field: 'typeKey',
-                title: this.translateService.instant(LIST_DEFAULT_FIELDS['typeKey'])
+                title: this.translateService.instant(LIST_DEFAULT_FIELDS['typeKey']),
             },
             {
                 field: 'startDate',
-                title: this.translateService.instant(LIST_DEFAULT_FIELDS['startDate'])
+                title: this.translateService.instant(LIST_DEFAULT_FIELDS['startDate']),
             },
             {
                 field: 'stateKey',
-                title: this.translateService.instant(LIST_DEFAULT_FIELDS['stateKey'])
-            }
-        ]
+                title: this.translateService.instant(LIST_DEFAULT_FIELDS['stateKey']),
+            },
+        ];
     }
 
-    protected buildOptions(defaultFields) {
+    protected buildOptions(defaultFields): void {
         const config = this.getListConfig();
         const fields = config && config.fields ? config.fields : defaultFields;
 
@@ -164,25 +174,25 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                     {
                         currentQuery: (config ? config.query : '') + this.searchQuery,
                         name: `[${this.searchQuery}]`,
-                        fields: fields,
-                        routerLink: config && config.routerLink ? config.routerLink : null
-                    }
-                ]
+                        fields,
+                        routerLink: config && config.routerLink ? config.routerLink : null,
+                    },
+                ],
             };
         } else {
-            this.entityType = this.getType(this.typeKey) || '';
+            this.entityType = this.getTypeFromSpec(this.spec, this.typeKey) || '';
             this.options = {
                 entities: [
                     {
                         typeKey: this.typeKey,
                         name: this.entityType.pluralName ? this.entityType.pluralName : this.entityType.name,
                         fastSearch: config && config.fastSearch ? config.fastSearch : this.entityType.fastSearch,
-                        fields: fields,
+                        fields,
                         routerLink: config && config.routerLink ? config.routerLink : null,
                         filter: config && config.filter ? config.filter : null,
                         noData: config && config.noData ? config.noData : null,
-                    }
-                ]
+                    },
+                ],
             };
         }
     }
@@ -206,7 +216,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
             const entitiesConfig = this.uiConfig.applications && this.uiConfig.applications.config &&
                 this.uiConfig.applications.config.entities;
             if (entitiesConfig) {
-                return entitiesConfig.filter(c => c.typeKey === this.typeKey).shift();
+                return entitiesConfig.filter((c) => c.typeKey === this.typeKey).shift();
             }
         }
         return null;
@@ -226,7 +236,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                 size: this.itemsPerPage,
                 search: this.searchQuery,
                 sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-            }
+            },
         }).then(() => this.load());
     }
 
@@ -237,7 +247,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
             queryParams: {
                 page: this.page,
                 sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-            }
+            },
         }).then(() => this.load());
     }
 
@@ -253,12 +263,14 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         }
     }
 
-    getType(typeKey: string) {
-        return this.spec.types.filter(t => t.key === typeKey).shift();
+    private getTypeFromSpec(spec: Spec, typeKey: string): XmEntitySpec | undefined {
+        return spec.types.filter((t) => t.key === typeKey).shift();
     }
 
-    getTypeFromSpec(spec: any, typeKey: string) {
-        return spec.types.filter(t => t.key === typeKey).shift();
+    private getSearchConfig(idOrSlug: any): Observable<any> {
+        return this.dashboardWrapperService.getDashboardByIdOrSlug(idOrSlug).pipe(
+            map( (dash) => dash && dash.config),
+            map( (config) => config && config.search),
+        );
     }
-
 }

@@ -25,6 +25,7 @@
     "noImplicitReturns": true,
     "newLine": "lf",
     "strictFunctionTypes": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true
   }
 }

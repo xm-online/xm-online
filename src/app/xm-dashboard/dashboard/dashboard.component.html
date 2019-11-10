@@ -1,12 +1,33 @@
 <xm-loader [showLoader]="showLoader"></xm-loader>
 
 <div [className]="dashboard?.layout?.class || ''">
-  <div [className]="row.class || ''" *ngFor="let row of dashboard?.layout?.grid">
-    <div [className]="item.class || ''" *ngFor="let item of row?.content">
-      <xm-dynamic-widget [init]="{module: item.widget?.module, component: item.widget?.selector, config: item.widget?.config, spec: spec}"
-                         *ngIf="item.widget?.module && spec">
-      </xm-dynamic-widget>
-    </div>
-  </div>
+  <ng-container *ngFor="let item of dashboard?.layout?.grid">
+    <ng-container *ngTemplateOutlet="dashboardItem;context:{item: item}">
+    </ng-container>
+  </ng-container>
 </div>
+
+<ng-template #dashboardItem let-item="item">
+  <div [className]="item.class" *ngIf="!!item.class">
+    <ng-container *ngTemplateOutlet="dashboardContent;context:{item: item}">
+    </ng-container>
+  </div>
+  <ng-container *ngIf="!item.class">
+    <ng-container *ngTemplateOutlet="dashboardContent;context:{item: item}" >
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #dashboardContent let-item="item">
+  <ng-container *ngFor="let subitem of item?.content">
+    <ng-container *ngTemplateOutlet="dashboardItem;context:{item: subitem}">
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="item?.widget">
+    <xm-dynamic-widget [init]="{module: item.widget?.module, component: item.widget?.selector, config: item.widget?.config, spec: spec}"
+                       *ngIf="item.widget?.module && spec">
+    </xm-dynamic-widget>
+  </ng-container>
+</ng-template>
+
 <no-data [show]="!dashboard?.layout?.grid?.length"></no-data>

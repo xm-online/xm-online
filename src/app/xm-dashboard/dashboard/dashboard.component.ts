@@ -142,21 +142,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 });
 
                 if (this.dashboard.layout && this.dashboard.layout.layout) {
-                    this.dashboard.layout.grid = this.dashboard.layout.layout.map(row => {
-                        row.content = row.content.map(el => {
-                            // TODO FIXME override id by widget object
-                            // TODO when page open next time, inside el.widget not id (object widget),
-                            // and <widget.id === el.widget> not work;
-                            el.widget = widgets.find(widget => {
-                                return widget.id === el.widget;
-                            });
-                            return el;
-                        });
-                        return row;
-                    });
+                    this.findAndEnrichWidget(this.dashboard.layout.layout, widgets);
+                    this.dashboard.layout.grid = this.dashboard.layout.layout;
                 } else {
                     this.dashboard.layout = {};
-                    this.dashboard.layout.grid = widgets.map(el => this.defaultGrid(el));
+                    this.dashboard.layout.grid = widgets.map((w) => this.defaultGrid(w));
                 }
                 this.routeData.pageSubSubTitle = this.processDashboardName(this.dashboard);
                 this.jhiLanguageHelper.updateTitle();
@@ -165,8 +155,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 console.log('No dashboard found by %s', id);
                 this.showLoader = false;
             },
-            () => (this.showLoader = false)
+            () => (this.showLoader = false),
         );
+    }
+
+    private findAndEnrichWidget(item: any, widgets: any[]): void {
+        Object.keys(item).some((k) => {
+            if (k === 'widget') {
+                item.widget = widgets.find((w) =>  w.id === item[k]);
+            }
+
+            if (item[k] && typeof item[k] === 'object') {
+                this.findAndEnrichWidget(item[k], widgets);
+            }
+        });
     }
 
     private processDashboardName(dashboard: any): string {

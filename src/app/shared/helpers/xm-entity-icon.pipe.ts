@@ -5,7 +5,8 @@ import { Spec } from '../../xm-entity';
 export class XmEntityIconPipe implements PipeTransform {
 
   public transform(typeKey: string, spec: Spec): string {
-      return spec.types.filter( (t) => t.key === typeKey).shift().icon;
+      const entitySpec = spec.types.filter( (t) => t.key === typeKey).shift() || {};
+      return entitySpec.icon || '';
   }
 
 }

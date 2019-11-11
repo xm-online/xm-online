@@ -82,6 +82,7 @@ const SERVICES_FOR_ROOT = [
 
 const PIPES = [
     TranslatePipe,
+    XmEntityIconPipe,
 ];
 
 const MODULES = [
@@ -146,7 +147,6 @@ const MODULES = [
         PrivacyAndTermsDialogComponent,
         PIPES,
         InputPatternDirective,
-        XmEntityIconPipe,
     ],
     entryComponents: [
         LoginComponent,
@@ -167,7 +167,7 @@ const MODULES = [
         EmailMatcherComponent,
         TextSectionComponent,
         FileUploadComponent,
-        PrivacyAndTermsDialogComponent
+        PrivacyAndTermsDialogComponent,
     ],
     providers: [
         CookieService,
@@ -247,7 +247,6 @@ const MODULES = [
         PIPES,
         MODULES,
         InputPatternDirective,
-        XmEntityIconPipe,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 

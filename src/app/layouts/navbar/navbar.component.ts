@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
 
-import { iif, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
 import { JhiLanguageHelper, LANGUAGES, Principal } from '../../shared';
 import { XmConfigService } from '../../shared/spec/config.service';
@@ -244,7 +244,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         return this.dashboardWrapperService.getDashboardByIdOrSlug(this.getDashboardId())
             .pipe(
                 // get 1 or '' depending from condition
-                mergeMap((dashboard) => iif(() => condition(dashboard), of(dashboard.config.search.mask), of(''))),
+                mergeMap((dashboard) => condition(dashboard) ? of(dashboard.config.search.mask) : of('')),
             );
     }
 

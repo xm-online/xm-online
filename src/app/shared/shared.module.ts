@@ -74,6 +74,7 @@ import { DigitOnlyDirective } from './directives/digit-only.directive';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputPatternDirective } from './directives/input-pattern.directive';
+import { XmEntityIconPipe } from './helpers/xm-entity-icon.pipe';
 
 const SERVICES_FOR_ROOT = [
     TranslatePipe,
@@ -81,6 +82,7 @@ const SERVICES_FOR_ROOT = [
 
 const PIPES = [
     TranslatePipe,
+    XmEntityIconPipe,
 ];
 
 const MODULES = [
@@ -165,7 +167,7 @@ const MODULES = [
         EmailMatcherComponent,
         TextSectionComponent,
         FileUploadComponent,
-        PrivacyAndTermsDialogComponent
+        PrivacyAndTermsDialogComponent,
     ],
     providers: [
         CookieService,
@@ -246,7 +248,7 @@ const MODULES = [
         MODULES,
         InputPatternDirective,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
 })
 export class XmSharedModule {

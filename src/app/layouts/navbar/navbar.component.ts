@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
 
-import { Observable, of } from 'rxjs';
+import { iif, Observable, of } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
 import { JhiLanguageHelper, LANGUAGES, Principal } from '../../shared';
 import { XmConfigService } from '../../shared/spec/config.service';
@@ -93,6 +93,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
                 if (this.getDashboardId()) {
                     this.getSearchMask().pipe(
+                        tap( m => {console.log(m);}),
                         tap((mask) => this.searchMask = mask),
                     ).subscribe();
                 }
@@ -240,11 +241,13 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     private getSearchMask(): Observable<string> {
-        const condition = (dash) => !!(dash && dash.config && dash.config.search && dash.config.search.mask);
+        const condition = (dash) =>  !!(dash && dash.config && dash.config.search && dash.config.search.mask);
+        const expr = (dash) => of((dash && dash.config && dash.config.search && dash.config.search.mask));
+        const f$ = of('');
         return this.dashboardWrapperService.getDashboardByIdOrSlug(this.getDashboardId())
             .pipe(
                 // get 1 or '' depending from condition
-                mergeMap((dashboard) => condition(dashboard) ? of(dashboard.config.search.mask) : of('')),
+                mergeMap((dashboard) => iif(() => condition(dashboard), expr(dashboard), f$)),
             );
     }
 

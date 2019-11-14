@@ -2,6 +2,7 @@ export class ExtSelectOptions {
     constructor(public placeholder?: string,
                 public title?: string,
                 public url?: string,
+                public description?: string,
                 public sourceField?: string,
                 public arrayField?: string,
                 public labelField?: string,

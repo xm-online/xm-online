@@ -2,7 +2,7 @@ FROM nginx
 LABEL version="0.0.1-SNAPSHOT"
 LABEL description="XM^online webapp"
 MAINTAINER Ihor Shkurko <ishkurko@gmail.com>
-EXPOSE 80 443
+EXPOSE 80 19999
 RUN apt-get update && apt-get install -y locales locales-all
 ADD proxy_params /etc/nginx/
 ENV LANG=en_US.UTF-8 \

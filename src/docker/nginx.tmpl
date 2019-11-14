@@ -24,7 +24,6 @@ http {
     gzip_min_length 1024;
     gzip_proxied expired no-cache no-store private auth;
     gzip_types
-        text/html
         text/css
         text/javascript
         text/xml
@@ -51,53 +50,43 @@ http {
 
     server {
 	listen 80;
-#	listen 443 ssl;
 	server_name localhost;
 	server_tokens off;
 	access_log /dev/stdout;
 	error_log /dev/stdout;
 
-#	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
-#	add_header X-Frame-Options SAMEORIGIN;
-#	add_header X-Content-Type-Options nosniff;
-#	add_header X-XSS-Protection "1; mode=block;";
-#	add_header Referrer-Policy "origin";
-#	add_header Content-Security-Policy "default-src https:; connect-src https:; font-src https: data:; frame-src https: twitter:; frame-ancestors https:; img-src https: data:; media-src https:; object-src https:; script-src 'unsafe-inline' 'unsafe-eval' https:; style-src 'unsafe-inline' https:";
+	    location / {
+	        rewrite ^/$ /index.html break;
+	        rewrite ^/login/$ /login/index.html break;
+	        rewrite ^/login$ /login/index.html break;
+	        index index.html;
+	        root /var/www/;
+	        expires 1d;
+	        try_files $uri /index.html;
+	    }
 
-#	ssl on;
-#	ssl_certificate /etc/ssl/ssl.crt;
-#	ssl_certificate_key /etc/ssl/ssl.key;
-#	ssl_dhparam /etc/ssl/dhparam.pem;
-#	ssl_session_timeout 5m;
-#	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-#	ssl_ciphers "EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA384:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH+aRSA+RC4:EECDH:EDH+aRSA:HIGH:!RC4:!aNULL:!MD5:!kEDH!RC4:!aNULL:!eNULL:!LOW:!3DES:!EXP:!PSK:!SRP:!DSS";
-#	ssl_prefer_server_ciphers on;
+	    location ~ ^/({{be_endpoints}}) {
+	        proxy_pass      http://{{be_host}}:{{be_port}}$request_uri;
+	        proxy_redirect off;
+	        include /etc/nginx/proxy_params;
+	    }
 
-	location / {
-	    rewrite ^/$ /index.html break;
-	    rewrite ^/login/$ /login/index.html break;
-	    rewrite ^/login$ /login/index.html break;
-	    index index.html;
-	    root /var/www/;
-	    expires 1d;
-	    try_files $uri /index.html;
-	}
+	    location ^~ /config/api/private {
+	        return 404;
+	    }
+    }
+    
+    server{
+        listen 19999;
+        charset utf-8;
+        server_name stats;
+        server_tokens off;
+        access_log off;
+        error_log off;
 
-#	location /NBUStatService/v1/statdirectory/exchange {
-#	    proxy_pass https://bank.gov.ua;
-#	    proxy_redirect off;
-#	    include /etc/nginx/proxy_params;
-#	}
-
-
-	location ~ ^/({{be_endpoints}}) {
-	    proxy_pass      http://{{be_host}}:{{be_port}}$request_uri;
-	    proxy_redirect off;
-	    include /etc/nginx/proxy_params;
-	}
-
-	location ^~ /config/api/private {
-	    return 404;
-	}
+        location / {
+          stub_status on;
+          access_log   off;
+        }
     }
 }

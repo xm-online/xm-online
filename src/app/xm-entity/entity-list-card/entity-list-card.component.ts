@@ -7,7 +7,7 @@ import { JhiEventManager } from 'ng-jhipster';
 import { Observable, of, Subscription } from 'rxjs';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
 
-import { ContextService, I18nNamePipe, ITEMS_PER_PAGE, Principal } from '../../shared';
+import { ContextService, I18nNamePipe, ITEMS_PER_PAGE, Principal, XmConfigService } from '../../shared';
 import { getFieldValue } from '../../shared/helpers/entity-list-helper';
 import { saveFile } from '../../shared/helpers/file-download-helper';
 import { buildJsfAttributes, transpilingForIE } from '../../shared/jsf-extention/jsf-attributes-helper';
@@ -44,6 +44,8 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     showLoader: boolean;
     firstPage = 1;
     public showPagination: boolean;
+    fastSearchHideAll = true;
+    entitiesUiConfig: any[] = [];
 
     private entityListActionSuccessSubscription: Subscription;
     private entityEntityListModificationSubscription: Subscription;
@@ -52,6 +54,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
                 private xmEntityService: XmEntityService,
                 private eventManager: JhiEventManager,
                 private modalService: NgbModal,
+                private xmConfigService: XmConfigService,
                 private translateService: TranslateService,
                 private i18nNamePipe: I18nNamePipe,
                 private router: Router,
@@ -65,7 +68,25 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
             () => this.load());
         this.entityEntityListModificationSubscription =
             this.eventManager.subscribe(XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION,
-            () => this.load());
+                () => this.load());
+
+        this.getEntitiesUIConfig();
+    }
+
+    private getEntitiesUIConfig(): void {
+        this.xmConfigService.getUiConfig().pipe(
+            map((res) => res.applications || {}),
+            map((app) => app.config || {}),
+            map((conf) => conf.entities || []),
+            map((entities) => {
+                console.log('MAP UI CFG ---------', entities);
+                console.log('MAP OPT ENT ---------', this.options.entities);
+                this.options.entities.forEach((e) => {
+                    const entity = e;
+                    this.entitiesUiConfig.push(entities.filter((e) => e.typeKey === entity.typeKey).shift());
+                });
+            }),
+        ).subscribe();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -277,7 +298,12 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
         if (!entityOptions.fastSearch) {
             return null;
         }
-        const fastSearchWithoutName = entityOptions.fastSearch.filter(s => !s.name).shift();
+        let fastSearchWithoutName: any;
+        if (entityOptions.fastSearchHideAll) {
+            fastSearchWithoutName = entityOptions.fastSearch[0];
+        } else {
+            fastSearchWithoutName = entityOptions.fastSearch.filter(s => !s.name).shift();
+        }
         return !fastSearchWithoutName ? null : fastSearchWithoutName.query;
     }
 

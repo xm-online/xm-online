@@ -69,6 +69,7 @@
           <div class="col-sm-8" *xmPermitted="['XMENTITY.SEARCH.QUERY']">
             <div *ngIf="item.fastSearch?.length > 1" class="btn-group">
               <button mat-raised-button
+                      *ngIf="!item.fastSearchHideAll"
                       class="btn btn-primary btn-sm btn-round"
                       [class.disabled]="item.currentQuery === getDefaultSearch(item)"
                       (click)="onApplyFastSearch(item, getDefaultSearch(item))">

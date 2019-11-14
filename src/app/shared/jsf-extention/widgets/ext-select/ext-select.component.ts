@@ -162,7 +162,6 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         this.controlValue = event.value.value;
     }
-    }
 
     private filterElements(): void {
         if (!this.elements) {

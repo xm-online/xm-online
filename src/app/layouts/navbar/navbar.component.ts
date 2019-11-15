@@ -93,7 +93,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
                 if (this.getDashboardId()) {
                     this.getSearchMask().pipe(
-                        tap( m => {console.log(m);}),
                         tap((mask) => this.searchMask = mask),
                     ).subscribe();
                 }

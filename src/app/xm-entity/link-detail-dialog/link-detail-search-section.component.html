@@ -30,7 +30,7 @@
         <td>
           <div class="xm-avatar-img-container">
             <img src="{{xmEntity.avatarUrl ? xmEntity.avatarUrl : './assets/img/placeholder.png'}}">
-            <i class="material-icons" *ngIf="linkSpec.icon && !xmEntity.avatarUrl">{{linkSpec.icon}}</i>
+            <i class="material-icons" *ngIf="!xmEntity.avatarUrl && xmEntity && spec">{{ xmEntity.typeKey | xmEntityIcon: spec}}</i>
           </div>
         </td>
         <td>{{xmEntity.name}}</td>

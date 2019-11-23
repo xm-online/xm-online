@@ -240,11 +240,13 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     private getSearchMask(): Observable<string> {
-        const condition = (dash) => !!(dash && dash.config && dash.config.search && dash.config.search.mask);
+        const condition = (dash) =>  !!(dash && dash.config && dash.config.search && dash.config.search.mask);
+        const expr = (dash) => of((dash && dash.config && dash.config.search && dash.config.search.mask));
+        const f$ = of('');
         return this.dashboardWrapperService.getDashboardByIdOrSlug(this.getDashboardId())
             .pipe(
                 // get 1 or '' depending from condition
-                mergeMap((dashboard) => iif(() => condition(dashboard), of(dashboard.config.search.mask), of(''))),
+                mergeMap((dashboard) => iif(() => condition(dashboard), expr(dashboard), f$)),
             );
     }
 

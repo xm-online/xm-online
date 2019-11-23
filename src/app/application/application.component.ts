@@ -157,8 +157,6 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     protected buildOptions(defaultFields): void {
         const config = this.getListConfig();
 
-        console.log('DBG %o', config);
-
         const fields = config && config.fields ? config.fields : defaultFields;
 
         if (this.isSearch) {

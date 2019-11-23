@@ -144,32 +144,26 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     }
 
     private buildDefaultFields(): Array<Object> {
-        return [
-            {
-                field: 'name',
-                title: this.translateService.instant(LIST_DEFAULT_FIELDS['name']),
-            },
-            {
-                field: 'typeKey',
-                title: this.translateService.instant(LIST_DEFAULT_FIELDS['typeKey']),
-            },
-            {
-                field: 'startDate',
-                title: this.translateService.instant(LIST_DEFAULT_FIELDS['startDate']),
-            },
-            {
-                field: 'stateKey',
-                title: this.translateService.instant(LIST_DEFAULT_FIELDS['stateKey']),
-            },
-        ];
+        return ['name', 'typeKey', 'startDate', 'stateKey'].map(item => this.newField(item));
+    }
+
+    private newField(name: string) {
+        return {
+            field: name,
+            title: this.translateService.instant(LIST_DEFAULT_FIELDS[name])
+        }
     }
 
     protected buildOptions(defaultFields): void {
         const config = this.getListConfig();
+
+        console.log('DBG %o', config);
+
         const fields = config && config.fields ? config.fields : defaultFields;
 
         if (this.isSearch) {
             this.options = {
+                hideDelete: config && config.hideDelete,
                 entities: [
                     {
                         currentQuery: (config ? config.query : '') + this.searchQuery,
@@ -182,6 +176,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         } else {
             this.entityType = this.getTypeFromSpec(this.spec, this.typeKey) || '';
             this.options = {
+                hideDelete: config && config.hideDelete,
                 entities: [
                     {
                         typeKey: this.typeKey,

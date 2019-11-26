@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
-import { Observable ,  Subscription } from 'rxjs';
+import { Observable ,  Subscription, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
@@ -268,9 +268,11 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     }
 
     private getSearchConfig(idOrSlug: any): Observable<any> {
-        return this.dashboardWrapperService.getDashboardByIdOrSlug(idOrSlug).pipe(
-            map( (dash) => dash && dash.config),
-            map( (config) => config && config.search),
-        );
+        if (idOrSlug) {
+            return this.dashboardWrapperService.getDashboardByIdOrSlug(idOrSlug).pipe(
+                map( (dash) => dash && dash.config),
+                map( (config) => config && config.search),
+            );
+        } else { return of(''); }
     }
 }

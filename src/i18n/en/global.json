@@ -180,7 +180,8 @@
             "suffix": "characters)"
         },
         "rest-select-search-more": "More results are available. Refine your search query!",
-        "rest-select-placeholder-noresults": "No results found"
+        "rest-select-placeholder-noresults": "No results found",
+        "rest-select-none-option": "None"
     },
     "mat": {
         "paginator": {

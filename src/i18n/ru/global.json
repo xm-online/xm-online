@@ -179,7 +179,8 @@
             "suffix": "символов)"
         },
         "rest-select-search-more": "Доступны еще результаты. Уточните поисковый запрос!",
-        "rest-select-placeholder-noresults": "Ничего не найдено"
+        "rest-select-placeholder-noresults": "Ничего не найдено",
+        "rest-select-none-option": "Ничего"
     },
     "mat": {
         "paginator": {

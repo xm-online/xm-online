@@ -44,7 +44,6 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     showLoader: boolean;
     firstPage = 1;
     public showPagination: boolean;
-    fastSearchHideAll = true;
     entitiesUiConfig: any[] = [];
 
     private entityListActionSuccessSubscription: Subscription;
@@ -64,13 +63,23 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
+        console.log(this);
+        this.getEntitiesUIConfig();
         this.entityListActionSuccessSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS,
-            () => this.load());
+            () => {
+            this.load();
+        });
         this.entityEntityListModificationSubscription =
             this.eventManager.subscribe(XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION,
-                () => this.load());
+                () => {
+                this.load();
+            });
 
-        this.getEntitiesUIConfig();
+    }
+
+    public isHideAll(typeKey: string): boolean {
+        const entity = this.entitiesUiConfig.find((e) => e.typeKey === typeKey) || {};
+        console.log(entity.fastSearchHideAll);
     }
 
     private getEntitiesUIConfig(): void {
@@ -91,6 +100,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.options && !_.isEqual(changes.options.previousValue, changes.options.currentValue)) {
+            this.getEntitiesUIConfig();
             this.predicate = 'id';
             this.reverse = false;
             this.load();
@@ -138,6 +148,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
 
     onRefresh() {
         this.filtersReset(this.list[this.activeItemId]);
+        this.getEntitiesUIConfig();
         this.loadEntities(this.list[this.activeItemId]).subscribe((result) => {
             this.list[this.activeItemId].entities = result;
         });
@@ -299,6 +310,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
             return null;
         }
         let fastSearchWithoutName: any;
+        this.isHideAll(entityOptions.typeKey);
         if (entityOptions.fastSearchHideAll) {
             fastSearchWithoutName = entityOptions.fastSearch[0];
         } else {

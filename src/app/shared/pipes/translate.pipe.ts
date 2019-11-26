@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Injectable, Pipe, PipeTransform } from '@angular/core';
+import { ChangeDetectorRef, Injectable, OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import { TranslatePipe as ngxTranslate, TranslateService } from '@ngx-translate/core';
 
 interface ITranslate {
@@ -16,9 +16,12 @@ type Translate = ITranslate | string;
     name: 'translate',
     pure: false,
 })
-export class TranslatePipe implements PipeTransform {
+export class TranslatePipe implements PipeTransform, OnDestroy {
+
+    private natiVeTranslate: ngxTranslate;
 
     constructor(protected translate: TranslateService, protected cdr: ChangeDetectorRef) {
+        this.natiVeTranslate = new ngxTranslate(this.translate, this.cdr);
     }
 
     /**
@@ -35,8 +38,11 @@ export class TranslatePipe implements PipeTransform {
         if (typeof value === 'object') {
             return value[this.translate.currentLang];
         } else {
-            return new ngxTranslate(this.translate, this.cdr).transform(value, ...args);
+            return this.natiVeTranslate.transform(value, ...args);
         }
     }
 
+    public ngOnDestroy(): void {
+        this.natiVeTranslate.ngOnDestroy();
+    }
 }

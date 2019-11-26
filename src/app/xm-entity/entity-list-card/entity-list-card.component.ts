@@ -45,6 +45,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     firstPage = 1;
     public showPagination: boolean;
     entitiesUiConfig: any[] = [];
+    currentEntitiesUiConfig: any[] = [];
 
     private entityListActionSuccessSubscription: Subscription;
     private entityEntityListModificationSubscription: Subscription;
@@ -78,8 +79,10 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public isHideAll(typeKey: string): boolean {
-        const entity = this.entitiesUiConfig.find((e) => e.typeKey === typeKey) || {};
-        console.log(entity.fastSearchHideAll);
+        if (this.currentEntitiesUiConfig && this.currentEntitiesUiConfig.length) {
+            const entityConfig = this.currentEntitiesUiConfig.find((e) => e && e.typeKey === typeKey) || {};
+            return entityConfig && entityConfig.fastSearchHideAll;
+        } else { return false; }
     }
 
     private getEntitiesUIConfig(): void {
@@ -87,20 +90,24 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
             map((res) => res.applications || {}),
             map((app) => app.config || {}),
             map((conf) => conf.entities || []),
-            map((entities) => {
-                console.log('MAP UI CFG ---------', entities);
-                console.log('MAP OPT ENT ---------', this.options.entities);
-                this.options.entities.forEach((e) => {
-                    const entity = e;
-                    this.entitiesUiConfig.push(entities.filter((e) => e.typeKey === entity.typeKey).shift());
-                });
-            }),
+            tap((entities) => this.entitiesUiConfig = entities),
+            tap( () => {this.getCurrentEntitiesConfig()}),
         ).subscribe();
+    }
+
+    private getCurrentEntitiesConfig() {
+        this.currentEntitiesUiConfig = [];
+        if (this.entitiesUiConfig && this.entitiesUiConfig.length) {
+            this.options.entities.forEach((e) => {
+                const entity = e;
+                this.currentEntitiesUiConfig.push(this.entitiesUiConfig.filter((e) => e.typeKey === entity.typeKey).shift());
+            });
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.options && !_.isEqual(changes.options.previousValue, changes.options.currentValue)) {
-            this.getEntitiesUIConfig();
+            this.getCurrentEntitiesConfig();
             this.predicate = 'id';
             this.reverse = false;
             this.load();
@@ -148,7 +155,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
 
     onRefresh() {
         this.filtersReset(this.list[this.activeItemId]);
-        this.getEntitiesUIConfig();
+        this.getCurrentEntitiesConfig();
         this.loadEntities(this.list[this.activeItemId]).subscribe((result) => {
             this.list[this.activeItemId].entities = result;
         });
@@ -310,8 +317,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
             return null;
         }
         let fastSearchWithoutName: any;
-        this.isHideAll(entityOptions.typeKey);
-        if (entityOptions.fastSearchHideAll) {
+        if (this.isHideAll(entityOptions.typeKey)) {
             fastSearchWithoutName = entityOptions.fastSearch[0];
         } else {
             fastSearchWithoutName = entityOptions.fastSearch.filter(s => !s.name).shift();

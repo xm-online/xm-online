@@ -179,7 +179,8 @@
             "suffix": "символів)"
         },
         "rest-select-search-more": "Доступні ще результати. Уточніть пошуковий запит!",
-        "rest-select-placeholder-noresults": "Нічого не знайдено"
+        "rest-select-placeholder-noresults": "Нічого не знайдено",
+        "rest-select-none-option": "Нічого"
     },
     "mat": {
         "paginator": {

@@ -14,7 +14,7 @@ const ROUTES: Routes = [
     {path: '', loadChildren: './account/account.module#GateAccountModule'},
     {path: '', loadChildren: './application/application.module#ApplicationModule'},
     {path: '', loadChildren: './xm-dashboard/xm-dashboard.module#XmDashboardModule'},
-    {path: '', loadChildren: './xm-config/xm-config.module#XmConfigModule'},
+
 ];
 
 @NgModule({

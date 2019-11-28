@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { environment } from '../environments/environment';
 import { errorRoute } from './layouts';
 import { navbarRoute } from './layouts/navbar/navbar.route';
-import { DEBUG_INFO_ENABLED } from './xm.constants';
 
 const ROUTES: Routes = [
     navbarRoute,
@@ -14,12 +14,11 @@ const ROUTES: Routes = [
     {path: '', loadChildren: './account/account.module#GateAccountModule'},
     {path: '', loadChildren: './application/application.module#ApplicationModule'},
     {path: '', loadChildren: './xm-dashboard/xm-dashboard.module#XmDashboardModule'},
-    {path: '', loadChildren: './xm-config/xm-config.module#XmConfigModule'},
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(ROUTES, {useHash: false, enableTracing: DEBUG_INFO_ENABLED}),
+        RouterModule.forRoot(ROUTES, {useHash: false, enableTracing: !environment.production}),
     ],
     exports: [RouterModule],
 })

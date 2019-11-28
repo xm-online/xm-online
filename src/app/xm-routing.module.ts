@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { errorRoute } from './layouts';
 import { navbarRoute } from './layouts/navbar/navbar.route';
-import { DEBUG_INFO_ENABLED } from './xm.constants';
+import { environment } from '../environments/environment';
 
 const ROUTES: Routes = [
     navbarRoute,
@@ -19,7 +19,7 @@ const ROUTES: Routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(ROUTES, {useHash: false, enableTracing: DEBUG_INFO_ENABLED}),
+        RouterModule.forRoot(ROUTES, {useHash: false, enableTracing: !environment.production}),
     ],
     exports: [RouterModule],
 })

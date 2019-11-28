@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { environment } from '../environments/environment';
 import { errorRoute } from './layouts';
 import { navbarRoute } from './layouts/navbar/navbar.route';
-import { environment } from '../environments/environment';
 
 const ROUTES: Routes = [
     navbarRoute,
@@ -14,7 +14,6 @@ const ROUTES: Routes = [
     {path: '', loadChildren: './account/account.module#GateAccountModule'},
     {path: '', loadChildren: './application/application.module#ApplicationModule'},
     {path: '', loadChildren: './xm-dashboard/xm-dashboard.module#XmDashboardModule'},
-
 ];
 
 @NgModule({

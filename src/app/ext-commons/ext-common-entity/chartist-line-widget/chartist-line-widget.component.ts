@@ -8,7 +8,7 @@ import { XmEntity, XmEntityService } from '../../../xm-entity/';
 @Component({
     selector: 'xm-chartist-line-widget',
     templateUrl: './chartist-line-widget.component.html',
-    styleUrls: ['./chartist-line-widget.component.scss']
+    styleUrls: ['./chartist-line-widget.component.scss'],
 })
 export class ChartistLineWidgetComponent implements OnInit {
 

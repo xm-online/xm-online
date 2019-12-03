@@ -124,7 +124,7 @@
                   </th>
                 </ng-container>
 
-                <th *ngIf="item.typeKey != 'RESOURCE.XM-TENANT' && !(options.hideExport)"></th>
+                <th *ngIf="!(options?.hideDelete) && !(options?.hideExport)"></th>
               </tr>
               </thead>
 
@@ -188,7 +188,7 @@
                     {{field.action.name | i18nName: principal}}
                   </button>
                 </td>
-                <td *ngIf="item.typeKey != 'RESOURCE.XM-TENANT' && !(options?.hideDelete) && !(item?.hideDelete)">
+                <td *ngIf="!(options?.hideDelete) && !(item?.hideDelete)">
                   <a href="javascript: void(0);" (click)="onRemove(xmEntity)">
                     <i class="material-icons">close</i>
                   </a>

@@ -1,5 +1,7 @@
 .idea/
 *.iml
+.npmrc
+
 node_modules/
 dist/
 !src/swagger-ui/dist/
@@ -22,3 +24,4 @@ src/app/ext/*
 !src/assets/css/ext/
 src/assets/img/ext/
 angular.json
+

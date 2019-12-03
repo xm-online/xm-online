@@ -36,23 +36,13 @@ export class EntityListWidgetComponent implements OnInit {
     }
 
     private buildDefaultFields(): Array<Object> {
-        return [
-            {
-                field: 'name',
-                title: this.translateService.instant(LIST_DEFAULT_FIELDS['name'])
-            },
-            {
-                field: 'typeKey',
-                title: this.translateService.instant(LIST_DEFAULT_FIELDS['typeKey'])
-            },
-            {
-                field: 'startDate',
-                title: this.translateService.instant(LIST_DEFAULT_FIELDS['startDate'])
-            },
-            {
-                field: 'stateKey',
-                title: this.translateService.instant(LIST_DEFAULT_FIELDS['stateKey'])
-            }
-        ]
+        return ['name', 'typeKey', 'startDate', 'stateKey'].map(item => this.newField(item));
+    }
+
+    private newField(name: string) {
+        return {
+            field: name,
+            title: this.translateService.instant(LIST_DEFAULT_FIELDS[name])
+        }
     }
 }

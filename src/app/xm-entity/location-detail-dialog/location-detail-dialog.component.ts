@@ -178,6 +178,9 @@ export class LocationDetailDialogComponent implements OnInit {
     }
 
     onConfirmSave() {
+        if (this.xmEntity && this.xmEntity.id) {
+            Object.assign(this.form.value.xmEntity, {id: this.xmEntity.id, typeKey: this.xmEntity.typeKey});
+        }
         this.showLoader = true;
         if (this.form.value.id) {
             this.locationService.update(this.form.value).pipe(

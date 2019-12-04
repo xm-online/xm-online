@@ -4,8 +4,6 @@ import { NgModule } from '@angular/core';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 
 import { AuthInterceptor } from '../../blocks/interceptor/auth.interceptor';
-import { JhiLanguageHelper } from '../../shared';
-import { ModulesLanguageHelper } from '../../shared/language/modules-language.helper';
 import { XmSharedModule } from '../../shared/shared.module';
 import {
     ClockWidgetComponent,
@@ -20,14 +18,14 @@ import {
     TwitterTimelineWidgetComponent,
     WeatherService,
     WeatherWidgetComponent,
-    WelcomeWidgetComponent
+    WelcomeWidgetComponent,
 } from './';
 
 @NgModule({
     imports: [
         CommonModule,
         XmSharedModule,
-        HttpClientJsonpModule
+        HttpClientJsonpModule,
     ],
     declarations: [
         ClockWidgetComponent,
@@ -38,7 +36,7 @@ import {
         SignInUpWidgetComponent,
         TwitterTimelineWidgetComponent,
         WeatherWidgetComponent,
-        WelcomeWidgetComponent
+        WelcomeWidgetComponent,
     ],
     entryComponents: [
         ClockWidgetComponent,
@@ -49,7 +47,7 @@ import {
         SignInUpWidgetComponent,
         TwitterTimelineWidgetComponent,
         WeatherWidgetComponent,
-        WelcomeWidgetComponent
+        WelcomeWidgetComponent,
     ],
     providers: [
         FeedService,
@@ -62,8 +60,8 @@ import {
             multi: true,
             deps: [
                 LocalStorageService,
-                SessionStorageService
-            ]
+                SessionStorageService,
+            ],
         },
         {provide: 'xm-widget-clock', useValue: ClockWidgetComponent},
         {provide: 'xm-widget-exchange-calculator', useValue: ExchangeWidgetComponent},
@@ -73,12 +71,8 @@ import {
         {provide: 'xm-widget-sign-in-up', useValue: SignInUpWidgetComponent},
         {provide: 'xm-widget-twitter-timeline', useValue: TwitterTimelineWidgetComponent},
         {provide: 'xm-widget-weather', useValue: WeatherWidgetComponent},
-        {provide: 'xm-widget-welcome', useValue: WelcomeWidgetComponent}
-    ]
+        {provide: 'xm-widget-welcome', useValue: WelcomeWidgetComponent},
+    ],
 })
 export class ExtCommonModule {
-    constructor(private modulesLangHelper: ModulesLanguageHelper, private languageHelper: JhiLanguageHelper) {
-        this.languageHelper.language.subscribe((languageKey: string) => {this.modulesLangHelper.correctLang(languageKey)});
-    }
 }
-

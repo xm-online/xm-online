@@ -1,30 +1,27 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
-import { I18nNamePipe, JhiLanguageHelper, ModulesLanguageHelper, Principal } from '../shared';
+import { I18nNamePipe, JhiLanguageHelper, Principal } from '../shared';
 import { Spec, XmEntity, XmEntityService, XmEntitySpecWrapperService } from '../xm-entity';
 
 declare var $: any;
 
 @Component({
     selector: 'xm-entity-detail',
-    templateUrl: './entity-detail.component.html'
+    templateUrl: './entity-detail.component.html',
 })
 export class EntityDetailComponent implements OnInit, OnDestroy {
 
+    public xmEntity: XmEntity;
+    public spec: Spec;
     private routeData: any;
     private eventSubscriber: Subscription;
     private routeParamsSubscription: any;
     private routeDataSubscription: Subscription;
 
-    xmEntity: XmEntity;
-    spec: Spec;
-
     constructor(private eventManager: JhiEventManager,
-                private moduleLangHelper: ModulesLanguageHelper,
-                private jhiLanguageService: JhiLanguageService,
                 private jhiLanguageHelper: JhiLanguageHelper,
                 private xmEntityService: XmEntityService,
                 private xmEntitySpecWrapperService: XmEntitySpecWrapperService,
@@ -33,16 +30,15 @@ export class EntityDetailComponent implements OnInit, OnDestroy {
                 private principal: Principal) {
     }
 
-    ngOnInit() {
-        this.jhiLanguageService.changeLanguage(this.moduleLangHelper.getLangKey());
-        this.xmEntitySpecWrapperService.spec().then(spec => this.spec = spec);
+    public ngOnInit(): void {
+        this.xmEntitySpecWrapperService.spec().then((spec) => this.spec = spec);
         this.routeDataSubscription = this.route.data.subscribe((data) => {
             this.routeData = data;
         });
         this.routeParamsSubscription = this.route.params.subscribe((params) => {
             if (params.key) {
-                this.xmEntitySpecWrapperService.spec().then(spec => {
-                    const type = spec.types.filter(t => t.key === params.key).shift() || {};
+                this.xmEntitySpecWrapperService.spec().then((spec) => {
+                    const type = spec.types.filter((t) => t.key === params.key).shift() || {};
                     if (type && type.name) {
                         this.routeData.pageSubTitle = this.i18nNamePipe.transform(type.name, this.principal);
                     }
@@ -53,28 +49,28 @@ export class EntityDetailComponent implements OnInit, OnDestroy {
         this.registerChangeInXmEntities();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         $.xmEntity = null;
         this.routeParamsSubscription.unsubscribe();
         this.routeDataSubscription.unsubscribe();
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    private registerChangeInXmEntities() {
+    private registerChangeInXmEntities(): void {
         this.eventSubscriber = this.eventManager.subscribe('xmEntityDetailModification',
             () => this.load(this.xmEntity.id));
     }
 
-    private load(id) {
+    private load(id: any): void {
         $.xmEntity = null;
         this.xmEntity = null;
-        this.xmEntityService.find(id, {'embed': 'data'}).subscribe((xmEntity) => {
-                    this.xmEntity = xmEntity.body;
-                    $.xmEntity = xmEntity.body;
-                    this.routeData.pageSubSubTitle = this.xmEntity.name;
-                    this.jhiLanguageHelper.updateTitle();
-                },
-                (err) => console.log(err));
+        this.xmEntityService.find(id, {embed: 'data'}).subscribe((xmEntity) => {
+                this.xmEntity = xmEntity.body;
+                $.xmEntity = xmEntity.body;
+                this.routeData.pageSubSubTitle = this.xmEntity.name;
+                this.jhiLanguageHelper.updateTitle();
+            },
+            (err) => console.log(err));
     }
 
 }

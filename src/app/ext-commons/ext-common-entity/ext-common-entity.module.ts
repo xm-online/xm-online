@@ -1,8 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
-import { JhiLanguageHelper } from '../../shared';
-import { ModulesLanguageHelper } from '../../shared/language/modules-language.helper';
 import { XmSharedModule } from '../../shared/shared.module';
 import { XmBalanceModule } from '../../xm-balance/xm-balance.module';
 import { XmEntityModule } from '../../xm-entity/xm-entity.module';
@@ -18,7 +15,7 @@ import {
     LocationMapWidgetComponent,
     MdTableComponent,
     StatsWidgetComponent,
-    TasksWidgetComponent
+    TasksWidgetComponent,
 } from './';
 
 @NgModule({
@@ -27,7 +24,7 @@ import {
         XmSharedModule,
         XmEntityModule,
         XmBalanceModule,
-        XmTimelineModule
+        XmTimelineModule,
     ],
     declarations: [
         AvailableOfferingsWidgetComponent,
@@ -40,7 +37,7 @@ import {
         LocationMapWidgetComponent,
         MdTableComponent,
         StatsWidgetComponent,
-        TasksWidgetComponent
+        TasksWidgetComponent,
     ],
     entryComponents: [
         AvailableOfferingsWidgetComponent,
@@ -53,7 +50,7 @@ import {
         LocationMapWidgetComponent,
         MdTableComponent,
         StatsWidgetComponent,
-        TasksWidgetComponent
+        TasksWidgetComponent,
     ],
     providers: [
         {provide: 'xm-widget-available-offerings', useValue: AvailableOfferingsWidgetComponent},
@@ -65,11 +62,8 @@ import {
         {provide: 'xm-widget-general-map', useValue: LocationMapWidgetComponent},
         {provide: 'xm-widget-general-countries', useValue: LocationCountriesWidgetComponent},
         {provide: 'xm-widget-stats', useValue: StatsWidgetComponent},
-        {provide: 'xm-widget-tasks', useValue: TasksWidgetComponent}
-    ]
+        {provide: 'xm-widget-tasks', useValue: TasksWidgetComponent},
+    ],
 })
 export class ExtCommonEntityModule {
-    constructor(private modulesLangHelper: ModulesLanguageHelper, private languageHelper: JhiLanguageHelper) {
-        this.languageHelper.language.subscribe((languageKey: string) => {this.modulesLangHelper.correctLang(languageKey)});
-    }
 }

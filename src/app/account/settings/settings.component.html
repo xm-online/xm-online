@@ -9,9 +9,7 @@
       </div>
       <div class="card-body">
         <form name="form" role="form" (ngSubmit)="save()" #settingsForm="ngForm" novalidate>
-          <div class="alert alert-success" *ngIf="success" jhiTranslate="settings.messages.success">
-            <strong>Settings saved!</strong>
-          </div>
+          <div class="alert alert-success" *ngIf="success" [innerHTML]="'settings.messages.success' | translate"></div>
           <div class="form-group">
             <mat-form-field>
               <input matInput

@@ -10,6 +10,7 @@ import {
 } from 'angular2-json-schema-form';
 import { TagInputModule } from 'ngx-chips';
 import { RatingModule } from 'ngx-rating';
+import { JhiLanguageHelper, ModulesLanguageHelper } from '../shared';
 
 import { XmSharedModule } from '../shared/shared.module';
 import { XmBalanceModule } from '../xm-balance/xm-balance.module';
@@ -52,4 +53,9 @@ import { EntityDetailComponent } from './entity-detail.component';
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ApplicationModule {
+    constructor(private modulesLangHelper: ModulesLanguageHelper, private languageHelper: JhiLanguageHelper) {
+        this.languageHelper
+            .language
+            .subscribe((languageKey: string) => {this.modulesLangHelper.correctLang(languageKey); });
+    }
 }

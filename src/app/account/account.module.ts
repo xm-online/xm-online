@@ -1,6 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { JhiLanguageHelper, ModulesLanguageHelper } from '../shared';
 
 import { XmSharedModule } from '../shared/shared.module';
 import {
@@ -44,4 +45,9 @@ import { accountState } from './account.route';
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class GateAccountModule {
+    constructor(private modulesLangHelper: ModulesLanguageHelper, private languageHelper: JhiLanguageHelper) {
+        this.languageHelper
+            .language
+            .subscribe((languageKey: string) => {this.modulesLangHelper.correctLang(languageKey); });
+    }
 }

@@ -14,7 +14,7 @@ import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
 import { ProfileService, XmMainComponent } from './layouts';
 import { LayoutModule } from './layouts/layout.module';
-import { UserRouteAccessService } from './shared';
+import { JhiLanguageHelper, ModulesLanguageHelper, UserRouteAccessService } from './shared';
 import { XmSharedModule } from './shared/shared.module';
 import { XmApplicationConfigService } from './shared/spec/xm-config.service';
 import { XmDashboardModule } from './xm-dashboard/xm-dashboard.module';
@@ -92,4 +92,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     bootstrap: [XmMainComponent],
 })
 export class XmModule {
+    constructor(private modulesLangHelper: ModulesLanguageHelper, private languageHelper: JhiLanguageHelper) {
+        this.languageHelper
+            .language
+            .subscribe((languageKey: string) => {this.modulesLangHelper.correctLang(languageKey); });
+    }
 }

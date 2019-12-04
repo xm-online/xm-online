@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, ModuleWithProviders, NgModule } from '@angular/core';
+import { JhiLanguageHelper, ModulesLanguageHelper } from '../shared';
 
 import { XmSharedModule } from '../shared/shared.module';
 import { DashboardService, DashboardWrapperService, DynamicWidgetComponent, WidgetService } from './';
@@ -33,5 +34,10 @@ export class XmDashboardModule {
                 DashboardWrapperService,
             ],
         };
+    }
+    constructor(private modulesLangHelper: ModulesLanguageHelper, private languageHelper: JhiLanguageHelper) {
+        this.languageHelper
+            .language
+            .subscribe((languageKey: string) => {this.modulesLangHelper.correctLang(languageKey); });
     }
 }

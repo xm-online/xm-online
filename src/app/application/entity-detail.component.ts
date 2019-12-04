@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
-import { I18nNamePipe, JhiLanguageHelper, Principal } from '../shared';
+import { I18nNamePipe, JhiLanguageHelper, ModulesLanguageHelper, Principal } from '../shared';
 import { Spec, XmEntity, XmEntityService, XmEntitySpecWrapperService } from '../xm-entity';
 
 declare var $: any;
@@ -23,6 +23,8 @@ export class EntityDetailComponent implements OnInit, OnDestroy {
     spec: Spec;
 
     constructor(private eventManager: JhiEventManager,
+                private moduleLangHelper: ModulesLanguageHelper,
+                private jhiLanguageService: JhiLanguageService,
                 private jhiLanguageHelper: JhiLanguageHelper,
                 private xmEntityService: XmEntityService,
                 private xmEntitySpecWrapperService: XmEntitySpecWrapperService,
@@ -32,6 +34,7 @@ export class EntityDetailComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.jhiLanguageService.changeLanguage(this.moduleLangHelper.getLangKey());
         this.xmEntitySpecWrapperService.spec().then(spec => this.spec = spec);
         this.routeDataSubscription = this.route.data.subscribe((data) => {
             this.routeData = data;

@@ -13,12 +13,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
 
-import { iif, Observable, of } from 'rxjs';
+import { iif, Observable, of, Subscription } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
 import { JhiLanguageHelper, LANGUAGES, Principal } from '../../shared';
 import { XmConfigService } from '../../shared/spec/config.service';
 import { DashboardWrapperService } from '../../xm-dashboard';
-import { DEBUG_INFO_ENABLED, VERSION } from '../../xm.constants';
+import { DEBUG_INFO_ENABLED, VERSION, XM_EVENT_LIST } from '../../xm.constants';
 
 const misc: any = {
     navbar_menu_visible: 0,
@@ -34,6 +34,8 @@ declare let $: any;
     templateUrl: './navbar.component.html',
 })
 export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
+
+    private changeLanguageSubscriber: Subscription;
 
     routeData: any = {};
     languages: any[];
@@ -71,6 +73,9 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     public ngOnInit(): void {
+        this.changeLanguageSubscriber = this.eventManager.subscribe(XM_EVENT_LIST.XM_CHANGE_LANGUAGE, (event) => {
+            this.jhiLanguageService.changeLanguage(event.content);
+        });
         this.xmConfigService.getUiConfig().subscribe((result) => {
             this.tenantName = result['name'] ? result['name'] : 'XM^online';
             if (this.tenantName === 'XM^online') {
@@ -131,6 +136,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     public ngOnDestroy(): void {
+        this.changeLanguageSubscriber.unsubscribe();
     }
 
     public ngDoCheck(): void {

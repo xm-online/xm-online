@@ -24,7 +24,7 @@ export class NoDataComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         if (!changes.text || !changes.text.currentValue) {
-            this.text = {trKey : 'global.noData'};
+            this.text = 'global.noData';
         }
     }
 

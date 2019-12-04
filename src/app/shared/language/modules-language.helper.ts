@@ -22,7 +22,7 @@ export class ModulesLanguageHelper {
 
     correctLang(langKey: string) {
         if (!this.principal.isAuthenticated()) {
-            this.languageService.changeLanguage(langKey)
+            this.languageService.changeLanguage(langKey);
         } else {
             const lang = this.getLangKey();
             if (lang !== langKey) {this.languageService.changeLanguage(lang)}

@@ -1,11 +1,13 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { JhiLanguageService } from 'ng-jhipster';
+import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 import { interval, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { AccountService, Principal } from '../../shared';
+import { AccountService, LANGUAGES, Principal } from '../../shared';
 import { XmConfigService } from '../../shared/spec/config.service';
-import { DEFAULT_LANG } from '../../xm.constants';
+import { DEFAULT_LANG, XM_EVENT_LIST } from '../../xm.constants';
+import { TranslateService } from '@ngx-translate/core';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
     selector: 'xm-settings',
@@ -30,7 +32,10 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     constructor(private accountService: AccountService,
                 private principal: Principal,
+                private translateService: TranslateService,
                 private jhiLanguageService: JhiLanguageService,
+                private $sessionStorage: SessionStorageService,
+                private eventManager: JhiEventManager,
                 private xmConfig: XmConfigService) {
         this.principal.identity().then((account) => {
             this.settingsAccount = this.copyAccount(account);
@@ -92,11 +97,7 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
             this.success = 'OK';
             this.principal.identity(true).then((account) => {
                 this.settingsAccount = this.copyAccount(account);
-            });
-            this.jhiLanguageService.getCurrent().then((current) => {
-                if (this.settingsAccount.langKey !== current) {
-                    this.jhiLanguageService.changeLanguage(this.settingsAccount.langKey);
-                }
+                this.setLanguage(this.settingsAccount.langKey);
             });
         }, () => {
             this.success = null;
@@ -154,5 +155,23 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
             autoLogoutEnabled: account.autoLogoutEnabled,
             autoLogoutTime: account.autoLogoutTimeoutSeconds,
         };
+    }
+
+    private setLanguage(lang: string): void {
+        this.jhiLanguageService.changeLanguage(lang);
+        this.translateService.setDefaultLang(lang);
+        this.principal.setLangKey(lang);
+        this.storeTranslates(lang);
+        this.eventManager.broadcast({name: XM_EVENT_LIST.XM_CHANGE_LANGUAGE, content: lang});
+    }
+
+    private storeTranslates(langKey: string): void {
+        this.translateService.getTranslation(langKey).subscribe((res) => {
+            LANGUAGES.forEach((lang) => {
+                this.$sessionStorage.clear(lang);
+            });
+            this.$sessionStorage.store(langKey, JSON.stringify(res));
+            this.$sessionStorage.store('currentLang', langKey);
+        });
     }
 }

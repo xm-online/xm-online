@@ -3,11 +3,10 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { getBrowserLang } from './../shared-libs.module';
 
 import { environment } from '../../../environments/environment';
-import { XmApplicationConfigService } from '../spec/xm-config.service';
 import { LANGUAGES } from './language.constants';
+import { ModulesLanguageHelper } from './modules-language.helper';
 
 @Injectable()
 export class JhiLanguageHelper {
@@ -18,13 +17,11 @@ export class JhiLanguageHelper {
         private translateService: TranslateService,
         // tslint:disable-next-line: no-unused-variable
         private rootRenderer: RendererFactory2,
-        private appConfig: XmApplicationConfigService,
+        private modulesLangHelper: ModulesLanguageHelper,
         private titleService: Title,
         private router: Router,
     ) {
-        const appCfg = this.appConfig.getAppConfig();
-        const startLanguage = (appCfg && appCfg.defaultLang) ? appCfg.defaultLang : getBrowserLang();
-        this._language = new BehaviorSubject<string>(startLanguage);
+        this._language = new BehaviorSubject<string>(this.modulesLangHelper.getLangKey());
         this.renderer = this.rootRenderer.createRenderer(document.querySelector('html'), null);
         this.translateService.onLangChange.subscribe((event: LangChangeEvent) => this.handleLanguageChangeEvent(event));
     }

@@ -11,11 +11,11 @@ import {
     WidgetLibraryService,
 } from 'angular2-json-schema-form';
 
-import { JhiLanguageHelper } from '../shared';
-import { ModulesLanguageHelper } from '../shared/language/modules-language.helper';
 import { XmSharedModule } from '../shared/shared.module';
 
+import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 import { TagInputModule } from 'ngx-chips';
+import { XM_EVENT_LIST } from '../xm.constants';
 import {
     AuditsComponent,
     AuditsService,
@@ -133,9 +133,9 @@ import { TranslationService } from './translations/translation.service';
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class XmAdminModule {
-    constructor(private modulesLangHelper: ModulesLanguageHelper, private languageHelper: JhiLanguageHelper) {
-        this.languageHelper
-            .language
-            .subscribe((languageKey: string) => {this.modulesLangHelper.correctLang(languageKey); });
+    constructor(private eventManager: JhiEventManager, private jhiLanguageService: JhiLanguageService) {
+        this.eventManager.subscribe(XM_EVENT_LIST.XM_CHANGE_LANGUAGE, (event) => {
+            this.jhiLanguageService.changeLanguage(event.content);
+        });
     }
 }

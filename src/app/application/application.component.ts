@@ -3,11 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
-import { Observable ,  Subscription, of } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
-import { I18nNamePipe, JhiLanguageHelper, Principal, XmConfigService } from '../shared';
+import { I18nNamePipe, Principal, XmConfigService } from '../shared';
 import { LIST_DEFAULT_FIELDS } from '../shared/constants/default-lists-fields.constants';
 import { DashboardWrapperService } from '../xm-dashboard';
 import { Spec, XmEntitySpec, XmEntitySpecWrapperService } from '../xm-entity';
@@ -53,11 +53,10 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         LIST_DEFAULT_FIELDS['name'],
         LIST_DEFAULT_FIELDS['typeKey'],
         LIST_DEFAULT_FIELDS['startDate'],
-        LIST_DEFAULT_FIELDS['stateKey']
+        LIST_DEFAULT_FIELDS['stateKey'],
     ];
 
-    constructor(protected jhiLanguageHelper: JhiLanguageHelper,
-                protected translateService: TranslateService,
+    constructor(protected translateService: TranslateService,
                 protected xmEntitySpecWrapperService: XmEntitySpecWrapperService,
                 protected xmConfigService: XmConfigService,
                 protected principal: Principal,
@@ -71,7 +70,6 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-
         if (!environment.production) {
             console.log('ApplicationComponent.ngOnInit')
         }
@@ -92,7 +90,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                         this.routeData = data;
                         if (this.entityType && this.entityType.name) {
                             this.routeData.pageSubTitle = this.i18nNamePipe.transform(this.entityType.name, this.principal);
-                            this.jhiLanguageHelper.updateTitle();
+
                         }
                     }
                 });
@@ -105,7 +103,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
 
                             if (this.entityType && this.entityType.name) {
                                 this.routeData.pageSubTitle = this.i18nNamePipe.transform(this.entityType.name, this.principal);
-                                this.jhiLanguageHelper.updateTitle();
+
                             }
                         });
                     }
@@ -121,7 +119,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                             });
 
                         this.routeData.pageSubTitle = `[${params['query']}]`;
-                        this.jhiLanguageHelper.updateTitle();
+
                     }
                 });
             });

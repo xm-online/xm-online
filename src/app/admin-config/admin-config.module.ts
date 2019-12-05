@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { JhiLanguageHelper } from '../shared';
-import { ModulesLanguageHelper } from '../shared/language/modules-language.helper';
+import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 import { XmSharedModule } from '../shared/shared.module';
 import { XmDashboardModule } from '../xm-dashboard/xm-dashboard.module';
+import { XM_EVENT_LIST } from '../xm.constants';
 import { adminConfigState } from './admin-config.route';
 import {
     DashboardDetailDialogComponent,
@@ -46,8 +46,9 @@ import { SpecificationMngComponent } from './specification-mng/specification-mng
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class XmAdminConfigModule {
-    constructor(private modulesLangHelper: ModulesLanguageHelper, private languageHelper: JhiLanguageHelper) {
-        this.languageHelper
-            .language.subscribe((languageKey: string) => {this.modulesLangHelper.correctLang(languageKey); });
+    constructor(private eventManager: JhiEventManager, private jhiLanguageService: JhiLanguageService) {
+        this.eventManager.subscribe(XM_EVENT_LIST.XM_CHANGE_LANGUAGE, (event) => {
+            this.jhiLanguageService.changeLanguage(event.content);
+        });
     }
 }

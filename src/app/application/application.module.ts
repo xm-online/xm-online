@@ -11,10 +11,12 @@ import {
 import { TagInputModule } from 'ngx-chips';
 import { RatingModule } from 'ngx-rating';
 
+import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 import { XmSharedModule } from '../shared/shared.module';
 import { XmBalanceModule } from '../xm-balance/xm-balance.module';
 import { XmDashboardModule } from '../xm-dashboard/xm-dashboard.module';
 import { XmEntityModule } from '../xm-entity/xm-entity.module';
+import { XM_EVENT_LIST } from '../xm.constants';
 import { ApplicationComponent } from './application.component';
 import { ApplicationResolvePagingParams, applicationRoute } from './application.route';
 import { EntityDetailComponent } from './entity-detail.component';
@@ -52,4 +54,9 @@ import { EntityDetailComponent } from './entity-detail.component';
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ApplicationModule {
+    constructor(private eventManager: JhiEventManager, private jhiLanguageService: JhiLanguageService) {
+        this.eventManager.subscribe(XM_EVENT_LIST.XM_CHANGE_LANGUAGE, (event) => {
+            this.jhiLanguageService.changeLanguage(event.content);
+        });
+    }
 }

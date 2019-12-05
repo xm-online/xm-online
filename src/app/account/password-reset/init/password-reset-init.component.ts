@@ -1,6 +1,10 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatInput } from '@angular/material';
+import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
 
+import { ModulesLanguageHelper } from '../../../shared';
+import { XM_EVENT_LIST } from '../../../xm.constants';
 import { PasswordResetInit } from './password-reset-init.service';
 
 @Component({
@@ -15,11 +19,21 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
 
     @ViewChild('emailInputElement', {static: false}) emailInputElement: MatInput;
 
-    constructor(private passwordResetInit: PasswordResetInit) {
+    private changeLanguageSubscriber: Subscription;
+
+    constructor(private passwordResetInit: PasswordResetInit,
+                private jhiLanguageService: JhiLanguageService,
+                private modulesLangHelper: ModulesLanguageHelper,
+                private eventManager: JhiEventManager) {
     }
 
     ngOnInit() {
+        this.jhiLanguageService.changeLanguage(this.modulesLangHelper.getLangKey());
         this.resetAccount = {};
+
+        this.changeLanguageSubscriber = this.eventManager.subscribe(XM_EVENT_LIST.XM_CHANGE_LANGUAGE, (event) => {
+            this.jhiLanguageService.changeLanguage(event.content);
+        });
     }
 
     ngAfterViewInit() {
@@ -40,5 +54,9 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
                 this.error = 'ERROR';
             }
         });
+    }
+
+    ngOnDestroy() {
+        this.changeLanguageSubscriber.unsubscribe();
     }
 }

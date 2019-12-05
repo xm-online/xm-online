@@ -5,6 +5,8 @@ import { XmSharedModule } from '../shared/shared.module';
 import { DashboardService, DashboardWrapperService, DynamicWidgetComponent, WidgetService } from './';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { XmDashboardRoutingModule } from './xm-dashboard-routing.module';
+import { XM_EVENT_LIST } from '../xm.constants';
+import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 
 @NgModule({
     imports: [
@@ -33,5 +35,10 @@ export class XmDashboardModule {
                 DashboardWrapperService,
             ],
         };
+    }
+    constructor(private eventManager: JhiEventManager, private jhiLanguageService: JhiLanguageService) {
+        this.eventManager.subscribe(XM_EVENT_LIST.XM_CHANGE_LANGUAGE, (event) => {
+            this.jhiLanguageService.changeLanguage(event.content);
+        });
     }
 }

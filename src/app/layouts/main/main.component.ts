@@ -1,13 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { Idle } from 'idlejs/dist';
-import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
-import { SessionStorageService } from 'ngx-webstorage';
+import { JhiEventManager } from 'ng-jhipster';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { JhiLanguageHelper, LANGUAGES } from '../../shared';
+import { JhiLanguageHelper } from '../../shared';
 import { Principal } from '../../shared/auth/principal.service';
 import { ModulesLanguageHelper } from '../../shared/language/modules-language.helper';
 import { LoginService } from '../../shared/login/login.service';
@@ -38,14 +36,11 @@ export class XmMainComponent implements OnInit, OnDestroy {
 
     constructor(private jhiLanguageHelper: JhiLanguageHelper,
                 private modulesLangHelper: ModulesLanguageHelper,
-                private jhiLanguageService: JhiLanguageService,
                 private configService: XmConfigService,
                 private xmConfigService: XmApplicationConfigService,
-                private translateService: TranslateService,
                 private router: Router,
                 private loginService: LoginService,
                 private principal: Principal,
-                private $sessionStorage: SessionStorageService,
                 private eventManager: JhiEventManager) {
         this.resolved$ = new BehaviorSubject<boolean>(false);
         this.isMaintenanceProgress$ = new BehaviorSubject<boolean>(false);
@@ -151,10 +146,10 @@ export class XmMainComponent implements OnInit, OnDestroy {
         const langKey = this.getLangFromProfileOrSession();
         if (langKey) {
             (!environment.production) && console.log('apply start language from Profile %s', langKey);
-            this.setLanguage(langKey);
+            this.modulesLangHelper.setLanguage(langKey);
         } else {
             const cfgLang = await this.getDefaultLanguageConfiguration();
-            this.setLanguage(cfgLang);
+            this.modulesLangHelper.setLanguage(cfgLang);
         }
     }
 
@@ -176,15 +171,6 @@ export class XmMainComponent implements OnInit, OnDestroy {
             : availableLanguages.includes(getBrowserLang()) ? getBrowserLang()
                 : availableLanguages[0];
 
-    }
-
-    private setLanguage (lang: string = DEFAULT_LANG): void {
-        (!environment.production) && console.log('apply start language %s', lang);
-        this.jhiLanguageService.changeLanguage(lang);
-        this.translateService.setDefaultLang(lang);
-        this.principal.setLangKey(lang);
-        this.storeTranslates(lang);
-        this.eventManager.broadcast({name: XM_EVENT_LIST.XM_CHANGE_LANGUAGE, content: lang});
     }
 
     ngOnDestroy() {
@@ -235,16 +221,6 @@ export class XmMainComponent implements OnInit, OnDestroy {
                 this.isIdleEnabled = false;
             })
             .start();
-    }
-
-    private storeTranslates(langKey: string): void {
-        this.translateService.getTranslation(langKey).subscribe((res) => {
-            LANGUAGES.forEach((lang) => {
-                this.$sessionStorage.clear(lang);
-            });
-            this.$sessionStorage.store(langKey, JSON.stringify(res));
-            this.$sessionStorage.store('currentLang', langKey);
-        })
     }
 
     private prepareLayout() {

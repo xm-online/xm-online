@@ -136,7 +136,9 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     public ngOnDestroy(): void {
-        this.changeLanguageSubscriber.unsubscribe();
+        if (this.changeLanguageSubscriber) {
+            this.changeLanguageSubscriber.unsubscribe();
+        }
     }
 
     public ngDoCheck(): void {

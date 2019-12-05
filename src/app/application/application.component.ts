@@ -7,7 +7,7 @@ import { Observable, Subscription, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
-import { I18nNamePipe, JhiLanguageHelper, ModulesLanguageHelper, Principal, XmConfigService } from '../shared';
+import { I18nNamePipe, ModulesLanguageHelper, Principal, XmConfigService } from '../shared';
 import { LIST_DEFAULT_FIELDS } from '../shared/constants/default-lists-fields.constants';
 import { DashboardWrapperService } from '../xm-dashboard';
 import { Spec, XmEntitySpec, XmEntitySpecWrapperService } from '../xm-entity';

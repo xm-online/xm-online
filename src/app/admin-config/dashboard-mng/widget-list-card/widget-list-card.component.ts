@@ -78,10 +78,10 @@ export class WidgetListCardComponent extends BaseAdminConfigListComponent implem
                     name: this.eventModify,
                     content: {id: 'delete', msg: `Widget ${id} deleted`},
                 });
-            }));
+            })).subscribe();
     }
 
-    public deleteItem(w: Widget) {
+    public deleteItem(w: Widget): void {
         this.onDeleteItem(w.id, w.name);
     }
 

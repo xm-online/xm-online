@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { LanguageService, Translate } from './language.service';
+import { DEFAULT_LOCALE, LanguageService, Translate } from './language.service';
 
 export interface IRouteDate {
     pageTitle?: Translate;
@@ -31,7 +31,7 @@ export class TitleService implements OnInitialize {
 
     public init(): void {
         this.subscriptions.push(
-            this.languageService.locale$.subscribe(this.update.bind(this)),
+            this.translateService.get(DEFAULT_LOCALE).subscribe(this.update.bind(this)),
             this.router.events.pipe(
                 filter((e) => e instanceof NavigationEnd),
             ).subscribe(this.update.bind(this)),

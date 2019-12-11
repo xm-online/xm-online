@@ -43,6 +43,10 @@ export class TitleService implements OnInitialize {
     }
 
     public set(title: string): void {
+        if (title === undefined || title === null) {
+            return;
+        }
+
         this.title.setTitle(this.translateService.instant(title));
     }
 

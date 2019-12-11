@@ -6,8 +6,8 @@ import { ReCaptchaModule } from 'angular2-recaptcha';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { MarkdownModule } from 'ngx-markdown';
-import { MatModule } from '../mat.module';
 
+import { MatModule } from '../mat.module';
 import {
     AccountService,
     AuthServerProvider,

@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { JhiLanguageService } from 'ng-jhipster';
+
 import { JhiLanguageHelper } from '../../shared/language/language.helper';
 import { ModulesLanguageHelper } from '../../shared/language/modules-language.helper';
 import { XmJhiLanguageService } from './jhiLanguage.service';

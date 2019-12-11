@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
 import { BehaviorSubject, Observable } from 'rxjs';
+
 import { Principal } from '../../shared/auth/principal.service';
 import { LANGUAGES } from '../../shared/language/language.constants';
 import { XmApplicationConfigService } from '../../shared/spec/xm-config.service';

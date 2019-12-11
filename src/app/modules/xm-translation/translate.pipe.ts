@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Injectable, OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import { TranslatePipe as NgxTranslate, TranslateService } from '@ngx-translate/core';
+
 import { Translate } from './language.service';
 
 @Injectable()

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
-import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { JhiEventManager } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
 
 import { ModulesLanguageHelper } from '../../../shared/language/modules-language.helper';
 import { XM_EVENT_LIST } from '../../../xm.constants';
@@ -9,41 +9,37 @@ import { XM_EVENT_LIST } from '../../../xm.constants';
 @Component({
     selector: 'xm-sign-in-up-widget',
     templateUrl: './sign-in-up-widget.component.html',
-    styleUrls: ['./sign-in-up-widget.component.scss']
+    styleUrls: ['./sign-in-up-widget.component.scss'],
 })
 export class SignInUpWidgetComponent implements OnInit, OnDestroy {
 
+    public config: any;
+    public isLoginFormView = true;
+    public successRegistration = false;
+    public loginLabel: string;
     private registrationSuccessSubscription: Subscription;
     private changeLanguageSubscriber: Subscription;
 
-    config: any;
-    isLoginFormView = true;
-    successRegistration = false;
-    loginLabel: string;
-
     constructor(
         private eventManager: JhiEventManager,
-        private jhiLanguageService: JhiLanguageService,
         private modulesLangHelper: ModulesLanguageHelper,
         private route: ActivatedRoute,
         private router: Router) {
     }
 
-    ngOnInit() {
-        this.jhiLanguageService.changeLanguage(this.modulesLangHelper.getLangKey());
+    public ngOnInit() {
         this.registrationSuccessSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_REGISTRATION, () => {
             this.isLoginFormView = true;
             this.successRegistration = true;
         });
 
         this.changeLanguageSubscriber = this.eventManager.subscribe(XM_EVENT_LIST.XM_CHANGE_LANGUAGE, (event) => {
-            this.jhiLanguageService.changeLanguage(event.content);
             if (this.config && this.config.loginLabel) {
                 this.updateLabels(this.config.loginLabel, event.content);
             }
         });
 
-        this.route.queryParams.subscribe(params => {
+        this.route.queryParams.subscribe((params) => {
             if (params['type']) {
                 this.isLoginFormView = !(params['type'] === 'registration');
             }
@@ -53,17 +49,17 @@ export class SignInUpWidgetComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.registrationSuccessSubscription.unsubscribe();
         this.changeLanguageSubscriber.unsubscribe();
     }
 
-    changeMode() {
+    public changeMode() {
         this.isLoginFormView = !this.isLoginFormView;
         this.successRegistration = false;
 
         this.router.navigate(['.'], {
-            queryParams: {}
+            queryParams: {},
         });
     }
 

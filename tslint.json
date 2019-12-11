@@ -45,6 +45,8 @@
         "no-arg":true,
         "prefer-readonly":false,
         "no-internal-module":true,
+        "interface-name":false,
+        "no-inferrable-types": [true, "ignore-params", "ignore-properties"],
         "no-trailing-whitespace":true,
         "no-bitwise":true,
         "no-unused-expression":true,

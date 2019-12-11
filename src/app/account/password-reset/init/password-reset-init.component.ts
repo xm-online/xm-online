@@ -1,10 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatInput } from '@angular/material';
-import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
-import { Subscription } from 'rxjs';
-
-import { ModulesLanguageHelper } from '../../../shared';
-import { XM_EVENT_LIST } from '../../../xm.constants';
 import { PasswordResetInit } from './password-reset-init.service';
 
 @Component({
@@ -12,35 +7,25 @@ import { PasswordResetInit } from './password-reset-init.service';
     templateUrl: './password-reset-init.component.html',
 })
 export class PasswordResetInitComponent implements OnInit, AfterViewInit {
-    error: string;
-    errorEmailNotExists: string;
-    resetAccount: any;
-    success: string;
+    public error: string;
+    public errorEmailNotExists: string;
+    public resetAccount: any;
+    public success: string;
 
-    @ViewChild('emailInputElement', {static: false}) emailInputElement: MatInput;
+    @ViewChild('emailInputElement', {static: false}) public emailInputElement: MatInput;
 
-    private changeLanguageSubscriber: Subscription;
-
-    constructor(private passwordResetInit: PasswordResetInit,
-                private jhiLanguageService: JhiLanguageService,
-                private modulesLangHelper: ModulesLanguageHelper,
-                private eventManager: JhiEventManager) {
+    constructor(private passwordResetInit: PasswordResetInit) {
     }
 
-    ngOnInit() {
-        this.jhiLanguageService.changeLanguage(this.modulesLangHelper.getLangKey());
+    public ngOnInit() {
         this.resetAccount = {};
-
-        this.changeLanguageSubscriber = this.eventManager.subscribe(XM_EVENT_LIST.XM_CHANGE_LANGUAGE, (event) => {
-            this.jhiLanguageService.changeLanguage(event.content);
-        });
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit() {
         setTimeout(() => this.emailInputElement.focus(), 0);
     }
 
-    requestReset() {
+    public requestReset() {
         this.error = null;
         this.errorEmailNotExists = null;
 
@@ -56,7 +41,4 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
         });
     }
 
-    ngOnDestroy() {
-        this.changeLanguageSubscriber.unsubscribe();
-    }
 }

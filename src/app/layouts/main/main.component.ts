@@ -5,14 +5,13 @@ import { JhiEventManager } from 'ng-jhipster';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { JhiLanguageHelper } from '../../shared';
+import { LanguageService } from '../../modules/xm-translation/language.service';
+import { TitleService } from '../../modules/xm-translation/title.service';
 import { Principal } from '../../shared/auth/principal.service';
-import { ModulesLanguageHelper } from '../../shared/language/modules-language.helper';
 import { LoginService } from '../../shared/login/login.service';
 import { XmConfigService } from '../../shared/spec/config.service';
 import { XmApplicationConfigService } from '../../shared/spec/xm-config.service';
-import { DEFAULT_LANG, XM_EVENT_LIST } from '../../xm.constants';
-import { getBrowserLang } from './../../shared/shared-libs.module';
+import { XM_EVENT_LIST } from '../../xm.constants';
 
 declare let $: any;
 
@@ -21,26 +20,26 @@ declare let $: any;
     templateUrl: './main.component.html',
 })
 export class XmMainComponent implements OnInit, OnDestroy {
-    showSidebar = true;
-    config: any;
-    resolved$: BehaviorSubject<boolean>;
-    isIdleEnabled: boolean;
-    isGuestLayout: boolean;
-    guestBg: string;
-    authSucessSubscription: Subscription;
-    private excludePathsForViewSidebar: Array<string> = ['/social-auth'];
-    isMaintenanceProgress$: BehaviorSubject<boolean>;
-    userAutoLogoutEnabled: boolean;
-    userAutoLogoutSeconds: number;
-    idle: Idle;
+    public showSidebar: boolean = true;
+    public config: any;
+    public resolved$: BehaviorSubject<boolean>;
+    public isIdleEnabled: boolean;
+    public isGuestLayout: boolean;
+    public guestBg: string;
+    public authSucessSubscription: Subscription;
+    public isMaintenanceProgress$: BehaviorSubject<boolean>;
+    public userAutoLogoutEnabled: boolean;
+    public userAutoLogoutSeconds: number;
+    public idle: Idle;
+    private excludePathsForViewSidebar: string[] = ['/social-auth'];
 
-    constructor(private jhiLanguageHelper: JhiLanguageHelper,
-                private modulesLangHelper: ModulesLanguageHelper,
-                private configService: XmConfigService,
+    constructor(private configService: XmConfigService,
                 private xmConfigService: XmApplicationConfigService,
                 private router: Router,
                 private loginService: LoginService,
+                private languageService: LanguageService,
                 private principal: Principal,
+                protected titleService: TitleService,
                 private eventManager: JhiEventManager) {
         this.resolved$ = new BehaviorSubject<boolean>(false);
         this.isMaintenanceProgress$ = new BehaviorSubject<boolean>(false);
@@ -48,8 +47,10 @@ export class XmMainComponent implements OnInit, OnDestroy {
         this.xmConfigService.isMaintenanceProgress().subscribe((res: boolean) => this.isMaintenanceProgress$.next(res));
     }
 
-    ngOnInit() {
-        this.configService.getUiConfig().subscribe(config => {
+    public ngOnInit(): void {
+        this.languageService.init();
+        this.titleService.init();
+        this.configService.getUiConfig().subscribe((config) => {
             this.config = config ? config : null;
             this.prepareLayout();
             this.registerAuthenticationSuccess();
@@ -68,8 +69,6 @@ export class XmMainComponent implements OnInit, OnDestroy {
                 this.showSidebar = this.excludePathsForViewSidebar.indexOf(event.url) === -1;
             }
             if (event instanceof NavigationEnd) {
-                this.jhiLanguageHelper.updateTitle();
-                this.updateLang();
                 this.idleLogoutInit();
             }
             // TODO rethink to use in json form condition
@@ -90,17 +89,17 @@ export class XmMainComponent implements OnInit, OnDestroy {
         });
 
         if (!$.emptyString) {
-            $.emptyString = function(str) {
+            $.emptyString = function (str) {
                 if (str || str === false) {
                     return str;
                 } else {
                     return '';
                 }
-            }
+            };
         }
 
         if (!$.wrapArray) {
-            $.wrapArray = function(arr) {
+            $.wrapArray = function (arr) {
                 if (!Array.isArray(arr)) {
                     return $.emptyString(arr);
                 } else {
@@ -119,13 +118,13 @@ export class XmMainComponent implements OnInit, OnDestroy {
                     console.log(`["${result}"]`);
                     return result;
                 }
-            }
+            };
         }
 
         // using in json form dataSpec interpolation
         // for avoid break dataSpec json
         if (!$.safe) {
-            $.safe = function(str) {
+            $.safe = function (str) {
                 if (!(typeof str === 'string')) {
                     return str;
                 }
@@ -138,46 +137,15 @@ export class XmMainComponent implements OnInit, OnDestroy {
                     .replace(/\\t/g, '\\t')
                     .replace(/\\b/g, '\\b')
                     .replace(/\\f/g, '\\f');
-            }
+            };
         }
     }
 
-    private async updateLang() {
-        const langKey = this.getLangFromProfileOrSession();
-        if (langKey) {
-            (!environment.production) && console.log('apply start language from Profile %s', langKey);
-            this.modulesLangHelper.setLanguage(langKey);
-        } else {
-            const cfgLang = await this.getDefaultLanguageConfiguration();
-            this.modulesLangHelper.setLanguage(cfgLang);
-        }
-    }
-
-    private getLangFromProfileOrSession(): string {
-        return this.modulesLangHelper.getLangKey();
-    }
-
-    private async getDefaultLanguageConfiguration() {
-        const jhiLangCFG = await this.jhiLanguageHelper.getAll();
-        const uiCfg = await this.configService.getUiConfig().toPromise();
-        const availableLanguages = (uiCfg && uiCfg.langs) ? uiCfg.langs : jhiLangCFG;
-
-        if (!availableLanguages) {
-            console.log('No UI Language CFG or JHI cfg found');
-            return DEFAULT_LANG;
-        }
-        // Return UI Default form CONFIG --> Browser if supported by CFG --> or [0] from supported;
-        return availableLanguages.includes(uiCfg.defaultLang) ? uiCfg.defaultLang
-            : availableLanguages.includes(getBrowserLang()) ? getBrowserLang()
-                : availableLanguages[0];
-
-    }
-
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.authSucessSubscription ? this.authSucessSubscription.unsubscribe() : console.log('No authSucessSubscription');
     }
 
-    private registerAuthenticationSuccess() {
+    private registerAuthenticationSuccess(): void {
         this.authSucessSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, (message) => {
             this.principal.identity();
             this.isGuestLayout = false;
@@ -193,7 +161,7 @@ export class XmMainComponent implements OnInit, OnDestroy {
         }
         this.isIdleEnabled = false;
         if (this.principal.isAuthenticated()) {
-            this.principal.identity().then(account => {
+            this.principal.identity().then((account) => {
                 if (account) {
                     this.userAutoLogoutEnabled = account.autoLogoutEnabled || false;
                     this.userAutoLogoutSeconds = account.autoLogoutTimeoutSeconds || null;
@@ -223,21 +191,21 @@ export class XmMainComponent implements OnInit, OnDestroy {
             .start();
     }
 
-    private prepareLayout() {
+    private prepareLayout(): void {
         this.isGuestLayout = true;
-        this.principal.getAuthenticationState().subscribe(auth => {
+        this.principal.getAuthenticationState().subscribe((auth) => {
             if (!auth) {
                 this.isGuestLayout = true;
             } else {
                 this.isGuestLayout = false;
             }
-        }, error => {
+        }, (error) => {
             console.log(error);
             this.isGuestLayout = false;
         });
     }
 
-    private setBackground() {
+    private setBackground(): void {
         if (this.config && this.config.loginScreenBg) {
             const currentRoute = this.router.url;
             if (currentRoute === '/') {

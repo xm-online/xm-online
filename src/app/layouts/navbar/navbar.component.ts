@@ -1,24 +1,16 @@
 import { Location } from '@angular/common';
-import {
-    Component,
-    DoCheck,
-    ElementRef,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-} from '@angular/core';
+import { Component, DoCheck, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
-import { SessionStorageService } from 'ngx-webstorage';
+import { JhiLanguageService } from 'ng-jhipster';
 
-import { iif, Observable, of, Subscription } from 'rxjs';
+import { iif, Observable, of } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
-import { JhiLanguageHelper, LANGUAGES, Principal } from '../../shared';
+import { JhiLanguageHelper, Principal } from '../../shared';
 import { XmConfigService } from '../../shared/spec/config.service';
 import { DashboardWrapperService } from '../../xm-dashboard';
-import { DEBUG_INFO_ENABLED, VERSION, XM_EVENT_LIST } from '../../xm.constants';
+import { DEBUG_INFO_ENABLED, VERSION } from '../../xm.constants';
 
 const misc: any = {
     navbar_menu_visible: 0,
@@ -33,27 +25,23 @@ declare let $: any;
     styleUrls: ['./navbar.component.scss'],
     templateUrl: './navbar.component.html',
 })
-export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
+export class NavbarComponent implements OnInit, DoCheck {
 
-    private changeLanguageSubscriber: Subscription;
-
-    routeData: any = {};
-    languages: any[];
-    modalRef: NgbModalRef;
-    version: string;
-    tenantName: string;
-    mobile_menu_visible: any = 0;
-    title: string;
-    titleContent: string;
-    tenantLogoUrl: '../assets/img/logo-xm-online.png';
+    public routeData: any = {};
+    public languages: any[];
+    public modalRef: NgbModalRef;
+    public version: string;
+    public tenantName: string;
+    public mobile_menu_visible: any = 0;
+    public title: string;
+    public titleContent: string;
+    public tenantLogoUrl: '../assets/img/logo-xm-online.png';
     public searchMask = '';
-
+    @ViewChild('navbar-cmp', {static: false}) public button;
     private previousPath: string;
     private backStep = 0;
     private toggleButton;
     private sidebarVisible: boolean;
-
-    @ViewChild('navbar-cmp', {static: false}) button;
 
     constructor(private languageHelper: JhiLanguageHelper,
                 private jhiLanguageService: JhiLanguageService,
@@ -61,8 +49,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
                 private router: Router,
                 private translateService: TranslateService,
                 private element: ElementRef,
-                private eventManager: JhiEventManager,
-                private $sessionStorage: SessionStorageService,
                 private location: Location,
                 private xmConfigService: XmConfigService,
                 private dashboardWrapperService: DashboardWrapperService) {
@@ -73,9 +59,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     public ngOnInit(): void {
-        this.changeLanguageSubscriber = this.eventManager.subscribe(XM_EVENT_LIST.XM_CHANGE_LANGUAGE, (event) => {
-            this.jhiLanguageService.changeLanguage(event.content);
-        });
         this.xmConfigService.getUiConfig().subscribe((result) => {
             this.tenantName = result['name'] ? result['name'] : 'XM^online';
             if (this.tenantName === 'XM^online') {
@@ -135,12 +118,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         });
     }
 
-    public ngOnDestroy(): void {
-        if (this.changeLanguageSubscriber) {
-            this.changeLanguageSubscriber.unsubscribe();
-        }
-    }
-
     public ngDoCheck(): void {
         this.processTitle(this.routeData);
     }
@@ -153,14 +130,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
     public changeLanguage(languageKey: string): void {
         this.jhiLanguageService.changeLanguage(languageKey);
-        this.translateService.getTranslation(languageKey).subscribe((res) => {
-            LANGUAGES.forEach((lang) => {
-                this.$sessionStorage.clear(lang);
-            });
-            this.$sessionStorage.store(languageKey, JSON.stringify(res));
-            this.$sessionStorage.store('currentLang', languageKey);
-        });
-        this.eventManager.broadcast({name: 'changeLanguage', content: languageKey});
     }
 
     public isAuthenticated(): boolean {
@@ -184,11 +153,11 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         const $toggle = document.getElementsByClassName('navbar-toggler')[0];
         const toggleButton = this.toggleButton;
         const body = document.getElementsByTagName('body')[0];
-        setTimeout(function() {
+        setTimeout(function () {
             toggleButton.classList.add('toggled');
         }, 500);
         body.classList.add('nav-open');
-        setTimeout(function() {
+        setTimeout(function () {
             $toggle.classList.add('toggled');
         }, 430);
 
@@ -201,17 +170,17 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
             document.getElementsByClassName('wrapper-full-page')[0].appendChild($layer);
         }
 
-        setTimeout(function() {
+        setTimeout(function () {
             $layer.classList.add('visible');
         }, 100);
 
-        $layer.onclick = function() {
+        $layer.onclick = function () {
             body.classList.remove('nav-open');
             _this.mobile_menu_visible = 0;
             _this.sidebarVisible = false;
 
             $layer.classList.remove('visible');
-            setTimeout(function() {
+            setTimeout(function () {
                 $layer.remove();
                 $toggle.classList.remove('toggled');
             }, 400);
@@ -235,7 +204,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
             $layer.remove();
         }
 
-        setTimeout(function() {
+        setTimeout(function () {
             $toggle.classList.remove('toggled');
         }, 400);
 
@@ -248,7 +217,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     private getSearchMask(): Observable<string> {
-        const condition = (dash) =>  !!(dash && dash.config && dash.config.search && dash.config.search.mask);
+        const condition = (dash) => !!(dash && dash.config && dash.config.search && dash.config.search.mask);
         const expr = (dash) => of((dash && dash.config && dash.config.search && dash.config.search.mask));
         const f$ = of('');
         return this.dashboardWrapperService.getDashboardByIdOrSlug(this.getDashboardId())
@@ -310,7 +279,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     private getDashboardId(): number | string {
         if (this.location.path(false).includes('dashboard')) {
             const url = this.location.path(false).split('/');
-            return  url[url.indexOf('dashboard') + 1];
+            return url[url.indexOf('dashboard') + 1];
         }
         return null;
     }

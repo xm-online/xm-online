@@ -1,21 +1,11 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { registerLocaleData } from '@angular/common';
-import locale from '@angular/common/locales/en';
+import { NgModule } from '@angular/core';
 
-import {
-    GateSharedLibsModule,
-    JhiLanguageHelper,
-    ModulesLanguageHelper,
-    FindLanguageFromKeyPipe,
-    JhiAlertComponent,
-    JhiAlertErrorComponent
-} from './';
-import {XmAlertComponent} from './alert/xm-alert.component';
+import { FindLanguageFromKeyPipe, GateSharedLibsModule, JhiAlertComponent, JhiAlertErrorComponent } from './';
+import { XmAlertComponent } from './alert/xm-alert.component';
 
 @NgModule({
     imports: [
-        GateSharedLibsModule
+        GateSharedLibsModule,
     ],
     declarations: [
         FindLanguageFromKeyPipe,
@@ -23,25 +13,13 @@ import {XmAlertComponent} from './alert/xm-alert.component';
         JhiAlertErrorComponent,
         XmAlertComponent,
     ],
-    providers: [
-        JhiLanguageHelper,
-        ModulesLanguageHelper,
-        Title,
-        {
-            provide: LOCALE_ID,
-            useValue: 'en'
-        },
-    ],
     exports: [
         GateSharedLibsModule,
         FindLanguageFromKeyPipe,
         JhiAlertComponent,
         JhiAlertErrorComponent,
-        XmAlertComponent
-    ]
+        XmAlertComponent,
+    ],
 })
 export class GateSharedCommonModule {
-    constructor() {
-        registerLocaleData(locale);
-    }
 }

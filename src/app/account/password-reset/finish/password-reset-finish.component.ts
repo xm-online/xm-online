@@ -3,14 +3,13 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatInput } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { AuthServerProvider, ModulesLanguageHelper } from '../../../shared';
+import { AuthServerProvider } from '../../../shared';
 import { XmConfigService } from '../../../shared/spec/config.service';
 import { PasswordSpec } from '../../../xm-entity/shared/password-spec.model';
-import { DEFAULT_AUTH_TOKEN, DEFAULT_CONTENT_TYPE, XM_EVENT_LIST } from '../../../xm.constants';
+import { DEFAULT_AUTH_TOKEN, DEFAULT_CONTENT_TYPE } from '../../../xm.constants';
 import { PasswordResetFinish } from './password-reset-finish.service';
 
 interface IResetPasswordFormConfig {
@@ -42,8 +41,6 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
 
     @ViewChild('passwordInputElement', {static: false}) passwordInputElement: MatInput;
 
-    private changeLanguageSubscriber: Subscription;
-
     constructor(
         private passwordResetFinish: PasswordResetFinish,
         private route: ActivatedRoute,
@@ -51,9 +48,6 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
         private authServerProvider: AuthServerProvider,
         private xmConfigService: XmConfigService,
         private router: Router,
-        private jhiLanguageService: JhiLanguageService,
-        private modulesLangHelper: ModulesLanguageHelper,
-        private eventManager: JhiEventManager
     ) {
         this.config = {
             formTitle: 'reset.finish.title',
@@ -65,20 +59,17 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     }
 
     public ngOnInit(): void {
-        this.jhiLanguageService.changeLanguage(this.modulesLangHelper.getLangKey());
-        this.changeLanguageSubscriber = this.eventManager.subscribe(XM_EVENT_LIST.XM_CHANGE_LANGUAGE, (event) => {
-            this.jhiLanguageService.changeLanguage(event.content);
-        });
         this.route.queryParams.subscribe((params) => {
             this.key = params['key'];
 
             this.passwordResetFinish.check(this.key).subscribe(
-                (resp) => {}, (err) => {
+                (resp) => {
+                }, (err) => {
                     if (err.error && err.error.error) {
                         this.keyExpired = (err.error.error === 'error.reset.code.expired');
                         this.keyUsed = (err.error.error === 'error.reset.code.used');
                     }
-            });
+                });
         });
         this.route.data.subscribe((data) => {
             if (data && data.config) {
@@ -97,7 +88,6 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
         this.resetAccount = {};
         this.keyMissing = !this.key;
     }
-
 
     public ngAfterViewInit(): void {
         setTimeout(() => this.passwordInputElement.focus(), 0);
@@ -147,9 +137,5 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
         if (this.passwordSettings.patternMessage) {
             this.patternMessage = this.xmConfigService.updatePatternMessage(this.passwordSettings.patternMessage);
         }
-    }
-
-    ngOnDestroy() {
-        this.changeLanguageSubscriber.unsubscribe();
     }
 }

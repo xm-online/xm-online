@@ -7,15 +7,13 @@ import {
     FrameworkLibraryService,
     JsonSchemaFormModule,
     JsonSchemaFormService,
-    MaterialDesignFramework, MaterialDesignFrameworkModule,
+    MaterialDesignFramework,
+    MaterialDesignFrameworkModule,
     WidgetLibraryService,
 } from 'angular2-json-schema-form';
 
-import { XmSharedModule } from '../shared/shared.module';
-
-import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 import { TagInputModule } from 'ngx-chips';
-import { XM_EVENT_LIST } from '../xm.constants';
+import { XmSharedModule } from '../shared/shared.module';
 import {
     AuditsComponent,
     AuditsService,
@@ -133,9 +131,4 @@ import { TranslationService } from './translations/translation.service';
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class XmAdminModule {
-    constructor(private eventManager: JhiEventManager, private jhiLanguageService: JhiLanguageService) {
-        this.eventManager.subscribe(XM_EVENT_LIST.XM_CHANGE_LANGUAGE, (event) => {
-            this.jhiLanguageService.changeLanguage(event.content);
-        });
-    }
 }

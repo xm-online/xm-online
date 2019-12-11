@@ -29,8 +29,8 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
     private _clockSubscription: Subscription;
 
     constructor(private accountService: AccountService,
-                private principal: Principal,
                 private modulesLanguageHelper: ModulesLanguageHelper,
+                private principal: Principal,
                 private xmConfig: XmConfigService) {
         this.principal.identity().then((account) => {
             this.settingsAccount = this.copyAccount(account);
@@ -92,7 +92,7 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
             this.success = 'OK';
             this.principal.identity(true).then((account) => {
                 this.settingsAccount = this.copyAccount(account);
-                this.modulesLanguageHelper.setLanguage(this.settingsAccount.langKey);
+                this.modulesLanguageHelper.correctLang(this.settingsAccount.langKey);
             });
         }, () => {
             this.success = null;
@@ -118,20 +118,20 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     private findEmail(account: any): string {
-      if (account && account.logins) {
-        for (const entry of account.logins) {
-          if (entry.typeKey === 'LOGIN.EMAIL') {
-            return entry.login;
-          }
+        if (account && account.logins) {
+            for (const entry of account.logins) {
+                if (entry.typeKey === 'LOGIN.EMAIL') {
+                    return entry.login;
+                }
+            }
         }
-      }
-      return '';
+        return '';
     }
 
     private updatePrincipalIdentity(): void {
-      this.principal.identity(true).then((account) => {
-        this.settingsAccount = this.copyAccount(account);
-      });
+        this.principal.identity(true).then((account) => {
+            this.settingsAccount = this.copyAccount(account);
+        });
     }
 
     private copyAccount(account: any): any {

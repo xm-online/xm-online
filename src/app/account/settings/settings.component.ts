@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators';
 import { AccountService, ModulesLanguageHelper, Principal } from '../../shared';
 import { XmConfigService } from '../../shared/spec/config.service';
 import { DEFAULT_LANG } from '../../xm.constants';
+import { TranslateService } from '@ngx-translate/core';
+import { TitleService } from '../../modules/xm-translation/title.service';
 
 
 @Component({
@@ -30,6 +32,8 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     constructor(private accountService: AccountService,
                 private modulesLanguageHelper: ModulesLanguageHelper,
+                private translateService: TranslateService,
+                private titleService: TitleService,
                 private principal: Principal,
                 private xmConfig: XmConfigService) {
         this.principal.identity().then((account) => {
@@ -93,6 +97,9 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
             this.principal.identity(true).then((account) => {
                 this.settingsAccount = this.copyAccount(account);
                 this.modulesLanguageHelper.correctLang(this.settingsAccount.langKey);
+                this.translateService.getTranslation(this.settingsAccount.langKey).subscribe(() => {
+                    this.titleService.update();
+                });
             });
         }, () => {
             this.success = null;

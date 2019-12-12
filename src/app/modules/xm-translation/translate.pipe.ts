@@ -26,7 +26,7 @@ export class TranslatePipe extends NgxTranslate implements PipeTransform, OnDest
      */
     public transform(value: Translate, ...args: any[]): string | any {
         if (typeof value === 'object') {
-            return value[this.translateService.currentLang];
+            return this.processMap(value, args);
         } else {
             return super.transform(value, ...args);
         }
@@ -34,5 +34,9 @@ export class TranslatePipe extends NgxTranslate implements PipeTransform, OnDest
 
     public ngOnDestroy(): void {
         super.ngOnDestroy();
+    }
+
+    private processMap(map: object, ...args: any[]): string | any {
+        return map['trKey'] ? super.transform(map['trKey'], ...args) : map[this.translateService.currentLang];
     }
 }

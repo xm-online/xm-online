@@ -1,6 +1,4 @@
-<div class="alert alert-success" *ngIf="success" jhiTranslate="settings.messages.logins.success">
-    <strong>Settings saved!</strong>
-</div>
+<div class="alert alert-success" *ngIf="success" [innerHTML]="'settings.messages.logins.success' | translate"></div>
 <form class="m-0" name="editForm" novalidate (ngSubmit)="save()" #editForm="ngForm">
     <div class="form-group" *ngFor="let login of userLogins">
       <mat-form-field>

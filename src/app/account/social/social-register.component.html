@@ -4,13 +4,8 @@
             <h1 *ngIf="success" jhiTranslate="social.register.title" translateValues="{ label: '{{providerLabel}}' }">Registration with</h1>
             <h1 *ngIf="error" jhiTranslate="social.register.errorTitle">Registration</h1>
 
-            <div class="alert alert-success" *ngIf="success" jhiTranslate="social.register.messages.success">
-                <strong>Registration saved!</strong> Please check your email for confirmation.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="error" jhiTranslate="social.register.messages.error.fail">
-                <strong>Registration failed!</strong> Please try again later.
-            </div>
+            <div class="alert alert-success" *ngIf="success" [innerHTML]="'social.register.messages.success' | translate"></div>
+            <div class="alert alert-danger" *ngIf="error" [innerHTML]="'social.register.messages.error.fail' | translate"></div>
 
             <xm-social *ngIf="success" provider="{{ provider }}"></xm-social>
             <br/>

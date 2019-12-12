@@ -7,16 +7,19 @@
 </div>
 
 <!--Messages-->
-<div class="alert alert-success" *ngIf="success" jhiTranslate="register.messages.success">
-  <strong>Registration saved!</strong> Please check your email for confirmation.
+<div class="alert alert-success"
+     *ngIf="success"
+     [innerHTML]="'register.messages.success' | translate">
 </div>
 
-<div class="alert alert-danger" *ngIf="error" jhiTranslate="register.messages.error.fail">
-  <strong>Registration failed!</strong> Please try again later.
+<div class="alert alert-danger"
+     *ngIf="error"
+     [innerHTML]="'register.messages.error.fail' | translate">
 </div>
 
-<div class="alert alert-danger" *ngIf="errorUserExists" jhiTranslate="register.messages.error.userexists">
-  <strong>Login already registered!</strong> Please choose another one.
+<div class="alert alert-danger"
+     *ngIf="errorUserExists"
+     [innerHTML]="'register.messages.error.userexists' | translate">
 </div>
 <div class="alert alert-danger" *ngIf="doNotMatch" jhiTranslate="global.messages.error.dontmatch">
   The password and its confirmation do not match!

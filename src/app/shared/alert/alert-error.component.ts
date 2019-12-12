@@ -225,7 +225,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
     }
 
     addErrorAlert(message, key?, data?) {
-        key = key && key !== null ? key : message;
+        key = key && key !== null ? this.translateService.instant(key) : message;
         this.alerts.push(
             this.alertService.addAlert(
                 {

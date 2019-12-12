@@ -123,9 +123,7 @@
       </div>
       <div class="card-body">
         <form name="securityCfgForm" role="form" (ngSubmit)="updateSecuritySettings()" #settingsForm="ngForm" novalidate>
-          <div class="alert alert-success" *ngIf="securityChanged" jhiTranslate="settings.messages.success">
-            <strong>Settings saved!</strong>
-          </div>
+          <div class="alert alert-success" *ngIf="securityChanged" [innerHTML]="'settings.messages.success' | translate"></div>
           <div class="form-group">
             <mat-checkbox color="primary" [(ngModel)]="tfaEnabled"
                           name="twoFAStatus">

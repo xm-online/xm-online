@@ -9,6 +9,8 @@ export class I18nNamePipe implements PipeTransform {
                 private principal: Principal) {
     }
 
+    /** @deprecated Use the TranslatePipe "translate" instead */
+
     public transform(name: any, principal: Principal = this.principal): string {
         if (name && name['trKey']) {
             return this.translateService.instant(name['trKey']);

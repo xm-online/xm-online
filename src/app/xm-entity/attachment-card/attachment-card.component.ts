@@ -45,12 +45,17 @@ export class AttachmentCardComponent implements OnInit {
     }
 
     loadImage() {
-        this.attachmentService.find(this.attachment.id).subscribe((attachmentResp: HttpResponse<Attachment>) => {
-            if (attachmentResp.body.content && attachmentResp.body.content.value) {
-                this.attachment.body = attachmentResp.body;
-                this.imageSrc = `data:${attachmentResp.body.valueContentType};base64,` + attachmentResp.body.content.value;
-            }
-        });
+        this.attachmentService
+            .find(this.attachment.id)
+            .subscribe((attachmentResp: HttpResponse<Attachment>) => {
+                this.attachment.body = attachmentResp.body || {};
+                if (this.attachment.body.content && this.attachment.body.content.value) {
+                    this.imageSrc =
+                        `data:${this.attachment.body.valueContentType};base64,` + this.attachment.body.content.value;
+                } else {
+                    this.imageSrc  = this.attachment.body && this.attachment.body.contentUrl || null;
+                }
+            });
     }
 
     getFileTypeImage(): string {

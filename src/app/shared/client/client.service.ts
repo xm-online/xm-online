@@ -8,6 +8,7 @@ import { Client } from './client.model';
 export class ClientService {
 
     private resourceUrl = 'uaa/api/clients';
+    private resourceUrlByClientId = this.resourceUrl + '/clientid-contains';
 
 
     constructor(private http: HttpClient) {
@@ -37,6 +38,23 @@ export class ClientService {
             }
         }
         return this.http.get(this.resourceUrl, {params: params, observe: 'response'});
+    }
+
+    public filterByClientId(req: any): Observable<HttpResponse<any>> {
+        let params = new HttpParams();
+        if (req) {
+            params = params.set('page', req.page);
+            params = params.set('size', req.size);
+            if (req.sort) {
+                req.sort.forEach((val) => {
+                    params = params.append('sort', val);
+                });
+            }
+            if (req.clientId) {
+                params = params.set('clientId', req.clientId);
+            }
+        }
+        return this.http.get(this.resourceUrlByClientId, {params, observe: 'response'});
     }
 
     delete(id: number): Observable<HttpResponse<any>> {

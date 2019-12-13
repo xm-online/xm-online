@@ -21,6 +21,7 @@
         "roles": "Роли",
         "role": "Роль",
         "validityPeriod": "Срок действия",
-        "scopes-add": "Добавить области"
+        "scopes-add": "Добавить области",
+        "search-by-client-id": "Search by client ID"
     }
 }

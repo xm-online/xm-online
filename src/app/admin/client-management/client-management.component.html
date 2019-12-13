@@ -9,6 +9,41 @@
       </div>
 
       <div class="card-body">
+        <div class="row align-items-center mt2 mb-2">
+          <div class="col-xs-12 col-sm-3">
+            <form action="" novalidate (ngSubmit)="filterByClientId(clientId)">
+              <div class="row flex-nowrap align-items-center">
+                <div class="col pr-1">
+                  <mat-form-field class="example-form-field">
+                    <input
+                      matInput
+                      name="client-id"
+                      type="text"
+                      placeholder="{{'clientManagement.search-by-client-id' | translate}}"
+                      [(ngModel)]="clientId">
+                    <button
+                      mat-button
+                      type="button"
+                      *ngIf="clientId"
+                      matSuffix
+                      mat-icon-button
+                      (click)="clientId=''; filterByClientId(clientId)">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
+                <div class="col-auto pl-0">
+                  <button mat-raised-button
+                          class="btn btn-white btn-round btn-just-icon">
+                    <i class="material-icons">search</i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col"></div>
+        </div>
+
         <xm-loader [showLoader]="showLoader"></xm-loader>
         <div class="material-datatables table-responsive" *ngIf="list?.length">
           <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%"

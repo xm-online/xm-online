@@ -21,6 +21,7 @@
         "roles": "Ролі",
         "role": "Роль",
         "validityPeriod": "Термін дії",
-        "scopes-add": "Додати обсяги"
+        "scopes-add": "Додати обсяги",
+        "search-by-client-id": "Search by client ID"
     }
 }

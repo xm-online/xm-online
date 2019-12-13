@@ -5,7 +5,7 @@ import { DEFAULT_LANG } from '../../xm.constants';
 import { ITranslate, Translate } from './language.service';
 
 export interface ITrKeyTranslates {
-    trKey: string | 'en';
+    trKey: string;
 }
 
 @Injectable()

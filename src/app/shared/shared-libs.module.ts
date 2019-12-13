@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgJhipsterModule } from 'ng-jhipster';
+import { JhiConfigService, NgJhipsterModule } from 'ng-jhipster';
 import { XmTranslationModule } from '../modules/xm-translation/xm-translation.module';
 
 @NgModule({
@@ -11,7 +11,12 @@ import { XmTranslationModule } from '../modules/xm-translation/xm-translation.mo
         NgJhipsterModule,
         XmTranslationModule.forChild(),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: JhiConfigService,
+            useValue: new JhiConfigService({defaultI18nLang: 'en', i18nEnabled: true}),
+        },
+    ],
     exports: [
         FormsModule,
         NgJhipsterModule,

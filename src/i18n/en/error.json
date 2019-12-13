@@ -34,7 +34,9 @@
         "notfound": "Resource not found",
         "error.business": "Forwarding error",
         "unauthorized": "Unauthorized",
-        "session_expired": "Session expired. Please login."
+        "session_expired": "Session expired. Please login.",
+        "NotBlank": "Not blank",
+        "Unauthorized": "Need authorization!"
     },
     "Unauthorized": "Need authorization!"
 }

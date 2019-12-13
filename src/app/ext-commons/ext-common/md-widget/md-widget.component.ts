@@ -40,6 +40,7 @@ export class MdWidgetComponent implements OnInit {
             const widget: Widget = result.body;
             widget.config = widget.config || {};
             Object.assign(widget.config, {content: this.mdEditor.value()});
+            Object.assign(widget, {dashboard: { id: Number(widget.dashboard) }}); // widget.dashboard must be an object
             this.widgetService.update(widget).subscribe(() => this.onEditMode());
         });
     }

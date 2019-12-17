@@ -10,6 +10,7 @@ import { UserMgmtDialogComponent } from './user-management-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserMgmtDeleteDialogComponent } from './user-management-delete-dialog.component';
 import { UserLoginMgmtDialogComponent } from './user-login-management-dialog.component';
+import { finalize } from 'rxjs/operators';
 
 
 @Component({
@@ -49,18 +50,6 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
             this.roleService.getRoles().subscribe(roles => this.authorities = roles.map(role => role.roleKey).sort());
             this.userService.getOnlineUsers().subscribe(result => this.onlineUsers = result.body);
             this.loadAll();
-        });
-    }
-
-
-    private changeUserState(user) {
-        user.activated = !user.activated;
-        this.userService.update(user).subscribe(() => {
-            this.alertService.success('userManagement.success');
-        }, err => {
-            console.log(err);
-            this.alertService.error('userManagement.error');
-            user.activated = !user.activated
         });
     }
 
@@ -145,37 +134,46 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
     }
 
     getLogin(login: UserLogin) {
-        return this.userLoginService.getLogin(login)
+        return this.userLoginService.getLogin(login);
     }
 
     applySearchByRole(roleKey: string) {
-        this.login = '';
+        this.login = null;
         this.page = 1;
         this.previousPage = null;
         this.currentSearch = roleKey;
         this.transition();
     }
 
-    searchByLogin() {
+    public searchByLogin(): void | null {
         if (!(this.login && this.login.trim())) {
-            return this.loadAll();
+            this.loadAll();
+            return null;
         }
-        this.showLoader = true;
+        this.page = 1;
+        this.currentSearch = null;
+        this.loadFilteredUsers();
+    }
 
-        this.userService.findByLogin(this.login)
+    public loadFilteredUsers(): void {
+        this.showLoader = true;
+        this.userService.loginContains({
+            page: this.page - 1,
+            size: this.itemsPerPage,
+            sort: this.sort(),
+            roleKey: this.currentSearch,
+            login: this.login,
+        })
+            .pipe(finalize(() => this.showLoader = false))
             .subscribe((res) => {
-                    this.page = 1;
+                    this.list = [];
                     this.previousPage = null;
-                    this.totalItems = 1;
-                    this.queryCount = this.totalItems;
-                    this.list = [res.body]
+                    this.list = this.onSuccess(res.body, res.headers);
                 },
                 (err) => {
-                    this.showLoader = false;
-                    console.log(err);
-                    this.list = []
-                },
-                () => this.showLoader = false);
+                    console.info(err);
+                    this.list = [];
+                });
     }
 
     public onAdd() {
@@ -195,5 +193,24 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
     public onDelete(user) {
         const modalRef = this.modalService.open(UserMgmtDeleteDialogComponent, { backdrop: 'static', size: 'lg' });
         modalRef.componentInstance.user = user;
+    }
+
+    public transition(): void {
+        if (this.login) {
+            this.loadFilteredUsers();
+        } else {
+            this.loadAll();
+        }
+    }
+
+    private changeUserState(user) {
+        user.activated = !user.activated;
+        this.userService.update(user).subscribe(() => {
+            this.alertService.success('userManagement.success');
+        }, err => {
+            console.log(err);
+            this.alertService.error('userManagement.error');
+            user.activated = !user.activated;
+        });
     }
 }

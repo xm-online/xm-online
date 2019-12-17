@@ -26,25 +26,36 @@
         </div>
         <div class="row align-items-center mt2 mb-2">
           <div class="col-xs-12 col-sm-3">
-            <div class="row flex-nowrap align-items-center">
-              <div class="col pr-1">
-                <mat-form-field floatLabel="never">
-                  <input matInput
-                         type="text"
-                         [(ngModel)]="login"
-                         (change)="searchByLogin()"
-                         placeholder="{{'userManagement.search-by-login' | translate}}">
-                </mat-form-field>
+            <form action="" novalidate (ngSubmit)="searchByLogin()">
+              <div class="row flex-nowrap align-items-center">
+                <div class="col pr-1">
+                  <mat-form-field class="example-form-field">
+                    <input
+                      matInput
+                      name="user-login"
+                      type="text"
+                      placeholder="{{'userManagement.search-by-login' | translate}}"
+                      [(ngModel)]="login">
+                    <button
+                      mat-button
+                      type="button"
+                      *ngIf="login"
+                      matSuffix
+                      mat-icon-button
+                      (click)="login=''; searchByLogin()">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
+                <div class="col-auto pl-0">
+                  <button mat-raised-button
+                          class="btn btn-white btn-round btn-just-icon"
+                          (click)="searchByLogin()">
+                    <i class="material-icons">search</i>
+                  </button>
+                </div>
               </div>
-              <div class="col-auto pl-0">
-                <button mat-raised-button
-                        type="button"
-                        class="btn btn-white btn-round btn-just-icon"
-                        (click)="searchByLogin()">
-                  <i class="material-icons">search</i>
-                </button>
-              </div>
-            </div>
+            </form>
           </div>
           <div class="col"></div>
           <div class="col-auto">

@@ -7,6 +7,7 @@ import { User } from './user.model';
 @Injectable()
 export class UserService {
     private resourceUrl = 'uaa/api/users';
+    private resurceUrlByLogin = this.resourceUrl + '/logins-contains';
 
     constructor(private http: HttpClient) { }
 
@@ -33,6 +34,24 @@ export class UserService {
 
     find(userKey: string): Observable<User> {
         return this.http.get<User>(`${this.resourceUrl}/${userKey}`);
+    }
+
+    public loginContains(req: any): Observable<any> {
+        let params = new HttpParams();
+        if (req) {
+            params = params.set('page', req.page);
+            params = params.set('size', req.size);
+            if (req.sort) {
+                req.sort.forEach((val) => {
+                    params = params.append('sort', val);
+                });
+            }
+            if (req.login) {
+                params = params.set('login', req.login);
+            }
+        }
+
+        return this.http.get(this.resurceUrlByLogin, {params, observe: 'response'});
     }
 
     findPublic(userKey: string): Observable<any> {

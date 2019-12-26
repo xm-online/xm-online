@@ -5,25 +5,25 @@ import { map, share } from 'rxjs/operators';
 @Component({
     selector: 'xm-clock-widget',
     templateUrl: './clock-widget.component.html',
-    styleUrls: ['./clock-widget.component.scss']
+    styleUrls: ['./clock-widget.component.scss'],
 })
 export class ClockWidgetComponent implements OnInit, OnDestroy {
 
+    public clock: any;
     private subscription: any;
-    clock: any;
 
     constructor() {
     }
 
-    ngOnInit() {
-        this.subscription = interval(1000).pipe(map(tick => new Date()),
-            share()
-        ).subscribe(result => {
+    public ngOnInit(): void {
+        this.subscription = interval(1000).pipe(map((tick) => new Date()),
+            share(),
+        ).subscribe((result) => {
             this.clock = result.toLocaleString();
-        })
+        });
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }
 

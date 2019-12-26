@@ -8,14 +8,14 @@ export interface TableData {
 @Component({
     selector: 'xm-md-table',
     templateUrl: './md-table.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MdTableComponent {
 
-    @Input() title: string;
-    @Input() subtitle: string;
-    @Input() cardClass: string;
-    @Input() data: TableData;
+    @Input() public title: string;
+    @Input() public subtitle: string;
+    @Input() public cardClass: string;
+    @Input() public data: TableData;
 
     constructor() {
     }

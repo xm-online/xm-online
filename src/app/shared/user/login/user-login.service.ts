@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {JhiEventManager, JhiLanguageService} from 'ng-jhipster';
-import {UserLogin} from './user-login.model';
-import {XmConfigService} from '../../spec/config.service';
-import {Principal} from '../../auth/principal.service';
-import {XM_EVENT_LIST} from '../../../xm.constants';
+import { Injectable } from '@angular/core';
+import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
+import { XM_EVENT_LIST } from '../../../xm.constants';
+import { Principal } from '../../auth/principal.service';
+import { XmConfigService } from '../../spec/config.service';
+import { UserLogin } from './user-login.model';
 
 @Injectable()
 export class UserLoginService {
@@ -15,21 +15,13 @@ export class UserLoginService {
         private jhiLanguageService: JhiLanguageService,
         private specService: XmConfigService,
         private eventManager: JhiEventManager,
-        private principal: Principal
+        private principal: Principal,
     ) {
-        this.getAllLogins().then(logins => this.allLogins = logins);
+        this.getAllLogins().then((logins) => this.allLogins = logins);
         this.registerChangeAuth();
     }
 
-    private registerChangeAuth() {
-        this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, resp => {
-            this.allLogins = {};
-            this.promise = null;
-            this.getAllLogins().then(logins => this.allLogins = logins);
-        });
-    }
-
-    getAllLogins(): Promise<any> {
+    public getAllLogins(): Promise<any> {
         if (this.promise) {
             return this.promise;
         }
@@ -41,19 +33,19 @@ export class UserLoginService {
                         return map;
                     }, {}));
                 },
-                () => this.promise = null
+                () => this.promise = null,
             );
-        })
+        });
     }
 
-    getLogin(login: UserLogin): string {
+    public getLogin(login: UserLogin): string {
         if (!this.allLogins.hasOwnProperty(login.typeKey)) {
             return '';
         }
         return this.getName(login.typeKey) + ': ' + login.login;
     }
 
-    getName(typeKey) {
+    public getName(typeKey): string | number | 'MM/DD/YYYY HH:mm' | { name: 'English' } | any {
         const type = this.allLogins[typeKey];
         const name = type.name;
         const langKey = this.principal.getLangKey();
@@ -67,5 +59,13 @@ export class UserLoginService {
             }
         }
         return type.key;
+    }
+
+    private registerChangeAuth(): void {
+        this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, (resp) => {
+            this.allLogins = {};
+            this.promise = null;
+            this.getAllLogins().then((logins) => this.allLogins = logins);
+        });
     }
 }

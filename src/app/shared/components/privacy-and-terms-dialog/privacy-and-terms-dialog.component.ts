@@ -10,10 +10,10 @@ import { AuthServerProvider } from '../../auth/auth-jwt.service';
 })
 export class PrivacyAndTermsDialogComponent implements OnInit {
 
-    @Input() config: any;
-    iAgree = false;
-    lang: string;
-    termsToken: string;
+    @Input() public config: any;
+    public iAgree = false;
+    public lang: string;
+    public termsToken: string;
 
     constructor(private activeModal: NgbActiveModal,
                 private authServerProvider: AuthServerProvider,
@@ -23,14 +23,14 @@ export class PrivacyAndTermsDialogComponent implements OnInit {
         });
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
     }
 
-    onCancel() {
+    public onCancel(): void {
         this.activeModal.close('cancel');
     }
 
-    onAccept() {
+    public onAccept(): void {
         if (!this.termsToken) {
             this.activeModal.close('accept');
         } else {

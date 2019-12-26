@@ -2,22 +2,22 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-body text-center">
-          <button type="button" class="btn btn-primary" (click)="reindexElastic()"
-                  *xmPermitted="['ELASTICSEARCH.INDEX']">
-            Reindex elastic
-          </button>
-          <button type="button" mat-raised-button class="btn btn-primary" (click)="updateTenantsConfiguration()"
-                  *xmPermitted="['CONFIG.ADMIN.REFRESH']">
-            <i class="material-icons" style="margin-top: -20px; font-size: 17px;">warning</i>
-            Update tenants configuration
-          </button>
-          <button type="button"
-                  class="btn btn-primary"
-                  (click)="updateTenantConfiguration()"
-                  [ngClass]="{'loading' : isTenantCfgUpdating}"
-                  *xmPermitted="['CONFIG.CLIENT.REFRESH']">
-            Update tenant configuration
-          </button>
+        <button type="button" class="btn btn-primary" (click)="reindexElastic()"
+                *xmPermitted="['ELASTICSEARCH.INDEX']">
+          Reindex elastic
+        </button>
+        <button type="button" mat-raised-button class="btn btn-primary" (click)="updateTenantsConfiguration()"
+                *xmPermitted="['CONFIG.ADMIN.REFRESH']">
+          <i class="material-icons" style="margin-top: -20px; font-size: 17px;">warning</i>
+          Update tenants configuration
+        </button>
+        <button type="button"
+                class="btn btn-primary"
+                (click)="updateTenantConfiguration()"
+                [ngClass]="{'loading' : isTenantCfgUpdating}"
+                *xmPermitted="['CONFIG.CLIENT.REFRESH']">
+          Update tenant configuration
+        </button>
       </div>
     </div>
   </div>

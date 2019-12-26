@@ -104,4 +104,4 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
         NgxMatSelectSearchModule,
     ],
 })
-export class MatModule { }
+export class MatModule {}

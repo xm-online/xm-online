@@ -12,7 +12,7 @@ import { NotificationUiConfig } from './notification.model';
 @Injectable()
 export class NotificationsService {
 
-    totalCount: number;
+    public totalCount: number;
 
     constructor(
         private http: HttpClient,
@@ -20,7 +20,7 @@ export class NotificationsService {
         private eventManager: JhiEventManager,
         private i18nNamePipe: I18nNamePipe,
         private functionService: FunctionService,
-        private entityService: XmEntityService
+        private entityService: XmEntityService,
     ) {}
 
     public getNotifications(options: NotificationUiConfig): Observable<any> {
@@ -29,19 +29,19 @@ export class NotificationsService {
                 this.totalCount = Number(response.headers.get('X-Total-Count')) || 0;
                 const array: any = response.body || [];
                 return array
-                    .filter(e => e.stateKey === options.initialState)
-                    .map(e => {
+                    .filter((e) => e.stateKey === options.initialState)
+                    .map((e) => {
                         let label = e;
                         if (options.labelPath) {
                             label = this.byString(e, options.labelPath);
                         }
                         label = this.i18nNamePipe.transform(label, this.principal);
                         return {
-                            label: label,
+                            label,
                             id: e.id,
                             typeKey: e.typeKey,
                             updateDate: options.showDate ? e.updateDate : null,
-                            data: e.data
+                            data: e.data,
                         };
                     });
             }));
@@ -63,7 +63,7 @@ export class NotificationsService {
             }));
     }
 
-    byString(o, s) {
+    public byString(o, s) {
         s = s.replace(/\[(\w+)\]/g, '.$1');
         s = s.replace(/^\./, '');
         const a = s.split('.');
@@ -78,7 +78,7 @@ export class NotificationsService {
         return o;
     }
 
-    nullSafeLabel(x) {
+    public nullSafeLabel(x) {
         return x ? '' + x.label ? '' + x.label : '' : '';
     }
 }

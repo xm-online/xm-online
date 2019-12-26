@@ -1,44 +1,44 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { JhiAlertService, JhiOrderByPipe } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
+import { Principal } from '../../shared';
 
 import { ITEMS_PER_PAGE } from '../../shared/constants/pagination.constants';
 import { RoleMatrix, RoleMatrixPermission } from '../../shared/role/role.model';
 import { RoleService } from '../../shared/role/role.service';
-import { Principal } from '../../shared';
 
 @Component({
     selector: 'xm-roles-matrix',
     templateUrl: './roles-matrix.component.html',
     providers: [JhiOrderByPipe],
-    styleUrls: ['./roles-matrix.component.scss']
+    styleUrls: ['./roles-matrix.component.scss'],
 })
 export class RolesMatrixComponent implements OnInit {
 
-    @ViewChild('table', {static: false}) table: ElementRef;
+    @ViewChild('table', {static: false}) public table: ElementRef;
 
-    matrix: RoleMatrix;
-    permissions: RoleMatrixPermission[];
-    private permissionsSort: RoleMatrixPermission[];
-    totalItems: any;
-    queryCount: any;
-    itemsPerPage: any;
-    page: any = 1;
-    previousPage: any;
-    predicate: any = 'privilegeKey';
-    reverse: any = true;
-    showLoader: boolean;
-    sortBy: any = {};
-    entities: string[];
-    hiddenRoles: any[] = [];
-    checkAll: boolean[] = [];
-    hasChanges: boolean;
-    permitted_filter: any[] = [
+    public matrix: RoleMatrix;
+    public permissions: RoleMatrixPermission[];
+    public totalItems: any;
+    public queryCount: any;
+    public itemsPerPage: any;
+    public page: any = 1;
+    public previousPage: any;
+    public predicate: any = 'privilegeKey';
+    public reverse: any = true;
+    public showLoader: boolean;
+    public sortBy: any = {};
+    public entities: string[];
+    public hiddenRoles: any[] = [];
+    public checkAll: boolean[] = [];
+    public hasChanges: boolean;
+    public permitted_filter: any[] = [
         {},
         {trans: 'permitted', value: 'allset'},
         {trans: 'notPermitted', value: 'notset'},
         {trans: 'permittedAny', value: 'anyset'},
     ];
+    private permissionsSort: RoleMatrixPermission[];
     private isSort: boolean;
 
     constructor(
@@ -50,48 +50,48 @@ export class RolesMatrixComponent implements OnInit {
         this.itemsPerPage = ITEMS_PER_PAGE;
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.principal.identity().then(() => this.load());
     }
 
-    load() {
+    public load(): void {
         this.showLoader = true;
         this.roleService.getMatrix().subscribe(
-                (result: RoleMatrix) => {
-                    if (result.roles && result.roles.length && result.permissions && result.permissions.length) {
-                        result.permissions.forEach(item => {
-                            item.roles = item.roles || [];
-                            item.roles = result.roles.map(el => {
-                                const value = item.roles.indexOf(el) !== -1;
-                                return {value: value, valueOrg: value};
-                            });
+            (result: RoleMatrix) => {
+                if (result.roles && result.roles.length && result.permissions && result.permissions.length) {
+                    result.permissions.forEach((item) => {
+                        item.roles = item.roles || [];
+                        item.roles = result.roles.map((el) => {
+                            const value = item.roles.indexOf(el) !== -1;
+                            return {value, valueOrg: value};
                         });
-                        result.permissions = this.orderByPipe.transform(result.permissions, this.predicate, !this.reverse);
-                    }
-                    this.matrix = result;
-                    this.entities = this.getEntities(result.permissions);
-                    this.queryCount = this.totalItems = result.permissions.length;
-                    this.permissions = this.getItemsByPage(this.page);
-                },
-                (resp) => this.onError(resp),
-                () => this.showLoader = false
-            );
+                    });
+                    result.permissions = this.orderByPipe.transform(result.permissions, this.predicate, !this.reverse);
+                }
+                this.matrix = result;
+                this.entities = this.getEntities(result.permissions);
+                this.queryCount = this.totalItems = result.permissions.length;
+                this.permissions = this.getItemsByPage(this.page);
+            },
+            (resp) => this.onError(resp),
+            () => this.showLoader = false,
+        );
     }
 
-    onLoadPage(page: number) {
+    public onLoadPage(page: number): void {
         if (page !== this.previousPage) {
             this.previousPage = page;
             this.permissions = this.getItemsByPage(page);
             setTimeout(() => {
-                this.hiddenRoles.forEach(role => {
-                    this.table.nativeElement.querySelectorAll(`.col-${role.indx}`).forEach(el => el.classList.add('hidden'));
+                this.hiddenRoles.forEach((role) => {
+                    this.table.nativeElement.querySelectorAll(`.col-${role.indx}`).forEach((el) => el.classList.add('hidden'));
                 });
             }, 10);
             // this.transition();
         }
     }
 
-    onTransition(page: number) {
+    public onTransition(page: number): void {
         if (this.isSort) {
             this.permissionsSort = this.orderByPipe.transform(this.permissionsSort, this.predicate, !this.reverse);
         } else {
@@ -99,13 +99,13 @@ export class RolesMatrixComponent implements OnInit {
         }
         this.permissions = this.getItemsByPage(page);
         setTimeout(() => {
-            this.hiddenRoles.forEach(role => {
-                this.table.nativeElement.querySelectorAll(`.col-${role.indx}`).forEach(el => el.classList.add('hidden'));
+            this.hiddenRoles.forEach((role) => {
+                this.table.nativeElement.querySelectorAll(`.col-${role.indx}`).forEach((el) => el.classList.add('hidden'));
             });
         }, 10);
     }
 
-    onChangeSort() {
+    public onChangeSort(): void {
         console.log('sort');
         if (this.sortBy.msName || this.sortBy.query || this.sortBy.permitted_filter) {
             this.isSort = true;
@@ -119,36 +119,36 @@ export class RolesMatrixComponent implements OnInit {
         this.onTransition(this.page);
     }
 
-    onChangePerPage() {
+    public onChangePerPage(): void {
         this.previousPage = null;
         this.onLoadPage(this.page);
     }
 
-    onHideRole(role: string, indx: number) {
+    public onHideRole(role: string, indx: number): void {
         this.hiddenRoles.push({role, indx});
-        this.table.nativeElement.querySelectorAll(`.col-${indx}`).forEach(el => el.classList.add('d-none'));
+        this.table.nativeElement.querySelectorAll(`.col-${indx}`).forEach((el) => el.classList.add('d-none'));
     }
 
-    onViewRole(item) {
-        this.hiddenRoles = this.hiddenRoles.filter(el => el.indx !== item.indx);
-        this.table.nativeElement.querySelectorAll(`.col-${item.indx}`).forEach(el => el.classList.remove('d-none'));
+    public onViewRole(item): void {
+        this.hiddenRoles = this.hiddenRoles.filter((el) => el.indx !== item.indx);
+        this.table.nativeElement.querySelectorAll(`.col-${item.indx}`).forEach((el) => el.classList.remove('d-none'));
     }
 
-    onCheckAll(indx: number) {
+    public onCheckAll(indx: number): void {
         const check = this.checkAll[indx];
-        (this.isSort ? this.permissionsSort : this.matrix.permissions).forEach(item => item.roles[indx].value = check);
+        (this.isSort ? this.permissionsSort : this.matrix.permissions).forEach((item) => item.roles[indx].value = check);
     }
 
-    onCancel() {
-        this.matrix.permissions.forEach(item => item.roles.forEach(el => el.value = el.valueOrg));
+    public onCancel(): void {
+        this.matrix.permissions.forEach((item) => item.roles.forEach((el) => el.value = el.valueOrg));
         this.hasChanges = false;
     }
 
-    onSave() {
+    public onSave(): void {
         this.showLoader = true;
         const roles = this.matrix.roles;
         const matrix: RoleMatrix = Object.assign({}, this.matrix);
-        matrix.permissions = matrix.permissions.map(perm => {
+        matrix.permissions = matrix.permissions.map((perm) => {
             const item = Object.assign({}, perm);
             item.roles = item.roles.reduce((result, el, pos) => {
                 el.value && result.push(roles[pos]);
@@ -159,20 +159,20 @@ export class RolesMatrixComponent implements OnInit {
         this.roleService.updateMatrix(matrix).pipe(finalize(() => this.showLoader = false))
             .subscribe(
                 () => {
-                    this.matrix.permissions.forEach(item => item.roles.forEach(el => el.valueOrg = el.value));
+                    this.matrix.permissions.forEach((item) => item.roles.forEach((el) => el.valueOrg = el.value));
                     this.hasChanges = false;
                 },
                 (resp: Response) => {
-                    this.onError(resp), this.showLoader = false
+                    this.onError(resp), this.showLoader = false;
                 },
-                () => this.showLoader = false
+                () => this.showLoader = false,
             );
     }
 
-    public isChanged(allItems) {
+    public isChanged(allItems): void {
         this.hasChanges = false;
-        allItems.forEach(e => {
-            e.roles.forEach(r => {
+        allItems.forEach((e) => {
+            e.roles.forEach((r) => {
                 if (r.value !== r.valueOrg) {
                     this.hasChanges = true;
                 }
@@ -180,7 +180,7 @@ export class RolesMatrixComponent implements OnInit {
         });
     }
 
-    private getItemsByPage(page) {
+    private getItemsByPage(page): RoleMatrixPermission[] {
         const startPos = (page - 1) * this.itemsPerPage;
         const endPos = startPos + this.itemsPerPage;
         return (this.isSort ? this.permissionsSort : this.matrix.permissions).slice(startPos, endPos);
@@ -188,21 +188,21 @@ export class RolesMatrixComponent implements OnInit {
 
     private getEntities(list: RoleMatrixPermission[] = []): string[] {
         return list.reduce((result, item) => {
-            result.find(el => el === item.msName) || result.push(item.msName);
+            result.find((el) => el === item.msName) || result.push(item.msName);
             return result;
         }, ['']).sort();
     }
 
-    private groupByItem(list) {
+    private groupByItem(list): any {
         const sortBy = this.sortBy;
         return list.reduce((result: RoleMatrixPermission[], item: RoleMatrixPermission) => {
             const clearItemsbyRoles = item.roles.filter((x, y) => {
-                if (!this.hiddenRoles.some(i => i.indx === y)) {
+                if (!this.hiddenRoles.some((i) => i.indx === y)) {
                     return x;
                 }
             });
-            const anySet = clearItemsbyRoles.some(x => x.value);
-            const allSet = clearItemsbyRoles.every(x => x.value);
+            const anySet = clearItemsbyRoles.some((x) => x.value);
+            const allSet = clearItemsbyRoles.every((x) => x.value);
             if (
                 (sortBy.msName && item.msName !== sortBy.msName) ||
                 (sortBy.query && item.privilegeKey.indexOf(sortBy.query.toUpperCase()) === -1) ||
@@ -217,7 +217,7 @@ export class RolesMatrixComponent implements OnInit {
         }, []);
     }
 
-    private onError(resp) {
+    private onError(resp): void {
         try {
             const res = resp.body || {};
             this.alertService.error(res.error_description, res.params);

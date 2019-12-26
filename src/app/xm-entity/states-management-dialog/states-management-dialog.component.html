@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+  <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
   <h4 class="modal-title text-left">
     {{'xm-entity.states-management-dialog.title' | translate}}
   </h4>
@@ -21,8 +21,8 @@
             >
               <ngx-mat-select-search
                 [formControl]="formSpecSearch"
-                [placeholderLabel]="'global.rest-select-placeholder-search' | translate"
                 [noEntriesFoundLabel]="'global.rest-select-placeholder-noresults' | translate"
+                [placeholderLabel]="'global.rest-select-placeholder-search' | translate"
               ></ngx-mat-select-search>
 
               <mat-option *ngFor="let option of filteredSpecOptions$ | async" [value]="option.key">

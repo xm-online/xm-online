@@ -1,44 +1,36 @@
-import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
+
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+
+import * as _ from 'lodash';
 import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { NotificationsService } from '../shared/notifications.service';
 import { Principal, XmConfigService } from '../../shared';
 import { Notification, NotificationUiConfig } from '../shared/notification.model';
 
-import { DomSanitizer } from '@angular/platform-browser'
-
-import * as _ from 'lodash';
+import { NotificationsService } from '../shared/notifications.service';
 
 const DEFAULT_PRIVILEGES = ['XMENTITY.SEARCH', 'XMENTITY.SEARCH.QUERY', 'XMENTITY.SEARCH.TEMPLATE'];
 
 @Component({
     selector: 'xm-notifications',
     templateUrl: './notifications.component.html',
-    styleUrls: ['./notifications.component.scss']
+    styleUrls: ['./notifications.component.scss'],
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
 
+    public config: NotificationUiConfig;
+    public isOpened: boolean;
+    public showCount: number;
+    public notifications: Notification[];
+    public redirectUrl: string;
+    public autoUpdateEnabled: boolean = null;
+    public privileges: string[];
+    public updateInterval: number;
     private entityListModifications: Subscription;
     private entityEntityStateChange: Subscription;
-
-    config: NotificationUiConfig;
-    isOpened: boolean;
-    showCount: number;
-    notifications: Notification[];
-    redirectUrl: string;
-    autoUpdateEnabled: boolean = null;
-    privileges: string[];
-    updateInterval: number;
-
-    @HostListener('document:click', ['$event'])
-    clickout(event) {
-        if (!(this.eRef.nativeElement.contains(event.target))) {
-            this.isOpened = false;
-        }
-    }
 
     constructor(
         private xmConfigService: XmConfigService,
@@ -53,7 +45,18 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         this.config = null;
     }
 
-    ngOnInit () {
+    get notificationsCount(): number {
+        return this.notificationsService.totalCount;
+    }
+
+    @HostListener('document:click', ['$event'])
+    public clickout(event): void {
+        if (!(this.eRef.nativeElement.contains(event.target))) {
+            this.isOpened = false;
+        }
+    }
+
+    public ngOnInit(): void {
         this.entityListModifications = this.eventManager.subscribe('xmEntityListModification',
             () => this.load());
         this.entityEntityStateChange = this.eventManager.subscribe('xmEntityDetailModification',
@@ -61,17 +64,14 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         this.load(true);
     }
 
-    ngOnDestroy () {
+    public ngOnDestroy(): void {
         this.eventManager.destroy(this.entityListModifications);
         this.eventManager.destroy(this.entityEntityStateChange);
     }
 
-    get notificationsCount(): number {
-        return this.notificationsService.totalCount;
-    }
-    public load(initAutoUpdate?: boolean) {
-        this.xmConfigService.getUiConfig().subscribe(config => {
-            this.config = <NotificationUiConfig>config.notifications;
+    public load(initAutoUpdate?: boolean): void {
+        this.xmConfigService.getUiConfig().subscribe((config) => {
+            this.config = config.notifications as NotificationUiConfig;
             this.mapPrviliges(this.config);
             if (this.config) {
                 this.getNotifications(this.config);
@@ -80,28 +80,28 @@ export class NotificationsComponent implements OnInit, OnDestroy {
                 const self = this;
                 self.autoUpdateEnabled = true;
                 // @TODO should be redone with webocets
-                this.updateInterval = setInterval(function () {
+                this.updateInterval = setInterval(function() {
                     if (self.principal.isAuthenticated()) {
                         self.getNotifications(self.config);
                     } else {
                         clearInterval(self.updateInterval);
                     }
-                }, self.config.autoUpdate)
+                }, self.config.autoUpdate);
             }
         });
     }
 
-    public getNotifications(config: NotificationUiConfig) {
+    public getNotifications(config: NotificationUiConfig): void {
         this.notificationsService.getNotifications(config).pipe(
             map((notifications: any) => {
-                notifications.forEach(notification => {
+                notifications.forEach((notification) => {
                     if (config.showAsHtml) {
                         notification.label = this.sanitized.bypassSecurityTrustHtml(notification.label);
                     }
                 });
                 return notifications;
             }))
-            .subscribe(resp => {
+            .subscribe((resp) => {
                 this.notifications = resp;
                 this.redirectUrl = config.redirectUrl;
                 this.showCount = config.max ? config.max - 1 : 5;
@@ -112,7 +112,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         event.stopPropagation();
         if (this.config && this.config.changeStateName) {
             this.notificationsService.markRead(item.id, this.config).subscribe(() => {
-                this.notifications = this.notifications.filter(i => i !== item);
+                this.notifications = this.notifications.filter((i) => i !== item);
             });
         }
     }
@@ -121,7 +121,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         this.isOpened = !this.isOpened;
     }
 
-    public viewAll(url) {
+    public viewAll(url): void {
         this.router.navigate([url]);
         this.toggleNotifications();
     }
@@ -148,7 +148,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     private mapPrviliges(config: NotificationUiConfig): void {
         this.privileges = [];
         if (config && config.privileges && config.privileges.length > 0) {
-            config.privileges.map(p => {
+            config.privileges.map((p) => {
                 this.privileges.push(p);
             });
         } else {

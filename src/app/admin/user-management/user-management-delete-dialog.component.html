@@ -1,18 +1,20 @@
-<form class="m-0" name="deleteForm" (ngSubmit)="confirmDelete(user.userKey)">
-    <div class="modal-header">
-        <a href="javascript: void(0);" class="modal-close material-icons" data-dismiss="modal" (click)="clear()">close</a>
-        <h4 class="modal-title text-left" jhiTranslate="entity.delete.title">Confirm delete operation</h4>
-    </div>
-    <div class="modal-body">
-        <xm-loader [showLoader]="showLoader"></xm-loader>
-        <p jhiTranslate="userManagement.delete.question" translateValues="{userKey: '{{user.userKey}}'}">Are you sure you want to delete this User?</p>
-    </div>
-    <div class="modal-footer">
-        <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="clear()">
-            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-        </button>
-        <button mat-raised-button type="submit" class="btn btn-danger" [disabled]="showLoader">
-            <span class="fa fa-trash"></span>&nbsp;<span jhiTranslate="entity.action.delete">Delete</span>
-        </button>
-    </div>
+<form (ngSubmit)="confirmDelete(user.userKey)" class="m-0" name="deleteForm">
+  <div class="modal-header">
+    <a (click)="clear()" class="modal-close material-icons" data-dismiss="modal" href="javascript: void(0);">close</a>
+    <h4 class="modal-title text-left" jhiTranslate="entity.delete.title">Confirm delete operation</h4>
+  </div>
+  <div class="modal-body">
+    <xm-loader [showLoader]="showLoader"></xm-loader>
+    <p jhiTranslate="userManagement.delete.question" translateValues="{userKey: '{{user.userKey}}'}">Are you sure you
+                                                                                                     want to delete this
+                                                                                                     User?</p>
+  </div>
+  <div class="modal-footer">
+    <button (click)="clear()" class="btn mr-1" data-dismiss="modal" mat-raised-button type="button">
+      <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+    </button>
+    <button [disabled]="showLoader" class="btn btn-danger" mat-raised-button type="submit">
+      <span class="fa fa-trash"></span>&nbsp;<span jhiTranslate="entity.action.delete">Delete</span>
+    </button>
+  </div>
 </form>

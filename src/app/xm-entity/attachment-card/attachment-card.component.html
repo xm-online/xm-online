@@ -1,14 +1,14 @@
 <div class="card card-product">
   <div class="card-header card-header-image attachment-card-image d-flex align-items-center">
-    <img class="img"
+    <img *ngIf="isImage() && imageSrc"
          [src]="imageSrc"
-         *ngIf="isImage() && imageSrc"/>
-    <img class="img"
+         class="img"/>
+    <img *ngIf="!isImage() && getFileTypeImage()"
          [src]="getFileTypeImage()"
-         *ngIf="!isImage() && getFileTypeImage()"/>
-    <img class="img"
+         class="img"/>
+    <img *ngIf="!(isImage() && imageSrc) && !(!isImage() && getFileTypeImage())"
          [src]="'./assets/img/filetypes/filetype-noimg.png'"
-         *ngIf="!(isImage() && imageSrc) && !(!isImage() && getFileTypeImage())">
+         class="img">
   </div>
   <div class="card-body text-center">
     <p class="category"><em>{{(attachmentSpec.name | i18nName : principal).toUpperCase()}}</em></p>
@@ -17,10 +17,10 @@
   <div class="card-footer">
     <div class="stats">{{getFileSize(2)}}</div>
     <div class="navbar-right">
-      <a href="javascript: void(0);" role="button" (click)="onDownload()" *xmPermitted="['ATTACHMENT.GET_LIST.ITEM']">
+      <a (click)="onDownload()" *xmPermitted="['ATTACHMENT.GET_LIST.ITEM']" href="javascript: void(0);" role="button">
         <i class="material-icons">file_download</i>
       </a>
-      <a href="javascript: void(0);" role="button" (click)="onRemove()" *xmPermitted="['ATTACHMENT.DELETE']">
+      <a (click)="onRemove()" *xmPermitted="['ATTACHMENT.DELETE']" href="javascript: void(0);" role="button">
         <i class="material-icons">close</i>
       </a>
     </div>

@@ -3,8 +3,8 @@ export class ResponseConfig {
     }
 
     public getResponseConfigItem(rc) {
-        return this.responses.filter(r => {
-            return r.isMatch(rc)
+        return this.responses.filter((r) => {
+            return r.isMatch(rc);
         })[0];
     }
 }
@@ -18,12 +18,11 @@ export class ResponseConfigItem {
                 public validationFieldsExtractor?: string,
                 public outputMessage?: {
                     type?: string,
-                    value?: string
+                    value?: string,
                 },
                 public condition?: any,
                 public redirectUrl?: string) {
     }
-
 
     public isMatch(rc: ResponseContext) {
         const regExp = new RegExp(this.code);
@@ -65,4 +64,3 @@ export class ResponseContext {
                 public request?: any) {
     }
 }
-

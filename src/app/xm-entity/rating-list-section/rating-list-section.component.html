@@ -3,9 +3,9 @@
     <div *ngSwitchCase="'5STARS'">
       <div class="row align-items-center">
         <div class="col-auto pt-1">
-          <rating [float]="true"
+          <rating (ngModelChange)="onChange($event, getRatingByRatingSpec(ratingSpec))"
                   [(ngModel)]="getRatingByRatingSpec(ratingSpec).value"
-                  (ngModelChange)="onChange($event, getRatingByRatingSpec(ratingSpec))">
+                  [float]="true">
           </rating>
         </div>
         <div class="col">

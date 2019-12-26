@@ -1,12 +1,12 @@
 <div *ngIf="defaultWidget" class="row default-row">
   <div class="col-md-6 default-lef-col">
-    <xm-dynamic-widget [init]="{module: defaultWidget.module, component: defaultWidget.selector, config: defaultWidget.config}"
-                       *ngIf="defaultWidget.module">
+    <xm-dynamic-widget *ngIf="defaultWidget.module"
+                       [init]="{module: defaultWidget.module, component: defaultWidget.selector, config: defaultWidget.config}">
     </xm-dynamic-widget>
   </div>
   <div class="col-md-6 default-right-col">
-    <xm-dynamic-widget [init]="{module: signWidget.module, component: signWidget.selector, config: signWidget.config}"
-                       *ngIf="signWidget?.module">
+    <xm-dynamic-widget *ngIf="signWidget?.module"
+                       [init]="{module: signWidget.module, component: signWidget.selector, config: signWidget.config}">
     </xm-dynamic-widget>
 
     <dynamic-widget [widgetData]="{component: signWidget.component, inputs: {config: signWidget.config || {}}}"></dynamic-widget>
@@ -16,8 +16,8 @@
 <div *ngIf="defaultLayout">
   <div *ngFor="let row of defaultLayout" [className]="row.class">
     <div *ngFor="let item of row?.content" [className]="item.class">
-      <xm-dynamic-widget [init]="{module: item.widget?.module, component: item.widget?.selector, config: item.widget?.config}"
-                         *ngIf="item.widget?.module">
+      <xm-dynamic-widget *ngIf="item.widget?.module"
+                         [init]="{module: item.widget?.module, component: item.widget?.selector, config: item.widget?.config}">
       </xm-dynamic-widget>
     </div>
   </div>

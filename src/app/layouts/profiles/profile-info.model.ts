@@ -1,6 +1,6 @@
 export class ProfileInfo {
-    activeProfiles: string[];
-    ribbonEnv: string;
-    inProduction: boolean;
-    swaggerEnabled: boolean;
+    public activeProfiles: string[];
+    public ribbonEnv: string;
+    public inProduction: boolean;
+    public swaggerEnabled: boolean;
 }

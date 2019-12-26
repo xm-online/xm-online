@@ -7,15 +7,15 @@
   </div>
   <div class="card-body">
     <div *ngIf="groups?.length > 1" class="btn-group">
-      <button mat-raised-button
-              class="btn btn-primary btn-sm btn-round"
+      <button (click)="showGroup(group)"
+              *ngFor="let group of groups"
               [class.disabled]="currentGroup === group"
-              (click)="showGroup(group)"
-              *ngFor="let group of groups">
+              class="btn btn-primary btn-sm btn-round"
+              mat-raised-button>
         {{group.name}}
       </button>
     </div>
-    <ng-template xmGMapApiInit (gMapApiReady)="onAfterGMapApiInit()">
+    <ng-template (gMapApiReady)="onAfterGMapApiInit()" xmGMapApiInit>
       <div [id]="mapId" class="map"></div>
     </ng-template>
   </div>

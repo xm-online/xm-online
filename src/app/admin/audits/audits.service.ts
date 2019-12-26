@@ -11,7 +11,7 @@ export class AuditsService {
     constructor(private http: HttpClient) {
     }
 
-    query(req: any): Observable<HttpResponse<Audit[]>> {
+    public query(req: any): Observable<HttpResponse<Audit[]>> {
         const params: HttpParams = createRequestOption(req);
         params.set('fromDate', req.fromDate);
         params.set('toDate', req.toDate);

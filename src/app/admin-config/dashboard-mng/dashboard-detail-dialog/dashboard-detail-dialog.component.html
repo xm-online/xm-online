@@ -1,28 +1,28 @@
-<form class="m-0" name="dashboardForm" role="form" novalidate (ngSubmit)="onConfirmSave()" #dashboardForm="ngForm">
+<form #dashboardForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="dashboardForm" novalidate role="form">
   <div class="modal-header">
-    <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
-    <h4 class="modal-title text-left" *ngIf="!dashboard.id">
+    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
+    <h4 *ngIf="!dashboard.id" class="modal-title text-left">
       <span jhiTranslate="admin-config.dashboard-detail-dialog.add.title">Add a new dashboard</span>
     </h4>
-    <h4 class="modal-title text-left" *ngIf="dashboard.id">
+    <h4 *ngIf="dashboard.id" class="modal-title text-left">
       <span jhiTranslate="admin-config.dashboard-detail-dialog.edit.title">Edit a dashboard</span>
     </h4>
   </div>
   <div class="modal-body">
     <xm-loader [showLoader]="showLoader"></xm-loader>
 
-    <input *ngIf="dashboard.id" type="hidden" class="form-control" id="id" name="id" [(ngModel)]="dashboard.id"
-           readonly/>
+    <input *ngIf="dashboard.id" [(ngModel)]="dashboard.id" class="form-control" id="id" name="id" readonly
+           type="hidden"/>
 
     <div class="form-group">
       <mat-form-field>
-        <input matInput
-               type="text"
-               name="name"
+        <input #dashboardName="ngModel"
                [(ngModel)]="dashboard.name"
-               #dashboardName="ngModel"
+               matInput
+               name="name"
                placeholder="{{'admin-config.common.fields.name' | translate}}"
-               required>
+               required
+               type="text">
         <mat-error *ngIf="dashboardName.hasError('required')">
           <span jhiTranslate="xm-entity.common.validation.required">This field is required.</span>
         </mat-error>
@@ -31,13 +31,13 @@
 
     <div class="form-group">
       <mat-form-field>
-        <input matInput
-               type="text"
-               name="typeKey"
+        <input #dashboardTypeKey="ngModel"
                [(ngModel)]="dashboard.typeKey"
-               #dashboardTypeKey="ngModel"
+               matInput
+               name="typeKey"
                placeholder="{{'admin-config.common.fields.typeKey' | translate}}"
-               required>
+               required
+               type="text">
         <mat-error *ngIf="dashboardTypeKey.hasError('required')">
           <span jhiTranslate="xm-entity.common.validation.required">This field is required.</span>
         </mat-error>
@@ -46,35 +46,38 @@
 
     <div class="form-group">
       <label class="control-label" jhiTranslate="admin-config.common.fields.config">Config</label>
-      <div xmAceEditor
-           [text]="configStringIn"
-           [readOnly]="false"
-           [mode]="'json'"
+      <div (textChanged)="onConfigChange($event)"
            [autoUpdateContent]="true"
-           (textChanged)="onConfigChange($event)"
+           [mode]="'json'"
+           [readOnly]="false"
            [style.min-height]="'200px'"
-           [style.width]="'100%'">
+           [style.width]="'100%'"
+           [text]="configStringIn"
+           xmAceEditor>
       </div>
     </div>
 
     <div class="form-group">
       <label class="control-label" jhiTranslate="admin-config.common.fields.layout">Layout</label>
-      <div xmAceEditor
-           [text]="layoutStringIn"
-           [readOnly]="false"
-           [mode]="'json'"
+      <div (textChanged)="onLayoutChange($event)"
            [autoUpdateContent]="true"
-           (textChanged)="onLayoutChange($event)"
+           [mode]="'json'"
+           [readOnly]="false"
            [style.min-height]="'200px'"
-           [style.width]="'100%'">
+           [style.width]="'100%'"
+           [text]="layoutStringIn"
+           xmAceEditor>
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()">
+    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-raised-button type="button">
       <span jhiTranslate="admin-config.common.cancel">Cancel</span>
     </button>
-    <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="dashboardForm.form.invalid || showLoader">
+    <button [disabled]="dashboardForm.form.invalid || showLoader"
+            class="btn btn-primary"
+            mat-raised-button
+            type="submit">
       <span jhiTranslate="admin-config.common.save">Save</span>
     </button>
   </div>

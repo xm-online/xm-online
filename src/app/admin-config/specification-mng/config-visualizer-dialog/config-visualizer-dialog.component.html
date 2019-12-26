@@ -1,50 +1,50 @@
-<div id="canvasHolder"
-     class="modal-body frame-height"
+<div #canvasHolder
      (mousedown)="mouseDown($event)"
-     (mouseup)="mouseUp()"
      (mousemove)="mouseMove($event)"
+     (mouseup)="mouseUp()"
      (wheel)="wheel($event)"
-     #canvasHolder>
+     class="modal-body frame-height"
+     id="canvasHolder">
   <div class="actions text-right">
-    <button class="btn btn-just-icon btn-icon btn-link"
-            type="button"
-            (click)="magnifyViewport(2)"
-            mat-raised-button>
+    <button (click)="magnifyViewport(2)"
+            class="btn btn-just-icon btn-icon btn-link"
+            mat-raised-button
+            type="button">
       <i class="material-icons">zoom_in</i>
     </button>
-    <button class="btn btn-just-icon btn-icon btn-link"
-            type="button"
-            (click)="resetViewport()"
-            mat-raised-button>
+    <button (click)="resetViewport()"
+            class="btn btn-just-icon btn-icon btn-link"
+            mat-raised-button
+            type="button">
       <i class="material-icons">center_focus_strong</i>
     </button>
-    <button class="btn btn-just-icon btn-icon btn-link"
-            (click)="magnifyViewport(-2)"
-            type="button"
-            mat-raised-button>
+    <button (click)="magnifyViewport(-2)"
+            class="btn btn-just-icon btn-icon btn-link"
+            mat-raised-button
+            type="button">
       <i class="material-icons">zoom_out</i>
     </button>
   </div>
-  <canvas id="canvas" #canvas></canvas>
+  <canvas #canvas id="canvas"></canvas>
 
 
   <div class="custom-modal-footer">
-    <a href="javascript: void(0);"
+    <a (click)="doDownloadPng('config-model')"
        class="btn btn-primary mr-1"
-       (click)="doDownloadPng('config-model')">
+       href="javascript: void(0);">
       {{'admin-config.common.save' | translate}} PNG
     </a>
-    <a href="javascript: void(0);"
-       class="btn btn-primary mr-1"
+    <a #downloadLinkSvg
        (click)="doDownloadSvg('config-model')"
-       #downloadLinkSvg>
+       class="btn btn-primary mr-1"
+       href="javascript: void(0);">
       {{'admin-config.common.save' | translate}} SVG
     </a>
-    <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()">
+    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-raised-button type="button">
       <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
 
-    <a href="javascript: void(0);" class="hidden" #downloadLink></a>
+    <a #downloadLink class="hidden" href="javascript: void(0);"></a>
   </div>
 </div>
 

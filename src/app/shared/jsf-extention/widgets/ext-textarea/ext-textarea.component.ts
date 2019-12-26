@@ -9,20 +9,20 @@ import { ExtTextareaOptions } from './ext-textarea-options.model';
 })
 export class ExtTextareaComponent implements OnInit {
 
-    @Input() layoutNode: any;
+    @Input() public layoutNode: any;
 
-    controlValue: any;
-    options: ExtTextareaOptions;
+    public controlValue: any;
+    public options: ExtTextareaOptions;
 
     constructor(private jsf: JsonSchemaFormService) {
     }
 
-    ngOnInit() {
+    public ngOnInit() {
         this.options = this.layoutNode.options || {};
         this.jsf.initializeControl(this);
     }
 
-    changeText(event) {
+    public changeText(event) {
         this.jsf.updateValue(this, event.target.value);
     }
 

@@ -1,44 +1,44 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { createRequestOption } from '../../shared';
 import { SERVER_API_URL } from '../../xm.constants';
 import { Widget } from './widget.model';
-import { createRequestOption } from '../../shared';
 
 @Injectable()
 export class WidgetService {
 
-    private resourceUrl =  SERVER_API_URL + 'dashboard/api/widgets';
+    private resourceUrl: string = SERVER_API_URL + 'dashboard/api/widgets';
 
     constructor(private http: HttpClient) { }
 
-    create(widget: Widget): Observable<HttpResponse<Widget>> {
+    public create(widget: Widget): Observable<HttpResponse<Widget>> {
         const copy = this.convert(widget);
-        return this.http.post<Widget>(this.resourceUrl, copy, { observe: 'response' }).pipe(
+        return this.http.post<Widget>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Widget>) => this.convertResponse(res)));
     }
 
-    update(widget: Widget): Observable<HttpResponse<Widget>> {
+    public update(widget: Widget): Observable<HttpResponse<Widget>> {
         const copy = this.convert(widget);
-        return this.http.put<Widget>(this.resourceUrl, copy, { observe: 'response' }).pipe(
+        return this.http.put<Widget>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Widget>) => this.convertResponse(res)));
     }
 
-    find(id: number): Observable<HttpResponse<Widget>> {
-        return this.http.get<Widget>(`${this.resourceUrl}/${id}`, { observe: 'response'}).pipe(
+    public find(id: number): Observable<HttpResponse<Widget>> {
+        return this.http.get<Widget>(`${this.resourceUrl}/${id}`, {observe: 'response'}).pipe(
             map((res: HttpResponse<Widget>) => this.convertResponse(res)));
     }
 
-    query(req?: any): Observable<HttpResponse<Widget[]>> {
+    public query(req?: any): Observable<HttpResponse<Widget[]>> {
         const options = createRequestOption(req);
-        return this.http.get<Widget[]>(this.resourceUrl, { params: options, observe: 'response' }).pipe(
+        return this.http.get<Widget[]>(this.resourceUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Widget[]>) => this.convertArrayResponse(res)));
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+    public delete(id: number): Observable<HttpResponse<any>> {
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 
     private convertResponse(res: HttpResponse<Widget>): HttpResponse<Widget> {

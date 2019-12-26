@@ -2,14 +2,14 @@ import { AfterViewInit, Component, ElementRef, Input, OnInit } from '@angular/co
 import { Router } from '@angular/router';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TERMS_ERROR, XM_EVENT_LIST } from '../../xm.constants';
 import { StateStorageService } from '../auth/state-storage.service';
+import { PrivacyAndTermsDialogComponent } from '../components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
 import { XmConfigService } from '../spec/config.service';
 import { LoginService } from './login.service';
-import { PrivacyAndTermsDialogComponent } from '../components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 declare let $: any;
 
@@ -20,24 +20,24 @@ declare let $: any;
 })
 export class LoginComponent implements OnInit, AfterViewInit {
 
-    @Input() successRegistration: boolean;
-    @Input() loginLabel: string;
+    @Input() public successRegistration: boolean;
+    @Input() public loginLabel: string;
     @Input() public config: any;
 
-    isShowPassword = false;
-    isDisabled: boolean;
-    authenticationError: boolean;
-    password: string;
-    hideRememberMe: boolean;
-    hideResetPasswordLink: boolean;
-    rememberMe: boolean;
-    username: string;
-    credentials: any;
-    checkOTP: boolean;
-    otpValue: string;
-    floatLabel: boolean;
-    sendingLogin: boolean;
-    socialConfig: [];
+    public isShowPassword = false;
+    public isDisabled: boolean;
+    public authenticationError: boolean;
+    public password: string;
+    public hideRememberMe: boolean;
+    public hideResetPasswordLink: boolean;
+    public rememberMe: boolean;
+    public username: string;
+    public credentials: any;
+    public checkOTP: boolean;
+    public otpValue: string;
+    public floatLabel: boolean;
+    public sendingLogin: boolean;
+    public socialConfig: [];
 
     public checkTermsOfConditions: boolean;
 
@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.successRegistration = false;
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         $('body').addClass('xm-public-screen');
         this.isDisabled = false;
 
@@ -77,11 +77,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
             });
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.fixAutoFillFieldsChrome();
     }
 
-    cancel() {
+    public cancel(): void {
         this.credentials = {
             username: null,
             password: null,
@@ -91,7 +91,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.successRegistration = false;
     }
 
-    loginSuccess() {
+    public loginSuccess(): void {
       $('body').removeClass('xm-public-screen');
       if (this.router.url === '/register' || (/activate/.test(this.router.url)) ||
         this.router.url === '/finishReset' || this.router.url === '/requestReset') {
@@ -134,7 +134,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     }
 
-    backToLogin() {
+    public backToLogin(): void {
       this.checkOTP = false;
       this.stateStorageService.resetAllStates();
       this.password = '';
@@ -142,7 +142,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.username = '';
     }
 
-    login() {
+    public login(): void {
         this.sendingLogin = true;
         this.isDisabled = true;
         this.authenticationError = false;
@@ -178,11 +178,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
         });
     }
 
-    requestResetPassword() {
+    public requestResetPassword(): void {
         this.router.navigate(['/reset', 'request']);
     }
 
-    isFormDisabled() {
+    public isFormDisabled(): boolean {
         return this.isDisabled;
     }
 

@@ -1,41 +1,42 @@
 .avatar-container-card {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display:  inline-block;
 
     .edit-avatar {
         position: absolute;
-        right: 0;
-        bottom: 0;
+        right:    0;
+        bottom:   0;
     }
 }
 
 .avatar-container-card i {
-  display: block;
-  text-align: center;
-  color: grey;
-  position: absolute;
-  left: 0;
-  right: 0;
-  transform: translateY(5%);
-  font-size: 72px;
-  top: 20%;
+    display:    block;
+    text-align: center;
+    color:      grey;
+    position:   absolute;
+    left:       0;
+    right:      0;
+    transform:  translateY(5%);
+    font-size:  72px;
+    top:        20%;
 }
 
 .avatar-container-card img {
-  width: 130px;
-  height: 130px;
-  overflow: hidden;
-  border-radius: 50%;
+    width:         130px;
+    height:        130px;
+    overflow:      hidden;
+    border-radius: 50%;
 }
 
 ::ng-deep {
     .card {
         &-menu {
             position: absolute;
-            z-index: 10;
-            right: 0;
-            top: 0;
+            z-index:  10;
+            right:    0;
+            top:      0;
         }
+
         &-header {
             margin-right: 40px !important;
         }

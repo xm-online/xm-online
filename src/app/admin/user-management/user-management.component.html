@@ -11,46 +11,46 @@
       <div class="card-body">
         <xm-loader [showLoader]="showLoader"></xm-loader>
         <div *ngIf="authorities" class="btn-group flex-wrap">
-          <button mat-raised-button
-                  class="btn btn-primary btn-sm btn-round"
+          <button (click)="applySearchByRole(null)"
                   [class.disabled]="!currentSearch"
-                  (click)="applySearchByRole(null)">
+                  class="btn btn-primary btn-sm btn-round"
+                  mat-raised-button>
             <span jhiTranslate="global.all">All</span>
           </button>
-          <button mat-raised-button
-                  class="btn btn-primary btn-sm btn-round"
+          <button (click)="applySearchByRole(authority)"
                   *ngFor="let authority of authorities"
                   [class.disabled]="currentSearch === authority"
-                  (click)="applySearchByRole(authority)">{{ authority | i18nName: principal }}
+                  class="btn btn-primary btn-sm btn-round"
+                  mat-raised-button>{{ authority | i18nName: principal }}
           </button>
         </div>
         <div class="row align-items-center mt2 mb-2">
           <div class="col-xs-12 col-sm-3">
-            <form action="" novalidate (ngSubmit)="searchByLogin()">
+            <form (ngSubmit)="searchByLogin()" action="" novalidate>
               <div class="row flex-nowrap align-items-center">
                 <div class="col pr-1">
                   <mat-form-field class="example-form-field">
                     <input
+                      [(ngModel)]="login"
                       matInput
                       name="user-login"
-                      type="text"
                       placeholder="{{'userManagement.search-by-login' | translate}}"
-                      [(ngModel)]="login">
+                      type="text">
                     <button
-                      mat-button
-                      type="button"
+                      (click)="login=''; searchByLogin()"
                       *ngIf="login"
-                      matSuffix
+                      mat-button
                       mat-icon-button
-                      (click)="login=''; searchByLogin()">
+                      matSuffix
+                      type="button">
                       <mat-icon>close</mat-icon>
                     </button>
                   </mat-form-field>
                 </div>
                 <div class="col-auto pl-0">
-                  <button mat-raised-button
+                  <button (click)="searchByLogin()"
                           class="btn btn-white btn-round btn-just-icon"
-                          (click)="searchByLogin()">
+                          mat-raised-button>
                     <i class="material-icons">search</i>
                   </button>
                 </div>
@@ -62,11 +62,11 @@
             {{'userManagement.onlineUsers' | translate}} {{onlineUsers}}
           </div>
         </div>
-        <div class="material-datatables table-responsive" *ngIf="list?.length">
-          <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%"
-                 style="width:100%">
+        <div *ngIf="list?.length" class="material-datatables table-responsive">
+          <table cellspacing="0" class="table table-striped table-no-bordered table-hover" id="datatables" style="width:100%"
+                 width="100%">
             <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <tr [(ascending)]="reverse" [(predicate)]="predicate" [callback]="transition.bind(this)" jhiSort>
               <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
               <th jhiSortBy="logins"><span jhiTranslate="userManagement.logins">Logins</span> <span
                 class="fa fa-sort"></span></th>
@@ -88,7 +88,7 @@
             <tr *ngFor="let user of list; trackBy: trackIdentity">
               <td><a [routerLink]="['../user-management', user.userKey]">{{user.id}}</a></td>
               <td>
-                <table class="clear-table" width="100%" style="width:100%" *ngIf="user.logins">
+                <table *ngIf="user.logins" class="clear-table" style="width:100%" width="100%">
                   <tbody>
                   <tr>
                     <td>
@@ -97,7 +97,7 @@
                       </div>
                     </td>
                     <td class="text-right">
-                      <a href="javascript: void(0);" (click)="onLoginEdit(user)">
+                      <a (click)="onLoginEdit(user)" href="javascript: void(0);">
                         <i class="material-icons">perm_identity</i>
                       </a>
                     </td>
@@ -106,10 +106,14 @@
                 </table>
               </td>
               <td>
-                <a href="javascript: void(0);" *ngIf="!user.tfaEnabled" style="color: grey" (click)="enable2FA(user)">
+                <a (click)="enable2FA(user)" *ngIf="!user.tfaEnabled" href="javascript: void(0);" style="color: grey">
                   <i class="material-icons">verified_user</i>
                 </a>
-                <a href="javascript: void(0);" class="icon" *ngIf="user.tfaEnabled" style="color: #4caf50" (click)="disable2FA(user)">
+                <a (click)="disable2FA(user)"
+                   *ngIf="user.tfaEnabled"
+                   class="icon"
+                   href="javascript: void(0);"
+                   style="color: #4caf50">
                   <i class="material-icons ">verified_user</i>
                 </a>
               </td>
@@ -121,19 +125,22 @@
               <td>{{user.lastModifiedBy}}</td>
               <td>{{user.lastModifiedDate | xmDateTime}}</td>
               <td class="text-right nowrap">
-                <a href="javascript: void(0);" *ngIf="!user.activated" style="color: red" (click)="changeState(user)">
+                <a (click)="changeState(user)" *ngIf="!user.activated" href="javascript: void(0);" style="color: red">
                   <i class="material-icons">lock_outline</i>
                 </a>
-                <a href="javascript: void(0);" *ngIf="user.activated" style="color: #4caf50" (click)="changeState(user)">
+                <a (click)="changeState(user)"
+                   *ngIf="user.activated"
+                   href="javascript: void(0);"
+                   style="color: #4caf50">
                   <i class="material-icons green">lock_open</i>
                 </a>
-                <a class="ml-1" href="javascript: void(0);" (click)="onEdit(user)"
-                   *permitted="'USER.UPDATE'">
+                <a (click)="onEdit(user)" *permitted="'USER.UPDATE'" class="ml-1"
+                   href="javascript: void(0);">
                   <i class="material-icons">edit</i>
                 </a>
-                <a class="ml-1" href="javascript: void(0);"
-                   (click)="onDelete(user)"
-                   *permitted="'USER.DELETE'">
+                <a (click)="onDelete(user)" *permitted="'USER.DELETE'"
+                   class="ml-1"
+                   href="javascript: void(0);">
                   <i class="material-icons">delete</i>
                 </a>
               </td>
@@ -142,19 +149,19 @@
           </table>
         </div>
 
-        <div class="row align-items-center list-pagination" *ngIf="list?.length">
+        <div *ngIf="list?.length" class="row align-items-center list-pagination">
           <div class="col-auto">
-            <xm-per-page [(itemsPerPage)]="itemsPerPage" (onChange)="transition()"></xm-per-page>
+            <xm-per-page (onChange)="transition()" [(itemsPerPage)]="itemsPerPage"></xm-per-page>
           </div>
           <div class="col-auto">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            <jhi-item-count [itemsPerPage]="itemsPerPage" [page]="page" [total]="totalItems"></jhi-item-count>
           </div>
           <div class="col-sm"></div>
           <div class="col-auto">
-            <ngb-pagination [collectionSize]="totalItems"
-                            [pageSize]="itemsPerPage"
-                            [maxSize]="5" [(page)]="page"
-                            (pageChange)="loadPage(page)">
+            <ngb-pagination (pageChange)="loadPage(page)"
+                            [(page)]="page"
+                            [collectionSize]="totalItems" [maxSize]="5"
+                            [pageSize]="itemsPerPage">
 
             </ngb-pagination>
           </div>
@@ -166,9 +173,9 @@
 </div>
 
 <div class="xm-fab">
-  <button mat-raised-button class="btn btn-primary btn-icon btn-just-icon btn-round btn-lg"
-          (click)="onAdd()"
-          *permitted="'USER.CREATE'">
+  <button (click)="onAdd()" *permitted="'USER.CREATE'"
+          class="btn btn-primary btn-icon btn-just-icon btn-round btn-lg"
+          mat-raised-button>
     <i class="material-icons">add</i>
   </button>
 </div>

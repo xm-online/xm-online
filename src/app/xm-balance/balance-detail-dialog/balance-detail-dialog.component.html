@@ -1,9 +1,9 @@
 <div class="modal-header">
-  <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+  <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
   <h4 class="modal-title text-left" jhiTranslate="xm-balance.balance-detail-dialog.title">Balance detail</h4>
 </div>
 <div class="modal-body">
-  <div class="table-responsive" *ngIf="pockets?.length">
+  <div *ngIf="pockets?.length" class="table-responsive">
     <table class="table table-striped">
       <thead>
       <tr>
@@ -35,11 +35,11 @@
   <no-data [show]="!pockets?.length"></no-data>
 </div>
 <div class="modal-footer">
-  <button mat-raised-button
-          type="button"
+  <button (click)="onCancel()"
           class="btn"
           data-dismiss="modal"
-          (click)="onCancel()">
+          mat-raised-button
+          type="button">
     <span jhiTranslate="xm-balance.common.cancel">Cancel</span>
   </button>
 </div>

@@ -31,4 +31,3 @@ export interface EntityUiConfig {
     links?: { items: EntityLinkUiConfig[] };
     noData?: TranslationSet;
 }
-

@@ -8,25 +8,25 @@ import { PocketService } from '../shared/pocket.service';
 @Component({
     selector: 'xm-balance-detail-dialog',
     templateUrl: './balance-detail-dialog.component.html',
-    styleUrls: ['./balance-detail-dialog.component.scss']
+    styleUrls: ['./balance-detail-dialog.component.scss'],
 })
 export class BalanceDetailDialogComponent implements OnInit {
 
-    @Input() balanceId: number;
+    @Input() public balanceId: number;
 
-    pockets: Pocket[];
+    public pockets: Pocket[];
 
     constructor(private activeModal: NgbActiveModal,
                 private pocketService: PocketService) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.pocketService.query({'balanceId.in': this.balanceId}).subscribe((pockets: HttpResponse<Pocket[]>) => {
             this.pockets = pockets.body;
         });
     }
 
-    onCancel() {
+    public onCancel(): void {
         this.activeModal.dismiss('cancel');
     }
 

@@ -8,12 +8,12 @@
 </div>
 
 <ng-template #dashboardItem let-item="item">
-  <div [className]="item.class" *ngIf="!!item.class">
+  <div *ngIf="!!item.class" [className]="item.class">
     <ng-container *ngTemplateOutlet="dashboardContent;context:{item: item}">
     </ng-container>
   </div>
   <ng-container *ngIf="!item.class">
-    <ng-container *ngTemplateOutlet="dashboardContent;context:{item: item}" >
+    <ng-container *ngTemplateOutlet="dashboardContent;context:{item: item}">
     </ng-container>
   </ng-container>
 </ng-template>
@@ -24,8 +24,8 @@
     </ng-container>
   </ng-container>
   <ng-container *ngIf="item?.widget">
-    <xm-dynamic-widget [init]="{module: item.widget?.module, component: item.widget?.selector, config: item.widget?.config, spec: spec}"
-                       *ngIf="item.widget?.module && spec">
+    <xm-dynamic-widget *ngIf="item.widget?.module && spec"
+                       [init]="{module: item.widget?.module, component: item.widget?.selector, config: item.widget?.config, spec: spec}">
     </xm-dynamic-widget>
   </ng-container>
 </ng-template>

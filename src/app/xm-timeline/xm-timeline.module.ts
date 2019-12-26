@@ -9,19 +9,18 @@ import { TimelineComponent } from './timeline/timeline.component';
 @NgModule({
     imports: [
         CommonModule,
-        XmSharedModule
+        XmSharedModule,
     ],
     declarations: [
-        TimelineComponent
+        TimelineComponent,
     ],
     exports: [
-        TimelineComponent
+        TimelineComponent,
     ],
     providers: [
         TimeAgoService,
-        TimelineService
-    ]
+        TimelineService,
+    ],
 })
 export class XmTimelineModule {
 }
-

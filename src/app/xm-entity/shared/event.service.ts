@@ -11,40 +11,40 @@ import { Event } from './event.model';
 @Injectable()
 export class EventService {
 
-    private resourceUrl = SERVER_API_URL + 'entity/api/events';
-    private resourceSearchUrl = SERVER_API_URL + 'entity/api/_search/events';
+    private resourceUrl: string = SERVER_API_URL + 'entity/api/events';
+    private resourceSearchUrl: string = SERVER_API_URL + 'entity/api/_search/events';
 
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils) {
     }
 
-    create(event: Event): Observable<HttpResponse<Event>> {
+    public create(event: Event): Observable<HttpResponse<Event>> {
         const copy = this.convert(event);
         return this.http.post<Event>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Event>) => this.convertResponse(res)));
     }
 
-    update(event: Event): Observable<HttpResponse<Event>> {
+    public update(event: Event): Observable<HttpResponse<Event>> {
         const copy = this.convert(event);
         return this.http.put<Event>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Event>) => this.convertResponse(res)));
     }
 
-    find(id: number): Observable<HttpResponse<Event>> {
+    public find(id: number): Observable<HttpResponse<Event>> {
         return this.http.get<Event>(`${this.resourceUrl}/${id}`, {observe: 'response'}).pipe(
             map((res: HttpResponse<Event>) => this.convertResponse(res)));
     }
 
-    query(req?: any): Observable<HttpResponse<Event[]>> {
+    public query(req?: any): Observable<HttpResponse<Event[]>> {
         const options = createRequestOption(req);
         return this.http.get<Event[]>(this.resourceUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Event[]>) => this.convertArrayResponse(res)));
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
+    public delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 
-    search(req?: any): Observable<HttpResponse<Event[]>> {
+    public search(req?: any): Observable<HttpResponse<Event[]>> {
         const options = createRequestOption(req);
         return this.http.get<Event[]>(this.resourceSearchUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Event[]>) => this.convertArrayResponse(res)));

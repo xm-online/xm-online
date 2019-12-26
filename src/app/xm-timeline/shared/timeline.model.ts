@@ -21,7 +21,7 @@ export class Timeline {
                 public responseHeaders?: any,
                 public execTime?: number,
                 public browser?: string,
-                public opSystem?: string
+                public opSystem?: string,
     ) {
     }
 

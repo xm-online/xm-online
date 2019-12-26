@@ -39,7 +39,7 @@ export class XmApplicationConfigService {
             } else {
                 this.applyTheme(DEFAULT_THEME);
             }
-        }, err => {
+        }, (err) => {
             console.error(err);
             this.setMaintenanceProgress(true);
         });
@@ -61,15 +61,15 @@ export class XmApplicationConfigService {
         this.maintenance$.next(newValue);
     }
 
-    getAppConfig() {
+    public getAppConfig() {
         return this.appConfig;
     }
 
     private resolveThemePath(strategy: string, themeName: string): string {
         if (THEME_STARTEGY.TENANT_ONLY === strategy) {
-            return `/assets/css/ext/${themeName}.css`
+            return `/assets/css/ext/${themeName}.css`;
         } else {
-            return `/assets/css/themes/material-${themeName}.css`
+            return `/assets/css/themes/material-${themeName}.css`;
         }
     }
 

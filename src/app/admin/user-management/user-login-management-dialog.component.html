@@ -1,8 +1,8 @@
 <div class="modal-header">
-    <a href="javascript: void(0);" class="modal-close material-icons" (click)="close()">close</a>
-    <h4 class="modal-title text-left" id="editUserLogin" jhiTranslate="userManagement.home.editLoginsLabel">
-        Edit user logins</h4>
+  <a (click)="close()" class="modal-close material-icons" href="javascript: void(0);">close</a>
+  <h4 class="modal-title text-left" id="editUserLogin" jhiTranslate="userManagement.home.editLoginsLabel">
+    Edit user logins</h4>
 </div>
 <div class="modal-body">
-    <xm-user-login-form [user]="user" [isUser]="true"></xm-user-login-form>
+  <xm-user-login-form [isUser]="true" [user]="user"></xm-user-login-form>
 </div>

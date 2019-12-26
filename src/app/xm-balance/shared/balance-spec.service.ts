@@ -8,12 +8,12 @@ import { Spec } from './spec.model';
 @Injectable()
 export class BalanceSpecService {
 
-    private resourceUrl = SERVER_API_URL + 'config/api/profile/balance/balancespec.yml?toJson';
+    private resourceUrl: string = SERVER_API_URL + 'config/api/profile/balance/balancespec.yml?toJson';
 
     constructor(private http: HttpClient) {
     }
 
-    get(): Observable<HttpResponse<Spec>> {
+    public get(): Observable<HttpResponse<Spec>> {
         return this.http.get<Spec>(this.resourceUrl, {observe: 'response'});
     }
 

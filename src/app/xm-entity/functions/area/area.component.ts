@@ -12,20 +12,18 @@ declare let L: any;
 @Component({
     selector: 'xm-area',
     templateUrl: './area.component.html',
-    styleUrls: ['./area.component.scss']
+    styleUrls: ['./area.component.scss'],
 })
 export class AreaComponent implements AfterViewInit {
 
+    @Input() public xmEntity: XmEntity;
+    @Input() public functionContext: FunctionContext;
+    public mapId: string;
+    public context: FunctionContext;
     private map: any;
     private gmLayer: any;
     private drawnItems: any;
     private drawControl: any;
-
-    @Input() xmEntity: XmEntity;
-    @Input() functionContext: FunctionContext;
-
-    mapId: string;
-    context: FunctionContext;
 
     constructor(private functionContextService: FunctionContextService,
                 private modalService: NgbModal) {
@@ -35,18 +33,32 @@ export class AreaComponent implements AfterViewInit {
         this.context.typeKey = 'AREA';
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.init();
     }
 
-    private init() {
+    public onClickAddPolygon(): void {
+        const self = this;
+        const modalRef = this.modalService.open(OsmPolygonDialogComponent, {backdrop: 'static'});
+        modalRef.componentInstance.addPolygonInternal = (polygon) => {
+            const layer = L.polygon(
+                polygon.map((el) => [el.lat, el.lon]),
+                {fillColor: '#009688', fillOpacity: 0.6, opacity: 1, weight: 3, color: '#009688'},
+            );
+            self.drawnItems.addLayer(layer);
+            self.saveFunction(self.drawnItems);
+            self.map.fitBounds(this.drawnItems.getBounds(), {padding: [1, 1]});
+        };
+    }
+
+    private init(): void {
         this.context.xmEntity = this.xmEntity;
         if (this.functionContext) {
             Object.assign(this.context, this.functionContext);
         }
         setTimeout(() => {
             this.map = L.map(this.mapId, {
-                closePopupOnClick: false
+                closePopupOnClick: false,
             }).setView([50, 30.2], 8);
             this.map.scrollWheelZoom.disable();
             L.control.scale({imperial: false}).addTo(this.map);
@@ -59,16 +71,16 @@ export class AreaComponent implements AfterViewInit {
         }, 500);
     }
 
-    private initLayers() {
+    private initLayers(): void {
         this.gmLayer = L.gridLayer.googleMutant({
-            type: 'roadmap'
+            type: 'roadmap',
         });
         this.map.addLayer(this.gmLayer);
         this.drawnItems = new L.FeatureGroup();
         this.map.addLayer(this.drawnItems);
     }
 
-    private initDrawInterface() {
+    private initDrawInterface(): void {
         if (!this.map) {
             return;
         }
@@ -78,27 +90,27 @@ export class AreaComponent implements AfterViewInit {
                 polygon: {
                     allowIntersection: false,
                     shapeOptions: {
-                        color: '#009688'
-                    }
+                        color: '#009688',
+                    },
                 },
                 rectangle: {
                     shapeOptions: {
-                        color: '#009688'
-                    }
+                        color: '#009688',
+                    },
                 },
                 circle: false,
-                marker: false
+                marker: false,
             },
             edit: {
                 featureGroup: this.drawnItems,
                 edit: true,
-                remove: true
-            }
+                remove: true,
+            },
         });
         this.map.addControl(this.drawControl);
     }
 
-    private attachEventHandlers() {
+    private attachEventHandlers(): void {
         const self = this;
         this.map.on('draw:created', function (e) {
             self.drawnItems.addLayer(e.layer);
@@ -116,18 +128,18 @@ export class AreaComponent implements AfterViewInit {
 
     }
 
-    private drawPolygons(list) {
-        list.forEach(item => {
+    private drawPolygons(list): void {
+        list.forEach((item) => {
             const layer = L.polygon(
-                item.paths.map(el => [el.lat, el.lng]),
-                {fillColor: '#009688', fillOpacity: 0.6, opacity: 1, weight: 3, color: '#009688'}
+                item.paths.map((el) => [el.lat, el.lng]),
+                {fillColor: '#009688', fillOpacity: 0.6, opacity: 1, weight: 3, color: '#009688'},
             );
             this.drawnItems.addLayer(layer);
         });
         this.map.fitBounds(this.drawnItems.getBounds(), {padding: [1, 1]});
     }
 
-    private saveFunction(options: any) {
+    private saveFunction(options: any): void {
         const data = {polygons: []};
         for (const layerName of Object.keys(options._layers)) {
             const layer = options._layers[layerName];
@@ -143,20 +155,6 @@ export class AreaComponent implements AfterViewInit {
             this.context.updateDate = new Date().toJSON();
             this.functionContextService.create(this.context).subscribe();
         }
-    }
-
-    public onClickAddPolygon(): void {
-        const self = this;
-        const modalRef = this.modalService.open(OsmPolygonDialogComponent, {backdrop: 'static'});
-        modalRef.componentInstance.addPolygonInternal = (polygon) => {
-            const layer = L.polygon(
-                polygon.map(el => [el.lat, el.lon]),
-                {fillColor: '#009688', fillOpacity: 0.6, opacity: 1, weight: 3, color: '#009688'}
-            );
-            self.drawnItems.addLayer(layer);
-            self.saveFunction(self.drawnItems);
-            self.map.fitBounds(this.drawnItems.getBounds(), {padding: [1, 1]});
-        };
     }
 
 }

@@ -6,33 +6,34 @@ import { User } from './user.model';
 
 @Injectable()
 export class UserService {
-    private resourceUrl = 'uaa/api/users';
-    private resurceUrlByLogin = this.resourceUrl + '/logins-contains';
+    private resourceUrl: string = 'uaa/api/users';
+    private resurceUrlByLogin: string = this.resourceUrl + '/logins-contains';
 
     constructor(private http: HttpClient) { }
 
-    create(user: User): Observable<HttpResponse<any>> {
+    public create(user: User): Observable<HttpResponse<any>> {
         return this.http.post(this.resourceUrl, user, {observe: 'response'});
     }
 
-    update(user: User): Observable<HttpResponse<any>> {
+    public update(user: User): Observable<HttpResponse<any>> {
         console.log(user);
         return this.http.put(this.resourceUrl, user, {observe: 'response'});
     }
 
-    enable2FA(userKey: string, email: string): Observable<HttpResponse<any>> {
-      return this.http.post(`${this.resourceUrl}/${userKey}/tfa_enable`, {
-      'otpChannelSpec': {
-        'channelType': 'email',
-          'destination': email
-      }}, {observe: 'response'});
+    public enable2FA(userKey: string, email: string): Observable<HttpResponse<any>> {
+        return this.http.post(`${this.resourceUrl}/${userKey}/tfa_enable`, {
+            otpChannelSpec: {
+                channelType: 'email',
+                destination: email,
+            }
+        }, {observe: 'response'});
     }
 
-    disable2FA(userKey: string): Observable<HttpResponse<any>> {
-      return this.http.post(`${this.resourceUrl}/${userKey}/tfa_disable`, {}, {observe: 'response'});
+    public disable2FA(userKey: string): Observable<HttpResponse<any>> {
+        return this.http.post(`${this.resourceUrl}/${userKey}/tfa_disable`, {}, {observe: 'response'});
     }
 
-    find(userKey: string): Observable<User> {
+    public find(userKey: string): Observable<User> {
         return this.http.get<User>(`${this.resourceUrl}/${userKey}`);
     }
 
@@ -54,17 +55,17 @@ export class UserService {
         return this.http.get(this.resurceUrlByLogin, {params, observe: 'response'});
     }
 
-    findPublic(userKey: string): Observable<any> {
+    public findPublic(userKey: string): Observable<any> {
         return this.http.get<any>(`${this.resourceUrl}/${userKey}/public`);
     }
 
-    findByLogin(login: string): Observable<HttpResponse<any>> {
+    public findByLogin(login: string): Observable<HttpResponse<any>> {
         let params = new HttpParams();
         params = params.set('login', login);
-        return this.http.get(`${this.resourceUrl}/logins`, {params: params, observe: 'response'});
+        return this.http.get(`${this.resourceUrl}/logins`, {params, observe: 'response'});
     }
 
-    query(req?: any): Observable<HttpResponse<any>> {
+    public query(req?: any): Observable<HttpResponse<any>> {
         let params = new HttpParams();
         if (req) {
             params = params.set('page', req.page);
@@ -79,18 +80,18 @@ export class UserService {
             }
         }
 
-        return this.http.get(this.resourceUrl, {params: params, observe: 'response'});
+        return this.http.get(this.resourceUrl, {params, observe: 'response'});
     }
 
-    delete(userKey: string): Observable<HttpResponse<any>> {
+    public delete(userKey: string): Observable<HttpResponse<any>> {
         return this.http.delete(`${this.resourceUrl}/${userKey}`, {observe: 'response'});
     }
 
-    updateLogins(user: User): Observable<HttpResponse<any>> {
+    public updateLogins(user: User): Observable<HttpResponse<any>> {
         return this.http.put(`${this.resourceUrl}/logins`, user, {observe: 'response'});
     }
 
-    getOnlineUsers(): Observable<HttpResponse<any>> {
+    public getOnlineUsers(): Observable<HttpResponse<any>> {
         return this.http.get('uaa/api/onlineUsers', {observe: 'response'});
     }
 }

@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="card-header card-header-primary card-header-icon" [hidden]="!isLoginFormView">
+  <div [hidden]="!isLoginFormView" class="card-header card-header-primary card-header-icon">
     <div class="card-icon">
       <i class="material-icons">person</i>
     </div>
@@ -7,7 +7,7 @@
       Sign in
     </h4>
   </div>
-  <div class="card-header card-header-primary card-header-icon" [hidden]="isLoginFormView">
+  <div [hidden]="isLoginFormView" class="card-header card-header-primary card-header-icon">
     <div class="card-icon">
       <i class="material-icons">person_add</i>
     </div>
@@ -17,24 +17,27 @@
   </div>
   <div class="card-body">
     <div class="text-center">
-      <div class="btn-group" *ngIf="config?.signUpEnabled">
-        <button mat-raised-button
-                type="button"
-                class="btn btn-primary btn-sm btn-round"
+      <div *ngIf="config?.signUpEnabled" class="btn-group">
+        <button (click)="changeMode()"
                 [disabled]="isLoginFormView"
-                (click)="changeMode()">
+                class="btn btn-primary btn-sm btn-round"
+                mat-raised-button
+                type="button">
           <span jhiTranslate="ext-common.sign-in-up-widget.sign-in">Sign in</span>
         </button>
-        <button mat-raised-button
-                type="button"
-                class="btn btn-primary btn-sm btn-round"
+        <button (click)="changeMode()"
                 [disabled]="!isLoginFormView"
-                (click)="changeMode()">
+                class="btn btn-primary btn-sm btn-round"
+                mat-raised-button
+                type="button">
           <span jhiTranslate="ext-common.sign-in-up-widget.sign-up">Sign up</span>
         </button>
       </div>
     </div>
-    <xm-login [config]="config" [successRegistration]="successRegistration" [loginLabel]="loginLabel" *ngIf="isLoginFormView"></xm-login>
-    <xm-register [config]="config" *ngIf="!isLoginFormView"></xm-register>
+    <xm-login *ngIf="isLoginFormView"
+              [config]="config"
+              [loginLabel]="loginLabel"
+              [successRegistration]="successRegistration"></xm-login>
+    <xm-register *ngIf="!isLoginFormView" [config]="config"></xm-register>
   </div>
 </div>

@@ -8,11 +8,11 @@ export class I18nJsfPipe implements PipeTransform {
     constructor(private pipe: I18nNamePipe) {
     }
 
-    transform(formOrLayoutOrOptions: any, principal: Principal): any {
+    public transform(formOrLayoutOrOptions: any, principal: Principal): any {
         return this.transformTitles(formOrLayoutOrOptions, principal);
     }
 
-    transformTitles(obj, principal) {
+    public transformTitles(obj, principal) {
         for (const property in obj) {
             if (obj.hasOwnProperty(property)) {
                 if (property === 'validationMessages') {
@@ -30,7 +30,7 @@ export class I18nJsfPipe implements PipeTransform {
         return obj;
     }
 
-    transformValidationMessages(obj, principal) {
+    public transformValidationMessages(obj, principal) {
         for (const property in obj) {
             if (obj.hasOwnProperty(property)) {
                 obj[property] = this.pipe.transform(obj[property], principal);

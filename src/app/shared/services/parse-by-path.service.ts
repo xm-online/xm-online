@@ -5,8 +5,8 @@ export class ParseByPathService {
 
     constructor() {}
 
-    parse(obj: any = {}, path: string = ''): any {
-        let pathArr = path.split('.');
+    public parse(obj: any = {}, path: string = ''): any {
+        const pathArr = path.split('.');
         if (pathArr.length > 1) {
             return this.parse(obj[pathArr.shift()], pathArr.join('.'));
         } else  {

@@ -1,8 +1,9 @@
-<form class="m-0" name="attachmentForm" role="form" novalidate (ngSubmit)="onConfirmSave()" #attachmentForm="ngForm">
+<form #attachmentForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="attachmentForm" novalidate role="form">
   <div class="modal-header">
-    <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <h4 class="modal-title text-left">
-      <span jhiTranslate="xm-entity.attachment-detail-dialog.title">Add new attachment for the</span> [<b>{{xmEntity.name}}</b>]
+      <span jhiTranslate="xm-entity.attachment-detail-dialog.title">Add new attachment for the</span>
+      [<b>{{xmEntity.name}}</b>]
     </h4>
   </div>
   <div class="modal-body">
@@ -10,15 +11,15 @@
 
     <div class="form-group">
       <mat-form-field>
-        <mat-select [(ngModel)]="attachment.typeKey"
-                    name="typeKey"
-                    #attachmentType="ngModel"
-                    placeholder="{{'xm-entity.attachment-detail-dialog.choose-type' | translate}}"
+        <mat-select #attachmentType="ngModel"
+                    [(ngModel)]="attachment.typeKey"
                     [disabled]="attachmentSpecs?.length == 1"
+                    name="typeKey"
+                    placeholder="{{'xm-entity.attachment-detail-dialog.choose-type' | translate}}"
                     required>
           <mat-option *ngFor="let attachmentSpec of attachmentSpecs"
-                      [value]="attachmentSpec.key"
-                      [selected]="attachmentSpec.key == attachment.typeKey ? true : null">
+                      [selected]="attachmentSpec.key == attachment.typeKey ? true : null"
+                      [value]="attachmentSpec.key">
             {{(attachmentSpec.name | i18nName: principal).toUpperCase()}}
           </mat-option>
         </mat-select>
@@ -28,17 +29,17 @@
       </mat-form-field>
     </div>
 
-    <div class="form-group" #nameCtrl>
+    <div #nameCtrl class="form-group">
       <mat-form-field>
-        <input matInput
-               id="field_name"
-               type="text"
-               name="name"
+        <input #attachmentName="ngModel"
                [(ngModel)]="attachment.name"
-               #attachmentName="ngModel"
-               placeholder="{{'xm-entity.common.fields.name' | translate}}"
                [disabled]="readOnlyInputs"
-               required>
+               id="field_name"
+               matInput
+               name="name"
+               placeholder="{{'xm-entity.common.fields.name' | translate}}"
+               required
+               type="text">
         <mat-error *ngIf="attachmentName.hasError('required')">
           <span jhiTranslate="xm-entity.common.validation.required">This field is required.</span>
         </mat-error>
@@ -47,13 +48,13 @@
 
     <div class="form-group label-floating">
       <mat-form-field>
-        <textarea matInput
+        <textarea [(ngModel)]="attachment.description"
                   id="field_description"
+                  matInput
+                  maxlength="255"
                   name="description"
-                  [(ngModel)]="attachment.description"
-                  rows="4"
                   placeholder="{{'xm-entity.common.fields.description' | translate}}"
-                  maxlength="255">
+                  rows="4">
         </textarea>
       </mat-form-field>
     </div>
@@ -61,13 +62,13 @@
     <div class="form-group text-center upload-area">
       <div *ngIf="!attachment.valueContentType">
         <span jhiTranslate="xm-entity.attachment-detail-dialog.upload">Click to upload or drop file here</span>
-        <input type="file" id="uploadFile" (change)="setFileData($event, nameCtrl)" [accept]="acceptedFileTypes">
-        <input type="hidden" class="form-control" name="value" id="field_value" required
-               [(ngModel)]="attachment.content.value"/>
-        <input type="hidden" class="form-control" name="valueContentType" id="field_valueContentType"
-               [(ngModel)]="attachment.valueContentType"/>
+        <input (change)="setFileData($event, nameCtrl)" [accept]="acceptedFileTypes" id="uploadFile" type="file">
+        <input [(ngModel)]="attachment.content.value" class="form-control" id="field_value" name="value" required
+               type="hidden"/>
+        <input [(ngModel)]="attachment.valueContentType" class="form-control" id="field_valueContentType" name="valueContentType"
+               type="hidden"/>
         <div [hidden]="!(attachmentForm.controls.value?.dirty && attachmentForm.controls.value?.invalid)">
-          <small class="form-text text-danger" [hidden]="!attachmentForm.controls.value?.errors?.required">
+          <small [hidden]="!attachmentForm.controls.value?.errors?.required" class="form-text text-danger">
             <span jhiTranslate="xm-entity.common.validation.required">This field is required.</span>
           </small>
         </div>
@@ -75,23 +76,31 @@
 
       <div *ngIf="attachment.valueContentType">
         <span>{{attachment.contentUrl}}, {{byteSize(attachment.content.value, attachment.valueContentSize)}}</span>
-        <a href="javascript: void(0);" role="button" class="text-muted" (click)="attachment.content.value = null; attachment.valueContentType = '';">
+        <a (click)="attachment.content.value = null; attachment.valueContentType = '';"
+           class="text-muted"
+           href="javascript: void(0);"
+           role="button">
           <i class="material-icons">close</i>
         </a>
       </div>
     </div>
-    <small class="form-text text-danger" [hidden]="!wrongFileType">
-      <span>{{ "xm-entity.attachment-detail-dialog.wrong-type-error" | translate: { fileType: wrongFileType} }}</span>
+    <small [hidden]="!wrongFileType" class="form-text text-danger">
+      <span>{{ "xm-entity.attachment-detail-dialog.wrong-type-error" | translate: {fileType: wrongFileType} }}</span>
     </small>
   </div>
   <div class="modal-footer">
-    <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()" [disabled]="showLoader">
+    <button (click)="onCancel()"
+            [disabled]="showLoader"
+            class="btn mr-1"
+            data-dismiss="modal"
+            mat-raised-button
+            type="button">
       <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
-    <button mat-raised-button
-            type="submit"
+    <button [disabled]="attachmentForm.form.invalid || showLoader"
             class="btn btn-primary"
-            [disabled]="attachmentForm.form.invalid || showLoader">
+            mat-raised-button
+            type="submit">
       <span jhiTranslate="xm-entity.common.save">Save</span>
     </button>
   </div>

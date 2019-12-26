@@ -23,10 +23,10 @@ declare let swal: any;
 })
 export class DashboardListCardComponent extends BaseAdminConfigListComponent implements OnInit {
 
-    list: Dashboard[];
-    eventModify = 'dashboardListModification';
+    public list: Dashboard[];
+    public eventModify = 'dashboardListModification';
 
-    showLoader: boolean;
+    public showLoader: boolean;
 
     constructor(protected dashboardService: DashboardService,
                 protected modalService: NgbModal,
@@ -40,7 +40,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
         this.itemsPerPage = ITEMS_PER_PAGE;
     }
 
-    loadAll() {
+    public loadAll(): void {
         this.showLoader = true;
         this.dashboardService.query(
             {
@@ -55,7 +55,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
             });
     }
 
-    trackIdentity(index, item) {
+    public trackIdentity(index, item): any {
         return item.id;
     }
 
@@ -68,11 +68,11 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
         modalRef.componentInstance.dashboard = Object.assign({}, d);
     }
 
-    public deleteItem(d: Dashboard) {
+    public deleteItem(d: Dashboard): void {
         this.onDeleteItem(d.id, d.name);
     }
 
-    deleteAction(id: number) {
+    public deleteAction(id: number): void {
         this.dashboardService.delete(id).subscribe(
             (resp) => console.log(resp), // tslint:disable-line
             (err) => console.log(err), // tslint:disable-line
@@ -82,7 +82,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
             }));
     }
 
-    exportDashboardsAndWidgets(): void {
+    public exportDashboardsAndWidgets(): void {
         const mappedList = [];
         this.list.map((b, i) => {
             this.dashboardService.find(b.id).subscribe((result) => {
@@ -102,13 +102,13 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
         });
     }
 
-    onInputChange(event) {
+    public onInputChange(event): void {
         const reader = new FileReader();
         reader.onload = (e) => this.onReaderLoad(e);
         reader.readAsText(event.target.files[0]);
     }
 
-    onReaderLoad(event): void {
+    public onReaderLoad(event): void {
         swal({
             type: 'warning',
             text: this.translateService.instant('admin-config.common.confirm'),
@@ -144,7 +144,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
     private saveJson(data: any): void {
         const a = window.document.createElement('a');
         const theJSON = JSON.stringify(data);
-        const blob = new Blob([theJSON], { type: 'text/json' });
+        const blob = new Blob([theJSON], {type: 'text/json'});
         a.href = window.URL.createObjectURL(blob);
         a.download = 'dashboards.json';
         document.body.appendChild(a);
@@ -152,7 +152,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
         document.body.removeChild(a);
     }
 
-    private alert(type, key) {
+    private alert(type: string, key: string): void {
         swal({
             type,
             text: this.translateService.instant(key),

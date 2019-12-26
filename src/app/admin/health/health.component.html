@@ -54,16 +54,16 @@
         <div class="table-responsive" *ngIf="healthData?.length">
           <table id="healthCheck" class="table table-striped">
             <thead>
-              <tr>
-                <th jhiTranslate="health.table.service">Service Name</th>
-                <th class="text-center" jhiTranslate="health.table.status">Status</th>
-                <th class="text-center" jhiTranslate="health.details.details">Details</th>
-              </tr>
+            <tr>
+              <th jhiTranslate="health.table.service">Service Name</th>
+              <th class="text-center" jhiTranslate="health.table.status">Status</th>
+              <th class="text-center" jhiTranslate="health.details.details">Details</th>
+            </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let health of healthData">
-                <td>{{'health.indicator.' + baseName(health.name) | translate}} {{subSystemName(health.name)}}</td>
-                <td class="text-center">
+            <tr *ngFor="let health of healthData">
+              <td>{{'health.indicator.' + baseName(health.name) | translate}} {{subSystemName(health.name)}}</td>
+              <td class="text-center">
                   <span class="badge"
                         [class.badge-default]="health.status === 'OUT_OF_SERVICE'"
                         [class.badge-danger]="health.status === 'DOWN'"
@@ -72,19 +72,19 @@
                         jhiTranslate="health.status.{{health.status}}">
                     {{health.status}}
                   </span>
-                </td>
-                <td class="text-center">
-                  <div class="view-action">
-                    <button type="button"
-                            mat-raised-button
-                            (click)="showHealth(health)"
-                            class="btn btn-sm btn-icon btn-just-icon btn-link action"
-                            *ngIf="health.details || health.error">
-                      <mat-icon [color]="'primary'">visibility</mat-icon>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+              </td>
+              <td class="text-center">
+                <div class="view-action">
+                  <button type="button"
+                          mat-raised-button
+                          (click)="showHealth(health)"
+                          class="btn btn-sm btn-icon btn-just-icon btn-link action"
+                          *ngIf="health.details || health.error">
+                    <mat-icon [color]="'primary'">visibility</mat-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
             </tbody>
           </table>
         </div>

@@ -3,6 +3,8 @@ import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
+
+import * as _ from 'lodash';
 import { JhiEventManager } from 'ng-jhipster';
 import { Observable, of, Subscription } from 'rxjs';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
@@ -19,8 +21,6 @@ import { XmEntitySpec } from '../shared/xm-entity-spec.model';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
 import { ActionOptions, EntityListCardOptions, EntityOptions, FieldOptions } from './entity-list-card-options.model';
-
-import * as _ from 'lodash';
 
 declare let swal: any;
 
@@ -211,7 +211,10 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
             finalize(() => this.showLoader = false),
         ).subscribe(
             () => {console.log(`Exported ${entityOptions.typeKey}`)}, // tslint:disable-line
-            (err) => {console.log(err); this.showLoader = false} // tslint:disable-line
+            (err) => {
+                console.log(err);
+                this.showLoader = false
+            } // tslint:disable-line
         );
     }
 
@@ -244,7 +247,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
             map((app) => app.config || {}),
             map((conf) => conf.entities || []),
             tap((entities) => this.entitiesUiConfig = entities),
-            tap( () => { this.getCurrentEntitiesConfig(); }),
+            tap(() => { this.getCurrentEntitiesConfig(); }),
         ).subscribe();
     }
 

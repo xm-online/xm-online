@@ -1,7 +1,10 @@
-<div class="card card-custom" *ngIf="xmEntity && xmEntitySpec" [ngSwitch]="isAvatarEnabled" [class.has-avatar]="isAvatarEnabled">
+<div *ngIf="xmEntity && xmEntitySpec"
+     [class.has-avatar]="isAvatarEnabled"
+     [ngSwitch]="isAvatarEnabled"
+     class="card card-custom">
   <div class="card-header card-header-icon card-header-primary text-left">
     <ng-container *ngSwitchCase="false">
-      <div class="card-icon" *ngIf="xmEntitySpec.icon">
+      <div *ngIf="xmEntitySpec.icon" class="card-icon">
         <i class="material-icons">{{xmEntitySpec.icon}}</i>
       </div>
     </ng-container>
@@ -9,20 +12,20 @@
   </div>
 
   <div class="card-menu">
-    <button mat-icon-button [matMenuTriggerFor]="actionItems">
+    <button [matMenuTriggerFor]="actionItems" mat-icon-button>
       <mat-icon>more_vert</mat-icon>
     </button>
 
     <mat-menu #actionItems="matMenu" xPosition="before">
-      <button class="btn-sm" mat-menu-item (click)="onRefresh($event)">
+      <button (click)="onRefresh($event)" class="btn-sm" mat-menu-item>
         <mat-icon>refresh</mat-icon>
         <span>{{'xm-entity.entity-list-card.refresh' | translate}}</span>
       </button>
 
       <ng-container>
         <xm-function-list-section
-            [functionSpecs]="commonFunctionSpec"
-            [listView]="true">
+          [functionSpecs]="commonFunctionSpec"
+          [listView]="true">
         </xm-function-list-section>
       </ng-container>
     </mat-menu>
@@ -30,13 +33,13 @@
 
   <div class="container-fluid text-left mt-3 mb-3">
     <div class="row">
-      <div class="col-auto text-center" *ngSwitchCase="true">
+      <div *ngSwitchCase="true" class="col-auto text-center">
         <div class="avatar-container-card">
           <img src="{{xmEntity.avatarUrl ? xmEntity.avatarUrl : './assets/img/placeholder.png'}}">
-          <i class="material-icons" *ngIf="xmEntitySpec.icon && !xmEntity.avatarUrl">{{xmEntitySpec.icon}}</i>
-          <button role="button"
+          <i *ngIf="xmEntitySpec.icon && !xmEntity.avatarUrl" class="material-icons">{{xmEntitySpec.icon}}</i>
+          <button (click)="onAvatarChangeClick()"
                   class="btn btn-sm btn-just-icon btn-round btn-icon edit-avatar"
-                  (click)="onAvatarChangeClick()">
+                  role="button">
             <mat-icon>edit</mat-icon>
           </button>
         </div>
@@ -44,35 +47,41 @@
 
       <div class="col">
         <div class="row">
-          <div class="col-auto" style="margin-top: 6px; font-size: 18px;"><b>{{xmEntitySpec.name | i18nName: principal}}</b></div>
+          <div class="col-auto" style="margin-top: 6px; font-size: 18px;">
+            <b>{{xmEntitySpec.name | i18nName: principal}}</b></div>
 
           <div class="col-auto">
             <xm-function-list-section-compact
-                [xmEntity]="xmEntity"
-                [xmEntityId]="xmEntity.id"
-                [functionSpecs]="entityFunctionSpec"
-                [nextStates]="getNextStates()"
-                [stateSpec]="getState()"
-                [xmEntitySpec]="xmEntitySpec"
-                *ngIf="xmEntity || (getNextStates()?.length || xmEntitySpec.functions)" >
+              *ngIf="xmEntity || (getNextStates()?.length || xmEntitySpec.functions)"
+              [functionSpecs]="entityFunctionSpec"
+              [nextStates]="getNextStates()"
+              [stateSpec]="getState()"
+              [xmEntityId]="xmEntity.id"
+              [xmEntitySpec]="xmEntitySpec"
+              [xmEntity]="xmEntity">
             </xm-function-list-section-compact>
           </div>
         </div>
 
-        <div *ngIf="xmEntity?.description" class="row card-desc" [class.desc-full-view]="isDescFull">
+        <div *ngIf="xmEntity?.description" [class.desc-full-view]="isDescFull" class="row card-desc">
           <div class="col card-desc-inner">
-            <p class="description m-0" [innerHTML]="formatDescription(xmEntity.description)"></p>
+            <p [innerHTML]="formatDescription(xmEntity.description)" class="description m-0"></p>
           </div>
-          <div class="card-desc-toggle" (click)="isDescFull = !isDescFull"></div>
+          <div (click)="isDescFull = !isDescFull" class="card-desc-toggle"></div>
         </div>
 
         <div class="row">
-          <div class="col-auto" *ngIf="xmEntitySpec?.ratings" style="padding-top: 14px" [class.hidden]="!rating?.ratingSpecs?.length">
-            <xm-rating-list-section #rating [xmEntityId]="xmEntity.id" [ratingSpecs]="xmEntitySpec?.ratings"></xm-rating-list-section>
+          <div *ngIf="xmEntitySpec?.ratings"
+               [class.hidden]="!rating?.ratingSpecs?.length"
+               class="col-auto"
+               style="padding-top: 14px">
+            <xm-rating-list-section #rating
+                                    [ratingSpecs]="xmEntitySpec?.ratings"
+                                    [xmEntityId]="xmEntity.id"></xm-rating-list-section>
           </div>
 
-          <div class="col-auto" *ngIf="xmEntitySpec?.tags">
-            <xm-tag-list-section [xmEntityId]="xmEntity.id" [tagSpecs]="xmEntitySpec?.tags"></xm-tag-list-section>
+          <div *ngIf="xmEntitySpec?.tags" class="col-auto">
+            <xm-tag-list-section [tagSpecs]="xmEntitySpec?.tags" [xmEntityId]="xmEntity.id"></xm-tag-list-section>
           </div>
         </div>
       </div>
@@ -80,16 +89,16 @@
 
     <div class="min-height card-custom-schema">
       <xm-loader [showLoader]="showLoader"></xm-loader>
-      <json-schema-form [framework]="'material-design'"
-                        [schema]="jsfAttributes.schema"
-                        [layout]="jsfAttributes.layout | i18nJsf :principal"
-                        [form]="jsfAttributes.form | i18nJsf :principal"
-                        [data]="jsfAttributes.data"
-                        [options]="jsfAttributes.options | i18nJsf :principal"
-                        [widgets]="jsfAttributes.widgets"
-                        (formLayout)="jsfAttributes.formLayout"
+      <json-schema-form (formLayout)="jsfAttributes.formLayout"
                         (onSubmit)="onSubmitForm($event)"
-                        *ngIf="jsfAttributes?.schema">
+                        *ngIf="jsfAttributes?.schema"
+                        [data]="jsfAttributes.data"
+                        [form]="jsfAttributes.form | i18nJsf :principal"
+                        [framework]="'material-design'"
+                        [layout]="jsfAttributes.layout | i18nJsf :principal"
+                        [options]="jsfAttributes.options | i18nJsf :principal"
+                        [schema]="jsfAttributes.schema"
+                        [widgets]="jsfAttributes.widgets">
       </json-schema-form>
     </div>
   </div>

@@ -7,7 +7,7 @@ export class TimeAgoService {
     constructor(private translateService: TranslateService) {
     }
 
-    transform(value: string) {
+    public transform(value: string) {
         const d = new Date(value);
         const now = new Date();
         const seconds = Math.round(Math.abs((now.getTime() - d.getTime()) / 1000));

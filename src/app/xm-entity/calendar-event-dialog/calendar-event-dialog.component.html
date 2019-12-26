@@ -1,8 +1,8 @@
-<form class="m-0" name="eventForm" role="form" novalidate (ngSubmit)="onConfirmSave()" #eventForm="ngForm">
+<form #eventForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="eventForm" novalidate role="form">
   <div class="modal-header">
-    <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <h4 class="modal-title text-left">
-      <span jhiTranslate="xm-entity.calendar-event-dialog.title" >Add new event for the</span> [<b>{{xmEntity.name}}</b>]
+      <span jhiTranslate="xm-entity.calendar-event-dialog.title">Add new event for the</span> [<b>{{xmEntity.name}}</b>]
     </h4>
   </div>
   <div class="modal-body">
@@ -10,14 +10,14 @@
 
     <div class="form-group">
       <mat-form-field>
-        <mat-select [(ngModel)]="event.typeKey"
+        <mat-select #eventType="ngModel"
+                    [(ngModel)]="event.typeKey"
                     name="typeKey"
-                    #eventType="ngModel"
                     placeholder="{{'xm-entity.calendar-event-dialog.choose-type' | translate}}"
                     required>
           <mat-option *ngFor="let eventSpec of calendarSpec.events"
-                      [value]="eventSpec.key"
-                      [selected]="event && eventSpec.key == event.typeKey ? true : null">
+                      [selected]="event && eventSpec.key == event.typeKey ? true : null"
+                      [value]="eventSpec.key">
             <span [style.borderColor]="eventSpec.color">{{eventSpec?.name | i18nName: principal | uppercase}}</span>
           </mat-option>
         </mat-select>
@@ -31,14 +31,14 @@
       <div class="col-md-6">
         <div class="form-group">
           <mat-form-field>
-            <input matInput
-                   id="field_startDate"
-                   type="datetime-local"
-                   name="startDate"
+            <input #eventStartDate="ngModel"
                    [(ngModel)]="event.startDate"
-                   #eventStartDate="ngModel"
+                   id="field_startDate"
+                   matInput
+                   name="startDate"
                    placeholder="{{'xm-entity.common.fields.start-date' | translate}}"
-                   required>
+                   required
+                   type="datetime-local">
             <mat-error *ngIf="eventStartDate.hasError('required')">
               <span jhiTranslate="xm-entity.common.validation.required">This field is required.</span>
             </mat-error>
@@ -51,14 +51,14 @@
       <div class="col-md-6">
         <div class="form-group">
           <mat-form-field>
-            <input matInput
-                   id="field_endDate"
-                   type="datetime-local"
-                   name="endDate"
+            <input #eventEndDate="ngModel"
                    [(ngModel)]="event.endDate"
-                   #eventEndDate="ngModel"
+                   id="field_endDate"
+                   matInput
+                   name="endDate"
                    placeholder="{{'xm-entity.common.fields.end-date' | translate}}"
-                   required>
+                   required
+                   type="datetime-local">
             <mat-error *ngIf="eventEndDate.hasError('required')">
               <span jhiTranslate="xm-entity.common.validation.required">This field is required.</span>
             </mat-error>
@@ -72,14 +72,14 @@
 
     <div class="form-group">
       <mat-form-field>
-        <input matInput
-               id="field_title"
-               type="text"
-               name="title"
+        <input #eventTitle="ngModel"
                [(ngModel)]="event.title"
-               #eventTitle="ngModel"
+               id="field_title"
+               matInput
+               name="title"
                placeholder="{{'xm-entity.common.fields.title' | translate}}"
-               required>
+               required
+               type="text">
         <mat-error *ngIf="eventTitle.hasError('required')">
           <span jhiTranslate="xm-entity.common.validation.required">This field is required.</span>
         </mat-error>
@@ -88,21 +88,21 @@
 
     <div class="form-group">
       <mat-form-field>
-        <textarea matInput
+        <textarea [(ngModel)]="event.description"
                   id="field_description"
+                  matInput
                   name="description"
-                  [(ngModel)]="event.description"
-                  rows="4"
-                  placeholder="{{'xm-entity.common.fields.description' | translate}}">
+                  placeholder="{{'xm-entity.common.fields.description' | translate}}"
+                  rows="4">
         </textarea>
       </mat-form-field>
     </div>
   </div>
   <div class="modal-footer">
-    <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()">
+    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-raised-button type="button">
       <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
-    <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="eventForm.form.invalid || showLoader">
+    <button [disabled]="eventForm.form.invalid || showLoader" class="btn btn-primary" mat-raised-button type="submit">
       <span jhiTranslate="xm-entity.common.save">Save</span>
     </button>
   </div>

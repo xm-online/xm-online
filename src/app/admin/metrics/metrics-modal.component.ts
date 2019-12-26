@@ -3,23 +3,23 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'xm-metrics-modal',
-    templateUrl: './metrics-modal.component.html'
+    templateUrl: './metrics-modal.component.html',
 })
 export class JhiMetricsMonitoringModalComponent implements OnInit {
 
-    threadDumpFilter: any;
-    threadDump: any;
-    threadDumpAll = 0;
-    threadDumpBlocked = 0;
-    threadDumpRunnable = 0;
-    threadDumpTimedWaiting = 0;
-    threadDumpWaiting = 0;
+    public threadDumpFilter: any;
+    public threadDump: any;
+    public threadDumpAll: number = 0;
+    public threadDumpBlocked: number = 0;
+    public threadDumpRunnable: number = 0;
+    public threadDumpTimedWaiting: number = 0;
+    public threadDumpWaiting: number = 0;
 
     constructor(public activeModal: NgbActiveModal) {
         // this.jhiLanguageService.addLocation('metrics');
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.threadDump.forEach((value) => {
             if (value.threadState === 'RUNNABLE') {
                 this.threadDumpRunnable += 1;
@@ -36,7 +36,7 @@ export class JhiMetricsMonitoringModalComponent implements OnInit {
             this.threadDumpTimedWaiting + this.threadDumpBlocked;
     }
 
-    getBadgeClass(threadState): string {
+    public getBadgeClass(threadState: string): string {
         if (threadState === 'RUNNABLE') {
             return 'badge-success';
         } else if (threadState === 'WAITING') {

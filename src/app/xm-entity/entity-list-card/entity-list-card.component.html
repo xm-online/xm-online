@@ -1,10 +1,14 @@
-<div class="card has-refresh-button" [ngSwitch]="list?.length === 1">
+<div [ngSwitch]="list?.length === 1" class="card has-refresh-button">
   <!-- start header for the multi entities types -->
   <div *ngSwitchCase="false" class="card-header card-header-tabs card-header-primary">
-    <ul class="nav nav-tabs" data-tabs="tabs" [class.xm-disabled]="showLoader">
-      <li class="nav-item" *ngFor="let item of list; index as i; first as isFirst">
-        <a class="nav-link" [class.active]="i == activeItemId" data-toggle="tab" href="{{'#wdt-entity-group-' + i}}" (click)="setActiveTab(i)">
-          <i class="material-icons">{{ item.xmEntitySpec?.icon  ? item.xmEntitySpec?.icon : 'view_list'}}</i>
+    <ul [class.xm-disabled]="showLoader" class="nav nav-tabs" data-tabs="tabs">
+      <li *ngFor="let item of list; index as i; first as isFirst" class="nav-item">
+        <a (click)="setActiveTab(i)"
+           [class.active]="i == activeItemId"
+           class="nav-link"
+           data-toggle="tab"
+           href="{{'#wdt-entity-group-' + i}}">
+          <i class="material-icons">{{ item.xmEntitySpec?.icon ? item.xmEntitySpec?.icon : 'view_list'}}</i>
           {{item.name | i18nName: principal}}
         </a>
       </li>
@@ -17,27 +21,27 @@
     <div class="card-icon">
       <i class="material-icons">{{list[0]?.xmEntitySpec?.icon ? list[0]?.xmEntitySpec?.icon : 'search'}}</i>
     </div>
-    <h4 class="card-title" *ngSwitchCase="true">{{list[0].name | i18nName: principal}}</h4>
+    <h4 *ngSwitchCase="true" class="card-title">{{list[0].name | i18nName: principal}}</h4>
   </div>
   <!-- end header for the one entity type  -->
 
   <xm-loader [showLoader]="showLoader"></xm-loader>
   <div class="card-body">
-    <div class="tab-content" [class.xm-disabled]="showLoader">
-      <div class="tab-pane"
+    <div [class.xm-disabled]="showLoader" class="tab-content">
+      <div *ngFor="let item of list; index as i; first as isFirst"
            [class.active]="i == activeItemId"
-           *ngFor="let item of list; index as i; first as isFirst"
+           class="tab-pane"
            id="{{'wdt-entity-group-' + i}}">
-        <div class="dropdown xm-entity-list-actions" *ngIf="!(options?.hideOptionsMenu)">
-          <button mat-icon-button [matMenuTriggerFor]="entityListActions">
+        <div *ngIf="!(options?.hideOptionsMenu)" class="dropdown xm-entity-list-actions">
+          <button [matMenuTriggerFor]="entityListActions" mat-icon-button>
             <mat-icon>more_vert</mat-icon>
           </button>
 
           <mat-menu #entityListActions="matMenu">
-            <button mat-menu-item class="btn-sm" (click)="onRefresh()">
+            <button (click)="onRefresh()" class="btn-sm" mat-menu-item>
               {{'xm-entity.entity-list-card.refresh' | translate}}
             </button>
-            <button mat-menu-item class="btn-sm" *ngIf="item.filter" (click)="isShowFilterArea = !isShowFilterArea">
+            <button (click)="isShowFilterArea = !isShowFilterArea" *ngIf="item.filter" class="btn-sm" mat-menu-item>
               <ng-container *ngIf="isShowFilterArea">
                 {{'xm-entity.entity-list-card.filters-hide' | translate}}
               </ng-container>
@@ -45,20 +49,23 @@
                 {{'xm-entity.entity-list-card.filters-show' | translate}}
               </ng-container>
             </button>
-            <ng-container  *ngIf="item.xmEntitySpec?.functions && item.xmEntitySpec?.functions.length">
+            <ng-container *ngIf="item.xmEntitySpec?.functions && item.xmEntitySpec?.functions.length">
               <xm-function-list-section [functionSpecs]="item.xmEntitySpec?.functions" [listView]="true">
               </xm-function-list-section>
             </ng-container>
-            <button mat-menu-item class="btn-sm" [matMenuTriggerFor]="entityListActionDownloads" *xmPermitted="['XMENTITY.EXPORT.FILE']">
+            <button *xmPermitted="['XMENTITY.EXPORT.FILE']"
+                    [matMenuTriggerFor]="entityListActionDownloads"
+                    class="btn-sm"
+                    mat-menu-item>
               {{'xm-entity.entity-list-card.export.action.downloads' | translate}}
             </button>
           </mat-menu>
 
           <mat-menu #entityListActionDownloads="matMenu">
-            <button mat-menu-item class="btn-sm" (click)="onFileExport(item, 'xlsx')">
+            <button (click)="onFileExport(item, 'xlsx')" class="btn-sm" mat-menu-item>
               {{'xm-entity.entity-list-card.export.action.xls' | translate}}
             </button>
-            <button mat-menu-item class="btn-sm" (click)="onFileExport(item, 'csv');">
+            <button (click)="onFileExport(item, 'csv');" class="btn-sm" mat-menu-item>
               {{'xm-entity.entity-list-card.export.action.csv' | translate}}
             </button>
           </mat-menu>
@@ -66,20 +73,20 @@
 
         <div class="row">
           <!-- start fast search -->
-          <div class="col-sm-8" *xmPermitted="['XMENTITY.SEARCH.QUERY']">
+          <div *xmPermitted="['XMENTITY.SEARCH.QUERY']" class="col-sm-8">
             <div *ngIf="item.fastSearch?.length > 1" class="btn-group">
-              <button mat-raised-button
+              <button (click)="onApplyFastSearch(item, getDefaultSearch(item))"
                       *ngIf="!isHideAll(item.typeKey)"
-                      class="btn btn-primary btn-sm btn-round"
                       [class.disabled]="item.currentQuery === getDefaultSearch(item)"
-                      (click)="onApplyFastSearch(item, getDefaultSearch(item))">
+                      class="btn btn-primary btn-sm btn-round"
+                      mat-raised-button>
                 <span jhiTranslate="global.all">All</span>
               </button>
-              <button mat-raised-button
-                      class="btn btn-primary btn-sm btn-round"
+              <button (click)="onApplyFastSearch(item, fastSearch.query)"
+                      *ngFor="let fastSearch of getFastSearches(item)"
                       [class.disabled]="item.currentQuery === fastSearch.query"
-                      (click)="onApplyFastSearch(item, fastSearch.query)"
-                      *ngFor="let fastSearch of getFastSearches(item)">
+                      class="btn btn-primary btn-sm btn-round"
+                      mat-raised-button>
                 {{fastSearch.name | i18nName: principal}}
               </button>
             </div>
@@ -88,27 +95,27 @@
         </div>
 
         <!-- start filter area -->
-        <div class="row" *ngIf="isShowFilterArea">
+        <div *ngIf="isShowFilterArea" class="row">
           <div class="col-sm">
-            <json-schema-form [framework]="'material-design'"
-                              [schema]="item.filterJsfAttributes.schema"
-                              [layout]="item.filterJsfAttributes.layout | i18nJsf :principal"
-                              [form]="item.filterJsfAttributes.form | i18nJsf :principal"
-                              [data]="item.filterJsfAttributes.data"
-                              [options]="item.filterJsfAttributes.options | i18nJsf :principal"
-                              [widgets]="item.filterJsfAttributes.widgets"
-                              (formLayout)="item.filterJsfAttributes.formLayout"
+            <json-schema-form (formLayout)="item.filterJsfAttributes.formLayout"
                               (onSubmit)="onApplyFilter(item, $event)"
-                              *ngIf="item.filterJsfAttributes?.schema">
+                              *ngIf="item.filterJsfAttributes?.schema"
+                              [data]="item.filterJsfAttributes.data"
+                              [form]="item.filterJsfAttributes.form | i18nJsf :principal"
+                              [framework]="'material-design'"
+                              [layout]="item.filterJsfAttributes.layout | i18nJsf :principal"
+                              [options]="item.filterJsfAttributes.options | i18nJsf :principal"
+                              [schema]="item.filterJsfAttributes.schema"
+                              [widgets]="item.filterJsfAttributes.widgets">
             </json-schema-form>
           </div>
         </div>
         <!-- end filter area -->
         <ng-container *ngIf="item.entities">
-          <div class="table-responsive" [ngClass]="{ 'sm-overflow': options.smOverflow }">
+          <div [ngClass]="{ 'sm-overflow': options.smOverflow }" class="table-responsive">
             <table class="table table-striped">
               <thead>
-              <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+              <tr [(ascending)]="reverse" [(predicate)]="predicate" [callback]="transition.bind(this)" jhiSort>
                 <th></th>
 
                 <ng-container *ngFor="let field of item.fields">
@@ -120,7 +127,7 @@
                       [jhiSortBy]="field.useKeyword ? field.field + '.keyword' : field.field"
                       [ngClass]="{'th-hidden' : field.hiddenTitle}">
                     <span *ngIf="field.title">{{field.title | i18nName :principal}}</span>
-                    <span class="fa fa-sort" *ngIf="field.title"></span>
+                    <span *ngIf="field.title" class="fa fa-sort"></span>
                   </th>
                 </ng-container>
 
@@ -133,15 +140,15 @@
                 <td>
                   <div class="xm-avatar-img-container">
                     <img src="{{xmEntity.avatarUrl ? xmEntity.avatarUrl : './assets/img/placeholder.png'}}">
-                    <i class="material-icons"
-                       *ngIf="xmEntity.type?.icon && !xmEntity.avatarUrl">{{xmEntity.type?.icon}}</i>
+                    <i *ngIf="xmEntity.type?.icon && !xmEntity.avatarUrl"
+                       class="material-icons">{{xmEntity.type?.icon}}</i>
                   </div>
                 </td>
-                <td [ngSwitch]="field.field" *ngFor="let field of item.fields">
+                <td *ngFor="let field of item.fields" [ngSwitch]="field.field">
                   <div *ngSwitchCase="'name'">
                     <div *ngIf="(options?.noDeepLink || item?.noDeepLink); then entryHasNotLink else entryHasLink"></div>
                     <ng-template #entryHasLink>
-                      <a href="javascript: void(0);" (click)="onNavigate(item, xmEntity)">
+                      <a (click)="onNavigate(item, xmEntity)" href="javascript: void(0);">
                         {{getFieldValue(xmEntity, field)}}
                       </a>
                     </ng-template>
@@ -156,8 +163,8 @@
                     {{xmEntity.startDate | xmDateTime}}
                   </div>
                   <div *ngSwitchCase="'actions'">
-                    <div class="xm-table-options dropdown" *permitted="field.actionsListPrivileges">
-                      <span class="dropdown-toggle" data-toggle="dropdown" href="#pablo" aria-expanded="false">
+                    <div *permitted="field.actionsListPrivileges" class="xm-table-options dropdown">
+                      <span aria-expanded="false" class="dropdown-toggle" data-toggle="dropdown" href="#pablo">
                         <i class="material-icons text_align-center visible-on-sidebar-regular">more_vert</i>
                       </span>
                       <ul class="dropdown-menu" x-placement="bottom-start">
@@ -174,8 +181,8 @@
                     </div>
                   </div>
                   <div *ngSwitchCase="'stateKey'">
-                    <div class="xm-state" *ngIf="xmEntity.state">
-                      <div class="xm-state-icon" [style.background]="xmEntity.state?.color">
+                    <div *ngIf="xmEntity.state" class="xm-state">
+                      <div [style.background]="xmEntity.state?.color" class="xm-state-icon">
                         <i class="material-icons">{{xmEntity.state?.icon}}</i>
                       </div>
                       {{xmEntity.state?.name | i18nName: principal}}
@@ -183,13 +190,13 @@
                   </div>
                   <div *ngSwitchDefault [innerHtml]="getFieldValue(xmEntity, field)">
                   </div>
-                  <button class="btn btn-primary btn-round btn-sm" (click)="onAction(item, xmEntity, field.action)"
-                          *ngIf="field.action">
+                  <button (click)="onAction(item, xmEntity, field.action)" *ngIf="field.action"
+                          class="btn btn-primary btn-round btn-sm">
                     {{field.action.name | i18nName: principal}}
                   </button>
                 </td>
                 <td *ngIf="!(options?.hideDelete) && !(item?.hideDelete)">
-                  <a href="javascript: void(0);" (click)="onRemove(xmEntity)">
+                  <a (click)="onRemove(xmEntity)" href="javascript: void(0);">
                     <i class="material-icons">close</i>
                   </a>
                 </td>
@@ -199,21 +206,21 @@
           </div>
         </ng-container>
 
-        <div class="row align-items-center list-pagination" *ngIf="item?.entities?.length && showPagination">
+        <div *ngIf="item?.entities?.length && showPagination" class="row align-items-center list-pagination">
           <div class="col-auto mt-1 mb-1">
-            <xm-per-page [(itemsPerPage)]="entitiesPerPage" (onChange)="transition()"></xm-per-page>
+            <xm-per-page (onChange)="transition()" [(itemsPerPage)]="entitiesPerPage"></xm-per-page>
           </div>
           <div class="col-auto mt-1 mb-1">
-            <jhi-item-count [page]="item.page" [total]="item.queryCount" [itemsPerPage]="entitiesPerPage">
+            <jhi-item-count [itemsPerPage]="entitiesPerPage" [page]="item.page" [total]="item.queryCount">
             </jhi-item-count>
           </div>
           <div class="col-sm"></div>
           <div class="col-auto mt-1 mb-1">
-            <ngb-pagination [collectionSize]="item.totalItems"
-                            [pageSize]="entitiesPerPage"
+            <ngb-pagination (pageChange)="onLoadPage(item)"
                             [(page)]="item.page"
+                            [collectionSize]="item.totalItems"
                             [maxSize]="5"
-                            (pageChange)="onLoadPage(item)">
+                            [pageSize]="entitiesPerPage">
             </ngb-pagination>
           </div>
         </div>

@@ -1,69 +1,70 @@
-<form class="m-0" name="editForm" role="form" novalidate (ngSubmit)="onSave()" #editForm="ngForm" *ngIf="role">
-    <div class="modal-header">
-        <a href="javascript: void(0);" class="modal-close material-icons" (click)="onClose()">close</a>
-        <h4 class="modal-title text-left">
-            <span *ngIf="isAddMode" jhiTranslate="rolesManagement.home.labelCreate">Create new Role</span>
-            <span *ngIf="!isAddMode" jhiTranslate="rolesManagement.home.labelEdit">Edit a Role</span>
-        </h4>
+<form #editForm="ngForm" (ngSubmit)="onSave()" *ngIf="role" class="m-0" name="editForm" novalidate role="form">
+  <div class="modal-header">
+    <a (click)="onClose()" class="modal-close material-icons" href="javascript: void(0);">close</a>
+    <h4 class="modal-title text-left">
+      <span *ngIf="isAddMode" jhiTranslate="rolesManagement.home.labelCreate">Create new Role</span>
+      <span *ngIf="!isAddMode" jhiTranslate="rolesManagement.home.labelEdit">Edit a Role</span>
+    </h4>
+  </div>
+
+  <div class="modal-body">
+    <xm-loader [showLoader]="showLoader"></xm-loader>
+
+    <div class="form-group">
+      <mat-form-field>
+        <input #fieldRoleKey="ngModel"
+               [(ngModel)]="role.roleKey"
+               [disabled]="!isAddMode"
+               matInput
+               name="roleKey"
+               pattern="^\s*[\w|\d]+\s*$"
+               placeholder="{{'rolesManagement.key' | translate}}"
+               required
+               type="text">
+        <mat-error *ngIf="fieldRoleKey.hasError('required')">
+          <span jhiTranslate="xm-entity.common.validation.required">This field is required.</span>
+        </mat-error>
+        <mat-error *ngIf="fieldRoleKey.hasError('pattern')">
+          <span jhiTranslate="xm-entity.common.validation.pattern">This field does not match the rules</span>:&nbsp;&nbsp;<span
+          [innerHtml]="'^\s*[\w|\d]+\s*$'"></span>
+        </mat-error>
+      </mat-form-field>
     </div>
 
-    <div class="modal-body">
-        <xm-loader [showLoader]="showLoader"></xm-loader>
 
-        <div class="form-group">
-          <mat-form-field>
-            <input matInput
-                   name="roleKey"
-                   type="text"
-                   #fieldRoleKey="ngModel"
-                   [(ngModel)]="role.roleKey"
-                   placeholder="{{'rolesManagement.key' | translate}}"
-                   required
-                   pattern="^\s*[\w|\d]+\s*$"
-                   [disabled]="!isAddMode">
-            <mat-error *ngIf="fieldRoleKey.hasError('required')">
-              <span jhiTranslate="xm-entity.common.validation.required">This field is required.</span>
-            </mat-error>
-            <mat-error *ngIf="fieldRoleKey.hasError('pattern')">
-              <span jhiTranslate="xm-entity.common.validation.pattern">This field does not match the rules</span>:&nbsp;&nbsp;<span [innerHtml]="'^\s*[\w|\d]+\s*$'"></span>
-            </mat-error>
-          </mat-form-field>
-        </div>
+    <div *ngIf="isAddMode" class="form-group">
+      <mat-form-field>
+        <mat-select [(ngModel)]="role.basedOn"
+                    name="authority"
+                    placeholder="{{'rolesManagement.basedOn' | translate}}">
+          <mat-option readonly>{{'rolesManagement.chooseRole' | translate}}</mat-option>
+          <mat-option *ngFor="let item of roles" [value]="item">{{item}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-
-        <div class="form-group" *ngIf="isAddMode">
-          <mat-form-field>
-            <mat-select [(ngModel)]="role.basedOn"
-                        name="authority"
-                        placeholder="{{'rolesManagement.basedOn' | translate}}">
-              <mat-option readonly>{{'rolesManagement.chooseRole' | translate}}</mat-option>
-              <mat-option *ngFor="let item of roles" [value]="item">{{item}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <div class="form-group">
-          <mat-form-field>
-            <textarea matInput
-                      name="desc"
+    <div class="form-group">
+      <mat-form-field>
+            <textarea [(ngModel)]="role.description"
                       id="field_desc"
-                      [(ngModel)]="role.description"
-                      rows="4"
-                      placeholder="{{'rolesManagement.description' | translate}}"></textarea>
-          </mat-form-field>
-        </div>
+                      matInput
+                      name="desc"
+                      placeholder="{{'rolesManagement.description' | translate}}"
+                      rows="4"></textarea>
+      </mat-form-field>
     </div>
+  </div>
 
-    <div class="modal-footer">
-        <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onClose()">
-            <span class="fa fa-ban"></span>&nbsp;<span
-            jhiTranslate="entity.action.cancel">Cancel</span>
-        </button>
-        <button mat-raised-button
-                type="submit"
-                [disabled]="editForm.form.invalid || showLoader"
-                class="btn btn-primary">
-            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-        </button>
-    </div>
+  <div class="modal-footer">
+    <button (click)="onClose()" class="btn mr-1" data-dismiss="modal" mat-raised-button type="button">
+      <span class="fa fa-ban"></span>&nbsp;<span
+      jhiTranslate="entity.action.cancel">Cancel</span>
+    </button>
+    <button [disabled]="editForm.form.invalid || showLoader"
+            class="btn btn-primary"
+            mat-raised-button
+            type="submit">
+      <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+    </button>
+  </div>
 </form>

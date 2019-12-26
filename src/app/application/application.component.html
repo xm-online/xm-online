@@ -1,12 +1,12 @@
 <div class="row">
   <div class="col-md-12">
-    <xm-entity-list-card [options]="options"
-                         [spec]="spec"
-                         *ngIf="options && spec"
-                         [searchTemplateParams]="searchParams?.templateName ? searchParams : null">
+    <xm-entity-list-card *ngIf="options && spec"
+                         [options]="options"
+                         [searchTemplateParams]="searchParams?.templateName ? searchParams : null"
+                         [spec]="spec">
     </xm-entity-list-card>
   </div>
 </div>
 
-<xm-entity-list-fab [xmEntitySpec]="entityType" [spec]="spec" *ngIf="entityType && spec">
+<xm-entity-list-fab *ngIf="entityType && spec" [spec]="spec" [xmEntitySpec]="entityType">
 </xm-entity-list-fab>

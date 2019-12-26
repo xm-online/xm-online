@@ -10,7 +10,7 @@ export class Client {
         public lastModifiedBy?: string,
         public lastModifiedDate?: Date,
         public accessTokenValiditySeconds?: number,
-        public scopes?: string[]
+        public scopes?: string[],
     ) {
     }
 }

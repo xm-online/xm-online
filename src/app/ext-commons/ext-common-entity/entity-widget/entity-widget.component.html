@@ -9,85 +9,85 @@
         <div [ngSwitch]="item.component">
           <div *ngSwitchCase="'entity-card'">
             <xm-entity-card
-              [xmEntity]="fetchedXmEntity"
               [xmEntitySpec]="xmEntitySpec"
+              [xmEntity]="fetchedXmEntity"
             ></xm-entity-card>
 
             <xm-balance-list-card
-              [xmEntityId]="fetchedXmEntity.id"
               [typeKey]="xmEntity.typeKey"
+              [xmEntityId]="fetchedXmEntity.id"
             ></xm-balance-list-card>
           </div>
 
           <div *ngSwitchCase="'entity-card-compact'">
             <xm-entity-card-compact
-                [xmEntity]="fetchedXmEntity"
-                [xmEntitySpec]="xmEntitySpec"
+              [xmEntitySpec]="xmEntitySpec"
+              [xmEntity]="fetchedXmEntity"
             ></xm-entity-card-compact>
           </div>
 
           <div *ngSwitchCase="'entity-data-card'">
             <xm-entity-data-card
-              [xmEntity]="fetchedXmEntity"
               [xmEntitySpec]="xmEntitySpec"
+              [xmEntity]="fetchedXmEntity"
             ></xm-entity-data-card>
           </div>
 
           <div *ngSwitchCase="'attachment-grid'">
             <xm-attachment-list
-              [xmEntityId]="fetchedXmEntity.id"
+              *ngIf="xmEntitySpec?.attachments"
               [attachmentSpecs]="xmEntitySpec?.attachments"
-              [xmEntity]="fetchedXmEntity"
-              *ngIf="xmEntitySpec?.attachments">
+              [xmEntityId]="fetchedXmEntity.id"
+              [xmEntity]="fetchedXmEntity">
             </xm-attachment-list>
           </div>
 
           <div *ngSwitchCase="'attachment-list'">
             <xm-attachment-list-simplified
-              [xmEntityId]="fetchedXmEntity.id"
+              *ngIf="xmEntitySpec?.attachments"
               [attachmentSpecs]="xmEntitySpec?.attachments"
-              [xmEntity]="fetchedXmEntity"
               [entityUiConfig]="this.entityUiConfig"
-              *ngIf="xmEntitySpec?.attachments">
+              [xmEntityId]="fetchedXmEntity.id"
+              [xmEntity]="fetchedXmEntity">
             </xm-attachment-list-simplified>
           </div>
 
           <div *ngSwitchCase="'location-list-card'">
             <xm-location-list-card
-              [entityUiConfig]="this.entityUiConfig"
-              [xmEntityId]="fetchedXmEntity.id" [locationSpecs]="xmEntitySpec?.locations"
-              *ngIf="xmEntitySpec?.locations?.length">
+              *ngIf="xmEntitySpec?.locations?.length"
+              [entityUiConfig]="this.entityUiConfig" [locationSpecs]="xmEntitySpec?.locations"
+              [xmEntityId]="fetchedXmEntity.id">
             </xm-location-list-card>
           </div>
 
           <div *ngSwitchCase="'link-list'">
             <xm-link-list
-              [xmEntityId]="fetchedXmEntity.id"
-              [linkSpecs]="linkSpecs$ | async"
+              *ngIf="xmEntitySpec?.links?.length > 0 || backLinkSpecs.length > 0"
               [backLinkSpecs]="backLinkSpecs$ | async"
-              *ngIf="xmEntitySpec?.links?.length > 0 || backLinkSpecs.length > 0">
+              [linkSpecs]="linkSpecs$ | async"
+              [xmEntityId]="fetchedXmEntity.id">
             </xm-link-list>
           </div>
 
           <div *ngSwitchCase="'comment-list'">
             <xm-comment-list
-              [xmEntityId]="fetchedXmEntity.id"
+              *ngIf="xmEntitySpec?.comments"
               [commentSpecs]="xmEntitySpec?.comments"
-              *ngIf="xmEntitySpec?.comments">
+              [xmEntityId]="fetchedXmEntity.id">
             </xm-comment-list>
           </div>
 
           <div *ngSwitchCase="'calendar-card'">
             <xm-calendar-card
-              [xmEntityId]="fetchedXmEntity.id"
+              *ngIf="xmEntitySpec?.calendars"
               [calendarSpecs]="xmEntitySpec?.calendars"
-              *ngIf="xmEntitySpec?.calendars">
+              [xmEntityId]="fetchedXmEntity.id">
             </xm-calendar-card>
           </div>
 
           <div *ngSwitchCase="'timeline'">
-            <xm-timeline [xmEntityId]="fetchedXmEntity?.id"
-                         *xmPermitted="['TIMELINE.GET_LIST']">
+            <xm-timeline *xmPermitted="['TIMELINE.GET_LIST']"
+                         [xmEntityId]="fetchedXmEntity?.id">
             </xm-timeline>
           </div>
         </div>
@@ -96,9 +96,9 @@
 
     <xm-entity-detail-fab
       *ngIf="spec && xmEntitySpec"
-      [xmEntity]="fetchedXmEntity"
-      [xmEntitySpec]="xmEntitySpec"
       [spec]="spec"
+      [xmEntitySpec]="xmEntitySpec"
+      [xmEntity]="fetchedXmEntity"
     ></xm-entity-detail-fab>
   </ng-template>
 

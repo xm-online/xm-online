@@ -8,6 +8,6 @@ export const gatewayRoute: Route = {
     data: {
         privileges: {value: ['ROUTE.GET_LIST']},
         pageTitle: 'global.menu.admin.main',
-        pageSubTitleTrans: 'global.menu.admin.gateway'
-    }
+        pageSubTitleTrans: 'global.menu.admin.gateway',
+    },
 };

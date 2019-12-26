@@ -1,36 +1,36 @@
-<div class="row" *ngIf="xmEntity">
+<div *ngIf="xmEntity" class="row">
   <!-- TODO: use masonry layout -->
   <div class="col-lg-6">
     <div *ngFor="let linkSpec of linkSpecs; let even = even">
-      <xm-link-list-card [xmEntity]="xmEntity"
-                         [links]="filterLinks(linkSpec.model)"
+      <xm-link-list-card *ngIf="even"
                          [linkSpec]="linkSpec"
+                         [links]="filterLinks(linkSpec.model)"
                          [modes]="getModes(linkSpec.model)"
-                         *ngIf="even">
+                         [xmEntity]="xmEntity">
       </xm-link-list-card>
     </div>
     <div *ngFor="let backLinkSpec of filterBackLinkSpecs(); let even = even">
-      <xm-link-list-card [links]="filterLinks(backLinkSpec.model)"
-                         [linkSpec]="backLinkSpec"
+      <xm-link-list-card *ngIf="even"
                          [isBackLink]="true"
-                         *ngIf="even">
+                         [linkSpec]="backLinkSpec"
+                         [links]="filterLinks(backLinkSpec.model)">
       </xm-link-list-card>
     </div>
   </div>
   <div class="col-lg-6">
     <div *ngFor="let linkSpec of linkSpecs; let odd = odd">
-      <xm-link-list-card [xmEntity]="xmEntity"
-                         [links]="filterLinks(linkSpec.model)"
+      <xm-link-list-card *ngIf="odd"
                          [linkSpec]="linkSpec"
+                         [links]="filterLinks(linkSpec.model)"
                          [modes]="getModes(linkSpec.model)"
-                         *ngIf="odd">
+                         [xmEntity]="xmEntity">
       </xm-link-list-card>
     </div>
     <div *ngFor="let backLinkSpec of filterBackLinkSpecs(); let odd = odd">
-      <xm-link-list-card [links]="filterLinks(backLinkSpec.model)"
-                         [linkSpec]="backLinkSpec"
+      <xm-link-list-card *ngIf="odd"
                          [isBackLink]="true"
-                         *ngIf="odd">
+                         [linkSpec]="backLinkSpec"
+                         [links]="filterLinks(backLinkSpec.model)">
       </xm-link-list-card>
     </div>
   </div>

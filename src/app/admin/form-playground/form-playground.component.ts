@@ -8,11 +8,14 @@ import { map, startWith, tap } from 'rxjs/operators';
 import { Principal } from '../../shared/auth/principal.service';
 
 import {
-    addValidationComponent, addValidationComponentToLayout, formLayout,
-    getJsfWidgets, processValidationMessages,
+    addValidationComponent,
+    addValidationComponentToLayout,
+    formLayout,
+    getJsfWidgets,
+    processValidationMessages,
 } from '../../shared/jsf-extention/jsf-attributes-helper';
 import { FunctionSpec, XmEntitySpec, XmEntitySpecWrapperService } from '../../xm-entity';
-import { Examples } from './example-schemas.model';
+import { EXAMPLES } from './example-schemas.model';
 
 interface FormsConfig {
     key: string;
@@ -20,8 +23,6 @@ interface FormsConfig {
     dataSpec: string;
     dataForm: string;
 }
-
-
 
 @Component({
     selector: 'xm-form-playground',
@@ -41,68 +42,61 @@ interface FormsConfig {
 })
 export class FormPlaygroundComponent implements OnInit, AfterViewInit {
 
-    private XM_TEMPLATE = `ng2jsf-xm-layout`;
-
-    examples = Examples;
-    frameworkList: any = ['material-design', 'bootstrap-3', 'no-framework'];
-    frameworks: any = {
+    public examples: typeof EXAMPLES = EXAMPLES;
+    public frameworkList: any = ['material-design', 'bootstrap-3', 'no-framework'];
+    public frameworks: any = {
         'material-design': 'Material Design framework',
         'bootstrap-3': 'Bootstrap 3 framework',
         'no-framework': 'No Framework (plain HTML controls)',
     };
-    selectedSet = 'ng2jsf';
-    selectedSetName = '';
-    selectedExample = 'ng2jsf-flex-layout';
-    selectedExampleName = 'Flexbox layout';
-    selectedFramework = 'material-design';
-    visible: { [item: string]: boolean } = {
+    public selectedSet: string = 'ng2jsf';
+    public selectedSetName: string = '';
+    public selectedExample: string = 'ng2jsf-flex-layout';
+    public selectedExampleName: string = 'Flexbox layout';
+    public selectedFramework: string = 'material-design';
+    public visible: { [item: string]: boolean } = {
         options: true,
         schema: true,
         form: true,
-        output: true
+        output: true,
     };
-
-    formActive = false;
-    jsonFormSchema: string;
-    jsonFormValid = false;
-    jsonFormStatusMessage = 'Loading form...';
-    jsonFormObject: any;
-    jsonFormOptions: any = {
+    public formActive: boolean = false;
+    public jsonFormSchema: string;
+    public jsonFormValid: boolean = false;
+    public jsonFormStatusMessage: string = 'Loading form...';
+    public jsonFormObject: any;
+    public jsonFormOptions: any = {
         addSubmit: true, // Add a submit button if layout does not have one
         loadExternalAssets: true, // Load external css and JavaScript for frameworks
         formDefaults: {feedback: true}, // Show inline feedback icons
         debug: false,
         returnEmptyFields: false,
     };
-    liveFormData: any = {};
-    formValidationErrors: any;
-    formIsValid: boolean = null;
-    submittedFormData: any = null;
-    aceEditorOptions: any = {
+    public liveFormData: any = {};
+    public formValidationErrors: any;
+    public formIsValid: boolean = null;
+    public submittedFormData: any = null;
+    public aceEditorOptions: any = {
         highlightActiveLine: true,
         maxLines: 1000,
         printMargin: false,
         autoScrollEditorIntoView: true,
     };
-
-    widgets = {};
-    formLayout: Function;
-
-    formSpecSearch = new FormControl();
-    filteredSpecOptions$: Observable<XmEntitySpec[]>;
-    specs$: Observable<XmEntitySpec[]>;
-    spec$: Observable<XmEntitySpec>;
-    specs: XmEntitySpec[] = [];
+    public widgets: any = {};
+    public formLayout: () => void;
+    public formSpecSearch: any = new FormControl();
+    public filteredSpecOptions$: Observable<XmEntitySpec[]>;
+    public specs$: Observable<XmEntitySpec[]>;
+    public spec$: Observable<XmEntitySpec>;
+    public specs: XmEntitySpec[] = [];
     // spec: XmEntitySpec;
-    selectedSpec: string;
-    selectedSpecKey$ = new Subject<string>();
-
-    xmEntityForms: FormsConfig[] = [];
-    xmEntityForms$ = new BehaviorSubject<FormsConfig[]>(this.xmEntityForms);
-
-    formConfig$ = new BehaviorSubject<string>('');
-
-    isXmForm = false;
+    public selectedSpec: string;
+    public selectedSpecKey$: Subject<any> = new Subject<string>();
+    public xmEntityForms: FormsConfig[] = [];
+    public xmEntityForms$: BehaviorSubject<any> = new BehaviorSubject<FormsConfig[]>(this.xmEntityForms);
+    public formConfig$: BehaviorSubject<any> = new BehaviorSubject<string>('');
+    public isXmForm: boolean = false;
+    private XM_TEMPLATE: string = `ng2jsf-xm-layout`;
 
     constructor(private xmEntitySpecWrapperService: XmEntitySpecWrapperService,
                 private route: ActivatedRoute,
@@ -112,92 +106,15 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
         this.formLayout = formLayout;
     }
 
-    ngOnInit() {
-        // Subscribe to query string to detect schema to load
-        this.route.queryParams.subscribe(
-            params => {
-                if (params['set']) {
-                    this.selectedSet = params['set'];
-                    this.selectedSetName = ({
-                        ng2jsf: '',
-                        asf: 'Angular Schema Form:',
-                        rsf: 'React Schema Form:',
-                        jsf: 'JSONForm:'
-                    })[this.selectedSet];
-                }
-                if (params['example']) {
-                    this.selectedExample = params['example'];
-                    this.selectedExampleName = this.examples[this.selectedSet].schemas
-                        .find(schema => schema.file === this.selectedExample).name;
-                }
-                if (params['framework']) {
-                    this.selectedFramework = params['framework'];
-                }
-                this.loadSelectedExample(null, 'ng2jsf-flex-layout');
-            }
-        );
-
-        this.specs$ = this.xmEntitySpecWrapperService.specv2()
-            .pipe(
-                map(specs => specs.types),
-                tap((specs) => this.specs = specs)
-            );
-
-        this.filteredSpecOptions$ = this.formSpecSearch.valueChanges
-            .pipe(
-                startWith(''),
-                map(value => this._filterSpec(value))
-            );
-
-    }
-
-    private updateXmFormTemplate(spec: XmEntitySpec): FormsConfig[] {
-        const xmForms = [];
-        if (spec.dataSpec || spec.dataForm) {
-            const dataSpec = spec.dataSpec ? spec.dataSpec : '{}';
-            const dataForm = spec.dataForm ? spec.dataForm : '[]';
-            const item = {key: 'dataForm', title: 'dataForm', dataSpec, dataForm};
-            xmForms.push(item);
-        }
-        xmForms.push(...spec.functions.map(item => this.functionSpecToFormConfig(item)));
-        return xmForms;
-    }
-
-    private functionSpecToFormConfig(item: FunctionSpec): FormsConfig {
-        return {key: item.key,
-            title: item.key,
-            dataSpec: item.inputSpec ? item.inputSpec : '{}',
-            dataForm: item.inputForm ? item.inputForm : '[]'}
-    }
-
-    ngAfterViewInit() {
-    }
-
-    onSubmit(data: any) {
-        this.submittedFormData = data;
-    }
-
-    get prettySubmittedFormData() {
+    get prettySubmittedFormData(): string {
         return JSON.stringify(this.submittedFormData, null, 2);
     }
 
-    onChanges(data: any) {
-        this.liveFormData = data;
-    }
-
-    get prettyLiveFormData() {
+    get prettyLiveFormData(): string {
         return JSON.stringify(this.liveFormData, null, 2);
     }
 
-    isValid(isValid: boolean): void {
-        this.formIsValid = isValid;
-    }
-
-    validationErrors(data: any): void {
-        this.formValidationErrors = data;
-    }
-
-    get prettyValidationErrors() {
+    get prettyValidationErrors(): string | null {
         if (!this.formValidationErrors) {
             return null;
         }
@@ -209,12 +126,66 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
         return prettyValidationErrors;
     }
 
-    private getSchemaTemplate(file): Observable<string> {
-        return this.http.get(`assets/example-schemas/${file}.json`, {responseType: 'text'});
+    public ngOnInit(): void {
+        // Subscribe to query string to detect schema to load
+        this.route.queryParams.subscribe(
+            (params) => {
+                if (params['set']) {
+                    this.selectedSet = params['set'];
+                    this.selectedSetName = ({
+                        ng2jsf: '',
+                        asf: 'Angular Schema Form:',
+                        rsf: 'React Schema Form:',
+                        jsf: 'JSONForm:',
+                    })[this.selectedSet];
+                }
+                if (params['example']) {
+                    this.selectedExample = params['example'];
+                    this.selectedExampleName = this.examples[this.selectedSet].schemas
+                        .find((schema) => schema.file === this.selectedExample).name;
+                }
+                if (params['framework']) {
+                    this.selectedFramework = params['framework'];
+                }
+                this.loadSelectedExample(null, 'ng2jsf-flex-layout');
+            },
+        );
+
+        this.specs$ = this.xmEntitySpecWrapperService.specv2()
+            .pipe(
+                map((specs) => specs.types),
+                tap((specs) => this.specs = specs),
+            );
+
+        this.filteredSpecOptions$ = this.formSpecSearch.valueChanges
+            .pipe(
+                startWith(''),
+                map((value) => this._filterSpec(value as any)),
+            );
+
     }
 
-    loadSelectedExample(event, file) {
-        this.getSchemaTemplate(file).subscribe(schema => {
+    public ngAfterViewInit(): void {
+    }
+
+    public onSubmit(data: any): void {
+        this.submittedFormData = data;
+    }
+
+    public onChanges(data: any): void {
+        this.liveFormData = data;
+    }
+
+    public isValid(isValid: boolean): void {
+        this.formIsValid = isValid;
+    }
+
+    public validationErrors(data: any): void {
+        this.formValidationErrors = data;
+    }
+
+    public loadSelectedExample(event: any, file: any): void {
+        this.getSchemaTemplate(file).subscribe((schema) => {
             this.isXmForm = (this.XM_TEMPLATE === file);
             this.jsonFormSchema = schema;
             this.formConfig$.next(schema);
@@ -222,9 +193,8 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
         });
     }
 
-    // Display the form entered by the user
     // (runs whenever the user changes the jsonform object in the ACE input field)
-    generateForm(newFormString: string) {
+    public generateForm(newFormString: string): void {
         if (!newFormString) {
             return;
         }
@@ -270,33 +240,30 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
         this.formActive = true;
     }
 
-    private _filterSpec(value: string): XmEntitySpec[] {
-        return this.specs
-            .filter(option => option.key.toLowerCase().indexOf(value.toLowerCase()) === 0);
-    }
-
-    onEntitySelect(value: string) {
+    public onEntitySelect(value: string): void {
         this.xmEntityForms$.next([]);
         this.xmEntitySpecWrapperService.xmSpecByKey(value).pipe(
-            map(spec => this.updateXmFormTemplate(spec))
+            map((spec) => this.updateXmFormTemplate(spec)),
         ).subscribe(
-            data => this.xmEntityForms$.next(data),
-            error => console.log(error)
+            (data) => this.xmEntityForms$.next(data),
+            (error) => console.log(error),
         );
     }
 
-    onSpecSelect(key: FormsConfig) {
+    public onSpecSelect(key: FormsConfig): void {
         this.getSchemaTemplate(this.XM_TEMPLATE).pipe(
-            map(tmpl => tmpl.replace('"schema": {}', `"schema": ${key.dataSpec}`)),
-            map(tmpl => tmpl.replace('"layout": []', `"layout": ${key.dataForm}`)),
-        ).subscribe(success => this.formConfig$.next(success))
+            map((tmpl) => tmpl.replace('"schema": {}', `"schema": ${key.dataSpec}`)),
+            map((tmpl) => tmpl.replace('"layout": []', `"layout": ${key.dataForm}`)),
+        ).subscribe((success) => this.formConfig$.next(success));
     }
 
-    toggleVisible(item: string) {
+    // Display the form entered by the user
+
+    public toggleVisible(item: string): void {
         this.visible[item] = !this.visible[item];
     }
 
-    toggleFormOption(option: string) {
+    public toggleFormOption(option: string): void {
         if (option === 'feedback') {
             this.jsonFormOptions.formDefaults.feedback =
                 !this.jsonFormOptions.formDefaults.feedback;
@@ -304,5 +271,35 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
             this.jsonFormOptions[option] = !this.jsonFormOptions[option];
         }
         this.generateForm(this.jsonFormSchema);
+    }
+
+    private updateXmFormTemplate(spec: XmEntitySpec): FormsConfig[] {
+        const xmForms = [];
+        if (spec.dataSpec || spec.dataForm) {
+            const dataSpec = spec.dataSpec ? spec.dataSpec : '{}';
+            const dataForm = spec.dataForm ? spec.dataForm : '[]';
+            const item = {key: 'dataForm', title: 'dataForm', dataSpec, dataForm};
+            xmForms.push(item);
+        }
+        xmForms.push(...spec.functions.map((item) => this.functionSpecToFormConfig(item)));
+        return xmForms;
+    }
+
+    private functionSpecToFormConfig(item: FunctionSpec): FormsConfig {
+        return {
+            key: item.key,
+            title: item.key,
+            dataSpec: item.inputSpec ? item.inputSpec : '{}',
+            dataForm: item.inputForm ? item.inputForm : '[]',
+        };
+    }
+
+    private getSchemaTemplate(file: any): Observable<string> {
+        return this.http.get(`assets/example-schemas/${file}.json`, {responseType: 'text'});
+    }
+
+    private _filterSpec(value: string): XmEntitySpec[] {
+        return this.specs
+            .filter((option) => option.key.toLowerCase().indexOf(value.toLowerCase()) === 0);
     }
 }

@@ -8,7 +8,7 @@ import { SERVER_API_URL } from '../../xm.constants';
 @Injectable()
 export class FunctionService {
 
-    private resourceUrl = SERVER_API_URL + 'entity/api/functions';
+    private resourceUrl: string = SERVER_API_URL + 'entity/api/functions';
 
     private resourceEntityUrl = (id, key) => SERVER_API_URL + `entity/api/xm-entities/${id}/functions/${key}`;
 
@@ -22,15 +22,15 @@ export class FunctionService {
     constructor(private http: HttpClient) {
     }
 
-    callEntityFunction(functionKey: string, xmEntityId?: number, inputContext?: any): Observable<HttpResponse<any>> {
+    public callEntityFunction(functionKey: string, xmEntityId?: number, inputContext?: any): Observable<HttpResponse<any>> {
         const copy = this.convert(inputContext);
         if (xmEntityId) {
-            return this.callWithEntityId(xmEntityId, functionKey, copy)
+            return this.callWithEntityId(xmEntityId, functionKey, copy);
         }
-        return this.call(functionKey, copy)
+        return this.call(functionKey, copy);
     }
 
-    call(functionKey: string, inputContext?: any): Observable<HttpResponse<any>> {
+    public call(functionKey: string, inputContext?: any): Observable<HttpResponse<any>> {
         const copy = this.convert(inputContext);
         const url = this.resourceUrl + '/' + functionKey;
         if (this.isExportFunction(functionKey)) {
@@ -39,7 +39,7 @@ export class FunctionService {
         return this.callXmFunction(url, copy);
     }
 
-    callWithEntityId(xmEntityId: number, functionKey: string, inputContext?: any): Observable<HttpResponse<any>> {
+    public callWithEntityId(xmEntityId: number, functionKey: string, inputContext?: any): Observable<HttpResponse<any>> {
         const copy = this.convert(inputContext);
         const url = this.resourceEntityUrl(xmEntityId, functionKey);
         if (this.isExportFunction(functionKey)) {

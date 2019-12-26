@@ -11,40 +11,40 @@ import { Calendar } from './calendar.model';
 @Injectable()
 export class CalendarService {
 
-    private resourceUrl = SERVER_API_URL + 'entity/api/calendars';
-    private resourceSearchUrl = SERVER_API_URL + 'entity/api/_search/calendars';
+    private resourceUrl: string = SERVER_API_URL + 'entity/api/calendars';
+    private resourceSearchUrl: string = SERVER_API_URL + 'entity/api/_search/calendars';
 
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils) {
     }
 
-    create(calendar: Calendar): Observable<HttpResponse<Calendar>> {
+    public create(calendar: Calendar): Observable<HttpResponse<Calendar>> {
         const copy = this.convert(calendar);
         return this.http.post<Calendar>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Calendar>) => this.convertResponse(res)));
     }
 
-    update(calendar: Calendar): Observable<HttpResponse<Calendar>> {
+    public update(calendar: Calendar): Observable<HttpResponse<Calendar>> {
         const copy = this.convert(calendar);
         return this.http.put<Calendar>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Calendar>) => this.convertResponse(res)));
     }
 
-    find(id: number): Observable<HttpResponse<Calendar>> {
+    public find(id: number): Observable<HttpResponse<Calendar>> {
         return this.http.get<Calendar>(`${this.resourceUrl}/${id}`, {observe: 'response'}).pipe(
             map((res: HttpResponse<Calendar>) => this.convertResponse(res)));
     }
 
-    query(req?: any): Observable<HttpResponse<Calendar[]>> {
+    public query(req?: any): Observable<HttpResponse<Calendar[]>> {
         const options = createRequestOption(req);
         return this.http.get<Calendar[]>(this.resourceUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Calendar[]>) => this.convertArrayResponse(res)));
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
+    public delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 
-    search(req?: any): Observable<HttpResponse<Calendar[]>> {
+    public search(req?: any): Observable<HttpResponse<Calendar[]>> {
         const options = createRequestOption(req);
         return this.http.get<Calendar[]>(this.resourceSearchUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Calendar[]>) => this.convertArrayResponse(res)));

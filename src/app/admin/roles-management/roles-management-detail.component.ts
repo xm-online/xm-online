@@ -14,37 +14,37 @@ import { RoleConditionDialogComponent } from './roles-management-condition-dialo
 @Component({
     selector: 'xm-role-mgmt-datail',
     templateUrl: './roles-management-detail.component.html',
-    providers: [JhiOrderByPipe]
+    providers: [JhiOrderByPipe],
 })
 export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
 
-    role: Role;
-    permissions: Permission[];
-    permissionsSort: Permission[];
-    totalItems: any;
-    queryCount: any;
-    itemsPerPage = ITEMS_PER_PAGE;
-    previousPage: any;
-    page: any = 1;
-    predicate: any = 'privilegeKey';
-    reverse: any = true;
-    routeData: any;
-    forbids: string[] = ['', 'EXCEPTION', 'SKIP'];
-    permits: any[] = [
+    public role: Role;
+    public permissions: Permission[];
+    public permissionsSort: Permission[];
+    public totalItems: any;
+    public queryCount: any;
+    public itemsPerPage: typeof ITEMS_PER_PAGE = ITEMS_PER_PAGE;
+    public previousPage: any;
+    public page: any = 1;
+    public predicate: any = 'privilegeKey';
+    public reverse: any = true;
+    public routeData: any;
+    public forbids: string[] = ['', 'EXCEPTION', 'SKIP'];
+    public permits: any[] = [
         {},
         {trans: 'permitted', value: true},
-        {trans: 'notPermitted', value: false}
+        {trans: 'notPermitted', value: false},
     ];
-    resource_conditions: any[] = [
+    public resource_conditions: any[] = [
         {},
         {trans: 'permitted', value: true},
-        {trans: 'notPermitted', value: false}
+        {trans: 'notPermitted', value: false},
     ];
-    showLoader: boolean;
-    sortBy: any = {};
-    hasEnv: boolean;
-    entities: string[];
-    checkAll: boolean;
+    public showLoader: boolean;
+    public sortBy: any = {};
+    public hasEnv: boolean;
+    public entities: string[];
+    public checkAll: boolean;
     private isSort: boolean;
     private routeParamsSubscription: Subscription;
     private routeDataSubscription: Subscription;
@@ -55,10 +55,10 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
                 private activatedRoute: ActivatedRoute,
                 private orderByPipe: JhiOrderByPipe,
                 private modalService: NgbModal) {
-        this.routeDataSubscription = this.activatedRoute.data.subscribe(data => this.routeData = data);
+        this.routeDataSubscription = this.activatedRoute.data.subscribe((data) => this.routeData = data);
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.routeParamsSubscription = this.activatedRoute.params.subscribe((params) => {
             const roleKey = params['roleKey'];
             if (roleKey) {
@@ -69,12 +69,12 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.routeParamsSubscription.unsubscribe();
         this.routeDataSubscription.unsubscribe();
     }
 
-    load(roleKey: string) {
+    public load(roleKey: string): void {
         this.showLoader = true;
         this.roleService.getRole(roleKey)
             .subscribe(
@@ -87,11 +87,11 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
                     this.onTransition(this.page);
                 },
                 (resp: Response) => this.onError(resp),
-                () => this.showLoader = false
+                () => this.showLoader = false,
             );
     }
 
-    onLoadPage(page: number) {
+    public onLoadPage(page: number): void {
         if (page !== this.previousPage) {
             this.previousPage = page;
             this.permissions = this.getItemsByPage(page);
@@ -99,7 +99,7 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    onTransition(page: number) {
+    public onTransition(page: number): void {
         if (this.isSort) {
             this.permissionsSort = this.orderByPipe.transform(this.permissionsSort, this.predicate, !this.reverse);
         } else {
@@ -108,7 +108,7 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
         this.permissions = this.getItemsByPage(page);
     }
 
-    onChangeSort() {
+    public onChangeSort(): void {
         const booleanCompare = (obj) => typeof obj === 'boolean';
         if (this.sortBy.msName || this.sortBy.query || booleanCompare(this.sortBy.enabled) || booleanCompare(this.sortBy.condition)) {
             this.isSort = true;
@@ -122,32 +122,32 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
         this.onTransition(this.page);
     }
 
-    onChangePerPage() {
+    public onChangePerPage(): void {
         this.previousPage = null;
         this.onLoadPage(this.page);
     }
 
-    onCheckAll() {
-        (this.isSort ? this.permissionsSort : this.role.permissions).forEach(el => el.enabled = this.checkAll);
+    public onCheckAll(): void {
+        (this.isSort ? this.permissionsSort : this.role.permissions).forEach((el) => el.enabled = this.checkAll);
     }
 
-    onEditResource(item: Permission) {
+    public onEditResource(item: Permission): void {
         this.openDialog(RoleConditionDialogComponent, item, item.resourceCondition, item.resources, 'rolesManagement.permission.conditionResourceInfo').result
-            .then(result => {
+            .then((result) => {
                 item.resourceCondition = result || '';
             }, () => {
             });
     }
 
-    onEditEnv(item: Permission) {
+    public onEditEnv(item: Permission): void {
         this.openDialog(RoleConditionDialogComponent, item, item.envCondition, this.role.env, 'rolesManagement.permission.conditionEnvInfo').result
-            .then(result => {
+            .then((result) => {
                 item.envCondition = result || '';
             }, () => {
             });
     }
 
-    onSave() {
+    public onSave(): void {
         this.showLoader = true;
         this.role.updatedDate = new Date().toJSON();
         this.roleService.update(this.role)
@@ -156,7 +156,7 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
                 () => this.showLoader = false);
     }
 
-    private getItemsByPage(page) {
+    private getItemsByPage(page): Permission[] {
         const startPos = (page - 1) * this.itemsPerPage,
             endPos = startPos + this.itemsPerPage
         ;
@@ -165,15 +165,15 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
 
     private getEntities(list: Permission[] = []): string[] {
         return list.reduce((result, item) => {
-            result.find(el => el === item.msName) || result.push(item.msName);
+            result.find((el) => el === item.msName) || result.push(item.msName);
             return result;
         }, ['']).sort();
     }
 
-    private groupByItem(list) {
+    private groupByItem(list): any {
         const sortBy = this.sortBy;
         return list.reduce((result: Permission[], item: Permission) => {
-            const resourceCondition = typeof item.resourceCondition !== 'object'
+            const resourceCondition = typeof item.resourceCondition !== 'object';
             if (
                 (sortBy.msName && item.msName !== sortBy.msName) ||
                 (typeof sortBy.enabled === 'boolean' && item.enabled !== sortBy.enabled) ||
@@ -188,7 +188,7 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
         }, []);
     }
 
-    private onError(resp) {
+    private onError(resp): void {
         try {
             const res = resp.json() || {};
             this.alertService.error(res.error_description, res.params);
@@ -206,5 +206,3 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
     }
 
 }
-
-

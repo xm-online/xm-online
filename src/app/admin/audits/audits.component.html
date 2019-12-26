@@ -1,100 +1,100 @@
 <div class="row" *ngIf="audits">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">track_changes</i>
-              </div>
-              <h4 class="card-title" jhiTranslate="audits.title">Audits</h4>
-            </div>
-
-            <div class="card-body">
-                <xm-loader [showLoader]="showLoader"></xm-loader>
-                <legend jhiTranslate="audits.filter.title">Filter by date</legend>
-                <div class="row">
-                  <div class="col-sm-2">
-                    <mat-form-field>
-                      <input matInput
-                             [matDatepicker]="fromDatePicker"
-                             [(ngModel)]="fromDate"
-                             (ngModelChange)="onChangeDate()"
-                             placeholder="{{'audits.filter.from' | translate}}"
-                             required>
-                      <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-                      <mat-datepicker #fromDatePicker></mat-datepicker>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-sm-2">
-                    <mat-form-field>
-                      <input matInput
-                             [matDatepicker]="toDatePicker"
-                             [(ngModel)]="toDate"
-                             (ngModelChange)="onChangeDate()"
-                             placeholder="{{'audits.filter.to' | translate}}"
-                             required>
-                      <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-                      <mat-datepicker #toDatePicker></mat-datepicker>
-                    </mat-form-field>
-                  </div>
-                </div>
-
-              <ng-container *ngIf="audits?.length > 0">
-                <div class="table-responsive">
-                  <table class="table table-striped table-bordered">
-                    <thead>
-                    <tr>
-                      <th (click)="sortAudits(audits, 'timestamp')">
-                        <span jhiTranslate="audits.table.header.date">Date</span>
-                      </th>
-                      <th (click)="sortAudits(audits, 'principal')">
-                        <span jhiTranslate="audits.table.header.principal">User</span>
-                      </th>
-                      <th (click)="sortAudits(audits, 'type')">
-                        <span jhiTranslate="audits.table.header.status">State</span>
-                      </th>
-                      <th (click)="sortAudits(audits, 'data.remoteAddress')">
-                        <span jhiTranslate="audits.table.header.data">Extra data</span>
-                      </th>
-                    </tr>
-                    </thead>
-                    <tr *ngFor="let audit of audits">
-                      <td><span>{{audit.timestamp| date:'medium'}}</span></td>
-                      <td>
-                        <small>{{audit.principal}}</small>
-                      </td>
-                      <td>{{audit.type}}</td>
-                      <td>
-                        <span *ngIf="audit.data" ng-show="audit.data.message">{{audit.data.message}}</span>
-                        <span *ngIf="audit.data" ng-show="audit.data.remoteAddress"><span
-                          jhiTranslate="audits.table.data.remoteAddress">Remote Address</span> {{audit.data.remoteAddress}}</span>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-
-                <div class="row align-items-center list-pagination" *ngIf="audits?.length">
-                  <div class="col-auto">
-                    <xm-per-page [(itemsPerPage)]="itemsPerPage" (onChange)="onChangeDate()"></xm-per-page>
-                  </div>
-                  <div class="col-auto">
-                    <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-                  </div>
-                  <div class="col-sm"></div>
-                  <div class="col-auto">
-                    <ngb-pagination [collectionSize]="totalItems"
-                                    [pageSize]="itemsPerPage"
-                                    [(page)]="page"
-                                    [maxSize]="5"
-                                    (pageChange)="loadPage(page)">
-
-                    </ngb-pagination>
-                  </div>
-                </div>
-              </ng-container>
-
-
-                <no-data [show]="!audits?.length"></no-data>
-            </div>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">track_changes</i>
         </div>
+        <h4 class="card-title" jhiTranslate="audits.title">Audits</h4>
+      </div>
+
+      <div class="card-body">
+        <xm-loader [showLoader]="showLoader"></xm-loader>
+        <legend jhiTranslate="audits.filter.title">Filter by date</legend>
+        <div class="row">
+          <div class="col-sm-2">
+            <mat-form-field>
+              <input matInput
+                     [matDatepicker]="fromDatePicker"
+                     [(ngModel)]="fromDate"
+                     (ngModelChange)="onChangeDate()"
+                     placeholder="{{'audits.filter.from' | translate}}"
+                     required>
+              <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #fromDatePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-2">
+            <mat-form-field>
+              <input matInput
+                     [matDatepicker]="toDatePicker"
+                     [(ngModel)]="toDate"
+                     (ngModelChange)="onChangeDate()"
+                     placeholder="{{'audits.filter.to' | translate}}"
+                     required>
+              <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #toDatePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <ng-container *ngIf="audits?.length > 0">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+              <thead>
+              <tr>
+                <th (click)="sortAudits(audits, 'timestamp')">
+                  <span jhiTranslate="audits.table.header.date">Date</span>
+                </th>
+                <th (click)="sortAudits(audits, 'principal')">
+                  <span jhiTranslate="audits.table.header.principal">User</span>
+                </th>
+                <th (click)="sortAudits(audits, 'type')">
+                  <span jhiTranslate="audits.table.header.status">State</span>
+                </th>
+                <th (click)="sortAudits(audits, 'data.remoteAddress')">
+                  <span jhiTranslate="audits.table.header.data">Extra data</span>
+                </th>
+              </tr>
+              </thead>
+              <tr *ngFor="let audit of audits">
+                <td><span>{{audit.timestamp| date:'medium'}}</span></td>
+                <td>
+                  <small>{{audit.principal}}</small>
+                </td>
+                <td>{{audit.type}}</td>
+                <td>
+                  <span *ngIf="audit.data" ng-show="audit.data.message">{{audit.data.message}}</span>
+                  <span *ngIf="audit.data" ng-show="audit.data.remoteAddress"><span
+                    jhiTranslate="audits.table.data.remoteAddress">Remote Address</span> {{audit.data.remoteAddress}}</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="row align-items-center list-pagination" *ngIf="audits?.length">
+            <div class="col-auto">
+              <xm-per-page [(itemsPerPage)]="itemsPerPage" (onChange)="onChangeDate()"></xm-per-page>
+            </div>
+            <div class="col-auto">
+              <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="col-sm"></div>
+            <div class="col-auto">
+              <ngb-pagination [collectionSize]="totalItems"
+                              [pageSize]="itemsPerPage"
+                              [(page)]="page"
+                              [maxSize]="5"
+                              (pageChange)="loadPage(page)">
+
+              </ngb-pagination>
+            </div>
+          </div>
+        </ng-container>
+
+
+        <no-data [show]="!audits?.length"></no-data>
+      </div>
     </div>
+  </div>
 </div>

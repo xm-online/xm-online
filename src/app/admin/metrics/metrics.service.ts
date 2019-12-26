@@ -10,7 +10,7 @@ export class JhiMetricsService {
 
     constructor(private http: HttpClient) {}
 
-    getMetrics(msName: string = ''): Observable<any> {
+    public getMetrics(msName: string = ''): Observable<any> {
         if (!msName) {
             return this.http.get(SERVER_API_URL + 'management/metrics');
         } else {
@@ -18,19 +18,19 @@ export class JhiMetricsService {
         }
     }
 
-    threadDump(): Observable<any> {
+    public threadDump(): Observable<any> {
         return this.http.get(SERVER_API_URL + 'management/threaddump');
     }
 
-    getMonitoringServicesCollection(): Observable<any> {
+    public getMonitoringServicesCollection(): Observable<any> {
         return this.http.get(SERVICES_COLLECTION);
     }
 
-    getMetricsByMsName(msName: string, metricsType: string): Observable<any> {
+    public getMetricsByMsName(msName: string, metricsType: string): Observable<any> {
         return this.http.get(`/api/monitoring/services/${msName}/${metricsType}`);
     }
 
-    isEmpty(obj) {
+    public isEmpty(obj: any): boolean {
         for (const key in obj) {
             if (obj.hasOwnProperty(key)) {
                 return false;

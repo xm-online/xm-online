@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
-    MaterialDesignFramework,
-    MaterialDesignFrameworkModule,
     Framework,
     FrameworkLibraryService,
-    JsonSchemaFormModule, JsonSchemaFormService,
+    JsonSchemaFormModule,
+    JsonSchemaFormService,
+    MaterialDesignFramework,
+    MaterialDesignFrameworkModule,
     WidgetLibraryService,
 } from 'angular2-json-schema-form';
 import { TagInputModule } from 'ngx-chips';
@@ -28,8 +29,8 @@ import {
     CommentListComponent,
     CommentService,
     ContentService,
-    EntityCardComponent,
     EntityCardCompactComponent,
+    EntityCardComponent,
     EntityDataCardComponent,
     EntityDetailDialogComponent,
     EntityDetailFabComponent,
@@ -39,18 +40,19 @@ import {
     EventService,
     FunctionCallDialogComponent,
     FunctionContextService,
-    FunctionListSectionComponent,
     FunctionListSectionCompactComponent,
+    FunctionListSectionComponent,
     FunctionService,
     LinkDetailDialogComponent,
     LinkDetailNewSectionComponent,
     LinkDetailSearchSectionComponent,
-    LinkedinProfileComponent,
     LinkedinDataItemComponent,
+    LinkedinProfileComponent,
     LinkListCardComponent,
     LinkListComponent,
     LinkListTreeSectionComponent,
     LinkService,
+    LocationCardNamePipe,
     LocationDetailDialogComponent,
     LocationListCardComponent,
     LocationService,
@@ -58,19 +60,18 @@ import {
     OverpassApiService,
     RatingListSectionComponent,
     RatingService,
+    StatesManagementDialogComponent,
     TagListSectionComponent,
     TagService,
     VoteService,
     XmEntityService,
     XmEntitySpecService,
     XmEntitySpecWrapperService,
-    LocationCardNamePipe,
-    StatesManagementDialogComponent
 } from './';
-
-import {StateChangeDialogComponent} from './state-change-dialog/state-change-dialog.component';
-import { AttachmentListSimplifiedComponent } from './attachment-list/attachment-list-simplified.component';
 import { AttachmentListBaseComponent } from './attachment-list/attachment-list-base.component';
+import { AttachmentListSimplifiedComponent } from './attachment-list/attachment-list-simplified.component';
+
+import { StateChangeDialogComponent } from './state-change-dialog/state-change-dialog.component';
 
 @NgModule({
     imports: [
@@ -84,12 +85,12 @@ import { AttachmentListBaseComponent } from './attachment-list/attachment-list-b
                 JsonSchemaFormService,
                 FrameworkLibraryService,
                 WidgetLibraryService,
-                {provide: Framework, useClass: MaterialDesignFramework, multi: true}
-            ]
+                {provide: Framework, useClass: MaterialDesignFramework, multi: true},
+            ],
         },
         ImageCropperModule,
         RatingModule,
-        TagInputModule
+        TagInputModule,
     ],
     declarations: [
         AreaComponent,
@@ -131,7 +132,7 @@ import { AttachmentListBaseComponent } from './attachment-list/attachment-list-b
         LocationCardNamePipe,
         StatesManagementDialogComponent,
         AttachmentListSimplifiedComponent,
-        AttachmentListBaseComponent
+        AttachmentListBaseComponent,
     ],
     entryComponents: [
         StatesManagementDialogComponent,
@@ -144,7 +145,7 @@ import { AttachmentListBaseComponent } from './attachment-list/attachment-list-b
         StateChangeDialogComponent,
         LinkDetailDialogComponent,
         LocationDetailDialogComponent,
-        OsmPolygonDialogComponent
+        OsmPolygonDialogComponent,
     ],
     exports: [
         AreaComponent,
@@ -170,7 +171,7 @@ import { AttachmentListBaseComponent } from './attachment-list/attachment-list-b
         LocationListCardComponent,
         RatingListSectionComponent,
         TagListSectionComponent,
-        StatesManagementDialogComponent
+        StatesManagementDialogComponent,
     ],
     providers: [
         AttachmentService,
@@ -188,9 +189,9 @@ import { AttachmentListBaseComponent } from './attachment-list/attachment-list-b
         VoteService,
         XmEntityService,
         XmEntitySpecService,
-        XmEntitySpecWrapperService
+        XmEntitySpecWrapperService,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class XmEntityModule {
 }

@@ -8,31 +8,31 @@
 
   <div class="card-body">
     <div class="text-center">
-      <div class="btn-group" *ngIf="modes.length > 1">
-        <button mat-raised-button
-                type="button"
-                class="btn btn-primary btn-sm btn-round"
+      <div *ngIf="modes.length > 1" class="btn-group">
+        <button (click)="mode = 'list';"
                 [disabled]="mode === 'list'"
-                (click)="mode = 'list';">
+                class="btn btn-primary btn-sm btn-round"
+                mat-raised-button
+                type="button">
           <span jhiTranslate="xm-entity.link-list-card.list-view">List view</span>
         </button>
-        <button mat-raised-button
-                type="button"
-                class="btn btn-primary btn-sm btn-round"
+        <button (click)="mode = 'tree';"
                 [disabled]="mode === 'tree'"
-                (click)="mode = 'tree';">
+                class="btn btn-primary btn-sm btn-round"
+                mat-raised-button
+                type="button">
           <span jhiTranslate="xm-entity.link-list-card.tree-view">Tree view</span>
         </button>
       </div>
     </div>
 
-    <div class="table-responsive" *ngIf="mode == 'list'">
+    <div *ngIf="mode == 'list'" class="table-responsive">
       <table class="table table-striped">
         <thead>
         <tr>
           <th></th>
           <th *ngFor="let field of fields">
-            <span >{{field.title | i18nName :principal}}</span>
+            <span>{{field.title | i18nName :principal}}</span>
           </th>
           <th *ngIf="!isBackLink"></th>
         </tr>
@@ -42,11 +42,14 @@
           <td>
             <div class="xm-avatar-img-container">
               <img src="{{link.target.avatarUrl ? link.target.avatarUrl : './assets/img/placeholder.png'}}">
-              <i class="material-icons" *ngIf="linkSpec.model.icon && !link.target.avatarUrl">{{linkSpec.model.icon}}</i>
+              <i *ngIf="linkSpec.model.icon && !link.target.avatarUrl"
+                 class="material-icons">{{linkSpec.model.icon}}</i>
             </div>
           </td>
           <td *ngFor="let field of fields">
-            <a *ngIf="field.field =='name'; else barePropertyText" routerLink="/application/{{link.target.typeKey}}/{{link.target.id}}" title="{{link.target.key}}">
+            <a *ngIf="field.field =='name'; else barePropertyText"
+               routerLink="/application/{{link.target.typeKey}}/{{link.target.id}}"
+               title="{{link.target.key}}">
               {{ getFieldValue(link.target, field) }}
             </a>
             <ng-template #barePropertyText>
@@ -55,7 +58,7 @@
           </td>
 
           <td *ngIf="!isBackLink">
-            <a role="button" class="text-muted" (click)="onRemove(link)" *permitted="'LINK.DELETE'">
+            <a (click)="onRemove(link)" *permitted="'LINK.DELETE'" class="text-muted" role="button">
               <i class="material-icons">close</i>
             </a>
           </td>
@@ -64,9 +67,9 @@
       </table>
     </div>
 
-    <div class="row" *ngIf="mode === 'tree'">
+    <div *ngIf="mode === 'tree'" class="row">
       <div class="col-md-12">
-        <xm-link-list-tree-section class="tree" [links]="treeRootLinks" [linkSpec]="linkSpec.model">
+        <xm-link-list-tree-section [linkSpec]="linkSpec.model" [links]="treeRootLinks" class="tree">
         </xm-link-list-tree-section>
       </div>
     </div>

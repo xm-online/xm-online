@@ -6,19 +6,19 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
     selector: 'xm-social-register',
     templateUrl: './social-register.component.html',
 })
-export class SocialRegisterComponent implements OnInit  {
-    success: boolean;
-    error: boolean;
-    provider: string;
-    providerLabel: string;
-    modalRef: NgbModalRef;
+export class SocialRegisterComponent implements OnInit {
+    public success: boolean;
+    public error: boolean;
+    public provider: string;
+    public providerLabel: string;
+    public modalRef: NgbModalRef;
 
     constructor(
         private route: ActivatedRoute,
     ) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.route.queryParams.subscribe((queryParams) => {
             this.success = /true/.test(queryParams['success'].toLowerCase());
         });
@@ -29,7 +29,7 @@ export class SocialRegisterComponent implements OnInit  {
         this.providerLabel = this.provider.charAt(0).toUpperCase() + this.provider.slice(1);
     }
 
-    login() {
+    public login(): void {
     }
 
 }

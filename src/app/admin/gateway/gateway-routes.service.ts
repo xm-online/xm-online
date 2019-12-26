@@ -8,7 +8,7 @@ import { GatewayRoute } from './gateway-route.model';
 export class GatewayRoutesService {
     constructor(private http: HttpClient) { }
 
-    findAll(): Observable<GatewayRoute[]> {
+    public findAll(): Observable<GatewayRoute[]> {
         return this.http.get<GatewayRoute[]>('api/gateway/routes/');
     }
 }

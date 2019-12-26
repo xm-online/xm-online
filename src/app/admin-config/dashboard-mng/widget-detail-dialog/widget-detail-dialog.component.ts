@@ -9,18 +9,18 @@ import { Widget, WidgetService } from '../../../xm-dashboard';
 declare let swal: any;
 
 @Component({
-  selector: 'xm-widget-detail-dialog',
-  templateUrl: './widget-detail-dialog.component.html',
-  styleUrls: ['./widget-detail-dialog.component.scss'],
+    selector: 'xm-widget-detail-dialog',
+    templateUrl: './widget-detail-dialog.component.html',
+    styleUrls: ['./widget-detail-dialog.component.scss'],
 })
 export class WidgetDetailDialogComponent implements OnInit {
 
-    @Input() dashboardId: number;
-    @Input() widget: Widget = new Widget();
+    @Input() public dashboardId: number;
+    @Input() public widget: Widget = new Widget();
 
-    configStringIn: string;
-    configStringOut: string;
-    showLoader: boolean;
+    public configStringIn: string;
+    public configStringOut: string;
+    public showLoader: boolean;
 
     constructor(private activeModal: NgbActiveModal,
                 private widgetService: WidgetService,
@@ -29,17 +29,17 @@ export class WidgetDetailDialogComponent implements OnInit {
                 public principal: Principal) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.configStringIn = JSON.stringify(this.widget.config, null, 2);
         this.configStringOut = this.configStringIn;
     }
 
-    onConfigChange(textChanged) {
+    public onConfigChange(textChanged): void {
         this.configStringOut = textChanged;
     }
 
-    onConfirmSave() {
-        this.widget.dashboard = { id: this.dashboardId };
+    public onConfirmSave(): void {
+        this.widget.dashboard = {id: this.dashboardId};
         this.widget.config = this.configStringOut ? JSON.parse(this.configStringOut) : null;
 
         this.showLoader = true;
@@ -58,18 +58,18 @@ export class WidgetDetailDialogComponent implements OnInit {
         }
     }
 
-    onCancel() {
+    public onCancel(): void {
         this.activeModal.dismiss('cancel');
     }
 
-    private onSaveSuccess(key: string) {
+    private onSaveSuccess(key: string): void {
         // TODO: use constant for the broadcast and analyse listeners
         this.eventManager.broadcast({name: 'widgetListModification'});
         this.activeModal.dismiss(true);
         this.alert('success', key);
     }
 
-    private alert(type, key) {
+    private alert(type: string, key: string): void {
         swal({
             type,
             text: this.translateService.instant(key),

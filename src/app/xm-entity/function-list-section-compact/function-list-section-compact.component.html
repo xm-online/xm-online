@@ -1,23 +1,23 @@
-<div class="mt-3" *ngIf="!listView">
+<div *ngIf="!listView" class="mt-3">
 
   <ng-container *ngIf="customFunctions$ | async as customFunctions">
-    <mat-tab-group *ngIf="customFunctions.length > 0; else statesAndFunctions"
-                   mat-stretch-tabs
-                   (selectedTabChange)="reinitMap($event)"
-                   animationDuration="0ms">
+    <mat-tab-group (selectedTabChange)="reinitMap($event)"
+                   *ngIf="customFunctions.length > 0; else statesAndFunctions"
+                   animationDuration="0ms"
+                   mat-stretch-tabs>
       <mat-tab [label]="'xm-entity.function-list-card.general-group' | translate">
         <ng-container *ngIf="true; then statesAndFunctions"></ng-container>
       </mat-tab>
 
-      <mat-tab [label]="f.name | i18nName: principal"
-               *ngFor="let f of customFunctions; let i = index;"
+      <mat-tab *ngFor="let f of customFunctions; let i = index;"
+               [label]="f.name | i18nName: principal"
                [tabIndex]="f.key === 'AREA' ? 'AREA': i">
         <div *ngIf="f.key === 'AREA'">
-          <xm-area [xmEntity]="xmEntity" [functionContext]="getFunctionContext(f)" *ngIf="initMap">
+          <xm-area *ngIf="initMap" [functionContext]="getFunctionContext(f)" [xmEntity]="xmEntity">
           </xm-area>
         </div>
         <div *ngIf="f.key === 'EXTRACT-LINKEDIN-PROFILE' || f.key === 'ACCOUNT.EXTRACT-LINKEDIN-PROFILE'">
-          <xm-linkedin-profile [xmEntity]="xmEntity" [functionContext]="getFunctionContext(f)">
+          <xm-linkedin-profile [functionContext]="getFunctionContext(f)" [xmEntity]="xmEntity">
           </xm-linkedin-profile>
         </div>
       </mat-tab>
@@ -28,19 +28,21 @@
     <ng-container>
       <div class="container-fluid">
         <div class="row mt-3 mb-3 text-left">
-          <div class="col" [class.limetedWidth]="nextStates?.length" *ngIf="xmEntity && nextStates?.length">
-            <div class="mb-1"><xm-entity-state [stateSpec]="getCurrentStateSpec()"></xm-entity-state></div>
+          <div *ngIf="xmEntity && nextStates?.length" [class.limetedWidth]="nextStates?.length" class="col">
+            <div class="mb-1">
+              <xm-entity-state [stateSpec]="getCurrentStateSpec()"></xm-entity-state>
+            </div>
           </div>
 
           <div class="col">
             <ng-container *xmPermitted="['XMENTITY.STATE']">
               <div *ngIf="nextStates?.length">
-                <div class="xm-state act-as-button no-wrap mr-1 mb-1"
+                <div (click)="onChangeState(nextState.key)"
                      *ngFor="let nextState of nextStates"
-                     title="{{nextState.actionName | i18nName: principal}}"
-                     (click)="onChangeState(nextState.key)"
-                     [style.background]="nextState.color">
-                  <div class="xm-state-icon mr-0" [style.background]="'transparent'">
+                     [style.background]="nextState.color"
+                     class="xm-state act-as-button no-wrap mr-1 mb-1"
+                     title="{{nextState.actionName | i18nName: principal}}">
+                  <div [style.background]="'transparent'" class="xm-state-icon mr-0">
                     <i class="material-icons">{{nextState.icon}}</i>
                   </div>
                   {{nextState.actionName | i18nName: principal}}
@@ -49,13 +51,13 @@
             </ng-container>
 
             <ng-container *ngIf="defaultFunctions$ | async as defaultFunctions">
-              <div class="func-compact-blk" *ngIf="defaultFunctions.length">
+              <div *ngIf="defaultFunctions.length" class="func-compact-blk">
                 <div class="text-left">
                   <hr class="mt-0">
                   <ng-container *ngFor="let functionSpec of defaultFunctions">
-                    <button class="btn btn-sm btn-primary mr-1 mt-0 mb-1 ml-0 no-wrap func-btn"
-                            title="{{(functionSpec.actionName ? functionSpec.actionName : functionSpec.name) | i18nName: principal}}"
-                            (click)="onCallFunction(functionSpec)">
+                    <button (click)="onCallFunction(functionSpec)"
+                            class="btn btn-sm btn-primary mr-1 mt-0 mb-1 ml-0 no-wrap func-btn"
+                            title="{{(functionSpec.actionName ? functionSpec.actionName : functionSpec.name) | i18nName: principal}}">
                       {{(functionSpec.actionName ? functionSpec.actionName : functionSpec.name) | i18nName: principal}}
                     </button>
                   </ng-container>
@@ -72,7 +74,10 @@
 <ng-container *ngIf="listView && defaultFunctions$ | async as defaultFunctions">
   <div *ngIf="defaultFunctions.length">
     <hr class="mt-0 mb-0">
-    <button mat-menu-item class="btn-sm" *ngFor="let functionSpec of defaultFunctions" (click)="onCallFunction(functionSpec)">
+    <button (click)="onCallFunction(functionSpec)"
+            *ngFor="let functionSpec of defaultFunctions"
+            class="btn-sm"
+            mat-menu-item>
       {{(functionSpec.actionName ? functionSpec.actionName : functionSpec.name) | i18nName: principal}}
     </button>
     <hr class="mt-0 mb-0">

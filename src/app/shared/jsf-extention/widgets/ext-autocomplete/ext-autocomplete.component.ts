@@ -9,28 +9,28 @@ import { I18nNamePipe } from '../../../language/i18n-name.pipe';
 import { ExtAutocompleteOptions } from './ext-autocomplete-options.model';
 import { ExtAutocompleteService } from './ext-autocomplete-service';
 
-import "rxjs/add/operator/debounceTime";
-import "rxjs/add/operator/distinctUntilChanged";
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 @Component({
     selector: 'xm-ext-autocomplete-widget',
     templateUrl: 'ext-autocomplete.component.html',
-    styleUrls: ['./ext-autocomplete.component.scss']
+    styleUrls: ['./ext-autocomplete.component.scss'],
 })
 export class ExtAutocompleteComponent implements OnInit {
 
-    @Input() layoutNode: any;
+    @Input() public layoutNode: any;
 
-    options: ExtAutocompleteOptions;
-    controlName: string;
-    elements: any;
-    filteredItems: any;
-    showAutocomplete: boolean;
-    searchLabel: string;
-    dataFields: any;
-    selectedItem: any;
+    public options: ExtAutocompleteOptions;
+    public controlName: string;
+    public elements: any;
+    public filteredItems: any;
+    public showAutocomplete: boolean;
+    public searchLabel: string;
+    public dataFields: any;
+    public selectedItem: any;
 
-    @ViewChild('emailRef', {static: false}) emailRef: ElementRef;
+    @ViewChild('emailRef', {static: false}) public emailRef: ElementRef;
 
     constructor(private jsf: JsonSchemaFormService,
                 private principal: Principal,
@@ -41,10 +41,10 @@ export class ExtAutocompleteComponent implements OnInit {
         this.searchLabel = '';
     }
 
-    ngOnInit() {
+    public ngOnInit() {
         fromEvent(this.emailRef.nativeElement, 'keyup').pipe(map((evt: any) => evt.target.value),
             debounceTime(500),
-            distinctUntilChanged()
+            distinctUntilChanged(),
         ).subscribe((text: string) => {
             this.trySearch(text);
         });
@@ -57,7 +57,7 @@ export class ExtAutocompleteComponent implements OnInit {
 
     private fetchData(options: any) {
         if (options.enum) {
-            options.enum.forEach(it => {
+            options.enum.forEach((it) => {
                 if (this.options.translations && this.options.translations[it]) {
                     this.elements.push({label: this.i18nNamePipe.transform(it, this.principal), value: it});
                 } else {
@@ -66,25 +66,25 @@ export class ExtAutocompleteComponent implements OnInit {
             });
             this.assignCopy();
         } else {
-            this.autocompleteService.fetchData(this.options).subscribe(elements => {
+            this.autocompleteService.fetchData(this.options).subscribe((elements) => {
                 this.elements = elements;
                 this.assignCopy();
                 this.changeDetectorRef.detectChanges();
-            }, error => {
+            }, (error) => {
                 console.error(error);
             });
         }
     }
 
-    getLabel(controlValue) {
-        const value = this.elements.filter(it => it.value === controlValue);
+    public getLabel(controlValue) {
+        const value = this.elements.filter((it) => it.value === controlValue);
         if (value.length > 0) {
             return value[0].label;
         }
         return '';
     }
 
-    hideAutocomplete() {
+    public hideAutocomplete() {
         const self = this;
         setTimeout(() => {
            self.showAutocomplete = false;
@@ -92,7 +92,7 @@ export class ExtAutocompleteComponent implements OnInit {
         }, 100);
     }
 
-    updateValue(item, event) {
+    public updateValue(item, event) {
         event.preventDefault();
         this.searchLabel = item.label;
         this.selectedItem = item;
@@ -101,13 +101,13 @@ export class ExtAutocompleteComponent implements OnInit {
         this.showAutocomplete = false;
     }
 
-    updateValueField(el) {
+    public updateValueField(el) {
         const item = el;
         const fg: FormGroup = this.jsf.formGroup;
         if (this.options.relatedFields) {
-            this.options.relatedFields.forEach(field => {
+            this.options.relatedFields.forEach((field) => {
                 fg.get(field.key).setValue(ExtAutocompleteService.byString(item.object, field.value));
-            })
+            });
         }
         if (this.layoutNode.dataType === 'array') {
             this.jsf.updateValue(this, [item.value]);
@@ -120,19 +120,19 @@ export class ExtAutocompleteComponent implements OnInit {
         this.selectedItem = null;
         if (text.length < 3) { return; }
         this.filteredItems = [];
-        if (!text) {this.assignCopy()}
+        if (!text) {this.assignCopy(); }
         this.filteredItems = Object.assign([], this.elements).filter(
-            (item) => item.label.toLowerCase().indexOf(text.toLowerCase()) > -1
+            (item) => item.label.toLowerCase().indexOf(text.toLowerCase()) > -1,
         );
         this.showAutocomplete = true;
         this.changeDetectorRef.detectChanges();
     }
 
-    assignCopy() {
+    public assignCopy() {
         this.filteredItems = Object.assign([], this.elements);
     }
 
-    showDataFields(options, item) {
+    public showDataFields(options, item) {
         this.dataFields = [];
         const data = item.data ? item.data : null;
         if (options.showDataFields && data) {

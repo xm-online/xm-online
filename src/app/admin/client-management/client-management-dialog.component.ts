@@ -83,7 +83,7 @@ export class ClientMgmtDialogComponent implements OnInit {
     }
 
     private onSaveSuccess(result) {
-        this.eventManager.broadcast({ name: 'clientListModification', content: 'OK' });
+        this.eventManager.broadcast({name: 'clientListModification', content: 'OK'});
         this.activeModal.dismiss(result);
     }
 

@@ -1,24 +1,24 @@
-import {Component} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Principal} from '../../../shared/auth/principal.service';
-import {OverpassApiService} from './overpass-api.service';
+import { Component } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Principal } from '../../../shared/auth/principal.service';
+import { OverpassApiService } from './overpass-api.service';
 
 @Component({
     selector: 'xm-osm-polygon-dialog',
-    templateUrl: './osm-polygon-dialog.component.html'
+    templateUrl: './osm-polygon-dialog.component.html',
 })
 export class OsmPolygonDialogComponent {
 
-    showLoader: boolean;
-    relations: any[];
-    addPolygonInternal = new Function();
+    public showLoader: boolean;
+    public relations: any[];
+    public addPolygonInternal = new Function();
 
     constructor(public principal: Principal,
                 public activeModal: NgbActiveModal,
                 private overpassApi: OverpassApiService) {
     }
 
-    search(searchString) {
+    public search(searchString): void {
         if (searchString && searchString.length > 3) {
             this.showLoader = true;
             this.overpassApi.getBoundariesByName(searchString).subscribe((body) => {
@@ -31,7 +31,7 @@ export class OsmPolygonDialogComponent {
         }
     }
 
-    addPolygon(rel) {
+    public addPolygon(rel): void {
         this.overpassApi.getRelGeom(rel.id).subscribe((body) => {
             const polygon = [];
             const members = body.elements.shift().members
@@ -58,7 +58,7 @@ export class OsmPolygonDialogComponent {
         });
     }
 
-    clear() {
+    public clear(): void {
         this.activeModal.dismiss('cancel');
     }
 

@@ -42,17 +42,17 @@ export class AuthServerProvider {
         private $localStorage: LocalStorageService,
         private $sessionStorage: SessionStorageService,
         private stateStorageService: StateStorageService,
-        private router: Router
+        private router: Router,
     ) {
         const isRememberMe = this.$localStorage.retrieve(REFRESH_TOKEN) != null;
         this.setAutoRefreshTokens(isRememberMe);
     }
 
-    getToken() {
+    public getToken() {
         return this.$localStorage.retrieve(AUTH_TOKEN) || this.$sessionStorage.retrieve(AUTH_TOKEN);
     }
 
-    getRefreshToken() {
+    public getRefreshToken() {
         return this.$localStorage.retrieve(REFRESH_TOKEN) || this.$sessionStorage.retrieve(REFRESH_TOKEN);
     }
 
@@ -89,7 +89,7 @@ export class AuthServerProvider {
     }
 
     private getAccessToken(data, headers, rememberMe): Observable<any> {
-        return this.http.post(TOKEN_URL, data, { headers: headers, observe: 'response'}).pipe(map((resp) => {
+        return this.http.post(TOKEN_URL, data, { headers, observe: 'response'}).pipe(map((resp) => {
             this.$sessionStorage.clear(TOKEN_STORAGE_KEY);
             const result = resp.body;
             let accessToken;
@@ -101,11 +101,11 @@ export class AuthServerProvider {
 
                 this.stateStorageService.storeDestinationState(
                     {
-                        'name': 'otpConfirmation',
-                        'data': {'tfaVerificationKey': result['tfaVerificationKey'], 'tfaChannel': tfaChannel}
+                        name: 'otpConfirmation',
+                        data: {tfaVerificationKey: result['tfaVerificationKey'], tfaChannel},
                     },
                     {},
-                    {'name': 'login'});
+                    {name: 'login'});
 
                 accessToken = this.storeAT(result, rememberMe);
             } else {
@@ -119,7 +119,7 @@ export class AuthServerProvider {
         }));
     }
 
-    login(credentials): Observable<any> {
+    public login(credentials): Observable<any> {
         let data = new HttpParams({encoder: new CustomUriEncoder()});
         this.$sessionStorage.clear(WIDGET_DATA);
 
@@ -143,7 +143,7 @@ export class AuthServerProvider {
 
     }
 
-    loginWithToken(jwt, rememberMe) {
+    public loginWithToken(jwt, rememberMe) {
         this.$sessionStorage.clear(WIDGET_DATA);
         if (jwt) {
             this.storeAuthenticationToken(jwt, rememberMe);
@@ -153,7 +153,7 @@ export class AuthServerProvider {
         }
     }
 
-    storeAuthenticationToken(jwt, rememberMe) {
+    public storeAuthenticationToken(jwt, rememberMe) {
         if (rememberMe) {
             this.$localStorage.store(AUTH_TOKEN, jwt);
             this.$sessionStorage.store(AUTH_TOKEN, jwt);
@@ -162,7 +162,7 @@ export class AuthServerProvider {
         }
     }
 
-    storeRefreshToken(jwt, rememberMe) {
+    public storeRefreshToken(jwt, rememberMe) {
         if (rememberMe) {
             this.$localStorage.store(REFRESH_TOKEN, jwt);
             this.$sessionStorage.store(REFRESH_TOKEN, jwt);
@@ -171,8 +171,8 @@ export class AuthServerProvider {
         }
     }
 
-    logout(): Observable<any> {
-        return new Observable(observer => {
+    public logout(): Observable<any> {
+        return new Observable((observer) => {
             this.$localStorage.clear(AUTH_TOKEN);
             this.$sessionStorage.clear(AUTH_TOKEN);
             this.$localStorage.clear(REFRESH_TOKEN);
@@ -201,7 +201,7 @@ export class AuthServerProvider {
         ;
 
         this.http.post<any>(TOKEN_URL, body, { headers, observe: 'response'})
-            .pipe(map((resp) => { return resp.body; }))
+            .pipe(map((resp) => resp.body))
             .subscribe((data) => {
                 this.storeAT(data, rememberMe);
                 this.storeRT(data, rememberMe);

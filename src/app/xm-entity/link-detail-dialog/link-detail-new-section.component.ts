@@ -20,21 +20,21 @@ declare let swal: any;
 @Component({
     selector: 'xm-link-detail-new-section',
     templateUrl: './link-detail-new-section.component.html',
-    styleUrls: ['./link-detail-new-section.component.scss']
+    styleUrls: ['./link-detail-new-section.component.scss'],
 })
 export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    @Input() linkSpec: LinkSpec;
-    @Input() sourceXmEntity: XmEntity;
-    @Input() spec: Spec;
+    @Input() public linkSpec: LinkSpec;
+    @Input() public sourceXmEntity: XmEntity;
+    @Input() public spec: Spec;
 
-    xmEntity: XmEntity = {};
-    xmEntitySpec: XmEntitySpec;
-    availableSpecs: XmEntitySpec[];
-    jsfAttributes: any;
-    showLoader: boolean;
-    isJsonFormValid = true;
-    isEdit: boolean;
+    public xmEntity: XmEntity = {};
+    public xmEntitySpec: XmEntitySpec;
+    public availableSpecs: XmEntitySpec[];
+    public jsfAttributes: any;
+    public showLoader: boolean;
+    public isJsonFormValid = true;
+    public isEdit: boolean;
 
     constructor(private activeModal: NgbActiveModal,
                 private xmEntityService: XmEntityService,
@@ -45,18 +45,18 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
         $.isAddNewLink = true;
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.availableSpecs = this.spec.types
             .filter((t) => !t.isAbstract && (t.key.startsWith(this.linkSpec.typeKey + '.') || t.key === this.linkSpec.typeKey));
         this.xmEntity.key = UUID.UUID();
         this.onChangeEntityType(this.availableSpecs[0].key);
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.changeDetector.detectChanges();
     }
 
-    onChangeEntityType(typeKey: string) {
+    public onChangeEntityType(typeKey: string): void {
         this.xmEntitySpec = this.availableSpecs.filter((s) => s.key === typeKey).shift();
         this.xmEntity.typeKey = this.xmEntitySpec.key;
         if (this.xmEntitySpec.dataSpec) {
@@ -70,7 +70,7 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
         }
     }
 
-    onConfirmSave() {
+    public onConfirmSave(): void {
         this.showLoader = true;
         const link: Link = {};
         link.name = this.xmEntity.name;
@@ -85,10 +85,25 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
         this.xmEntityService.create(this.xmEntity).pipe(finalize(() => this.showLoader = false))
             .subscribe(() => this.onSaveSuccess(),
                 // TODO: error processing
-                (err) => {console.log(err); this.showLoader = false});
+                (err) => {
+                    console.log(err);
+                    this.showLoader = false;
+                });
     }
 
-    private onSaveSuccess() {
+    public onCancel(): void {
+        this.activeModal.dismiss('cancel');
+    }
+
+    public onChangeForm(data: any): void {
+        this.xmEntity.data = data;
+    }
+
+    public ngOnDestroy(): void {
+        $.isAddNewLink = false;
+    }
+
+    private onSaveSuccess(): void {
         // TODO: use constant for the broadcast and analyse listeners
         this.eventManager.broadcast({name: 'xmEntityListModification'});
         this.eventManager.broadcast({name: 'linkListModification'});
@@ -96,25 +111,13 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
         this.alert('success', 'xm-entity.link-detail-dialog.add.success');
     }
 
-    onCancel() {
-        this.activeModal.dismiss('cancel');
-    }
-
-    onChangeForm(data: any) {
-        this.xmEntity.data = data;
-    }
-
-    private alert(type, key) {
+    private alert(type: string, key: string): void {
         swal({
-            type: type,
+            type,
             text: this.translateService.instant(key),
             buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary'
+            confirmButtonClass: 'btn btn-primary',
         });
-    }
-
-    ngOnDestroy(): void {
-        $.isAddNewLink = false;
     }
 
 }

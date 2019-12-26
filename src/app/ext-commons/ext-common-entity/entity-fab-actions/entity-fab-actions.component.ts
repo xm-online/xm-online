@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
 
 import { Principal } from '../../../shared';
-import { XmEntitySpecWrapperService, EntityDetailDialogComponent, Spec, XmEntity } from '../../../xm-entity';
+import { EntityDetailDialogComponent, Spec, XmEntity, XmEntitySpec, XmEntitySpecWrapperService } from '../../../xm-entity';
 import { FunctionCallDialogComponent } from '../../../xm-entity/function-call-dialog/function-call-dialog.component';
 import { XM_EVENT_LIST } from '../../../xm.constants';
 
@@ -17,22 +17,22 @@ const ENTITY_SELECTED = 'xm-entity-selected';
 @Component({
     selector: 'xm-entity-fab-actions',
     templateUrl: './entity-fab-actions.component.html',
-    styleUrls: ['./entity-fab-actions.component.scss']
+    styleUrls: ['./entity-fab-actions.component.scss'],
 })
 export class EntityFabActionsComponent implements OnInit, OnDestroy {
 
-    selectedEntity: Subscription;
-    createEntity: Subscription;
-    config: any;
-    buttons: any [] = [];
-    mainButton: any;
-    role: string;
-    spec: Spec;
-    selectedNode: XmEntity;
-    fabButtonContext: any;
-    entityId: any;
-    entityType: string;
-    routingUrl: string;
+    public selectedEntity: Subscription;
+    public createEntity: Subscription;
+    public config: any;
+    public buttons: any [] = [];
+    public mainButton: any;
+    public role: string;
+    public spec: Spec;
+    public selectedNode: XmEntity;
+    public fabButtonContext: any;
+    public entityId: any;
+    public entityType: string;
+    public routingUrl: string;
 
     constructor(
         public principal: Principal,
@@ -45,7 +45,7 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
         this.spec = null;
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.selectedEntity = this.eventManager.subscribe(ENTITY_SELECTED, (entity) => {
             if (entity) {
                 this.selectedNode = entity.body;
@@ -60,22 +60,22 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.principal.identity().then(role => {
+        this.principal.identity().then((role) => {
             this.role = role.roleKey;
             this.buttons = this.config ? this.config.buttons : this.config;
             this.mainButton = this.config ? this.config.mainButton : null;
-            this.xmEntitySpecWrapperService.spec().then(spec => {
+            this.xmEntitySpecWrapperService.spec().then((spec) => {
                 this.spec = spec;
             });
         });
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.eventManager.destroy(this.selectedEntity);
         this.eventManager.destroy(this.createEntity);
     }
 
-    public onAddNew(item): void {
+    public onAddNew(item: any): void {
         this.routingUrl = item.routingUrl || null;
         if (!item.typeKey || !this.spec) {
             return;
@@ -87,7 +87,7 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
         }
     }
 
-    public onRouterAction(button) {
+    public onRouterAction(button: any): void {
         const path = button.routerPath;
         const options = button.routerData;
         if (button && button.routerPath) {
@@ -95,11 +95,11 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
         }
     }
 
-    getType(typeKey: string) {
-        return this.spec.types.filter(t => t.key === typeKey).shift();
+    public getType(typeKey: string): XmEntitySpec {
+        return this.spec.types.filter((t) => t.key === typeKey).shift();
     }
 
-    callEntityDetailAction(key: string): any {
+    public callEntityDetailAction(key: string): any {
         const modalRef = this.modalService.open(EntityDetailDialogComponent, {backdrop: 'static'});
         modalRef.componentInstance.xmEntitySpec = this.getType(key);
         modalRef.componentInstance.spec = this.spec;
@@ -116,17 +116,17 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
                 type: 'success',
                 text: this.translateService.instant('ext-common-entity.entity-fab-actions.operation-success'),
                 buttonsStyling: false,
-                confirmButtonClass: 'btn btn-primary'
+                confirmButtonClass: 'btn btn-primary',
             });
         };
         return modalRef;
     }
 
-    callFunctionAction(key: string, funcName: string): any {
-        const entitySpec = this.spec.types.filter(x => x.key === key).shift();
+    public callFunctionAction(key: string, funcName: string): any {
+        const entitySpec = this.spec.types.filter((x) => x.key === key).shift();
 
         const functionSpecArray = entitySpec.functions || [];
-        const functionSpec = functionSpecArray.filter(x => x.key === funcName).shift();
+        const functionSpec = functionSpecArray.filter((x) => x.key === funcName).shift();
         const title = functionSpec.actionName ? functionSpec.actionName : functionSpec.name;
         const modalRef = this.modalService.open(FunctionCallDialogComponent, {backdrop: 'static'});
 
@@ -139,19 +139,19 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
         modalRef.componentInstance.dialogTitle = title;
         modalRef.componentInstance.buttonTitle = title;
         modalRef.componentInstance.onSuccess = () => {
-            this.eventManager.broadcast({name: XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS });
+            this.eventManager.broadcast({name: XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS});
             swal({
                 type: 'success',
                 text: this.translateService.instant('ext-common-entity.entity-fab-actions.operation-success'),
                 buttonsStyling: false,
-                confirmButtonClass: 'btn btn-primary'
+                confirmButtonClass: 'btn btn-primary',
             });
         };
 
         return modalRef;
     }
 
-    private navigate(path, options) {
+    private navigate(path, options): void {
         this.router.navigate([path], {queryParams: options});
     }
 }

@@ -1,6 +1,6 @@
-import {Directive, Input, TemplateRef, ViewContainerRef, OnDestroy} from '@angular/core';
-import {Principal} from '../auth/principal.service';
+import {Directive, Input, OnDestroy, TemplateRef, ViewContainerRef} from '@angular/core';
 import {Subscription} from 'rxjs';
+import {Principal} from '../auth/principal.service';
 
 /**
  * @whatItDoes Conditionally includes an HTML element if current user has any
@@ -15,11 +15,11 @@ import {Subscription} from 'rxjs';
  */
 
 @Directive({
-    selector: '[permitted]'
+    selector: '[permitted]',
 })
 export class PermitDirective implements OnDestroy {
 
-    privileges: string[];
+    public privileges: string[];
     private privilegeSubscription: Subscription;
 
     constructor(
@@ -31,7 +31,7 @@ export class PermitDirective implements OnDestroy {
 
     @Input()
     set permitted(value: string) {
-        this.privileges = typeof value === 'string' ? [ <string> value ] : <string[]> value;
+        this.privileges = typeof value === 'string' ? [ value as string ] : value as string[];
         this.updateView();
         // Get notified each time authentication state changes.
         this.privilegeSubscription = this.principal.getAuthenticationState().subscribe((identity) => this.updateView());
@@ -46,7 +46,7 @@ export class PermitDirective implements OnDestroy {
         });
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.privilegeSubscription.unsubscribe();
     }
 

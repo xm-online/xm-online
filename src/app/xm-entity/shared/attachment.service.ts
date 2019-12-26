@@ -11,40 +11,40 @@ import { Attachment } from './attachment.model';
 @Injectable()
 export class AttachmentService {
 
-    private resourceUrl = SERVER_API_URL + 'entity/api/attachments';
-    private resourceSearchUrl = SERVER_API_URL + 'entity/api/_search/attachments';
+    private resourceUrl: string = SERVER_API_URL + 'entity/api/attachments';
+    private resourceSearchUrl: string = SERVER_API_URL + 'entity/api/_search/attachments';
 
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils) {
     }
 
-    create(attachment: Attachment): Observable<HttpResponse<Attachment>> {
+    public create(attachment: Attachment): Observable<HttpResponse<Attachment>> {
         const copy = this.convert(attachment);
         return this.http.post<Attachment>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Attachment>) => this.convertResponse(res)));
     }
 
-    update(attachment: Attachment): Observable<HttpResponse<Attachment>> {
+    public update(attachment: Attachment): Observable<HttpResponse<Attachment>> {
         const copy = this.convert(attachment);
         return this.http.put<Attachment>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Attachment>) => this.convertResponse(res)));
     }
 
-    find(id: number): Observable<HttpResponse<Attachment>> {
+    public find(id: number): Observable<HttpResponse<Attachment>> {
         return this.http.get<Attachment>(`${this.resourceUrl}/${id}`, {observe: 'response'}).pipe(
             map((res: HttpResponse<Attachment>) => this.convertResponse(res)));
     }
 
-    query(req?: any): Observable<HttpResponse<Attachment[]>> {
+    public query(req?: any): Observable<HttpResponse<Attachment[]>> {
         const options = createRequestOption(req);
         return this.http.get<Attachment[]>(this.resourceUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Attachment[]>) => this.convertArrayResponse(res)));
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
+    public delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 
-    search(req?: any): Observable<HttpResponse<Attachment[]>> {
+    public search(req?: any): Observable<HttpResponse<Attachment[]>> {
         const options = createRequestOption(req);
         return this.http.get<Attachment[]>(this.resourceSearchUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Attachment[]>) => this.convertArrayResponse(res)));

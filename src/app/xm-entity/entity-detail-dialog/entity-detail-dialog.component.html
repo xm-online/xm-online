@@ -1,6 +1,6 @@
-<form class="m-0" name="entityForm" role="form" novalidate (ngSubmit)="onConfirmSave()" #entityForm="ngForm">
+<form #entityForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="entityForm" novalidate role="form">
   <div class="modal-header">
-    <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <div *ngIf="jsfAttributes?.entity?.formHeaderTitle; then
                 hasHeaderConfig else
                 hasNotHeaderConfig;">
@@ -10,10 +10,10 @@
     <h4 class="modal-title text-left">{{jsfAttributes.entity.formHeaderTitle | i18nName: principal}}</h4>
   </ng-template>
   <ng-template #hasNotHeaderConfig>
-    <h4 class="modal-title text-left" *ngIf="!isEdit">
+    <h4 *ngIf="!isEdit" class="modal-title text-left">
       <span jhiTranslate="xm-entity.entity-detail-dialog.add.title">Add a new entity</span>
     </h4>
-    <h4 class="modal-title text-left" *ngIf="isEdit">
+    <h4 *ngIf="isEdit" class="modal-title text-left">
       <span jhiTranslate="xm-entity.entity-detail-dialog.edit.title">Edit an entity</span> [<b>{{name}}</b>]
     </h4>
   </ng-template>
@@ -21,25 +21,25 @@
   <div class="modal-body">
     <xm-loader [showLoader]="showLoader"></xm-loader>
 
-    <div class="form-group" [hidden]="true">
+    <div [hidden]="true" class="form-group">
       <label class="form-control-label" for="id">
         <span jhiTranslate="xm-entity.common.fields.id">ID</span>
       </label>
-      <input type="text" class="form-control" id="id" name="id" [(ngModel)]="xmEntity.id" readonly/>
+      <input [(ngModel)]="xmEntity.id" class="form-control" id="id" name="id" readonly type="text"/>
     </div>
 
-    <div class="form-group" [hidden]="!(availableSpecs?.length > 1)" *ngIf="!isEdit">
+    <div *ngIf="!isEdit" [hidden]="!(availableSpecs?.length > 1)" class="form-group">
       <mat-form-field>
-        <mat-select [(ngModel)]="xmEntity.typeKey"
-                    name="typeKey"
-                    #entityType="ngModel"
-                    id="field_typeKey"
+        <mat-select #entityType="ngModel"
                     (selectionChange)="onChangeEntityType(null, xmEntity.typeKey)"
+                    [(ngModel)]="xmEntity.typeKey"
+                    id="field_typeKey"
+                    name="typeKey"
                     placeholder="{{'xm-entity.entity-detail-dialog.add.choose-type' | translate}}"
                     required>
           <mat-option *ngFor="let spec of availableSpecs"
-                      [value]="spec.key"
-                      [selected]="spec.key == xmEntity.typeKey ? true : null">
+                      [selected]="spec.key == xmEntity.typeKey ? true : null"
+                      [value]="spec.key">
             {{(spec.name | i18nName: principal)?.toUpperCase()}}
           </mat-option>
         </mat-select>
@@ -49,58 +49,62 @@
       </mat-form-field>
     </div>
 
-    <div class="form-group" *ngIf="!jsfAttributes?.entity?.hideNameAndDescription">
+    <div *ngIf="!jsfAttributes?.entity?.hideNameAndDescription" class="form-group">
       <mat-form-field>
-        <input matInput
-               type="text"
-               name="name"
-               id="field_name"
+        <input #entityName="ngModel"
                [(ngModel)]="xmEntity.name"
-               #entityName="ngModel"
+               [pattern]="nameValidPattern"
+               id="field_name"
+               matInput
+               name="name"
                placeholder="{{'xm-entity.common.fields.name' | translate}}"
                required
-               [pattern]="nameValidPattern">
+               type="text">
         <mat-error *ngIf="entityName.hasError('required')">
           <span jhiTranslate="xm-entity.common.validation.required">This field is required.</span>
         </mat-error>
         <mat-error *ngIf="entityName.hasError('pattern')">
-          <span jhiTranslate="xm-entity.common.validation.pattern">This field does not match the rules</span>:&nbsp;&nbsp;<span [innerHtml]="nameValidPattern"></span>
+          <span jhiTranslate="xm-entity.common.validation.pattern">This field does not match the rules</span>:&nbsp;&nbsp;<span
+          [innerHtml]="nameValidPattern"></span>
         </mat-error>
       </mat-form-field>
     </div>
 
-    <div class="form-group" *ngIf="!jsfAttributes?.entity?.hideNameAndDescription">
+    <div *ngIf="!jsfAttributes?.entity?.hideNameAndDescription" class="form-group">
       <mat-form-field>
-        <textarea matInput
-                  name="description"
+        <textarea (keyup)="smartDescription.active = false;"
                   [(ngModel)]="smartDescription.value"
-                  (keyup)="smartDescription.active = false;"
-                  rows="4"
-                  placeholder="{{'xm-entity.common.fields.description' | translate}}">
+                  matInput
+                  name="description"
+                  placeholder="{{'xm-entity.common.fields.description' | translate}}"
+                  rows="4">
         </textarea>
       </mat-form-field>
     </div>
 
-    <json-schema-form class="json-form-hide-submit"
-                      [framework]="'material-design'"
-                      [schema]="jsfAttributes.schema"
-                      [layout]="jsfAttributes.layout | i18nJsf :principal"
-                      [form]="jsfAttributes.form | i18nJsf :principal"
-                      [data]="jsfAttributes.data"
-                      [options]="jsfAttributes.options | i18nJsf :principal"
-                      [widgets]="jsfAttributes.widgets"
-                      (formLayout)="jsfAttributes.formLayout"
-                      (onChanges)="onChangeForm($event)"
+    <json-schema-form (formLayout)="jsfAttributes.formLayout"
                       (isValid)="isJsonFormValid = $event"
-                      *ngIf="!isEdit && jsfAttributes?.schema">
+                      (onChanges)="onChangeForm($event)"
+                      *ngIf="!isEdit && jsfAttributes?.schema"
+                      [data]="jsfAttributes.data"
+                      [form]="jsfAttributes.form | i18nJsf :principal"
+                      [framework]="'material-design'"
+                      [layout]="jsfAttributes.layout | i18nJsf :principal"
+                      [options]="jsfAttributes.options | i18nJsf :principal"
+                      [schema]="jsfAttributes.schema"
+                      [widgets]="jsfAttributes.widgets"
+                      class="json-form-hide-submit">
     </json-schema-form>
   </div>
-  <div class="modal-footer" *ngIf="!(jsfAttributes?.entity?.formDefaultFooterHide)">
-    <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()">
+  <div *ngIf="!(jsfAttributes?.entity?.formDefaultFooterHide)" class="modal-footer">
+    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-raised-button type="button">
       <span *ngIf="jsfAttributes?.entity?.cancelName">{{jsfAttributes.entity.cancelName | i18nName: principal}}</span>
       <span *ngIf="!jsfAttributes?.entity?.cancelName" jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
-    <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="entityForm.form.invalid || showLoader || !isJsonFormValid">
+    <button [disabled]="entityForm.form.invalid || showLoader || !isJsonFormValid"
+            class="btn btn-primary"
+            mat-raised-button
+            type="submit">
       <span *ngIf="jsfAttributes?.entity?.saveName">{{jsfAttributes.entity.saveName | i18nName: principal}}</span>
       <span *ngIf="!jsfAttributes?.entity?.saveName" jhiTranslate="xm-entity.common.save">Save</span>
     </button>

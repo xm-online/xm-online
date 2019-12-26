@@ -1,35 +1,34 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import {Permission} from "../../shared/role/permission.model";
+import { Permission } from '../../shared/role/permission.model';
 
 @Component({
     selector: 'xm-role-mgmt-condition-dialog',
-    templateUrl: './roles-management-condition-dialog.component.html'
+    templateUrl: './roles-management-condition-dialog.component.html',
 })
 export class RoleConditionDialogComponent implements OnInit {
 
-    condition: any;
-    variables: string[];
-    transInfo: string;
-    permission: Permission;
-    isAddMode: boolean;
+    public condition: any;
+    public variables: string[];
+    public transInfo: string;
+    public permission: Permission;
+    public isAddMode: boolean;
 
     constructor(
         public activeModal: NgbActiveModal,
     ) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.isAddMode = !this.condition;
     }
 
-    onCancel() {
+    public onCancel(): void {
         this.activeModal.dismiss('cancel');
     }
 
-    onSave() {
+    public onSave(): void {
         this.activeModal.close(this.condition);
     }
 
 }
-

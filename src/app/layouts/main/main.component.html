@@ -4,17 +4,17 @@
 <xm-alert-error></xm-alert-error>
 <xm-password-needed></xm-password-needed>
 <xm-maintenance-view [show]="isMaintenanceProgress$ | async"></xm-maintenance-view>
-<div class="wrapper"
+<div [class.has-ackground]="guestBg"
      [class.xm-guest-layout]="isGuestLayout"
-     [class.has-ackground]="guestBg"
-     [style.backgroundImage]="guestBg">
-  <xm-loader [showLoader]="!(resolved$ | async)" [absolute]="true"></xm-loader>
-  <div class="sidebar" data-color="white" data-background-color="">
+     [style.backgroundImage]="guestBg"
+     class="wrapper">
+  <xm-loader [absolute]="true" [showLoader]="!(resolved$ | async)"></xm-loader>
+  <div class="sidebar" data-background-color="" data-color="white">
     <xm-sidebar-cmp></xm-sidebar-cmp>
     <div class="sidebar-background"></div>
   </div>
 
-  <div class="main-panel" *ngIf="resolved$ | async">
+  <div *ngIf="resolved$ | async" class="main-panel">
     <router-outlet name="navbar"></router-outlet>
     <div class="main-content">
       <div [class]="isGuestLayout ? 'container' : 'container-fluid'">

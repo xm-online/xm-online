@@ -12,10 +12,10 @@
         <xm-loader [showLoader]="showLoader"></xm-loader>
         <div *ngIf="roles?.length">
           <div class="material-datatables table-responsive">
-            <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0"
-                   width="100%" style="width:100%">
+            <table cellspacing="0" class="table table-striped table-no-bordered table-hover" id="datatables"
+                   style="width:100%" width="100%">
               <thead>
-              <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="onTransition.bind(this)">
+              <tr [(ascending)]="reverse" [(predicate)]="predicate" [callback]="onTransition.bind(this)" jhiSort>
                 <th jhiSortBy="roleKey"><span jhiTranslate="rolesManagement.key">Key</span> <span
                   class="fa fa-sort"></span></th>
                 <th><span jhiTranslate="rolesManagement.description">Description</span></th>
@@ -39,23 +39,23 @@
                 <td>{{item.updatedBy}}</td>
                 <td>{{item.updatedDate | xmDateTime}}</td>
                 <td class="text-right nowrap">
-                  <a href="javascript: void(0);"
+                  <a (click)="onEdit(item)"
                      *permitted="'ROLE.UPDATE'"
-                     (click)="onEdit(item)">
+                     href="javascript: void(0);">
                     <i class="material-icons">edit</i>
                   </a>
-                  <a class="ml-1" href="javascript: void(0);"
-                     (click)="onDelete(item)"
-                     *permitted="'ROLE.DELETE'">
+                  <a (click)="onDelete(item)" *permitted="'ROLE.DELETE'"
+                     class="ml-1"
+                     href="javascript: void(0);">
                     <i class="material-icons">close</i>
                   </a>
                   <!--<a [routerLink]="[{ outlets: { popup: 'role-management/'+ item.roleKey + '/edit'} }]"-->
-                     <!--replaceUrl="true" *permitted="'ROLE.UPDATE'">-->
-                    <!--<i class="material-icons">edit</i>-->
+                  <!--replaceUrl="true" *permitted="'ROLE.UPDATE'">-->
+                  <!--<i class="material-icons">edit</i>-->
                   <!--</a>-->
                   <!--<a class="ml-1" [routerLink]="[{ outlets: { popup: 'role-management/'+ item.roleKey + '/delete'} }]"-->
-                     <!--replaceUrl="true" *permitted="'ROLE.DELETE'">-->
-                    <!--<i class="material-icons">close</i>-->
+                  <!--replaceUrl="true" *permitted="'ROLE.DELETE'">-->
+                  <!--<i class="material-icons">close</i>-->
                   <!--</a>-->
                 </td>
               </tr>
@@ -65,18 +65,18 @@
 
           <div class="row align-items-center list-pagination">
             <div class="col-auto mt-1 mb-1">
-              <xm-per-page [(itemsPerPage)]="itemsPerPage" (onChange)="onChangePerPage()"></xm-per-page>
+              <xm-per-page (onChange)="onChangePerPage()" [(itemsPerPage)]="itemsPerPage"></xm-per-page>
             </div>
             <div class="col-auto mt-1 mb-1">
-              <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+              <jhi-item-count [itemsPerPage]="itemsPerPage" [page]="page" [total]="totalItems"></jhi-item-count>
             </div>
             <div class="col-sm"></div>
             <div class="col-auto mt-1 mb-1">
-              <ngb-pagination [collectionSize]="totalItems"
-                              [pageSize]="itemsPerPage"
-                              [maxSize]="5"
+              <ngb-pagination (pageChange)="onLoadPage(page)"
                               [(page)]="page"
-                              (pageChange)="onLoadPage(page)">
+                              [collectionSize]="totalItems"
+                              [maxSize]="5"
+                              [pageSize]="itemsPerPage">
 
               </ngb-pagination>
             </div>
@@ -90,10 +90,10 @@
 </div>
 
 <div class="xm-fab">
-  <button mat-raised-button
+  <button (click)="onAdd()"
+          *permitted="'ROLE.CREATE'"
           class="btn btn-primary btn-icon btn-just-icon btn-round btn-lg"
-          (click)="onAdd()"
-          *permitted="'ROLE.CREATE'">
+          mat-raised-button>
     <i class="material-icons">add</i>
   </button>
 </div>

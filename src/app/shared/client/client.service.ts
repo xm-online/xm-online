@@ -7,26 +7,25 @@ import { Client } from './client.model';
 @Injectable()
 export class ClientService {
 
-    private resourceUrl = 'uaa/api/clients';
+    private resourceUrl: string = 'uaa/api/clients';
     private resourceUrlByClientId = this.resourceUrl + '/clientid-contains';
-
 
     constructor(private http: HttpClient) {
     }
 
-    create(client: Client): Observable<HttpResponse<any>> {
+    public create(client: Client): Observable<HttpResponse<any>> {
         return this.http.post(this.resourceUrl, client, {observe: 'response'});
     }
 
-    update(client: Client): Observable<HttpResponse<any>> {
+    public update(client: Client): Observable<HttpResponse<any>> {
         return this.http.put(this.resourceUrl, client, {observe: 'response'});
     }
 
-    find(id: number): Observable<Client> {
+    public find(id: number): Observable<Client> {
         return this.http.get<Client>(`${this.resourceUrl}/${id}`);
     }
 
-    query(req?: any): Observable<HttpResponse<any>> {
+    public query(req?: any): Observable<HttpResponse<any>> {
         let params = new HttpParams();
         if (req) {
             params = params.set('page', req.page);
@@ -37,7 +36,7 @@ export class ClientService {
                 });
             }
         }
-        return this.http.get(this.resourceUrl, {params: params, observe: 'response'});
+        return this.http.get(this.resourceUrl, {params, observe: 'response'});
     }
 
     public filterByClientId(req: any): Observable<HttpResponse<any>> {
@@ -57,7 +56,7 @@ export class ClientService {
         return this.http.get(this.resourceUrlByClientId, {params, observe: 'response'});
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
+    public delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 }

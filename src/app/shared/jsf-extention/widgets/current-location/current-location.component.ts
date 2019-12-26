@@ -8,28 +8,28 @@ declare const google: any;
 
 @Component({
     selector: 'xm-current-location-widget',
-    templateUrl: 'current-location.component.html'
+    templateUrl: 'current-location.component.html',
 })
 export class CurrentLocationComponent implements OnInit {
 
-    @Input() layoutNode: any;
-    options: CurrentLocationOptions;
+    @Input() public layoutNode: any;
+    public options: CurrentLocationOptions;
 
-    latitude: number;
-    longitude: number;
-    mapId: string;
+    public latitude: number;
+    public longitude: number;
+    public mapId: string;
 
     constructor(private jsf: JsonSchemaFormService,
                 private changeDetectorRef: ChangeDetectorRef) {
         this.mapId = buildMapId('currentLocation');
     }
 
-    ngOnInit() {
+    public ngOnInit() {
         this.options = this.layoutNode.options || {};
         this.jsf.initializeControl(this);
     }
 
-    onAfterGMapApiInit() {
+    public onAfterGMapApiInit() {
         if (!!navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 this.latitude = position.coords.latitude;
@@ -41,17 +41,17 @@ export class CurrentLocationComponent implements OnInit {
         }
     }
 
-    showMap(location) {
+    public showMap(location) {
         const mapOptions = {
             maxZoom: 16,
-            scrollwheel: false
+            scrollwheel: false,
         };
         const bounds = new google.maps.LatLngBounds();
         const map = new google.maps.Map(document.getElementById(this.mapId), mapOptions);
         const latLng = new google.maps.LatLng(location.latitude, location.longitude);
         const marker = new google.maps.Marker({
             position: latLng,
-            icon: buildPinSymbol('#009688')
+            icon: buildPinSymbol('#009688'),
         });
         marker.setMap(map);
         bounds.extend(latLng);

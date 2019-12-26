@@ -5,8 +5,9 @@
   </div>
   <div class="modal-body">
     <xm-loader [showLoader]="showLoader"></xm-loader>
-    <p jhiTranslate="clientManagement.delete.question" translateValues="{id: '{{client.id}}'}">Are you sure you want to
-      delete this Client?</p>
+    <p jhiTranslate="clientManagement.delete.question"
+       translateValues="{id: '{{client.id}}'}">Are you sure you want to
+                                               delete this Client?</p>
   </div>
   <div class="modal-footer">
     <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="clear()">

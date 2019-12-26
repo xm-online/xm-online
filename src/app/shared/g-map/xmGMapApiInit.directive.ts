@@ -13,17 +13,17 @@ export class XmGMapApiInitDirective implements OnInit, OnDestroy {
     private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
     private statusLoaded = new BehaviorSubject(false);
 
-    @Output() gMapApiReady = new EventEmitter<boolean>();
-    @Input() libraries: string[] = ['geometry'];
+    @Output() public gMapApiReady = new EventEmitter<boolean>();
+    @Input() public libraries: string[] = ['geometry'];
 
     constructor(
         private templateRef: TemplateRef<any>,
         private viewContainerRef: ViewContainerRef,
-        private xmConfigService: XmConfigService
+        private xmConfigService: XmConfigService,
     ) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         if (window.hasOwnProperty('google') && window['google'].hasOwnProperty('maps')) {
             this.statusLoaded.next(true);
         } else {
@@ -42,7 +42,7 @@ export class XmGMapApiInitDirective implements OnInit, OnDestroy {
         ).subscribe(() => {});
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroyed$.next(true);
         this.destroyed$.complete();
     }
@@ -57,7 +57,7 @@ export class XmGMapApiInitDirective implements OnInit, OnDestroy {
         }
     }
 
-    private loadGoogleMapApi(apiKey: string) {
+    private loadGoogleMapApi(apiKey: string): void {
         const scriptNode = document.createElement('script');
         const apiLibraries = this.libraries.length ? `&libraries=${this.libraries.join(',')}` : '';
 

@@ -1,5 +1,5 @@
+import { Metric, Pocket } from '../';
 import { BaseEntity } from '../../shared';
-import { Pocket, Metric } from '../';
 
 export class Balance implements BaseEntity {
     constructor(

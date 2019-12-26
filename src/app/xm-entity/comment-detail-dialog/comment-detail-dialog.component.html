@@ -1,19 +1,20 @@
-<form class="m-0" name="commentForm" role="form" novalidate (ngSubmit)="onConfirmSave()" #commentForm="ngForm">
+<form #commentForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="commentForm" novalidate role="form">
   <div class="modal-header">
-    <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <h4 class="modal-title text-left">
-      <span jhiTranslate="xm-entity.comment-detail-dialog.title">Add new comment for the</span> [<b>{{xmEntity.name}}</b>]
+      <span jhiTranslate="xm-entity.comment-detail-dialog.title">Add new comment for the</span>
+      [<b>{{xmEntity.name}}</b>]
     </h4>
   </div>
   <div class="modal-body">
     <xm-loader [showLoader]="showLoader"></xm-loader>
-    <div class="form-group" [hidden]="!(commentSpecs?.length > 1)">
+    <div [hidden]="!(commentSpecs?.length > 1)" class="form-group">
       <mat-form-field>
         <mat-select [(ngModel)]="comment.typeKey"
+                    [disabled]="commentSpecs?.length == 1"
                     id="field_typeKey"
                     name="typeKey"
-                    placeholder="{{'xm-entity.comment-detail-dialog.choose-type' | translate}}"
-                    [disabled]="commentSpecs?.length == 1">
+                    placeholder="{{'xm-entity.comment-detail-dialog.choose-type' | translate}}">
           <mat-option *ngFor="let commentSpec of commentSpecs" [value]="commentSpec.key">
             {{(commentSpec.name | i18nName: principal)?.toUpperCase()}}
           </mat-option>
@@ -23,13 +24,13 @@
 
     <div class="form-group">
       <mat-form-field>
-        <textarea matInput
-                  name="comment"
+        <textarea #commentBody="ngModel"
                   [(ngModel)]="comment.message"
+                  matInput
+                  name="comment"
+                  placeholder="{{'xm-entity.common.fields.message' | translate}}"
                   required
-                  #commentBody="ngModel"
-                  rows="4"
-                  placeholder="{{'xm-entity.common.fields.message' | translate}}">
+                  rows="4">
         </textarea>
         <mat-error *ngIf="commentBody.hasError('required')">
           <span jhiTranslate="xm-entity.common.validation.required">This field is required.</span>
@@ -38,10 +39,10 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()">
+    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-raised-button type="button">
       <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
-    <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="commentForm.form.invalid || showLoader">
+    <button [disabled]="commentForm.form.invalid || showLoader" class="btn btn-primary" mat-raised-button type="submit">
       <span jhiTranslate="xm-entity.common.save">Save</span>
     </button>
   </div>

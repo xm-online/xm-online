@@ -17,15 +17,15 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
     constructor(private passwordResetInit: PasswordResetInit) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.resetAccount = {};
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         setTimeout(() => this.emailInputElement.focus(), 0);
     }
 
-    public requestReset() {
+    public requestReset(): void {
         this.error = null;
         this.errorEmailNotExists = null;
 

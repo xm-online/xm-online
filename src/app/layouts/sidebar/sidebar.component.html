@@ -1,6 +1,6 @@
 <div class="logo xm-sidebar-logo">
   <a class="simple-text logo-mini">
-    <div class="logo-img" *ngIf="tenantLogoUrl">
+    <div *ngIf="tenantLogoUrl" class="logo-img">
       <img [src]="tenantLogoUrl"/>
     </div>
   </a>
@@ -9,23 +9,23 @@
   </a>
 </div>
 
-<div class="sidebar-wrapper" [class.bottom-spacer]="poweredByConfig" [ngSwitch]="isAuthenticated()">
-  <div *ngSwitchCase="true" class="user" [class.has-user-description]="(userDescription$ | async)">
+<div [class.bottom-spacer]="poweredByConfig" [ngSwitch]="isAuthenticated()" class="sidebar-wrapper">
+  <div *ngSwitchCase="true" [class.has-user-description]="(userDescription$ | async)" class="user">
     <div class="photo">
       <span *ngIf="getImageUrl()">
-        <img [src]="getImageUrl()" class="img-fluid rounded-circle" alt="Avatar">
+        <img [src]="getImageUrl()" alt="Avatar" class="img-fluid rounded-circle">
       </span>
       <span *ngIf="!getImageUrl()">
-        <img src="./assets/img/anonymous.png" class="img-fluid rounded-circle" alt="Avatar">
+        <img alt="Avatar" class="img-fluid rounded-circle" src="./assets/img/anonymous.png">
       </span>
     </div>
     <div class="user-info">
-      <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+      <a class="collapsed" data-toggle="collapse" href="#collapseExample">
         <span class="user-name">
             <em class="truncated pr-4">{{principal.getName()}}</em>
-            <em class="user-description text-muted truncated pr-4"
-                *ngIf="(userDescription$ | async) as userDescription"
-                [title]="userDescription | i18nName: principal">
+            <em *ngIf="(userDescription$ | async) as userDescription"
+                [title]="userDescription | i18nName: principal"
+                class="user-description text-muted truncated pr-4">
               {{userDescription | i18nName: principal}}
             </em>
             <b class="caret"></b>
@@ -33,20 +33,20 @@
       </a>
       <div class="collapse" id="collapseExample">
         <ul class="nav">
-          <li class="nav-item" *permitted="'ACCOUNT.GET_LIST.ITEM'">
-            <a routerLink="settings" routerLinkActive="active" class="nav-link">
+          <li *permitted="'ACCOUNT.GET_LIST.ITEM'" class="nav-item">
+            <a class="nav-link" routerLink="settings" routerLinkActive="active">
               <span class="sidebar-mini" jhiTranslate="global.menu.account.mini.settings">S</span>
               <span class="sidebar-normal" jhiTranslate="global.menu.account.settings">Settings</span>
             </a>
           </li>
-          <li class="nav-item" *permitted="'ACCOUNT.PASSWORD.UPDATE'">
-            <a routerLink="password" routerLinkActive="active" class="nav-link">
+          <li *permitted="'ACCOUNT.PASSWORD.UPDATE'" class="nav-item">
+            <a class="nav-link" routerLink="password" routerLinkActive="active">
               <span class="sidebar-mini" jhiTranslate="global.menu.account.mini.password">P</span>
               <span class="sidebar-normal" jhiTranslate="global.menu.account.password">Password</span>
             </a>
           </li>
           <li class="nav-item">
-            <a href="javascript: void(0);" id="logout" (click)="logout()" class="nav-link">
+            <a (click)="logout()" class="nav-link" href="javascript: void(0);" id="logout">
               <span class="sidebar-mini" jhiTranslate="global.menu.account.mini.profile">SO</span>
               <span class="sidebar-normal" jhiTranslate="global.menu.account.logout">Sign out</span>
             </a>
@@ -56,43 +56,44 @@
     </div>
   </div>
 
-  <ul class="nav" *permitted="'DASHBOARD.GET_LIST'">
+  <ul *permitted="'DASHBOARD.GET_LIST'" class="nav">
     <ng-container *ngFor="let group of dashboardGroups">
       <ng-container *ngIf="group.groupIsLink; then groupLikeLink else normalItem"></ng-container>
       <ng-template #normalItem>
         <li class="nav-item" routerLinkActive="active">
-            <a  class="nav-link" href="#dashboards-{{group.key}}" data-toggle="collapse" [class.d-none]="!group.key">
-              <ng-container *ngIf="group?.config?.icon; then tmplIcon else tmplNoIcon"></ng-container>
-              <ng-template #tmplIcon><i class="material-icons">{{ group.config.icon }}</i></ng-template>
-              <ng-template #tmplNoIcon><i class="material-icons">dashboard</i></ng-template>
-              <p>
-                <span class="truncated pr-3" *ngIf="group.key === 'DASHBOARD'">{{'global.menu.dashboards.main' | translate}}</span>
-                <span class="truncated pr-3" *ngIf="group.key !== 'DASHBOARD'">{{group.name | i18nName:principal}}</span>
-                <b class="caret"></b>
-              </p>
-            </a>
-            <div id="dashboards-{{group?.key}}" class="collapse" [class.show]="!group.key">
-              <ul class="nav">
-                <ng-container *ngFor="let dashboard of group?.dashboards">
-                  <li class="nav-item"
-                      routerLinkActive="active"
-                      [ngClass]="{'d-none' : (dashboard.config && dashboard.config.hidden)}">
-                    <a class="nav-link"
-                       [routerLink]="['dashboard', dashboard.config?.slug ? dashboard.config?.slug : dashboard.id]">
-                      <span class="sidebar-mini" innerHtml="{{getDashboardIcon(dashboard)}}"></span>
-                      <span class="sidebar-normal">{{getDashboardName(dashboard)}}</span>
-                    </a>
-                  </li>
-                </ng-container>
-              </ul>
-            </div>
+          <a [class.d-none]="!group.key" class="nav-link" data-toggle="collapse" href="#dashboards-{{group.key}}">
+            <ng-container *ngIf="group?.config?.icon; then tmplIcon else tmplNoIcon"></ng-container>
+            <ng-template #tmplIcon><i class="material-icons">{{ group.config.icon }}</i></ng-template>
+            <ng-template #tmplNoIcon><i class="material-icons">dashboard</i></ng-template>
+            <p>
+              <span *ngIf="group.key === 'DASHBOARD'"
+                    class="truncated pr-3">{{'global.menu.dashboards.main' | translate}}</span>
+              <span *ngIf="group.key !== 'DASHBOARD'" class="truncated pr-3">{{group.name | i18nName:principal}}</span>
+              <b class="caret"></b>
+            </p>
+          </a>
+          <div [class.show]="!group.key" class="collapse" id="dashboards-{{group?.key}}">
+            <ul class="nav">
+              <ng-container *ngFor="let dashboard of group?.dashboards">
+                <li [ngClass]="{'d-none' : (dashboard.config && dashboard.config.hidden)}"
+                    class="nav-item"
+                    routerLinkActive="active">
+                  <a [routerLink]="['dashboard', dashboard.config?.slug ? dashboard.config?.slug : dashboard.id]"
+                     class="nav-link">
+                    <span class="sidebar-mini" innerHtml="{{getDashboardIcon(dashboard)}}"></span>
+                    <span class="sidebar-normal">{{getDashboardName(dashboard)}}</span>
+                  </a>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
         </li>
       </ng-template>
 
       <ng-template #groupLikeLink>
-        <li class="nav-item" routerLinkActive="active" *ngFor="let dashboard of group?.dashboards">
-          <a class="nav-link"
-             [routerLink]="['dashboard', dashboard.config?.slug ? dashboard.config?.slug : dashboard.id]">
+        <li *ngFor="let dashboard of group?.dashboards" class="nav-item" routerLinkActive="active">
+          <a [routerLink]="['dashboard', dashboard.config?.slug ? dashboard.config?.slug : dashboard.id]"
+             class="nav-link">
             <i class="material-icons">{{ dashboard.config.icon }}</i>
             <p>
               <span>{{getDashboardName(dashboard)}}</span>
@@ -104,22 +105,23 @@
   </ul>
 
   <ul class="nav">
-    <li class="nav-item" *ngSwitchCase="true" routerLinkActive="active">
+    <li *ngSwitchCase="true" class="nav-item" routerLinkActive="active">
       <ng-container *permitted="'XMENTITY_SPEC.GET'">
-        <a class="nav-link" data-toggle="collapse" href="#applications" *ngIf="isApplicationExists">
+        <a *ngIf="isApplicationExists" class="nav-link" data-toggle="collapse" href="#applications">
           <i class="material-icons">apps</i>
-          <p><span class="truncated pr-3">{{'global.menu.applications.main' | translate}}</span><b class="caret"></b></p>
+          <p><span class="truncated pr-3">{{'global.menu.applications.main' | translate}}</span><b class="caret"></b>
+          </p>
         </a>
       </ng-container>
       <div class="collapse" id="applications">
-        <ul class="nav" *ngIf="applications">
-          <li class="nav-item" *ngFor="let application of applications | async" routerLinkActive="active">
+        <ul *ngIf="applications" class="nav">
+          <li *ngFor="let application of applications | async" class="nav-item" routerLinkActive="active">
             <ng-container *permitted="'APPLICATION.' + application.key">
-              <a class="nav-link" [routerLink]="['application', application.key]">
-              <span class="sidebar-mini" *ngIf="!iconsInMenu">
+              <a [routerLink]="['application', application.key]" class="nav-link">
+              <span *ngIf="!iconsInMenu" class="sidebar-mini">
                 {{getApplicationName(application).charAt(0)}}
               </span>
-                <span class="sidebar-mini" *ngIf="iconsInMenu">
+                <span *ngIf="iconsInMenu" class="sidebar-mini">
                 <i class="material-icons">{{application.icon}}</i>
               </span>
                 <span class="sidebar-normal">{{(application.pluralName ? application.pluralName : application.name) | translate}}</span>
@@ -130,14 +132,14 @@
       </div>
     </li>
 
-    <li class="nav-item" *ngSwitchCase="true" routerLinkActive="active">
-      <a class="nav-link" data-toggle="collapse" href="#configuration" *permitted="'DASHBOARD.CREATE'">
+    <li *ngSwitchCase="true" class="nav-item" routerLinkActive="active">
+      <a *permitted="'DASHBOARD.CREATE'" class="nav-link" data-toggle="collapse" href="#configuration">
         <i class="material-icons">tune</i>
         <p><span class="truncated pr-3">{{'admin-config.common.menu.title' | translate}}</span><b class="caret"></b></p>
       </a>
       <div class="collapse" id="configuration">
         <ul class="nav">
-          <li class="nav-item" routerLinkActive="active" *permitted="'DASHBOARD.CREATE'">
+          <li *permitted="'DASHBOARD.CREATE'" class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/configuration/dashboard-management">
               <span class="sidebar-mini" jhiTranslate="admin-config.common.menu.mini.dashboard-mng">D</span>
               <span class="sidebar-normal"
@@ -155,88 +157,89 @@
       </div>
     </li>
 
-    <li class="nav-item" *ngSwitchCase="true" routerLinkActive="active">
-      <a class="nav-link" data-toggle="collapse" href="#administrations"
-         *permitted="['ROUTE.GET_LIST', 'ROLE.GET_LIST', 'ROLE.MATRIX.GET', 'USER.GET_LIST', 'CLIENT.GET_LIST']">
+    <li *ngSwitchCase="true" class="nav-item" routerLinkActive="active">
+      <a *permitted="['ROUTE.GET_LIST', 'ROLE.GET_LIST', 'ROLE.MATRIX.GET', 'USER.GET_LIST', 'CLIENT.GET_LIST']" class="nav-link" data-toggle="collapse"
+         href="#administrations">
         <i class="material-icons">settings</i>
         <p><span class="truncated pr-3">{{'global.menu.admin.main' | translate}}</span><b class="caret"></b></p>
       </a>
       <div class="collapse" id="administrations">
         <ul class="nav">
-          <li class="nav-item" routerLinkActive="active" *permitted="'ROUTE.GET_LIST'">
+          <li *permitted="'ROUTE.GET_LIST'" class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/administration/gateway">
               <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.gateway">G</span>
               <span class="sidebar-normal" jhiTranslate="global.menu.admin.gateway">Gateway</span>
             </a>
           </li>
-          <li class="nav-item" routerLinkActive="active" *permitted="'ROUTE.GET_LIST'">
+          <li *permitted="'ROUTE.GET_LIST'" class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/administration/metrics">
               <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.metrics">M</span>
               <span class="sidebar-normal" jhiTranslate="global.menu.admin.metrics">Metrics</span>
             </a>
           </li>
-          <li class="nav-item" routerLinkActive="active" *permitted="'ROUTE.GET_LIST'">
+          <li *permitted="'ROUTE.GET_LIST'" class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/administration/health">
               <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.health">H</span>
               <span class="sidebar-normal" jhiTranslate="global.menu.admin.health">Health</span>
             </a>
           </li>
-          <li class="nav-item" routerLinkActive="active" *permitted="'ROLE.GET_LIST'">
+          <li *permitted="'ROLE.GET_LIST'" class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/administration/roles-management">
               <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.rolesManagement">RM</span>
               <span class="sidebar-normal" jhiTranslate="global.menu.admin.rolesManagement">Roles Management</span>
             </a>
           </li>
-          <li class="nav-item" routerLinkActive="active" *permitted="'ROLE.MATRIX.GET'">
+          <li *permitted="'ROLE.MATRIX.GET'" class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/administration/roles-matrix">
               <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.rolesMatrix">RM</span>
               <span class="sidebar-normal" jhiTranslate="global.menu.admin.rolesMatrix">Roles Matrix</span>
             </a>
           </li>
-          <li class="nav-item" routerLinkActive="active" *permitted="'USER.GET_LIST'">
+          <li *permitted="'USER.GET_LIST'" class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/administration/user-management">
               <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.userManagement">UM</span>
               <span class="sidebar-normal" jhiTranslate="global.menu.admin.userManagement">User Management</span>
             </a>
           </li>
-          <li class="nav-item" routerLinkActive="active" *permitted="'CLIENT.GET_LIST'">
+          <li *permitted="'CLIENT.GET_LIST'" class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/administration/client-management">
               <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.clientManagement">CM</span>
               <span class="sidebar-normal" jhiTranslate="global.menu.admin.clientManagement">Client management</span>
             </a>
           </li>
-          <li class="nav-item" routerLinkActive="active" *permitted="''">
+          <li *permitted="''" class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/administration/audits">
               <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.audits">A</span>
               <span class="sidebar-normal" jhiTranslate="global.menu.admin.audits">Audits</span>
             </a>
           </li>
-          <li class="nav-item" routerLinkActive="active" *permitted="''">
+          <li *permitted="''" class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/administration/logs">
               <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.logs">L</span>
               <span class="sidebar-normal" jhiTranslate="global.menu.admin.logs">Logs</span>
             </a>
           </li>
-          <li class="nav-item" routerLinkActive="active" *permitted="''">
+          <li *permitted="''" class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/administration/form-playground">
               <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.formPlayground">FP</span>
               <span class="sidebar-normal" jhiTranslate="global.menu.admin.formPlayground">Form playground</span>
             </a>
           </li>
-          <li class="nav-item"
-              routerLinkActive="active" *permitted="['ELASTICSEARCH.INDEX', 'CONFIG.ADMIN.REFRESH', 'CONFIG.CLIENT.REFRESH']">
+          <li *permitted="['ELASTICSEARCH.INDEX', 'CONFIG.ADMIN.REFRESH', 'CONFIG.CLIENT.REFRESH']"
+              class="nav-item"
+              routerLinkActive="active">
             <a class="nav-link" routerLink="/administration/maintenance">
               <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.maintenance">M</span>
               <span class="sidebar-normal" jhiTranslate="global.menu.admin.maintenance">Maintenance</span>
             </a>
           </li>
-          <li class="nav-item" routerLinkActive="active" *permitted="''">
+          <li *permitted="''" class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/administration/translation">
               <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.translation">T</span>
               <span class="sidebar-normal" jhiTranslate="global.menu.admin.translation">Translation</span>
             </a>
           </li>
-          <li class="nav-item" routerLinkActive="active" *permitted="'ROUTE.GET_LIST'">
+          <li *permitted="'ROUTE.GET_LIST'" class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/administration/docs">
               <span class="sidebar-mini" jhiTranslate="global.menu.admin.mini.apidocs">A</span>
               <span class="sidebar-normal" jhiTranslate="global.menu.admin.apidocs">API</span>

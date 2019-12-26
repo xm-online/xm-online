@@ -1,31 +1,31 @@
 {
-  "compileOnSave": true,
-  "compilerOptions": {
-    "importHelpers": true,
-    "outDir": "./dist/out-tsc",
-    "baseUrl": "./",
-    "sourceMap": true,
-    "declaration": true,
-    "downlevelIteration": true,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ],
-    "inlineSources": true,
-    "module": "esnext",
-    "stripInternal": false,
-    "noUnusedLocals": true,
-    "noImplicitReturns": true,
-    "newLine": "lf",
-    "strictFunctionTypes": true,
-    "noFallthroughCasesInSwitch": true,
-    "resolveJsonModule": true
-  }
+    "compileOnSave": true,
+    "compilerOptions": {
+        "importHelpers": true,
+        "outDir": "./dist/out-tsc",
+        "baseUrl": "./",
+        "sourceMap": true,
+        "declaration": true,
+        "downlevelIteration": true,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "es5",
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "lib": [
+            "es2018",
+            "dom"
+        ],
+        "inlineSources": true,
+        "module": "esnext",
+        "stripInternal": false,
+        "noUnusedLocals": true,
+        "noImplicitReturns": true,
+        "newLine": "lf",
+        "strictFunctionTypes": true,
+        "noFallthroughCasesInSwitch": true,
+        "resolveJsonModule": true
+    }
 }

@@ -1,26 +1,26 @@
 {
-  "extends": "../tsconfig",
-  "compilerOptions": {
-    "resolveJsonModule": true,
-    "outDir": "../out-tsc/app",
-    "types": []
-  },
-  "files": [
-    "./main.ts",
-    "./polyfills.ts"
-  ],
-  "include": [
-    "./**/*.ts"
-  ],
-  "exclude": [
-    "./test.ts",
-    "./**/*.spec.ts"
-  ],
-  "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
-  }
+    "extends": "../tsconfig",
+    "compilerOptions": {
+        "resolveJsonModule": true,
+        "outDir": "../out-tsc/app",
+        "types": []
+    },
+    "files": [
+        "./main.ts",
+        "./polyfills.ts"
+    ],
+    "include": [
+        "./**/*.ts"
+    ],
+    "exclude": [
+        "./test.ts",
+        "./**/*.spec.ts"
+    ],
+    "angularCompilerOptions": {
+        "annotateForClosureCompiler": true,
+        "skipTemplateCodegen": true,
+        "strictMetadataEmit": true,
+        "fullTemplateTypeCheck": true,
+        "strictInjectionParameters": true
+    }
 }

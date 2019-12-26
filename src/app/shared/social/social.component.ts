@@ -3,20 +3,20 @@ import { CSRFService } from '../auth/csrf.service';
 @Component({
     selector: 'xm-social',
     templateUrl: './social.component.html',
-    styleUrls: [ './social.component.scss' ]
+    styleUrls: [ './social.component.scss' ],
 })
 export class JhiSocialComponent implements OnInit {
 
-    @Input() providerId: string;
-    @Input() scope: string;
-    @Input() icon: any;
+    @Input() public providerId: string;
+    @Input() public scope: string;
+    @Input() public icon: any;
 
-    csrf: string;
+    public csrf: string;
 
     constructor(private csrfService: CSRFService) {
     }
 
-    ngOnInit() {
+    public ngOnInit() {
         this.csrf = this.csrfService.getCSRF();
     }
 }

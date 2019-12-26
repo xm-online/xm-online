@@ -4,17 +4,17 @@ import { from as fromPromise } from 'rxjs';
 @Component({
     selector: 'xm-dynamic-widget',
     templateUrl: './dynamic-widget.component.html',
-    styleUrls: ['./dynamic-widget.component.scss']
+    styleUrls: ['./dynamic-widget.component.scss'],
 })
 export class DynamicWidgetComponent implements OnInit {
 
-    commons: string[] = ['ext-common', 'ext-common-csp', 'ext-common-entity'];
+    public commons: string[] = ['ext-common', 'ext-common-csp', 'ext-common-entity'];
 
     @Input() set init(value) {
         if (!value) {
             return;
         }
-        const rootClass = value.module.split('-').map(e => e[0].toUpperCase() + e.slice(1)).join('');
+        const rootClass = value.module.split('-').map((e) => e[0].toUpperCase() + e.slice(1)).join('');
         const extName = value.module.split('-').reverse()[0];
         const extRootClass = extName.charAt(0).toUpperCase() + extName.slice(1) + 'WebappExtModule';
         let modulePath: string;
@@ -24,7 +24,7 @@ export class DynamicWidgetComponent implements OnInit {
             modulePath = `src/app/ext/${extName}-webapp-ext/module/${extName}-webapp-ext.module#${extRootClass}`;
         }
         const moduleFactory = fromPromise(this.loader.load(modulePath));
-        moduleFactory.subscribe(factory => {
+        moduleFactory.subscribe((factory) => {
             const module = factory.create(this.injector);
             const entryComponentType = module.injector.get(value.component);
             const componentFactory = module.componentFactoryResolver.resolveComponentFactory(entryComponentType);
@@ -39,7 +39,7 @@ export class DynamicWidgetComponent implements OnInit {
                 private viewRef: ViewContainerRef) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
     }
 
 }

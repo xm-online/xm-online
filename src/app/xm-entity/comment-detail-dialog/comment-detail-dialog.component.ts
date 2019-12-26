@@ -14,15 +14,15 @@ declare let swal: any;
 @Component({
     selector: 'xm-comment-detail-dialog',
     templateUrl: './comment-detail-dialog.component.html',
-    styleUrls: ['./comment-detail-dialog.component.scss']
+    styleUrls: ['./comment-detail-dialog.component.scss'],
 })
 export class CommentDetailDialogComponent implements OnInit {
 
-    @Input() xmEntity: XmEntity;
-    @Input() commentSpecs: CommentSpec[];
+    @Input() public xmEntity: XmEntity;
+    @Input() public commentSpecs: CommentSpec[];
 
-    comment: Comment = {};
-    showLoader: boolean;
+    public comment: Comment = {};
+    public showLoader: boolean;
 
     constructor(private activeModal: NgbActiveModal,
                 private commentService: CommentService,
@@ -31,45 +31,45 @@ export class CommentDetailDialogComponent implements OnInit {
                 public principal: Principal) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         if (this.commentSpecs && this.commentSpecs.length > 0) {
             this.comment.typeKey = this.commentSpecs[0].key;
         }
     }
 
-    onConfirmSave() {
+    public onConfirmSave(): void {
         this.showLoader = true;
         this.comment.xmEntity = this.xmEntity;
         this.comment.entryDate = new Date().toISOString();
         this.comment.userKey = this.principal.getUserKey();
         this.commentService.create(this.comment)
             .subscribe(() => this.onSaveSuccess(),
-            (err) => this.onError(err),
-            () => this.showLoader = false);
+                (err) => this.onError(err),
+                () => this.showLoader = false);
     }
 
-    private onError(e) {
+    public onCancel(): void {
+        this.activeModal.dismiss('cancel');
+    }
+
+    private onError(e): void {
         console.log(e);
         this.showLoader = false;
     }
 
-    private onSaveSuccess() {
+    private onSaveSuccess(): void {
         // TODO: use constant for the broadcast and analyse listeners
         this.eventManager.broadcast({name: 'commentListModification'});
         this.activeModal.dismiss(true);
         this.alert('success', 'xm-entity.comment-detail-dialog.add.success');
     }
 
-    onCancel() {
-        this.activeModal.dismiss('cancel');
-    }
-
-    private alert(type, key) {
+    private alert(type: string, key: string): void {
         swal({
-            type: type,
+            type,
             text: this.translateService.instant(key),
             buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary'
+            confirmButtonClass: 'btn btn-primary',
         });
     }
 

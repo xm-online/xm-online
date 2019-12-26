@@ -1,6 +1,6 @@
+import * as _ from 'lodash';
 import {FieldOptions} from '../../xm-entity/entity-list-card/entity-list-card-options.model';
 import {transpilingForIE} from '../jsf-extention';
-import * as _ from 'lodash'
 
 function fieldValueToString(field: FieldOptions, value) {
     if (field && field.func) {

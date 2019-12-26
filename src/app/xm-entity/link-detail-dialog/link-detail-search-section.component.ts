@@ -49,7 +49,7 @@ export class LinkDetailSearchSectionComponent implements OnInit {
     }
 
     public getEntitySpec(typeKey: string): XmEntitySpec {
-        return this.spec.types.filter( (t) => t.key === typeKey).shift();
+        return this.spec.types.filter((t) => t.key === typeKey).shift();
     }
 
     public onShowMore(): void {

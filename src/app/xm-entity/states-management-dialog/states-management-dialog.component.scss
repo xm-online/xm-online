@@ -4,6 +4,7 @@
             overflow-y: auto;
         }
     }
+
     .status-distribution {
         min-width: 100%;
 
@@ -22,7 +23,7 @@
             }
 
             td {
-                border: 2px dashed #999999;
+                border:  2px dashed #999999;
                 padding: 5px 10px;
 
                 &.active {

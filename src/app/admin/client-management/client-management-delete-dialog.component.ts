@@ -10,9 +10,9 @@ import { Client, ClientService } from '../../shared';
 })
 export class ClientMgmtDeleteDialogComponent implements OnInit {
 
-    @Input() selectedClient: Client;
-    showLoader: boolean;
-    client: Client;
+    @Input() public selectedClient: Client;
+    public showLoader: boolean;
+    public client: Client;
 
     constructor(
         private clientService: ClientService,
@@ -21,17 +21,17 @@ export class ClientMgmtDeleteDialogComponent implements OnInit {
     ) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         if (this.selectedClient) {
             this.client = new Client(this.selectedClient.id);
         }
     }
 
-    clear() {
+    public clear(): void {
         this.activeModal.dismiss('cancel');
     }
 
-    confirmDelete(id) {
+    public confirmDelete(id: any): void {
         this.showLoader = true;
         this.clientService.delete(id)
             .subscribe((response) => {

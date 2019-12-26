@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 
-import { AuthServerProvider } from '../../shared/auth/auth-jwt.service';
-
 import { SwaggerUIBundle } from 'swagger-ui-dist';
+
+import { AuthServerProvider } from '../../shared/auth/auth-jwt.service';
 
 @Component({
     selector: 'xm-docs',
@@ -11,8 +11,8 @@ import { SwaggerUIBundle } from 'swagger-ui-dist';
 })
 export class JhiDocsComponent implements OnInit, AfterViewInit {
 
-    swaggerResources: any[];
-    currentResource: any;
+    public swaggerResources: any[];
+    public currentResource: any;
 
     constructor(
         private http: HttpClient,
@@ -20,10 +20,10 @@ export class JhiDocsComponent implements OnInit, AfterViewInit {
     ) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.http
             .get<any[]>('/swagger-resources')
             .subscribe((data: any[]) => {
@@ -33,7 +33,7 @@ export class JhiDocsComponent implements OnInit, AfterViewInit {
             });
     }
 
-    updateSwagger(resource) {
+    public updateSwagger(resource: any): void {
         const authToken = this.auth.getToken();
         new SwaggerUIBundle({
             dom_id: '#swaggerHolder',

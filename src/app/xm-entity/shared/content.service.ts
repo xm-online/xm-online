@@ -10,35 +10,35 @@ import { Content } from './content.model';
 @Injectable()
 export class ContentService {
 
-    private resourceUrl = SERVER_API_URL + 'entity/api/contents';
+    private resourceUrl: string = SERVER_API_URL + 'entity/api/contents';
 
     constructor(private http: HttpClient) {
     }
 
-    create(content: Content): Observable<HttpResponse<Content>> {
+    public create(content: Content): Observable<HttpResponse<Content>> {
         const copy = this.convert(content);
         return this.http.post<Content>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Content>) => this.convertResponse(res)));
     }
 
-    update(content: Content): Observable<HttpResponse<Content>> {
+    public update(content: Content): Observable<HttpResponse<Content>> {
         const copy = this.convert(content);
         return this.http.put<Content>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Content>) => this.convertResponse(res)));
     }
 
-    find(id: number): Observable<HttpResponse<Content>> {
+    public find(id: number): Observable<HttpResponse<Content>> {
         return this.http.get<Content>(`${this.resourceUrl}/${id}`, {observe: 'response'}).pipe(
             map((res: HttpResponse<Content>) => this.convertResponse(res)));
     }
 
-    query(req?: any): Observable<HttpResponse<Content[]>> {
+    public query(req?: any): Observable<HttpResponse<Content[]>> {
         const options = createRequestOption(req);
         return this.http.get<Content[]>(this.resourceUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Content[]>) => this.convertArrayResponse(res)));
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
+    public delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 

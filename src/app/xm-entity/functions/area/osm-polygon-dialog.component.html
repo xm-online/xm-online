@@ -1,22 +1,22 @@
 <div class="modal-header">
-  <a href="javascript: void(0);" class="modal-close material-icons" (click)="clear()">close</a>
+  <a (click)="clear()" class="modal-close material-icons" href="javascript: void(0);">close</a>
 </div>
 <div class="modal-body">
   <div class="row">
     <div class="col">
       <div class="form-group">
         <mat-form-field>
-          <input matInput
-                 type="text"
-                 #searchString
+          <input #searchString
                  (change)="search(searchString.value)"
-                 placeholder="{{'xm-entity.common.search' | translate}}">
+                 matInput
+                 placeholder="{{'xm-entity.common.search' | translate}}"
+                 type="text">
         </mat-form-field>
       </div>
     </div>
   </div>
   <xm-loader [showLoader]="showLoader"></xm-loader>
-  <div class="table-responsive" *ngIf="relations">
+  <div *ngIf="relations" class="table-responsive">
     <table class="table table-striped">
       <thead>
       <tr>
@@ -31,7 +31,7 @@
           <span *ngIf="!rel.tags?.wikipedia">{{rel.tags?.name}}</span>
         </td>
         <td>
-          <button class="btn btn-primary btn-round btn-sm"  (click)="addPolygon(rel)" >
+          <button (click)="addPolygon(rel)" class="btn btn-primary btn-round btn-sm">
             <span jhiTranslate="xm-entity.common.add">Add</span>
           </button>
         </td>
@@ -41,7 +41,7 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button mat-raised-button type="button" class="btn" data-dismiss="modal" (click)="clear()">
+  <button (click)="clear()" class="btn" data-dismiss="modal" mat-raised-button type="button">
     <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
   </button>
 </div>

@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 
 import * as Chartist from 'chartist';
 
@@ -8,13 +8,13 @@ import { XmEntity, XmEntityService } from '../../../xm-entity/';
 @Component({
     selector: 'xm-chartist-line-widget',
     templateUrl: './chartist-line-widget.component.html',
-    styleUrls: ['./chartist-line-widget.component.scss']
+    styleUrls: ['./chartist-line-widget.component.scss'],
 })
 export class ChartistLineWidgetComponent implements OnInit {
 
-    name: any;
-    firstSeries: any;
-    config: any;
+    public name: any;
+    public firstSeries: any;
+    public config: any;
 
     constructor(
         private xmEntityService: XmEntityService,
@@ -22,14 +22,14 @@ export class ChartistLineWidgetComponent implements OnInit {
     ) {
     }
 
-    ngOnInit() {
+    public ngOnInit() {
         this.name = this.config.name;
         this.firstSeries = this.config.series[0];
         this.xmEntityService.search({
             query: this.firstSeries.query,
             page: 0,
             size: this.config.size,
-            sort: [this.firstSeries.sort]
+            sort: [this.firstSeries.sort],
         }).subscribe((resp: HttpResponse<XmEntity[]>) => {
             const entities: any[] = resp.body;
             const series = [[]];
@@ -40,15 +40,15 @@ export class ChartistLineWidgetComponent implements OnInit {
             }
 
             const chartistLine = new Chartist.Line(this.element.nativeElement.querySelector('.chartistLine'), {
-                    labels: labels,
-                    series: series
+                    labels,
+                    series,
                 },
                 this.config.options);
             this.startAnimationForLineChart(chartistLine);
         });
     }
 
-    startAnimationForLineChart(chart: any) {
+    public startAnimationForLineChart(chart: any) {
         let seq: number, delays: number, durations: number;
         seq = 0;
         delays = 80;
@@ -61,8 +61,8 @@ export class ChartistLineWidgetComponent implements OnInit {
                         dur: 700,
                         from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
                         to: data.path.clone().stringify(),
-                        easing: Chartist.Svg.Easing.easeOutQuint
-                    }
+                        easing: Chartist.Svg.Easing.easeOutQuint,
+                    },
                 });
             } else if (data.type === 'point') {
                 seq++;
@@ -72,8 +72,8 @@ export class ChartistLineWidgetComponent implements OnInit {
                         dur: durations,
                         from: 0,
                         to: 1,
-                        easing: 'ease'
-                    }
+                        easing: 'ease',
+                    },
                 });
             }
         });

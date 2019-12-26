@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class OverpassApiService {
 
-    OVERPASS_API_URL = 'https://www.overpass-api.de';
+    public OVERPASS_API_URL = 'https://www.overpass-api.de';
 
     /**
      * @param {Object} http angular http service
@@ -18,7 +18,7 @@ export class OverpassApiService {
      * http://wiki.openstreetmap.org/wiki/FR:Overpass_API
      * @return {Observable} http.get
      */
-    overpass(query: string): Observable<any> {
+    public overpass(query: string): Observable<any> {
         return this.http.get(this.OVERPASS_API_URL + '/api/interpreter?data=' + query);
     }
 

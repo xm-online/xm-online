@@ -3,43 +3,43 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { XmSharedModule } from '../shared/shared.module';
 import {
-    BalanceDetailDialogComponent,
     BalanceDetailComponent,
+    BalanceDetailDialogComponent,
     BalanceListCardComponent,
     BalanceService,
     BalanceSpecService,
     BalanceSpecWrapperService,
     MetricService,
-    PocketService
+    PocketService,
 } from './';
 
 @NgModule({
     imports: [
         CommonModule,
-        XmSharedModule
+        XmSharedModule,
     ],
     declarations: [
         BalanceListCardComponent,
         BalanceDetailDialogComponent,
-        BalanceDetailComponent
+        BalanceDetailComponent,
     ],
     entryComponents: [
         BalanceDetailDialogComponent,
-        BalanceDetailComponent
+        BalanceDetailComponent,
     ],
     exports: [
         BalanceListCardComponent,
         BalanceDetailDialogComponent,
-        BalanceDetailComponent
+        BalanceDetailComponent,
     ],
     providers: [
         BalanceService,
         BalanceSpecService,
         BalanceSpecWrapperService,
         MetricService,
-        PocketService
+        PocketService,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class XmBalanceModule {
 }

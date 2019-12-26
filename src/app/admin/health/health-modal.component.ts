@@ -5,37 +5,37 @@ import { JhiHealthService } from './health.service';
 
 @Component({
     selector: 'xm-health-modal',
-    templateUrl: './health-modal.component.html'
+    templateUrl: './health-modal.component.html',
 })
 export class JhiHealthModalComponent implements OnInit {
 
-    currentHealth: any;
-    aceEditorOptions: any = {
+    public currentHealth: any;
+    public aceEditorOptions: any = {
         highlightActiveLine: false,
         maxLines: 1000,
         printMargin: false,
         showGutter: false,
-        autoScrollEditorIntoView: true
+        autoScrollEditorIntoView: true,
     };
-    editorValue: string;
+    public editorValue: string;
 
     constructor(public activeModal: NgbActiveModal,
                 private healthService: JhiHealthService) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.editorValue = JSON.stringify(this.currentHealth, null, 4) || null;
     }
 
-    baseName(name) {
+    public baseName(name: any): string {
         return this.healthService.getBaseName(name);
     }
 
-    subSystemName(name) {
+    public subSystemName(name: any): string {
         return this.healthService.getSubSystemName(name);
     }
 
-    readableValue(value: number) {
+    public readableValue(value: number): string {
         if (this.currentHealth.name !== 'diskSpace') {
             return value.toString();
         }

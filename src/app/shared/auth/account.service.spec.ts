@@ -1,9 +1,9 @@
-import {TestBed} from '@angular/core/testing';
-import {AccountService} from './account.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {SERVER_API_URL} from '../../xm.constants';
-import {ACCOUNT_LOGIN_UPDATE_URL, ACCOUNT_URL, ACCOUNT_TFA_ENABLE_URL, ACCOUNT_TFA_DISABLE_URL} from './auth.constants';
+import {TestBed} from '@angular/core/testing';
 import {JhiDateUtils} from 'ng-jhipster';
+import {SERVER_API_URL} from '../../xm.constants';
+import {AccountService} from './account.service';
+import {ACCOUNT_LOGIN_UPDATE_URL, ACCOUNT_TFA_DISABLE_URL, ACCOUNT_TFA_ENABLE_URL, ACCOUNT_URL} from './auth.constants';
 
 describe('AccountService', () => {
 
@@ -15,8 +15,8 @@ describe('AccountService', () => {
             imports: [HttpClientTestingModule],
             providers: [
                 AccountService,
-                JhiDateUtils
-            ]
+                JhiDateUtils,
+            ],
         });
         httpTestingController = TestBed.get(HttpTestingController);
         service  = TestBed.get(AccountService);
@@ -32,7 +32,6 @@ describe('AccountService', () => {
 
     });
 
-
     describe('save()', () => {
         it('should call with correct URL', () => {
             service.save({id: 100}).subscribe((data) => {});
@@ -42,7 +41,6 @@ describe('AccountService', () => {
         });
 
     });
-
 
     describe('updateLogins()', () => {
         it('should call with correct URL', () => {

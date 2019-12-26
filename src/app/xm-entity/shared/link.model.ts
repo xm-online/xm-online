@@ -1,5 +1,5 @@
-import { XmEntity } from './xm-entity.model';
 import { BaseEntity } from '../../shared';
+import { XmEntity } from './xm-entity.model';
 
 export interface Link extends BaseEntity {
     id?: number;

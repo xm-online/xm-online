@@ -5,10 +5,10 @@
         <img src="{{link.target.avatarUrl}}">
       </div>
       <p>{{link.target.name}}</p>
-      <i class="material-icons" *ngIf="!link.target.targets">keyboard_arrow_right</i>
+      <i *ngIf="!link.target.targets" class="material-icons">keyboard_arrow_right</i>
     </span>
-    <xm-link-list-tree-section [links]="filterByLinkType(link.target.targets)" [linkSpec]="linkSpec"
-                                *ngIf="filterByLinkType(link.target.targets).length > 0">
+    <xm-link-list-tree-section *ngIf="filterByLinkType(link.target.targets).length > 0" [linkSpec]="linkSpec"
+                               [links]="filterByLinkType(link.target.targets)">
     </xm-link-list-tree-section>
   </li>
 </ul>

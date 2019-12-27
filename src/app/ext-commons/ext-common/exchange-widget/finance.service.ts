@@ -12,13 +12,13 @@ export class FinanceService {
     }
 
     public getRate(from: string, to: string): Observable<any> {
-        return this.http.jsonp(this.FINANCE_URL + `${from}_${to}&compact=y`, 'callback').pipe(map((data: any) => {
-            if (data && data.query && data.query.results) {
-                const result = data.query.results.channel;
-                return result;
-            }
-            return data;
-        }));
+        return this.http.jsonp(this.FINANCE_URL + `${from}_${to}&compact=y`, 'callback')
+            .pipe(map((data: any) => {
+                if (data && data.query && data.query.results) {
+                    return data.query.results.channel;
+                }
+                return data;
+            }));
     }
 
     public getRates(from: string, to: string[]): Observable<any[]> {

@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core';
-import { JhiAlertService } from 'ng-jhipster';
-import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
-import { Observable ,  Subject } from 'rxjs';
-import { shareReplay, takeUntil } from 'rxjs/operators';
-import { AccountService } from './account.service';
-import { SUPER_ADMIN } from './auth.constants';
-
-import { XmEntity } from '../../xm-entity';
 
 import * as moment from 'moment';
+import { JhiAlertService } from 'ng-jhipster';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+import { Observable, Subject } from 'rxjs';
+import { shareReplay, takeUntil } from 'rxjs/operators';
+
+import { XmEntity } from '../../xm-entity';
+import { AccountService } from './account.service';
+import { SUPER_ADMIN } from './auth.constants';
 
 const CACHE_SIZE = 1;
 const EXPIRES_DATE_FIELD = 'authenticationTokenexpiresDate';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class Principal {
     private userIdentity: any;
-    private authenticated = false;
-    private authenticationState = new Subject<any>();
+    private authenticated: boolean = false;
+    private authenticationState: Subject<any> = new Subject<any>();
     private promise: Promise<any>;
 
-    private reload$ = new Subject<void>();
+    private reload$: Subject<void> = new Subject<void>();
     private xmProfileCache$: Observable<XmEntity>;
 
     constructor(
@@ -87,7 +87,8 @@ export class Principal {
         });
     }
 
-    public identity(force?: boolean, mockUser?: boolean): Promise<any> {
+    // tslint:disable-next-line:cognitive-complexity
+    public identity(force: boolean = false, mockUser: boolean = false): Promise<any> {
         if (!force && this.promise) {
             return this.promise;
         } else {
@@ -132,24 +133,24 @@ export class Principal {
                         this.authenticationState.next(this.userIdentity);
                         resolve(this.userIdentity);
                     }).catch((err) => {
-                        this.promise = null;
-                        this.resetCachedProfile();
-                        if (mockUser) {
-                            this.userIdentity = {
-                                firstName: 'NoName',
-                                lastName: 'NoName',
-                                roleKey: 'ROLE_USER',
-                            };
-                            this.authenticated = true;
-                            this.authenticationState.next(this.userIdentity);
-                            resolve(this.userIdentity);
-                        } else {
-                            this.userIdentity = null;
-                            this.authenticated = false;
-                            this.authenticationState.next(this.userIdentity);
-                            resolve(this.userIdentity);
-                        }
-                    });
+                    this.promise = null;
+                    this.resetCachedProfile();
+                    if (mockUser) {
+                        this.userIdentity = {
+                            firstName: 'NoName',
+                            lastName: 'NoName',
+                            roleKey: 'ROLE_USER',
+                        };
+                        this.authenticated = true;
+                        this.authenticationState.next(this.userIdentity);
+                        resolve(this.userIdentity);
+                    } else {
+                        this.userIdentity = null;
+                        this.authenticated = false;
+                        this.authenticationState.next(this.userIdentity);
+                        resolve(this.userIdentity);
+                    }
+                });
             });
         }
     }
@@ -158,7 +159,7 @@ export class Principal {
      * Returns user XM Profile
      * @param force
      */
-    public getXmEntityProfile(force?: boolean): Observable<XmEntity> {
+    public getXmEntityProfile(force: boolean = false): Observable<XmEntity> {
         if (force) {
             this.resetCachedProfile();
         }
@@ -181,7 +182,7 @@ export class Principal {
         return this.authenticationState.asObservable();
     }
 
-    public getImageUrl(): String {
+    public getImageUrl(): string {
         if (this.isIdentityResolved()) {
             if ('null' === this.userIdentity.imageUrl) {
                 return null;
@@ -195,16 +196,16 @@ export class Principal {
         return this.isIdentityResolved() ? this.userIdentity.userKey : null;
     }
 
-    public getName(): String {
+    public getName(): string {
         if (!this.isIdentityResolved()) {return null; }
-        if (this.userIdentity.firstName ||  this.userIdentity.lastName) {
+        if (this.userIdentity.firstName || this.userIdentity.lastName) {
             return [this.userIdentity.firstName, this.userIdentity.lastName].join(' ');
         } else {
             return this.userIdentity.logins[0].login;
         }
     }
 
-    public getDetailName(): String[] {
+    public getDetailName(): string[] {
         if (!this.isIdentityResolved()) {return null; }
 
         return [

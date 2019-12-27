@@ -1,3 +1,4 @@
+
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { JsonSchemaFormService } from 'angular2-json-schema-form';
 
@@ -24,12 +25,12 @@ export class CurrentLocationComponent implements OnInit {
         this.mapId = buildMapId('currentLocation');
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.options = this.layoutNode.options || {};
         this.jsf.initializeControl(this);
     }
 
-    public onAfterGMapApiInit() {
+    public onAfterGMapApiInit(): void {
         if (!!navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 this.latitude = position.coords.latitude;
@@ -41,7 +42,7 @@ export class CurrentLocationComponent implements OnInit {
         }
     }
 
-    public showMap(location) {
+    public showMap(location: any): void {
         const mapOptions = {
             maxZoom: 16,
             scrollwheel: false,

@@ -17,7 +17,7 @@ export class UserMgmtDialogComponent implements OnInit {
     public languages: any[];
     public authorities: any[];
     public showLoader: boolean;
-    @ViewChild('userLoginForm', {static: false}) public userLoginForm;
+    @ViewChild('userLoginForm', {static: false}) public userLoginForm: any;
     @Input() public selectedUser: User;
 
     constructor(
@@ -51,14 +51,14 @@ export class UserMgmtDialogComponent implements OnInit {
 
     public save(): void {
         this.showLoader = true;
-        this.user.id || this.userLoginForm.createLogins();
+        if (!this.user.id) { this.userLoginForm.createLogins(); }
         this.userService[this.user.id ? 'update' : 'create'](this.user)
             .subscribe((response) => this.onSaveSuccess(response),
-                (err) => console.log(err),
+                (err) => console.info(err),
                 () => this.showLoader = false);
     }
 
-    private onSaveSuccess(result): void {
+    private onSaveSuccess(result: any): void {
         this.eventManager.broadcast({name: XM_EVENT_LIST.XM_USER_LIST_MODIFICATION, content: 'OK'});
         this.activeModal.dismiss(result);
     }

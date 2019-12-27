@@ -20,7 +20,7 @@ export class SocialRegisterComponent implements OnInit {
 
     public ngOnInit(): void {
         this.route.queryParams.subscribe((queryParams) => {
-            this.success = /true/.test(queryParams['success'].toLowerCase());
+            this.success = /true/.test(queryParams.success.toLowerCase());
         });
         this.route.params.subscribe((params) => {
             this.provider = params['provider?{success:boolean}'];

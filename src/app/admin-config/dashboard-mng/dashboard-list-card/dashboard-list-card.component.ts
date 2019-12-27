@@ -24,7 +24,7 @@ declare let swal: any;
 export class DashboardListCardComponent extends BaseAdminConfigListComponent implements OnInit {
 
     public list: Dashboard[];
-    public eventModify = 'dashboardListModification';
+    public eventModify: string = 'dashboardListModification';
 
     public showLoader: boolean;
 
@@ -55,7 +55,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
             });
     }
 
-    public trackIdentity(index, item): any {
+    public trackIdentity(_index: any, item: any): any {
         return item.id;
     }
 
@@ -74,8 +74,8 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
 
     public deleteAction(id: number): void {
         this.dashboardService.delete(id).subscribe(
-            (resp) => console.log(resp), // tslint:disable-line
-            (err) => console.log(err), // tslint:disable-line
+            (resp) => console.info(resp), // tslint:disable-line
+            (err) => console.info(err), // tslint:disable-line
             () => this.eventManager.broadcast({
                 name: this.eventModify,
                 content: {id: 'delete', msg: `Dashboard ${id} deleted`},
@@ -84,12 +84,12 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
 
     public exportDashboardsAndWidgets(): void {
         const mappedList = [];
-        this.list.map((b, i) => {
+        this.list.forEach((b, i) => {
             this.dashboardService.find(b.id).subscribe((result) => {
                 const dashboard = result.body || {};
                 delete dashboard.id;
                 if (dashboard.widgets && dashboard.widgets.length > 0) {
-                    dashboard.widgets.map((w) => {
+                    dashboard.widgets.forEach((w) => {
                         delete w.id;
                         delete w.dashboard;
                     });
@@ -102,13 +102,13 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
         });
     }
 
-    public onInputChange(event): void {
+    public onInputChange(event: any): void {
         const reader = new FileReader();
         reader.onload = (e) => this.onReaderLoad(e);
         reader.readAsText(event.target.files[0]);
     }
 
-    public onReaderLoad(event): void {
+    public onReaderLoad(event: any): void {
         swal({
             type: 'warning',
             text: this.translateService.instant('admin-config.common.confirm'),
@@ -129,7 +129,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
                                 this.loadAll();
                             }
                         }, (err) => {
-                            console.log(err); // tslint:disable-line
+                            console.info(err); // tslint:disable-line
                             this.showLoader = false;
                         });
                 }

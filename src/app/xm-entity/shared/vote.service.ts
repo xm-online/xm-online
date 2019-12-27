@@ -58,8 +58,8 @@ export class VoteService {
     private convertArrayResponse(res: HttpResponse<Vote[]>): HttpResponse<Vote[]> {
         const jsonResponse: Vote[] = res.body;
         const body: Vote[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+        for (const i of jsonResponse) {
+            body.push(this.convertItemFromServer(i));
         }
         return res.clone({body});
     }

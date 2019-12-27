@@ -22,7 +22,7 @@ export class EntityDetailFabComponent implements OnInit, OnChanges, OnDestroy {
     @Input() public xmEntity: XmEntity;
     @Input() public xmEntitySpec: XmEntitySpec;
     @Input() public spec: Spec;
-    public view = {attachment: false, location: false, link: false, comment: false};
+    public view: any = {attachment: false, location: false, link: false, comment: false};
     public showEditOptions: boolean = false;
     public showEditSubOptions: boolean = false;
     private eventSubscriber: Subscription;
@@ -80,7 +80,7 @@ export class EntityDetailFabComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    public onAddLink(linkSpec): void {
+    public onAddLink(linkSpec: any): void {
         this.openDialog(LinkDetailDialogComponent, (modalRef) => {
             modalRef.componentInstance.linkSpec = linkSpec;
             modalRef.componentInstance.sourceXmEntity = this.xmEntity;
@@ -120,7 +120,7 @@ export class EntityDetailFabComponent implements OnInit, OnChanges, OnDestroy {
             (this.xmEntitySpec && this.xmEntitySpec.links && this.xmEntitySpec.links.length > 0);
     }
 
-    private openDialog(dialogClass, operation, options?): NgbModalRef {
+    private openDialog(dialogClass: any, operation: any, options?: any): NgbModalRef {
         const modalRef = this.modalService.open(dialogClass, options ? options : {backdrop: 'static'});
         modalRef.componentInstance.xmEntity = this.xmEntity;
         operation(modalRef);

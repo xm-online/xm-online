@@ -52,8 +52,8 @@ export class CommentDetailDialogComponent implements OnInit {
         this.activeModal.dismiss('cancel');
     }
 
-    private onError(e): void {
-        console.log(e);
+    private onError(e: any): void {
+        console.warn(e);
         this.showLoader = false;
     }
 

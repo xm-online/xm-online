@@ -25,7 +25,7 @@ export class RatingListSectionComponent implements OnInit, OnChanges {
 
     public xmEntity: XmEntity;
     public ratings: Rating[] = [];
-    public votesNumber = {};
+    public votesNumber: {} = {};
 
     constructor(private xmEntityService: XmEntityService,
                 private ratingService: RatingService,
@@ -74,7 +74,7 @@ export class RatingListSectionComponent implements OnInit, OnChanges {
     private load(): void {
         if (!this.ratingSpecs || !this.ratingSpecs.length) {
             if (DEBUG_INFO_ENABLED) {
-                console.log('DBG: no spec no call');
+                console.info('DBG: no spec no call');
             }
             return;
         }
@@ -90,7 +90,7 @@ export class RatingListSectionComponent implements OnInit, OnChanges {
                         this.votesNumber[rating.typeKey] = parseInt(response.headers.get('X-Total-Count'), 10);
                     },
                     // TODO: error processing
-                    (err) => console.log(err),
+                    (err) => console.info(err),
                 );
             }
         });

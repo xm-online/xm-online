@@ -25,7 +25,7 @@ export class RolesMgmtComponent implements OnInit, OnDestroy {
     public previousPage: any;
     public page: any = 1;
     public predicate: any = 'roleKey';
-    public reverse: any = true;
+    public reverse: boolean = true;
     public showLoader: boolean;
     private eventSubscriber: Subscription;
 
@@ -77,7 +77,8 @@ export class RolesMgmtComponent implements OnInit, OnDestroy {
         if (page !== this.previousPage) {
             this.previousPage = page;
             this.roles = this.getItemsByPage(page);
-            // this.transition();
+            // TODO:
+            //  this.transition();
         }
     }
 

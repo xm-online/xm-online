@@ -35,8 +35,9 @@ export class AvailableOfferingsWidgetComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.rowSize = this.config.rowSize ? this.config.rowSize : 3;
         this.load();
-        this.availableOfferingActionSuccessSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS,
-            (response) => this.load());
+        this.availableOfferingActionSuccessSubscription = this.eventManager
+            .subscribe(XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS,
+                (response) => this.load());
     }
 
     public ngOnDestroy(): void {
@@ -67,14 +68,14 @@ export class AvailableOfferingsWidgetComponent implements OnInit, OnDestroy {
         }
     }
 
-    public resolveAvatarUrl(offering): string {
+    public resolveAvatarUrl(offering: any): string {
         if (offering && offering.avatarUrl && !offering.avatarUrl.startsWith('http')) {
             return 'https://xm-avatar-rgw.icthh.com/' + offering.avatarUrl;
         }
         return offering ? offering.avatarUrl : null;
     }
 
-    public onAction(offering): void {
+    public onAction(offering: any): void {
         const modalRef = this.modalService.open(FunctionCallDialogComponent, {backdrop: 'static'});
         modalRef.componentInstance.xmEntity = offering;
         modalRef.componentInstance.functionSpec = {key: this.config.action.functionKey};

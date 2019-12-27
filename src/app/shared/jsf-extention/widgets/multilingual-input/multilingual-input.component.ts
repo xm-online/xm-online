@@ -40,7 +40,7 @@ export class MultilingualInputComponent implements OnInit {
         });
     }
 
-    public onChangeLanguage(lang): void {
+    public onChangeLanguage(lang: any): void {
         this.currentLanguage = lang;
         const currentLanguageItem = this.controlValue.filter((v) => v.languageKey === this.currentLanguage).shift();
         this.text = currentLanguageItem ? currentLanguageItem.name : '';
@@ -65,7 +65,8 @@ export class MultilingualInputComponent implements OnInit {
         while (formArray.value.length) {
             formArray.removeAt(0);
         }
-        const refPointer = removeRecursiveReferences(this.layoutNode.dataPointer + '/-', this.jsf.dataRecursiveRefMap, this.jsf.arrayMap);
+        const refPointer = removeRecursiveReferences(this.layoutNode.dataPointer + '/-',
+            this.jsf.dataRecursiveRefMap, this.jsf.arrayMap);
         for (const i of item) {
             const newFormControl = buildFormGroup(this.jsf.templateRefLibrary[refPointer]);
             newFormControl.setValue(i);

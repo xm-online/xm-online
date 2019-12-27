@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import * as _ from 'lodash';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { FunctionService, XmEntity, XmEntityService } from '../../../xm-entity/';
 
@@ -69,7 +69,6 @@ export class StatsWidgetComponent implements OnInit {
         return this.functionService.call(iFunction.name, {}).pipe(
             map((resp) => resp.body),
             map((body) => this.getWidgetValue(body, iFunction)),
-            tap((value) => console.log(value)),
             catchError((e) => of(iFunction.errorValue ? iFunction.errorValue : '?')),
         );
     }

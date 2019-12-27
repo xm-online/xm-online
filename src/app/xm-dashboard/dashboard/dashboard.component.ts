@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.routeData = data;
         });
         this.routeSubscription = this.route.params.subscribe((params) => {
-            console.log('-------------- dashboard--------', params);
+            console.info('-------------- dashboard--------', params);
             if (params.id) {
                 this.load(params.id);
             } else {
@@ -79,6 +79,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.routeDataSubscription.unsubscribe();
     }
 
+    // tslint:disable-next-line:cognitive-complexity
     public rootRedirect(): void {
         this.principal.identity().then(() =>
             this.principal.hasPrivileges(['DASHBOARD.GET_LIST']).then((result) => {
@@ -93,7 +94,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                                 this.checkAndRedirect(config.defaultDashboard);
                             }
                         } else {
-                            if (!environment.production) {console.log(`rootRedirect`);}
+                            if (!environment.production) {console.info(`rootRedirect`); }
                             this.dashboardWrapperService.dashboards().then((dashboards) => {
                                     if (dashboards && dashboards.length && dashboards[0].id) {
                                         const key = dashboards[0].config && dashboards[0].config.slug
@@ -109,9 +110,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         );
     }
 
-    public load(idOrSlug): void {
+    public load(idOrSlug: any): void {
         this.showLoader = true;
-        if (!environment.production) {console.log(`load ${idOrSlug}`);}
+        if (!environment.production) {console.info(`load ${idOrSlug}`); }
         this.dashboardWrapperService.dashboards().then((dashboards) => {
                 if (dashboards && dashboards.length) {
                     this.dashboard = dashboards.filter((d) => (d.config && d.config.slug === idOrSlug)
@@ -121,7 +122,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     if (this.dashboard && this.dashboard.id) {
                         this.loadDashboard(this.dashboard.id);
                     } else {
-                        console.log('No dashboard found by %s', idOrSlug);
+                        console.info('No dashboard found by %s', idOrSlug);
                         this.rootRedirect();
                     }
                 }
@@ -129,8 +130,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         );
     }
 
-    public loadDashboard(id): void {
-        if (!environment.production) {console.log(`load dashboard ${id}`);}
+    public loadDashboard(id: any): void {
+        if (!environment.production) {console.info(`load dashboard ${id}`); }
 
         this.dashboardService.find(id).subscribe((result) => {
                 const widgets =
@@ -151,7 +152,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.jhiLanguageHelper.updateTitle();
             },
             () => {
-                console.log('No dashboard found by %s', id);
+                console.info('No dashboard found by %s', id);
                 this.showLoader = false;
             },
             () => (this.showLoader = false),
@@ -179,7 +180,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         return dashboardName || dashboardMenuLabel;
     }
 
-    private defaultGrid(el: Widget): { class: "row"; content: { widget: Widget; class: string }[] } {
+    private defaultGrid(el: Widget): { class: 'row'; content: Array<{ widget: Widget; class: string }> } {
         return {
             class: 'row',
             content: [
@@ -191,10 +192,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
         };
     }
 
+    // tslint:disable-next-line:cognitive-complexity
     private checkAndRedirect(slugs: any[]): void {
         const configSlugs = slugs instanceof Array ? slugs : [];
         let slugToGo = null;
-        if (!environment.production) {console.log(`checkAndRedirect`);}
+        if (!environment.production) {console.info(`checkAndRedirect`); }
         this.dashboardWrapperService.dashboards().then((dashboards) => {
             configSlugs.forEach((slug) => {
                 if (dashboards && dashboards.length) {
@@ -222,7 +224,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     private getWidgetComponent(widgets: Widget[]): Widget[] {
         return widgets.map((widget) => {
-            if (typeof this.mapWidgets[widget.selector] === 'string' || this.mapWidgets[widget.selector] instanceof String) {
+            if (typeof this.mapWidgets[widget.selector] === 'string'
+                || this.mapWidgets[widget.selector] instanceof String) {
                 widget.selector = this.mapWidgets[widget.selector];
             } else {
                 widget.component = this.mapWidgets[widget.selector];

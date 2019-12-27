@@ -57,8 +57,9 @@ export class LocationService {
     private convertArrayResponse(res: HttpResponse<Location[]>): HttpResponse<Location[]> {
         const jsonResponse: Location[] = res.body;
         const body: Location[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+
+        for (const i of jsonResponse) {
+            body.push(this.convertItemFromServer(i));
         }
         return res.clone({body});
     }
@@ -67,15 +68,13 @@ export class LocationService {
      * Convert a returned JSON object to Location.
      */
     private convertItemFromServer(location: Location): Location {
-        const copy: Location = Object.assign({}, location);
-        return copy;
+        return Object.assign({}, location);
     }
 
     /**
      * Convert a Location to a JSON which can be sent to the server.
      */
     private convert(location: Location): Location {
-        const copy: Location = Object.assign({}, location);
-        return copy;
+        return Object.assign({}, location);
     }
 }

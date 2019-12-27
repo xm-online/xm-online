@@ -9,10 +9,10 @@ export class AuthService {
         private principal: Principal,
     ) {}
 
-    public authorize(force) {
+    public authorize(force: boolean = false): Promise<any> {
         return this.principal.identity(force).then(() => authThen.bind(this));
 
-        function authThen() {
+        function authThen(): boolean | Promise<boolean> {
             const isAuthenticated = this.principal.isAuthenticated();
             const toStateInfo = this.stateStorageService.getDestinationState().destination;
 
@@ -27,7 +27,7 @@ export class AuthService {
             const previousState = this.stateStorageService.getPreviousState();
             if (isAuthenticated && !fromStateInfo.name && previousState) {
                 this.stateStorageService.resetPreviousState();
-                this.router.navigate([previousState.name], { queryParams:  previousState.params  });
+                this.router.navigate([previousState.name], {queryParams: previousState.params});
                 return false;
             }
 

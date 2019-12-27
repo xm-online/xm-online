@@ -49,8 +49,8 @@ export class MetricService {
     private convertArrayResponse(res: HttpResponse<Metric[]>): HttpResponse<Metric[]> {
         const jsonResponse: Metric[] = res.body;
         const body: Metric[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+        for (const i of jsonResponse) {
+            body.push(this.convertItemFromServer(i));
         }
         return res.clone({body});
     }
@@ -59,15 +59,13 @@ export class MetricService {
      * Convert a returned JSON object to Metric.
      */
     private convertItemFromServer(metric: Metric): Metric {
-        const copy: Metric = Object.assign({}, metric);
-        return copy;
+        return Object.assign({}, metric);
     }
 
     /**
      * Convert a Metric to a JSON which can be sent to the server.
      */
     private convert(metric: Metric): Metric {
-        const copy: Metric = Object.assign({}, metric);
-        return copy;
+        return Object.assign({}, metric);
     }
 }

@@ -58,7 +58,7 @@
                   <mat-select (selectionChange)="onChangeSort()"
                               [(ngModel)]="sortBy.condition"
                               placeholder="{{'rolesManagement.permission.resourceCondition' | translate}}">
-                    <mat-option *ngFor="let item of resource_conditions" [value]="item.value">
+                    <mat-option *ngFor="let item of resourceConditions" [value]="item.value">
                       <span *ngIf="item.trans" jhiTranslate="rolesManagement.permission.{{item.trans}}"></span>
                     </mat-option>
                   </mat-select>

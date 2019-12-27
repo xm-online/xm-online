@@ -1,5 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Principal } from '../../../auth/principal.service';
@@ -9,7 +10,7 @@ import { ExtAutocompleteOptions } from './ext-autocomplete-options.model';
 @Injectable()
 export class ExtAutocompleteService {
 
-    public static byString(o, s) {
+    public static byString(o: any, s: any): any {
         s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
         s = s.replace(/^\./, '');           // strip a leading dot
         const a = s.split('.');
@@ -30,7 +31,8 @@ export class ExtAutocompleteService {
         private i18nNamePipe: I18nNamePipe,
     ) {}
 
-    public fetchData(options: ExtAutocompleteOptions) {
+    // tslint:disable-next-line:cognitive-complexity
+    public fetchData(options: ExtAutocompleteOptions): Observable<any[]> {
         return this.http.get(options.url, {observe: 'response'}).pipe(map((response: HttpResponse<any>) => {
             const json = response.body;
             let array: any = json;
@@ -70,7 +72,7 @@ export class ExtAutocompleteService {
         }));
     }
 
-    public nullSafeLabel(x) {
+    public nullSafeLabel(x: any): string {
         return x ? '' + x.label ? '' + x.label : '' : '';
     }
 

@@ -26,8 +26,7 @@ function findNoTranslationsElement(dom, parentTag, file) {
         if (isTransletableText(text)) {
 
             if (/\d+"/g.test(text)) {
-                //console.log(`${file} -->> <${dom.raw}>${dom.data}<${dom.name}> -->> <${parentTag.raw}>`);
-            }
+           }
             else {
                 console.log(`${file} -->> ${text}`);
             }

@@ -17,15 +17,17 @@ export class UserResolve implements CanActivate {
     }
 }
 
+// tslint:disable-next-line:max-classes-per-file
 @Injectable()
 export class UserResolvePagingParams implements Resolve<any> {
 
     constructor(private paginationUtil: JhiPaginationUtil) {
     }
 
-    public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): { predicate: string; size: number; page: number; ascending: boolean } {
-        const page = route.queryParams['page'] ? route.queryParams['page'] : '1';
-        const sort = route.queryParams['sort'] ? route.queryParams['sort'] : 'id,asc';
+    public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
+        : { predicate: string; size: number; page: number; ascending: boolean } {
+        const page = route.queryParams.page ? route.queryParams.page : '1';
+        const sort = route.queryParams.sort ? route.queryParams.sort : 'id,asc';
         const size = route.queryParams.size && parseInt(route.queryParams.size, 10) || ITEMS_PER_PAGE;
         return {
             size,

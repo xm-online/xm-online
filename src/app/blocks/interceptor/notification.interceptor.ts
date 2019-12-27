@@ -6,6 +6,7 @@ export class NotificationInterceptor {
     constructor() {
     }
 
+    // tslint:disable-next-line:cognitive-complexity
     public responseIntercept(observable: Observable<any>): Observable<any> {
         return observable.pipe(catchError((error) => {
             if (error && error.headers && error.headers._headers) {
@@ -20,7 +21,7 @@ export class NotificationInterceptor {
                 headers.sort();
                 const alertKey = headers.length >= 1 ? error.headers.get(headers[0]) : null;
                 if (typeof alertKey === 'string') {
-                    // JhiAlertService.success(alertKey, { param: response.headers(headers[1])});
+                    // TODO: JhiAlertService.success(alertKey, { param: response.headers(headers[1])});
                 }
             }
             return observableThrowError(error);

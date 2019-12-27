@@ -1,43 +1,45 @@
 import { Component, NO_ERRORS_SCHEMA, TemplateRef, ViewContainerRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
-import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs/Subject';
 
 import { JhiLanguageHelper } from '../../shared';
 import { Principal } from '../../shared/auth/principal.service';
-import {XmPrivilegeDirective} from './xmPrivilege.directive';
+import { XmPrivilegeDirective } from './xmPrivilege.directive';
 
 class Mock {
 }
 
+// tslint:disable-next-line:max-classes-per-file
 @Component({
-    template: `<div>
-        <button class="noPermission">noPermission</button>
-        <button class="privOk" *xmPermitted="['TEST_OK']">privOk</button>
-        <button class="privNok" *xmPermitted="['TEST_NOK']">privNok</button>
-        <button class="privOkCtxOk" *xmPermitted="['TEST_OK']; context:contextCB(true)">privOkCtxOk</button>
-        <button class="privOkCtxNok" *xmPermitted="['TEST_OK']; context:contextCB(false)">privOkCtxNok</button>
-        <button class="privNokCtxOk" *xmPermitted="['TEST_NOK']; context:contextCB(true)">privNokCtxOk</button>
-        <button class="privNokCtxNok" *xmPermitted="['TEST_NOK']; context:contextCB(false)">privNokCtxNok</button>
-    </div>`
+    template: `
+        <div>
+            <button class="noPermission">noPermission</button>
+            <button class="privOk" *xmPermitted="['TEST_OK']">privOk</button>
+            <button class="privNok" *xmPermitted="['TEST_NOK']">privNok</button>
+            <button class="privOkCtxOk" *xmPermitted="['TEST_OK']; context:contextCB(true)">privOkCtxOk</button>
+            <button class="privOkCtxNok" *xmPermitted="['TEST_OK']; context:contextCB(false)">privOkCtxNok</button>
+            <button class="privNokCtxOk" *xmPermitted="['TEST_NOK']; context:contextCB(true)">privNokCtxOk</button>
+            <button class="privNokCtxNok" *xmPermitted="['TEST_NOK']; context:contextCB(false)">privNokCtxNok</button>
+        </div>`,
 })
 class TestComponent {
-    contextCB(value: boolean): Function  {
-        return () => {return value};
+    public contextCB(value: boolean): any {
+        return () => value;
     }
 }
 
 describe('Directive: PermitDirective', () => {
-    let component: TestComponent;
+
     let fixture: ComponentFixture<TestComponent>;
 
     let mockPrincipalService;
 
     let authenticationState;
 
-    const OK_SET  = new Set(['noPermission', 'privOk', 'privOkCtxOk']);
+    const OK_SET = new Set(['noPermission', 'privOk', 'privOkCtxOk']);
     const NOK_SET = new Set(['privNok', 'privOkCtxNok', 'privNokCtxOk', 'privNokCtxNok']);
 
     const OK_PRIV = 'TEST_OK';
@@ -45,7 +47,7 @@ describe('Directive: PermitDirective', () => {
 
     const permissionResolver = (privileges: string[] = [], privilegesOperation: string = 'OR') => {
         if (!privileges) {
-            console.log('No privileges passed');
+            console.info('No privileges passed');
             return Promise.resolve(false);
         }
 
@@ -57,7 +59,7 @@ describe('Directive: PermitDirective', () => {
             return Promise.resolve(false);
         }
 
-        console.log('Resolve false, no match');
+        console.info('Resolve false, no match');
         return Promise.resolve(false);
     };
 
@@ -76,23 +78,21 @@ describe('Directive: PermitDirective', () => {
                 JhiEventManager,
                 ViewContainerRef,
                 TemplateRef,
-                { provide: JhiLanguageHelper, useClass: Mock },
-                { provide: JhiLanguageService, useClass: Mock },
-                { provide: Router, useClass: Mock},
-                { provide: Principal, useValue : mockPrincipalService},
+                {provide: JhiLanguageHelper, useClass: Mock},
+                {provide: JhiLanguageService, useClass: Mock},
+                {provide: Router, useClass: Mock},
+                {provide: Principal, useValue: mockPrincipalService},
             ],
             schemas: [
-                NO_ERRORS_SCHEMA
-            ]
+                NO_ERRORS_SCHEMA,
+            ],
         });
 
         authenticationState = new Subject<any>();
         fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
-
     }));
 
-    it('should be visible all elements from OK_SET',  async(() => {
+    it('should be visible all elements from OK_SET', async(() => {
         authenticationState.next(true);
         mockPrincipalService.getAuthenticationState.and.returnValue(authenticationState.asObservable());
 
@@ -108,7 +108,7 @@ describe('Directive: PermitDirective', () => {
 
     }));
 
-    it('should not be visible all elements from NOK_SET',  async(() => {
+    it('should not be visible all elements from NOK_SET', async(() => {
         authenticationState.next(true);
         mockPrincipalService.getAuthenticationState.and.returnValue(authenticationState.asObservable());
 

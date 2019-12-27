@@ -50,8 +50,8 @@ export class PocketService {
     private convertArrayResponse(res: HttpResponse<Pocket[]>): HttpResponse<Pocket[]> {
         const jsonResponse: Pocket[] = res.body;
         const body: Pocket[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+        for (const i of jsonResponse) {
+            body.push(this.convertItemFromServer(i));
         }
         return res.clone({body});
     }

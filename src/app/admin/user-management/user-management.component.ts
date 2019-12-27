@@ -21,12 +21,12 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
     public currentAccount: any;
     public list: User[];
     public eventModify: string = XM_EVENT_LIST.XM_USER_LIST_MODIFICATION;
-    public navigateUrl = 'administration/user-management';
-    public basePredicate = 'id';
+    public navigateUrl: string = 'administration/user-management';
+    public basePredicate: string = 'id';
     public login: string;
     public authorities: any[];
     public currentSearch: string;
-    public onlineUsers = 0;
+    public onlineUsers: number = 0;
 
     constructor(protected activatedRoute: ActivatedRoute,
                 protected alertService: JhiAlertService,
@@ -39,20 +39,22 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
                 private roleService: RoleService,
                 public principal: Principal) {
         super(activatedRoute, alertService, eventManager, parseLinks, router);
-        this.currentSearch = activatedRoute.snapshot.params['search'] || '';
+        this.currentSearch = activatedRoute.snapshot.params.search || '';
     }
 
     public ngOnInit(): void {
         this.principal.identity().then((account) => {
             this.registerChangeInList();
             this.currentAccount = account;
-            this.roleService.getRoles().subscribe((roles) => this.authorities = roles.map((role) => role.roleKey).sort());
-            this.userService.getOnlineUsers().subscribe((result) => this.onlineUsers = result.body);
+            this.roleService.getRoles()
+                .subscribe((roles) => this.authorities = roles.map((role) => role.roleKey).sort());
+            this.userService.getOnlineUsers()
+                .subscribe((result) => this.onlineUsers = result.body);
             this.loadAll();
         });
     }
 
-    public changeState(user): void {
+    public changeState(user: User): void {
         swal({
             title: user.activated ? `Block user?` : `Unblock user?`,
             showCancelButton: true,
@@ -62,7 +64,7 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
             confirmButtonText: 'Yes',
         }).then((result) => result.value ?
             this.changeUserState(user) :
-            console.log('Cancel'));
+            console.info('Cancel'));
     }
 
     public getRegistrationEmail(user: User): string {
@@ -71,12 +73,13 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
         }
 
         for (const entry of user.logins) {
+            // tslint:disable-next-line:no-constant-condition no-conditional-assignment
             if (entry.typeKey = 'LOGIN.EMAIL') {
                 return entry.login;
             }
         }
 
-        console.log('Key LOGIN.EMAIL not found %o', user.logins);
+        console.info('Key LOGIN.EMAIL not found %o', user.logins);
         return '';
     }
 
@@ -95,7 +98,7 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
                         this.alertService.success('userManagement.twoFAEnabled');
                     },
                     (error) => this.alertService.error(error)) :
-            console.log('Cancel'));
+            console.info('Cancel'));
     }
 
     public disable2FA(user: User): void {
@@ -113,7 +116,7 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
                         this.alertService.success('userManagement.twoFADisabled');
                     },
                     (error) => this.alertService.error(error)) :
-            console.log('Cancel'));
+            console.info('Cancel'));
     }
 
     public loadAll(): void {
@@ -124,11 +127,11 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
             sort: this.sort(),
             roleKey: this.currentSearch,
         }).subscribe((res) => this.list = this.onSuccess(res.body, res.headers),
-            (err) => console.log(err),
+            (err) => console.info(err),
             () => this.showLoader = false);
     }
 
-    public trackIdentity(index, item: User): any {
+    public trackIdentity(_index: number, item: User): any {
         return item.id;
     }
 
@@ -179,17 +182,17 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
         this.modalService.open(UserMgmtDialogComponent, {backdrop: 'static', size: 'lg'});
     }
 
-    public onEdit(user): void {
+    public onEdit(user: User): void {
         const modalRef = this.modalService.open(UserMgmtDialogComponent, {backdrop: 'static', size: 'lg'});
         modalRef.componentInstance.selectedUser = user;
     }
 
-    public onLoginEdit(user): void {
+    public onLoginEdit(user: User): void {
         const modalRef = this.modalService.open(UserLoginMgmtDialogComponent, {backdrop: 'static', size: 'lg'});
         modalRef.componentInstance.user = user;
     }
 
-    public onDelete(user): void {
+    public onDelete(user: User): void {
         const modalRef = this.modalService.open(UserMgmtDeleteDialogComponent, {backdrop: 'static', size: 'lg'});
         modalRef.componentInstance.user = user;
     }
@@ -202,12 +205,12 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
         }
     }
 
-    private changeUserState(user): void {
+    private changeUserState(user: User): void {
         user.activated = !user.activated;
         this.userService.update(user).subscribe(() => {
             this.alertService.success('userManagement.success');
         }, (err) => {
-            console.log(err);
+            console.info(err);
             this.alertService.error('userManagement.error');
             user.activated = !user.activated;
         });

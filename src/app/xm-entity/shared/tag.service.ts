@@ -58,8 +58,8 @@ export class TagService {
     private convertArrayResponse(res: HttpResponse<Tag[]>): HttpResponse<Tag[]> {
         const jsonResponse: Tag[] = res.body;
         const body: Tag[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+        for (const i of jsonResponse) {
+            body.push(this.convertItemFromServer(i));
         }
         return res.clone({body});
     }

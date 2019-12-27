@@ -33,7 +33,8 @@ export class TagListSectionComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public ngOnInit(): void {
-        this.eventSubscriber = this.eventManager.subscribe(XM_EVENT_LIST.XM_ENTITY_DETAIL_MODIFICATION, () => this.load());
+        this.eventSubscriber = this.eventManager
+            .subscribe(XM_EVENT_LIST.XM_ENTITY_DETAIL_MODIFICATION, () => this.load());
     }
 
     public ngOnDestroy(): void {
@@ -73,7 +74,7 @@ export class TagListSectionComponent implements OnInit, OnChanges, OnDestroy {
     private load(): void {
         if (!this.tagSpecs || !this.tagSpecs.length) {
             if (DEBUG_INFO_ENABLED) {
-                console.log('DBG: no spec no call');
+                console.info('DBG: no spec no call');
             }
             return;
         }

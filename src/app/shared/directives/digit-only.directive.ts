@@ -1,26 +1,26 @@
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 @Directive({
-    selector: '[xmDigitOnly]'
+    selector: '[xmDigitOnly]',
 })
 export class DigitOnlyDirective {
-    @Input() numericType: string; // number || decimal
+    @Input() public numericType: string; // number || decimal
 
-    private regex = {
+    private regex: any = {
         number: new RegExp(/^\d+$/),
-        decimal: new RegExp(/^[0-9]+(\.[0-9]*){0,1}$/g)
+        decimal: new RegExp(/^[0-9]+(\.[0-9]*){0,1}$/g),
     };
 
-    private specialKeys = {
-        number: [ 'Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight' ],
-        decimal: [ 'Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight' ],
+    private specialKeys: any = {
+        number: ['Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight'],
+        decimal: ['Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight'],
     };
 
     constructor(private el: ElementRef) {
     }
 
-    @HostListener('keydown', [ '$event' ])
-    onKeyDown(event: KeyboardEvent) {
+    @HostListener('keydown', ['$event'])
+    public onKeyDown(event: KeyboardEvent): void {
 
         if (this.specialKeys[this.numericType].indexOf(event.key) !== -1 || event.ctrlKey === true) {
             return;
@@ -35,7 +35,7 @@ export class DigitOnlyDirective {
     }
 
     @HostListener('paste', ['$event'])
-    onPaste(event: ClipboardEvent) {
+    public onPaste(event: ClipboardEvent): void {
         event.preventDefault();
         const pastedInput: string = event.clipboardData
             .getData('text/plain')

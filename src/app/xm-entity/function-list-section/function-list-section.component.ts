@@ -38,7 +38,7 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
     public functionContexts: FunctionContext[];
     public defaultFunctions$: Observable<FunctionSpec[]>;
     public customFunctions$: Observable<FunctionSpec[]>;
-    public customFunctions = {
+    public customFunctions: any = {
         'AREA': AreaComponent,
         'EXTRACT-LINKEDIN-PROFILE': LinkedinProfileComponent,
         'ACCOUNT.EXTRACT-LINKEDIN-PROFILE': LinkedinProfileComponent,
@@ -70,10 +70,11 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
         }
     }
 
-    public onChangeState(stateKey): void {
+    public onChangeState(stateKey: string): void {
         const nextSpec: NextSpec = this.stateSpec.next.filter((it) => it.stateKey === stateKey)[0];
         if (!nextSpec) {
             // exceptional case: user should never be able to change state outside the state tree
+            // tslint:disable-next-line:max-line-length
             throw new Error(`XM error: trying to change entity state from "${this.stateSpec.name}" to "${stateKey}", not allowed`);
         }
 
@@ -86,9 +87,9 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
         modalRef.componentInstance.dialogTitle = title;
         modalRef.componentInstance.buttonTitle = title;
         modalRef.result.then((result) => {
-            console.log(result);
+            console.info(result);
         }, (reason) => {
-            console.log(reason);
+            console.info(reason);
             if (reason === 'OK') {
                 this.eventManager.broadcast({
                     name: 'xmEntityDetailModification',
@@ -110,7 +111,7 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
         modalRef.componentInstance.functionSpec = functionSpec;
         modalRef.componentInstance.dialogTitle = title;
         modalRef.componentInstance.buttonTitle = title;
-        console.log('onCallFunction');
+        console.info('onCallFunction');
     }
 
     public getFunctionContext(functionSpec: FunctionSpec): FunctionContext {
@@ -127,11 +128,13 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
         this.functionContexts = [];
         this.functionSpecs = this.functionSpecs ? this.functionSpecs : [];
         if (!this.xmEntityId) {
-            this.functionSpecs = this.functionSpecs.filter((f) => f.hasOwnProperty('withEntityId') && f.withEntityId === false);
+            this.functionSpecs = this.functionSpecs
+                .filter((f) => f.hasOwnProperty('withEntityId') && f.withEntityId === false);
         } else {
             // TODO workaround not to call xmEntityService for no reason
             if (this.functionSpecs &&
-                ((this.functionSpecs.length === 1 && this.functionSpecs[0].saveFunctionContext) || (this.functionSpecs.length > 1))) {
+                ((this.functionSpecs.length === 1 && this.functionSpecs[0].saveFunctionContext)
+                    || (this.functionSpecs.length > 1))) {
                 this.getContext();
             }
         }
@@ -147,14 +150,15 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
     }
 
     private getContext(): void {
-        this.xmEntityService.find(this.xmEntityId, {embed: 'functionContexts'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
-            this.functionSpecs = this.functionSpecs.filter(
-                (f) => !f.allowedStateKeys || f.allowedStateKeys.includes(xmEntity.body.stateKey));
-            this.xmEntity = xmEntity.body;
-            if (xmEntity.body.functionContexts) {
-                this.functionContexts = [...xmEntity.body.functionContexts];
-            }
-        });
+        this.xmEntityService.find(this.xmEntityId, {embed: 'functionContexts'})
+            .subscribe((xmEntity: HttpResponse<XmEntity>) => {
+                this.functionSpecs = this.functionSpecs.filter(
+                    (f) => !f.allowedStateKeys || f.allowedStateKeys.includes(xmEntity.body.stateKey));
+                this.xmEntity = xmEntity.body;
+                if (xmEntity.body.functionContexts) {
+                    this.functionContexts = [...xmEntity.body.functionContexts];
+                }
+            });
     }
 
     private getCustomFunctions(): FunctionSpec[] {

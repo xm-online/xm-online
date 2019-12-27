@@ -34,7 +34,7 @@ export class WidgetDetailDialogComponent implements OnInit {
         this.configStringOut = this.configStringIn;
     }
 
-    public onConfigChange(textChanged): void {
+    public onConfigChange(textChanged: any): void {
         this.configStringOut = textChanged;
     }
 

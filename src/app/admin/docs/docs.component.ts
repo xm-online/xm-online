@@ -35,6 +35,7 @@ export class JhiDocsComponent implements OnInit, AfterViewInit {
 
     public updateSwagger(resource: any): void {
         const authToken = this.auth.getToken();
+        // tslint:disable-next-line:no-unused-expression
         new SwaggerUIBundle({
             dom_id: '#swaggerHolder',
             supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
@@ -46,7 +47,7 @@ export class JhiDocsComponent implements OnInit, AfterViewInit {
             configs: {
                 preFetch: (req) => {
                     if (authToken) {
-                        req.headers['Authorization'] = 'Bearer ' + authToken;
+                        req.headers.Authorization = 'Bearer ' + authToken;
                     }
                     return req;
                 },

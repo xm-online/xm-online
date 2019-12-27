@@ -11,9 +11,6 @@ export interface LinkSpec extends BaseSpec {
     max?: number;
 }
 
-export interface TargetInterfaceSpec extends EntityLinkUiConfig {}
-export interface SourceInterfaceSpec extends EntityLinkUiConfig {}
-
 export interface FullLinkSpec {
     model: LinkSpec;
     interface: EntityLinkUiConfig;

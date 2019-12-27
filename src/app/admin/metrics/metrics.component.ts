@@ -44,14 +44,14 @@ export class JhiMetricsMonitoringComponent implements OnInit {
                     this.selectedService = this.services[0].name;
                     this.onServiceSelect();
                 }
-            }, (error) => console.log(error));
+            }, (error) => console.warn(error));
     }
 
     public onServiceSelect(): void {
         this.instances = null;
         this.services
             .filter((s) => s.name === this.selectedService)
-            .map((i) => this.instances = i.instances || null);
+            .forEach((i) => this.instances = i.instances || null);
         this.getMetrics(this.selectedService);
     }
 
@@ -64,12 +64,12 @@ export class JhiMetricsMonitoringComponent implements OnInit {
                 this.allMetrics = result || [];
                 this.mapMetrics(this.allMetrics[0].instanceId);
             }, (error) => {
-                console.log(error);
+                console.warn(error);
                 this.noData = true;
             });
     }
 
-    public mapMetrics(metricId): void {
+    public mapMetrics(metricId: any): void {
         this.metrics = {};
         this.selectedInstance = metricId || '';
         const currentMetrics = this.allMetrics.filter((m) => m.instanceId === metricId).shift();
@@ -95,7 +95,7 @@ export class JhiMetricsMonitoringComponent implements OnInit {
                     // Keep the name of the domain
                     this.cachesStats[newKey] = {
                         name: this.JCACHE_KEY.length,
-                        value: value,
+                        value,
                     };
                 }
             });
@@ -104,7 +104,8 @@ export class JhiMetricsMonitoringComponent implements OnInit {
 
     public refreshThreadDumpData(): void {
         this.metricsService.threadDump().subscribe((data) => {
-            const modalRef = this.modalService.open(JhiMetricsMonitoringModalComponent, {size: 'lg', backdrop: 'static'});
+            const modalRef = this.modalService.open(JhiMetricsMonitoringModalComponent,
+                {size: 'lg', backdrop: 'static'});
             modalRef.componentInstance.threadDump = data && data.threads || [];
             modalRef.result.then((result) => {
                 // Left blank intentionally, nothing to do here

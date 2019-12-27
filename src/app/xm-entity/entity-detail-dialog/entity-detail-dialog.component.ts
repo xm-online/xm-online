@@ -58,7 +58,8 @@ export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
             this.onChangeEntityType(this.xmEntitySpec);
         } else {
             if (this.spec && this.spec.types) {
-                this.availableSpecs = this.spec.types.filter((t) => !t.isAbstract && t.key.startsWith(this.xmEntitySpec.key));
+                this.availableSpecs = this.spec.types
+                    .filter((t) => !t.isAbstract && t.key.startsWith(this.xmEntitySpec.key));
                 this.xmEntity.key = UUID.UUID();
                 this.xmEntity.typeKey = this.availableSpecs[0].key;
                 this.onChangeEntityType(null, this.xmEntity.typeKey);
@@ -83,7 +84,10 @@ export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
         this.nameValidPattern = xmEntitySpec.nameValidationPattern ? xmEntitySpec.nameValidationPattern : null;
         this.smartDescription.template = xmEntitySpec.descriptionPattern ? xmEntitySpec.descriptionPattern : null;
 
-        if (this.jsfAttributes && this.jsfAttributes.entity && this.jsfAttributes.entity.hideNameAndDescription && !this.xmEntity.name) {
+        if (this.jsfAttributes
+            && this.jsfAttributes.entity
+            && this.jsfAttributes.entity.hideNameAndDescription
+            && !this.xmEntity.name) {
             this.xmEntity.name = '###';
         } else if (this.xmEntity.name === '###') {
             this.xmEntity.name = '';
@@ -117,8 +121,8 @@ export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
         this.formatSmartDescription(data);
     }
 
-    private onConfirmError(err): void {
-        console.log(err);
+    private onConfirmError(err: any): void {
+        console.info(err);
         // disable form spinner
         this.showLoader = false;
     }

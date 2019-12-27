@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import swal from 'sweetalert2';
 
 import { ITEMS_PER_PAGE } from '../shared/constants/pagination.constants';
+import { Link } from '../xm-entity';
 
 @Injectable()
 export class BaseAdminConfigListComponent implements OnInit, OnDestroy {
@@ -16,7 +17,7 @@ export class BaseAdminConfigListComponent implements OnInit, OnDestroy {
     public reverse: any;
     public predicate: any;
     public itemsPerPage: any;
-    public links: any;
+    public links: Link[];
     public totalItems: any;
     public queryCount: any;
     public eventModify: string;
@@ -35,11 +36,11 @@ export class BaseAdminConfigListComponent implements OnInit, OnDestroy {
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
-            this.itemsPerPage = data['pagingParams'].size;
-            this.page = data['pagingParams'].page;
-            this.previousPage = data['pagingParams'].page;
-            this.reverse = data['pagingParams'].ascending;
-            this.predicate = data['pagingParams'].predicate;
+            this.itemsPerPage = data.pagingParams.size;
+            this.page = data.pagingParams.page;
+            this.previousPage = data.pagingParams.page;
+            this.reverse = data.pagingParams.ascending;
+            this.predicate = data.pagingParams.predicate;
         });
     }
 
@@ -93,14 +94,14 @@ export class BaseAdminConfigListComponent implements OnInit, OnDestroy {
         });
     }
 
-    public onSuccess(data, headers): any {
+    public onSuccess(data: any, headers: any): any {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         this.queryCount = this.totalItems;
         return data;
     }
 
-    public onError(error): void {
+    public onError(error: any): void {
         this.alertService.error(error.error, error.message, null);
     }
 
@@ -113,10 +114,10 @@ export class BaseAdminConfigListComponent implements OnInit, OnDestroy {
             cancelButtonClass: 'btn btn mat-raised-button',
             confirmButtonText: 'Yes, delete!',
         }).then((result) => result.value ? this.deleteAction(id)
-            : console.log('Cancel')); // tslint:disable-line
+            : console.info('Cancel')); // tslint:disable-line
     }
 
-    protected getPageAfterRemove(result): any {
+    protected getPageAfterRemove(result: any): any {
         if (result && result.content && result.content.id === 'delete' && this.page > 1) {
             this.queryCount--;
             const length =

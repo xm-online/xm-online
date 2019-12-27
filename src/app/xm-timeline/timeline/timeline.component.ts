@@ -16,7 +16,7 @@ const TL_REFRESH_EVENT = XM_EVENT_LIST.XM_REFRESH_TIMELINE;
 })
 export class TimelineComponent implements OnInit, OnChanges, OnDestroy {
 
-    @Input() public xmEntityId = 0;
+    @Input() public xmEntityId: number = 0;
     @Input() public limit: number;
     @Input() public params: any;
     @Input() public filter: any;
@@ -29,7 +29,7 @@ export class TimelineComponent implements OnInit, OnChanges, OnDestroy {
     public currentSearch: string;
     public formFilter: any = {};
 
-    public showTimelineHeader = true;
+    public showTimelineHeader: boolean = true;
 
     private modifySubscription: Subscription;
 
@@ -56,7 +56,7 @@ export class TimelineComponent implements OnInit, OnChanges, OnDestroy {
         this.eventManager.destroy(this.modifySubscription);
     }
 
-    public onNextPage(next): void {
+    public onNextPage(next: any): void {
         this.showLoader = true;
         this.timelineService.search(this.getSearchBody({next})).pipe(
             finalize(() => this.showLoader = false))
@@ -66,7 +66,7 @@ export class TimelineComponent implements OnInit, OnChanges, OnDestroy {
             });
     }
 
-    public timeAgo(time): any {
+    public timeAgo(time: any): any {
         return this.timeAgoService.transform(time);
     }
 
@@ -77,7 +77,6 @@ export class TimelineComponent implements OnInit, OnChanges, OnDestroy {
 
     private registerListModify(): void {
         this.modifySubscription = this.eventManager.subscribe(TL_REFRESH_EVENT, () => {
-            console.log('Event: %s', TL_REFRESH_EVENT);
             this.load();
         });
     }

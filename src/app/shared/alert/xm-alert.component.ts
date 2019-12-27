@@ -16,7 +16,7 @@ export class XmAlertComponent implements OnInit {
     @Input() public dismissible: boolean;
     @Input() public type: string;
     @Input() public message: string;
-    @Output() public close = new EventEmitter();
+    @Output() public close: EventEmitter<any> = new EventEmitter();
 
     constructor(config: NgbAlertConfig) {
         this.dismissible = config.dismissible;
@@ -29,11 +29,10 @@ export class XmAlertComponent implements OnInit {
         }
     }
 
-    public showAlert(type, message): void {
+    public showAlert(type: any, message: any): void {
         $.notify({
             icon: 'add',
             message,
-
         }, {
             type,
             timer: 5000,

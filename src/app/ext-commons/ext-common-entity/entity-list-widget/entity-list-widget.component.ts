@@ -14,10 +14,10 @@ export class EntityListWidgetComponent implements OnInit {
     public config: any;
     public spec: Spec;
     public defaultFieldsKeys: string[] = [
-        LIST_DEFAULT_FIELDS['name'],
-        LIST_DEFAULT_FIELDS['typeKey'],
-        LIST_DEFAULT_FIELDS['startDate'],
-        LIST_DEFAULT_FIELDS['stateKey'],
+        LIST_DEFAULT_FIELDS.name,
+        LIST_DEFAULT_FIELDS.typeKey,
+        LIST_DEFAULT_FIELDS.startDate,
+        LIST_DEFAULT_FIELDS.stateKey,
     ];
 
     constructor(private translateService: TranslateService) {
@@ -35,7 +35,7 @@ export class EntityListWidgetComponent implements OnInit {
         }
     }
 
-    private buildDefaultFields(): Object[] {
+    private buildDefaultFields(): object[] {
         return ['name', 'typeKey', 'startDate', 'stateKey'].map((item) => this.newField(item));
     }
 

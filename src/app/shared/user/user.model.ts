@@ -1,4 +1,5 @@
-import {UserLogin} from './login/user-login.model';
+/* tslint:disable:bool-param-default */
+import { UserLogin } from './login/user-login.model';
 
 export class User {
     public id?: any;
@@ -19,6 +20,8 @@ export class User {
     public password?: string;
     public tfaEnabled?: boolean;
     public imageUrl?: string;
+
+    // tslint:disable-next-line:cognitive-complexity
     constructor(
         id?: any,
         userKey?: string,
@@ -50,7 +53,7 @@ export class User {
         if (this.autoLogoutEnabled) {
             this.autoLogoutTimeoutSeconds = autoLogoutTimeoutSeconds ? autoLogoutTimeoutSeconds : 60 * 30;
         } else {
-          this.autoLogoutTimeoutSeconds = null;
+            this.autoLogoutTimeoutSeconds = null;
         }
 
         this.langKey = langKey ? langKey : null;

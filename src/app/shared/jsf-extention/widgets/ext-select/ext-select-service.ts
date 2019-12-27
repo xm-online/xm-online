@@ -1,5 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Principal } from '../../../auth/principal.service';
@@ -9,7 +10,7 @@ import { ExtSelectOptions } from './ext-select-options.model';
 @Injectable()
 export class ExtSelectService {
 
-    public static byString(o, s) {
+    public static byString(o: any, s: any): any {
         s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
         s = s.replace(/^\./, '');           // strip a leading dot
         const a = s.split('.');
@@ -30,7 +31,7 @@ export class ExtSelectService {
         private i18nNamePipe: I18nNamePipe,
     ) {}
 
-    public fetchData(options: ExtSelectOptions) {
+    public fetchData(options: ExtSelectOptions): Observable<any[]> {
         return this.http.get(options.url, {observe: 'response'}).pipe(
             map((response: HttpResponse<any>) => {
                 const json = response.body;
@@ -38,7 +39,7 @@ export class ExtSelectService {
             }));
     }
 
-    public mapArrayToView(object: any, options: ExtSelectOptions) {
+    public mapArrayToView(object: any, options: ExtSelectOptions): any[] {
         let array = object;
         if (options.arrayField) {
             array = ExtSelectService.byString(object, options.arrayField);
@@ -75,7 +76,7 @@ export class ExtSelectService {
         return elements;
     }
 
-    public nullSafeLabel(x) {
+    public nullSafeLabel(x: any): string {
         return x ? '' + x.label ? '' + x.label : '' : '';
     }
 

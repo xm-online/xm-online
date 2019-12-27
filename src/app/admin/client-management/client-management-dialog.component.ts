@@ -13,13 +13,13 @@ import { XmConfigService } from '../../shared/spec/config.service';
 })
 export class ClientMgmtDialogComponent implements OnInit {
 
-    @Input() selectedClient: Client;
-    client: Client;
-    languages: any[];
-    scopes: any[];
-    authorities: any[];
-    showLoader: boolean;
-    @ViewChild('userLoginForm', {static: false}) userLoginForm;
+    @Input() public selectedClient: Client;
+    public client: Client;
+    public languages: any[];
+    public scopes: any[];
+    public authorities: any[];
+    public showLoader: boolean;
+    @ViewChild('userLoginForm', {static: false}) public userLoginForm: any;
 
     constructor(public activeModal: NgbActiveModal,
                 private languageHelper: JhiLanguageHelper,
@@ -29,7 +29,7 @@ export class ClientMgmtDialogComponent implements OnInit {
                 private xmConfigService: XmConfigService) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         if (this.selectedClient) {
             this.client = new Client(
                 this.selectedClient.id,
@@ -58,20 +58,22 @@ export class ClientMgmtDialogComponent implements OnInit {
         this.scopes = this.client.scopes;
     }
 
-    clear() {
+    public clear(): void {
         this.activeModal.dismiss('cancel');
     }
 
-    save() {
+    public save(): void {
         this.showLoader = true;
         this.client.clientId = this.client.clientId.trim();
-        this.client.description && (this.client.description = this.client.description.trim());
+        if (this.client.description) {
+            this.client.description = this.client.description.trim();
+        }
         this.client.scopes = (this.scopes || []).map((it) => it.value);
         this.clientService[this.client.id ? 'update' : 'create'](this.client)
             .subscribe(
                 (response) => this.onSaveSuccess(response),
                 (err) => {
-                    console.log(err); // tslint:disable-line
+                    console.warn(err); // tslint:disable-line
                     this.showLoader = false;
                 },
                 () => this.showLoader = false);
@@ -79,10 +81,10 @@ export class ClientMgmtDialogComponent implements OnInit {
 
     protected setFormSources(sources: string[]): any[] {
         if (!sources) {return []; }
-        return sources.map((s) => {return {display: s, value: s}; });
+        return sources.map((s) => ({display: s, value: s}));
     }
 
-    private onSaveSuccess(result) {
+    private onSaveSuccess(result: any): void {
         this.eventManager.broadcast({name: 'clientListModification', content: 'OK'});
         this.activeModal.dismiss(result);
     }

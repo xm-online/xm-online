@@ -11,7 +11,7 @@ import { AuthServerProvider } from '../../auth/auth-jwt.service';
 export class PrivacyAndTermsDialogComponent implements OnInit {
 
     @Input() public config: any;
-    public iAgree = false;
+    public iAgree: boolean = false;
     public lang: string;
     public termsToken: string;
 

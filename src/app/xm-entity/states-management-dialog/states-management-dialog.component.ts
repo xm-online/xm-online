@@ -17,7 +17,7 @@ export class StatesManagementDialogComponent implements OnInit {
     public specs: XmEntitySpec[] = [];
 
     public selectedSpec: string;
-    public selectedSpecKey$ = new Subject<string>();
+    public selectedSpecKey$: Subject<string> = new Subject<string>();
     public formSpecSearch: FormControl;
     public filteredSpecOptions$: Observable<XmEntitySpec[]>;
     public ratioSpec$: any;
@@ -60,7 +60,10 @@ export class StatesManagementDialogComponent implements OnInit {
                                     }
                                     const nextState: NextSpec = state.next.find((next) => next.stateKey === key);
                                     if (nextState) {
-                                        return Object.assign({}, arr.filter((eState) => eState.key === nextState.stateKey).shift(), nextState);
+                                        return Object.assign(
+                                            {},
+                                            arr.filter((eState) => eState.key === nextState.stateKey).shift(),
+                                            nextState);
                                     } else {
                                         return 'empty';
                                     }

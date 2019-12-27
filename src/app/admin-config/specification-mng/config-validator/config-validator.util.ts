@@ -44,9 +44,10 @@ export class ConfigValidatorUtil {
         const validate = new AJV({allErrors: true}).compile(schema);
         const valid = validate(object);
         if (!valid) {
-            validate.errors.map((err) => errors.push({
+            validate.errors.forEach((err) => errors.push({
                 message: err.message,
-                path: (path ? path : '') + err.dataPath}));
+                path: (path ? path : '') + err.dataPath,
+            }));
         }
         return errors;
     }
@@ -62,6 +63,7 @@ export class ConfigValidatorUtil {
         return errors;
     }
 
+    // tslint:disable-next-line:cognitive-complexity
     private static findAttributes(object: any, name: string, parent?: string): any[] {
         const result = [];
         for (const property in object) {
@@ -110,8 +112,8 @@ export class ConfigValidatorUtil {
             try {
                 errors.push(...ConfigValidatorUtil.validateObjectBySchema(JSON.parse(a.value), SCHEMA, a.path));
             } catch (err) {
-                console.log(err); // tslint:disable-line
-                console.log('valueRaw %o', a); // tslint:disable-line
+                console.info(err); // tslint:disable-line
+                console.info('valueRaw %o', a); // tslint:disable-line
             }
         }
         return errors;

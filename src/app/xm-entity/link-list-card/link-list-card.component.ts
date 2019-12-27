@@ -23,9 +23,9 @@ export class LinkListCardComponent implements OnInit, OnChanges {
     @Input() public links: Link[];
     @Input() public linkSpec: FullLinkSpec;
     @Input() public modes: string[] = ['list'];
-    @Input() public isBackLink = false;
+    @Input() public isBackLink: boolean = false;
 
-    public mode = 'list';
+    public mode: string = 'list';
     public treeRootLinks: Link[];
 
     public fields: FieldOptions[] = [
@@ -52,7 +52,8 @@ export class LinkListCardComponent implements OnInit, OnChanges {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (changes.links && this.valueToLength(changes.links.previousValue) !== this.valueToLength(changes.links.currentValue)) {
+        if (changes.links
+            && this.valueToLength(changes.links.previousValue) !== this.valueToLength(changes.links.currentValue)) {
             const link: Link = {};
             link.target = this.xmEntity;
             this.treeRootLinks = [link];
@@ -84,7 +85,7 @@ export class LinkListCardComponent implements OnInit, OnChanges {
         return getFieldValue(xmEntity, field);
     }
 
-    private valueToLength(value): any {
+    private valueToLength(value: any[]): any {
         return value ? value.length : 0;
     }
 

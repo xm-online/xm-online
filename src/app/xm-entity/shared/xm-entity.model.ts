@@ -11,6 +11,8 @@ import { Tag } from './tag.model';
 import { Vote } from './vote.model';
 
 export interface XmEntity extends BaseEntity {
+    state?: any;
+    type?: any;
     id?: number;
     key?: string;
     typeKey?: string;

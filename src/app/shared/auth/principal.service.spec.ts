@@ -1,13 +1,16 @@
-import {TestBed} from '@angular/core/testing';
-import {Principal} from './principal.service';
-import {AccountService} from './account.service';
-import {JhiAlertService} from 'ng-jhipster';
-import {of} from 'rxjs/observable/of';
+import { TestBed } from '@angular/core/testing';
+import { JhiAlertService } from 'ng-jhipster';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+import { of } from 'rxjs/observable/of';
+import { AccountService } from './account.service';
+import { Principal } from './principal.service';
 
 describe('PrincipalService', () => {
 
-    let mockAlertService, mockAccountService, mockLocalStorage, mockSessionStorage;
+    let mockAlertService;
+    let mockAccountService;
+    let mockLocalStorage;
+    let mockSessionStorage;
     let service: Principal;
 
     const mockedUser = {
@@ -15,8 +18,8 @@ describe('PrincipalService', () => {
             id: 1,
             name: 'Iron man', imageUrl: 'someUrl', firstName: 'Tony', lastName: 'Stark',
             langKey: 'en', userKey: 'userKey',
-            permissions: [{privilegeKey: 'CAN_WALK', enabled: true}, {privilegeKey: 'CAN_FLY', enabled: true}]
-        }
+            permissions: [{privilegeKey: 'CAN_WALK', enabled: true}, {privilegeKey: 'CAN_FLY', enabled: true}],
+        },
     };
 
     beforeEach(() => {
@@ -34,9 +37,9 @@ describe('PrincipalService', () => {
                 {provide: JhiAlertService, useValue: mockAlertService},
                 {provide: LocalStorageService, useValue: mockLocalStorage},
                 {provide: SessionStorageService, useValue: mockSessionStorage},
-            ]
+            ],
         });
-        service  = TestBed.get(Principal);
+        service = TestBed.get(Principal);
     });
 
     describe('isAuthenticated()', () => {
@@ -135,7 +138,7 @@ describe('PrincipalService', () => {
         it('should return false if stategy is not AND | OR', () => {
             expect(service.isAuthenticated()).toBeFalsy();
             service.hasPrivileges().then(() => {
-                service.hasPrivileges(['CAN_FLY'], 'XOR').then(value => expect(value).toBeFalsy());
+                service.hasPrivileges(['CAN_FLY'], 'XOR').then((value) => expect(value).toBeFalsy());
             });
         });
 
@@ -144,9 +147,9 @@ describe('PrincipalService', () => {
                 expect(service.isAuthenticated()).toBeFalsy();
                 service.identity().then(() => {
                     expect(service.isAuthenticated()).toBeTruthy();
-                    service.hasPrivileges(['CAN_FLY']).then(value => expect(value).toBeTruthy());
-                    service.hasPrivileges(['CAN_WALK']).then(value => expect(value).toBeTruthy());
-                    service.hasPrivileges(['CAN_WALK', 'CAN_FLY']).then(value => expect(value).toBeTruthy());
+                    service.hasPrivileges(['CAN_FLY']).then((value) => expect(value).toBeTruthy());
+                    service.hasPrivileges(['CAN_WALK']).then((value) => expect(value).toBeTruthy());
+                    service.hasPrivileges(['CAN_WALK', 'CAN_FLY']).then((value) => expect(value).toBeTruthy());
                 });
             });
 
@@ -154,7 +157,7 @@ describe('PrincipalService', () => {
                 expect(service.isAuthenticated()).toBeFalsy();
                 service.identity().then(() => {
                     expect(service.isAuthenticated()).toBeTruthy();
-                    service.hasPrivileges(['CAN_SWIM']).then(value => expect(value).toBeFalsy());
+                    service.hasPrivileges(['CAN_SWIM']).then((value) => expect(value).toBeFalsy());
                 });
             });
 
@@ -165,11 +168,13 @@ describe('PrincipalService', () => {
                 expect(service.isAuthenticated()).toBeFalsy();
                 service.identity().then(() => {
                     expect(service.isAuthenticated()).toBeTruthy();
-                    service.hasPrivileges(['CAN_WALK', 'CAN_FLY'], 'AND').then(value => {
-                        expect(value.length).toBe(0)
+                    service.hasPrivileges(['CAN_WALK', 'CAN_FLY'], 'AND').then((value) => {
+                        expect(value.length).toBe(0);
                     });
-                    service.hasPrivileges(['CAN_WALK'], 'AND').then(value => expect(value.length).toBe(0));
-                    service.hasPrivileges(['CAN_FLY'], 'AND').then(value => expect(value.length).toBe(0));
+                    service.hasPrivileges(['CAN_WALK'], 'AND')
+                        .then((value) => expect(value.length).toBe(0));
+                    service.hasPrivileges(['CAN_FLY'], 'AND')
+                        .then((value) => expect(value.length).toBe(0));
                 });
             });
 
@@ -177,9 +182,10 @@ describe('PrincipalService', () => {
                 expect(service.isAuthenticated()).toBeFalsy();
                 service.identity().then(() => {
                     expect(service.isAuthenticated()).toBeTruthy();
-                    const bulsitBingoArray = ['CAN_WALK', 'CAN_FLY', 'CAN_SWIM', 'CAN_DRINK_VODKA', 'CAN_PLAY_BALALAYKA'];
-                    service.hasPrivileges(bulsitBingoArray, 'AND').then(value => {
-                        expect(value.length).toBe(3)
+                    const bulsitBingoArray = ['CAN_WALK', 'CAN_FLY',
+                        'CAN_SWIM', 'CAN_DRINK_VODKA', 'CAN_PLAY_BALALAYKA'];
+                    service.hasPrivileges(bulsitBingoArray, 'AND').then((value) => {
+                        expect(value.length).toBe(3);
                     });
                 });
             });

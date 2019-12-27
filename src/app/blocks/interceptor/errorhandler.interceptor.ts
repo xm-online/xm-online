@@ -16,12 +16,12 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
             (event: HttpEvent<any>) => {
             },
             (err: any) => {
-                if (err instanceof HttpErrorResponse) {
-                    if (!(err.status === 401 && (err.message === '' || (err.url && err.url.includes('/api/account'))))) {
-                        // TODO: this is workaround to get eventManager from root injector
-                        this.eventManager = this.contextService ? this.contextService.eventManager : this.eventManager;
-                        this.eventManager.broadcast({name: 'xm.httpError', content: err, request});
-                    }
+                if (err instanceof HttpErrorResponse
+                    && !(err.status === 401
+                        && (err.message === '' || (err.url && err.url.includes('/api/account'))))) {
+                    // TODO: this is workaround to get eventManager from root injector
+                    this.eventManager = this.contextService ? this.contextService.eventManager : this.eventManager;
+                    this.eventManager.broadcast({name: 'xm.httpError', content: err, request});
                 }
             },
         ));

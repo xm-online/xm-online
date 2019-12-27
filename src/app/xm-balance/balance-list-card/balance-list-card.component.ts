@@ -20,21 +20,6 @@ import { MetricService } from '../shared/metric.service';
 })
 export class BalanceListCardComponent implements OnInit {
 
-    @Input() public xmEntityId: number;
-    @Input() public typeKey: string;
-
-    @ViewChildren('balanceSections') public balanceSections: QueryList<any>;
-
-    public balances: Balance[];
-    public spec: Spec;
-
-    constructor(protected balanceService: BalanceService,
-                protected balanceSpecWrapperService: BalanceSpecWrapperService,
-                protected metricService: MetricService,
-                protected modalService: NgbModal,
-                public principal: Principal) {
-    }
-
     protected static buildBalancePie(balance: Balance): Chartist.IChartistPieChart {
         const max = balance.metrics.filter((m) => m.typeKey === 'MAX').shift();
         const total = max && max.value ? parseFloat(max.value) : balance.amount + 1;
@@ -59,6 +44,19 @@ export class BalanceListCardComponent implements OnInit {
         }, options);
     }
 
+    @Input() public xmEntityId: number;
+    @Input() public typeKey: string;
+    @ViewChildren('balanceSections') public balanceSections: QueryList<any>;
+    public balances: Balance[];
+    public spec: Spec;
+
+    constructor(protected balanceService: BalanceService,
+                protected balanceSpecWrapperService: BalanceSpecWrapperService,
+                protected metricService: MetricService,
+                protected modalService: NgbModal,
+                public principal: Principal) {
+    }
+
     public ngOnInit(): void {
         this.load();
     }
@@ -81,15 +79,17 @@ export class BalanceListCardComponent implements OnInit {
         this.balanceSpecWrapperService.spec().then((s) => {
             this.spec = s;
             if (s.types && s.types.filter((t) => t.entityTypeKey && t.entityTypeKey.includes(this.typeKey)).length) {
-                this.balanceService.query({'entityId.in': this.xmEntityId}).subscribe((balances: HttpResponse<Balance[]>) => {
-                    this.balances = balances.body;
-                    this.balances.forEach((balance) => {
-                        this.metricService.query({'balanceId.in': balance.id}).subscribe((metrics: HttpResponse<Metric[]>) => {
-                            balance.metrics = metrics.body.filter((m) => m.balanceId === balance.id);
-                            BalanceListCardComponent.buildBalancePie(balance);
+                this.balanceService.query({'entityId.in': this.xmEntityId})
+                    .subscribe((balances: HttpResponse<Balance[]>) => {
+                        this.balances = balances.body;
+                        this.balances.forEach((balance) => {
+                            this.metricService.query({'balanceId.in': balance.id})
+                                .subscribe((metrics: HttpResponse<Metric[]>) => {
+                                    balance.metrics = metrics.body.filter((m) => m.balanceId === balance.id);
+                                    BalanceListCardComponent.buildBalancePie(balance);
+                                });
                         });
                     });
-                });
             }
         });
     }

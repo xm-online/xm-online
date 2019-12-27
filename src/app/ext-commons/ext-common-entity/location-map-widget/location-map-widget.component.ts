@@ -22,7 +22,7 @@ export class LocationMapWidgetComponent implements OnInit {
     public groups: any[];
     public currentGroup: any;
     public markerClusterer: any;
-    public gMapApiReady$ = new BehaviorSubject<boolean>(false);
+    public gMapApiReady$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     constructor(private xmEntityService: XmEntityService) {
     }
@@ -35,7 +35,7 @@ export class LocationMapWidgetComponent implements OnInit {
         this.initMap();
     }
 
-    public showGroup(group): void {
+    public showGroup(group: any): void {
         this.currentGroup = group;
         this.initMap();
     }
@@ -52,8 +52,7 @@ export class LocationMapWidgetComponent implements OnInit {
                     )
                     .subscribe(() => this.onShowMap(res.body));
             },
-            (res: Response) =>
-                console.log('Error'),
+            (res: Response) => console.warn('Error'),
         );
     }
 
@@ -76,7 +75,8 @@ export class LocationMapWidgetComponent implements OnInit {
             const locations: any[] = xmEntity.locations;
 
             for (const location of locations) {
-                if ((location.latitude > -90 && location.latitude < 90) && (location.longitude > -180 && location.longitude < 180)) {
+                if ((location.latitude > -90 && location.latitude < 90)
+                    && (location.longitude > -180 && location.longitude < 180)) {
                     // TODO: it should be filter by location type based on widget config
                     const loc = new google.maps.LatLng(location.latitude, location.longitude);
                     const marker = new google.maps.Marker({
@@ -91,9 +91,7 @@ export class LocationMapWidgetComponent implements OnInit {
                     const infowindow = new google.maps.InfoWindow({
                         content: xmEntity.name,
                     });
-                    marker.addListener('click', function () {
-                        infowindow.open(map, marker);
-                    });
+                    marker.addListener('click', () => infowindow.open(map, marker));
                 }
             }
         }

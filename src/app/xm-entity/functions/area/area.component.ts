@@ -112,23 +112,23 @@ export class AreaComponent implements AfterViewInit {
 
     private attachEventHandlers(): void {
         const self = this;
-        this.map.on('draw:created', function (e) {
+        this.map.on('draw:created', (e) => {
             self.drawnItems.addLayer(e.layer);
             self.saveFunction(self.drawnItems);
 
         });
 
-        this.map.on('draw:edited', function () {
+        this.map.on('draw:edited', () => {
             self.saveFunction(self.drawnItems);
         });
 
-        this.map.on('draw:deleted', function () {
+        this.map.on('draw:deleted', () => {
             self.saveFunction(self.drawnItems);
         });
 
     }
 
-    private drawPolygons(list): void {
+    private drawPolygons(list: any): void {
         list.forEach((item) => {
             const layer = L.polygon(
                 item.paths.map((el) => [el.lat, el.lng]),

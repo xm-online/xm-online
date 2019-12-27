@@ -1,35 +1,31 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'xm-confirm-dialog',
-    templateUrl: './xm-confirm-dialog.component.html'
+    templateUrl: './xm-confirm-dialog.component.html',
 })
-export class XmConfirmDialogComponent implements OnInit {
+export class XmConfirmDialogComponent {
 
-    @ViewChild('xmConfirmDialog', {static: false}) tpl: ElementRef;
-    form: FormGroup;
-    modal: NgbModalRef;
-    showLoader: boolean;
-    incorrect: boolean;
-    event: any;
+    @ViewChild('xmConfirmDialog', {static: false}) public tpl: ElementRef;
+    public form: FormGroup;
+    public modal: NgbModalRef;
+    public showLoader: boolean;
+    public incorrect: boolean;
+    public event: any;
 
     constructor(
         private fb: FormBuilder,
     ) {
-        this.form = this.fb.group({ password: [null, Validators.required] });
+        this.form = this.fb.group({password: [null, Validators.required]});
     }
 
-    ngOnInit() {
-
-    }
-
-    onSubmit() {
+    public onSubmit(): void {
 
     }
 
-    onDismiss() {
+    public onDismiss(): void {
         this.modal.close();
     }
 

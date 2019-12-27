@@ -33,7 +33,7 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
     public availableSpecs: XmEntitySpec[];
     public jsfAttributes: any;
     public showLoader: boolean;
-    public isJsonFormValid = true;
+    public isJsonFormValid: boolean = true;
     public isEdit: boolean;
 
     constructor(private activeModal: NgbActiveModal,
@@ -47,7 +47,8 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
 
     public ngOnInit(): void {
         this.availableSpecs = this.spec.types
-            .filter((t) => !t.isAbstract && (t.key.startsWith(this.linkSpec.typeKey + '.') || t.key === this.linkSpec.typeKey));
+            .filter((t) => !t.isAbstract
+                && (t.key.startsWith(this.linkSpec.typeKey + '.') || t.key === this.linkSpec.typeKey));
         this.xmEntity.key = UUID.UUID();
         this.onChangeEntityType(this.availableSpecs[0].key);
     }
@@ -62,7 +63,9 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
         if (this.xmEntitySpec.dataSpec) {
             this.jsfAttributes = buildJsfAttributes(this.xmEntitySpec.dataSpec, this.xmEntitySpec.dataForm);
             this.jsfAttributes.data = Object.assign(nullSafe(this.jsfAttributes.data), nullSafe(this.xmEntity.data));
-            if (this.jsfAttributes && this.jsfAttributes.entity && this.jsfAttributes.entity.hideNameAndDescription && !this.xmEntity.name) {
+            if (this.jsfAttributes && this.jsfAttributes.entity
+                && this.jsfAttributes.entity.hideNameAndDescription
+                && !this.xmEntity.name) {
                 this.xmEntity.name = '###';
             } else if (this.xmEntity.name === '###') {
                 this.xmEntity.name = '';
@@ -86,7 +89,7 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
             .subscribe(() => this.onSaveSuccess(),
                 // TODO: error processing
                 (err) => {
-                    console.log(err);
+                    console.info(err);
                     this.showLoader = false;
                 });
     }

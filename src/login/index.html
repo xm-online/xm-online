@@ -528,7 +528,7 @@
             _self.loaded = true;
           }, 200);
         }).catch(function (e) {
-          console.log(e);
+          console.warn(e);
 
           setTimeout(function () {
             _self.loaded = true;
@@ -566,7 +566,7 @@
           _self.getCaptca();
 
         }).catch(function (e) {
-          console.log(e);
+          console.warn(e);
         });
       },
       // check if need captcha and get site key
@@ -585,7 +585,7 @@
           _self.publicSiteKey = response.data.publicKey;
 
         }).catch(function (e) {
-          console.log(e);
+          console.warn(e);
         });
       },
 
@@ -655,7 +655,7 @@
             _self.setSession();
           }
         }).catch(function (e) {
-          console.log(e);
+          console.warn(e);
           window.sessionStorage.setItem('jhi-authenticationToken', '');
           window.sessionStorage.setItem('jhi-refresh_token', '');
           window.sessionStorage.setItem('jhi-authenticationtokenexpiresdate', '');
@@ -696,7 +696,7 @@
           _self.setSession();
 
         }).catch(function (e) {
-          console.log(e);
+          console.warn(e);
 
           window.sessionStorage.setItem('jhi-authenticationToken', '');
           window.sessionStorage.setItem('jhi-refresh_token', '');

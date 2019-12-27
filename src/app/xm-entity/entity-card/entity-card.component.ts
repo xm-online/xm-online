@@ -59,7 +59,7 @@ export class EntityCardComponent implements OnInit {
         modalRef.componentInstance.xmEntity = this.xmEntity;
     }
 
-    public formatDescription(html): string {
+    public formatDescription(html: any): string {
         return html ? html.replace(/\r\n|\r|\n/g, '<br />') : '';
     }
 
@@ -68,7 +68,7 @@ export class EntityCardComponent implements OnInit {
         return states ? states.filter((s) => s.key === this.xmEntity.stateKey).shift() : null;
     }
 
-    public getNextStates(): unknown[] {
+    public getNextStates(): Array<unknown> {
         const state = this.getState();
         return state && state.next ? state.next.map((n) => {
             const nextState: any = this.xmEntitySpec.states.filter((s) => s.key === n.stateKey).shift();
@@ -78,7 +78,7 @@ export class EntityCardComponent implements OnInit {
         }) : null;
     }
 
-    public onRefresh(e): void {
+    public onRefresh(_e: any): void {
         this.eventManager.broadcast({name: XM_EVENT_LIST.XM_ENTITY_DETAIL_MODIFICATION});
     }
 

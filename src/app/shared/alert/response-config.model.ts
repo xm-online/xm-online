@@ -2,13 +2,14 @@ export class ResponseConfig {
     constructor(public responses: ResponseConfigItem[]) {
     }
 
-    public getResponseConfigItem(rc) {
+    public getResponseConfigItem(rc: any): ResponseConfigItem {
         return this.responses.filter((r) => {
             return r.isMatch(rc);
         })[0];
     }
 }
 
+// tslint:disable-next-line:max-classes-per-file
 export class ResponseConfigItem {
     constructor(public code?: string,
                 public codePath?: string,
@@ -24,7 +25,7 @@ export class ResponseConfigItem {
                 public redirectUrl?: string) {
     }
 
-    public isMatch(rc: ResponseContext) {
+    public isMatch(rc: ResponseContext): boolean {
         const regExp = new RegExp(this.code);
         if ((this.status != null) && this.status !== rc.response.status) {
             return false;
@@ -37,19 +38,19 @@ export class ResponseConfigItem {
                 return false;
             }
         } catch (e) {
-            console.error(e);
+            console.warn(e);
             return false;
         }
 
         return true;
     }
 
-    private getByPath(obj, path) {
-        let paths = path.split('.')
-            , current = obj
-            , i;
+    private getByPath(obj: any, path: string): any | undefined {
+        const paths = path.split('.');
+        let current = obj;
+        let i;
         for (i = 0; i < paths.length; ++i) {
-            if (current[paths[i]] == undefined) {
+            if (!current[paths[i]]) {
                 return undefined;
             } else {
                 current = current[paths[i]];
@@ -59,6 +60,7 @@ export class ResponseConfigItem {
     }
 }
 
+// tslint:disable-next-line:max-classes-per-file
 export class ResponseContext {
     constructor(public response?: any,
                 public request?: any) {

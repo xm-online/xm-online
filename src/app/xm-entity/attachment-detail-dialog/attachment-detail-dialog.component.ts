@@ -49,18 +49,20 @@ export class AttachmentDetailDialogComponent implements OnInit {
         this.readOnlyInputs = this.attachmentSpecs[0].isNameReadonly ? this.attachmentSpecs[0].isNameReadonly : true;
     }
 
-    public setFileData(event, nameCtrl): void {
+    public setFileData(event: any, nameCtrl: any): void {
         if (event.target.files && event.target.files[0]) {
             const file = event.target.files[0];
 
             // Content type validation
-            const attachmentSpec = this.attachmentSpecs.filter((att: any) => att.key === this.attachment.typeKey).shift();
-            if (attachmentSpec && attachmentSpec.contentTypes) {
-                if (attachmentSpec.contentTypes.filter((type: string) => type === file.type).length <= 0) {
-                    console.log('Not allowed content type ' + file.type);
-                    this.wrongFileType = file.type;
-                    return;
-                }
+            const attachmentSpec = this.attachmentSpecs
+                .filter((att: any) => att.key === this.attachment.typeKey).shift();
+
+            if (attachmentSpec
+                && attachmentSpec.contentTypes
+                && attachmentSpec.contentTypes.filter((type: string) => type === file.type).length <= 0) {
+                console.warn('Not allowed content type ' + file.type);
+                this.wrongFileType = file.type;
+                return;
             }
 
             this.wrongFileType = undefined;
@@ -81,7 +83,7 @@ export class AttachmentDetailDialogComponent implements OnInit {
         }
     }
 
-    public byteSize(field, size): string {
+    public byteSize(field: any, size: any): string {
         return !field ? size + ' ' + this.translateService.instant('xm-entity.attachment-card.volume.bytes')
             : this.dataUtils.byteSize(field);
     }
@@ -95,7 +97,7 @@ export class AttachmentDetailDialogComponent implements OnInit {
 
         this.attachmentService.create(this.attachment).subscribe(() => this.onSaveSuccess(),
             // TODO: error processing
-            (err) => console.log(err),
+            (err) => console.warn(err),
             () => this.showLoader = false);
 
     }
@@ -106,13 +108,13 @@ export class AttachmentDetailDialogComponent implements OnInit {
 
     private onSaveSuccess(): void {
         // TODO: use constant for the broadcast and analyse listeners
-        console.log('Fire %s', ATTACHMENT_EVENT);
+        console.info('Fire %s', ATTACHMENT_EVENT);
         this.eventManager.broadcast({name: ATTACHMENT_EVENT});
         this.activeModal.dismiss(true);
         this.alert('success');
     }
 
-    private alert(type): void {
+    private alert(type: string): void {
         swal({
             type,
             text: this.translateService.instant('xm-entity.attachment-detail-dialog.add.success'),

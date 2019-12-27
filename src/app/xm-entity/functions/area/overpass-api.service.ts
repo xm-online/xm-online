@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class OverpassApiService {
 
-    public OVERPASS_API_URL = 'https://www.overpass-api.de';
+    public OVERPASS_API_URL: string = 'https://www.overpass-api.de';
 
     /**
      * @param {Object} http angular http service
@@ -27,7 +27,7 @@ export class OverpassApiService {
      * @param {String} name
      * @return {Observable} http.get
      */
-    public getBoundariesByName(name): Observable<any> {
+    public getBoundariesByName(name: string): Observable<any> {
         return this.overpass(`[out:json];rel[~"name"~"^${name}",i]["type"="boundary"];out body;`);
     }
 
@@ -36,7 +36,7 @@ export class OverpassApiService {
      * @param {String} osmId
      * @return {Observable} http.get
      */
-    public getRelGeom(osmId): Observable<any> {
+    public getRelGeom(osmId: string): Observable<any> {
         return this.overpass(`[out:json];rel(${osmId});out geom;`);
     }
 

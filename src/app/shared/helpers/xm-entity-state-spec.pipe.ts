@@ -7,9 +7,9 @@ export class XmEntityStateSpecPipe implements PipeTransform {
     constructor() {
     }
 
-    transform(value: string, specKey: string, spec: Spec): any {
-        const entitySpec = spec.types.filter(x => x.key === specKey).shift();
+    public transform(value: string, specKey: string, spec: Spec): any {
+        const entitySpec = spec.types.filter((x) => x.key === specKey).shift();
         const states = entitySpec.states;
-        return states.filter(x => x.key === value).shift();
+        return states.filter((x) => x.key === value).shift();
     }
 }

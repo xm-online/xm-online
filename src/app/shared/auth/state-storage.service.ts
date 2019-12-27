@@ -20,16 +20,16 @@ export class StateStorageService {
     }
 
     public resetDestinationState(): void {
-      this.$sessionStorage.clear(DEST_STATE);
+        this.$sessionStorage.clear(DEST_STATE);
     }
 
     public resetAllStates(): void {
-      this.resetPreviousState();
-      this.resetDestinationState();
+        this.resetPreviousState();
+        this.resetDestinationState();
     }
 
-    public storePreviousState(previousStateName, previousStateParams): void {
-        const previousState = { name: previousStateName, params: previousStateParams };
+    public storePreviousState(previousStateName: any, previousStateParams: any): void {
+        const previousState = {name: previousStateName, params: previousStateParams};
         this.$sessionStorage.store(PREV_STATE, previousState);
     }
 
@@ -45,7 +45,7 @@ export class StateStorageService {
         return this.$sessionStorage.retrieve('previousUrl');
     }
 
-    public storeDestinationState(destinationState, destinationStateParams, fromState): void {
+    public storeDestinationState(destinationState: any, destinationStateParams: any, fromState: any): void {
         const destinationInfo = {
             destination: {
                 name: destinationState.name,
@@ -54,7 +54,7 @@ export class StateStorageService {
             params: destinationStateParams,
             from: {
                 name: fromState.name,
-             },
+            },
         };
         this.$sessionStorage.store(DEST_STATE, destinationInfo);
     }

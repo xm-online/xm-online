@@ -11,7 +11,7 @@ export class FileUploadComponent implements OnInit, OnDestroy {
 
     public options: any;
     public controlValue: any;
-    public uploadingError = false;
+    public uploadingError: boolean = false;
     public progress: number;
     public file: any;
     public uploadProcess: any;
@@ -34,7 +34,7 @@ export class FileUploadComponent implements OnInit, OnDestroy {
         }
     }
 
-    public updateFile(event): void {
+    public updateFile(event: any): void {
         if (event.target.files.length > 0) {
             this.file = event.target.files[0];
         }
@@ -70,7 +70,7 @@ export class FileUploadComponent implements OnInit, OnDestroy {
     }
 
     private saveFile(formData: FormData, headers?: HttpHeaders): void {
-        const apiUrl = this.options['url'] || null;
+        const apiUrl = this.options.url || null;
         this.uploadingError = false;
         if (apiUrl) {
             this.uploadProcess = this.httpClient
@@ -92,19 +92,19 @@ export class FileUploadComponent implements OnInit, OnDestroy {
         }
     }
 
-    private updateProgress(event): void {
+    private updateProgress(event: any): void {
         this.progress = Math.round(100 * event.loaded / event.total);
         this.registerChanges();
     }
 
-    private updateData(response): void {
-        this.jsf.updateValue(this, response['data']['key']);
+    private updateData(res: any): void {
+        this.jsf.updateValue(this, res.data.key);
         this.progress = null;
         this.registerChanges();
     }
 
     private handleError(err?: any): void {
-        err && console.error(err);
+        console.warn(err);
         this.uploadingError = true;
         this.progress = null;
         this.registerChanges();

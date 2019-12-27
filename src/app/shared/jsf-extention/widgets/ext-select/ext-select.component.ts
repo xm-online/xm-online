@@ -60,7 +60,7 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
     public ngOnInit(): void {
         this.options = this.layoutNode.options || {};
         if (!environment.production) {
-            console.log('[dbg] initial -> %o', this.options);
+            console.info('[dbg] initial -> %o', this.options);
         }
         this.jsf.initializeControl(this);
         if (this.layoutNode.dataType === 'array') {
@@ -179,6 +179,7 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
         );
     }
 
+    // tslint:disable-next-line:cognitive-complexity
     private fetchData(options: any): void {
         if (options.sourceField) {
             const array = new Function(
@@ -207,7 +208,7 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
             }
 
             this.fetchOptions(options).pipe(
-                tap((items) => !environment.production && console.log('[dbg] ext-select -> ', items)),
+                tap((items) => !environment.production && console.info('[dbg] ext-select -> ', items)),
                 tap((items) => this.elements = items),
                 tap(() => this.initOptionList()),
                 finalize(() => this.changeDetectorRef.detectChanges()),
@@ -217,7 +218,7 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
                         this.jsf.updateValue(this, this.controlValue);
                     }
                 },
-                (error) => console.error(error));
+                (error) => console.warn(error));
         }
     }
 

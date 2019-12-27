@@ -38,14 +38,14 @@ export class DashboardDetailDialogComponent implements OnInit {
         this.layoutStringOut = this.layoutStringIn;
     }
 
-    public onConfigChange(textChanged): void {
+    public onConfigChange(textChanged: string): void {
         if (!environment.production) {
-            console.log(`Changed text ${textChanged}`); // tslint:disable-line
+            console.info(`Changed text ${textChanged}`); // tslint:disable-line
         }
         this.configStringOut = textChanged;
     }
 
-    public onLayoutChange(textChanged): void {
+    public onLayoutChange(textChanged: string): void {
         this.layoutStringOut = textChanged;
     }
 
@@ -57,14 +57,14 @@ export class DashboardDetailDialogComponent implements OnInit {
             this.dashboardService.update(this.dashboard).subscribe(
                 () => this.onSaveSuccess('admin-config.dashboard-detail-dialog.edit.success'),
                 // TODO: error processing
-                (err) => console.log(err), // tslint:disable-line
+                (err) => console.info(err), // tslint:disable-line
                 () => this.showLoader = false);
         } else {
             this.dashboard.owner = this.principal.getUserKey();
             this.dashboardService.create(this.dashboard).subscribe(
                 () => this.onSaveSuccess('admin-config.dashboard-detail-dialog.add.success'),
                 // TODO: error processing
-                (err) => console.log(err), // tslint:disable-line
+                (err) => console.info(err), // tslint:disable-line
                 () => this.showLoader = false);
         }
     }

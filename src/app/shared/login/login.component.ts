@@ -7,7 +7,9 @@ import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TERMS_ERROR, XM_EVENT_LIST } from '../../xm.constants';
 import { StateStorageService } from '../auth/state-storage.service';
-import { PrivacyAndTermsDialogComponent } from '../components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
+import {
+    PrivacyAndTermsDialogComponent,
+} from '../components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
 import { XmConfigService } from '../spec/config.service';
 import { LoginService } from './login.service';
 
@@ -24,7 +26,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     @Input() public loginLabel: string;
     @Input() public config: any;
 
-    public isShowPassword = false;
+    public isShowPassword: boolean = false;
     public isDisabled: boolean;
     public authenticationError: boolean;
     public password: string;

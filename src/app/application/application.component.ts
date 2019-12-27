@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment';
 import { I18nNamePipe, Principal, XmConfigService } from '../shared';
 import { LIST_DEFAULT_FIELDS } from '../shared/constants/default-lists-fields.constants';
 import { DashboardWrapperService } from '../xm-dashboard';
-import { Spec, XmEntitySpec, XmEntitySpecWrapperService } from '../xm-entity';
+import { Link, Spec, XmEntitySpec, XmEntitySpecWrapperService } from '../xm-entity';
 import { EntityListCardOptions } from '../xm-entity/entity-list-card/entity-list-card-options.model';
 
 @Component({
@@ -20,12 +20,12 @@ import { EntityListCardOptions } from '../xm-entity/entity-list-card/entity-list
 export class ApplicationComponent implements OnInit, OnDestroy {
 
     public options: EntityListCardOptions;
-    public isSearch = false;
+    public isSearch: boolean = false;
     public searchQuery: string;
     public currentAccount: any;
     public error: any;
     public success: any;
-    public links: any;
+    public links: Link[];
     public totalItems: any;
     public queryCount: any;
     public itemsPerPage: any;
@@ -41,10 +41,10 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     public spec$: Observable<Spec>;
     public uiConfig: any;
     public defaultFieldsKeys: string[] = [
-        LIST_DEFAULT_FIELDS['name'],
-        LIST_DEFAULT_FIELDS['typeKey'],
-        LIST_DEFAULT_FIELDS['startDate'],
-        LIST_DEFAULT_FIELDS['stateKey'],
+        LIST_DEFAULT_FIELDS.name,
+        LIST_DEFAULT_FIELDS.typeKey,
+        LIST_DEFAULT_FIELDS.startDate,
+        LIST_DEFAULT_FIELDS.stateKey,
     ];
     private routeData: any;
     private routeDataSubscription: Subscription;
@@ -61,12 +61,13 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                 protected eventManager: JhiEventManager,
                 protected i18nNamePipe: I18nNamePipe,
                 protected dashboardWrapperService: DashboardWrapperService) {
-        this.searchQuery = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : '';
+        this.searchQuery = activatedRoute.snapshot.params.search ? activatedRoute.snapshot.params.search : '';
     }
 
+    // tslint:disable-next-line:cognitive-complexity
     public ngOnInit(): void {
         if (!environment.production) {
-            console.log('ApplicationComponent.ngOnInit');
+            console.info('ApplicationComponent.ngOnInit');
         }
 
         this.spec$ = this.xmEntitySpecWrapperService.specv2();
@@ -76,50 +77,54 @@ export class ApplicationComponent implements OnInit, OnDestroy {
             this.xmEntitySpecWrapperService.spec().then((spec) => {
                 this.spec = spec;
                 this.routeDataSubscription = this.activatedRoute.data.subscribe((data) => {
-                    if (data['pagingParams']) {
-                        this.itemsPerPage = data['pagingParams'].size;
-                        this.page = data['pagingParams'].page;
-                        this.previousPage = data['pagingParams'].page;
-                        this.reverse = data['pagingParams'].ascending;
-                        this.predicate = data['pagingParams'].predicate;
+                    if (data.pagingParams) {
+                        this.itemsPerPage = data.pagingParams.size;
+                        this.page = data.pagingParams.page;
+                        this.previousPage = data.pagingParams.page;
+                        this.reverse = data.pagingParams.ascending;
+                        this.predicate = data.pagingParams.predicate;
                         this.routeData = data;
                         if (this.entityType && this.entityType.name) {
-                            this.routeData.pageSubTitle = this.i18nNamePipe.transform(this.entityType.name, this.principal);
+                            this.routeData.pageSubTitle = this.i18nNamePipe.transform(
+                                this.entityType.name,
+                                this.principal);
 
                         }
                     }
                 });
                 this.routeParamsSubscription = this.activatedRoute.params.subscribe((params) => {
-                    if (params['key']) {
-                        this.typeKey = params['key'];
+                    if (params.key) {
+                        this.typeKey = params.key;
                         this.spec$.subscribe((s) => {
                             this.entityType = this.getTypeFromSpec(s, this.typeKey);
                             this.load();
 
                             if (this.entityType && this.entityType.name) {
-                                this.routeData.pageSubTitle = this.i18nNamePipe.transform(this.entityType.name, this.principal);
+                                this.routeData.pageSubTitle = this.i18nNamePipe.transform(
+                                    this.entityType.name,
+                                    this.principal);
 
                             }
                         });
                     }
                 });
                 this.routeQueryParamsSubscription = this.activatedRoute.queryParams.subscribe((params) => {
-                    if (params['query']) {
+                    if (params.query) {
                         this.isSearch = true;
-                        this.searchQuery = params['query'];
+                        this.searchQuery = params.query;
                         this.getSearchConfig(params.dashboardId)
                             .subscribe((config) => {
                                 this.searchParams = config;
                                 this.load();
                             });
 
-                        this.routeData.pageSubTitle = `[${params['query']}]`;
+                        this.routeData.pageSubTitle = `[${params.query}]`;
 
                     }
                 });
             });
         }, (err) => {
-            console.log(err);
+            console.info(err);
         });
 
         this.principal.identity().then((account) => {
@@ -177,7 +182,8 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         }
     }
 
-    protected buildOptions(defaultFields): void {
+    // tslint:disable-next-line:cognitive-complexity
+    protected buildOptions(defaultFields: any): void {
         const config = this.getListConfig();
 
         const fields = config && config.fields ? config.fields : defaultFields;

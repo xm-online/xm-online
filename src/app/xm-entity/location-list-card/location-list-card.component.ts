@@ -24,23 +24,6 @@ declare let swal: any;
 })
 export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
 
-    @Input() public xmEntityId: number;
-    @Input() public locationSpecs: LocationSpec[];
-    @Input() public entityUiConfig: any;
-    public xmEntity: XmEntity;
-    public locations: Location[];
-    public locationMaps: any;
-    public noDataText: any;
-    private modificationSubscription: Subscription;
-
-    constructor(private xmEntityService: XmEntityService,
-                private locationService: LocationService,
-                private modalService: NgbModal,
-                private eventManager: JhiEventManager,
-                private translateService: TranslateService,
-                public principal: Principal) {
-    }
-
     private static loadMap(location: Location): any {
         if (location.latitude && location.longitude) {
             const latLng = new google.maps.LatLng(location.latitude, location.longitude);
@@ -58,6 +41,23 @@ export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
             marker.setMap(map);
             return map;
         }
+    }
+
+    @Input() public xmEntityId: number;
+    @Input() public locationSpecs: LocationSpec[];
+    @Input() public entityUiConfig: any;
+    public xmEntity: XmEntity;
+    public locations: Location[];
+    public locationMaps: any;
+    public noDataText: any;
+    private modificationSubscription: Subscription;
+
+    constructor(private xmEntityService: XmEntityService,
+                private locationService: LocationService,
+                private modalService: NgbModal,
+                private eventManager: JhiEventManager,
+                private translateService: TranslateService,
+                public principal: Principal) {
     }
 
     public ngOnInit(): void {
@@ -82,9 +82,13 @@ export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public getPrintAddress(location: Location): string {
-        const country = location.countryKey ? this.translateService.instant('xm-entity.location-detail-dialog.countries.' +
-            location.countryKey) : null;
-        return $.grep([country, location.region, location.city, location.addressLine1, location.addressLine2, location.zip],
+        const country = location.countryKey
+            ? this.translateService.instant('xm-entity.location-detail-dialog.countries.' + location.countryKey)
+            : null;
+        return $.grep(
+            [
+                country, location.region, location.city, location.addressLine1, location.addressLine2, location.zip,
+            ],
             Boolean).join(', ');
     }
 
@@ -104,7 +108,7 @@ export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
         }, 50);
     }
 
-    public onManage(location): void {
+    public onManage(location: any): void {
         const modalRef = this.modalService.open(LocationDetailDialogComponent, {size: 'lg', backdrop: 'static'});
         modalRef.componentInstance.xmEntity = this.xmEntity;
         modalRef.componentInstance.locationSpecs = this.locationSpecs;
@@ -135,18 +139,20 @@ export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private registerListModify(): void {
-        this.modificationSubscription = this.eventManager.subscribe('locationListModification', (response) => this.load());
+        this.modificationSubscription = this.eventManager.subscribe('locationListModification',
+            (response) => this.load());
     }
 
     private load(): void {
         this.locations = [];
         this.locationMaps = {};
-        this.xmEntityService.find(this.xmEntityId, {embed: 'locations'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
-            this.xmEntity = xmEntity.body;
-            if (xmEntity.body.locations) {
-                this.locations = [...xmEntity.body.locations];
-            }
-        });
+        this.xmEntityService.find(this.xmEntityId, {embed: 'locations'})
+            .subscribe((xmEntity: HttpResponse<XmEntity>) => {
+                this.xmEntity = xmEntity.body;
+                if (xmEntity.body.locations) {
+                    this.locations = [...xmEntity.body.locations];
+                }
+            });
     }
 
     private alert(type: string, key: string): void {

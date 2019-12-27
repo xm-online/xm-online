@@ -40,8 +40,8 @@ export class SignInUpWidgetComponent implements OnInit, OnDestroy {
         });
 
         this.route.queryParams.subscribe((params) => {
-            if (params['type']) {
-                this.isLoginFormView = !(params['type'] === 'registration');
+            if (params.type) {
+                this.isLoginFormView = (params.type !== 'registration');
             }
         });
         if (this.config && this.config.loginLabel) {

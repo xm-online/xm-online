@@ -1,3 +1,4 @@
+/* tslint:disable:forin */
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as FileSaver from 'file-saver';
 import * as JSZip from 'jszip';
@@ -35,6 +36,7 @@ export class TranslationComponent implements OnInit, AfterViewInit {
         }
     }
 
+    // tslint:disable-next-line:cognitive-complexity
     public loadLangFiles(): void {
         const self = this;
         this.service.getFile('/i18n/settings.json').subscribe((result) => {
@@ -56,9 +58,9 @@ export class TranslationComponent implements OnInit, AfterViewInit {
                             localization[location] = {};
                         }
 
-                        this.service.getFile(`/i18n/${lang}/${location}.json`).subscribe((result) => {
-                            this.originalTranslations[`${lang}/${location}`] = result;
-                            const properties = this.toPropertyList(result, '');
+                        this.service.getFile(`/i18n/${lang}/${location}.json`).subscribe((res) => {
+                            this.originalTranslations[`${lang}/${location}`] = res;
+                            const properties = this.toPropertyList(res, '');
 
                             for (const property in properties) {
                                 const locationTranlsations = localization[location];
@@ -69,7 +71,7 @@ export class TranslationComponent implements OnInit, AfterViewInit {
                             }
 
                             clearTimeout(this.timer);
-                            this.timer = setTimeout(function () { self.mapToProperyArray(localization); }, 500);
+                            this.timer = setTimeout(() => { self.mapToProperyArray(localization); }, 500);
 
                         });
                     });
@@ -79,18 +81,18 @@ export class TranslationComponent implements OnInit, AfterViewInit {
         });
     }
 
-    public startEdit(property): void {
+    public startEdit(property: any): void {
         this.editingPropery.editing = false;
         property.editing = true;
         this.editingPropery = property;
     }
 
-    public onChangePropery($event, property, lang): void {
+    public onChangePropery($event: any, property: any, lang: any): void {
         property.langs[lang] = $event.target.value;
         this.saveState();
     }
 
-    public addTranslationToFile(i, missedTranslation): void {
+    public addTranslationToFile(i: any, missedTranslation: any): void {
         this.missedTranslations.splice(i, 1);
         this.localization[missedTranslation.targetFile].push({
             property: missedTranslation.key,
@@ -99,15 +101,15 @@ export class TranslationComponent implements OnInit, AfterViewInit {
         this.saveState();
     }
 
-    public translate(property, lang): void {
-        this.service.translate(lang, property.langs['en'])
+    public translate(property: any, lang: string): void {
+        this.service.translate(lang, property.langs.en)
             .done((result) => {
                 property.langs[lang] = result.data.translations[0].translatedText;
             });
         this.saveState();
     }
 
-    public translateAllTo(lang): void {
+    public translateAllTo(lang: string): void {
         let delay = 0;
 
         for (const location in this.localization) {
@@ -115,7 +117,7 @@ export class TranslationComponent implements OnInit, AfterViewInit {
             let tmpSource = [];
             for (let i = 1; i <= properties.length; i++) {
                 tmpSource.push(properties[i - 1]);
-                if (i % 20 === 0 || i == properties.length) {
+                if (i % 20 === 0 || i === properties.length) {
                     this.translateProperties(tmpSource, lang, delay);
                     tmpSource = [];
                     delay = delay + 500;
@@ -124,13 +126,13 @@ export class TranslationComponent implements OnInit, AfterViewInit {
         }
     }
 
-    public translateLocationTo(location, lang): void {
+    public translateLocationTo(location: any, lang: string): void {
         const properties = this.localization[location];
         let tmpSource = [];
         let delay = 0;
         for (let i = 1; i <= properties.length; i++) {
             tmpSource.push(properties[i - 1]);
-            if (i % 20 === 0 || i == properties.length) {
+            if (i % 20 === 0 || i === properties.length) {
                 this.translateProperties(tmpSource, lang, delay);
                 tmpSource = [];
                 delay = delay + 500;
@@ -163,7 +165,7 @@ export class TranslationComponent implements OnInit, AfterViewInit {
         });
     }
 
-    public toPropertyList(translations, path): {} {
+    public toPropertyList(translations: any, path: any): {} {
         const properties = {};
         for (const trKey in translations) {
             if (typeof translations[trKey] === 'object') {
@@ -207,7 +209,7 @@ export class TranslationComponent implements OnInit, AfterViewInit {
         });
 
         zip.generateAsync({type: 'blob'})
-            .then(function (content) {
+            .then((content) => {
                 // see FileSaver.js
                 FileSaver.saveAs(content, 'i18n.zip');
             });
@@ -222,7 +224,7 @@ export class TranslationComponent implements OnInit, AfterViewInit {
         });
     }
 
-    private mapToProperyArray(localization): void {
+    private mapToProperyArray(localization: any): void {
         const resultLocalization = {};
         for (const location in localization) {
             if (!resultLocalization[location]) {
@@ -239,13 +241,13 @@ export class TranslationComponent implements OnInit, AfterViewInit {
         this.saveState();
     }
 
-    private translateProperties(props: any, lang, delay): void {
+    private translateProperties(props: any, lang: string, delay: any): void {
         const self = this;
         const properties = props;
         const sources = [];
-        setTimeout(function () {
+        setTimeout(() => {
             properties.forEach((property) => {
-                sources.push(property.langs['en']);
+                sources.push(property.langs.en);
             });
             self.service.translate(lang, sources)
                 .done((result) => {
@@ -259,7 +261,7 @@ export class TranslationComponent implements OnInit, AfterViewInit {
         }, delay);
     }
 
-    private getKeyPath(lang, location, trKey): any[] | string[] {
+    private getKeyPath(lang: string, location: any, trKey: string): any[] | string[] {
         let json = this.originalTranslations[`${lang}/${location}`];
         if (!json) {
             json = this.originalTranslations[`en/${location}`];
@@ -286,7 +288,7 @@ export class TranslationComponent implements OnInit, AfterViewInit {
         return keyPath;
     }
 
-    private assignProperty(json, jsonPath, value): void {
+    private assignProperty(json: any, jsonPath: any, value: string): void {
         let lastSubObject;
         let lastProperty;
         let currectSubObject = json;

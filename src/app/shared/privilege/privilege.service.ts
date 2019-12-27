@@ -10,7 +10,7 @@ import { ParseByPathService } from '../services/parse-by-path.service';
 export class PrivilegeService {
 
     public privileges: any;
-    private privilegeState = new Subject<any>();
+    private privilegeState: Subject<any> = new Subject<any>();
 
     constructor(
         private principal: Principal,
@@ -33,7 +33,7 @@ export class PrivilegeService {
             }));
     }
 
-    private parsePrivileges(account: any = {}) {
+    private parsePrivileges(account: any = {}): any | { isSuperAdmin: true } {
         if (SUPER_ADMIN === account.roleKey) {
             return {isSuperAdmin: true};
         }
@@ -47,9 +47,9 @@ export class PrivilegeService {
         const pathArr = path.split('.');
         if (pathArr.length > 1) {
             const key = pathArr.shift()/*.toLowerCase()*/;
-            obj.hasOwnProperty(key) || (obj[key] = {});
+            if (!obj.hasOwnProperty(key)) {(obj[key] = {}); }
             this.setValue(obj[key], pathArr.join('.'));
-        } else  {
+        } else {
             obj[`_${path/*.toLowerCase()*/}`] = true;
         }
     }

@@ -1,16 +1,14 @@
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
 import { JhiDateUtils } from 'ng-jhipster';
-import { Observable } from 'rxjs/Observable';
-import {TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {XmEntityService} from './xm-entity.service';
-import {SERVER_API_URL} from '../../xm.constants';
+import { SERVER_API_URL } from '../../xm.constants';
+import { XmEntityService } from './xm-entity.service';
 
 describe('XmEntityService', () => {
 
     const v2ResourceUrl = SERVER_API_URL + 'entity/api/v2/xm-entities';
     const resourceUrl = SERVER_API_URL + 'entity/api/xm-entities';
     const resourceSearchUrl = SERVER_API_URL + 'entity/api/_search/xm-entities';
-    const resourceAvatarUrl = SERVER_API_URL + 'entity/api/storage/objects';
     const resourceProfileUrl = SERVER_API_URL + 'entity/api/profile';
     const resourceSearchTemplateUrl = SERVER_API_URL + 'entity/api/_search-with-template/xm-entities';
     const getEntitiesByIdUrl = `entity/api/xm-entities-by-ids`;
@@ -23,11 +21,11 @@ describe('XmEntityService', () => {
             imports: [HttpClientTestingModule],
             providers: [
                 XmEntityService,
-                JhiDateUtils
-            ]
+                JhiDateUtils,
+            ],
         });
         httpTestingController = TestBed.get(HttpTestingController);
-        service  = TestBed.get(XmEntityService);
+        service = TestBed.get(XmEntityService);
     });
 
     describe('serchApi', () => {
@@ -96,7 +94,8 @@ describe('XmEntityService', () => {
             const idOrKey = '123';
             const linkType = ['test'];
             service.findLinkSourcesInverted(idOrKey, linkType).subscribe((data) => {});
-            const req = httpTestingController.expectOne(`${v2ResourceUrl}/${idOrKey}/links/sources?typeKeys=${linkType}`);
+            const req = httpTestingController.expectOne(
+                `${v2ResourceUrl}/${idOrKey}/links/sources?typeKeys=${linkType}`);
             req.flush({id: 123});
             httpTestingController.verify();
         });

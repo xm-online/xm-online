@@ -28,7 +28,7 @@ export class UserLoginService {
         return this.promise = new Promise((resolve) => {
             this.specService.getLoginsSpec().toPromise().then(
                 (result) => {
-                    resolve(result.logins.reduce(function (map, obj) {
+                    resolve(result.logins.reduce((map, obj) => {
                         map[obj.key] = obj;
                         return map;
                     }, {}));
@@ -45,7 +45,7 @@ export class UserLoginService {
         return this.getName(login.typeKey) + ': ' + login.login;
     }
 
-    public getName(typeKey): string | number | 'MM/DD/YYYY HH:mm' | { name: 'English' } | any {
+    public getName(typeKey: string): (string | number | 'MM/DD/YYYY HH:mm') | { name: 'English' } | any {
         const type = this.allLogins[typeKey];
         const name = type.name;
         const langKey = this.principal.getLangKey();

@@ -39,14 +39,14 @@ export class JhiHealthCheckComponent implements OnInit {
                     this.selectedService = this.services[0].name;
                     this.onServiceSelect();
                 }
-            }, (error) => console.log(error));
+            }, (error) => console.info(error));
     }
 
     public onServiceSelect(): void {
         this.instances = null;
         this.services
             .filter((s) => s.name === this.selectedService)
-            .map((i) => this.instances = i.instances || null);
+            .forEach((i) => this.instances = i.instances || null);
         this.getHealthCheck(this.selectedService);
     }
 
@@ -61,7 +61,7 @@ export class JhiHealthCheckComponent implements OnInit {
                 this.mapHealthCheck(this.allHealthChecks[0].instanceId);
                 this.showLoader = false;
             }, (error) => {
-                console.log(error);
+                console.info(error);
                 if (error.status === 503) {
                     this.healthData = this.healthService.transformHealthData(error.json());
                 }

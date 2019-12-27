@@ -58,8 +58,8 @@ export class CommentService {
     private convertArrayResponse(res: HttpResponse<Comment[]>): HttpResponse<Comment[]> {
         const jsonResponse: Comment[] = res.body;
         const body: Comment[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+        for (const i of jsonResponse) {
+            body.push(this.convertItemFromServer(i));
         }
         return res.clone({body});
     }

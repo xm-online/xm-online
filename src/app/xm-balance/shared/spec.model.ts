@@ -7,19 +7,17 @@ export class Spec implements BaseSpec {
     }
 }
 
-class MeasureSpec implements BaseSpec {
-    constructor(public key?: string,
-                public name?: any,
-                public isInteger?: boolean) {
-    }
+interface MeasureSpec extends BaseSpec {
+    key?: string;
+    name?: any;
+    isInteger?: boolean;
 }
 
-class BalanceSpec implements BaseSpec {
-    constructor(public key?: string,
-                public name?: any,
-                public measureKey?: string,
-                public isAlwaysShow?: boolean,
-                public isWithPockets?: boolean,
-                public entityTypeKey?: string[]) {
-    }
+interface BalanceSpec extends BaseSpec {
+    key?: string;
+    name?: any;
+    measureKey?: string;
+    isAlwaysShow?: boolean;
+    isWithPockets?: boolean;
+    entityTypeKey?: string[];
 }

@@ -6,8 +6,8 @@ export class NotificationInterceptor {
     constructor() {
     }
 
-    responseIntercept(observable: Observable<any>): Observable<any> {
-        return <Observable<Response>> observable.pipe(catchError((error) => {
+    public responseIntercept(observable: Observable<any>): Observable<any> {
+        return observable.pipe(catchError((error) => {
             if (error && error.headers && error.headers._headers) {
                 const arr = Array.from(error.headers._headers);
                 const headers = [];
@@ -24,6 +24,6 @@ export class NotificationInterceptor {
                 }
             }
             return observableThrowError(error);
-        }));
+        })) as Observable<Response>;
     }
 }

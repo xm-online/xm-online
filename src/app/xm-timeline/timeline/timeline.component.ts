@@ -12,24 +12,24 @@ const TL_REFRESH_EVENT = XM_EVENT_LIST.XM_REFRESH_TIMELINE;
 @Component({
     selector: 'xm-timeline',
     templateUrl: './timeline.component.html',
-    styleUrls: ['./timeline.component.scss']
+    styleUrls: ['./timeline.component.scss'],
 })
 export class TimelineComponent implements OnInit, OnChanges, OnDestroy {
 
-    @Input() xmEntityId = 0;
-    @Input() limit: number;
-    @Input() params: any;
-    @Input() filter: any;
-    @Input() template: (arg?: any) => string;
-    @Input() config: any;
+    @Input() public xmEntityId = 0;
+    @Input() public limit: number;
+    @Input() public params: any;
+    @Input() public filter: any;
+    @Input() public template: (arg?: any) => string;
+    @Input() public config: any;
 
     // xmEntity: XmEntity;
-    timelinePage: TimelinePage;
-    showLoader: boolean;
-    currentSearch: string;
-    formFilter: any = {};
+    public timelinePage: TimelinePage;
+    public showLoader: boolean;
+    public currentSearch: string;
+    public formFilter: any = {};
 
-    showTimelineHeader = true;
+    public showTimelineHeader = true;
 
     private modifySubscription: Subscription;
 
@@ -40,30 +40,49 @@ export class TimelineComponent implements OnInit, OnChanges, OnDestroy {
         this.registerListModify();
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         if (this.config && this.config.hideHeader) {
             this.showTimelineHeader = false;
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.xmEntityId && changes.xmEntityId.previousValue !== changes.xmEntityId.currentValue) {
             this.load();
         }
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.eventManager.destroy(this.modifySubscription);
     }
 
-    private registerListModify() {
+    public onNextPage(next): void {
+        this.showLoader = true;
+        this.timelineService.search(this.getSearchBody({next})).pipe(
+            finalize(() => this.showLoader = false))
+            .subscribe((result) => {
+                this.timelinePage.timelines = [...this.timelinePage.timelines, ...result.timelines];
+                this.timelinePage.next = result.next;
+            });
+    }
+
+    public timeAgo(time): any {
+        return this.timeAgoService.transform(time);
+    }
+
+    public applyFastSearch(query: string): void {
+        this.currentSearch = query;
+        this.load();
+    }
+
+    private registerListModify(): void {
         this.modifySubscription = this.eventManager.subscribe(TL_REFRESH_EVENT, () => {
             console.log('Event: %s', TL_REFRESH_EVENT);
-            this.load()
+            this.load();
         });
     }
 
-    private load() {
+    private load(): void {
         this.showLoader = true;
 
         if (!this.xmEntityId) {
@@ -73,36 +92,17 @@ export class TimelineComponent implements OnInit, OnChanges, OnDestroy {
 
         this.timelineService.search(this.getSearchBody()).pipe(
             finalize(() => this.showLoader = false))
-            .subscribe(result => this.timelinePage = result);
+            .subscribe((result) => this.timelinePage = result);
     }
 
-    onNextPage(next) {
-        this.showLoader = true;
-        this.timelineService.search(this.getSearchBody({next: next})).pipe(
-            finalize(() => this.showLoader = false))
-            .subscribe(result => {
-                this.timelinePage.timelines = [...this.timelinePage.timelines, ...result.timelines];
-                this.timelinePage.next = result.next;
-            });
-    }
-
-    timeAgo(time) {
-        return this.timeAgoService.transform(time);
-    }
-
-    applyFastSearch(query: string) {
-        this.currentSearch = query;
-        this.load();
-    }
-
-    private getSearchBody(options: any = {}) {
+    private getSearchBody(options: any = {}): any {
         return Object.assign({
             id: this.xmEntityId,
             limit: this.limit,
             operation: this.currentSearch,
             dateFrom: this.formFilter.dateFrom ? this.formFilter.dateFrom.toJSON() : '',
-            dateTo: this.formFilter.dateTo ? this.formFilter.dateTo.toJson() : ''
-        }, this.params || {}, options)
+            dateTo: this.formFilter.dateTo ? this.formFilter.dateTo.toJson() : '',
+        }, this.params || {}, options);
     }
 
 }

@@ -12,7 +12,7 @@ export class BalanceSpecWrapperService {
     constructor(private balanceSpecService: BalanceSpecService) {
     }
 
-    spec(force?: boolean, mockSpec?: boolean): Promise<Spec> {
+    public spec(force?: boolean, mockSpec?: boolean): Promise<Spec> {
         if (!force && this.promise) {
             return this.promise;
         } else {

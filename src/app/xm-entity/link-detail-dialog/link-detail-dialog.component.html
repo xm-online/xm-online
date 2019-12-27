@@ -1,34 +1,34 @@
 <div class="modal-header">
-  <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
+  <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
   <h4 class="modal-title text-left">
     <span jhiTranslate="xm-entity.link-detail-dialog.add.title">Add new Link for the</span> [<b>{{xmEntity.name}}</b>]
   </h4>
 </div>
 <div class="modal-body">
-  <div class="raw col-sm-12 text-center" *ngIf="linkSpec.builderType === 'NEW-OR-SEARCH'">
+  <div *ngIf="linkSpec.builderType === 'NEW-OR-SEARCH'" class="raw col-sm-12 text-center">
     <div class="btn-group">
-      <button mat-raised-button
-              type="button"
-              class="btn btn-primary btn-sm btn-round"
+      <button (click)="mode = 'NEW';"
               [disabled]="mode === 'NEW'"
-              (click)="mode = 'NEW';">
+              class="btn btn-primary btn-sm btn-round"
+              mat-raised-button
+              type="button">
         <span jhiTranslate="xm-entity.link-detail-dialog.add.build-type-new">New</span>
       </button>
-      <button mat-raised-button
-              type="button"
-              class="btn btn-primary btn-sm btn-round"
+      <button (click)="mode = 'SEARCH';"
               [disabled]="mode === 'SEARCH'"
-              (click)="mode = 'SEARCH';">
+              class="btn btn-primary btn-sm btn-round"
+              mat-raised-button
+              type="button">
         <span jhiTranslate="xm-entity.link-detail-dialog.add.build-type-search">Search</span>
       </button>
     </div>
   </div>
 </div>
 
-<xm-link-detail-new-section [linkSpec]="linkSpec" [sourceXmEntity]="sourceXmEntity" [spec]="spec"
-                            *ngIf="mode === 'NEW' && spec">
+<xm-link-detail-new-section *ngIf="mode === 'NEW' && spec" [linkSpec]="linkSpec" [sourceXmEntity]="sourceXmEntity"
+                            [spec]="spec">
 </xm-link-detail-new-section>
 
-<xm-link-detail-search-section [linkSpec]="linkSpec" [sourceXmEntity]="sourceXmEntity" [spec]="spec"
-                               *ngIf="mode === 'SEARCH'">
+<xm-link-detail-search-section *ngIf="mode === 'SEARCH'" [linkSpec]="linkSpec" [sourceXmEntity]="sourceXmEntity"
+                               [spec]="spec">
 </xm-link-detail-search-section>

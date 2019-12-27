@@ -1,22 +1,22 @@
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { JhiAlertService, JhiConfigService, JhiDateUtils, JhiEventManager, JhiModuleConfig } from 'ng-jhipster';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule, MatSelectModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient, HttpHandler } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
+import { JhiAlertService, JhiConfigService, JhiDateUtils, JhiEventManager, JhiModuleConfig } from 'ng-jhipster';
+
+import { NgxWebstorageModule } from 'ngx-webstorage';
+import { XmEntityService } from '..';
 
 import { AccountService } from '../../shared';
 import { Principal } from '../../shared/auth/principal.service';
-import { EntityDetailDialogComponent } from './entity-detail-dialog.component';
-import { I18nNamePipe } from '../../shared/language/i18n-name.pipe';
 import { I18nJsfPipe } from '../../shared/language/i18n-jsf.pipe';
-import { XmEntityService } from '..';
-
-import { NgxWebstorageModule } from 'ngx-webstorage';
+import { I18nNamePipe } from '../../shared/language/i18n-name.pipe';
+import { EntityDetailDialogComponent } from './entity-detail-dialog.component';
 
 describe('Entity detail dialog Component', () => {
     let component: EntityDetailDialogComponent;
@@ -92,7 +92,7 @@ describe('Entity detail dialog Component', () => {
         component.nameValidPattern = PATTERN;
         fixture.detectChanges();
         component.xmEntity.name = '@w';
-        for (let i = 0; i < 100; i++) {tick(1)};
+        for (let i = 0; i < 100; i++) {tick(1)}
         fixture.detectChanges();
         element = fixture.debugElement.query(By.css('#field_name'));
         const classArr = element.nativeElement.classList;

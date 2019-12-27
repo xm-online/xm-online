@@ -7,24 +7,24 @@
             <ng-container *ngIf="button?.isRouterLink; then routerAction else functionAction"></ng-container>
 
             <ng-template #functionAction>
-              <button class="xm-fab-option fab-link"
-                      (click)="onAddNew(button)"
+              <button (click)="onAddNew(button)"
+                      *permitted="button?.permitted"
                       [style.backgroundColor]="button?.bgColor"
                       [style.color]="button?.color"
-                      *permitted="button?.permitted">
+                      class="xm-fab-option fab-link">
                 <ng-container *ngIf="button?.icon === 'no-icon'; then noIconTpl else iconTpl"></ng-container>
-                <span class="fab-title" *ngIf="button?.title">{{ button?.title | i18nName: principal }}</span>
+                <span *ngIf="button?.title" class="fab-title">{{ button?.title | i18nName: principal }}</span>
               </button>
             </ng-template>
 
             <ng-template #routerAction>
-              <button class="xm-fab-option fab-link"
-                      (click)="onRouterAction(button)"
+              <button (click)="onRouterAction(button)"
+                      *permitted="button?.permitted"
                       [style.backgroundColor]="button?.bgColor"
                       [style.color]="button?.color"
-                      *permitted="button?.permitted">
+                      class="xm-fab-option fab-link">
                 <ng-container *ngIf="button?.icon === 'no-icon'; then noIconTpl else iconTpl"></ng-container>
-                <span class="fab-title" *ngIf="button?.title">{{ button?.title | i18nName: principal }}</span>
+                <span *ngIf="button?.title" class="fab-title">{{ button?.title | i18nName: principal }}</span>
               </button>
             </ng-template>
 
@@ -38,13 +38,13 @@
           </ng-container>
         </ng-container>
       </div>
-      <button class="xm-fab-button fab-main-button"
-              (click)="onAddNew(mainButton)"
+      <button (click)="onAddNew(mainButton)"
+              *permitted="mainButton?.permitted"
               [style.backgroundColor]="mainButton?.bgColor"
               [style.color]="mainButton?.color"
-              *permitted="mainButton?.permitted">
+              class="xm-fab-button fab-main-button">
         <i class="material-icons">{{ mainButton?.icon }}</i>
-        <span class="fab-title" *ngIf="mainButton?.title">{{ mainButton?.title | i18nName: principal }}</span>
+        <span *ngIf="mainButton?.title" class="fab-title">{{ mainButton?.title | i18nName: principal }}</span>
       </button>
     </div>
   </div>

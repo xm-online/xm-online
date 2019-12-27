@@ -12,7 +12,7 @@
 
 .attachments-list .attachment-element {
     position: relative;
-    padding: 10px 30px 10px 10px;
+    padding:  10px 30px 10px 10px;
 }
 
 .attachments-list .attachment-element:nth-child(odd) {
@@ -21,21 +21,21 @@
 
 .attachments-list .remove-attachment {
     position: absolute;
-    right: 4px;
-    top: 9px;
+    right:    4px;
+    top:      9px;
 }
 
 .attachments-list .attach-name {
-    overflow: hidden;
-    white-space: nowrap;
+    overflow:      hidden;
+    white-space:   nowrap;
     text-overflow: ellipsis;
-    display: block;
+    display:       block;
 }
 
 .attachments-list .attach-description {
-    color: #666;
-    overflow: hidden;
-    white-space: nowrap;
+    color:         #666;
+    overflow:      hidden;
+    white-space:   nowrap;
     text-overflow: ellipsis;
-    display: block;
+    display:       block;
 }

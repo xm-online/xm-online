@@ -1,4 +1,4 @@
-import {Permission} from "./permission.model";
+import {Permission} from './permission.model';
 
 export class Role {
     constructor(
@@ -10,7 +10,7 @@ export class Role {
         public updatedDate?: any,
         public updatedBy?: string,
         public env?: string[],
-        public permissions?: Permission[]
+        public permissions?: Permission[],
     ) {
     }
 }
@@ -22,7 +22,6 @@ export class RoleMatrix {
     ) {
     }
 }
-
 
 export class RoleMatrixPermission {
     constructor(

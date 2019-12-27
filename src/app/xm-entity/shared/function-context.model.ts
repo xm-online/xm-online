@@ -1,5 +1,5 @@
-import { XmEntity } from './xm-entity.model';
 import { BaseEntity } from '../../shared';
+import { XmEntity } from './xm-entity.model';
 
 export interface FunctionContext extends BaseEntity {
     id?: number;
@@ -12,4 +12,3 @@ export interface FunctionContext extends BaseEntity {
     data?: any;
     xmEntity?: XmEntity;
 }
-

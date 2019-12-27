@@ -1,25 +1,25 @@
 {
-  "extends": "../tsconfig",
-  "compilerOptions": {
-    "importHelpers": false,
-    "outDir": "../out-tsc/spec",
-    "types": [
-      "jasmine",
-      "node"
-    ]
-  },
-  "files": [
-    "./test.ts",
-    "./polyfills.ts"
-  ],
-  "include": [
-    "./**/*.spec.ts",
-    "./**/*.d.ts"
-  ],
-  "angularCompilerOptions": {
-    "annotateForClosureCompiler": false,
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "fullTemplateTypeCheck": true
-  }
+    "extends": "../tsconfig",
+    "compilerOptions": {
+        "importHelpers": false,
+        "outDir": "../out-tsc/spec",
+        "types": [
+            "jasmine",
+            "node"
+        ]
+    },
+    "files": [
+        "./test.ts",
+        "./polyfills.ts"
+    ],
+    "include": [
+        "./**/*.spec.ts",
+        "./**/*.d.ts"
+    ],
+    "angularCompilerOptions": {
+        "annotateForClosureCompiler": false,
+        "skipTemplateCodegen": true,
+        "strictMetadataEmit": true,
+        "fullTemplateTypeCheck": true
+    }
 }

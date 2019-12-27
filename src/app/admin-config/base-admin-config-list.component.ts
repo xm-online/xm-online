@@ -10,19 +10,19 @@ import { ITEMS_PER_PAGE } from '../shared/constants/pagination.constants';
 @Injectable()
 export class BaseAdminConfigListComponent implements OnInit, OnDestroy {
 
-    list: any[];
-    page: any;
-    previousPage: any;
-    reverse: any;
-    predicate: any;
-    itemsPerPage: any;
-    links: any;
-    totalItems: any;
-    queryCount: any;
-    eventModify: string;
-    navigateUrl: string;
-    basePredicate: string;
-    showLoader: boolean;
+    public list: any[];
+    public page: any;
+    public previousPage: any;
+    public reverse: any;
+    public predicate: any;
+    public itemsPerPage: any;
+    public links: any;
+    public totalItems: any;
+    public queryCount: any;
+    public eventModify: string;
+    public navigateUrl: string;
+    public basePredicate: string;
+    public showLoader: boolean;
     private routeData: Subscription;
     private eventModifySubscriber: Subscription;
 
@@ -43,23 +43,23 @@ export class BaseAdminConfigListComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.loadAll();
         this.registerChangeInList();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.routeData.unsubscribe();
         this.eventManager.destroy(this.eventModifySubscriber);
     }
 
-    loadAll() {
+    public loadAll(): void {
     }
 
-    deleteAction(id: number) {
+    public deleteAction(id: number): void {
     }
 
-    sort() {
+    public sort(): string[] {
         const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
         if (this.predicate !== this.basePredicate) {
             result.push(this.basePredicate);
@@ -67,7 +67,7 @@ export class BaseAdminConfigListComponent implements OnInit, OnDestroy {
         return result;
     }
 
-    transition() {
+    public transition(): void {
         this.router.navigate([this.navigateUrl], {
             queryParams:
                 {
@@ -79,32 +79,32 @@ export class BaseAdminConfigListComponent implements OnInit, OnDestroy {
         this.loadAll();
     }
 
-    loadPage(page: number) {
+    public loadPage(page: number): void {
         if (page !== this.previousPage) {
             this.previousPage = page;
             this.transition();
         }
     }
 
-    registerChangeInList() {
+    public registerChangeInList(): void {
         this.eventModifySubscriber = this.eventManager.subscribe(this.eventModify, (result) => {
             this.page = this.getPageAfterRemove(result);
             this.loadAll();
         });
     }
 
-    onSuccess(data, headers) {
+    public onSuccess(data, headers): any {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         this.queryCount = this.totalItems;
         return data;
     }
 
-    onError(error) {
+    public onError(error): void {
         this.alertService.error(error.error, error.message, null);
     }
 
-    protected onDeleteItem(id: number, itemName: string) {
+    protected onDeleteItem(id: number, itemName: string): void {
         swal({
             title: `Delete ${itemName}?`,
             showCancelButton: true,
@@ -116,7 +116,7 @@ export class BaseAdminConfigListComponent implements OnInit, OnDestroy {
             : console.log('Cancel')); // tslint:disable-line
     }
 
-    protected getPageAfterRemove(result) {
+    protected getPageAfterRemove(result): any {
         if (result && result.content && result.content.id === 'delete' && this.page > 1) {
             this.queryCount--;
             const length =

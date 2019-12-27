@@ -6,24 +6,33 @@
     <h4 class="card-title" jhiTranslate="xm-entity.location-list-card.title">Locations</h4>
   </div>
   <div class="card-body">
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false" *ngIf="locations.length; else emptyTemplate">
-      <div class="card-collapse mb-0" *ngFor="let location of locations">
-        <div class="card-header" role="tab" id="{{'heading-' + location.id" (click)="onCollapseMap(location)">
-          <a role="button"
-             data-toggle="collapse"
-             data-parent="#accordion"
-             href="{{'#collapse-' + location.id}}"
+    <div *ngIf="locations.length; else emptyTemplate"
+         aria-multiselectable="false"
+         class="panel-group"
+         id="accordion"
+         role="tablist">
+      <div *ngFor="let location of locations" class="card-collapse mb-0">
+        <div (click)="onCollapseMap(location)" class="card-header" id="{{'heading-' + location.id" role="tab">
+          <a [attr.aria-controls]="'collapse-' + location.id"
              aria-expanded="false"
-             [attr.aria-controls]="'collapse-' + location.id"
+             data-parent="#accordion"
+             data-toggle="collapse"
+             href="{{'#collapse-' + location.id}}"
+             role="button"
           >
             <h4 class="panel-title">
               <span class="row">
                 <span class="col">
-                  <em>({{getLocationSpec(location).name | i18nName: principal | uppercase}})</em>{{location | locationAddress}}
+                  <em>({{getLocationSpec(location).name | i18nName: principal | uppercase}}
+                      )</em>{{location | locationAddress}}
                 </span>
                 <span class="col-auto">
-                  <a (click)="onRemove(location)" class="d-inline" *xmPermitted="['LOCATION.DELETE']"><i class="material-icons no-rotate">close</i></a>
-                  <a (click)="onManage(location)" class="d-inline" *xmPermitted="['LOCATION.UPDATE']"><i class="material-icons no-rotate">edit</i></a>
+                  <a (click)="onRemove(location)"
+                     *xmPermitted="['LOCATION.DELETE']"
+                     class="d-inline"><i class="material-icons no-rotate">close</i></a>
+                  <a (click)="onManage(location)"
+                     *xmPermitted="['LOCATION.UPDATE']"
+                     class="d-inline"><i class="material-icons no-rotate">edit</i></a>
                   <i class="material-icons">keyboard_arrow_down</i>
                 </span>
               </span>
@@ -31,23 +40,25 @@
           </a>
         </div>
 
-        <div id="{{'collapse-' + location.id}}"
+        <div [attr.aria-labelledby]="'heading-' + location.id"
              class="collapse"
+             id="{{'collapse-' + location.id}}"
              role="tabpanel"
-             [attr.aria-labelledby]="'heading-' + location.id"
         >
-          <h5 class="mt-4" *ngIf="location">{{getPrintAddress(location)}}</h5>
+          <h5 *ngIf="location" class="mt-4">{{getPrintAddress(location)}}</h5>
 
           <ng-container *ngIf="locationMaps.hasOwnProperty(location.id)">
-            <ng-template xmGMapApiInit (gMapApiReady)="onAfterGMapApiInit(location)">
-              <div id="{{'location-map-' + location.id}}" class="map" *ngIf="location.latitude && location.longitude"></div>
+            <ng-template (gMapApiReady)="onAfterGMapApiInit(location)" xmGMapApiInit>
+              <div *ngIf="location.latitude && location.longitude"
+                   class="map"
+                   id="{{'location-map-' + location.id}}"></div>
             </ng-template>
           </ng-container>
         </div>
       </div>
     </div>
     <ng-template #emptyTemplate>
-      <no-data [text]="noDataText" [show]="true" [hideImage]="true"></no-data>
+      <no-data [hideImage]="true" [show]="true" [text]="noDataText"></no-data>
     </ng-template>
   </div>
 </div>

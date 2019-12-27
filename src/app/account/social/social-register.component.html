@@ -1,20 +1,26 @@
 <div>
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h1 *ngIf="success" jhiTranslate="social.register.title" translateValues="{ label: '{{providerLabel}}' }">Registration with</h1>
-            <h1 *ngIf="error" jhiTranslate="social.register.errorTitle">Registration</h1>
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <h1 *ngIf="success" jhiTranslate="social.register.title" translateValues="{ label: '{{providerLabel}}' }">
+        Registration with</h1>
+      <h1 *ngIf="error" jhiTranslate="social.register.errorTitle">Registration</h1>
 
-            <div class="alert alert-success" *ngIf="success" [innerHTML]="'social.register.messages.success' | translate"></div>
-            <div class="alert alert-danger" *ngIf="error" [innerHTML]="'social.register.messages.error.fail' | translate"></div>
+      <div class="alert alert-success"
+           *ngIf="success"
+           [innerHTML]="'social.register.messages.success' | translate"></div>
+      <div class="alert alert-danger"
+           *ngIf="error"
+           [innerHTML]="'social.register.messages.error.fail' | translate"></div>
 
-            <xm-social *ngIf="success" provider="{{ provider }}"></xm-social>
-            <br/>
-            <div class="alert alert-warning">
-                {{'global.messages.info.authenticated.prefix' | translate}}
-                <a class="alert-link" (click)="login()">{{'global.messages.info.authenticated.link' | translate}}</a>{{'global.messages.info.authenticated.suffix' | translate}}
-                <br/>- Administrator (login="admin" and password="admin")
-                <br/>- User (login="user" and password="user").
-            </div>
-        </div>
+      <xm-social *ngIf="success" provider="{{ provider }}"></xm-social>
+      <br/>
+      <div class="alert alert-warning">
+        {{'global.messages.info.authenticated.prefix' | translate}}
+        <a class="alert-link"
+           (click)="login()">{{'global.messages.info.authenticated.link' | translate}}</a>{{'global.messages.info.authenticated.suffix' | translate}}
+        <br/>- Administrator (login="admin" and password="admin")
+        <br/>- User (login="user" and password="user").
+      </div>
     </div>
+  </div>
 </div>

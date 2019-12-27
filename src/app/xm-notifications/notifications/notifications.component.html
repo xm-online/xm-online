@@ -1,31 +1,36 @@
 <ng-container *ngIf="config">
-  <ul class="navbar-nav navbar-right xm-notifications-container" *permitted="privileges">
+  <ul *permitted="privileges" class="navbar-nav navbar-right xm-notifications-container">
     <li class="nav-item dropdown">
-      <a class="nav-link"
+      <a [attr.aria-expanded]="notificationsCount ? 'false' : null"
+         [attr.aria-haspopup]="notificationsCount ? 'true' : null"
+         [attr.data-toggle]="notificationsCount ? 'dropdown' : null"
+         class="nav-link"
          href="javascript: void(0);"
          id="navbarDropdownMenuLink"
-         [attr.data-toggle]="notificationsCount ? 'dropdown' : null"
-         [attr.aria-haspopup]="notificationsCount ? 'true' : null"
-         [attr.aria-expanded]="notificationsCount ? 'false' : null"
-         >
+      >
         <i class="material-icons">notifications</i>
-        <span class="notification" *ngIf="notificationsCount">{{ notificationsCount }}</span>
+        <span *ngIf="notificationsCount" class="notification">{{ notificationsCount }}</span>
       </a>
-      <div *ngIf="notificationsCount" class="dropdown-menu dropdown-menu-right xm-notifications" aria-labelledby="navbarDropdownMenuLink">
+      <div *ngIf="notificationsCount"
+           aria-labelledby="navbarDropdownMenuLink"
+           class="dropdown-menu dropdown-menu-right xm-notifications">
         <ng-container *ngFor="let item of notifications; let i = index">
-          <a class="dropdown-item notification-item"
+          <a (click)="onNavigate(item, $event)"
+             *ngIf="i <= showCount"
              [ngClass]="{'hasDate' : item.updateDate}"
-             (click)="onNavigate(item, $event)"
-             *ngIf="i <= showCount">
+             class="dropdown-item notification-item">
             <span *ngIf="!config.showAsHtml">{{ item.label }}</span>
             <div *ngIf="config.showAsHtml" [innerHTML]="item.label"></div>
-            <span class="update-date" *ngIf="item.updateDate">{{ item.updateDate | date}}</span>
-            <span class="close-notification material-icons" (click)="onRemoveItem($event, item);">close</span>
+            <span *ngIf="item.updateDate" class="update-date">{{ item.updateDate | date}}</span>
+            <span (click)="onRemoveItem($event, item);" class="close-notification material-icons">close</span>
           </a>
         </ng-container>
 
         <div class="notifications-actions text-right">
-          <a class="show-all" href="javascript: void(0);"><span class="text-primary" jhiTranslate="xm-notifications.showAll" *ngIf="redirectUrl" (click)="viewAll(redirectUrl)">View all</span></a>
+          <a class="show-all" href="javascript: void(0);"><span (click)="viewAll(redirectUrl)"
+                                                                *ngIf="redirectUrl"
+                                                                class="text-primary"
+                                                                jhiTranslate="xm-notifications.showAll">View all</span></a>
         </div>
       </div>
     </li>

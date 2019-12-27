@@ -3,10 +3,9 @@ import { NgModule } from '@angular/core';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
     ],
-    declarations: []
+    declarations: [],
 })
 export class XmConfigModule {
 }
-

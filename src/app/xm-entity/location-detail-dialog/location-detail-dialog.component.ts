@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { Observable } from 'rxjs';
-import {finalize, map, startWith} from 'rxjs/operators';
+import { finalize, map, startWith } from 'rxjs/operators';
 
 import { XmConfigService } from '../../shared';
 import { Principal } from '../../shared/auth/principal.service';
@@ -25,70 +25,22 @@ export interface CountryOption {
 @Component({
     selector: 'xm-location-detail-dialog',
     templateUrl: './location-detail-dialog.component.html',
-    styleUrls: ['./location-detail-dialog.component.scss']
+    styleUrls: ['./location-detail-dialog.component.scss'],
 })
 export class LocationDetailDialogComponent implements OnInit {
-    @Input() xmEntity: XmEntity;
-    @Input() location: Location = {};
-    @Input() locationSpecs: LocationSpec[];
+    @Input() public xmEntity: XmEntity;
+    @Input() public location: Location = {};
+    @Input() public locationSpecs: LocationSpec[];
 
-    form: FormGroup;
-    formCountrySearch: FormControl;
-    iso3166Codes: string[] = ISO3166_CODES;
-    showLoader: boolean;
-    locations: Location[];
-    locationMap: any;
-    locationMarker: any;
-    filteredCountryOptions: Observable<CountryOption[]>;
-    countryOptions: CountryOption[];
-
-    private loadMap(): any {
-        const mapOptions = {
-            zoom: 8,
-            center: {
-                lat: 0,
-                lng: 0
-            }
-        };
-
-        return new google.maps.Map(document.querySelector('.location-detail-dialog__map'), mapOptions);
-    }
-
-    private loadMarker() {
-        return new google.maps.Marker({
-            draggable: true,
-            position: {
-                lat: 0,
-                lng: 0
-            },
-            map: this.locationMap
-        });
-    }
-
-    private applyMapHandlers() {
-        google.maps.event.addListener(this.locationMarker, 'dragend', (e) => {
-            this.form.controls.latitude.setValue(e.latLng.lat());
-            this.form.controls.longitude.setValue(e.latLng.lng());
-        });
-        google.maps.event.addListener(this.locationMap, 'click', (e) => {
-            this.form.controls.latitude.setValue(e.latLng.lat());
-            this.form.controls.longitude.setValue(e.latLng.lng());
-            this.applyCoordinates(false);
-        });
-    }
-
-    public applyCoordinates(setCenter: boolean = true) {
-        if (this.coordinatesInvalid || !this.locationMarker || !this.locationMap) {return}
-
-        const LatLng = new google.maps.LatLng(this.form.controls.latitude.value, this.form.controls.longitude.value);
-
-        this.locationMarker.setPosition(LatLng);
-        if (setCenter) {this.locationMap.setCenter(LatLng)}
-    }
-
-    public get coordinatesInvalid(): boolean {
-        return this.form.controls.latitude.invalid || this.form.controls.longitude.invalid
-    }
+    public form: FormGroup;
+    public formCountrySearch: FormControl;
+    public iso3166Codes: string[] = ISO3166_CODES;
+    public showLoader: boolean;
+    public locations: Location[];
+    public locationMap: any;
+    public locationMarker: any;
+    public filteredCountryOptions: Observable<CountryOption[]>;
+    public countryOptions: CountryOption[];
 
     constructor(private activeModal: NgbActiveModal,
                 private locationService: LocationService,
@@ -99,14 +51,27 @@ export class LocationDetailDialogComponent implements OnInit {
                 public principal: Principal) {
     }
 
-    ngOnInit() {
+    public get coordinatesInvalid(): boolean {
+        return this.form.controls.latitude.invalid || this.form.controls.longitude.invalid;
+    }
+
+    public applyCoordinates(setCenter: boolean = true): void {
+        if (this.coordinatesInvalid || !this.locationMarker || !this.locationMap) {return; }
+
+        const latLng = new google.maps.LatLng(this.form.controls.latitude.value, this.form.controls.longitude.value);
+
+        this.locationMarker.setPosition(latLng);
+        if (setCenter) {this.locationMap.setCenter(latLng); }
+    }
+
+    public ngOnInit(): void {
         // load the initial countries list
         this.countryOptions = this.iso3166Codes
             .map((option) => {
                 return {
                     key: option,
-                    name: this.translateService.instant(`xm-entity.location-detail-dialog.countries.${option}`)
-                }
+                    name: this.translateService.instant(`xm-entity.location-detail-dialog.countries.${option}`),
+                };
             });
 
         // init forms/form controls
@@ -118,11 +83,11 @@ export class LocationDetailDialogComponent implements OnInit {
         this.filteredCountryOptions = this.formCountrySearch.valueChanges
             .pipe(
                 startWith(''),
-                map(value => this._filterCountry(value))
+                map((value) => this._filterCountry(value)),
             );
 
-        this.xmConfigService.getUiConfig().subscribe(result => {
-            if (!result.entity && !result.entity.location) {return}
+        this.xmConfigService.getUiConfig().subscribe((result) => {
+            if (!result.entity && !result.entity.location) {return; }
 
             const defaultSetting = result.entity.location;
 
@@ -140,14 +105,76 @@ export class LocationDetailDialogComponent implements OnInit {
         });
     }
 
-    onAfterGMapApiInit() {
+    public onAfterGMapApiInit(): void {
         this.locationMap = this.loadMap();
         this.locationMarker = this.loadMarker();
         this.applyMapHandlers();
         this.applyCoordinates();
     }
 
-    private createForm() {
+    public onConfirmSave(): void {
+        if (this.xmEntity && this.xmEntity.id) {
+            Object.assign(this.form.value.xmEntity, {id: this.xmEntity.id, typeKey: this.xmEntity.typeKey});
+        }
+        this.showLoader = true;
+        if (this.form.value.id) {
+            this.locationService.update(this.form.value).pipe(
+                finalize(() => this.showLoader = false),
+            ).subscribe(
+                () => this.onSaveSuccess('xm-entity.location-detail-dialog.edit.success'),
+                // TODO: error processing
+                (err) => console.log(err));
+        } else {
+            this.locationService.create(this.form.value).pipe(
+                finalize(() => this.showLoader = false),
+            )
+                .subscribe(
+                    () => this.onSaveSuccess('xm-entity.location-detail-dialog.add.success'),
+                    // TODO: error processing
+                    (err) => console.log(err));
+        }
+    }
+
+    public onCancel(): void {
+        this.activeModal.dismiss('cancel');
+    }
+
+    private loadMap(): any {
+        const mapOptions = {
+            zoom: 8,
+            center: {
+                lat: 0,
+                lng: 0,
+            },
+        };
+
+        return new google.maps.Map(document.querySelector('.location-detail-dialog__map'), mapOptions);
+    }
+
+    private loadMarker(): any {
+        return new google.maps.Marker({
+            draggable: true,
+            position: {
+                lat: 0,
+                lng: 0,
+            },
+            map: this.locationMap,
+        });
+    }
+
+    private applyMapHandlers(): void {
+        google.maps.event.addListener(this.locationMarker, 'dragend', (e) => {
+            this.form.controls.latitude.setValue(e.latLng.lat());
+            this.form.controls.longitude.setValue(e.latLng.lng());
+        });
+        google.maps.event.addListener(this.locationMap, 'click', (e) => {
+            this.form.controls.latitude.setValue(e.latLng.lat());
+            this.form.controls.longitude.setValue(e.latLng.lng());
+            this.applyCoordinates(false);
+        });
+    }
+
+    private createForm(): void {
         const regCoordinate = /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/;
 
         this.form = this.fb.group({
@@ -162,11 +189,11 @@ export class LocationDetailDialogComponent implements OnInit {
             addressLine2: [null],
             latitude: [null, [Validators.required, Validators.pattern(regCoordinate)]],
             longitude: [null, [Validators.required, Validators.pattern(regCoordinate)]],
-            xmEntity: this.fb.group({})
+            xmEntity: this.fb.group({}),
         });
     }
 
-    private resetForm() {
+    private resetForm(): void {
         if (!this.location.typeKey && this.locationSpecs.length) {
             this.location.typeKey = this.locationSpecs[0].key;
         }
@@ -177,46 +204,19 @@ export class LocationDetailDialogComponent implements OnInit {
         this.form.reset({...this.location});
     }
 
-    onConfirmSave() {
-        if (this.xmEntity && this.xmEntity.id) {
-            Object.assign(this.form.value.xmEntity, {id: this.xmEntity.id, typeKey: this.xmEntity.typeKey});
-        }
-        this.showLoader = true;
-        if (this.form.value.id) {
-            this.locationService.update(this.form.value).pipe(
-                finalize(() => this.showLoader = false)
-            ).subscribe(
-                () => this.onSaveSuccess('xm-entity.location-detail-dialog.edit.success'),
-                // TODO: error processing
-                (err) => console.log(err));
-        } else {
-            this.locationService.create(this.form.value).pipe(
-                finalize(() => this.showLoader = false)
-            )
-                .subscribe(
-                () => this.onSaveSuccess('xm-entity.location-detail-dialog.add.success'),
-                // TODO: error processing
-                (err) => console.log(err));
-        }
-    }
-
-    private onSaveSuccess(key: string) {
+    private onSaveSuccess(key: string): void {
         // TODO: use constant for the broadcast and analyse listeners
         this.eventManager.broadcast({name: 'locationListModification'});
         this.activeModal.dismiss(true);
         this.alert('success', key);
     }
 
-    onCancel() {
-        this.activeModal.dismiss('cancel');
-    }
-
-    private alert(type, key) {
+    private alert(type: string, key: string): void {
         swal({
-            type: type,
+            type,
             text: this.translateService.instant(key),
             buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary'
+            confirmButtonClass: 'btn btn-primary',
         });
     }
 
@@ -224,6 +224,6 @@ export class LocationDetailDialogComponent implements OnInit {
         const filterValue = value.toLowerCase();
 
         return this.countryOptions
-            .filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+            .filter((option) => option.name.toLowerCase().indexOf(filterValue) === 0);
     }
 }

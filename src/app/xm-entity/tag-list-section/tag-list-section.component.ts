@@ -16,17 +16,15 @@ declare let swal: any;
 @Component({
     selector: 'xm-tag-list-section',
     templateUrl: './tag-list-section.component.html',
-    styleUrls: ['./tag-list-section.component.scss']
+    styleUrls: ['./tag-list-section.component.scss'],
 })
 export class TagListSectionComponent implements OnInit, OnChanges, OnDestroy {
 
+    @Input() public xmEntityId: number;
+    @Input() public tagSpecs: TagSpec[];
+    public xmEntity: XmEntity;
+    public tags: Tag[];
     private eventSubscriber: Subscription;
-
-    @Input() xmEntityId: number;
-    @Input() tagSpecs: TagSpec[];
-
-    xmEntity: XmEntity;
-    tags: Tag[];
 
     constructor(private eventManager: JhiEventManager,
                 private tagService: TagService,
@@ -34,36 +32,21 @@ export class TagListSectionComponent implements OnInit, OnChanges, OnDestroy {
                 private translateService: TranslateService) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.eventSubscriber = this.eventManager.subscribe(XM_EVENT_LIST.XM_ENTITY_DETAIL_MODIFICATION, () => this.load());
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.xmEntityId && changes.xmEntityId.previousValue !== changes.xmEntityId.currentValue) {
             this.load();
         }
     }
 
-    private load() {
-        if (!this.tagSpecs || !this.tagSpecs.length) {
-            if (DEBUG_INFO_ENABLED) {
-                console.log('DBG: no spec no call');
-            }
-            return
-        }
-        this.xmEntityService.find(this.xmEntityId, { 'embed': 'tags' }).subscribe((xmEntity: HttpResponse<XmEntity>) => {
-            this.xmEntity = xmEntity.body;
-            if (xmEntity.body.tags) {
-                this.tags = [...xmEntity.body.tags];
-            }
-        });
-    }
-
-    onAdd(xmTag: Tag) {
+    public onAdd(xmTag: Tag): void {
         const tag: Tag = {
             typeKey: 'DEFAULT',
             name: xmTag.name.toUpperCase(),
@@ -78,7 +61,7 @@ export class TagListSectionComponent implements OnInit, OnChanges, OnDestroy {
             });
     }
 
-    onRemove(xmTag: Tag) {
+    public onRemove(xmTag: Tag): void {
         this.tagService.delete(xmTag.id).subscribe(
             () => this.load(),
             () => {
@@ -87,12 +70,27 @@ export class TagListSectionComponent implements OnInit, OnChanges, OnDestroy {
             });
     }
 
-    private alert(type, key) {
+    private load(): void {
+        if (!this.tagSpecs || !this.tagSpecs.length) {
+            if (DEBUG_INFO_ENABLED) {
+                console.log('DBG: no spec no call');
+            }
+            return;
+        }
+        this.xmEntityService.find(this.xmEntityId, {embed: 'tags'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
+            this.xmEntity = xmEntity.body;
+            if (xmEntity.body.tags) {
+                this.tags = [...xmEntity.body.tags];
+            }
+        });
+    }
+
+    private alert(type: string, key: string): void {
         swal({
-            type: type,
+            type,
             text: this.translateService.instant(key),
             buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary'
+            confirmButtonClass: 'btn btn-primary',
         });
     }
 

@@ -8,6 +8,6 @@ export const docsRoute: Route = {
     data: {
         privileges: {value: ['ROUTE.GET_LIST']},
         pageTitle: 'global.menu.admin.main',
-        pageSubTitleTrans: 'global.menu.admin.apidocs'
-    }
+        pageSubTitleTrans: 'global.menu.admin.apidocs',
+    },
 };

@@ -9,11 +9,11 @@ export class ContextService {
     constructor(public eventManager: JhiEventManager) {
     }
 
-    get(key: string) {
+    public get(key: string) {
         return this.data[key];
     }
 
-    put(key: string, value: any) {
+    public put(key: string, value: any) {
         this.data[key] = value;
         this.eventManager.broadcast({ name: 'CONTEXT_UPDATED' });
     }

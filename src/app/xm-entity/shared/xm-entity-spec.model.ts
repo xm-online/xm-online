@@ -11,25 +11,25 @@ import { StateSpec } from './state-spec.model';
 import { TagSpec } from './tag-spec.model';
 
 export interface XmEntitySpec extends BaseSpec {
-    key?: string,
-    name?: any,
-    isApp?: boolean,
-    isAbstract?: boolean,
-    isAvatarEnabled?: boolean,
-    fastSearch?: FastSearchSpec[],
-    icon?: string,
-    dataSpec?: string,
-    dataForm?: string,
-    functions?: FunctionSpec[],
-    attachments?: AttachmentSpec[],
-    calendars?: CalendarSpec[],
-    links?: LinkSpec[],
-    locations?: LocationSpec[],
-    ratings?: RatingSpec[],
-    states?: StateSpec[],
-    tags?: TagSpec[],
-    comments?: CommentSpec[],
-    pluralName?: string,
-    nameValidationPattern?: string,
-    descriptionPattern?: string
+    key?: string;
+    name?: any;
+    isApp?: boolean;
+    isAbstract?: boolean;
+    isAvatarEnabled?: boolean;
+    fastSearch?: FastSearchSpec[];
+    icon?: string;
+    dataSpec?: string;
+    dataForm?: string;
+    functions?: FunctionSpec[];
+    attachments?: AttachmentSpec[];
+    calendars?: CalendarSpec[];
+    links?: LinkSpec[];
+    locations?: LocationSpec[];
+    ratings?: RatingSpec[];
+    states?: StateSpec[];
+    tags?: TagSpec[];
+    comments?: CommentSpec[];
+    pluralName?: string;
+    nameValidationPattern?: string;
+    descriptionPattern?: string;
 }

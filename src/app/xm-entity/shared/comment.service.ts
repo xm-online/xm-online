@@ -11,40 +11,40 @@ import { Comment } from './comment.model';
 @Injectable()
 export class CommentService {
 
-    private resourceUrl = SERVER_API_URL + 'entity/api/comments';
-    private resourceSearchUrl = SERVER_API_URL + 'entity/api/_search/comments';
+    private resourceUrl: string = SERVER_API_URL + 'entity/api/comments';
+    private resourceSearchUrl: string = SERVER_API_URL + 'entity/api/_search/comments';
 
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils) {
     }
 
-    create(comment: Comment): Observable<HttpResponse<Comment>> {
+    public create(comment: Comment): Observable<HttpResponse<Comment>> {
         const copy = this.convert(comment);
         return this.http.post<Comment>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Comment>) => this.convertResponse(res)));
     }
 
-    update(comment: Comment): Observable<HttpResponse<Comment>> {
+    public update(comment: Comment): Observable<HttpResponse<Comment>> {
         const copy = this.convert(comment);
         return this.http.put<Comment>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Comment>) => this.convertResponse(res)));
     }
 
-    find(id: number): Observable<HttpResponse<Comment>> {
+    public find(id: number): Observable<HttpResponse<Comment>> {
         return this.http.get<Comment>(`${this.resourceUrl}/${id}`, {observe: 'response'}).pipe(
             map((res: HttpResponse<Comment>) => this.convertResponse(res)));
     }
 
-    query(req?: any): Observable<HttpResponse<Comment[]>> {
+    public query(req?: any): Observable<HttpResponse<Comment[]>> {
         const options = createRequestOption(req);
         return this.http.get<Comment[]>(this.resourceUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Comment[]>) => this.convertArrayResponse(res)));
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
+    public delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 
-    search(req?: any): Observable<HttpResponse<Comment[]>> {
+    public search(req?: any): Observable<HttpResponse<Comment[]>> {
         const options = createRequestOption(req);
         return this.http.get<Comment[]>(this.resourceSearchUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Comment[]>) => this.convertArrayResponse(res)));

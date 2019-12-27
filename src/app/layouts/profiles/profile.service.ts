@@ -8,18 +8,18 @@ import { ProfileInfo } from './profile-info.model';
 @Injectable()
 export class ProfileService {
 
-    private profileInfoUrl = 'api/profile-info';
+    private profileInfoUrl: string = 'api/profile-info';
 
     constructor(private http: HttpClient) { }
 
-    getProfileInfo(): Observable<ProfileInfo> {
+    public getProfileInfo(): Observable<ProfileInfo> {
         return this.http.get<any>(this.profileInfoUrl).pipe(map((data) => {
-                const pi = new ProfileInfo();
-                pi.activeProfiles = data.activeProfiles;
-                pi.ribbonEnv = data.ribbonEnv;
-                pi.inProduction = data.activeProfiles.indexOf('prod') !== -1;
-                pi.swaggerEnabled = data.activeProfiles.indexOf('swagger') !== -1;
-                return pi;
-            }));
+            const pi = new ProfileInfo();
+            pi.activeProfiles = data.activeProfiles;
+            pi.ribbonEnv = data.ribbonEnv;
+            pi.inProduction = data.activeProfiles.indexOf('prod') !== -1;
+            pi.swaggerEnabled = data.activeProfiles.indexOf('swagger') !== -1;
+            return pi;
+        }));
     }
 }

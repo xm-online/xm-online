@@ -3,11 +3,11 @@ export class Permission {
         public msName?: string,
         public roleKey?: string,
         public privilegeKey?: string,
-        public enabled?: Boolean,
+        public enabled?: boolean,
         public reactionStrategy?: string,
         public envCondition?: string,
         public resourceCondition?: string,
-        public resources?: string[]
+        public resources?: string[],
     ) {
     }
 }

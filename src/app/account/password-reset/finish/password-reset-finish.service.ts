@@ -10,11 +10,11 @@ export class PasswordResetFinish {
     constructor(private http: HttpClient) {
     }
 
-    save(keyAndPassword: any): Observable<any> {
+    public save(keyAndPassword: any): Observable<any> {
         return this.http.post('uaa/api/account/reset_password/finish', keyAndPassword);
     }
 
-    check(keyAndPassword: any): Observable<any> {
+    public check(keyAndPassword: any): Observable<any> {
         return this.http.get(CHECK_API + keyAndPassword);
     }
 }

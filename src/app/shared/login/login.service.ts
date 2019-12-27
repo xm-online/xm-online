@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import { Router } from '@angular/router';
 
 import {JhiLanguageService} from 'ng-jhipster';
-import {Principal} from '../auth/principal.service';
 import {AuthServerProvider} from '../auth/auth-jwt.service';
+import {Principal} from '../auth/principal.service';
 import {StateStorageService} from '../auth/state-storage.service';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class LoginService {
                 private stateStorageService: StateStorageService) {
     }
 
-    private getUserIdentity(next, data) {
+    private getUserIdentity(next, data): void {
       this.principal.identity(true, true).then((account) => {
         // After the login the language will be changed to
         // the language selected by the user during his registration
@@ -29,9 +29,9 @@ export class LoginService {
       });
     }
 
-    login(credentials, callback?) {
+    public login(credentials, callback?): Promise<unknown> {
 
-        const cb = callback || function () {
+        const cb = callback || function() {
             };
 
         return new Promise((resolve, reject) => {
@@ -52,18 +52,18 @@ export class LoginService {
                 return cb();
             }, (err) => {
               console.log('service-error %o', err);
-                this.logout();
-                reject(err);
-                return cb(err);
+              this.logout();
+              reject(err);
+              return cb(err);
             });
         });
     }
 
-    loginWithToken(jwt, rememberMe) {
+    public loginWithToken(jwt, rememberMe): Promise<unknown> {
         return this.authServerProvider.loginWithToken(jwt, rememberMe);
     }
 
-    logout() {
+    public logout(): void {
       this.authServerProvider.logout().subscribe();
       this.principal.logout();
       this.router.navigate(['']);

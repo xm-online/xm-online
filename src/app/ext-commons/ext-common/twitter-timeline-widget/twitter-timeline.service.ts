@@ -4,26 +4,26 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class TwitterTimelineService {
 
-    private TWITTER_SCRIPT_ID = 'twitter-wjs';
-    private TWITTER_WIDGET_URL = 'https://platform.twitter.com/widgets.js';
+    private TWITTER_SCRIPT_ID: string = 'twitter-wjs';
+    private TWITTER_WIDGET_URL: string = 'https://platform.twitter.com/widgets.js';
 
     constructor() {
     }
 
-    loadScript(): Observable<any> {
+    public loadScript(): Observable<any> {
         const that = this;
-        return Observable.create(observer => {
+        return Observable.create((observer) => {
             that.startScriptLoad();
             window['twttr'].ready(
                 function onLoadTwitterScript(twitter) {
                     observer.next(twitter);
                     observer.complete();
-                }
+                },
             );
         });
-    };
+    }
 
-    private startScriptLoad() {
+    private startScriptLoad(): void {
         window['twttr'] = (function (d, s, id, url) {
             const fjs = d.getElementsByTagName(s)[0];
             const t = window['twttr'] || {};

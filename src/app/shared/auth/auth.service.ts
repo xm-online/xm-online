@@ -6,10 +6,10 @@ import { Principal } from './principal.service';
 export class AuthService {
 
     constructor(
-        private principal: Principal
+        private principal: Principal,
     ) {}
 
-    authorize(force) {
+    public authorize(force) {
         return this.principal.identity(force).then(() => authThen.bind(this));
 
         function authThen() {

@@ -13,11 +13,11 @@ export class TranslationService {
                 private eventManager: JhiEventManager) {
     }
 
-    getFile(configPath: string): Observable<any> {
+    public getFile(configPath: string): Observable<any> {
         return this.http.get<any>(configPath).pipe(map((res: Response) => res.json()));
     }
 
-    translate(target, q) {
+    public translate(target, q): any {
         const self = this;
         const url = 'https://www.googleapis.com/language/translate/v2';
         const key = 'AIzaSyBqzZZrc4Wgc5nAH4mMZjnjBSdv-425qgU';
@@ -29,7 +29,7 @@ export class TranslationService {
                 'source': 'en',
                 'target': target,
                 'q': q
-            }
+            },
         });
         jqxhr.fail(function (error) {
             self.eventManager.broadcast({name: 'thirdpaty.httpError', content: error.responseJSON});

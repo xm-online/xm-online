@@ -1,18 +1,18 @@
+import { environment } from '../../../environments/environment';
 import { CurrentLocationComponent } from './widgets/current-location/current-location.component';
+import { DatetimePickerComponent } from './widgets/datetime-picker/datetime-picker.component';
+import { DatetimeUtcComponent } from './widgets/datetime-utc/datetime-utc.component';
+import { EmailMatcherComponent } from './widgets/email-matcher/email-matcher.component';
+import { ExtAutocompleteComponent } from './widgets/ext-autocomplete/ext-autocomplete.component';
+import { ExtMdEditorComponent } from './widgets/ext-md-editor/ext-md-editor.component';
+import { ExtMultiSelectComponent } from './widgets/ext-multi-select/ext-multi-select.component';
+import { ExtQuerySelectComponent } from './widgets/ext-query-select/ext-query-select.component';
 import { ExtSelectComponent } from './widgets/ext-select/ext-select.component';
 import { ExtTextareaComponent } from './widgets/ext-textarea/ext-textarea.component';
-import { ExtMultiSelectComponent } from './widgets/ext-multi-select/ext-multi-select.component';
-import { ExtAutocompleteComponent } from './widgets/ext-autocomplete/ext-autocomplete.component';
-import { ValidationComponent } from './widgets/validation-component/validation-component.component';
-import { MultilingualInputComponent } from './widgets/multilingual-input/multilingual-input.component';
-import { DatetimeUtcComponent } from './widgets/datetime-utc/datetime-utc.component';
-import { ExtMdEditorComponent } from './widgets/ext-md-editor/ext-md-editor.component';
-import { DatetimePickerComponent } from './widgets/datetime-picker/datetime-picker.component';
-import { ExtQuerySelectComponent } from './widgets/ext-query-select/ext-query-select.component';
-import { environment } from '../../../environments/environment';
-import { EmailMatcherComponent } from './widgets/email-matcher/email-matcher.component';
-import { TextSectionComponent } from './widgets/text-section/text-section.component';
 import { FileUploadComponent } from './widgets/file-upload/file-upload.component';
+import { MultilingualInputComponent } from './widgets/multilingual-input/multilingual-input.component';
+import { TextSectionComponent } from './widgets/text-section/text-section.component';
+import { ValidationComponent } from './widgets/validation-component/validation-component.component';
 
 declare const $: any;
 declare let Babili: any;
@@ -36,7 +36,7 @@ export const getJsfWidgets = () => {
         'datetime-picker': DatetimePickerComponent,
         'email-matcher': EmailMatcherComponent,
         'text-section': TextSectionComponent,
-        'file-upload': FileUploadComponent
+        'file-upload': FileUploadComponent,
     };
 };
 
@@ -48,14 +48,14 @@ export const getJsfWidgets = () => {
 export const buildJsfAttributes = (spec: any, form: any) => {
     const input = {dataSpec: interpolate(spec), dataForm: interpolate(form)};
     const jsfAttributes = spec && {
-            'schema': typeof(input.dataSpec) === 'string' ? JSON.parse(input.dataSpec) : input.dataSpec,
-            'layout': extractLayoutElement(input, 'layout'),
-            'form': conditionalForm(input.dataForm, 'form') || extractLayoutElement(input, 'form'),
-            'data': extractData(input) || extractElement(input, 'data'),
-            'entity': conditionalForm(input.dataForm, 'entity') || extractElement(input, 'entity'),
-            'options': conditionalForm(input.dataForm, 'options') || extractElement(input, 'options') || {},
-            'widgets': getJsfWidgets(),
-            'formLayout': formLayout()
+            schema: typeof(input.dataSpec) === 'string' ? JSON.parse(input.dataSpec) : input.dataSpec,
+            layout: extractLayoutElement(input, 'layout'),
+            form: conditionalForm(input.dataForm, 'form') || extractLayoutElement(input, 'form'),
+            data: extractData(input) || extractElement(input, 'data'),
+            entity: conditionalForm(input.dataForm, 'entity') || extractElement(input, 'entity'),
+            options: conditionalForm(input.dataForm, 'options') || extractElement(input, 'options') || {},
+            widgets: getJsfWidgets(),
+            formLayout: formLayout(),
         } || null;
     jsfAttributes.options.data = jsfAttributes.data;
     jsfAttributes.form = addValidationComponent(jsfAttributes.form);
@@ -63,8 +63,8 @@ export const buildJsfAttributes = (spec: any, form: any) => {
     // proxy data to options field for access original data inside component
     Object.defineProperty(jsfAttributes, 'data',
         {
-            set: function(data) { this.options.data = data; },
-            get: function() { return this.options.data; }
+            set(data) { this.options.data = data; },
+            get() { return this.options.data; },
         });
 
     processValidationMessages(jsfAttributes);
@@ -112,11 +112,11 @@ const interpolate = (spec: any) => {
 export const addValidationComponent = (form) => {
     if (form && form instanceof Array) {
         form.push({
-            type: 'validation-component'
+            type: 'validation-component',
         });
     } else if (!form) {
         form = ['*', {
-            type: 'validation-component'
+            type: 'validation-component',
         }];
     }
     return form;
@@ -125,12 +125,11 @@ export const addValidationComponent = (form) => {
 export const addValidationComponentToLayout = (layout) => {
     if (layout && layout instanceof Array) {
         layout.push({
-            type: 'validation-component'
+            type: 'validation-component',
         });
     }
     return layout;
 };
-
 
 const traverce = (obj, task) => {
     for (const property in obj) {
@@ -164,7 +163,7 @@ export const processValidationMessages = (jsfAttributes) => {
 
     traverce(jsfAttributes.schema, function(object, property) {
         if (property === 'type' && (object.type instanceof Array)) {
-            object.type = object.type.filter(it => it !== 'null');
+            object.type = object.type.filter((it) => it !== 'null');
             if (object.type.length === 1) {
                 object.type = object.type[0];
             }
@@ -179,7 +178,7 @@ export const processValidationMessages = (jsfAttributes) => {
             return;
         }
 
-        const hasValidations = validations.filter(key => object.hasOwnProperty(key)).length > 0;
+        const hasValidations = validations.filter((key) => object.hasOwnProperty(key)).length > 0;
         if (!hasValidations) {
             return;
         }
@@ -188,16 +187,15 @@ export const processValidationMessages = (jsfAttributes) => {
         key = key.replace(/\./g, '.properties.');
         key = key.replace(/\[\]/g, '.items');
 
-
         let field = jsfAttributes.schema || {};
         field = field['properties'] || {};
 
         const path = key.split('.');
-        for(let i in path) {
+        for (const i in path) {
             field = field[path[i]];
         }
 
-        validations.filter(key => object.hasOwnProperty(key)).forEach(it => field[it] = object[it]);
+        validations.filter((key) => object.hasOwnProperty(key)).forEach((it) => field[it] = object[it]);
 
         if (environment && !environment.production) {
             console.log('[dbg] %o', jsfAttributes.schema);
@@ -222,7 +220,7 @@ const conditionalForm = (inDataForm: any, fieldName) => {
         if (value && !condition) {
             field = conditionalFormConfig[fieldName];
             condition = true;
-            console.log('Use form config by condition', conditionalFormConfig.condition)
+            console.log('Use form config by condition', conditionalFormConfig.condition);
         } else if (value && condition) {
             console.error('Error! Two conditions of conditionalForm are true!', conditionalFormConfig.condition);
         }
@@ -267,11 +265,11 @@ const extractData = (input: any) => {
 };
 
 const processDataFieldExpressions = (data: any) => {
-    for (let i in data) {
+    for (const i in data) {
         if (data[i] !== null && typeof(data[i]) === 'object') {
             processDataFieldExpressions(data[i]);
         } else {
-            data[i] = new Function('expression', 'return ' + data[i])()
+            data[i] = new Function('expression', 'return ' + data[i])();
         }
     }
 };

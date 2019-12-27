@@ -1,66 +1,66 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { JhiHealthModalComponent } from './health-modal.component';
 
 import { JhiHealthService } from './health.service';
-import { JhiHealthModalComponent } from './health-modal.component';
 
 @Component({
     selector: 'xm-health',
     templateUrl: './health.component.html',
-    styleUrls: ['./health.component.scss']
+    styleUrls: ['./health.component.scss'],
 })
 export class JhiHealthCheckComponent implements OnInit {
 
-    healthData: any;
-    showLoader: boolean;
-    allHealthChecks: any[];
-    services: any[];
-    instances: any[];
-    selectedService = '';
-    selectedInstance = '';
-    selectedInstanceStatus: string;
+    public healthData: any;
+    public showLoader: boolean;
+    public allHealthChecks: any[];
+    public services: any[];
+    public instances: any[];
+    public selectedService: string = '';
+    public selectedInstance: string = '';
+    public selectedInstanceStatus: string;
 
     constructor(
         private modalService: NgbModal,
-        private healthService: JhiHealthService
+        private healthService: JhiHealthService,
     ) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.initHealthCheck();
     }
 
-    initHealthCheck() {
+    public initHealthCheck(): void {
         this.healthService
             .getMonitoringServicesCollection()
-            .subscribe(result => {
+            .subscribe((result) => {
                 this.services = result || [];
                 if (this.services.length > 0) {
                     this.selectedService = this.services[0].name;
                     this.onServiceSelect();
                 }
-            }, error => console.log(error));
+            }, (error) => console.log(error));
     }
 
-    onServiceSelect(): void {
+    public onServiceSelect(): void {
         this.instances = null;
         this.services
-            .filter(s => s.name === this.selectedService)
-            .map(i => this.instances = i.instances || null);
+            .filter((s) => s.name === this.selectedService)
+            .map((i) => this.instances = i.instances || null);
         this.getHealthCheck(this.selectedService);
     }
 
-    getHealthCheck(selectedService: string): void {
+    public getHealthCheck(selectedService: string): void {
         this.showLoader = true;
         this.healthData = [];
         this.selectedInstanceStatus = null;
         this.healthService
             .getHealsCheckByMsName(selectedService, 'health')
-            .subscribe(result => {
+            .subscribe((result) => {
                 this.allHealthChecks = result || [];
                 this.mapHealthCheck(this.allHealthChecks[0].instanceId);
                 this.showLoader = false;
-            }, error => {
+            }, (error) => {
                 console.log(error);
                 if (error.status === 503) {
                     this.healthData = this.healthService.transformHealthData(error.json());
@@ -69,9 +69,9 @@ export class JhiHealthCheckComponent implements OnInit {
             });
     }
 
-    mapHealthCheck(metricId) {
+    public mapHealthCheck(metricId: any): void {
         this.selectedInstance = metricId || '';
-        const currentMetrics = this.allHealthChecks.filter(h => h.instanceId === metricId).shift();
+        const currentMetrics = this.allHealthChecks.filter((h) => h.instanceId === metricId).shift();
         this.healthData = currentMetrics && currentMetrics.health
             ? this.healthService.transformHealthData(currentMetrics.health)
             : [];
@@ -79,14 +79,14 @@ export class JhiHealthCheckComponent implements OnInit {
             currentMetrics
             && currentMetrics.health
             && currentMetrics.health.status
-            ? currentMetrics.health.status : null;
+                ? currentMetrics.health.status : null;
     }
 
-    baseName(name: string) {
+    public baseName(name: string): string {
         return this.healthService.getBaseName(name);
     }
 
-    getBadgeClass(statusState) {
+    public getBadgeClass(statusState: any): string {
         if (statusState === 'UP') {
             return 'badge-success';
         } else {
@@ -94,8 +94,8 @@ export class JhiHealthCheckComponent implements OnInit {
         }
     }
 
-    showHealth(health: any) {
-        const modalRef  = this.modalService.open(JhiHealthModalComponent, {backdrop: 'static'});
+    public showHealth(health: any): void {
+        const modalRef = this.modalService.open(JhiHealthModalComponent, {backdrop: 'static'});
         modalRef.componentInstance.currentHealth = health;
         modalRef.result.then((result) => {
             // Left blank intentionally, nothing to do here
@@ -104,7 +104,7 @@ export class JhiHealthCheckComponent implements OnInit {
         });
     }
 
-    subSystemName(name: string) {
+    public subSystemName(name: string): string {
         return this.healthService.getSubSystemName(name);
     }
 

@@ -14,14 +14,14 @@
     </h4>
   </div>
   <div class="card-body">
-    <form [formGroup]="form" novalidate (submit)="submitForm()" name="customerInfoForm">
+    <form (submit)="submitForm()" [formGroup]="form" name="customerInfoForm" novalidate>
       <div class="row">
         <div class="form-group col-md-4">
-          <label for="firstName" jhiTranslate="global.form.firstname" class="mb-0"></label>
+          <label class="mb-0" for="firstName" jhiTranslate="global.form.firstname"></label>
           <mat-form-field>
-            <input matInput
+            <input formControlName="firstName"
                    id="firstName"
-                   formControlName="firstName"
+                   matInput
                    required
                    type="text">
             <mat-error>
@@ -30,11 +30,11 @@
           </mat-form-field>
         </div>
         <div class="form-group col-md-4">
-          <label for="lastName" jhiTranslate="global.form.lastname" class="mb-0"></label>
+          <label class="mb-0" for="lastName" jhiTranslate="global.form.lastname"></label>
           <mat-form-field>
-            <input matInput
+            <input formControlName="lastName"
                    id="lastName"
-                   formControlName="lastName"
+                   matInput
                    required
                    type="text">
             <mat-error>
@@ -45,11 +45,11 @@
       </div>
       <div class="row">
         <div class="form-group col-md-4">
-          <label for="countryCode" jhiTranslate="nemondo.countryCode" class="mb-0"></label>
+          <label class="mb-0" for="countryCode" jhiTranslate="nemondo.countryCode"></label>
           <mat-form-field>
-            <mat-select id="countryCode"
-                        required
-                        formControlName="countryCode">
+            <mat-select formControlName="countryCode"
+                        id="countryCode"
+                        required>
               <mat-option *ngFor="let c of countries"
                           [value]="c.code">
                 {{c.name}}
@@ -61,11 +61,11 @@
           </mat-form-field>
         </div>
         <div class="form-group col-md-4">
-          <label for="locality" jhiTranslate="nemondo.locality" class="mb-0"></label>
+          <label class="mb-0" for="locality" jhiTranslate="nemondo.locality"></label>
           <mat-form-field>
-            <input matInput
+            <input formControlName="locality"
                    id="locality"
-                   formControlName="locality"
+                   matInput
                    required
                    type="text">
             <mat-error>
@@ -74,11 +74,11 @@
           </mat-form-field>
         </div>
         <div class="form-group col-md-2">
-          <label for="zip" jhiTranslate="nemondo.zip" class="mb-0"></label>
+          <label class="mb-0" for="zip" jhiTranslate="nemondo.zip"></label>
           <mat-form-field>
-            <input matInput
+            <input formControlName="zip"
                    id="zip"
-                   formControlName="zip"
+                   matInput
                    required
                    type="text">
             <mat-error>
@@ -92,9 +92,9 @@
           <div class="form-group">
             <label for="address1" jhiTranslate="nemondo.address1"></label>
             <mat-form-field>
-              <input matInput
+              <input formControlName="address1"
                      id="address1"
-                     formControlName="address1"
+                     matInput
                      required
                      type="text">
               <mat-error>
@@ -105,9 +105,9 @@
           <div class="form-group">
             <label for="address2" jhiTranslate="nemondo.address2"></label>
             <mat-form-field>
-              <input matInput
+              <input formControlName="address2"
                      id="address2"
-                     formControlName="address2"
+                     matInput
                      type="text">
             </mat-form-field>
           </div>
@@ -116,21 +116,21 @@
           <div class="form-group">
             <label for="phone" jhiTranslate="nemondo.phone"></label>
             <mat-form-field>
-              <input matInput
+              <input formControlName="phone"
                      id="phone"
-                     formControlName="phone"
+                     matInput
                      type="text">
               <mat-error>
                 {{'nemondo.invalid.phone' | translate}}
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="form-group" *ngIf="showCurrencies">
+          <div *ngIf="showCurrencies" class="form-group">
             <label for="localCurrency" jhiTranslate="nemondo.localCurrency"></label>
             <mat-form-field>
-              <mat-select id="localCurrency"
-                          required
-                          formControlName="localCurrency">
+              <mat-select formControlName="localCurrency"
+                          id="localCurrency"
+                          required>
                 <mat-option *ngFor="let c of currencies"
                             [value]="c">
                   {{c}}
@@ -144,11 +144,11 @@
         </div>
       </div>
       <br>
-      <div class="row" *ngIf="form.enabled">
+      <div *ngIf="form.enabled" class="row">
         <div class="col-md-12">
-          <button mat-raised-button
+          <button [disabled]="form.invalid"
                   class="btn btn-primary pull-right"
-                  [disabled]="form.invalid">
+                  mat-raised-button>
             Submit
           </button>
         </div>
@@ -157,7 +157,7 @@
   </div>
 </div>
 
-<div class="card" *ngIf="uploadFileEnabled">
+<div *ngIf="uploadFileEnabled" class="card">
   <div class="card-header card-header-icon card-header-primary">
     <div class="card-icon">
       <i class="material-icons">attachment</i>
@@ -172,7 +172,7 @@
       <div class="col-md-12">
         <div class="attachments-list">
           <xm-loader [showLoader]="showAttachmentLoader"></xm-loader>
-          <div class="attachment-element" *ngFor="let attachment of attachments | async">
+          <div *ngFor="let attachment of attachments | async" class="attachment-element">
             <div class="row">
               <div class="col-md-6">
                 <div class="attach-name">{{attachment.name ? attachment.name : 'no name'}}</div>
@@ -182,17 +182,17 @@
                 </div>
               </div>
             </div>
-            <a class="remove-attachment" href="javascript:void(0)" [class.hidden]="!form.enabled"
-               (click)="onRemoveAttachment(attachment)" *permitted="'ATTACHMENT.DELETE'">
+            <a (click)="onRemoveAttachment(attachment)" *permitted="'ATTACHMENT.DELETE'" [class.hidden]="!form.enabled"
+               class="remove-attachment" href="javascript:void(0)">
               <i class="material-icons">delete</i>
             </a>
           </div>
         </div>
-        <button mat-raised-button
-                class="btn btn-primary btn-round pull-right"
+        <button (click)="onAddAttachment()"
+                *permitted="'ATTACHMENT.CREATE'"
                 [class.hidden]="!form.enabled"
-                (click)="onAddAttachment()"
-                *permitted="'ATTACHMENT.CREATE'">
+                class="btn btn-primary btn-round pull-right"
+                mat-raised-button>
           {{'tsg.tsgAddAttachments' | translate}}
         </button>
       </div>

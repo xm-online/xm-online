@@ -11,40 +11,40 @@ import { Tag } from './tag.model';
 @Injectable()
 export class TagService {
 
-    private resourceUrl = SERVER_API_URL + 'entity/api/tags';
-    private resourceSearchUrl = SERVER_API_URL + 'entity/api/_search/tags';
+    private resourceUrl: string = SERVER_API_URL + 'entity/api/tags';
+    private resourceSearchUrl: string = SERVER_API_URL + 'entity/api/_search/tags';
 
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils) {
     }
 
-    create(tag: Tag): Observable<HttpResponse<Tag>> {
+    public create(tag: Tag): Observable<HttpResponse<Tag>> {
         const copy = this.convert(tag);
         return this.http.post<Tag>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Tag>) => this.convertResponse(res)));
     }
 
-    update(tag: Tag): Observable<HttpResponse<Tag>> {
+    public update(tag: Tag): Observable<HttpResponse<Tag>> {
         const copy = this.convert(tag);
         return this.http.put<Tag>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Tag>) => this.convertResponse(res)));
     }
 
-    find(id: number): Observable<HttpResponse<Tag>> {
+    public find(id: number): Observable<HttpResponse<Tag>> {
         return this.http.get<Tag>(`${this.resourceUrl}/${id}`, {observe: 'response'}).pipe(
             map((res: HttpResponse<Tag>) => this.convertResponse(res)));
     }
 
-    query(req?: any): Observable<HttpResponse<Tag[]>> {
+    public query(req?: any): Observable<HttpResponse<Tag[]>> {
         const options = createRequestOption(req);
         return this.http.get<Tag[]>(this.resourceUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Tag[]>) => this.convertArrayResponse(res)));
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
+    public delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 
-    search(req?: any): Observable<HttpResponse<Tag[]>> {
+    public search(req?: any): Observable<HttpResponse<Tag[]>> {
         const options = createRequestOption(req);
         return this.http.get<Tag[]>(this.resourceSearchUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Tag[]>) => this.convertArrayResponse(res)));

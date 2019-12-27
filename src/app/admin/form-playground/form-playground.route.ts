@@ -8,6 +8,6 @@ export const formPlaygroundRoute: Route = {
     data: {
         privileges: {value: ['']},
         pageTitle: 'global.menu.admin.main',
-        pageSubTitleTrans: 'global.menu.admin.formPlayground'
-    }
+        pageSubTitleTrans: 'global.menu.admin.formPlayground',
+    },
 };

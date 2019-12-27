@@ -12,4 +12,3 @@ export interface Calendar extends BaseEntity {
     events?: Event[];
     xmEntity?: XmEntity;
 }
-

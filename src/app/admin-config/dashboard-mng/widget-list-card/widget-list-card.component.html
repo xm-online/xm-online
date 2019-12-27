@@ -10,12 +10,13 @@
 
       <div class="card-body">
         <xm-loader [showLoader]="showLoader"></xm-loader>
-        <div class="material-datatables table-responsive" *ngIf="list?.length">
-          <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%">
+        <div *ngIf="list?.length" class="material-datatables table-responsive">
+          <table cellspacing="0" class="table table-striped table-no-bordered table-hover" id="datatables" width="100%">
             <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <tr [(ascending)]="reverse" [(predicate)]="predicate" [callback]="transition.bind(this)" jhiSort>
               <th><span jhiTranslate="admin-config.common.fields.id">ID</span> <span class="fa fa-sort"></span></th>
-              <th><span jhiTranslate="admin-config.common.fields.selector">Selector</span> <span class="fa fa-sort"></span></th>
+              <th><span jhiTranslate="admin-config.common.fields.selector">Selector</span>
+                <span class="fa fa-sort"></span></th>
               <th><span jhiTranslate="admin-config.common.fields.name"></span> <span class="fa fa-sort"></span></th>
               <th><span jhiTranslate="admin-config.common.fields.config"></span> <span class="fa fa-sort"></span></th>
               <th></th>
@@ -28,10 +29,10 @@
               <td>{{widget.name}}</td>
               <td>{{!!widget.config}}</td>
               <td class="text-right">
-                <a href="javascript: void(0);" (click)="onEdit(widget)">
+                <a (click)="onEdit(widget)" href="javascript: void(0);">
                   <i class="material-icons">edit</i>
                 </a>
-                <a href="javascript: void(0);" (click)="deleteItem(widget)">
+                <a (click)="deleteItem(widget)" href="javascript: void(0);">
                   <i class="material-icons">close</i>
                 </a>
               </td>
@@ -47,7 +48,7 @@
 </div>
 
 <div class="xm-fab">
-  <button mat-raised-button class="btn btn-primary btn-icon btn-just-icon btn-round btn-lg" (click)="onAddNew()">
+  <button (click)="onAddNew()" class="btn btn-primary btn-icon btn-just-icon btn-round btn-lg" mat-raised-button>
     <i class="material-icons">add</i>
   </button>
 </div>

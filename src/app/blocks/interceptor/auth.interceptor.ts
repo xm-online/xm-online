@@ -11,7 +11,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 private sessionStorage: SessionStorageService) {
     }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (!request || !request.url || (/^http/.test(request.url) && !(SERVER_API_URL && request.url.startsWith(SERVER_API_URL)))) {
             return next.handle(request);
         }
@@ -26,8 +26,8 @@ export class AuthInterceptor implements HttpInterceptor {
         if (!!token && noAuthHeader) {
             request = request.clone({
                 setHeaders: {
-                    Authorization: 'Bearer ' + token
-                }
+                    Authorization: 'Bearer ' + token,
+                },
             });
         }
         return next.handle(request);

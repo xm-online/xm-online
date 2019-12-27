@@ -76,7 +76,7 @@ describe('XmEntityService', () => {
 
         it('should call findLinkTargets() with correct url', () => {
             const id = 123;
-            const linkType = 'test;'
+            const linkType = 'test;';
             service.findLinkTargets(id, linkType).subscribe((data) => {});
             const req = httpTestingController.expectOne(`${resourceUrl}/${id}/links/targets?typeKey=${linkType}`);
             req.flush({id: 123});
@@ -85,7 +85,7 @@ describe('XmEntityService', () => {
 
         it('should call findLinkSources() with correct url', () => {
             const id = 123;
-            const linkType = 'test;'
+            const linkType = 'test;';
             service.findLinkSources(id, linkType).subscribe((data) => {});
             const req = httpTestingController.expectOne(`${resourceUrl}/${id}/links/sources?typeKey=${linkType}`);
             req.flush({id: 123});

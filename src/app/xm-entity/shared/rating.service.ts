@@ -11,40 +11,40 @@ import { Rating } from './rating.model';
 @Injectable()
 export class RatingService {
 
-    private resourceUrl = SERVER_API_URL + 'entity/api/ratings';
-    private resourceSearchUrl = SERVER_API_URL + 'entity/api/_search/ratings';
+    private resourceUrl: string = SERVER_API_URL + 'entity/api/ratings';
+    private resourceSearchUrl: string = SERVER_API_URL + 'entity/api/_search/ratings';
 
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils) {
     }
 
-    create(rating: Rating): Observable<HttpResponse<Rating>> {
+    public create(rating: Rating): Observable<HttpResponse<Rating>> {
         const copy = this.convert(rating);
         return this.http.post<Rating>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Rating>) => this.convertResponse(res)));
     }
 
-    update(rating: Rating): Observable<HttpResponse<Rating>> {
+    public update(rating: Rating): Observable<HttpResponse<Rating>> {
         const copy = this.convert(rating);
         return this.http.put<Rating>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Rating>) => this.convertResponse(res)));
     }
 
-    find(id: number): Observable<HttpResponse<Rating>> {
+    public find(id: number): Observable<HttpResponse<Rating>> {
         return this.http.get<Rating>(`${this.resourceUrl}/${id}`, {observe: 'response'}).pipe(
             map((res: HttpResponse<Rating>) => this.convertResponse(res)));
     }
 
-    query(req?: any): Observable<HttpResponse<Rating[]>> {
+    public query(req?: any): Observable<HttpResponse<Rating[]>> {
         const options = createRequestOption(req);
         return this.http.get<Rating[]>(this.resourceUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Rating[]>) => this.convertArrayResponse(res)));
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
+    public delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 
-    search(req?: any): Observable<HttpResponse<Rating[]>> {
+    public search(req?: any): Observable<HttpResponse<Rating[]>> {
         const options = createRequestOption(req);
         return this.http.get<Rating[]>(this.resourceSearchUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Rating[]>) => this.convertArrayResponse(res)));

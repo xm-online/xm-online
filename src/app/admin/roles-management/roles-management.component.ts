@@ -1,32 +1,32 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiAlertService, JhiEventManager, JhiOrderByPipe } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Principal } from '../../shared/auth/principal.service';
 import { ITEMS_PER_PAGE } from '../../shared/constants/pagination.constants';
 import { Role } from '../../shared/role/role.model';
 import { RoleService } from '../../shared/role/role.service';
-import { RoleMgmtDialogComponent} from './roles-management-dialog.component';
-import { RoleMgmtDeleteDialogComponent} from './roles-management-delete-dialog.component';
+import { RoleMgmtDeleteDialogComponent } from './roles-management-delete-dialog.component';
+import { RoleMgmtDialogComponent } from './roles-management-dialog.component';
 
 @Component({
     selector: 'xm-roles-mgmt',
     templateUrl: './roles-management.component.html',
-    providers: [JhiOrderByPipe]
+    providers: [JhiOrderByPipe],
 })
 export class RolesMgmtComponent implements OnInit, OnDestroy {
 
-    roles: Role[];
-    rolesAll: Role[];
-    totalItems: any;
-    queryCount: any;
-    itemsPerPage: any;
-    previousPage: any;
-    page: any = 1;
-    predicate: any = 'roleKey';
-    reverse: any = true;
-    showLoader: boolean;
+    public roles: Role[];
+    public rolesAll: Role[];
+    public totalItems: any;
+    public queryCount: any;
+    public itemsPerPage: any;
+    public previousPage: any;
+    public page: any = 1;
+    public predicate: any = 'roleKey';
+    public reverse: any = true;
+    public showLoader: boolean;
     private eventSubscriber: Subscription;
 
     constructor(
@@ -41,22 +41,17 @@ export class RolesMgmtComponent implements OnInit, OnDestroy {
         this.registerChangeInRoles();
     }
 
-
-    ngOnInit() {
+    public ngOnInit(): void {
         this.principal.identity().then(() => {
             this.loadAll();
         });
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    private registerChangeInRoles() {
-        this.eventSubscriber = this.eventManager.subscribe('roleListModification', () => this.loadAll());
-    }
-
-    loadAll() {
+    public loadAll(): void {
         this.showLoader = true;
         this.roleService.getRoles()
             .subscribe(
@@ -74,11 +69,11 @@ export class RolesMgmtComponent implements OnInit, OnDestroy {
                     this.roles = this.getItemsByPage(this.page);
                 },
                 (res: Response) => this.onError(res),
-                () => this.showLoader = false
+                () => this.showLoader = false,
             );
     }
 
-    onLoadPage(page: number) {
+    public onLoadPage(page: number): void {
         if (page !== this.previousPage) {
             this.previousPage = page;
             this.roles = this.getItemsByPage(page);
@@ -86,14 +81,32 @@ export class RolesMgmtComponent implements OnInit, OnDestroy {
         }
     }
 
-    onTransition() {
+    public onTransition(): void {
         this.rolesAll = this.orderByPipe.transform(this.rolesAll, this.predicate, !this.reverse);
         this.roles = this.getItemsByPage(this.page);
     }
 
-    onChangePerPage() {
+    public onChangePerPage(): void {
         this.previousPage = null;
         this.onLoadPage(this.page);
+    }
+
+    public onAdd(): void {
+        this.modalService.open(RoleMgmtDialogComponent, {backdrop: 'static'});
+    }
+
+    public onEdit(role: string): void {
+        const modalRef = this.modalService.open(RoleMgmtDialogComponent, {backdrop: 'static'});
+        modalRef.componentInstance.selectedRole = role;
+    }
+
+    public onDelete(role: string): void {
+        const modalRef = this.modalService.open(RoleMgmtDeleteDialogComponent, {backdrop: 'static'});
+        modalRef.componentInstance.selectedRole = role;
+    }
+
+    private registerChangeInRoles(): void {
+        this.eventSubscriber = this.eventManager.subscribe('roleListModification', () => this.loadAll());
     }
 
     private getItemsByPage(page: number): Role[] {
@@ -102,25 +115,11 @@ export class RolesMgmtComponent implements OnInit, OnDestroy {
         return this.rolesAll.slice(startPos, endPos);
     }
 
-    private onError(resp) {
+    private onError(resp: any): void {
         try {
             const res = resp.body || {};
-            this.alertService.error(res.error_description, res.params)
+            this.alertService.error(res.error_description, res.params);
         } catch (e) {
         }
-    }
-
-    public onAdd() {
-        this.modalService.open(RoleMgmtDialogComponent, { backdrop: 'static' });
-    }
-
-    public onEdit(role) {
-        const modalRef = this.modalService.open(RoleMgmtDialogComponent, { backdrop: 'static' });
-        modalRef.componentInstance.selectedRole = role;
-    }
-
-    public onDelete(role) {
-        const modalRef = this.modalService.open(RoleMgmtDeleteDialogComponent, { backdrop: 'static' });
-        modalRef.componentInstance.selectedRole = role;
     }
 }

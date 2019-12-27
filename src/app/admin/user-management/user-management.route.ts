@@ -12,7 +12,7 @@ export class UserResolve implements CanActivate {
     constructor(private principal: Principal) {
     }
 
-    canActivate() {
+    public canActivate(): Promise<boolean> {
         return this.principal.identity().then((account) => this.principal.hasAnyAuthority(['ROLE_ADMIN']));
     }
 }
@@ -23,12 +23,12 @@ export class UserResolvePagingParams implements Resolve<any> {
     constructor(private paginationUtil: JhiPaginationUtil) {
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): { predicate: string; size: number; page: number; ascending: boolean } {
         const page = route.queryParams['page'] ? route.queryParams['page'] : '1';
         const sort = route.queryParams['sort'] ? route.queryParams['sort'] : 'id,asc';
         const size = route.queryParams.size && parseInt(route.queryParams.size, 10) || ITEMS_PER_PAGE;
         return {
-            size: size,
+            size,
             page: this.paginationUtil.parsePage(page),
             predicate: this.paginationUtil.parsePredicate(sort),
             ascending: this.paginationUtil.parseAscending(sort),
@@ -44,13 +44,13 @@ export const userMgmtRoute: Routes = [
                 path: '',
                 component: UserMgmtComponent,
                 resolve: {
-                    'pagingParams': UserResolvePagingParams
+                    pagingParams: UserResolvePagingParams,
                 },
                 data: {
                     privileges: {value: ['USER.GET_LIST']},
                     pageTitle: 'global.menu.admin.main',
-                    pageSubTitleTrans: 'global.menu.admin.userManagement'
-                }
+                    pageSubTitleTrans: 'global.menu.admin.userManagement',
+                },
             },
             {
                 path: 'user-management/:userKey',
@@ -58,9 +58,9 @@ export const userMgmtRoute: Routes = [
                 data: {
                     privileges: {value: ['USER.GET_LIST']},
                     pageTitle: 'global.menu.admin.main',
-                    pageSubTitleTrans: 'userManagement.detail.title'
-                }
-            }
-        ]
-    }
+                    pageSubTitleTrans: 'userManagement.detail.title',
+                },
+            },
+        ],
+    },
 ];

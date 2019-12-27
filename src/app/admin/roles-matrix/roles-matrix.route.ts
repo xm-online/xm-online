@@ -8,7 +8,7 @@ export const rolesMatrixRoute: Routes = [
         data: {
             privileges: {value: ['ROLE.MATRIX.GET']},
             pageTitle: 'global.menu.admin.main',
-            pageSubTitleTrans: 'global.menu.admin.rolesMatrix'
-        }
-    }
+            pageSubTitleTrans: 'global.menu.admin.rolesMatrix',
+        },
+    },
 ];

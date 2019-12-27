@@ -1,14 +1,14 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, Version, ViewChild } from '@angular/core';
-import { JsonSchemaFormService, removeRecursiveReferences, buildFormGroup } from 'angular2-json-schema-form';
 import { FormControl } from '@angular/forms';
-import { ReplaySubject ,  Subject } from 'rxjs';
 import { MatSelect, VERSION } from '@angular/material';
+import { buildFormGroup, JsonSchemaFormService, removeRecursiveReferences } from 'angular2-json-schema-form';
+import { ReplaySubject ,  Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { Principal } from '../../../auth/principal.service';
 import { I18nNamePipe } from '../../../language/i18n-name.pipe';
-import { ExtMultiSelectOptions } from './ext-multi-select-options.model';
 import { ExtSelectService } from '../ext-select/ext-select-service';
+import { ExtMultiSelectOptions } from './ext-multi-select-options.model';
 
 interface Element {
     label: any;
@@ -17,19 +17,19 @@ interface Element {
 
 @Component({
     selector: 'xm-ext-multi-select-widget',
-    templateUrl: 'ext-multi-select.component.html'
+    templateUrl: 'ext-multi-select.component.html',
 })
 export class ExtMultiSelectComponent implements OnInit, OnDestroy, AfterViewInit {
-    version: Version = VERSION;
+    public version: Version = VERSION;
 
     public elementMultiCtrl: any;
     public elementMultiFilterCtrl: FormControl = new FormControl();
     public filteredElementsMulti: ReplaySubject<Element[]> = new ReplaySubject<Element[]>(1);
-    @ViewChild('multiSelect', {static: false}) multiSelect: MatSelect;
-    @Input() layoutNode: any;
-    options: ExtMultiSelectOptions;
-    elements: any;
-    controlValue: any;
+    @ViewChild('multiSelect', {static: false}) public multiSelect: MatSelect;
+    @Input() public layoutNode: any;
+    public options: ExtMultiSelectOptions;
+    public elements: any;
+    public controlValue: any;
     private _onDestroy = new Subject<void>();
 
     constructor(private jsf: JsonSchemaFormService,
@@ -39,7 +39,7 @@ export class ExtMultiSelectComponent implements OnInit, OnDestroy, AfterViewInit
                 public principal: Principal) {
     }
 
-    ngOnInit() {
+    public ngOnInit() {
         this.options = this.layoutNode.options || {};
         const options: any = this.options;
         this.jsf.initializeControl(this);
@@ -47,11 +47,11 @@ export class ExtMultiSelectComponent implements OnInit, OnDestroy, AfterViewInit
         this.fetchData(options);
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit() {
         this.setInitialValue();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy() {
         this._onDestroy.next();
         this._onDestroy.complete();
     }
@@ -76,14 +76,14 @@ export class ExtMultiSelectComponent implements OnInit, OnDestroy, AfterViewInit
 
     private setSelected(cValue: any[]): any[] {
         const selectedVal = [];
-        this.elements.forEach(el => {
-            cValue.forEach(c => {
+        this.elements.forEach((el) => {
+            cValue.forEach((c) => {
                 if (el.value === c) {
                     selectedVal.push(el);
                 }
             });
         });
-        return selectedVal
+        return selectedVal;
     }
 
     private filterElementsMulti() {
@@ -98,7 +98,7 @@ export class ExtMultiSelectComponent implements OnInit, OnDestroy, AfterViewInit
             search = search.toLowerCase();
         }
         this.filteredElementsMulti.next(
-            this.elements.filter(e => e.value.toLowerCase().indexOf(search) > -1)
+            this.elements.filter((e) => e.value.toLowerCase().indexOf(search) > -1),
         );
     }
 
@@ -114,7 +114,7 @@ export class ExtMultiSelectComponent implements OnInit, OnDestroy, AfterViewInit
 
         this.elements = [];
         if (options.enum) {
-            options.enum.forEach(it => {
+            options.enum.forEach((it) => {
                 if (this.options.translations && this.options.translations[it]) {
                     this.elements.push({label: this.i18nNamePipe.transform(this.options.translations[it], this.principal), value: it});
                 } else {
@@ -123,18 +123,18 @@ export class ExtMultiSelectComponent implements OnInit, OnDestroy, AfterViewInit
                 this.initOptionList();
             });
         } else {
-            this.selectService.fetchData(this.options).subscribe(elements => {
+            this.selectService.fetchData(this.options).subscribe((elements) => {
                 this.elements = elements;
                 this.initOptionList();
                 this.changeDetectorRef.detectChanges();
-            }, error => {
+            }, (error) => {
                 console.error(error);
             });
         }
     }
 
-    updateValue(event) {
-        this.updateFormArrayComponent(event.value.map(e => e.value));
+    public updateValue(event) {
+        this.updateFormArrayComponent(event.value.map((e) => e.value));
         this.controlValue = event.value.value;
     }
 
@@ -154,4 +154,3 @@ export class ExtMultiSelectComponent implements OnInit, OnDestroy, AfterViewInit
         formArray.markAsDirty();
     }
 }
-

@@ -12,22 +12,22 @@ declare const MarkerClusterer: any;
 @Component({
     selector: 'xm-location-map-widget',
     templateUrl: './location-map-widget.component.html',
-    styleUrls: ['./location-map-widget.component.scss']
+    styleUrls: ['./location-map-widget.component.scss'],
 })
 export class LocationMapWidgetComponent implements OnInit {
 
-    mapId: string;
-    name: any;
-    config: any;
-    groups: any[];
-    currentGroup: any;
-    markerClusterer: any;
-    gMapApiReady$ = new BehaviorSubject<boolean>(false);
+    public mapId: string;
+    public name: any;
+    public config: any;
+    public groups: any[];
+    public currentGroup: any;
+    public markerClusterer: any;
+    public gMapApiReady$ = new BehaviorSubject<boolean>(false);
 
     constructor(private xmEntityService: XmEntityService) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.mapId = buildMapId('generalMap');
         this.name = this.config.name;
         this.groups = this.config.groups;
@@ -35,38 +35,38 @@ export class LocationMapWidgetComponent implements OnInit {
         this.initMap();
     }
 
-    showGroup(group) {
+    public showGroup(group): void {
         this.currentGroup = group;
         this.initMap();
     }
 
-    initMap() {
+    public initMap(): void {
         this.xmEntityService.search({
             query: this.currentGroup.query,
-            size: this.currentGroup.size ? this.currentGroup.size : 20
+            size: this.currentGroup.size ? this.currentGroup.size : 20,
         }).subscribe(
             (res: HttpResponse<XmEntity[]>) => {
                 this.gMapApiReady$
                     .pipe(
-                        filter(status => status === true)
+                        filter((status) => status === true),
                     )
-                    .subscribe(() => this.onShowMap(res.body))
+                    .subscribe(() => this.onShowMap(res.body));
             },
             (res: Response) =>
-                console.log('Error')
+                console.log('Error'),
         );
     }
 
-    onAfterGMapApiInit() {
+    public onAfterGMapApiInit(): void {
         this.gMapApiReady$.next(true);
     }
 
-    onShowMap(data: any[]) {
+    public onShowMap(data: any[]): void {
         if (this.markerClusterer) {
             this.markerClusterer.clearMarkers();
         }
         const mapOptions = {
-            scrollwheel: false
+            scrollwheel: false,
         };
 
         const bounds = new google.maps.LatLngBounds();
@@ -81,7 +81,7 @@ export class LocationMapWidgetComponent implements OnInit {
                     const loc = new google.maps.LatLng(location.latitude, location.longitude);
                     const marker = new google.maps.Marker({
                         position: loc,
-                        icon: buildPinSymbol(this.currentGroup.color)
+                        icon: buildPinSymbol(this.currentGroup.color),
                     });
 
                     markers.push(marker);
@@ -89,7 +89,7 @@ export class LocationMapWidgetComponent implements OnInit {
                     bounds.extend(loc);
 
                     const infowindow = new google.maps.InfoWindow({
-                        content: xmEntity.name
+                        content: xmEntity.name,
                     });
                     marker.addListener('click', function () {
                         infowindow.open(map, marker);
@@ -98,7 +98,7 @@ export class LocationMapWidgetComponent implements OnInit {
             }
         }
         this.markerClusterer = new MarkerClusterer(map, markers, {
-            imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+            imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
         });
         map.fitBounds(bounds);
         map.panToBounds(bounds);

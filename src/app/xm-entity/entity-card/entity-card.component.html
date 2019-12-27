@@ -1,7 +1,7 @@
-<div class="card" *ngIf="xmEntity && xmEntitySpec" [ngSwitch]="isAvatarEnabled">
+<div *ngIf="xmEntity && xmEntitySpec" [ngSwitch]="isAvatarEnabled" class="card">
   <div class="card-header card-header-icon card-header-primary text-left">
     <ng-container *ngSwitchCase="false">
-      <div class="card-icon" *ngIf="xmEntitySpec.icon">
+      <div *ngIf="xmEntitySpec.icon" class="card-icon">
         <i class="material-icons">{{xmEntitySpec.icon}}</i>
       </div>
     </ng-container>
@@ -9,12 +9,12 @@
   </div>
 
   <div class="card-menu">
-    <button mat-icon-button [matMenuTriggerFor]="actionItems">
+    <button [matMenuTriggerFor]="actionItems" mat-icon-button>
       <mat-icon>more_vert</mat-icon>
     </button>
 
     <mat-menu #actionItems="matMenu" xPosition="before">
-      <button class="btn-sm" mat-menu-item (click)="onRefresh($event)">
+      <button (click)="onRefresh($event)" class="btn-sm" mat-menu-item>
         <mat-icon>refresh</mat-icon>
         <span>{{'xm-entity.entity-list-card.refresh' | translate}}</span>
       </button>
@@ -30,13 +30,13 @@
 
   <div class="container-fluid text-left mt-3 mb-3">
     <div class="row">
-      <div class="col-auto text-center" *ngSwitchCase="true">
+      <div *ngSwitchCase="true" class="col-auto text-center">
         <div class="avatar-container-card">
           <img src="{{xmEntity.avatarUrl ? xmEntity.avatarUrl : './assets/img/placeholder.png'}}">
-          <i class="material-icons" *ngIf="xmEntitySpec.icon && !xmEntity.avatarUrl">{{xmEntitySpec.icon}}</i>
-          <button role="button"
+          <i *ngIf="xmEntitySpec.icon && !xmEntity.avatarUrl" class="material-icons">{{xmEntitySpec.icon}}</i>
+          <button (click)="onAvatarChangeClick()"
                   class="btn btn-sm btn-just-icon btn-round btn-icon edit-avatar"
-                  (click)="onAvatarChangeClick()">
+                  role="button">
             <mat-icon>edit</mat-icon>
           </button>
         </div>
@@ -44,28 +44,28 @@
 
       <div class="col flex-grow-1">
         <div *ngIf="xmEntity?.description">
-          <p class="description m-0" [innerHTML]="formatDescription(xmEntity.description)"></p>
+          <p [innerHTML]="formatDescription(xmEntity.description)" class="description m-0"></p>
         </div>
 
-        <div class="mt-3" *ngIf="xmEntitySpec?.ratings">
-          <xm-rating-list-section [xmEntityId]="xmEntity.id" [ratingSpecs]="xmEntitySpec?.ratings">
+        <div *ngIf="xmEntitySpec?.ratings" class="mt-3">
+          <xm-rating-list-section [ratingSpecs]="xmEntitySpec?.ratings" [xmEntityId]="xmEntity.id">
           </xm-rating-list-section>
         </div>
 
-        <div class="mt-3" *ngIf="xmEntitySpec?.tags">
-          <xm-tag-list-section [xmEntityId]="xmEntity.id" [tagSpecs]="xmEntitySpec?.tags"></xm-tag-list-section>
+        <div *ngIf="xmEntitySpec?.tags" class="mt-3">
+          <xm-tag-list-section [tagSpecs]="xmEntitySpec?.tags" [xmEntityId]="xmEntity.id"></xm-tag-list-section>
         </div>
       </div>
     </div>
 
     <xm-function-list-section
-      [xmEntity]="xmEntity"
-      [xmEntityId]="xmEntity.id"
+      *ngIf="xmEntity || (getNextStates()?.length || xmEntitySpec.functions)"
       [functionSpecs]="entityFunctionSpec"
       [nextStates]="getNextStates()"
       [stateSpec]="getState()"
+      [xmEntityId]="xmEntity.id"
       [xmEntitySpec]="xmEntitySpec"
-      *ngIf="xmEntity || (getNextStates()?.length || xmEntitySpec.functions)" >
+      [xmEntity]="xmEntity">
     </xm-function-list-section>
   </div>
 </div>

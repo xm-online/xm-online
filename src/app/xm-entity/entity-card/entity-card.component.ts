@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { JhiEventManager } from 'ng-jhipster';
+import { FunctionSpec, StateSpec } from '..';
 import { Principal } from '../../shared/auth/principal.service';
+import { XM_EVENT_LIST } from '../../xm.constants';
 import { AvatarDialogComponent } from '../avatar-dialog/avatar-dialog.component';
 import { XmEntitySpec } from '../shared/xm-entity-spec.model';
 import { XmEntity } from '../shared/xm-entity.model';
-import { JhiEventManager } from 'ng-jhipster';
-import { XM_EVENT_LIST } from '../../xm.constants';
-import { FunctionSpec } from '..';
 
 @Component({
     selector: 'xm-entity-card',
@@ -16,10 +16,10 @@ import { FunctionSpec } from '..';
 })
 export class EntityCardComponent implements OnInit {
 
-    @Input() xmEntity: XmEntity;
-    @Input() xmEntitySpec: XmEntitySpec;
+    @Input() public xmEntity: XmEntity;
+    @Input() public xmEntitySpec: XmEntitySpec;
 
-    isAvatarEnabled: boolean;
+    public isAvatarEnabled: boolean;
 
     constructor(
         protected modalService: NgbModal,
@@ -27,11 +27,29 @@ export class EntityCardComponent implements OnInit {
         protected eventManager: JhiEventManager,
     ) {}
 
-    ngOnInit() {
+    get commonFunctionSpec(): FunctionSpec[] {
+        return (this.xmEntitySpec && this.xmEntitySpec.functions) ?
+            this.xmEntitySpec
+                .functions
+                .filter((item) => !item.withEntityId)
+                .filter((item) => this.hasPrivilege(item))
+                .filter((item) => this.allowedByState(item)) : [];
+    }
+
+    get entityFunctionSpec(): FunctionSpec[] {
+        return (this.xmEntitySpec && this.xmEntitySpec.functions) ?
+            this.xmEntitySpec
+                .functions
+                .filter((item) => item.withEntityId)
+                .filter((item) => this.hasPrivilege(item))
+                .filter((item) => this.allowedByState(item, this.xmEntity.stateKey)) : [];
+    }
+
+    public ngOnInit(): void {
         this.isAvatarEnabled = this.xmEntitySpec.isAvatarEnabled ? this.xmEntitySpec.isAvatarEnabled : false;
     }
 
-    getCurrentStateSpec() {
+    public getCurrentStateSpec(): StateSpec {
         return this.xmEntitySpec.states &&
             this.xmEntitySpec.states.filter((s) => s.key === this.xmEntity.stateKey).shift();
     }
@@ -41,45 +59,27 @@ export class EntityCardComponent implements OnInit {
         modalRef.componentInstance.xmEntity = this.xmEntity;
     }
 
-    formatDescription(html) {
+    public formatDescription(html): string {
         return html ? html.replace(/\r\n|\r|\n/g, '<br />') : '';
     }
 
-    getState() {
+    public getState(): StateSpec {
         const states = this.xmEntitySpec.states;
-        return states ? states.filter(s => s.key === this.xmEntity.stateKey).shift() : null;
+        return states ? states.filter((s) => s.key === this.xmEntity.stateKey).shift() : null;
     }
 
-    getNextStates() {
+    public getNextStates(): unknown[] {
         const state = this.getState();
-        return state && state.next ? state.next.map(n => {
-            const nextState: any = this.xmEntitySpec.states.filter(s => s.key === n.stateKey).shift();
+        return state && state.next ? state.next.map((n) => {
+            const nextState: any = this.xmEntitySpec.states.filter((s) => s.key === n.stateKey).shift();
             // TODO: fix potencial undefined
             nextState.actionName = n.name;
             return nextState;
         }) : null;
     }
 
-    onRefresh(e) {
+    public onRefresh(e): void {
         this.eventManager.broadcast({name: XM_EVENT_LIST.XM_ENTITY_DETAIL_MODIFICATION});
-    }
-
-    get commonFunctionSpec(): FunctionSpec[] {
-        return (this.xmEntitySpec && this.xmEntitySpec.functions) ?
-            this.xmEntitySpec
-                .functions
-                .filter(item => !item.withEntityId)
-                .filter(item => this.hasPrivilege(item))
-                .filter(item => this.allowedByState(item)) : [];
-    }
-
-    get entityFunctionSpec(): FunctionSpec[] {
-        return (this.xmEntitySpec && this.xmEntitySpec.functions) ?
-            this.xmEntitySpec
-                .functions
-                .filter(item => item.withEntityId)
-                .filter(item => this.hasPrivilege(item))
-                .filter(item => this.allowedByState(item, this.xmEntity.stateKey)) : [];
     }
 
     protected allowedByState(functionSpec: FunctionSpec, stateKey?: string): boolean {

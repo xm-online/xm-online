@@ -15,19 +15,19 @@ const _TERMS_ERROR = 'needAcceptTermsOfConditions';
  * @type {{XM_REGISTRATION: string; XM_USER_LIST_MODIFICATION: string}}
  * @private
  */
-enum _XM_EVENT_LIST  {
-  XM_REGISTRATION = 'xmRegistration',
-  XM_SUCCESS_AUTH = 'authenticationSuccess',
-  XM_UNAUTHORIZED = 'xm.unauthorized',
-  XM_LOGOUT = 'xm.logout',
-  XM_CHANGE_LANGUAGE = 'changeLanguage',
-  XM_DASHBOARD_LIST_MODIFICATION = 'dashboardListModification',
-  XM_USER_LIST_MODIFICATION = 'userListModification',
-  XM_FUNCTION_CALL_SUCCESS = 'xm.functionCall.success',
-  XM_ENTITY_DETAIL_MODIFICATION = 'xmEntityDetailModification',
-  XM_REFRESH_TIMELINE = XM_ENTITY_DETAIL_MODIFICATION,
-  XM_ATTACHMENT_LIST_MODIFICATION = 'attachmentListModification',
-  XM_ENTITY_LIST_MODIFICATION = 'xmEntityListModification',
+enum _XM_EVENT_LIST {
+    XM_REGISTRATION = 'xmRegistration',
+    XM_SUCCESS_AUTH = 'authenticationSuccess',
+    XM_UNAUTHORIZED = 'xm.unauthorized',
+    XM_LOGOUT = 'xm.logout',
+    XM_CHANGE_LANGUAGE = 'changeLanguage',
+    XM_DASHBOARD_LIST_MODIFICATION = 'dashboardListModification',
+    XM_USER_LIST_MODIFICATION = 'userListModification',
+    XM_FUNCTION_CALL_SUCCESS = 'xm.functionCall.success',
+    XM_ENTITY_DETAIL_MODIFICATION = 'xmEntityDetailModification',
+    XM_REFRESH_TIMELINE = XM_ENTITY_DETAIL_MODIFICATION,
+    XM_ATTACHMENT_LIST_MODIFICATION = 'attachmentListModification',
+    XM_ENTITY_LIST_MODIFICATION = 'xmEntityListModification',
 }
 
 export const VERSION = _VERSION;

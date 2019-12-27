@@ -4,7 +4,7 @@ export class UserLogin {
         public typeKey?: string,
         public stateKey?: string,
         public login?: string,
-        public removed?: boolean
+        public removed?: boolean,
     ) {
     }
 }

@@ -20,7 +20,7 @@ export class XmConfigService {
     constructor(
         private http: HttpClient,
         private modulesLangHelper: ModulesLanguageHelper,
-        private appConfig: XmApplicationConfigService
+        private appConfig: XmApplicationConfigService,
     ) {
     }
 
@@ -28,108 +28,108 @@ export class XmConfigService {
         return {headers: new HttpHeaders({'Content-Type': 'text/plain'})};
     }
 
-    validateTimelineSpec(configContent: string): Observable<any> {
+    public validateTimelineSpec(configContent: string): Observable<any> {
         return this.http.post('timeline/api/timelines/properties/validate', configContent, this.headers()).pipe(
-            map((res: any) => { return res; }));
+            map((res: any) => res));
     }
 
-    updateTimelineSpec(configContent: string): Observable<any> {
+    public updateTimelineSpec(configContent: string): Observable<any> {
         return this.http.post('timeline/api/timelines/properties', configContent, this.headers()).pipe(
-            map((res: any) => { return res; }));
+            map((res: any) => res));
     }
 
-    updateXmEntitySpec(configContent: string): Observable<any> {
+    public updateXmEntitySpec(configContent: string): Observable<any> {
         return this.http.post('entity/api/xm-entity-specs', configContent, this.headers()).pipe(
-            map((res: any) => { return res; }));
+            map((res: any) => res));
     }
 
-    updateConfig(configPath: string, configContent: string): Observable<any> {
+    public updateConfig(configPath: string, configContent: string): Observable<any> {
         return this.http.put(this.configUrl + configPath, configContent, this.headers()).pipe(
-            map((res: any) => { return res; }));
+            map((res: any) => res));
     }
 
-    updateTenantSpec(configPath: string, configContent: string): Observable<any> {
+    public updateTenantSpec(configPath: string, configContent: string): Observable<any> {
         return this.http.put(this.configUrl + configPath, configContent, this.headers()).pipe(
-            map((res: any) => { return res; }));
+            map((res: any) => res));
     }
 
-    getConfig(configPath: string): Observable<string> {
+    public getConfig(configPath: string): Observable<string> {
         return this.http.get(this.configUrl + configPath, {responseType: 'text'}).pipe(
-            map((res: any) => { return res; }));
+            map((res: any) => res));
     }
 
-    getPasswordConfig(): Observable<string> {
+    public getPasswordConfig(): Observable<string> {
         return this.http.get(this.uaaPasswordConfigUrl, {responseType: 'text'}).pipe(
-            map((res: any) => { return res; }));
+            map((res: any) => res));
     }
 
-    getUiConfigData() {
+    public getUiConfigData() {
         if (this.uiConfig) {
             this.uiConfigState.next(this.uiConfig);
         } else {
-            this.getConfigJson('/webapp/settings-public.yml?toJson').subscribe(uiConfig => {
+            this.getConfigJson('/webapp/settings-public.yml?toJson').subscribe((uiConfig) => {
                 this.uiConfigState.next(this.uiConfig = uiConfig);
                 this.uiConfigState.complete();
             });
         }
     }
 
-    getUiConfig(): Observable<any> {
+    public getUiConfig(): Observable<any> {
         return of(this.appConfig.getAppConfig());
     }
 
-    getConfigJson(configPath: string): Observable<any> {
+    public getConfigJson(configPath: string): Observable<any> {
         return this.http.get(this.configUrl + configPath).pipe(
-            map((res: any) => { return res; }));
+            map((res: any) => res));
     }
 
-    getLoginsSpec(): Observable<any> {
+    public getLoginsSpec(): Observable<any> {
         return this.http.get('uaa/api/logins').pipe(
-            map((res: any) => { return res; }));
+            map((res: any) => res));
     }
 
-    validateLoginsSpec(configContent: string): Observable<any> {
+    public validateLoginsSpec(configContent: string): Observable<any> {
         return this.http.post('uaa/api/logins/validate', configContent, this.headers()).pipe(
-            map((res: any) => { return res; }));
+            map((res: any) => res));
     }
 
-    updateLoginsSpec(configContent: string): Observable<any> {
+    public updateLoginsSpec(configContent: string): Observable<any> {
         return this.http.post('uaa/api/logins', configContent, this.headers()).pipe(
-            map((res: any) => { return res; }));
+            map((res: any) => res));
     }
 
-    validateUaaSpec(configContent: string) {
+    public validateUaaSpec(configContent: string) {
         return this.http.post('uaa/api/uaa/properties/validate', configContent, this.headers()).pipe(
-            map((res: any) => { return res; }));
+            map((res: any) => res));
     }
 
-    updateUaaSpec(configContent: string) {
+    public updateUaaSpec(configContent: string) {
         return this.http.post('uaa/api/uaa/properties', configContent, this.headers()).pipe(
-            map((res: any) => { return res; }));
+            map((res: any) => res));
     }
 
-    reindexTenantElastic() {
+    public reindexTenantElastic() {
         return this.http.post(this.elasticReindexUrl, {});
     }
 
-    updateTenantsConfig(): Observable<any> {
+    public updateTenantsConfig(): Observable<any> {
         // TODO Fix method to return JSON
         return this.http.post(this.configMaintenanceUrl + '/refresh', {});
     }
 
-    updateTenantConfig(): Observable<any> {
+    public updateTenantConfig(): Observable<any> {
         // TODO Fix method to return JSON
         return this.http.post(this.configUrl + '/refresh', {});
     }
 
-    mapPasswordSettings(config?: any): PasswordSpec {
+    public mapPasswordSettings(config?: any): PasswordSpec {
         const DEFAULT_SETTINGS = {
             minLength: 4,
             maxLength: 50,
             pattern: '',
             patternMessage: null,
         };
-        if (!config) {return DEFAULT_SETTINGS}
+        if (!config) {return DEFAULT_SETTINGS; }
         const CONFIG_PARSED = JSON.parse(config);
         if (CONFIG_PARSED && CONFIG_PARSED.passwordSettings) {
             const CONFIG: PasswordSpec = CONFIG_PARSED.passwordSettings;
@@ -137,14 +137,14 @@ export class XmConfigService {
                 minLength: CONFIG.minLength || 4,
                 maxLength: CONFIG.maxLength || 50,
                 pattern: CONFIG.pattern || '',
-                patternMessage: CONFIG.patternMessage || null
+                patternMessage: CONFIG.patternMessage || null,
             };
         } else {
             return DEFAULT_SETTINGS;
         }
     }
 
-    updatePatternMessage(message: any, currentLang?: string): string {
+    public updatePatternMessage(message: any, currentLang?: string): string {
         const lang = currentLang ? currentLang : this.modulesLangHelper.getLangKey();
         return message[lang] || message;
     }

@@ -7,6 +7,6 @@ export const maintenanceRoute: Route = {
     data: {
         privileges: {value: ['ELASTICSEARCH.INDEX', 'CONFIG.ADMIN.REFRESH', 'CONFIG.CLIENT.REFRESH']},
         pageTitle: 'global.menu.admin.main',
-        pageSubTitleTrans: 'global.menu.admin.maintenance'
-    }
+        pageSubTitleTrans: 'global.menu.admin.maintenance',
+    },
 };

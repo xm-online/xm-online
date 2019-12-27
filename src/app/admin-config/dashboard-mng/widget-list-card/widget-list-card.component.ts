@@ -13,9 +13,9 @@ import { BaseAdminConfigListComponent } from '../../base-admin-config-list.compo
 import { WidgetDetailDialogComponent } from '../widget-detail-dialog/widget-detail-dialog.component';
 
 @Component({
-  selector: 'xm-widget-list-card',
-  templateUrl: './widget-list-card.component.html',
-  styleUrls: ['./widget-list-card.component.scss'],
+    selector: 'xm-widget-list-card',
+    templateUrl: './widget-list-card.component.html',
+    styleUrls: ['./widget-list-card.component.scss'],
 })
 export class WidgetListCardComponent extends BaseAdminConfigListComponent implements OnInit {
 
@@ -55,7 +55,7 @@ export class WidgetListCardComponent extends BaseAdminConfigListComponent implem
             });
     }
 
-    public trackIdentity(index: number | string, item:  XmEntity): number {
+    public trackIdentity(index: number | string, item: XmEntity): number {
         return item.id;
     }
 

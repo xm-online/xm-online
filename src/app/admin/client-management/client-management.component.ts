@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { finalize } from 'rxjs/operators';
 
 import { Client, ClientService } from '../../shared';
 import { BaseAdminListComponent } from '../admin.service';
 import { ClientMgmtDeleteDialogComponent } from './client-management-delete-dialog.component';
 import { ClientMgmtDialogComponent } from './client-management-dialog.component';
-import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'xm-client-mgmt',
@@ -15,10 +15,10 @@ import { finalize } from 'rxjs/operators';
 })
 export class ClientMgmtComponent extends BaseAdminListComponent {
 
-    list: Client[];
-    eventModify = 'clientListModification';
-    navigateUrl = 'administration/client-management';
-    basePredicate = 'lastModifiedDate';
+    public list: Client[];
+    public eventModify: string = 'clientListModification';
+    public navigateUrl: string = 'administration/client-management';
+    public basePredicate: string = 'lastModifiedDate';
     public clientId: string;
 
     constructor(
@@ -34,7 +34,7 @@ export class ClientMgmtComponent extends BaseAdminListComponent {
         this.itemsPerPage = 10;
     }
 
-    loadAll() {
+    public loadAll(): void {
         this.showLoader = true;
         this.clientService.query({
             page: this.page - 1,
@@ -50,7 +50,7 @@ export class ClientMgmtComponent extends BaseAdminListComponent {
             () => this.showLoader = false);
     }
 
-    trackIdentity(index, item: Client) {
+    public trackIdentity(_index: any, item: Client): any {
         return item.id;
     }
 
@@ -73,18 +73,18 @@ export class ClientMgmtComponent extends BaseAdminListComponent {
         this.loadClientsById(this.clientId);
     }
 
-    public onDelete(client) {
-        const modalRef = this.modalService.open(ClientMgmtDeleteDialogComponent, { backdrop: 'static' });
+    public onDelete(client: any): void {
+        const modalRef = this.modalService.open(ClientMgmtDeleteDialogComponent, {backdrop: 'static'});
         modalRef.componentInstance.selectedClient = client;
     }
 
-    public onEdit(client) {
-        const modalRef = this.modalService.open(ClientMgmtDialogComponent, { backdrop: 'static' });
+    public onEdit(client: any): void {
+        const modalRef = this.modalService.open(ClientMgmtDialogComponent, {backdrop: 'static'});
         modalRef.componentInstance.selectedClient = client;
     }
 
-    public onAdd() {
-        this.modalService.open(ClientMgmtDialogComponent, { backdrop: 'static' });
+    public onAdd(): void {
+        this.modalService.open(ClientMgmtDialogComponent, {backdrop: 'static'});
     }
 
     private loadClientsById(clientId: string): void {
@@ -98,13 +98,13 @@ export class ClientMgmtComponent extends BaseAdminListComponent {
         })
             .pipe(finalize(() => this.showLoader = false))
             .subscribe(
-            (res) => {
-                this.list = [];
-                this.list = this.onSuccess(res.body, res.headers);
-            },
-            (err) => {
-                this.onError(err);
-                this.showLoader = false;
-            });
+                (res) => {
+                    this.list = [];
+                    this.list = this.onSuccess(res.body, res.headers);
+                },
+                (err) => {
+                    this.onError(err);
+                    this.showLoader = false;
+                });
     }
 }

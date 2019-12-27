@@ -27,11 +27,10 @@ export class ExtSelectService {
     constructor(
         private http: HttpClient,
         private principal: Principal,
-        private i18nNamePipe: I18nNamePipe
+        private i18nNamePipe: I18nNamePipe,
     ) {}
 
-
-    fetchData(options: ExtSelectOptions) {
+    public fetchData(options: ExtSelectOptions) {
         return this.http.get(options.url, {observe: 'response'}).pipe(
             map((response: HttpResponse<any>) => {
                 const json = response.body;
@@ -39,14 +38,14 @@ export class ExtSelectService {
             }));
     }
 
-    mapArrayToView(object: any, options: ExtSelectOptions) {
+    public mapArrayToView(object: any, options: ExtSelectOptions) {
         let array = object;
         if (options.arrayField) {
             array = ExtSelectService.byString(object, options.arrayField);
         }
         array = array ? array : [];
         let elements = [];
-        array.forEach(e => {
+        array.forEach((e) => {
             let label = e;
             let value = e;
             if (options.labelField) {
@@ -57,9 +56,9 @@ export class ExtSelectService {
                 value = ExtSelectService.byString(value, options.valueField);
             }
             elements.push({
-                label: label,
-                value: value,
-                object: e
+                label,
+                value,
+                object: e,
             });
         });
         elements = elements.sort((a, b) => {
@@ -76,7 +75,7 @@ export class ExtSelectService {
         return elements;
     }
 
-    nullSafeLabel(x) {
+    public nullSafeLabel(x) {
         return x ? '' + x.label ? '' + x.label : '' : '';
     }
 

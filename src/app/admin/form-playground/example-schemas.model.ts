@@ -1,4 +1,4 @@
-export const Examples = {
+export const EXAMPLES = {
     schemas: [
         {name: 'XMData', file: 'ng2jsf-xm-layout'},
         {name: 'Flexbox layout', file: 'ng2jsf-flex-layout'},
@@ -14,7 +14,7 @@ export const Examples = {
         {name: 'Complex Key Support', file: 'asf-complex-key-support'},
         {name: 'Array', file: 'asf-array'},
         {name: 'Tab Array', file: 'asf-tab-array'},
-        {name: 'TitleMap Examples', file: 'asf-titlemap-examples'},
+        {name: 'TitleMap EXAMPLES', file: 'asf-titlemap-examples'},
         {name: 'Kitchen Sink', file: 'asf-kitchen-sink'},
         {name: 'Hack: Conditional Required', file: 'asf-hack-conditional-required'},
         {name: 'Simple', file: 'rjsf-simple'},
@@ -219,5 +219,5 @@ export const Examples = {
             file: 'jsf-previousvalues-multidimensional',
             urlParameters: '?example=previousvalues-multidimensional',
         },
-    ]
+    ],
 };

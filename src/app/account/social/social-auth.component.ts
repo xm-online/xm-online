@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CookieService } from 'angular2-cookie/core';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
@@ -7,7 +8,6 @@ import { AuthService, LoginComponent, LoginService } from '../../shared';
 import { StateStorageService } from '../../shared/auth/state-storage.service';
 import { XmConfigService } from '../../shared/spec/config.service';
 import { XM_EVENT_LIST } from '../../xm.constants';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 const SOCIAL_AUTH = 'social-authentication';
 
@@ -39,7 +39,7 @@ export class SocialAuthComponent extends LoginComponent implements OnInit {
         );
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const token = this.cookieService.get(SOCIAL_AUTH);
         if (token) {
             this.loginService.loginWithToken(token, false).then(() => {

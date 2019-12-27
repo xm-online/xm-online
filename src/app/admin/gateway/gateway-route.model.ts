@@ -4,6 +4,6 @@ export class GatewayRoute {
         public serviceId: string,
         public serviceInstances: any[],
         public serviceInstancesStatus: any,
-        public serviceMetadata: any
+        public serviceMetadata: any,
     ) { }
 }

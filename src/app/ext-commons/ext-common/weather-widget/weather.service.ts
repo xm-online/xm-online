@@ -1,6 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 declare let escape: any;
@@ -9,12 +9,12 @@ declare let parseInt: any;
 @Injectable()
 export class WeatherService {
 
-    private WEATHER_URL = 'https://query.yahooapis.com/v1/public/yql?q=';
+    private WEATHER_URL: string = 'https://query.yahooapis.com/v1/public/yql?q=';
 
     constructor(private http: HttpClient) {
     }
 
-    get(location: string = 'Kyiv'): Observable<Response> {
+    public get(location: string = 'Kyiv'): Observable<Response> {
         const query = escape('select * from weather.forecast where woeid in' +
             `(select woeid from geo.places(1) where text='${location}') and u='c'`);
         return this.http.jsonp(this.WEATHER_URL + `${query}&format=json`, 'callback').pipe(map((data: any) => {

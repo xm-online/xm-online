@@ -35,7 +35,7 @@ export class ActivateComponent implements OnInit {
     }
 
     public register(): void {
-        this.router.navigate([''], { queryParams: { type: 'registration' } });
+        this.router.navigate([''], {queryParams: {type: 'registration'}});
     }
 
 }

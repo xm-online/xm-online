@@ -35,10 +35,10 @@ export class FindLanguageFromKeyPipe implements PipeTransform {
         'tr': { name: 'Türkçe' },
         'vi': { name: 'Tiếng Việt' },
         'zh-cn': { name: '中文（简体）' },
-        'zh-tw': { name: '繁體中文' }
+        'zh-tw': { name: '繁體中文' },
         // jhipster-needle-i18n-language-key-pipe - JHipster will add/remove languages in this object
     };
-    transform(lang: string): string {
+    public transform(lang: string): string {
         return this.languages[lang].name;
     }
 }

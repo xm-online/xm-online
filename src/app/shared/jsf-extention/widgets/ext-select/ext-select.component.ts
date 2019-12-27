@@ -143,10 +143,10 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     public updateValue(event: any): void {
-        const item = this.elements.filter(e => e.value === event.value.value)[0];
+        const item = this.elements.filter((e) => e.value === event.value.value)[0];
         const fg: FormGroup = this.jsf.formGroup;
         if (this.options.relatedFields) {
-            this.options.relatedFields.forEach(field => {
+            this.options.relatedFields.forEach((field) => {
                 fg.get(field.key).setValue(ExtSelectService.byString(item.object, field.value));
             });
         }

@@ -1,4 +1,4 @@
-<div class="card" *ngIf="jsfAttributes?.schema">
+<div *ngIf="jsfAttributes?.schema" class="card">
   <div *ngIf="jsfAttributes?.entity?.formHeaderTitle &&
               jsfAttributes?.entity?.formHeaderIconName; then
               hasHeaderConfig else
@@ -6,17 +6,17 @@
   </div>
 
   <div class="card-body min-height">
-  <xm-loader [showLoader]="showLoader"></xm-loader>
-    <json-schema-form [framework]="'material-design'"
-                      [schema]="jsfAttributes.schema"
-                      [layout]="jsfAttributes.layout | i18nJsf :principal"
-                      [form]="jsfAttributes.form | i18nJsf :principal"
-                      [data]="jsfAttributes.data"
-                      [options]="jsfAttributes.options | i18nJsf :principal"
-                      [widgets]="jsfAttributes.widgets"
-                      (formLayout)="jsfAttributes.formLayout"
+    <xm-loader [showLoader]="showLoader"></xm-loader>
+    <json-schema-form (formLayout)="jsfAttributes.formLayout"
                       (onSubmit)="onSubmitForm($event)"
-                      *ngIf="jsfAttributes?.schema">
+                      *ngIf="jsfAttributes?.schema"
+                      [data]="jsfAttributes.data"
+                      [form]="jsfAttributes.form | i18nJsf :principal"
+                      [framework]="'material-design'"
+                      [layout]="jsfAttributes.layout | i18nJsf :principal"
+                      [options]="jsfAttributes.options | i18nJsf :principal"
+                      [schema]="jsfAttributes.schema"
+                      [widgets]="jsfAttributes.widgets">
     </json-schema-form>
   </div>
 </div>

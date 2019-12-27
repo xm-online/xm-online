@@ -1,43 +1,46 @@
-<nav class="navbar navbar-transparent navbar-absolute top-0" [ngSwitch]="isAuthenticated()">
+<nav [ngSwitch]="isAuthenticated()" class="navbar navbar-transparent navbar-absolute top-0">
   <div class="container-fluid">
     <div class="col-sm-12">
       <div class="xm-navbar-container">
         <div class="navbar-container-part xm-nav-logo">
           <a [routerLink]="isAuthenticated() ? '/dashboard' : '/'"
              class="row flex-nowrap no-gutters align-items-center">
-            <span class="col" *ngIf="tenantLogoUrl"><img [src]="tenantLogoUrl"/></span>
+            <span *ngIf="tenantLogoUrl" class="col"><img [src]="tenantLogoUrl"/></span>
             <span class="col-auto"><strong class="logo-text">{{tenantName}}</strong></span>
           </a>
         </div>
 
         <div class="navbar-minimize navbar-container-part drawer-toggle">
-          <button mat-raised-button id="minimizeSidebar" class="btn btn-round btn-white btn-fill btn-just-icon">
+          <button class="btn btn-round btn-white btn-fill btn-just-icon" id="minimizeSidebar" mat-raised-button>
             <i class="material-icons visible-on-sidebar-regular">more_vert</i>
             <i class="material-icons visible-on-sidebar-mini">view_list</i>
           </button>
         </div>
 
         <div class="navbar-container-part">
-          <button mat-raised-button
+          <button (click)="onBack()"
                   *ngSwitchCase="true"
                   class="btn btn-round btn-white btn-fill btn-just-icon pull-left btn-back"
-                  (click)="onBack()">
+                  mat-raised-button>
             <i class="material-icons">arrow_back</i>
           </button>
         </div>
 
-        <div class="navbar-container-part title-part" *ngIf="routeData && title" [title]="title" [innerHTML]="titleContent"></div>
+        <div *ngIf="routeData && title"
+             [innerHTML]="titleContent"
+             [title]="title"
+             class="navbar-container-part title-part"></div>
 
-        <div class="navbar-container-part search-part" *ngIf="isMobileMenu()">
+        <div *ngIf="isMobileMenu()" class="navbar-container-part search-part">
           <form *ngSwitchCase="true" class="navbar-form navbar-right" role="search">
             <div class="input-group no-border">
-              <input #searchBox type="text" class="form-control search-input"
-                     xmInputPattern [regexp]="searchMask"
-                     placeholder="{{ 'navbar.search' | translate }}">
-              <button mat-raised-button
-                      type="submit"
+              <input #searchBox [regexp]="searchMask" class="form-control search-input"
+                     placeholder="{{ 'navbar.search' | translate }}" type="text"
+                     xmInputPattern>
+              <button (click)="search(searchBox.value)"
                       class="btn btn-white btn-round btn-just-icon"
-                      (click)="search(searchBox.value)">
+                      mat-raised-button
+                      type="submit">
                 <i class="material-icons">search</i>
                 <div class="ripple-container"></div>
               </button>
@@ -45,23 +48,24 @@
           </form>
         </div>
 
-        <div class="navbar-container-part notifications-part show" *ngIf="isMobileMenu()">
+        <div *ngIf="isMobileMenu()" class="navbar-container-part notifications-part show">
           <xm-notifications *ngSwitchCase="true"></xm-notifications>
         </div>
 
-        <div class="navbar-container-part langs-part" *ngSwitchCase="false">
+        <div *ngSwitchCase="false" class="navbar-container-part langs-part">
           <ul class="navbar-nav navbar-right xm-langs-chooser">
             <li class="dropdown">
-              <button mat-raised-button class="btn btn-icon btn-just-icon btn-link nav-link"
-                 id="navbarLanguageMenuLink"
-                 data-toggle="dropdown"
-                 aria-haspopup="true"
-                 aria-expanded="false">
+              <button aria-expanded="false" aria-haspopup="true"
+                      class="btn btn-icon btn-just-icon btn-link nav-link"
+                      data-toggle="dropdown"
+                      id="navbarLanguageMenuLink"
+                      mat-raised-button>
                 <i class="material-icons">language</i>
               </button>
-              <div class="dropdown-menu dropdown-menu-right langs-drop-container" aria-labelledby="navbarDropdownMenuLink">
+              <div aria-labelledby="navbarDropdownMenuLink"
+                   class="dropdown-menu dropdown-menu-right langs-drop-container">
                 <ng-container *ngFor="let language of languages">
-                  <a href="javascript: void(0);" class="dropdown-item" (click)="changeLanguage(language);">
+                  <a (click)="changeLanguage(language);" class="dropdown-item" href="javascript: void(0);">
                     {{language | findLanguageFromKey}}
                   </a>
                 </ng-container>
@@ -71,10 +75,10 @@
         </div>
 
         <div class="navbar-container-part sidbar-toggle">
-          <button mat-raised-button
+          <button (click)="sidebarToggle()"
                   class="navbar-toggler btn btn-icon btn-just-icon btn-link btn-no-ripple"
-                  type="button"
-                  (click)="sidebarToggle()">
+                  mat-raised-button
+                  type="button">
             <span class="sr-only">Toggle navigation</span>
             <span class="navbar-toggler-icon icon-bar"></span>
             <span class="navbar-toggler-icon icon-bar"></span>

@@ -7,13 +7,12 @@ export class RegisterService {
 
     constructor(private http: HttpClient) {}
 
-    save(account: any): Observable<any> {
+    public save(account: any): Observable<any> {
         return this.http.post('uaa/api/register', account);
     }
 
-    isCaptchaNeed(): Observable<any> {
+    public isCaptchaNeed(): Observable<any> {
         return this.http.get('uaa/api/is-captcha-need');
     }
-
 
 }

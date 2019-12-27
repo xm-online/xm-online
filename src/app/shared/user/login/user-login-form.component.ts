@@ -20,13 +20,13 @@ export class UserLoginFormComponent implements OnChanges {
     @Input()
     private user: User;
     @Input()
-    isUser: Boolean = false;
+    public isUser: boolean = false;
     @Input()
-    isCreate: Boolean = false;
+    public isCreate: boolean = false;
 
-    isSaving: Boolean;
-    userLogins: any = [];
-    success: Boolean;
+    public isSaving: boolean;
+    public userLogins: any = [];
+    public success: boolean;
 
     constructor(private activeModal: NgbActiveModal,
                 private userService: UserService,
@@ -36,11 +36,11 @@ export class UserLoginFormComponent implements OnChanges {
                 private userLoginService: UserLoginService) {
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes: SimpleChanges): void {
         this.reload();
     }
 
-    isSubmitValid(editForm: NgForm): boolean {
+    public isSubmitValid(editForm: NgForm): boolean {
         for (const key in editForm.value) {
             if (editForm.value[key]) {
                 return true;
@@ -49,13 +49,13 @@ export class UserLoginFormComponent implements OnChanges {
         return false;
     }
 
-    clear() {
+    public clear(): void {
         if (this.isUser && !this.isCreate) {
             this.activeModal.dismiss('cancel');
         }
     }
 
-    save() {
+    public save(): void {
         if (this.isCreate) {
             return;
         }
@@ -70,20 +70,20 @@ export class UserLoginFormComponent implements OnChanges {
         }
     }
 
-    createLogins() {
+    public createLogins(): void {
         this.user.logins = [];
         this.userLogins.filter((login) => login.value).forEach((login) => {
             this.user.logins.push(new UserLogin(login.id, login.key, null, login.value, false));
         });
     }
 
-    private reload() {
+    private reload(): void {
         this.isSaving = false;
         this.userLogins = [];
 
         this.userLoginService.getAllLogins().then((allLogins) => {
             Object.keys(allLogins).forEach((typeKey) => {
-                this.userLogins.push({'key': typeKey, 'name': this.userLoginService.getName(typeKey)});
+                this.userLogins.push({key: typeKey, name: this.userLoginService.getName(typeKey)});
             });
             if (this.user.logins) {
                 this.user.logins.forEach((login) => {
@@ -97,7 +97,7 @@ export class UserLoginFormComponent implements OnChanges {
         });
     }
 
-    private onSaveSuccess(result) {
+    private onSaveSuccess(result): void {
         this.isSaving = false;
         this.success = true;
         if (this.isUser) {
@@ -111,7 +111,7 @@ export class UserLoginFormComponent implements OnChanges {
         }
     }
 
-    private onSaveError() {
+    private onSaveError(): void {
         this.isSaving = false;
         this.success = false;
     }

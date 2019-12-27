@@ -3,19 +3,19 @@ import { JhiAlertService } from 'ng-jhipster';
 
 @Component({
     selector: 'xm-alerts',
-    templateUrl: './xm-alerts.component.html'
+    templateUrl: './xm-alerts.component.html',
 })
 export class JhiAlertComponent implements OnInit, OnDestroy {
-    alerts: any[];
+    public alerts: any[];
 
     constructor(private alertService: JhiAlertService) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.alerts = this.alertService.get();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.alerts = [];
     }
 }

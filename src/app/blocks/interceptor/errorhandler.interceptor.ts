@@ -11,7 +11,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
                 private contextService: ContextService) {
     }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(tap(
             (event: HttpEvent<any>) => {
             },
@@ -20,11 +20,10 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
                     if (!(err.status === 401 && (err.message === '' || (err.url && err.url.includes('/api/account'))))) {
                         // TODO: this is workaround to get eventManager from root injector
                         this.eventManager = this.contextService ? this.contextService.eventManager : this.eventManager;
-                        this.eventManager.broadcast({name: 'xm.httpError', content: err, request: request});
+                        this.eventManager.broadcast({name: 'xm.httpError', content: err, request});
                     }
                 }
-            }
+            },
         ));
     }
 }
-

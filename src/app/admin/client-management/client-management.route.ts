@@ -10,7 +10,7 @@ export class ClientResolvePagingParams implements Resolve<any> {
     constructor(private paginationUtil: JhiPaginationUtil) {
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
         const page = route.queryParams['page'] ? route.queryParams['page'] : '1';
         const sort = route.queryParams['sort'] ? route.queryParams['sort'] : 'lastModifiedDate,asc';
         return {

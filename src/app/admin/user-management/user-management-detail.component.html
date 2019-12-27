@@ -1,6 +1,6 @@
 <xm-loader [showLoader]="showLoader"></xm-loader>
 
-<div class="row" *ngIf="user">
+<div *ngIf="user" class="row">
   <div class="col-md-5 col-xm-12">
     <div class="card">
       <div class="card-header card-header-icon card-header-primary">
@@ -21,16 +21,16 @@
           </p>
           <label class="control-label">Status:</label>
           <p class="form-control-static">
-                        <span class="badge badge-danger" *ngIf="!user.activated"
+                        <span *ngIf="!user.activated" class="badge badge-danger"
                               jhiTranslate="userManagement.deactivated">Deactivated</span>
-            <span class="badge badge-success" *ngIf="user.activated"
+            <span *ngIf="user.activated" class="badge badge-success"
                   jhiTranslate="userManagement.activated">Activated</span>
           </p>
         </div>
         <div class="text-left">
           <button (click)="initPasswordReset()"
-                  routerLink="/administration/user-management"
-                  class="btn btn-info" [disabled]="pwdResetDisabled()">
+                  [disabled]="pwdResetDisabled()"
+                  class="btn btn-info" routerLink="/administration/user-management">
             <span>{{'reset.request.form.button' | translate}}</span>
           </button>
         </div>
@@ -61,9 +61,9 @@
           <p class="form-control-static">{{user.roleKey}}</p>
         </div>
         <div class="text-left">
-          <button type="submit"
-                  (click)="onBack()"
-                  class="btn btn-info">
+          <button (click)="onBack()"
+                  class="btn btn-info"
+                  type="submit">
             <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
           </button>
         </div>

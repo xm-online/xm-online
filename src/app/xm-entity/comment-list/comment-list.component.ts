@@ -12,43 +12,41 @@ import { XmEntityService } from '../shared/xm-entity.service';
 @Component({
     selector: 'xm-comment-list',
     templateUrl: './comment-list.component.html',
-    styleUrls: ['./comment-list.component.scss']
+    styleUrls: ['./comment-list.component.scss'],
 })
 export class CommentListComponent implements OnInit, OnChanges, OnDestroy {
 
+    @Input() public xmEntityId: number;
+    @Input() public commentSpecs: CommentSpec[];
+    public xmEntity: XmEntity;
+    public comments: Comment[] = [];
     private modificationSubscription: Subscription;
-
-    @Input() xmEntityId: number;
-    @Input() commentSpecs: CommentSpec[];
-
-    xmEntity: XmEntity;
-    comments: Comment[] = [];
 
     constructor(private xmEntityService: XmEntityService,
                 private eventManager: JhiEventManager,
                 public principal: Principal) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.registerListModify();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.xmEntityId && changes.xmEntityId.previousValue !== changes.xmEntityId.currentValue) {
             this.load();
         }
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.eventManager.destroy(this.modificationSubscription);
     }
 
-    private registerListModify() {
+    private registerListModify(): void {
         this.modificationSubscription = this.eventManager.subscribe('commentListModification', (response) => this.load());
     }
 
-    private load() {
-        this.xmEntityService.find(this.xmEntityId, {'embed': 'comments'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
+    private load(): void {
+        this.xmEntityService.find(this.xmEntityId, {embed: 'comments'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
             this.xmEntity = xmEntity.body;
             if (xmEntity.body.comments) {
                 this.comments = [...xmEntity.body.comments];

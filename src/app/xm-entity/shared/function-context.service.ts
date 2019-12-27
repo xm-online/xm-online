@@ -11,40 +11,40 @@ import { FunctionContext } from './function-context.model';
 @Injectable()
 export class FunctionContextService {
 
-    private resourceUrl = SERVER_API_URL + 'entity/api/function-contexts';
-    private resourceSearchUrl = SERVER_API_URL + 'entity/api/_search/function-contexts';
+    private resourceUrl: string = SERVER_API_URL + 'entity/api/function-contexts';
+    private resourceSearchUrl: string = SERVER_API_URL + 'entity/api/_search/function-contexts';
 
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils) {
     }
 
-    create(functionContext: FunctionContext): Observable<HttpResponse<FunctionContext>> {
+    public create(functionContext: FunctionContext): Observable<HttpResponse<FunctionContext>> {
         const copy = this.convert(functionContext);
         return this.http.post<FunctionContext>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<FunctionContext>) => this.convertResponse(res)));
     }
 
-    update(functionContext: FunctionContext): Observable<HttpResponse<FunctionContext>> {
+    public update(functionContext: FunctionContext): Observable<HttpResponse<FunctionContext>> {
         const copy = this.convert(functionContext);
         return this.http.put<FunctionContext>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<FunctionContext>) => this.convertResponse(res)));
     }
 
-    find(id: number): Observable<HttpResponse<FunctionContext>> {
+    public find(id: number): Observable<HttpResponse<FunctionContext>> {
         return this.http.get<FunctionContext>(`${this.resourceUrl}/${id}`, {observe: 'response'}).pipe(
             map((res: HttpResponse<FunctionContext>) => this.convertResponse(res)));
     }
 
-    query(req?: any): Observable<HttpResponse<FunctionContext[]>> {
+    public query(req?: any): Observable<HttpResponse<FunctionContext[]>> {
         const options = createRequestOption(req);
         return this.http.get<FunctionContext[]>(this.resourceUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<FunctionContext[]>) => this.convertArrayResponse(res)));
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
+    public delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 
-    search(req?: any): Observable<HttpResponse<FunctionContext[]>> {
+    public search(req?: any): Observable<HttpResponse<FunctionContext[]>> {
         const options = createRequestOption(req);
         return this.http.get<FunctionContext[]>(this.resourceSearchUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<FunctionContext[]>) => this.convertArrayResponse(res)));

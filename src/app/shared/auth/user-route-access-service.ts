@@ -15,15 +15,15 @@ export class UserRouteAccessService implements CanActivate, CanActivateChild {
         private alertService: JhiAlertService) {
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
+    public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
         return this.canActivateFunc(route, state);
     }
 
-    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
+    public canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
         return this.canActivateFunc(route, state);
     }
 
-    checkLogin(url: string, privileges: any = {}): Promise<boolean> {
+    public checkLogin(url: string, privileges: any = {}): Promise<boolean> {
         const principal = this.principal;
         return Promise.resolve(principal.identity().then((account) => {
             if (account) {

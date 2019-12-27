@@ -10,40 +10,40 @@ import { Location } from './location.model';
 @Injectable()
 export class LocationService {
 
-    private resourceUrl = SERVER_API_URL + 'entity/api/locations';
-    private resourceSearchUrl = SERVER_API_URL + 'entity/api/_search/locations';
+    private resourceUrl: string = SERVER_API_URL + 'entity/api/locations';
+    private resourceSearchUrl: string = SERVER_API_URL + 'entity/api/_search/locations';
 
     constructor(private http: HttpClient) {
     }
 
-    create(location: Location): Observable<HttpResponse<Location>> {
+    public create(location: Location): Observable<HttpResponse<Location>> {
         const copy = this.convert(location);
         return this.http.post<Location>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Location>) => this.convertResponse(res)));
     }
 
-    update(location: Location): Observable<HttpResponse<Location>> {
+    public update(location: Location): Observable<HttpResponse<Location>> {
         const copy = this.convert(location);
         return this.http.put<Location>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Location>) => this.convertResponse(res)));
     }
 
-    find(id: number): Observable<HttpResponse<Location>> {
+    public find(id: number): Observable<HttpResponse<Location>> {
         return this.http.get<Location>(`${this.resourceUrl}/${id}`, {observe: 'response'}).pipe(
             map((res: HttpResponse<Location>) => this.convertResponse(res)));
     }
 
-    query(req?: any): Observable<HttpResponse<Location[]>> {
+    public query(req?: any): Observable<HttpResponse<Location[]>> {
         const options = createRequestOption(req);
         return this.http.get<Location[]>(this.resourceUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Location[]>) => this.convertArrayResponse(res)));
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
+    public delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 
-    search(req?: any): Observable<HttpResponse<Location[]>> {
+    public search(req?: any): Observable<HttpResponse<Location[]>> {
         const options = createRequestOption(req);
         return this.http.get<Location[]>(this.resourceSearchUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Location[]>) => this.convertArrayResponse(res)));

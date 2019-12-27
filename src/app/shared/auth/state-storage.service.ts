@@ -7,55 +7,54 @@ const DEST_STATE = 'previousState';
 @Injectable()
 export class StateStorageService {
 
-
     constructor(
-        private $sessionStorage: SessionStorageService
+        private $sessionStorage: SessionStorageService,
     ) {}
 
-    getPreviousState() {
+    public getPreviousState(): any {
         return this.$sessionStorage.retrieve(PREV_STATE);
     }
 
-    resetPreviousState() {
+    public resetPreviousState(): void {
         this.$sessionStorage.clear(PREV_STATE);
     }
 
-    resetDestinationState() {
+    public resetDestinationState(): void {
       this.$sessionStorage.clear(DEST_STATE);
     }
 
-    resetAllStates() {
+    public resetAllStates(): void {
       this.resetPreviousState();
       this.resetDestinationState();
     }
 
-    storePreviousState(previousStateName, previousStateParams) {
-        const previousState = { 'name': previousStateName, 'params': previousStateParams };
+    public storePreviousState(previousStateName, previousStateParams): void {
+        const previousState = { name: previousStateName, params: previousStateParams };
         this.$sessionStorage.store(PREV_STATE, previousState);
     }
 
-    getDestinationState() {
+    public getDestinationState(): any {
         return this.$sessionStorage.retrieve(DEST_STATE);
     }
 
-    storeUrl(url: string) {
+    public storeUrl(url: string): void {
         this.$sessionStorage.store('previousUrl', url);
     }
 
-    getUrl() {
+    public getUrl(): any {
         return this.$sessionStorage.retrieve('previousUrl');
     }
 
-    storeDestinationState(destinationState, destinationStateParams, fromState) {
+    public storeDestinationState(destinationState, destinationStateParams, fromState): void {
         const destinationInfo = {
-            'destination': {
-                'name': destinationState.name,
-                'data': destinationState.data,
+            destination: {
+                name: destinationState.name,
+                data: destinationState.data,
             },
-            'params': destinationStateParams,
-            'from': {
-                'name': fromState.name,
-             }
+            params: destinationStateParams,
+            from: {
+                name: fromState.name,
+             },
         };
         this.$sessionStorage.store(DEST_STATE, destinationInfo);
     }

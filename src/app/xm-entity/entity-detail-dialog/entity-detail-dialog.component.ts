@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, AfterViewInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { UUID } from 'angular2-uuid';
 import { JhiEventManager } from 'ng-jhipster';
@@ -7,33 +7,33 @@ import * as formatString from 'string-template';
 
 import { Principal } from '../../shared/auth/principal.service';
 import { buildJsfAttributes, nullSafe } from '../../shared/jsf-extention/jsf-attributes-helper';
+import { XM_EVENT_LIST } from '../../xm.constants';
 import { Spec } from '../shared/spec.model';
 import { XmEntitySpec } from '../shared/xm-entity-spec.model';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
-import {XM_EVENT_LIST} from '../../xm.constants';
 
 @Component({
     selector: 'xm-entity-detail-dialog',
     templateUrl: './entity-detail-dialog.component.html',
-    styleUrls: ['./entity-detail-dialog.component.scss']
+    styleUrls: ['./entity-detail-dialog.component.scss'],
 })
 export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
 
-    @Input() xmEntity: XmEntity = {};
-    @Input() xmEntitySpec: XmEntitySpec;
-    @Input() spec: Spec;
-    @Input() onSuccess: any;
+    @Input() public xmEntity: XmEntity = {};
+    @Input() public xmEntitySpec: XmEntitySpec;
+    @Input() public spec: Spec;
+    @Input() public onSuccess: any;
 
-    availableSpecs: XmEntitySpec[];
-    selectedXmEntitySpec: XmEntitySpec;
-    jsfAttributes: any;
-    name: string;
-    isEdit: boolean;
-    showLoader: boolean;
-    nameValidPattern: string;
-    isJsonFormValid = true;
-    smartDescription: any;
+    public availableSpecs: XmEntitySpec[];
+    public selectedXmEntitySpec: XmEntitySpec;
+    public jsfAttributes: any;
+    public name: string;
+    public isEdit: boolean;
+    public showLoader: boolean;
+    public nameValidPattern: string;
+    public isJsonFormValid: boolean = true;
+    public smartDescription: any;
 
     constructor(private activeModal: NgbActiveModal,
                 private changeDetector: ChangeDetectorRef,
@@ -44,12 +44,12 @@ export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
         this.smartDescription = {
             active: false,
             value: '',
-            template: ''
-        }
+            template: '',
+        };
 
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.isEdit = !!(this.xmEntity && this.xmEntity.id);
         this.smartDescription.active = true;
         if (this.isEdit) {
@@ -66,11 +66,11 @@ export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
         }
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.changeDetector.detectChanges();
     }
 
-    onChangeEntityType(xmEntitySpec?: XmEntitySpec, typeKey?: string) {
+    public onChangeEntityType(xmEntitySpec?: XmEntitySpec, typeKey?: string): void {
         if (!xmEntitySpec) {
             xmEntitySpec = this.availableSpecs.filter((s) => s.key === typeKey).shift();
         }
@@ -90,7 +90,7 @@ export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
         }
     }
 
-    onConfirmSave() {
+    public onConfirmSave(): void {
         this.showLoader = true;
         this.xmEntity.description = this.smartDescription.value;
         if (this.xmEntity.id !== undefined) {
@@ -108,32 +108,32 @@ export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
         }
     }
 
-    private onConfirmError(err) {
+    public onCancel(): void {
+        this.activeModal.dismiss('cancel');
+    }
+
+    public onChangeForm(data: any): void {
+        this.xmEntity.data = data;
+        this.formatSmartDescription(data);
+    }
+
+    private onConfirmError(err): void {
         console.log(err);
         // disable form spinner
         this.showLoader = false;
     }
 
-    private onSaveSuccess(entity: XmEntity) {
+    private onSaveSuccess(entity: XmEntity): void {
         // TODO: analyse listeners
         this.eventManager.broadcast({
             name: this.isEdit ? XM_EVENT_LIST.XM_ENTITY_DETAIL_MODIFICATION : XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION,
             entityId: entity.id,
-            entityType: entity.typeKey
+            entityType: entity.typeKey,
         });
         this.activeModal.dismiss(true);
         if (this.onSuccess) {
             this.onSuccess();
         }
-    }
-
-    onCancel() {
-        this.activeModal.dismiss('cancel');
-    }
-
-    onChangeForm(data: any) {
-        this.xmEntity.data = data;
-        this.formatSmartDescription(data);
     }
 
     private formatSmartDescription(data: any): void {

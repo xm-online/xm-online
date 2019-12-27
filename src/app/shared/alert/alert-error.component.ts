@@ -1,28 +1,28 @@
 import { Component, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
 
-import { ResponseConfig, ResponseConfigItem, ResponseContext } from './response-config.model';
-import { XmConfigService } from '../spec/config.service';
-import { I18nNamePipe } from '../language/i18n-name.pipe';
 import { Principal } from '../../shared/auth/principal.service';
 import { DEBUG_INFO_ENABLED } from '../../xm.constants';
+import { I18nNamePipe } from '../language/i18n-name.pipe';
+import { XmConfigService } from '../spec/config.service';
+import { ResponseConfig, ResponseConfigItem, ResponseContext } from './response-config.model';
 
 declare let swal: any;
 declare let $: any;
 
 @Component({
     selector: 'xm-alert-error',
-    templateUrl: './alert-error.component.html'
+    templateUrl: './alert-error.component.html',
 })
 export class JhiAlertErrorComponent implements OnDestroy {
 
-    alerts: any[];
-    cleanHttpErrorListener: Subscription;
-    rc: ResponseContext;
-    responseConfig: ResponseConfig;
+    public alerts: any[];
+    public cleanHttpErrorListener: Subscription;
+    public rc: ResponseContext;
+    public responseConfig: ResponseConfig;
 
     /* tslint:disable */
     constructor(private alertService: JhiAlertService,
@@ -35,18 +35,18 @@ export class JhiAlertErrorComponent implements OnDestroy {
         /* tslint:enable */
         this.alerts = [];
 
-        this.cleanHttpErrorListener = eventManager.subscribe('xm.httpError', resp => {
+        this.cleanHttpErrorListener = eventManager.subscribe('xm.httpError', (resp) => {
             const response = this.processResponse(resp);
             if (DEBUG_INFO_ENABLED) {
                 console.log(`Error xm.httpError - ${response}`);
             }
-            this.specService.getUiConfig().subscribe(result => {
+            this.specService.getUiConfig().subscribe((result) => {
                 if (result &&
                     result.responseConfig &&
                     result.responseConfig.responses &&
                     result.responseConfig.responses.length) {
                     this.rc = new ResponseContext(response.content, response.request);
-                    this.responseConfig = new ResponseConfig(result.responseConfig.responses.map(e => {
+                    this.responseConfig = new ResponseConfig(result.responseConfig.responses.map((e) => {
                         return new ResponseConfigItem(
                             e.code,
                             e.codePath,
@@ -56,7 +56,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
                             e.validationFieldsExtractor,
                             e.outputMessage,
                             e.condition,
-                            e.redirectUrl
+                            e.redirectUrl,
                         );
                     }));
                     const respConfigEl = this.responseConfig.getResponseConfigItem(this.rc);
@@ -72,8 +72,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
         });
     }
 
-
-    configAndSendError(config: ResponseConfigItem, response: any, params?: any) {
+    public configAndSendError(config: ResponseConfigItem, response: any, params?: any): void {
         const title = this.processMessage(config.outputMessage ?
             config.outputMessage :
             null, response);
@@ -81,11 +80,11 @@ export class JhiAlertErrorComponent implements OnDestroy {
         switch (messageSettings[0]) {
             case 'swal': {
                 swal({
-                    title: title,
+                    title,
                     width: '42rem',
                     type: messageSettings[1],
                     buttonsStyling: false,
-                    confirmButtonClass: 'btn btn-primary'
+                    confirmButtonClass: 'btn btn-primary',
                 }).then((result) => {
                     if (result && config.redirectUrl) {
                         const redirect = (config.redirectUrl === '/') ? '' : config.redirectUrl;
@@ -99,18 +98,18 @@ export class JhiAlertErrorComponent implements OnDestroy {
             }
             case 'validation': {
 
-                let errors = new Function('rc', config.validationFieldsExtractor)(this.rc);
-                for (let key in errors) {
+                const errors = new Function('rc', config.validationFieldsExtractor)(this.rc);
+                for (const key in errors) {
                     errors[key] = this.processMessage(errors[key] ? errors[key] : null, response);
                 }
-                this.eventManager.broadcast({name: 'xm.ValidationError', content: config, rc: this.rc, title: title, errors: errors});
+                this.eventManager.broadcast({name: 'xm.ValidationError', content: config, rc: this.rc, title, errors});
                 break;
             }
             case 'alert': {
                 $.notify({
                     message: title,
                 }, {
-                    type: messageSettings[1]
+                    type: messageSettings[1],
                 });
                 break;
             }
@@ -121,7 +120,90 @@ export class JhiAlertErrorComponent implements OnDestroy {
         }
     }
 
-    private processMessage(config, response) {
+    public ngOnDestroy(): void {
+        if (this.cleanHttpErrorListener !== undefined && this.cleanHttpErrorListener !== null) {
+            this.eventManager.destroy(this.cleanHttpErrorListener);
+            this.alerts = [];
+        }
+    }
+
+    public sendDefaultError(response): void {
+        let i;
+        const httpErrorResponse = response.content;
+        switch (httpErrorResponse.status) {
+            // connection refused, server not reachable
+            case 0:
+                this.addErrorAlert('Server not reachable', 'error.server.not.reachable');
+                break;
+
+            case 400:
+                const arr = httpErrorResponse.headers.keys();
+                let errorHeader = null;
+                let entityKey = null;
+                arr.forEach((entry) => {
+                    if (entry.endsWith('app-error')) {
+                        errorHeader = httpErrorResponse.headers.get(entry);
+                    } else if (entry.endsWith('app-params')) {
+                        entityKey = httpErrorResponse.headers.get(entry);
+                    }
+                });
+                if (errorHeader) {
+                    const entityName = this.translateService.instant('global.menu.entities.' + entityKey);
+                    this.addErrorAlert(errorHeader, errorHeader, {entityName});
+                } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.fieldErrors) {
+                    const fieldErrors = httpErrorResponse.error.fieldErrors;
+                    for (i = 0; i < fieldErrors.length; i++) {
+                        const fieldError = fieldErrors[i];
+                        // convert 'something[14].other[4].id' to 'something[].other[].id' so translations can be written to it
+                        const convertedField = fieldError.field.replace(/\[\d*\]/g, '[]');
+                        const fieldName = this.translateService.instant(
+                            'jhipsterSampleApplicationApp.' + fieldError.objectName + '.' + convertedField,
+                        );
+                        this.addErrorAlert('Error on field "' + fieldName + '"', 'errors.' + fieldError.message, {fieldName});
+                    }
+                } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.error) {
+                    console.log(this.translateService.instant('errors.' + httpErrorResponse.error.error));
+                    this.addErrorAlert(
+                        'errors.' + httpErrorResponse.error.error_description,
+                        'errors.' + httpErrorResponse.error.error,
+                        httpErrorResponse.error.params,
+                    );
+                } else {
+                    this.addErrorAlert('errors.' + httpErrorResponse.error);
+                }
+                break;
+
+            case 404:
+                this.addErrorAlert('Not found', 'errors.url.not.found');
+                break;
+
+            default:
+                if (httpErrorResponse.error !== '' && httpErrorResponse.error.error) {
+                    this.addErrorAlert('errors.' + httpErrorResponse.error.error);
+                } else {
+                    this.addErrorAlert('errors.' + httpErrorResponse.error);
+                }
+        }
+    }
+
+    public addErrorAlert(message, key?, data?): void {
+        key = key && key !== null ? key : message;
+        this.alerts.push(
+            this.alertService.addAlert(
+                {
+                    type: 'danger',
+                    msg: key,
+                    params: data,
+                    timeout: 5000,
+                    toast: true,
+                    scoped: true,
+                },
+                this.alerts,
+            ),
+        );
+    }
+
+    private processMessage(config, response): string | null | any {
         if (!config) {
             return null;
         }
@@ -151,97 +233,14 @@ export class JhiAlertErrorComponent implements OnDestroy {
         }
     }
 
-    private interpolationParams(response, other) {
+    private interpolationParams(response, other): { rc: any } | any {
         if (response && response.content && response.content.error && response.content.error.params) {
             return Object.assign({}, response.content.error.params);
         }
         return {rc: other};
     }
 
-    ngOnDestroy() {
-        if (this.cleanHttpErrorListener !== undefined && this.cleanHttpErrorListener !== null) {
-            this.eventManager.destroy(this.cleanHttpErrorListener);
-            this.alerts = [];
-        }
-    }
-
-    sendDefaultError(response) {
-        let i;
-        const httpErrorResponse = response.content;
-        switch (httpErrorResponse.status) {
-            // connection refused, server not reachable
-            case 0:
-                this.addErrorAlert('Server not reachable', 'error.server.not.reachable');
-                break;
-
-            case 400:
-                const arr = httpErrorResponse.headers.keys();
-                let errorHeader = null;
-                let entityKey = null;
-                arr.forEach(entry => {
-                    if (entry.endsWith('app-error')) {
-                        errorHeader = httpErrorResponse.headers.get(entry);
-                    } else if (entry.endsWith('app-params')) {
-                        entityKey = httpErrorResponse.headers.get(entry);
-                    }
-                });
-                if (errorHeader) {
-                    const entityName = this.translateService.instant('global.menu.entities.' + entityKey);
-                    this.addErrorAlert(errorHeader, errorHeader, {entityName});
-                } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.fieldErrors) {
-                    const fieldErrors = httpErrorResponse.error.fieldErrors;
-                    for (i = 0; i < fieldErrors.length; i++) {
-                        const fieldError = fieldErrors[i];
-                        // convert 'something[14].other[4].id' to 'something[].other[].id' so translations can be written to it
-                        const convertedField = fieldError.field.replace(/\[\d*\]/g, '[]');
-                        const fieldName = this.translateService.instant(
-                            'jhipsterSampleApplicationApp.' + fieldError.objectName + '.' + convertedField
-                        );
-                        this.addErrorAlert('Error on field "' + fieldName + '"', 'errors.' + fieldError.message, {fieldName});
-                    }
-                } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.error) {
-                    console.log(this.translateService.instant('errors.' + httpErrorResponse.error.error));
-                    this.addErrorAlert(
-                        'errors.' + httpErrorResponse.error.error_description,
-                        'errors.' + httpErrorResponse.error.error,
-                        httpErrorResponse.error.params
-                    );
-                } else {
-                    this.addErrorAlert('errors.' + httpErrorResponse.error);
-                }
-                break;
-
-            case 404:
-                this.addErrorAlert('Not found', 'errors.url.not.found');
-                break;
-
-            default:
-                if (httpErrorResponse.error !== '' && httpErrorResponse.error.error) {
-                    this.addErrorAlert('errors.' + httpErrorResponse.error.error);
-                } else {
-                    this.addErrorAlert('errors.' + httpErrorResponse.error);
-                }
-        }
-    }
-
-    addErrorAlert(message, key?, data?) {
-        key = key && key !== null ? key : message;
-        this.alerts.push(
-            this.alertService.addAlert(
-                {
-                    type: 'danger',
-                    msg: key,
-                    params: data,
-                    timeout: 5000,
-                    toast: true,
-                    scoped: true
-                },
-                this.alerts
-            )
-        );
-    }
-
-    private processResponse (resp: any): any {
+    private processResponse(resp: any): any {
         const requestType = resp.request.responseType;
         const respType = resp.content.headers.get('content-type');
         if (requestType === 'arraybuffer' && respType === 'application/json;charset=UTF-8') {
@@ -269,7 +268,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
         return typeof variable;
     }
 
-    private getFromPath(obj, path) {
+    private getFromPath(obj, path): any | undefined {
         let paths = path.split('.')
             , current = obj
             , i;

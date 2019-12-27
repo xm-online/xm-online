@@ -248,5 +248,5 @@ export const ISO3166_CODES = [
     'YE',
     'ZM',
     'ZW',
-    'XK'
+    'XK',
 ];

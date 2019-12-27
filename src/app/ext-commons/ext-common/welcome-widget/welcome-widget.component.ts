@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
     styleUrls: ['./welcome-widget.component.scss'],
 })
 export class WelcomeWidgetComponent {
-    config: any;
+    public config: any;
 }

@@ -1,112 +1,116 @@
 <!-- Modal used to display the threads dump -->
 <div class="modal-header">
-    <a href="javascript: void(0);" class="modal-close material-icons" (click)="activeModal.dismiss('closed')">close</a>
-    <h3 class="modal-title text-left mt-0" jhiTranslate="metrics.jvm.threads.dump.title">Threads dump</h3>
+  <a href="javascript: void(0);" class="modal-close material-icons" (click)="activeModal.dismiss('closed')">close</a>
+  <h3 class="modal-title text-left mt-0" jhiTranslate="metrics.jvm.threads.dump.title">Threads dump</h3>
 </div>
 <div class="modal-body">
-    <div class="row align-items-center no-gutters flex-nowrap mb-3">
-      <div class="col-auto">
-        <button mat-raised-button
-                (click)="threadDumpFilter = {}"
-                class="btn btn-sm btn-round btn-primary mr-2 ml-2"
-                type="button">
-          {{'metrics.options.f-all' | translate}}
-          <span class="badge badge-pill pr-0">{{threadDumpAll}}</span>
-        </button>
-      </div>
-      <div class="col-auto">
-        <button mat-raised-button
-                (click)="threadDumpFilter = {threadState: 'RUNNABLE'}"
-                class="btn btn-sm btn-round btn-success mr-2 ml-2"
-                type="button">
-          {{'metrics.options.f-runnable' | translate}}
-          <span class="badge badge-pill pr-0">{{threadDumpRunnable}}</span>
-        </button>
-      </div>
-      <div class="col-auto">
-        <button mat-raised-button
-                (click)="threadDumpFilter = {threadState: 'WAITING'}"
-                class="btn btn-sm btn-round btn-info mr-2 ml-2"
-                type="button">
-          {{'metrics.options.f-waiting' | translate}}
-          <span class="badge badge-pill pr-0">{{threadDumpWaiting}}</span>
-        </button>
-      </div>
-      <div class="col-auto">
-        <button mat-raised-button
-                (click)="threadDumpFilter = {threadState: 'TIMED_WAITING'}"
-                class="btn btn-sm btn-round btn-warning mr-2 ml-2"
-                type="button">
-          {{'metrics.options.f-timed-waiting' | translate}}
-          <span class="badge badge-pill pr-0">{{threadDumpTimedWaiting}}</span>
-        </button>
-      </div>
-      <div class="col-auto">
-        <button mat-raised-button
-                (click)="threadDumpFilter = {threadState: 'BLOCKED'}"
-                class="btn btn-sm btn-round btn-danger mr-2 ml-2"
-                type="button">
-          {{'metrics.options.f-blocked' | translate}}
-          <span class="badge badge-pill pr-0">{{threadDumpBlocked}}</span>
-        </button>
-      </div>
+  <div class="row align-items-center no-gutters flex-nowrap mb-3">
+    <div class="col-auto">
+      <button mat-raised-button
+              (click)="threadDumpFilter = {}"
+              class="btn btn-sm btn-round btn-primary mr-2 ml-2"
+              type="button">
+        {{'metrics.options.f-all' | translate}}
+        <span class="badge badge-pill pr-0">{{threadDumpAll}}</span>
+      </button>
     </div>
+    <div class="col-auto">
+      <button mat-raised-button
+              (click)="threadDumpFilter = {threadState: 'RUNNABLE'}"
+              class="btn btn-sm btn-round btn-success mr-2 ml-2"
+              type="button">
+        {{'metrics.options.f-runnable' | translate}}
+        <span class="badge badge-pill pr-0">{{threadDumpRunnable}}</span>
+      </button>
+    </div>
+    <div class="col-auto">
+      <button mat-raised-button
+              (click)="threadDumpFilter = {threadState: 'WAITING'}"
+              class="btn btn-sm btn-round btn-info mr-2 ml-2"
+              type="button">
+        {{'metrics.options.f-waiting' | translate}}
+        <span class="badge badge-pill pr-0">{{threadDumpWaiting}}</span>
+      </button>
+    </div>
+    <div class="col-auto">
+      <button mat-raised-button
+              (click)="threadDumpFilter = {threadState: 'TIMED_WAITING'}"
+              class="btn btn-sm btn-round btn-warning mr-2 ml-2"
+              type="button">
+        {{'metrics.options.f-timed-waiting' | translate}}
+        <span class="badge badge-pill pr-0">{{threadDumpTimedWaiting}}</span>
+      </button>
+    </div>
+    <div class="col-auto">
+      <button mat-raised-button
+              (click)="threadDumpFilter = {threadState: 'BLOCKED'}"
+              class="btn btn-sm btn-round btn-danger mr-2 ml-2"
+              type="button">
+        {{'metrics.options.f-blocked' | translate}}
+        <span class="badge badge-pill pr-0">{{threadDumpBlocked}}</span>
+      </button>
+    </div>
+  </div>
 
-    <input type="text" [value]="threadDumpFilter?.threadState ? threadDumpFilter?.threadState : 'ALL'" class="form-control mb-3" disabled>
-    <div class="pad" *ngFor="let entry of threadDump | pureFilter:threadDumpFilter:'lockName' | keys">
-      <div class="row align-items-center flex-nowrap">
-        <div class="col-2">
-          <span class="badge" [ngClass]="getBadgeClass(entry.value.threadState)">{{entry.value.threadState}}</span>
-        </div>
-        <div class="col">
-          {{entry.value.threadName}} (ID {{entry.value.threadId}})
-        </div>
-        <div class="col-auto">
-          <a (click)="entry.show = !entry.show" href="javascript:void(0);">
-            <span [hidden]="entry.show" jhiTranslate="metrics.jvm.threads.dump.show">Show StackTrace</span>
-            <span [hidden]="!entry.show" jhiTranslate="metrics.jvm.threads.dump.hide">Hide StackTrace</span>
-          </a>
-        </div>
+  <input type="text"
+         [value]="threadDumpFilter?.threadState ? threadDumpFilter?.threadState : 'ALL'"
+         class="form-control mb-3"
+         disabled>
+  <div class="pad" *ngFor="let entry of threadDump | pureFilter:threadDumpFilter:'lockName' | keys">
+    <div class="row align-items-center flex-nowrap">
+      <div class="col-2">
+        <span class="badge" [ngClass]="getBadgeClass(entry.value.threadState)">{{entry.value.threadState}}</span>
       </div>
-      <div class="card mt-2 mb-2" [hidden]="!entry.show">
-          <div class="card-body">
-              <div *ngFor="let st of entry.value.stackTrace | keys" class="break">
-                  <samp>{{st.value.className}}.{{st.value.methodName}}(<code>{{st.value.fileName}}:{{st.value.lineNumber}}</code>)</samp>
-                  <span class="mt-1"></span>
-              </div>
-          </div>
+      <div class="col">
+        {{entry.value.threadName}} (ID {{entry.value.threadId}})
       </div>
-      <div class="table-responsive mt-2 mb-2">
-        <table class="table table-sm">
-          <thead>
-          <tr>
-            <th class="text-right" jhiTranslate="metrics.jvm.threads.dump.blockedtime">Blocked Time</th>
-            <th class="text-right" jhiTranslate="metrics.jvm.threads.dump.blockedcount">Blocked Count</th>
-            <th class="text-right" jhiTranslate="metrics.jvm.threads.dump.waitedtime">Waited Time</th>
-            <th class="text-right" jhiTranslate="metrics.jvm.threads.dump.waitedcount">Waited Count</th>
-            <th jhiTranslate="metrics.jvm.threads.dump.lockname">Lock Name</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td class="text-right">{{entry.value.blockedTime}}</td>
-            <td class="text-right">{{entry.value.blockedCount}}</td>
-            <td class="text-right">{{entry.value.waitedTime}}</td>
-            <td class="text-right">{{entry.value.waitedCount}}</td>
-            <td style="width: 300px;"><code>{{entry.value.lockName}}</code></td>
-          </tr>
-          </tbody>
-        </table>
-        <hr>
+      <div class="col-auto">
+        <a (click)="entry.show = !entry.show" href="javascript:void(0);">
+          <span [hidden]="entry.show" jhiTranslate="metrics.jvm.threads.dump.show">Show StackTrace</span>
+          <span [hidden]="!entry.show" jhiTranslate="metrics.jvm.threads.dump.hide">Hide StackTrace</span>
+        </a>
       </div>
     </div>
+    <div class="card mt-2 mb-2" [hidden]="!entry.show">
+      <div class="card-body">
+        <div *ngFor="let st of entry.value.stackTrace | keys" class="break">
+          <samp>{{st.value.className}}.{{st.value.methodName}}(<code>{{st.value.fileName}}
+            :{{st.value.lineNumber}}</code>)</samp>
+          <span class="mt-1"></span>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive mt-2 mb-2">
+      <table class="table table-sm">
+        <thead>
+        <tr>
+          <th class="text-right" jhiTranslate="metrics.jvm.threads.dump.blockedtime">Blocked Time</th>
+          <th class="text-right" jhiTranslate="metrics.jvm.threads.dump.blockedcount">Blocked Count</th>
+          <th class="text-right" jhiTranslate="metrics.jvm.threads.dump.waitedtime">Waited Time</th>
+          <th class="text-right" jhiTranslate="metrics.jvm.threads.dump.waitedcount">Waited Count</th>
+          <th jhiTranslate="metrics.jvm.threads.dump.lockname">Lock Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="text-right">{{entry.value.blockedTime}}</td>
+          <td class="text-right">{{entry.value.blockedCount}}</td>
+          <td class="text-right">{{entry.value.waitedTime}}</td>
+          <td class="text-right">{{entry.value.waitedCount}}</td>
+          <td style="width: 300px;"><code>{{entry.value.lockName}}</code></td>
+        </tr>
+        </tbody>
+      </table>
+      <hr>
+    </div>
+  </div>
 </div>
 <div class="modal-footer">
-    <button mat-raised-button
-            type="button"
-            class="btn btn-primary"
-            data-dismiss="modal"
-            (click)="activeModal.dismiss('closed')">
-      {{'metrics.options.done' | translate}}
-    </button>
+  <button mat-raised-button
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+          (click)="activeModal.dismiss('closed')">
+    {{'metrics.options.done' | translate}}
+  </button>
 </div>

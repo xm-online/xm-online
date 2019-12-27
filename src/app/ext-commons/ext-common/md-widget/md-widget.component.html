@@ -1,8 +1,8 @@
-<div class="card wdt-md" [ngClass]="{'wdt-md-edit': isEditMode}">
-  <a class="header-action" href="javascript: void(0);" *ngIf="isEditMode" (click)="onSave()">
+<div [ngClass]="{'wdt-md-edit': isEditMode}" class="card wdt-md">
+  <a (click)="onSave()" *ngIf="isEditMode" class="header-action" href="javascript: void(0);">
     <i class="material-icons">save</i>
   </a>
-  <a class="header-action" href="javascript: void(0);" *ngIf="!isEditMode" (click)="onEditMode()">
+  <a (click)="onEditMode()" *ngIf="!isEditMode" class="header-action" href="javascript: void(0);">
     <i class="material-icons">edit</i>
   </a>
   <div class="card-header card-header-icon card-header-primary">

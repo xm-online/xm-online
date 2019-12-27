@@ -1,29 +1,29 @@
-<form class="m-0" name="changeStateForm" (ngSubmit)="onChangeState()">
+<form (ngSubmit)="onChangeState()" class="m-0" name="changeStateForm">
   <div class="modal-header">
-    <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
-    <h4 class="modal-title text-left" [innerHTML]="dialogTitle | i18nName : principal"></h4>
+    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
+    <h4 [innerHTML]="dialogTitle | i18nName : principal" class="modal-title text-left"></h4>
   </div>
   <div class="modal-body">
     <xm-loader [showLoader]="showLoader"></xm-loader>
-    <json-schema-form class="json-form-hide-submit"
-                      [framework]="'material-design'"
-                      [schema]="jsfAttributes.schema"
-                      [layout]="jsfAttributes.layout | i18nJsf :principal"
-                      [form]="jsfAttributes.form | i18nJsf :principal"
-                      [data]="jsfAttributes.data"
-                      [options]="jsfAttributes.options | i18nJsf :principal"
-                      [widgets]="jsfAttributes.widgets"
-                      (formLayout)="jsfAttributes.formLayout"
-                      (onChanges)="onChangeForm($event)"
+    <json-schema-form (formLayout)="jsfAttributes.formLayout"
                       (isValid)="isJsonFormValid = $event"
-                      *ngIf="xmEntity && jsfAttributes?.schema">
+                      (onChanges)="onChangeForm($event)"
+                      *ngIf="xmEntity && jsfAttributes?.schema"
+                      [data]="jsfAttributes.data"
+                      [form]="jsfAttributes.form | i18nJsf :principal"
+                      [framework]="'material-design'"
+                      [layout]="jsfAttributes.layout | i18nJsf :principal"
+                      [options]="jsfAttributes.options | i18nJsf :principal"
+                      [schema]="jsfAttributes.schema"
+                      [widgets]="jsfAttributes.widgets"
+                      class="json-form-hide-submit">
     </json-schema-form>
   </div>
   <div class="modal-footer">
-    <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()">
+    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-raised-button type="button">
       <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
-    <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="showLoader || !isJsonFormValid">
+    <button [disabled]="showLoader || !isJsonFormValid" class="btn btn-primary" mat-raised-button type="submit">
       <span>{{buttonTitle | i18nName : principal}}</span>
     </button>
   </div>

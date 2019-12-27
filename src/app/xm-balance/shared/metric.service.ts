@@ -1,44 +1,44 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { createRequestOption } from '../../shared';
 import { SERVER_API_URL } from '../../xm.constants';
 import { Metric } from './metric.model';
-import { createRequestOption } from '../../shared';
 
 @Injectable()
 export class MetricService {
 
-    private resourceUrl =  SERVER_API_URL + 'balance/api/metrics';
+    private resourceUrl: string = SERVER_API_URL + 'balance/api/metrics';
 
     constructor(private http: HttpClient) { }
 
-    create(metric: Metric): Observable<HttpResponse<Metric>> {
+    public create(metric: Metric): Observable<HttpResponse<Metric>> {
         const copy = this.convert(metric);
-        return this.http.post<Metric>(this.resourceUrl, copy, { observe: 'response' }).pipe(
+        return this.http.post<Metric>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Metric>) => this.convertResponse(res)));
     }
 
-    update(metric: Metric): Observable<HttpResponse<Metric>> {
+    public update(metric: Metric): Observable<HttpResponse<Metric>> {
         const copy = this.convert(metric);
-        return this.http.put<Metric>(this.resourceUrl, copy, { observe: 'response' }).pipe(
+        return this.http.put<Metric>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Metric>) => this.convertResponse(res)));
     }
 
-    find(id: number): Observable<HttpResponse<Metric>> {
-        return this.http.get<Metric>(`${this.resourceUrl}/${id}`, { observe: 'response'}).pipe(
+    public find(id: number): Observable<HttpResponse<Metric>> {
+        return this.http.get<Metric>(`${this.resourceUrl}/${id}`, {observe: 'response'}).pipe(
             map((res: HttpResponse<Metric>) => this.convertResponse(res)));
     }
 
-    query(req?: any): Observable<HttpResponse<Metric[]>> {
+    public query(req?: any): Observable<HttpResponse<Metric[]>> {
         const options = createRequestOption(req);
-        return this.http.get<Metric[]>(this.resourceUrl, { params: options, observe: 'response' }).pipe(
+        return this.http.get<Metric[]>(this.resourceUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Metric[]>) => this.convertArrayResponse(res)));
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+    public delete(id: number): Observable<HttpResponse<any>> {
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 
     private convertResponse(res: HttpResponse<Metric>): HttpResponse<Metric> {

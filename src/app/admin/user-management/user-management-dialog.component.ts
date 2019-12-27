@@ -1,25 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
-import { ViewChild } from '@angular/core';
 
+import { XM_EVENT_LIST } from '../../../app/xm.constants';
 import { JhiLanguageHelper, User, UserService } from '../../shared';
 import { RoleService } from '../../shared/role/role.service';
-import { XM_EVENT_LIST } from '../../../app/xm.constants';
 import { XmConfigService } from '../../shared/spec/config.service';
 
 @Component({
     selector: 'xm-user-mgmt-dialog',
-    templateUrl: './user-management-dialog.component.html'
+    templateUrl: './user-management-dialog.component.html',
 })
 export class UserMgmtDialogComponent implements OnInit {
 
-    user: User;
-    languages: any[];
-    authorities: any[];
-    showLoader: Boolean;
-    @ViewChild('userLoginForm', {static: false}) userLoginForm;
-    @Input() selectedUser: User;
+    public user: User;
+    public languages: any[];
+    public authorities: any[];
+    public showLoader: boolean;
+    @ViewChild('userLoginForm', {static: false}) public userLoginForm;
+    @Input() public selectedUser: User;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -27,30 +26,30 @@ export class UserMgmtDialogComponent implements OnInit {
         private xmConfigService: XmConfigService,
         private userService: UserService,
         private roleService: RoleService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         if (this.selectedUser) {
             this.user = this.selectedUser;
         } else {
             this.user = new User();
         }
-        this.roleService.getRoles().subscribe(roles => {
-            this.authorities = roles.map(role => role.roleKey).sort();
+        this.roleService.getRoles().subscribe((roles) => {
+            this.authorities = roles.map((role) => role.roleKey).sort();
         });
         this.languageHelper.getAll().then((languages) => {
-            this.xmConfigService.getUiConfig().subscribe(config => {
+            this.xmConfigService.getUiConfig().subscribe((config) => {
                 this.languages = (config && config.langs) ? config.langs : languages;
             });
         });
     }
 
-    clear() {
+    public clear(): void {
         this.activeModal.dismiss('cancel');
     }
 
-    save() {
+    public save(): void {
         this.showLoader = true;
         this.user.id || this.userLoginForm.createLogins();
         this.userService[this.user.id ? 'update' : 'create'](this.user)
@@ -59,8 +58,8 @@ export class UserMgmtDialogComponent implements OnInit {
                 () => this.showLoader = false);
     }
 
-    private onSaveSuccess(result) {
-        this.eventManager.broadcast({ name: XM_EVENT_LIST.XM_USER_LIST_MODIFICATION, content: 'OK' });
+    private onSaveSuccess(result): void {
+        this.eventManager.broadcast({name: XM_EVENT_LIST.XM_USER_LIST_MODIFICATION, content: 'OK'});
         this.activeModal.dismiss(result);
     }
 

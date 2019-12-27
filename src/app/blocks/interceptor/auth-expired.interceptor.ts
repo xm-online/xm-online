@@ -3,15 +3,15 @@ import { Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { LoginService } from '../../shared';
 import { Router } from '@angular/router';
+import { LoginService } from '../../shared';
 
 export class AuthExpiredInterceptor implements HttpInterceptor {
 
     constructor(private injector: Injector) {
     }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(tap(
             (event: HttpEvent<any>) => {
             },
@@ -22,7 +22,7 @@ export class AuthExpiredInterceptor implements HttpInterceptor {
                         const stripedPath = router.parseUrl(router.url)
                             .root.children['primary']
                             .segments
-                            .map(it => it.path)
+                            .map((it) => it.path)
                             .join('/');
                         // when user is anonymous he get 401 when request account, and can't reset password
                         if (stripedPath !== 'password/setup' && stripedPath !== 'reset/finish') {
@@ -31,7 +31,7 @@ export class AuthExpiredInterceptor implements HttpInterceptor {
                         }
                     }
                 }
-            }
+            },
         ));
     }
 }

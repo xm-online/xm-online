@@ -7,17 +7,17 @@ import { MultilingualInputOptions } from './multilingual-input-options.model';
 
 @Component({
     selector: 'xm-multilingual-input-widget',
-    templateUrl: 'multilingual-input.component.html'
+    templateUrl: 'multilingual-input.component.html',
 })
 export class MultilingualInputComponent implements OnInit {
 
-    @Input() layoutNode: any;
-    options: MultilingualInputOptions;
+    @Input() public layoutNode: any;
+    public options: MultilingualInputOptions;
 
-    currentLanguage: any;
-    languages: any[];
-    controlValue: any;
-    text: string;
+    public currentLanguage: any;
+    public languages: any[];
+    public controlValue: any;
+    public text: string;
 
     constructor(private jsf: JsonSchemaFormService,
                 private changeDetectorRef: ChangeDetectorRef,
@@ -25,10 +25,10 @@ export class MultilingualInputComponent implements OnInit {
                 private xmConfigService: XmConfigService) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.options = this.layoutNode.options || {};
         this.jsf.initializeControl(this);
-        this.controlValue = this.controlValue.filter(v => v.languageKey);
+        this.controlValue = this.controlValue.filter((v) => v.languageKey);
 
         this.languageHelper.getAll().then((languages) => {
             this.xmConfigService.getUiConfig().subscribe((config) => {
@@ -40,27 +40,27 @@ export class MultilingualInputComponent implements OnInit {
         });
     }
 
-    onChangeLanguage(lang) {
+    public onChangeLanguage(lang): void {
         this.currentLanguage = lang;
-        const currentLanguageItem = this.controlValue.filter(v => v.languageKey === this.currentLanguage).shift();
+        const currentLanguageItem = this.controlValue.filter((v) => v.languageKey === this.currentLanguage).shift();
         this.text = currentLanguageItem ? currentLanguageItem.name : '';
     }
 
-    onChangeText() {
-        const currentLanguageItem = this.controlValue.filter(v => v.languageKey === this.currentLanguage).shift();
+    public onChangeText(): void {
+        const currentLanguageItem = this.controlValue.filter((v) => v.languageKey === this.currentLanguage).shift();
         if (currentLanguageItem) {
             currentLanguageItem.name = this.text;
         } else {
             this.controlValue.push({
                 languageKey: this.currentLanguage,
-                name: this.text
+                name: this.text,
             });
         }
         this.updateFormArrayComponent(this.controlValue);
     }
 
     // TODO: move it into the util class
-    private updateFormArrayComponent(item: any) {
+    private updateFormArrayComponent(item: any): void {
         const formArray: any = this.jsf.getFormControl(this);
         while (formArray.value.length) {
             formArray.removeAt(0);

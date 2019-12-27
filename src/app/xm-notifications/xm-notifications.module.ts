@@ -8,17 +8,17 @@ import { NotificationsService } from './shared/notifications.service';
 @NgModule({
     imports: [
         CommonModule,
-        XmSharedModule
+        XmSharedModule,
     ],
     declarations: [
-        NotificationsComponent
+        NotificationsComponent,
     ],
     exports: [
-        NotificationsComponent
+        NotificationsComponent,
     ],
     providers: [
-        NotificationsService
-    ]
+        NotificationsService,
+    ],
 })
 export class XmNotificationsModule {
 }

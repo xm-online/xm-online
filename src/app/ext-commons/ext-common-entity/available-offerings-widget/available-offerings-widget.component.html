@@ -1,17 +1,17 @@
-<div class="header text-center" *ngIf="config.name">
+<div *ngIf="config.name" class="header text-center">
   <h3 class="title">{{config.name}}</h3>
 </div>
 
-<div class="row" *ngFor="let i of rows">
-  <div [ngClass]="'col-sm-' + (12 / rowSize)"
-       *ngFor="let offering of offerings | slice:(i * rowSize):(i + 1) * rowSize">
+<div *ngFor="let i of rows" class="row">
+  <div *ngFor="let offering of offerings | slice:(i * rowSize):(i + 1) * rowSize"
+       [ngClass]="'col-sm-' + (12 / rowSize)">
     <div class="card card-product">
       <div class="card-header card-header-image">
-        <img class="img" [src]="resolveAvatarUrl(offering)" *ngIf="resolveAvatarUrl(offering)">
+        <img *ngIf="resolveAvatarUrl(offering)" [src]="resolveAvatarUrl(offering)" class="img">
       </div>
       <div class="card-body">
         <div class="card-actions">
-          <button type="button" class="btn btn-danger btn-simple fix-broken-card">
+          <button class="btn btn-danger btn-simple fix-broken-card" type="button">
             <i class="material-icons">build</i>
           </button>
         </div>
@@ -22,7 +22,7 @@
       <div class="card-footer">
         <div class="card-description">
           <h4 class="offering-description">{{offering.description}}</h4>
-          <button class="btn btn-primary btn-round" *ngIf="config.action?.enabled" (click)="onAction(offering)">
+          <button (click)="onAction(offering)" *ngIf="config.action?.enabled" class="btn btn-primary btn-round">
             {{config.action.name | i18nName: principal}}
           </button>
         </div>

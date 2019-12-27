@@ -7,6 +7,6 @@ export const metricsRoute: Route = {
     data: {
         privileges: {value: ['ROUTE.GET_LIST']},
         pageTitle: 'global.menu.admin.main',
-        pageSubTitleTrans: 'global.menu.admin.metrics'
-    }
+        pageSubTitleTrans: 'global.menu.admin.metrics',
+    },
 };

@@ -1,27 +1,26 @@
-import {Location} from '@angular/common';
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
-import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {TranslateService} from '@ngx-translate/core';
-import {JhiEventManager} from 'ng-jhipster';
+import { Location } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
+import { JhiEventManager } from 'ng-jhipster';
 import { Observable, of, Subscription } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import swal from 'sweetalert2';
 
-import {ContextService, I18nNamePipe, JhiLanguageHelper, LoginService, Principal} from '../../shared/';
-import {XmConfigService} from '../../shared/spec/config.service';
-import {Dashboard, DashboardWrapperService} from '../../xm-dashboard';
-import { XmEntitySpecWrapperService } from '../../xm-entity';
-import {DEBUG_INFO_ENABLED, VERSION, XM_EVENT_LIST} from '../../xm.constants';
-import {transpilingForIE} from '../../shared/jsf-extention/jsf-attributes-helper';
+import { ContextService, I18nNamePipe, JhiLanguageHelper, LoginService, Principal } from '../../shared/';
 import { PoweredBy } from '../../shared/components/powered-by/powered-by.model';
-
+import { transpilingForIE } from '../../shared/jsf-extention/jsf-attributes-helper';
+import { XmConfigService } from '../../shared/spec/config.service';
+import { Dashboard, DashboardWrapperService } from '../../xm-dashboard';
+import { XmEntitySpecWrapperService } from '../../xm-entity';
+import { DEBUG_INFO_ENABLED, VERSION, XM_EVENT_LIST } from '../../xm.constants';
 
 const misc: any = {
     navbar_menu_visible: 0,
     active_collapse: true,
-    disabled_collapse_init: 0
+    disabled_collapse_init: 0,
 };
 
 declare let $: any;
@@ -29,43 +28,36 @@ declare let $: any;
 @Component({
     moduleId: module.id,
     selector: 'xm-sidebar-cmp',
-    templateUrl: './sidebar.component.html'
+    templateUrl: './sidebar.component.html',
 })
 
 export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
 
+    public toggleButton: any;
+    public dashboardGroups: any[];
+    public uiConfig: any;
+    public inProduction: boolean;
+    public isNavbarCollapsed: boolean;
+    public languages: any[];
+    public swaggerEnabled: boolean;
+    public modalRef: NgbModalRef;
+    public version: string;
+    public applications: Promise<any[]>;
+    public dashboards: Dashboard[];
+    public location: Location;
+    public psMainPanel: any;
+    public isApplicationExists: boolean;
+    public tenantName: 'XM^online';
+    public userDescription$: Observable<any>;
+    public tenantLogoUrl: '../assets/img/logo-xm-online.png';
+    public iconsInMenu: false;
+    public poweredByConfig: PoweredBy;
+    @ViewChild('navbar-cmp', {static: false}) public button;
     private authSubscription: Subscription;
     private unauthSubscription: Subscription;
     private dashboardSubscription: Subscription;
     private contextSubscription: Subscription;
     private logoutSubscribtion: Subscription;
-
-    public toggleButton;
-
-    dashboardGroups: any[];
-    uiConfig: any;
-
-    inProduction: boolean;
-    isNavbarCollapsed: boolean;
-    languages: any[];
-    swaggerEnabled: boolean;
-    modalRef: NgbModalRef;
-    version: string;
-    applications: Promise<any[]>;
-    dashboards: Dashboard[];
-    location: Location;
-
-    psMainPanel: any;
-
-    isApplicationExists: boolean;
-
-    tenantName: 'XM^online';
-    userDescription$: Observable<any>;
-    tenantLogoUrl: '../assets/img/logo-xm-online.png';
-    iconsInMenu: false;
-    poweredByConfig: PoweredBy;
-
-    @ViewChild('navbar-cmp', {static: false}) button;
 
     constructor(private loginService: LoginService,
                 private languageHelper: JhiLanguageHelper,
@@ -93,8 +85,8 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     }
 
-    ngOnInit() {
-        this.xmConfigService.getUiConfig().subscribe(result => {
+    public ngOnInit(): void {
+        this.xmConfigService.getUiConfig().subscribe((result) => {
             this.uiConfig = result;
             this.languageHelper.getAll().then((languages) => {
                 this.languages = (result && result.langs) ? result.langs : languages;
@@ -114,13 +106,13 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.tenantName += ' ' + this.version;
             }
             this.poweredByConfig = result.poweredBy || null;
-        }, error => {
+        }, (error) => {
             console.log(error);
             this.tenantLogoUrl = '../assets/img/logo-xm-online.png';
             this.tenantName = 'XM^online';
         });
 
-        this.principal.getAuthenticationState().subscribe(state => {
+        this.principal.getAuthenticationState().subscribe((state) => {
             if (state) {
                 // no need to call this.loadData() only on manual refresh, otherwise method will be invoked by XM_EVENT_LIST.XM_SUCCESS_AUTH
                 const sideBarMenuConfig = this.uiConfig && this.uiConfig.sidebarMenu || null;
@@ -132,7 +124,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         console.log('Destroy: sidebar');
         this.applications = null;
         this.dashboards = null;
@@ -147,72 +139,11 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
         }
     }
 
-    private registerLogoutEvent() {
-        this.logoutSubscribtion = this.eventManager.subscribe(XM_EVENT_LIST.XM_LOGOUT, () => {
-            this.logout(true);
-        });
-    }
-
-    private registerUnauthorized() {
-        this.unauthSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_UNAUTHORIZED, () => {
-            this.logout(true);
-        });
-    }
-
-    private registerChangeAuth() {
-        this.authSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, () => {
-            // console.log('Event: %o', event);
-            this.loadData();
-            // this.router.navigate([`/dashboard`, result[0].id])
-        });
-    }
-
-    private registerChangeInDashboards() {
-        this.dashboardSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_DASHBOARD_LIST_MODIFICATION,
-            () => this.getDashboards(true));
-    }
-
-    private loadData() {
-        // optimization, load data only if it is empty;
-        if (!this.dashboards || this.dashboards.length === 0) {
-            this.principal.hasPrivileges(['XMENTITY_SPEC.GET'])
-                .then(result => {
-                    if (result) {
-                        // no need to load applciations, if they are loaded
-                        if (!this.applications) {
-                            this.applications = this.xmEntitySpecWrapperService.spec(true).then(spec => {
-                                let applications = spec.types.filter(t => t.isApp)
-                                    .filter(t => this.principal.hasPrivilegesInline(['APPLICATION.' + t.key]));
-                                this.isApplicationExists = applications.length > 0;
-                                return applications;
-                            });
-                            // this.applications.then(() => this.collapseTab());
-                        }
-                    }
-                });
-
-            this.principal.hasPrivileges(['DASHBOARD.GET_LIST'])
-                .then(result => {
-                    // no need to load dashboards, if they are loaded
-                    result && this.dashboardWrapperService.dashboards(true).then((dashboards) => {
-                        if (dashboards && dashboards.length) {
-                            this.dashboards = dashboards.sort((a, b) => this.sortDashboards(a, b))
-                        } else {
-                            this.dashboards = dashboards;
-                        }
-                        this.groupDashboards();
-                        this.collapseTab();
-                    });
-                });
-        }
-
-    }
-
-    isAuthenticated() {
+    public isAuthenticated(): boolean {
         return this.principal.isAuthenticated();
     }
 
-    logout(fast?: boolean) {
+    public logout(fast?: boolean): void {
 
         const logoutAction = () => {
             this.loginService.logout();
@@ -234,39 +165,28 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
                 confirmButtonClass: 'btn mat-raised-button btn-primary',
                 cancelButtonClass: 'btn mat-raised-button',
                 confirmButtonText: this.translateService.instant('global.common.yes-exit'),
-                cancelButtonText: this.translateService.instant('global.common.cancel')
-            }).then((result) => result.value ? logoutAction() : console.log('Cancel'))
+                cancelButtonText: this.translateService.instant('global.common.cancel'),
+            }).then((result) => result.value ? logoutAction() : console.log('Cancel'));
         }
 
     }
 
-    getDashboards(force?: boolean) {
+    public getDashboards(force?: boolean): void {
         this.dashboardWrapperService.dashboards(force).then((result) => {
             this.dashboards = result;
             this.collapseTab();
         });
     }
 
-    getImageUrl() {
+    public getImageUrl(): String {
         return this.isAuthenticated() ? this.principal.getImageUrl() : null;
     }
 
-    isNotMobileMenu() {
+    public isNotMobileMenu(): boolean {
         return $(window).width() < 991;
     }
 
-    private collapseTab() {
-        setTimeout(() => {
-            const sidebarMenuActive = $('.sidebar .nav > li.active > a:not([data-toggle="collapse"])');
-            let $sidebarParent, collapseId;
-
-            sidebarMenuActive && ($sidebarParent = sidebarMenuActive.parents('.collapse'));
-            $sidebarParent && (collapseId = $sidebarParent.siblings('a').attr('href'));
-            collapseId && $(collapseId).collapse('show');
-        }, 100);
-    }
-
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
         if ($('body').hasClass('sidebar-mini')) {
@@ -298,12 +218,114 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     }
 
+    public getDashboardName(dashboard): string {
+        let name = dashboard.name;
+        if (dashboard.config && dashboard.config.name) {
+            name = dashboard.config.name;
+        }
+        if (dashboard.config && dashboard.config.menu && dashboard.config.menu.name) {
+            name = dashboard.config.menu.name;
+        }
+        return this.i18nNamePipe.transform(name, this.principal);
+    }
+
+    public getDashboardIcon(dashboard): string {
+        let icon = '';
+        if (dashboard && dashboard.config && dashboard.config.icon) {
+            if (dashboard.config.icon === 'no-icon') {
+                icon = '';
+            } else {
+                icon = `<i class="material-icons m-0 w-30" style="width: 30px;">${dashboard.config.icon}</i>`;
+            }
+        } else {
+            icon = this.getDashboardName(dashboard).charAt(0);
+        }
+        return icon;
+    }
+
+    public getApplicationName(application): string {
+        const name = application.pluralName ? application.pluralName : application.name;
+        return this.i18nNamePipe.transform(name, this.principal);
+    }
+
+    private registerLogoutEvent(): void {
+        this.logoutSubscribtion = this.eventManager.subscribe(XM_EVENT_LIST.XM_LOGOUT, () => {
+            this.logout(true);
+        });
+    }
+
+    private registerUnauthorized(): void {
+        this.unauthSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_UNAUTHORIZED, () => {
+            this.logout(true);
+        });
+    }
+
+    private registerChangeAuth(): void {
+        this.authSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, () => {
+            // console.log('Event: %o', event);
+            this.loadData();
+            // this.router.navigate([`/dashboard`, result[0].id])
+        });
+    }
+
+    private registerChangeInDashboards(): void {
+        this.dashboardSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_DASHBOARD_LIST_MODIFICATION,
+            () => this.getDashboards(true));
+    }
+
+    private loadData(): void {
+        // optimization, load data only if it is empty;
+        if (!this.dashboards || this.dashboards.length === 0) {
+            this.principal.hasPrivileges(['XMENTITY_SPEC.GET'])
+                .then((result) => {
+                    if (result) {
+                        // no need to load applciations, if they are loaded
+                        if (!this.applications) {
+                            this.applications = this.xmEntitySpecWrapperService.spec(true).then((spec) => {
+                                const applications = spec.types.filter((t) => t.isApp)
+                                    .filter((t) => this.principal.hasPrivilegesInline(['APPLICATION.' + t.key]));
+                                this.isApplicationExists = applications.length > 0;
+                                return applications;
+                            });
+                            // this.applications.then(() => this.collapseTab());
+                        }
+                    }
+                });
+
+            this.principal.hasPrivileges(['DASHBOARD.GET_LIST'])
+                .then((result) => {
+                    // no need to load dashboards, if they are loaded
+                    result && this.dashboardWrapperService.dashboards(true).then((dashboards) => {
+                        if (dashboards && dashboards.length) {
+                            this.dashboards = dashboards.sort((a, b) => this.sortDashboards(a, b));
+                        } else {
+                            this.dashboards = dashboards;
+                        }
+                        this.groupDashboards();
+                        this.collapseTab();
+                    });
+                });
+        }
+
+    }
+
+    private collapseTab(): void {
+        setTimeout(() => {
+            const sidebarMenuActive = $('.sidebar .nav > li.active > a:not([data-toggle="collapse"])');
+            let $sidebarParent, collapseId;
+
+            sidebarMenuActive && ($sidebarParent = sidebarMenuActive.parents('.collapse'));
+            $sidebarParent && (collapseId = $sidebarParent.siblings('a').attr('href'));
+            collapseId && $(collapseId).collapse('show');
+        }, 100);
+    }
+
     private sortById(a, b): number {
         if (a.id > b.id) {
-            return -1
+            return -1;
         }
         if (a.id < b.id) {
-            return 1
+            return 1;
         }
         return 0;
     }
@@ -313,10 +335,10 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
         const cfgB: any = b.config;
         if (cfgA && cfgA.orderIndex && cfgB && cfgB.orderIndex) {
             if (cfgA.orderIndex > cfgB.orderIndex) {
-                return 1
+                return 1;
             }
             if (cfgA.orderIndex < cfgB.orderIndex) {
-                return -1
+                return -1;
             }
             return 0;
         }
@@ -325,10 +347,10 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
 
     private sortByName(a, b): number {
         if (a.name > b.name) {
-            return 1
+            return 1;
         }
         if (a.name < b.name) {
-            return -1
+            return -1;
         }
         return 0;
     }
@@ -348,41 +370,41 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
         return 0;
     }
 
-    private groupDashboards() {
+    private groupDashboards(): void {
         this.dashboardGroups = [];
         if (!this.dashboards) {
             return;
         }
-        for (const dashboard of this.dashboards.filter(d => this.checkCondition(d))) {
+        for (const dashboard of this.dashboards.filter((d) => this.checkCondition(d))) {
             const menu = dashboard.config && dashboard.config.menu ? dashboard.config.menu : null;
             const groupIsLink = menu && menu.groupIsLink ? menu.groupIsLink : false;
             const orderIndex = menu && menu.group && menu.group.orderIndex ?
                 menu.group.orderIndex :
                 this.dashboards
-                    .filter(d => this.checkCondition(d))
+                    .filter((d) => this.checkCondition(d))
                     .length + 1;
             let groupKey = !menu ? 'DASHBOARD' : menu.group.key;
             const icon = menu && menu.group && menu.group.icon ? menu.group.icon : null;
             if (groupIsLink) {
                 groupKey = dashboard.config && dashboard.config.slug ? dashboard.config.slug : null;
             }
-            let group = this.dashboardGroups.filter(g => g.key === groupKey).shift();
+            let group = this.dashboardGroups.filter((g) => g.key === groupKey).shift();
             if (!group) {
                 group = {
                     key: groupKey,
                     name: menu && menu.group ? menu.group.name : null,
-                    groupIsLink: groupIsLink,
+                    groupIsLink,
                     config: {
-                        orderIndex: orderIndex,
-                        icon: icon
+                        orderIndex,
+                        icon,
                     },
-                    dashboards: []
+                    dashboards: [],
                 };
                 this.dashboardGroups.push(group);
                 this.dashboardGroups.sort((a, b) => this.sortDashboards(a, b));
             }
             group.dashboards.push(dashboard);
-            this.dashboardGroups.map(d => {
+            this.dashboardGroups.map((d) => {
                 if (d.dashboards && d.dashboards.length > 0) {
                     d.dashboards.sort((a, b) => this.sortDashboards(a, b));
                 }
@@ -420,37 +442,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
                 }),
                 catchError(() => {
                     return of();
-                })
+                }),
             );
-    }
-
-    getDashboardName(dashboard) {
-        let name = dashboard.name;
-        if (dashboard.config && dashboard.config.name) {
-            name = dashboard.config.name;
-        }
-        if (dashboard.config && dashboard.config.menu && dashboard.config.menu.name) {
-            name = dashboard.config.menu.name;
-        }
-        return this.i18nNamePipe.transform(name, this.principal);
-    }
-
-    getDashboardIcon(dashboard) {
-        let icon = '';
-        if (dashboard && dashboard.config && dashboard.config.icon) {
-            if (dashboard.config.icon === 'no-icon') {
-                icon = '';
-            } else {
-                icon = `<i class="material-icons m-0 w-30" style="width: 30px;">${dashboard.config.icon}</i>`
-            }
-        } else {
-            icon = this.getDashboardName(dashboard).charAt(0);
-        }
-        return icon;
-    }
-
-    getApplicationName(application) {
-        const name = application.pluralName ? application.pluralName : application.name;
-        return this.i18nNamePipe.transform(name, this.principal);
     }
 }

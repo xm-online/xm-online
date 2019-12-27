@@ -1,21 +1,24 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { I18nNamePipe, JhiLanguageHelper, Principal } from '../../shared';
-import { Spec, XmEntitySpecWrapperService } from '../../xm-entity';
 import { Dashboard, DashboardService, DashboardWrapperService, Widget } from '../';
+import { environment } from '../../../environments/environment';
+import { I18nNamePipe, JhiLanguageHelper, Principal } from '../../shared';
 import { XmConfigService } from '../../shared/spec/config.service';
-import {environment} from '../../../environments/environment';
+import { Spec, XmEntitySpecWrapperService } from '../../xm-entity';
 
 @Component({
     selector: 'xm-dashboard',
     templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.scss']
+    styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
+    public dashboard: Dashboard = new Dashboard();
+    public showLoader: boolean;
+    public spec: Spec;
     // Back compatibility matrix
-    private mapWidgets = {
+    private mapWidgets: any = {
         'xm-widget-available-offerings': 'ext-common-entity/xm-widget-available-offerings',
         'xm-widget-clock': 'ext-common/xm-widget-clock',
         'xm-widget-general-countries': 'ext-common-entity/xm-widget-general-countries',
@@ -38,16 +41,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
         'xm-widget-zendesk-tickets': 'ext-zendesk/xm-widget-zendesk-tickets',
         'xm-widget-coin-wallet-escrow': 'ext-crypto-wallet/xm-widget-coin-wallet-escrow',
         'xm-widget-news': 'ext-common/xm-widget-news',
-        'xm-widget-ico': 'ext-ico/xm-widget-ico'
+        'xm-widget-ico': 'ext-ico/xm-widget-ico',
     };
-
     private routeData: any;
     private routeSubscription: any;
     private routeDataSubscription: any;
-
-    dashboard: Dashboard = new Dashboard();
-    showLoader: boolean;
-    spec: Spec;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -60,12 +58,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 private i18nNamePipe: I18nNamePipe) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.xmEntitySpecWrapperService.spec().then((spec) => this.spec = spec);
-        this.routeDataSubscription = this.route.data.subscribe(data => {
+        this.routeDataSubscription = this.route.data.subscribe((data) => {
             this.routeData = data;
         });
-        this.routeSubscription = this.route.params.subscribe(params => {
+        this.routeSubscription = this.route.params.subscribe((params) => {
             console.log('-------------- dashboard--------', params);
             if (params.id) {
                 this.load(params.id);
@@ -76,16 +74,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.routeSubscription.unsubscribe();
         this.routeDataSubscription.unsubscribe();
     }
 
-    rootRedirect() {
+    public rootRedirect(): void {
         this.principal.identity().then(() =>
-            this.principal.hasPrivileges(['DASHBOARD.GET_LIST']).then(result => {
+            this.principal.hasPrivileges(['DASHBOARD.GET_LIST']).then((result) => {
                 if (result) {
-                    this.xmConfigService.getUiConfig().subscribe(config => {
+                    this.xmConfigService.getUiConfig().subscribe((config) => {
                         if ('defaultDashboard' in config && config.defaultDashboard.length) {
                             if (typeof config.defaultDashboard === 'string') {
                                 const slugs = [];
@@ -95,31 +93,31 @@ export class DashboardComponent implements OnInit, OnDestroy {
                                 this.checkAndRedirect(config.defaultDashboard);
                             }
                         } else {
-                            if (!environment.production) {console.log(`rootRedirect`)}
+                            if (!environment.production) {console.log(`rootRedirect`);}
                             this.dashboardWrapperService.dashboards().then((dashboards) => {
                                     if (dashboards && dashboards.length && dashboards[0].id) {
                                         const key = dashboards[0].config && dashboards[0].config.slug
                                             ? dashboards[0].config.slug : dashboards[0].id;
                                         this.router.navigate([`/dashboard`, key]);
                                     }
-                                }
+                                },
                             );
                         }
                     });
                 }
-            })
+            }),
         );
     }
 
-    load(idOrSlug) {
+    public load(idOrSlug): void {
         this.showLoader = true;
-        if (!environment.production) {console.log(`load ${idOrSlug}`)}
+        if (!environment.production) {console.log(`load ${idOrSlug}`);}
         this.dashboardWrapperService.dashboards().then((dashboards) => {
                 if (dashboards && dashboards.length) {
                     this.dashboard = dashboards.filter((d) => (d.config && d.config.slug === idOrSlug)
                         || d.id === parseInt(idOrSlug, 10)).shift();
                     // TODO temporary fix for override widget variables
-                    this.dashboard =  JSON.parse(JSON.stringify(this.dashboard || ''));
+                    this.dashboard = JSON.parse(JSON.stringify(this.dashboard || ''));
                     if (this.dashboard && this.dashboard.id) {
                         this.loadDashboard(this.dashboard.id);
                     } else {
@@ -127,19 +125,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
                         this.rootRedirect();
                     }
                 }
-            }
+            },
         );
     }
 
-    loadDashboard(id) {
-        if (!environment.production) {console.log(`load dashboard ${id}`)}
+    public loadDashboard(id): void {
+        if (!environment.production) {console.log(`load dashboard ${id}`);}
 
-        this.dashboardService.find(id).subscribe(result => {
+        this.dashboardService.find(id).subscribe((result) => {
                 const widgets =
                     (result.body && result.body.widgets ? result.body.widgets : [])
                         .sort((a, b) => this.sortByOrderIndex(a, b));
                 Object.assign(this.dashboard, {
-                    widgets: this.getWidgetComponent(widgets)
+                    widgets: this.getWidgetComponent(widgets),
                 });
 
                 if (this.dashboard.layout && this.dashboard.layout.layout) {
@@ -163,7 +161,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private findAndEnrichWidget(item: any, widgets: any[]): void {
         Object.keys(item).some((k) => {
             if (k === 'widget') {
-                item.widget = widgets.find((w) =>  w.id === item[k]);
+                item.widget = widgets.find((w) => w.id === item[k]);
             }
 
             if (item[k] && typeof item[k] === 'object') {
@@ -181,22 +179,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
         return dashboardName || dashboardMenuLabel;
     }
 
-    private defaultGrid(el: Widget) {
+    private defaultGrid(el: Widget): { class: "row"; content: { widget: Widget; class: string }[] } {
         return {
             class: 'row',
             content: [
                 {
                     class: 'col-sm-12',
-                    widget: el
-                }
-            ]
+                    widget: el,
+                },
+            ],
         };
     }
 
     private checkAndRedirect(slugs: any[]): void {
         const configSlugs = slugs instanceof Array ? slugs : [];
         let slugToGo = null;
-        if (!environment.production) {console.log(`checkAndRedirect`)}
+        if (!environment.production) {console.log(`checkAndRedirect`);}
         this.dashboardWrapperService.dashboards().then((dashboards) => {
             configSlugs.forEach((slug) => {
                 if (dashboards && dashboards.length) {
@@ -223,7 +221,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     private getWidgetComponent(widgets: Widget[]): Widget[] {
-        return widgets.map(widget => {
+        return widgets.map((widget) => {
             if (typeof this.mapWidgets[widget.selector] === 'string' || this.mapWidgets[widget.selector] instanceof String) {
                 widget.selector = this.mapWidgets[widget.selector];
             } else {
@@ -248,16 +246,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
         const aIndex = this.getOrderIndex(itemA.config ? itemA.config : {});
         const bIndex = this.getOrderIndex(itemB.config ? itemB.config : {});
         if (aIndex > bIndex) {
-            return 1
+            return 1;
         }
         if (aIndex < bIndex) {
-            return -1
+            return -1;
         }
         return 0;
     }
 
-    private getOrderIndex({orderIndex = 100}: {orderIndex: number}): number {
+    private getOrderIndex({orderIndex = 100}: { orderIndex: number }): number {
         return orderIndex;
     }
 }
-

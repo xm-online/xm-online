@@ -1,60 +1,68 @@
 @import "../themes/material-cyan.css";
 
 .sidebar .nav p,
-body.xm-body
-{
-  font-size: 12px;
+body.xm-body {
+    font-size: 12px;
 }
+
 .xm-navbar-container .navbar-container-part.title-part {
-  font-size: 16px !important;
+    font-size: 16px !important;
 }
-.table>thead>tr>th {
-  font-size: 0.95rem !important;
+
+.table > thead > tr > th {
+    font-size: 0.95rem !important;
 }
+
 .card {
-  font-size: .775rem;
+    font-size: .775rem;
 }
+
 .card-custom .card-title {
-  font-size: 20px !important;
+    font-size: 20px !important;
 }
+
 .h4, h4 {
-  font-size: 1.025rem;
+    font-size: 1.025rem;
 }
 
 .sidebar .nav {
-  margin-top: 10px !important;
-}
-.sidebar .nav li a {
-  margin: 0 5px 0 15px !important;
+    margin-top: 10px !important;
 }
 
-.table>tbody>tr>td,
-.table>tbody>tr>th,
-.table>tfoot>tr>td,
-.table>tfoot>tr>th,
-.table>thead>tr>td,
-.table>thead>tr>th {
-  padding: 4px 8px !important;
+.sidebar .nav li a {
+    margin: 0 5px 0 15px !important;
+}
+
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
+    padding: 4px 8px !important;
 }
 
 .card [class*=card-header-] .card-icon, .card [class*=card-header-] .card-text {
-  padding: 10px !important;
-  margin-top: -15px !important;
+    padding:    10px !important;
+    margin-top: -15px !important;
 }
 
 xm-specification-mng .nav-pills.justify-content-center {
-  padding-left: 0 !important;
-  justify-content: left !important;
-  margin-top: -28px;
-  margin-bottom: -8px;
+    padding-left:    0 !important;
+    justify-content: left !important;
+    margin-top:      -28px;
+    margin-bottom:   -8px;
 }
+
 xm-specification-mng .nav-pills.justify-content-center .nav-item i {
-  padding: 0 8px;
+    padding: 0 8px;
 }
+
 xm-specification-mng .nav-pills.justify-content-center .nav-link {
-  min-width: 76px;
+    min-width: 76px;
 }
+
 xm-specification-mng .card-body > .text-center.pb-3 {
-  text-align: left !important;
-  padding-bottom: 10px !important;
+    text-align:     left !important;
+    padding-bottom: 10px !important;
 }

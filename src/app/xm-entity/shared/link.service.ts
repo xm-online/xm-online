@@ -11,40 +11,40 @@ import { Link } from './link.model';
 @Injectable()
 export class LinkService {
 
-    private resourceUrl = SERVER_API_URL + 'entity/api/links';
-    private resourceSearchUrl = SERVER_API_URL + 'entity/api/_search/links';
+    private resourceUrl: string = SERVER_API_URL + 'entity/api/links';
+    private resourceSearchUrl: string = SERVER_API_URL + 'entity/api/_search/links';
 
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils) {
     }
 
-    create(link: Link): Observable<HttpResponse<Link>> {
+    public create(link: Link): Observable<HttpResponse<Link>> {
         const copy = this.convert(link);
         return this.http.post<Link>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Link>) => this.convertResponse(res)));
     }
 
-    update(link: Link): Observable<HttpResponse<Link>> {
+    public update(link: Link): Observable<HttpResponse<Link>> {
         const copy = this.convert(link);
         return this.http.put<Link>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Link>) => this.convertResponse(res)));
     }
 
-    find(id: number): Observable<HttpResponse<Link>> {
+    public find(id: number): Observable<HttpResponse<Link>> {
         return this.http.get<Link>(`${this.resourceUrl}/${id}`, {observe: 'response'}).pipe(
             map((res: HttpResponse<Link>) => this.convertResponse(res)));
     }
 
-    query(req?: any): Observable<HttpResponse<Link[]>> {
+    public query(req?: any): Observable<HttpResponse<Link[]>> {
         const options = createRequestOption(req);
         return this.http.get<Link[]>(this.resourceUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Link[]>) => this.convertArrayResponse(res)));
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
+    public delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 
-    search(req?: any): Observable<HttpResponse<Link[]>> {
+    public search(req?: any): Observable<HttpResponse<Link[]>> {
         const options = createRequestOption(req);
         return this.http.get<Link[]>(this.resourceSearchUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Link[]>) => this.convertArrayResponse(res)));

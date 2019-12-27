@@ -10,7 +10,7 @@ export class Widget implements BaseEntity {
         public isPublic?: boolean,
         public dashboard?: Dashboard,
         public module?: string,
-        public component?: any
+        public component?: any,
     ) {
         this.isPublic = false;
     }

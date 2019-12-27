@@ -1,35 +1,35 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { JhiEventManager } from 'ng-jhipster';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { ContextService, XmConfigService } from '../../../shared';
-import {FullLinkSpec, LinkSpec, Spec, XmEntity, XmEntityService, XmEntitySpec} from '../../../xm-entity';
+import { AttachmentsView, EntityDetailLayout, EntityUiConfig } from '../../../shared/spec/xm-ui-config-model';
+import { FullLinkSpec, LinkSpec, Spec, XmEntity, XmEntityService, XmEntitySpec } from '../../../xm-entity';
 import { DEBUG_INFO_ENABLED } from '../../../xm.constants';
-import {AttachmentsView, EntityDetailLayout, EntityUiConfig} from '../../../shared/spec/xm-ui-config-model';
 
 @Component({
     selector: 'xm-entity-widget',
     templateUrl: './entity-widget.component.html',
-    styleUrls: ['./entity-widget.component.scss']
+    styleUrls: ['./entity-widget.component.scss'],
 })
 export class EntityWidgetComponent implements OnInit, OnDestroy {
 
-    config: any;
-    grid: any;
-    xmEntity: XmEntity;
-    xmEntitySpec: XmEntitySpec;
-    spec: Spec;
-    backLinkSpecs: LinkSpec[];
-    showLoader: boolean;
-    entityUiConfig: EntityUiConfig;
+    public config: any;
+    public grid: any;
+    public xmEntity: XmEntity;
+    public xmEntitySpec: XmEntitySpec;
+    public spec: Spec;
+    public backLinkSpecs: LinkSpec[];
+    public showLoader: boolean;
+    public entityUiConfig: EntityUiConfig;
     // TODO for demo
-    tenant: string;
+    public tenant: string;
 
-    backLinkSpecs$ = new BehaviorSubject<FullLinkSpec[]>([]);
-    linkSpecs$ = new BehaviorSubject<FullLinkSpec[]>([]);
+    public backLinkSpecs$ = new BehaviorSubject<FullLinkSpec[]>([]);
+    public linkSpecs$ = new BehaviorSubject<FullLinkSpec[]>([]);
 
-    xmEntity$: Observable<XmEntity>;
+    public xmEntity$: Observable<XmEntity>;
 
     private modificationSubscription: Subscription;
 
@@ -40,7 +40,7 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
         this.registerModificationSubscription();
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.showLoader = true;
         if (DEBUG_INFO_ENABLED) {
             console.log(`DBG entity  e=%o`, this.xmEntity);
@@ -49,79 +49,27 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
         this.loadEntity();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.eventManager.destroy(this.modificationSubscription);
     }
 
-    private registerModificationSubscription() {
-        this.modificationSubscription = this.eventManager.subscribe('xmEntityDetailModification', () => this.loadEntity());
-    }
-
-    private loadEntity() {
-        const xmEntityId = this.config.xmEntityId ? this.config.xmEntityId : this.contextService.get('xmEntityId');
-        if (!xmEntityId) {return}
-
-        this.xmEntity$ = this.xmEntityService.find(xmEntityId, {'embed': 'data'})
-            .pipe(
-                map(responce => responce.body),
-                tap((entity) => this.xmEntity = entity),
-                tap((entity) => this.xmEntitySpec = this.getXmEntitySpec(entity.typeKey)),
-                tap(() => DEBUG_INFO_ENABLED ? console.log(`DBG spec = %o`, this.xmEntitySpec) : () => {} ),
-                tap((entity) => this.backLinkSpecs = this.getBackLinkSpecs(entity.typeKey)),
-                tap(() => this.defineUiConfig()),
-                tap(() => this.linkSpecs$.next(
-                    this.xmEntitySpec && this.xmEntitySpec.links ?
-                        this.xmEntitySpec.links.map(spec => this.addInterfaceSpec(spec, this.entityUiConfig)) : []
-                    )
-                ),
-                tap(() => this.backLinkSpecs$.next(
-                    this.backLinkSpecs.map(spec => this.addInterfaceSpec(spec, this.entityUiConfig))
-                )),
-                tap((entity) => this.defineLayoutGrid(entity.typeKey))
-            )
-    }
-
-    defineUiConfig() {
+    public defineUiConfig(): void {
         this.xmConfigService.getUiConfig().subscribe((config) => {
             // TODO for demo
             this.tenant = config.name;
-            this.entityUiConfig = <EntityUiConfig>(config && config.applications
+            this.entityUiConfig = (config && config.applications
                 && config.applications.config
                 && config.applications.config.entities
-                && config.applications.config.entities.filter(e => e.typeKey === this.xmEntity.typeKey).shift());
+                && config.applications.config.entities.filter((e) => e.typeKey === this.xmEntity.typeKey).shift()) as EntityUiConfig;
         });
     }
 
-    private defineLayoutGrid(typeKey: string) {
-        let detailLayoutType: EntityDetailLayout = this.getXmEntitySpec(typeKey).dataSpec ? 'DEFAULT' : 'ALL-IN-ROW';
-        if (this.entityUiConfig && this.entityUiConfig.detailLayoutType) {
-            detailLayoutType = this.entityUiConfig.detailLayoutType;
-        }
-
-        this.grid = this.config.grid ?
-            this.config.grid :
-            this.getGridLayout(detailLayoutType, this.entityUiConfig
-                && this.entityUiConfig.attachments
-                && this.entityUiConfig.attachments.view);
-    }
-
-    getXmEntitySpec(typeKey: string) {
+    public getXmEntitySpec(typeKey: string): XmEntitySpec {
         const vTypeKey = typeKey ? typeKey : this.xmEntity.typeKey;
-        return this.spec.types.filter(t => t.key === vTypeKey).shift();
+        return this.spec.types.filter((t) => t.key === vTypeKey).shift();
     }
 
-    private addInterfaceSpec(linkSpec: LinkSpec, entityUiConfig: EntityUiConfig): FullLinkSpec {
-
-        const interfaceSpec = entityUiConfig && entityUiConfig.links && (entityUiConfig.links.items || [])
-            .filter(iSpec => iSpec.typeKey === linkSpec.key).shift();
-
-        return  {
-            model: linkSpec,
-            interface: interfaceSpec
-        };
-    }
-
-    getBackLinkSpecs(typeKey: string): LinkSpec[] {
+    public getBackLinkSpecs(typeKey: string): LinkSpec[] {
         const result: any = {};
 
         for (const xmEntitySpec of this.spec.types) {
@@ -133,7 +81,7 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
                 }
             }
         }
-        return (Object.keys(result).map(key => result[key]))
+        return (Object.keys(result).map((key) => result[key]))
             .filter((l) => !!l.backName)
             .map((l) => {
                 l.name = l.backName;
@@ -141,8 +89,7 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
             });
     }
 
-
-    getGridLayout(detailLayoutType: EntityDetailLayout, attachmentsView?: AttachmentsView): any[] {
+    public getGridLayout(detailLayoutType: EntityDetailLayout, attachmentsView?: AttachmentsView): any[] {
 
         let attachmentsComponent = 'attachment-grid';
 
@@ -179,5 +126,57 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
         });
 
         return grid;
+    }
+
+    private registerModificationSubscription(): void {
+        this.modificationSubscription = this.eventManager.subscribe('xmEntityDetailModification', () => this.loadEntity());
+    }
+
+    private loadEntity(): void {
+        const xmEntityId = this.config.xmEntityId ? this.config.xmEntityId : this.contextService.get('xmEntityId');
+        if (!xmEntityId) {return;}
+
+        this.xmEntity$ = this.xmEntityService.find(xmEntityId, {embed: 'data'})
+            .pipe(
+                map((responce) => responce.body),
+                tap((entity) => this.xmEntity = entity),
+                tap((entity) => this.xmEntitySpec = this.getXmEntitySpec(entity.typeKey)),
+                tap(() => DEBUG_INFO_ENABLED ? console.log(`DBG spec = %o`, this.xmEntitySpec) : () => {}),
+                tap((entity) => this.backLinkSpecs = this.getBackLinkSpecs(entity.typeKey)),
+                tap(() => this.defineUiConfig()),
+                tap(() => this.linkSpecs$.next(
+                    this.xmEntitySpec && this.xmEntitySpec.links ?
+                        this.xmEntitySpec.links.map((spec) => this.addInterfaceSpec(spec, this.entityUiConfig)) : [],
+                    ),
+                ),
+                tap(() => this.backLinkSpecs$.next(
+                    this.backLinkSpecs.map((spec) => this.addInterfaceSpec(spec, this.entityUiConfig)),
+                )),
+                tap((entity) => this.defineLayoutGrid(entity.typeKey)),
+            );
+    }
+
+    private defineLayoutGrid(typeKey: string): void {
+        let detailLayoutType: EntityDetailLayout = this.getXmEntitySpec(typeKey).dataSpec ? 'DEFAULT' : 'ALL-IN-ROW';
+        if (this.entityUiConfig && this.entityUiConfig.detailLayoutType) {
+            detailLayoutType = this.entityUiConfig.detailLayoutType;
+        }
+
+        this.grid = this.config.grid ?
+            this.config.grid :
+            this.getGridLayout(detailLayoutType, this.entityUiConfig
+                && this.entityUiConfig.attachments
+                && this.entityUiConfig.attachments.view);
+    }
+
+    private addInterfaceSpec(linkSpec: LinkSpec, entityUiConfig: EntityUiConfig): FullLinkSpec {
+
+        const interfaceSpec = entityUiConfig && entityUiConfig.links && (entityUiConfig.links.items || [])
+            .filter((iSpec) => iSpec.typeKey === linkSpec.key).shift();
+
+        return {
+            model: linkSpec,
+            interface: interfaceSpec,
+        };
     }
 }

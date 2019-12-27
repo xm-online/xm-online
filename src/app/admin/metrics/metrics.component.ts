@@ -8,34 +8,34 @@ import { JhiMetricsService } from './metrics.service';
 @Component({
     selector: 'xm-metrics',
     templateUrl: './metrics.component.html',
-    styleUrls: ['./metrics.component.scss']
+    styleUrls: ['./metrics.component.scss'],
 })
 export class JhiMetricsMonitoringComponent implements OnInit {
 
-    allMetrics: any[];
-    metrics: any = {};
-    cachesStats: any = {};
-    servicesStats: any = {};
-    updatingMetrics = true;
-    JCACHE_KEY: string ;
-    noData = false;
-    services: any[];
-    instances: any[];
-    selectedService = '';
-    selectedInstance = '';
+    public allMetrics: any[];
+    public metrics: any = {};
+    public cachesStats: any = {};
+    public servicesStats: any = {};
+    public updatingMetrics: boolean = true;
+    public JCACHE_KEY: string;
+    public noData: boolean = false;
+    public services: any[];
+    public instances: any[];
+    public selectedService: string = '';
+    public selectedInstance: string = '';
 
     constructor(
         private modalService: NgbModal,
-        private metricsService: JhiMetricsService
+        private metricsService: JhiMetricsService,
     ) {
         this.JCACHE_KEY = 'jcache.statistics';
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.initMonitoring();
     }
 
-    initMonitoring(): void {
+    public initMonitoring(): void {
         this.metricsService
             .getMonitoringServicesCollection()
             .subscribe((result) => {
@@ -44,32 +44,35 @@ export class JhiMetricsMonitoringComponent implements OnInit {
                     this.selectedService = this.services[0].name;
                     this.onServiceSelect();
                 }
-            }, error => console.log(error));
+            }, (error) => console.log(error));
     }
 
-    onServiceSelect(): void {
+    public onServiceSelect(): void {
         this.instances = null;
         this.services
-            .filter(s => s.name === this.selectedService)
-            .map(i => this.instances = i.instances || null);
+            .filter((s) => s.name === this.selectedService)
+            .map((i) => this.instances = i.instances || null);
         this.getMetrics(this.selectedService);
     }
 
-    getMetrics(selectedService: string): void {
+    public getMetrics(selectedService: string): void {
         this.updatingMetrics = true;
         this.metricsService
             .getMetricsByMsName(selectedService, 'metrics')
             .pipe(take(1), finalize(() => this.updatingMetrics = false))
-            .subscribe(result => {
+            .subscribe((result) => {
                 this.allMetrics = result || [];
                 this.mapMetrics(this.allMetrics[0].instanceId);
-            }, error => {console.log(error); this.noData = true});
+            }, (error) => {
+                console.log(error);
+                this.noData = true;
+            });
     }
 
-    mapMetrics(metricId): void {
+    public mapMetrics(metricId): void {
         this.metrics = {};
         this.selectedInstance = metricId || '';
-        const currentMetrics = this.allMetrics.filter(m => m.instanceId === metricId).shift();
+        const currentMetrics = this.allMetrics.filter((m) => m.instanceId === metricId).shift();
         this.metrics = this.validateMetric(currentMetrics) ? currentMetrics.metrics : {};
         this.noData = this.metricsService.isEmpty(this.metrics);
         this.servicesStats = {};
@@ -91,17 +94,17 @@ export class JhiMetricsMonitoringComponent implements OnInit {
                     const newKey = key.substr(0, index);
                     // Keep the name of the domain
                     this.cachesStats[newKey] = {
-                        'name': this.JCACHE_KEY.length,
-                        'value': value
+                        name: this.JCACHE_KEY.length,
+                        value: value,
                     };
                 }
             });
         }
     }
 
-    refreshThreadDumpData() {
+    public refreshThreadDumpData(): void {
         this.metricsService.threadDump().subscribe((data) => {
-            const modalRef  = this.modalService.open(JhiMetricsMonitoringModalComponent, { size: 'lg', backdrop: 'static'});
+            const modalRef = this.modalService.open(JhiMetricsMonitoringModalComponent, {size: 'lg', backdrop: 'static'});
             modalRef.componentInstance.threadDump = data && data.threads || [];
             modalRef.result.then((result) => {
                 // Left blank intentionally, nothing to do here
@@ -111,7 +114,7 @@ export class JhiMetricsMonitoringComponent implements OnInit {
         });
     }
 
-    validateMetric(metric: any): boolean {
+    public validateMetric(metric: any): boolean {
         return metric && metric.metrics && !(metric.metrics.error);
     }
 }

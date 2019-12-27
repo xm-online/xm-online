@@ -6,8 +6,8 @@ export class User {
     public logins?: UserLogin[];
     public firstName?: string;
     public lastName?: string;
-    public activated?: Boolean;
-    public autoLogoutEnabled?: Boolean;
+    public activated?: boolean;
+    public autoLogoutEnabled?: boolean;
     public autoLogoutTimeoutSeconds?: number;
     public langKey?: string;
     public permissions?: any[];
@@ -25,8 +25,8 @@ export class User {
         logins?: UserLogin[],
         firstName?: string,
         lastName?: string,
-        activated?: Boolean,
-        autoLogoutEnabled?: Boolean,
+        activated?: boolean,
+        autoLogoutEnabled?: boolean,
         autoLogoutTimeoutSeconds?: number,
         langKey?: string,
         permissions?: any[],
@@ -37,7 +37,7 @@ export class User {
         lastModifiedDate?: Date,
         password?: string,
         tfaEnabled?: boolean,
-        imageUrl?: string
+        imageUrl?: string,
     ) {
         this.id = id ? id : null;
         this.userKey = userKey ? userKey : null;

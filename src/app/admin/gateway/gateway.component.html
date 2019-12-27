@@ -53,9 +53,12 @@
                         <span *ngIf="route.serviceMetadata && route.serviceMetadata[instance.uri]">
                             <span
                               *ngFor="let entry of (route.serviceMetadata[instance.uri] | keys )">
-                                <span *ngIf="entry.key === 'currentBranch'" class="badge badge-default">{{entry.key}}: {{entry.value}}</span>
-                                <span *ngIf="entry.key === 'hashCommit'" class="badge badge-default">{{entry.key}}: {{entry.value}}</span>
-                                <span *ngIf="entry.key === 'time'" class="badge badge-default">{{entry.key}}: {{entry.value | date:'short'}}</span>
+                                <span *ngIf="entry.key === 'currentBranch'" class="badge badge-default">{{entry.key}}
+                                  : {{entry.value}}</span>
+                                <span *ngIf="entry.key === 'hashCommit'" class="badge badge-default">{{entry.key}}
+                                  : {{entry.value}}</span>
+                                <span *ngIf="entry.key === 'time'" class="badge badge-default">{{entry.key}}
+                                  : {{entry.value | date:'short'}}</span>
                             </span>
                         </span>
                       </td>

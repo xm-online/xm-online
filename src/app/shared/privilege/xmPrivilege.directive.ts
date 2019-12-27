@@ -1,6 +1,6 @@
-import {Directive, Input, TemplateRef, ViewContainerRef, OnDestroy, OnInit, AfterContentInit} from '@angular/core';
-import {Principal} from '../auth/principal.service';
-import {Subscription} from 'rxjs';
+import { AfterContentInit, Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Principal } from '../auth/principal.service';
 
 /**
  * @Purpose Conditionally includes an HTML element if current user has any
@@ -23,15 +23,13 @@ import {Subscription} from 'rxjs';
  */
 
 @Directive({
-    selector: '[xmPermitted]'
+    selector: '[xmPermitted]',
 })
 export class XmPrivilegeDirective implements OnInit, OnDestroy, AfterContentInit {
 
+    @Input() public xmPermitted: string[] = [];
+    @Input() public xmPermittedContext: () => boolean = () => true;
     private privilegeSubscription: Subscription;
-
-    @Input() xmPermitted: string[] = [];
-
-    @Input() xmPermittedContext: Function = () => {return true};
 
     constructor(
         private principal: Principal,
@@ -40,8 +38,16 @@ export class XmPrivilegeDirective implements OnInit, OnDestroy, AfterContentInit
     ) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.privilegeSubscription = this.principal.getAuthenticationState().subscribe((identity) => this.updateView());
+    }
+
+    public ngOnDestroy(): void {
+        this.privilegeSubscription ? this.privilegeSubscription.unsubscribe() : console.log('no privilegeSubscription');
+    }
+
+    public ngAfterContentInit(): void {
+        this.updateView();
     }
 
     private updateView(): void {
@@ -51,14 +57,6 @@ export class XmPrivilegeDirective implements OnInit, OnDestroy, AfterContentInit
                 this.viewContainerRef.createEmbeddedView(this.templateRef);
             }
         });
-    }
-
-    ngOnDestroy() {
-        this.privilegeSubscription ? this.privilegeSubscription.unsubscribe() : console.log('no privilegeSubscription');
-    }
-
-    ngAfterContentInit() {
-        this.updateView();
     }
 
 }

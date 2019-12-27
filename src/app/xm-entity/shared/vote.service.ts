@@ -11,40 +11,40 @@ import { Vote } from './vote.model';
 @Injectable()
 export class VoteService {
 
-    private resourceUrl = SERVER_API_URL + 'entity/api/votes';
-    private resourceSearchUrl = SERVER_API_URL + 'entity/api/_search/votes';
+    private resourceUrl: string = SERVER_API_URL + 'entity/api/votes';
+    private resourceSearchUrl: string = SERVER_API_URL + 'entity/api/_search/votes';
 
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils) {
     }
 
-    create(vote: Vote): Observable<HttpResponse<Vote>> {
+    public create(vote: Vote): Observable<HttpResponse<Vote>> {
         const copy = this.convert(vote);
         return this.http.post<Vote>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Vote>) => this.convertResponse(res)));
     }
 
-    update(vote: Vote): Observable<HttpResponse<Vote>> {
+    public update(vote: Vote): Observable<HttpResponse<Vote>> {
         const copy = this.convert(vote);
         return this.http.put<Vote>(this.resourceUrl, copy, {observe: 'response'}).pipe(
             map((res: HttpResponse<Vote>) => this.convertResponse(res)));
     }
 
-    find(id: number): Observable<HttpResponse<Vote>> {
+    public find(id: number): Observable<HttpResponse<Vote>> {
         return this.http.get<Vote>(`${this.resourceUrl}/${id}`, {observe: 'response'}).pipe(
             map((res: HttpResponse<Vote>) => this.convertResponse(res)));
     }
 
-    query(req?: any): Observable<HttpResponse<Vote[]>> {
+    public query(req?: any): Observable<HttpResponse<Vote[]>> {
         const options = createRequestOption(req);
         return this.http.get<Vote[]>(this.resourceUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Vote[]>) => this.convertArrayResponse(res)));
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
+    public delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 
-    search(req?: any): Observable<HttpResponse<Vote[]>> {
+    public search(req?: any): Observable<HttpResponse<Vote[]>> {
         const options = createRequestOption(req);
         return this.http.get<Vote[]>(this.resourceSearchUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<Vote[]>) => this.convertArrayResponse(res)));

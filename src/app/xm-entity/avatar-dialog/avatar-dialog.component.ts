@@ -10,17 +10,17 @@ import { XmEntityService } from '../shared/xm-entity.service';
 @Component({
     selector: 'xm-avatar-dialog',
     templateUrl: './avatar-dialog.component.html',
-    styleUrls: ['./avatar-dialog.component.scss']
+    styleUrls: ['./avatar-dialog.component.scss'],
 })
 export class AvatarDialogComponent implements OnInit {
 
-    @Input() xmEntity: XmEntity;
+    @Input() public xmEntity: XmEntity;
 
-    @ViewChild('cropper', {static: false}) cropper: ImageCropperComponent;
+    @ViewChild('cropper', {static: false}) public cropper: ImageCropperComponent;
 
-    cropperSettings: CropperSettings;
-    data: any;
-    showLoader: boolean;
+    public cropperSettings: CropperSettings;
+    public data: any;
+    public showLoader: boolean;
 
     constructor(private activeModal: NgbActiveModal,
                 private xmEntityService: XmEntityService,
@@ -31,10 +31,10 @@ export class AvatarDialogComponent implements OnInit {
         this.data = {};
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
     }
 
-    onFileChange($event) {
+    public onFileChange($event): void {
         const image = new Image();
         const file = $event.target.files[0];
         const myReader = new FileReader();
@@ -47,7 +47,7 @@ export class AvatarDialogComponent implements OnInit {
         myReader.readAsDataURL(file);
     }
 
-    onSave() {
+    public onSave(): void {
         this.showLoader = true;
         let file = this.dataURItoBlob(this.data.image);
         try {
@@ -56,12 +56,12 @@ export class AvatarDialogComponent implements OnInit {
             // window.navigator.msSaveBlob(file, 'avatar-' + this.xmEntity.id);
         }
         this.xmEntityService.createAvatar(file).subscribe((avatarUrl) => {
-            this.xmEntityService.find(this.xmEntity.id, {'embed': 'data'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
+            this.xmEntityService.find(this.xmEntity.id, {embed: 'data'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
                 const xmEntityCopy = xmEntity.body;
                 xmEntityCopy.avatarUrl = avatarUrl;
                 this.xmEntityService.update(xmEntityCopy).subscribe(() => {
                     this.eventManager.broadcast({
-                        name: 'xmEntityDetailModification'
+                        name: 'xmEntityDetailModification',
                     });
                     this.activeModal.dismiss('save');
                 });
@@ -69,11 +69,11 @@ export class AvatarDialogComponent implements OnInit {
         });
     }
 
-    onCancel() {
+    public onCancel(): void {
         this.activeModal.dismiss('cancel');
     }
 
-    private dataURItoBlob(dataURI) {
+    private dataURItoBlob(dataURI): Blob {
         // convert base64 to raw binary data held in a string
         // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
         const byteString = atob(dataURI.split(',')[1]);

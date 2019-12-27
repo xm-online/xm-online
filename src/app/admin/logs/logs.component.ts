@@ -1,32 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { finalize, map, share } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { JhiOrderByPipe } from 'ng-jhipster';
+import { Observable } from 'rxjs';
+import { finalize, map, share } from 'rxjs/operators';
 
+import { JhiHealthService } from '../health/health.service';
 import { Log } from './log.model';
 import { LogsService } from './logs.service';
-import { JhiHealthService } from '../health/health.service';
 
 @Component({
     selector: 'xm-logs',
     templateUrl: './logs.component.html',
     styleUrls: ['./logs.component.scss'],
-    providers: [ JhiOrderByPipe ]
+    providers: [ JhiOrderByPipe ],
 })
 export class LogsComponent implements OnInit {
 
-    loggers$: Observable<Log[]>;
-    filter: string;
-    orderProp: string;
-    showLoader: boolean;
-    reverse: boolean;
-    selectedService = '';
-    services: any[];
+    public loggers$: Observable<Log[]>;
+    public filter: string;
+    public orderProp: string;
+    public showLoader: boolean;
+    public reverse: boolean;
+    public selectedService: string = '';
+    public services: any[];
 
     constructor(
         private logsService: LogsService,
         private healthService: JhiHealthService,
-        private orderBy: JhiOrderByPipe
+        private orderBy: JhiOrderByPipe,
     ) {
         this.filter = '';
         this.orderProp = 'name';
@@ -34,32 +34,32 @@ export class LogsComponent implements OnInit {
         this.showLoader = true;
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.healthService
             .getMonitoringServicesCollection()
-            .subscribe(result => {
+            .subscribe((result) => {
                 this.services = result || [];
                 if (this.services.length > 0) {
                     this.selectedService = this.services[1].name;
                     this.getLoggers();
                 }
-            }, error => console.log(error));
+            }, (error) => console.log(error));
     }
 
-    getLoggers() {
+    public getLoggers(): void {
         this.showLoader = true;
         this.loggers$ = this.logsService
             .findByService(this.selectedService)
             .pipe(
                 share(),
-                map(resp => resp.body),
-                map( body => this.orderBy.transform(body, this.orderProp, this.reverse)),
+                map((resp) => resp.body),
+                map( (body) => this.orderBy.transform(body, this.orderProp, this.reverse)),
                 finalize(() => this.showLoader = false ),
-                share()
-            )
+                share(),
+            );
     }
 
-    changeLevel(name: string, level: string): void {
+    public changeLevel(name: string, level: string): void {
         this.showLoader = true;
         const log = new Log(name, level);
         this.logsService

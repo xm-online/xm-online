@@ -14,8 +14,8 @@ import { XM_EVENT_LIST } from '../../../xm.constants';
 export class SignInUpWidgetComponent implements OnInit, OnDestroy {
 
     public config: any;
-    public isLoginFormView = true;
-    public successRegistration = false;
+    public isLoginFormView: boolean = true;
+    public successRegistration: boolean = false;
     public loginLabel: string;
     private registrationSuccessSubscription: Subscription;
     private changeLanguageSubscriber: Subscription;
@@ -27,7 +27,7 @@ export class SignInUpWidgetComponent implements OnInit, OnDestroy {
         private router: Router) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.registrationSuccessSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_REGISTRATION, () => {
             this.isLoginFormView = true;
             this.successRegistration = true;
@@ -54,7 +54,7 @@ export class SignInUpWidgetComponent implements OnInit, OnDestroy {
         this.changeLanguageSubscriber.unsubscribe();
     }
 
-    public changeMode() {
+    public changeMode(): void {
         this.isLoginFormView = !this.isLoginFormView;
         this.successRegistration = false;
 
@@ -63,7 +63,7 @@ export class SignInUpWidgetComponent implements OnInit, OnDestroy {
         });
     }
 
-    private updateLabels(label: any, currentLang?: string) {
+    private updateLabels(label: any, currentLang?: string): void {
         const lang = currentLang ? currentLang : this.modulesLangHelper.getLangKey();
         this.loginLabel = label[lang] || label;
     }

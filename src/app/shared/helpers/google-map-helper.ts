@@ -11,7 +11,7 @@ export const buildPinSymbol = (color) => {
         strokeColor: '#000',
         strokeWeight: 1,
         scale: 1,
-        labelOrigin: new google.maps.Point(0, -29)
+        labelOrigin: new google.maps.Point(0, -29),
     };
 };
 

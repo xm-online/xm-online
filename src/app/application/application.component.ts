@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
-import { Observable, Subscription, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
@@ -15,46 +15,41 @@ import { EntityListCardOptions } from '../xm-entity/entity-list-card/entity-list
 
 @Component({
     selector: 'xm-entity',
-    templateUrl: './application.component.html'
+    templateUrl: './application.component.html',
 })
 export class ApplicationComponent implements OnInit, OnDestroy {
 
-    private routeData: any;
-    private routeDataSubscription: Subscription;
-    private routeParamsSubscription: Subscription;
-    private routeQueryParamsSubscription: Subscription;
-
-    options: EntityListCardOptions;
-
-    isSearch = false;
-    searchQuery: string;
-
-    currentAccount: any;
-    error: any;
-    success: any;
-    links: any;
-    totalItems: any;
-    queryCount: any;
-    itemsPerPage: any;
-    page: any;
-    predicate: any;
-    previousPage: any;
-    reverse: any;
-    typeKey: string;
-    entityType: any;
-    types: any;
-    spec: Spec;
-    searchParams: any;
-
-    spec$: Observable<Spec>;
-
-    uiConfig: any;
-    defaultFieldsKeys: string[] = [
+    public options: EntityListCardOptions;
+    public isSearch = false;
+    public searchQuery: string;
+    public currentAccount: any;
+    public error: any;
+    public success: any;
+    public links: any;
+    public totalItems: any;
+    public queryCount: any;
+    public itemsPerPage: any;
+    public page: any;
+    public predicate: any;
+    public previousPage: any;
+    public reverse: any;
+    public typeKey: string;
+    public entityType: any;
+    public types: any;
+    public spec: Spec;
+    public searchParams: any;
+    public spec$: Observable<Spec>;
+    public uiConfig: any;
+    public defaultFieldsKeys: string[] = [
         LIST_DEFAULT_FIELDS['name'],
         LIST_DEFAULT_FIELDS['typeKey'],
         LIST_DEFAULT_FIELDS['startDate'],
         LIST_DEFAULT_FIELDS['stateKey'],
     ];
+    private routeData: any;
+    private routeDataSubscription: Subscription;
+    private routeParamsSubscription: Subscription;
+    private routeQueryParamsSubscription: Subscription;
 
     constructor(protected translateService: TranslateService,
                 protected xmEntitySpecWrapperService: XmEntitySpecWrapperService,
@@ -69,16 +64,16 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         this.searchQuery = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : '';
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         if (!environment.production) {
-            console.log('ApplicationComponent.ngOnInit')
+            console.log('ApplicationComponent.ngOnInit');
         }
 
         this.spec$ = this.xmEntitySpecWrapperService.specv2();
 
-        this.xmConfigService.getUiConfig().subscribe(result => {
+        this.xmConfigService.getUiConfig().subscribe((result) => {
             this.uiConfig = result;
-            this.xmEntitySpecWrapperService.spec().then(spec => {
+            this.xmEntitySpecWrapperService.spec().then((spec) => {
                 this.spec = spec;
                 this.routeDataSubscription = this.activatedRoute.data.subscribe((data) => {
                     if (data['pagingParams']) {
@@ -132,7 +127,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         });
     }
 
-    load() {
+    public load(): void {
         this.translateService.get(this.defaultFieldsKeys).subscribe(() => {
             const defaultFields = this.buildDefaultFields();
             this.searchParams && this.searchParams.fields
@@ -141,14 +136,44 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         });
     }
 
-    private buildDefaultFields(): Array<Object> {
-        return ['name', 'typeKey', 'startDate', 'stateKey'].map(item => this.newField(item));
+    public loadPage(page: number): void {
+        if (page !== this.previousPage) {
+            this.previousPage = page;
+            this.transition();
+        }
     }
 
-    private newField(name: string) {
-        return {
-            field: name,
-            title: this.translateService.instant(LIST_DEFAULT_FIELDS[name])
+    public transition(): void {
+        this.router.navigate([`/application`, this.typeKey], {
+            queryParams: {
+                page: this.page,
+                size: this.itemsPerPage,
+                search: this.searchQuery,
+                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc'),
+            },
+        }).then(() => this.load());
+    }
+
+    public clear(): void {
+        this.page = 0;
+        this.searchQuery = '';
+        this.router.navigate(['/application', this.typeKey], {
+            queryParams: {
+                page: this.page,
+                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc'),
+            },
+        }).then(() => this.load());
+    }
+
+    public ngOnDestroy(): void {
+        if (this.routeParamsSubscription) {
+            this.routeParamsSubscription.unsubscribe();
+        }
+        if (this.routeDataSubscription) {
+            this.routeDataSubscription.unsubscribe();
+        }
+        if (this.routeQueryParamsSubscription) {
+            this.routeQueryParamsSubscription.unsubscribe();
         }
     }
 
@@ -188,19 +213,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         }
     }
 
-    private getSearchPattern() {
-        if (this.uiConfig.search && this.uiConfig.search.patterns) {
-            for (const pattern of this.uiConfig.search.patterns) {
-                const re = new RegExp(pattern.regexp);
-                if (re.test(this.searchQuery)) {
-                    return pattern;
-                }
-            }
-        }
-        return null;
-    }
-
-    protected getListConfig() {
+    protected getListConfig(): null | any {
         if (this.isSearch) {
             return this.getSearchPattern();
         } else {
@@ -213,45 +226,27 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         return null;
     }
 
-    loadPage(page: number) {
-        if (page !== this.previousPage) {
-            this.previousPage = page;
-            this.transition();
-        }
+    private buildDefaultFields(): any[] {
+        return ['name', 'typeKey', 'startDate', 'stateKey'].map((item) => this.newField(item));
     }
 
-    transition() {
-        this.router.navigate([`/application`, this.typeKey], {
-            queryParams: {
-                page: this.page,
-                size: this.itemsPerPage,
-                search: this.searchQuery,
-                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-            },
-        }).then(() => this.load());
+    private newField(name: string): { field: string; title: string | any } {
+        return {
+            field: name,
+            title: this.translateService.instant(LIST_DEFAULT_FIELDS[name]),
+        };
     }
 
-    clear() {
-        this.page = 0;
-        this.searchQuery = '';
-        this.router.navigate(['/application', this.typeKey], {
-            queryParams: {
-                page: this.page,
-                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-            },
-        }).then(() => this.load());
-    }
-
-    ngOnDestroy() {
-        if (this.routeParamsSubscription) {
-            this.routeParamsSubscription.unsubscribe();
+    private getSearchPattern(): any | null {
+        if (this.uiConfig.search && this.uiConfig.search.patterns) {
+            for (const pattern of this.uiConfig.search.patterns) {
+                const re = new RegExp(pattern.regexp);
+                if (re.test(this.searchQuery)) {
+                    return pattern;
+                }
+            }
         }
-        if (this.routeDataSubscription) {
-            this.routeDataSubscription.unsubscribe();
-        }
-        if (this.routeQueryParamsSubscription) {
-            this.routeQueryParamsSubscription.unsubscribe();
-        }
+        return null;
     }
 
     private getTypeFromSpec(spec: Spec, typeKey: string): XmEntitySpec | undefined {
@@ -261,8 +256,8 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     private getSearchConfig(idOrSlug: any): Observable<any> {
         if (idOrSlug) {
             return this.dashboardWrapperService.getDashboardByIdOrSlug(idOrSlug).pipe(
-                map( (dash) => dash && dash.config),
-                map( (config) => config && config.search),
+                map((dash) => dash && dash.config),
+                map((config) => config && config.search),
             );
         } else { return of(''); }
     }

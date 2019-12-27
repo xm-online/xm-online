@@ -12,18 +12,18 @@ declare let $: any;
 @Component({
     selector: 'xm-link-list-tree-section',
     templateUrl: './link-list-tree-section.component.html',
-    styleUrls: ['./link-list-tree-section.component.scss']
+    styleUrls: ['./link-list-tree-section.component.scss'],
 })
 export class LinkListTreeSectionComponent implements OnInit {
 
-    @Input() links: Link[];
-    @Input() linkSpec: LinkSpec;
+    @Input() public links: Link[];
+    @Input() public linkSpec: LinkSpec;
 
     constructor(private xmEntityService: XmEntityService,
                 private translateService: TranslateService) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         $('.tree li:has(ul)').addClass('parent_li').find(' > span')
             .attr('title', this.translateService.instant('xm-entity.link-list-tree-section.collapse'));
         $('.tree ul > li.parent_li > span').on('click', function (e) {
@@ -39,13 +39,13 @@ export class LinkListTreeSectionComponent implements OnInit {
         });
     }
 
-    filterByLinkType(items) {
+    public filterByLinkType(items): any {
         return items ? items.filter((link: Link) => link.typeKey === this.linkSpec.key) : [];
     }
 
-    toggle(link) {
+    public toggle(link): void {
         if (!link.target.targets) {
-            this.xmEntityService.find(link.target.id, {'embed': 'targets'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
+            this.xmEntityService.find(link.target.id, {embed: 'targets'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
                 link.target = xmEntity.body;
                 link.target.targets = link.target.targets ? link.target.targets : [];
             });

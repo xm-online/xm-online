@@ -1,28 +1,28 @@
-<form class="m-0" name="widgetForm" role="form" novalidate (ngSubmit)="onConfirmSave()" #widgetForm="ngForm">
+<form #widgetForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="widgetForm" novalidate role="form">
   <div class="modal-header">
-    <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
-    <h4 class="modal-title text-left" *ngIf="!widget.id">
+    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
+    <h4 *ngIf="!widget.id" class="modal-title text-left">
       <span jhiTranslate="admin-config.widget-detail-dialog.add.title">Add a new widget</span>
     </h4>
-    <h4 class="modal-title text-left" *ngIf="widget.id">
+    <h4 *ngIf="widget.id" class="modal-title text-left">
       <span jhiTranslate="admin-config.widget-detail-dialog.edit.title">Edit a widget</span>
     </h4>
   </div>
   <div class="modal-body">
     <xm-loader [showLoader]="showLoader"></xm-loader>
 
-    <input *ngIf="widget.id" type="hidden" class="form-control" id="id" name="id" [(ngModel)]="widget.id"
-           readonly/>
+    <input *ngIf="widget.id" [(ngModel)]="widget.id" class="form-control" id="id" name="id" readonly
+           type="hidden"/>
 
     <div class="form-group">
       <mat-form-field>
-        <input matInput
-               type="text"
-               name="selector"
+        <input #widgetSelector="ngModel"
                [(ngModel)]="widget.selector"
-               #widgetSelector="ngModel"
+               matInput
+               name="selector"
                placeholder="{{'admin-config.common.fields.selector' | translate}}"
-               required>
+               required
+               type="text">
         <mat-error *ngIf="widgetSelector.hasError('required')">
           <span jhiTranslate="xm-entity.common.validation.required">This field is required.</span>
         </mat-error>
@@ -31,13 +31,13 @@
 
     <div class="form-group label-floating">
       <mat-form-field>
-        <input matInput
-               type="text"
-               name="name"
+        <input #widgetName="ngModel"
                [(ngModel)]="widget.name"
-               #widgetName="ngModel"
+               matInput
+               name="name"
                placeholder="{{'admin-config.common.fields.name' | translate}}"
-               required>
+               required
+               type="text">
         <mat-error *ngIf="widgetName.hasError('required')">
           <span jhiTranslate="xm-entity.common.validation.required">This field is required.</span>
         </mat-error>
@@ -46,22 +46,22 @@
 
     <div class="form-group">
       <label class="control-label" jhiTranslate="admin-config.common.fields.config">Config</label>
-      <div xmAceEditor
-           [text]="configStringIn"
-           [readOnly]="false"
-           [mode]="'json'"
+      <div (textChanged)="onConfigChange($event)"
            [autoUpdateContent]="true"
-           (textChanged)="onConfigChange($event)"
+           [mode]="'json'"
+           [readOnly]="false"
            [style.min-height]="'200px'"
-           [style.width]="'100%'">
+           [style.width]="'100%'"
+           [text]="configStringIn"
+           xmAceEditor>
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()">
+    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-raised-button type="button">
       <span jhiTranslate="admin-config.common.cancel">Cancel</span>
     </button>
-    <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="widgetForm.form.invalid || showLoader">
+    <button [disabled]="widgetForm.form.invalid || showLoader" class="btn btn-primary" mat-raised-button type="submit">
       <span jhiTranslate="admin-config.common.save">Save</span>
     </button>
   </div>

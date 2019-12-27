@@ -27,11 +27,10 @@ export class ExtAutocompleteService {
     constructor(
         private http: HttpClient,
         private principal: Principal,
-        private i18nNamePipe: I18nNamePipe
+        private i18nNamePipe: I18nNamePipe,
     ) {}
 
-
-    fetchData(options: ExtAutocompleteOptions) {
+    public fetchData(options: ExtAutocompleteOptions) {
         return this.http.get(options.url, {observe: 'response'}).pipe(map((response: HttpResponse<any>) => {
             const json = response.body;
             let array: any = json;
@@ -40,7 +39,7 @@ export class ExtAutocompleteService {
             }
             array = array ? array : [];
             let elements = [];
-            array.forEach(e => {
+            array.forEach((e) => {
                 let label = e;
                 let value = e;
                 if (options.labelField) {
@@ -51,9 +50,9 @@ export class ExtAutocompleteService {
                     value = ExtAutocompleteService.byString(value, options.valueField);
                 }
                 elements.push({
-                    label: label,
-                    value: value,
-                    object: e
+                    label,
+                    value,
+                    object: e,
                 });
             });
             elements = elements.sort((a, b) => {
@@ -71,7 +70,7 @@ export class ExtAutocompleteService {
         }));
     }
 
-    nullSafeLabel(x) {
+    public nullSafeLabel(x) {
         return x ? '' + x.label ? '' + x.label : '' : '';
     }
 

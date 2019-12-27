@@ -1,8 +1,8 @@
-@mixin transition($property: all, $duration: .3s, $ease: linear){
+@mixin transition($property: all, $duration: .3s, $ease: linear) {
     -webkit-transition: $property $duration $ease;
-    -moz-transition: $property $duration $ease;
-    -o-transition: $property $duration $ease;
-    transition: $property $duration $ease;
+    -moz-transition:    $property $duration $ease;
+    -o-transition:      $property $duration $ease;
+    transition:         $property $duration $ease;
 }
 
 .xm-notifications-container {
@@ -10,27 +10,27 @@
 }
 
 .xm-notifications {
-    width: 350px;
+    width:    350px;
     position: absolute !important;
 
     .notification-item {
-        position: relative;
+        position:      relative;
         padding-right: 30px;
-        white-space: normal;
+        white-space:   normal;
 
         .close-notification {
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 20px;
-            height: 20px;
-            line-height: 20px;
-            font-size: 20px;
-            text-align: center;
-            margin: 9px 10px 0 0;
+            position:      absolute;
+            right:         0;
+            top:           0;
+            width:         20px;
+            height:        20px;
+            line-height:   20px;
+            font-size:     20px;
+            text-align:    center;
+            margin:        9px 10px 0 0;
             border-radius: 2px;
-            cursor: pointer;
-            background: transparent;
+            cursor:        pointer;
+            background:    transparent;
             @include transition(background, .3s, ease-in);
 
             &:hover {
@@ -41,21 +41,21 @@
 
     .update-date {
         font-size: 9px;
-        display: block;
-        margin: 4px 0 0 0;
+        display:   block;
+        margin:    4px 0 0 0;
     }
 
     .notifications-actions {
         border-top: 1px solid #ccc;
-        margin: 5px 0 -5px 0;
-        padding: 10px 5px;
+        margin:     5px 0 -5px 0;
+        padding:    10px 5px;
     }
 
     .show-all {
-        color: #555555;
-        font-size: 16px;
-        margin: 5px 10px 0 0;
-        background: none;
+        color:       #555555;
+        font-size:   16px;
+        margin:      5px 10px 0 0;
+        background:  none;
         font-weight: normal;
 
         &:hover, &:focus {

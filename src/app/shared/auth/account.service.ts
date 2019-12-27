@@ -18,38 +18,38 @@ export class AccountService {
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils) {
     }
 
-    get(): Observable<HttpResponse<any>> {
+    public get(): Observable<HttpResponse<any>> {
         return this.http.get<Account>(SERVER_API_URL + ACCOUNT_URL, {observe: 'response'});
     }
 
-    save(account: any): Observable<HttpResponse<any>> {
+    public save(account: any): Observable<HttpResponse<any>> {
         return this.http.post(SERVER_API_URL + ACCOUNT_URL, account, {observe: 'response'});
     }
 
-    updateLogins(account: any): Observable<HttpResponse<any>> {
+    public updateLogins(account: any): Observable<HttpResponse<any>> {
         return this.http.put(this.resourceLogins, account, {observe: 'response'});
     }
 
-    enableTFA(type: string, value: string): Observable<HttpResponse<any>> {
+    public enableTFA(type: string, value: string): Observable<HttpResponse<any>> {
         return this.http.post(SERVER_API_URL + ACCOUNT_TFA_ENABLE_URL,
             {
-                'otpChannelSpec': {
-                    'channelType': type,
-                    'destination': value
-                }
+                otpChannelSpec: {
+                    channelType: type,
+                    destination: value,
+                },
             }, {observe: 'response'});
     }
 
-    disableTFA(): Observable<HttpResponse<any>> {
+    public disableTFA(): Observable<HttpResponse<any>> {
         return this.http.post(SERVER_API_URL + ACCOUNT_TFA_DISABLE_URL, {}, {observe: 'response'});
     }
 
-    getProfile(req?: any): Observable<XmEntity> {
+    public getProfile(req?: any): Observable<XmEntity> {
         const options = createRequestOption(req);
         return this.http.get<XmEntity>(this.resourceProfileUrl, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<XmEntity>) => this.convertResponse(res)),
-            map((res: HttpResponse<XmEntity>) => res.body)
-        )
+            map((res: HttpResponse<XmEntity>) => res.body),
+        );
     }
 
     private convertResponse(res: HttpResponse<XmEntity>): HttpResponse<XmEntity> {

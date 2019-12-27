@@ -17,19 +17,19 @@ declare let $: any;
 @Component({
     selector: 'xm-state-change-dialog',
     templateUrl: './state-change-dialog.component.html',
-    styleUrls: ['./state-change-dialog.component.scss']
+    styleUrls: ['./state-change-dialog.component.scss'],
 })
 export class StateChangeDialogComponent implements OnInit {
 
-    @Input() xmEntity: XmEntity;
-    @Input() nextSpec: NextSpec;
-    @Input() dialogTitle: any;
-    @Input() buttonTitle: any;
+    @Input() public xmEntity: XmEntity;
+    @Input() public nextSpec: NextSpec;
+    @Input() public dialogTitle: any;
+    @Input() public buttonTitle: any;
 
-    jsfAttributes: any;
-    formData: any = {};
-    showLoader: boolean;
-    isJsonFormValid = true;
+    public jsfAttributes: any;
+    public formData: any = {};
+    public showLoader: boolean;
+    public isJsonFormValid = true;
 
     constructor(private activeModal: NgbActiveModal,
                 private xmEntityService: XmEntityService,
@@ -40,7 +40,7 @@ export class StateChangeDialogComponent implements OnInit {
                 public principal: Principal) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         // TODO: this is workaround to get eventManager from root injector
         this.eventManager = this.contextService.eventManager;
         // TODO think about correct way to work with context
@@ -51,7 +51,7 @@ export class StateChangeDialogComponent implements OnInit {
         $.xmEntity = null;
     }
 
-    onChangeState() {
+    public onChangeState(): void {
         this.showLoader = true;
         this.formData.xmEntity = this.xmEntity;
         this.xmEntityService.changeState(this.xmEntity.id, this.nextSpec.stateKey, this.formData).pipe(finalize(() => {
@@ -60,28 +60,19 @@ export class StateChangeDialogComponent implements OnInit {
             (r) => {
                 this.onSuccessFunctionCall(r);
             },
-            () => this.alert('error', 'xm-entity.function-list-card.change-state.error')
+            () => this.alert('error', 'xm-entity.function-list-card.change-state.error'),
         );
 
     }
 
-    private alert(type, key) {
-        swal({
-            type: type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary'
-        });
-    }
-
-    onSuccessFunctionCall(r: any) {
+    public onSuccessFunctionCall(r: any): void {
         const data = r.body;
         if (data && this.nextSpec.showResponse) {
             swal({
                 type: 'success',
                 html: `<pre style="text-align: left"><code>${JSON.stringify(data, null, '  ')}</code></pre>`,
                 buttonsStyling: false,
-                confirmButtonClass: 'btn btn-primary'
+                confirmButtonClass: 'btn btn-primary',
             });
         } else {
             this.alert('success', 'xm-entity.function-list-card.change-state.success');
@@ -89,12 +80,21 @@ export class StateChangeDialogComponent implements OnInit {
         this.activeModal.dismiss('OK');
     }
 
-    onCancel() {
+    public onCancel(): void {
         this.activeModal.dismiss('cancel');
     }
 
-    onChangeForm(data: any) {
+    public onChangeForm(data: any): void {
         this.formData = data;
+    }
+
+    private alert(type: string, key: string): void {
+        swal({
+            type,
+            text: this.translateService.instant(key),
+            buttonsStyling: false,
+            confirmButtonClass: 'btn btn-primary',
+        });
     }
 
 }

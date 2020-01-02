@@ -4,5 +4,6 @@ node_js:
 script:
  - set -e
  - npm install --save-dev
+ - npm run lint
  - npm run prebuild
  - npm run build-aot

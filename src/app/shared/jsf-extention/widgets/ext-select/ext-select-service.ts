@@ -45,7 +45,7 @@ export class ExtSelectService {
             array = ExtSelectService.byString(object, options.arrayField);
         }
         array = array ? array : [];
-        let elements = [];
+        const elements = [];
         array.forEach((e) => {
             let label = e;
             let value = e;
@@ -62,7 +62,7 @@ export class ExtSelectService {
                 object: e,
             });
         });
-        elements = elements.sort((a, b) => {
+        elements.sort((a, b) => {
             const x = this.nullSafeLabel(a).toLowerCase();
             const y = this.nullSafeLabel(b).toLowerCase();
             if (x < y) {

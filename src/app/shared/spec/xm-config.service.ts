@@ -28,11 +28,9 @@ export class XmApplicationConfigService {
         // Should be !!promise!!, to wait until data is loaded
         return this.http.get(this.configUrl).toPromise().then((data: any) => {
             this.appConfig = data;
-            let themeStrategy = THEME_STARTEGY.DEFAULT;
-            let themeName = DEFAULT_THEME_NAME;
             if (data) {
-                themeName = data.theme ? data.theme : DEFAULT_THEME_NAME;
-                themeStrategy = data.themeStrategy ? data.themeStrategy : THEME_STARTEGY.DEFAULT;
+                const themeName = data.theme ? data.theme : DEFAULT_THEME_NAME;
+                const themeStrategy = data.themeStrategy ? data.themeStrategy : THEME_STARTEGY.DEFAULT;
                 const themePath = this.resolveThemePath(themeStrategy, themeName);
                 console.info('version=%s apply theme name=%s strategy=%s path=%s',
                     VERSION, themeName, themeStrategy, themePath);

@@ -1,10 +1,7 @@
-export class UserLogin {
-    constructor(
-        public id?: any,
-        public typeKey?: string,
-        public stateKey?: string,
-        public login?: string,
-        public removed?: boolean,
-    ) {
-    }
+export interface UserLogin {
+    id?: any;
+    typeKey?: string;
+    stateKey?: string;
+    login?: string;
+    removed?: boolean;
 }

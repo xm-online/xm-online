@@ -1,5 +1,4 @@
-export class CurrentLocationOptions {
-    constructor(public isShowCoordinates?: boolean,
-                public isShowMap?: boolean) {
-    }
+export interface CurrentLocationOptions {
+    isShowCoordinates?: boolean;
+    isShowMap?: boolean;
 }

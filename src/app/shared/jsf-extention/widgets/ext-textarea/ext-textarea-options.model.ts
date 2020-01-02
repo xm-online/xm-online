@@ -1,4 +1,3 @@
-export class ExtTextareaOptions {
-    constructor(public height?: boolean) {
-    }
+export interface ExtTextareaOptions {
+    height?: boolean;
 }

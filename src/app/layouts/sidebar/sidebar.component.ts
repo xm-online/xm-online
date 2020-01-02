@@ -25,6 +25,56 @@ const misc: any = {
 
 declare let $: any;
 
+function sortById(a: Dashboard, b: Dashboard): number {
+    if (a.id > b.id) {
+        return -1;
+    }
+    if (a.id < b.id) {
+        return 1;
+    }
+    return 0;
+}
+
+function sortByName(a: Dashboard, b: Dashboard): number {
+    if (a.name > b.name) {
+        return 1;
+    }
+    if (a.name < b.name) {
+        return -1;
+    }
+    return 0;
+}
+
+function sortDashboards(a: Dashboard, b: Dashboard): number {
+    if (a && b) {
+        if (a.config && b.config) {
+            return sortByConfig(a, b);
+        } else {
+            if (a.name && b.name) {
+                return sortByName(a, b);
+            } else {
+                return sortById(a, b);
+            }
+        }
+    }
+    return 0;
+}
+
+function sortByConfig(a: Dashboard, b: Dashboard): number {
+    const cfgA: any = a.config;
+    const cfgB: any = b.config;
+    if (cfgA && cfgA.orderIndex && cfgB && cfgB.orderIndex) {
+        if (cfgA.orderIndex > cfgB.orderIndex) {
+            return 1;
+        }
+        if (cfgA.orderIndex < cfgB.orderIndex) {
+            return -1;
+        }
+        return 0;
+    }
+    return 0;
+}
+
 @Component({
     moduleId: module.id,
     selector: 'xm-sidebar-cmp',
@@ -52,7 +102,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
     public tenantLogoUrl: '../assets/img/logo-xm-online.png';
     public iconsInMenu: false;
     public poweredByConfig: PoweredBy;
-    @ViewChild('navbar-cmp', {static: false}) public button;
+    @ViewChild('navbar-cmp', {static: false}) public button: any;
     private authSubscription: Subscription;
     private unauthSubscription: Subscription;
     private dashboardSubscription: Subscription;
@@ -73,7 +123,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
                 private contextService: ContextService) {
         this.version = DEBUG_INFO_ENABLED ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
-        // this.jhiLanguageService.addLocation('home');
+        // TODO: this.jhiLanguageService.addLocation('home');
 
         this.registerChangeAuth();
         this.registerChangeInDashboards();
@@ -85,20 +135,21 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     }
 
+    // tslint:disable-next-line:cognitive-complexity
     public ngOnInit(): void {
         this.xmConfigService.getUiConfig().subscribe((result) => {
             this.uiConfig = result;
             this.languageHelper.getAll().then((languages) => {
                 this.languages = (result && result.langs) ? result.langs : languages;
             });
-            if (result['logoUrl']) {
-                this.tenantLogoUrl = result['logoUrl'];
+            if (result.logoUrl) {
+                this.tenantLogoUrl = result.logoUrl;
             }
-            if (result['name']) {
-                this.tenantName = result['name'];
+            if (result.name) {
+                this.tenantName = result.name;
             }
-            if (result['iconsInMenu']) {
-                this.iconsInMenu = result['iconsInMenu'];
+            if (result.iconsInMenu) {
+                this.iconsInMenu = result.iconsInMenu;
             }
 
             this.tenantName = this.tenantName ? this.tenantName : 'XM^online';
@@ -107,14 +158,15 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
             }
             this.poweredByConfig = result.poweredBy || null;
         }, (error) => {
-            console.log(error);
+            console.info(error);
             this.tenantLogoUrl = '../assets/img/logo-xm-online.png';
             this.tenantName = 'XM^online';
         });
 
         this.principal.getAuthenticationState().subscribe((state) => {
             if (state) {
-                // no need to call this.loadData() only on manual refresh, otherwise method will be invoked by XM_EVENT_LIST.XM_SUCCESS_AUTH
+                // no need to call this.loadData() only on manual refresh,
+                // otherwise method will be invoked by XM_EVENT_LIST.XM_SUCCESS_AUTH
                 const sideBarMenuConfig = this.uiConfig && this.uiConfig.sidebarMenu || null;
                 if (sideBarMenuConfig) {
                     this.userDescription$ = this.getUserDescription(sideBarMenuConfig);
@@ -125,7 +177,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     public ngOnDestroy(): void {
-        console.log('Destroy: sidebar');
+        console.info('Destroy: sidebar');
         this.applications = null;
         this.dashboards = null;
         this.eventManager.destroy(this.authSubscription);
@@ -143,7 +195,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
         return this.principal.isAuthenticated();
     }
 
-    public logout(fast?: boolean): void {
+    public logout(fast: boolean = false): void {
 
         const logoutAction = () => {
             this.loginService.logout();
@@ -166,19 +218,19 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
                 cancelButtonClass: 'btn mat-raised-button',
                 confirmButtonText: this.translateService.instant('global.common.yes-exit'),
                 cancelButtonText: this.translateService.instant('global.common.cancel'),
-            }).then((result) => result.value ? logoutAction() : console.log('Cancel'));
+            }).then((result) => result.value ? logoutAction() : console.info('Cancel'));
         }
 
     }
 
-    public getDashboards(force?: boolean): void {
+    public getDashboards(force: boolean = false): void {
         this.dashboardWrapperService.dashboards(force).then((result) => {
             this.dashboards = result;
             this.collapseTab();
         });
     }
 
-    public getImageUrl(): String {
+    public getImageUrl(): string {
         return this.isAuthenticated() ? this.principal.getImageUrl() : null;
     }
 
@@ -192,14 +244,14 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
         if ($('body').hasClass('sidebar-mini')) {
             misc.sidebar_mini_active = true;
         }
-        $('#minimizeSidebar').click(function () {
+        $('#minimizeSidebar').click(() => {
 
             if (misc.sidebar_mini_active === true) {
                 $('body').removeClass('sidebar-mini');
                 misc.sidebar_mini_active = false;
 
             } else {
-                setTimeout(function () {
+                setTimeout(() => {
                     $('body').addClass('sidebar-mini');
 
                     misc.sidebar_mini_active = true;
@@ -207,18 +259,18 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
             }
 
             // we simulate the window Resize so the charts will get updated in realtime.
-            const simulateWindowResize = setInterval(function () {
+            const simulateWindowResize = setInterval(() => {
                 window.dispatchEvent(new Event('resize'));
             }, 180);
 
             // we stop the simulation of Window Resize after the animations are completed
-            setTimeout(function () {
+            setTimeout(() => {
                 clearInterval(simulateWindowResize);
             }, 1000);
         });
     }
 
-    public getDashboardName(dashboard): string {
+    public getDashboardName(dashboard: Dashboard): string {
         let name = dashboard.name;
         if (dashboard.config && dashboard.config.name) {
             name = dashboard.config.name;
@@ -229,7 +281,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
         return this.i18nNamePipe.transform(name, this.principal);
     }
 
-    public getDashboardIcon(dashboard): string {
+    public getDashboardIcon(dashboard: Dashboard): string {
         let icon = '';
         if (dashboard && dashboard.config && dashboard.config.icon) {
             if (dashboard.config.icon === 'no-icon') {
@@ -243,7 +295,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
         return icon;
     }
 
-    public getApplicationName(application): string {
+    public getApplicationName(application: any): string {
         const name = application.pluralName ? application.pluralName : application.name;
         return this.i18nNamePipe.transform(name, this.principal);
     }
@@ -262,7 +314,6 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
 
     private registerChangeAuth(): void {
         this.authSubscription = this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, () => {
-            // console.log('Event: %o', event);
             this.loadData();
             // this.router.navigate([`/dashboard`, result[0].id])
         });
@@ -273,33 +324,34 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
             () => this.getDashboards(true));
     }
 
+    // tslint:disable-next-line:cognitive-complexity
     private loadData(): void {
         // optimization, load data only if it is empty;
         if (!this.dashboards || this.dashboards.length === 0) {
             this.principal.hasPrivileges(['XMENTITY_SPEC.GET'])
                 .then((result) => {
-                    if (result) {
-                        // no need to load applciations, if they are loaded
-                        if (!this.applications) {
-                            this.applications = this.xmEntitySpecWrapperService.spec(true).then((spec) => {
-                                const applications = spec.types.filter((t) => t.isApp)
-                                    .filter((t) => this.principal.hasPrivilegesInline(['APPLICATION.' + t.key]));
-                                this.isApplicationExists = applications.length > 0;
-                                return applications;
-                            });
-                            // this.applications.then(() => this.collapseTab());
-                        }
+                    if (result && !this.applications) {
+                        this.applications = this.xmEntitySpecWrapperService.spec(true).then((spec) => {
+                            const applications = spec.types.filter((t) => t.isApp)
+                                .filter((t) => this.principal
+                                    .hasPrivilegesInline(['APPLICATION.' + t.key]));
+                            this.isApplicationExists = applications.length > 0;
+                            return applications;
+                        });
+                        // TODO: this.applications.then(() => this.collapseTab());
                     }
                 });
 
             this.principal.hasPrivileges(['DASHBOARD.GET_LIST'])
                 .then((result) => {
+                    if (!result) {
+                        return;
+                    }
                     // no need to load dashboards, if they are loaded
-                    result && this.dashboardWrapperService.dashboards(true).then((dashboards) => {
+                    this.dashboardWrapperService.dashboards(true).then((dashboards) => {
+                        this.dashboards = dashboards;
                         if (dashboards && dashboards.length) {
-                            this.dashboards = dashboards.sort((a, b) => this.sortDashboards(a, b));
-                        } else {
-                            this.dashboards = dashboards;
+                            this.dashboards.sort(sortDashboards);
                         }
                         this.groupDashboards();
                         this.collapseTab();
@@ -312,64 +364,17 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
     private collapseTab(): void {
         setTimeout(() => {
             const sidebarMenuActive = $('.sidebar .nav > li.active > a:not([data-toggle="collapse"])');
-            let $sidebarParent, collapseId;
+            let $sidebarParent;
+            let collapseId;
 
-            sidebarMenuActive && ($sidebarParent = sidebarMenuActive.parents('.collapse'));
-            $sidebarParent && (collapseId = $sidebarParent.siblings('a').attr('href'));
-            collapseId && $(collapseId).collapse('show');
+            if (sidebarMenuActive) {($sidebarParent = sidebarMenuActive.parents('.collapse')); }
+            if ($sidebarParent) { (collapseId = $sidebarParent.siblings('a').attr('href')); }
+            if (collapseId) { $(collapseId).collapse('show'); }
+
         }, 100);
     }
 
-    private sortById(a, b): number {
-        if (a.id > b.id) {
-            return -1;
-        }
-        if (a.id < b.id) {
-            return 1;
-        }
-        return 0;
-    }
-
-    private sortByConfig(a, b): number {
-        const cfgA: any = a.config;
-        const cfgB: any = b.config;
-        if (cfgA && cfgA.orderIndex && cfgB && cfgB.orderIndex) {
-            if (cfgA.orderIndex > cfgB.orderIndex) {
-                return 1;
-            }
-            if (cfgA.orderIndex < cfgB.orderIndex) {
-                return -1;
-            }
-            return 0;
-        }
-        return 0;
-    }
-
-    private sortByName(a, b): number {
-        if (a.name > b.name) {
-            return 1;
-        }
-        if (a.name < b.name) {
-            return -1;
-        }
-        return 0;
-    }
-
-    private sortDashboards(a, b): number {
-        if (a && b) {
-            if (a.config && b.config) {
-                return this.sortByConfig(a, b);
-            } else {
-                if (a.name && b.name) {
-                    return this.sortByName(a, b);
-                } else {
-                    return this.sortById(a, b);
-                }
-            }
-        }
-        return 0;
-    }
-
+    // tslint:disable-next-line:cognitive-complexity
     private groupDashboards(): void {
         this.dashboardGroups = [];
         if (!this.dashboards) {
@@ -401,25 +406,23 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
                     dashboards: [],
                 };
                 this.dashboardGroups.push(group);
-                this.dashboardGroups.sort((a, b) => this.sortDashboards(a, b));
+                this.dashboardGroups.sort(sortDashboards);
             }
             group.dashboards.push(dashboard);
-            this.dashboardGroups.map((d) => {
+            this.dashboardGroups.forEach((d) => {
                 if (d.dashboards && d.dashboards.length > 0) {
-                    d.dashboards.sort((a, b) => this.sortDashboards(a, b));
+                    d.dashboards.sort(sortDashboards);
                 }
             });
         }
     }
 
-    private checkCondition(dashboard): boolean {
+    private checkCondition(dashboard: Dashboard): boolean {
         if (dashboard.config && dashboard.config.condition) {
             try {
                 return !!(new Function('context', dashboard.config.condition))(this.contextService);
             } catch (e) {
-                // console.log('--------------- e checkCondition', dashboard.config);
                 const code = transpilingForIE(dashboard.config.condition, this.contextService);
-                // console.log('--------------- code', code);
                 return !!(new Function('context', `return ${code}`))(this.contextService);
             }
         } else {

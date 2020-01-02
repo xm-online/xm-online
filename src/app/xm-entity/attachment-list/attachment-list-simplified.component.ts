@@ -61,7 +61,9 @@ import { AttachmentListBaseComponent } from './attachment-list-base.component';
                                         <i class="material-icons">cloud_download</i>
                                     </a>
                                     &nbsp;
-                                    <a href="javascript: void(0);" (click)="onRemove(attachment)" *xmPermitted="['ATTACHMENT.DELETE']">
+                                    <a href="javascript: void(0);"
+                                       (click)="onRemove(attachment)"
+                                       *xmPermitted="['ATTACHMENT.DELETE']">
                                         <i class="material-icons">delete</i>
                                     </a>
                                 </td>

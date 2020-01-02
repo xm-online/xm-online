@@ -10,7 +10,7 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Principal } from '../../../auth/principal.service';
 import { I18nNamePipe } from '../../../language/i18n-name.pipe';
 import { ExtAutocompleteOptions } from './ext-autocomplete-options.model';
-import { ExtAutocompleteService } from './ext-autocomplete-service';
+import { byString, ExtAutocompleteService } from './ext-autocomplete-service';
 
 @Component({
     selector: 'xm-ext-autocomplete-widget',
@@ -85,7 +85,7 @@ export class ExtAutocompleteComponent implements OnInit {
         const fg: FormGroup = this.jsf.formGroup;
         if (this.options.relatedFields) {
             this.options.relatedFields.forEach((field) => {
-                fg.get(field.key).setValue(ExtAutocompleteService.byString(item.object, field.value));
+                fg.get(field.key).setValue(byString(item.object, field.value));
             });
         }
         if (this.layoutNode.dataType === 'array') {

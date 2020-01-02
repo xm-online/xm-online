@@ -6,6 +6,16 @@ import { Subscription } from 'rxjs';
 
 import { EntityDetailDialogComponent, Spec, XmEntity, XmEntityService, XmEntitySpec } from '../../../xm-entity';
 
+function sort(a: any, b: any): number {
+    if (a.typeKey < b.typeKey) {
+        return -1;
+    }
+    if (a.typeKey > b.typeKey) {
+        return 1;
+    }
+    return 0;
+}
+
 @Component({
     selector: 'xm-tasks-widget',
     templateUrl: './tasks-widget.component.html',
@@ -42,7 +52,7 @@ export class TasksWidgetComponent implements OnInit, OnDestroy {
             size: 1000,
         }).subscribe(
             (res: HttpResponse<XmEntity[]>) => this.prepareData(res.body),
-            (err) => console.log(err),
+            (err) => console.warn(err),
         );
     }
 
@@ -67,17 +77,9 @@ export class TasksWidgetComponent implements OnInit, OnDestroy {
                 xmEntity: e,
             });
         });
-        this.tasks = this.tasks.sort((a, b) => {
-            if (a.typeKey < b.typeKey) {
-                return -1;
-            }
-            if (a.typeKey > b.typeKey) {
-                return 1;
-            }
-            return 0;
-        });
-        for (let i = 0; i < this.tasks.length; i++) {
-            this.tasks[i].list = this.tasks[i].list.sort((a, b) => {
+        this.tasks.sort(sort);
+        for (const i of this.tasks) {
+            i.list = i.list.sort((a, b) => {
                 if (a.id < b.id) {
                     return -1;
                 }
@@ -89,23 +91,15 @@ export class TasksWidgetComponent implements OnInit, OnDestroy {
         }
     }
 
-    public sort(a, b): number {
-        if (a.typeKey < b.typeKey) {
-            return -1;
-        }
-        if (a.typeKey > b.typeKey) {
-            return 1;
-        }
-        return 0;
-    }
-
-    public setActive(i): void {
+    public setActive(i: any): void {
         this.activeId = i;
     }
 
     public registerChangeInXmEntities(): void {
-        this.xmEntityListModificationSubscriber = this.eventManager.subscribe('xmEntityListModification', (response) => this.load());
-        this.xmEntityDetailModificationSubscriber = this.eventManager.subscribe('xmEntityDetailModification', (response) => this.load());
+        this.xmEntityListModificationSubscriber = this.eventManager
+            .subscribe('xmEntityListModification', (response) => this.load());
+        this.xmEntityDetailModificationSubscriber = this.eventManager
+            .subscribe('xmEntityDetailModification', (response) => this.load());
     }
 
     public getType(typeKey: string): XmEntitySpec {
@@ -124,7 +118,7 @@ export class TasksWidgetComponent implements OnInit, OnDestroy {
         });
     }
 
-    public onEdit(item): void {
+    public onEdit(item: any): void {
         const modalRef = this.modalService.open(EntityDetailDialogComponent, {backdrop: 'static'});
         modalRef.componentInstance.xmEntity = Object.assign({}, item.xmEntity);
         modalRef.componentInstance.xmEntitySpec = this.getType(item.typeKey);

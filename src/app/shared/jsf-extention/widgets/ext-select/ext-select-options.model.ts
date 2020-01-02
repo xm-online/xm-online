@@ -1,16 +1,15 @@
-export class ExtSelectOptions {
-    constructor(public placeholder?: string,
-                public title?: string,
-                public url?: string,
-                public description?: string,
-                public sourceField?: string,
-                public arrayField?: string,
-                public labelField?: string,
-                public valueField?: string,
-                public relatedFields?: any[],
-                public translations?: any,
-                public htmlClass?: any,
-                public required?: boolean,
-                public emptyPlaceholder?: string) {
-    }
+export interface ExtSelectOptions {
+    placeholder?: string;
+    title?: string;
+    url?: string;
+    description?: string;
+    sourceField?: string;
+    arrayField?: string;
+    labelField?: string;
+    valueField?: string;
+    relatedFields?: any[];
+    translations?: any;
+    htmlClass?: any;
+    required?: boolean;
+    emptyPlaceholder?: string;
 }

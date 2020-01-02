@@ -25,7 +25,7 @@ export class RoleMgmtDeleteDialogComponent implements OnInit {
 
     public ngOnInit(): void {
         if (this.selectedRole) {
-            this.role = new Role(this.selectedRole.roleKey);
+            this.role = {roleKey: this.selectedRole.roleKey};
         }
     }
 

@@ -8,7 +8,6 @@ import { AccountService } from '../../auth/account.service';
 import { Principal } from '../../auth/principal.service';
 import { User } from '../user.model';
 import { UserService } from '../user.service';
-import { UserLogin } from './user-login.model';
 import { UserLoginService } from './user-login.service';
 
 @Component({
@@ -18,15 +17,14 @@ import { UserLoginService } from './user-login.service';
 export class UserLoginFormComponent implements OnChanges {
 
     @Input()
-    private user: User;
-    @Input()
     public isUser: boolean = false;
     @Input()
     public isCreate: boolean = false;
-
     public isSaving: boolean;
     public userLogins: any = [];
     public success: boolean;
+    @Input()
+    private user: User;
 
     constructor(private activeModal: NgbActiveModal,
                 private userService: UserService,
@@ -73,7 +71,13 @@ export class UserLoginFormComponent implements OnChanges {
     public createLogins(): void {
         this.user.logins = [];
         this.userLogins.filter((login) => login.value).forEach((login) => {
-            this.user.logins.push(new UserLogin(login.id, login.key, null, login.value, false));
+            this.user.logins.push({
+                id: login.id,
+                typeKey: login.key,
+                stateKey: null,
+                login: login.value,
+                removed: false,
+            });
         });
     }
 
@@ -87,7 +91,7 @@ export class UserLoginFormComponent implements OnChanges {
             });
             if (this.user.logins) {
                 this.user.logins.forEach((login) => {
-                    const info = this.userLogins.find((i) => i['key'] === login.typeKey);
+                    const info = this.userLogins.find((i) => i.key === login.typeKey);
                     if (info) {
                         info.value = login.login;
                         info.id = login.id;
@@ -97,7 +101,7 @@ export class UserLoginFormComponent implements OnChanges {
         });
     }
 
-    private onSaveSuccess(result): void {
+    private onSaveSuccess(result: any): void {
         this.isSaving = false;
         this.success = true;
         if (this.isUser) {

@@ -2,69 +2,63 @@ import { FastSearchSpec } from '../shared/fast-search-spec.model';
 import { XmEntitySpec } from '../shared/xm-entity-spec.model';
 import { XmEntity } from '../shared/xm-entity.model';
 
-export class EntityListCardOptions {
-    constructor(public entities?: EntityOptions[],
-                public hideDelete?: boolean,
-                public smOverflow?: boolean,
-                public hideExport?: boolean,
-                public hideOptionsMenu?: boolean,
-                public noDeepLink?: boolean) {
-    }
+export interface EntityListCardOptions {
+    entities?: EntityOptions[];
+    hideDelete?: boolean;
+    smOverflow?: boolean;
+    hideExport?: boolean;
+    hideOptionsMenu?: boolean;
+    noDeepLink?: boolean;
 }
 
-export class EntityOptions {
-    constructor(public typeKey?: string,
-                public query?: string,
-                public currentQuery?: string,
-                public name?: any,
-                public fastSearch?: FastSearchSpec[],
-                public hideDelete?: boolean,
-                public noDeepLink?: boolean,
-                public fields?: FieldOptions[],
-                public noData?: any,
-                public page?: number,
-                public xmEntitySpec?: XmEntitySpec,
-                public entities?: XmEntity[],
-                public totalItems?: any,
-                public queryCount?: any,
-                public routerLink?: string[],
-                public filter?: FilterOptions) {
-    }
+export interface EntityOptions {
+    typeKey?: string;
+    query?: string;
+    currentQuery?: string;
+    name?: any;
+    fastSearch?: FastSearchSpec[];
+    hideDelete?: boolean;
+    noDeepLink?: boolean;
+    fields?: FieldOptions[];
+    noData?: any;
+    page?: number;
+    xmEntitySpec?: XmEntitySpec;
+    entities?: XmEntity[];
+    totalItems?: any;
+    queryCount?: any;
+    routerLink?: string[];
+    filter?: FilterOptions;
 }
 
-export class FieldOptions {
-    constructor(public field?: string,
-                public title?: any,
-                public hiddenTitle?: boolean,
-                public useKeyword?: boolean,
-                public func?: string,
-                public action?: ActionOptions,
-                public actions?: ActionsOptions[],
-                public actionsListPrivileges?: string[],
-                public sortable?: boolean) {
-    }
+export interface FieldOptions {
+    field?: string;
+    title?: any;
+    hiddenTitle?: boolean;
+    useKeyword?: boolean;
+    func?: string;
+    action?: ActionOptions;
+    actions?: ActionsOptions[];
+    actionsListPrivileges?: string[];
+    sortable?: boolean;
 }
 
-export class ActionOptions {
-    constructor(public name?: any,
-                public functionKey?: string,
-                public handler?: (entity: XmEntity) => any,
-                public actionCondition?: (entity: XmEntity) => any) {
-    }
+export interface ActionOptions {
+    name?: any;
+    functionKey?: string;
+    handler?: (entity: XmEntity) => any;
+    actionCondition?: (entity: XmEntity) => any;
 }
 
-export class ActionsOptions {
-    constructor(public name?: any,
-                public functionKey?: string,
-                public privilege?: string[],
-                public handler?: (entity: XmEntity) => any,
-                public actionCondition?: (entity: XmEntity) => any) {
-    }
+export interface ActionsOptions {
+    name?: any;
+    functionKey?: string;
+    privilege?: string[];
+    handler?: (entity: XmEntity) => any;
+    actionCondition?: (entity: XmEntity) => any;
 }
 
-export class FilterOptions {
-    constructor(public template?: string,
-                public dataSpec?: string,
-                public dataForm?: string) {
-    }
+export interface FilterOptions {
+    template?: string;
+    dataSpec?: string;
+    dataForm?: string;
 }

@@ -1,6 +1,6 @@
-import {Directive, Input, OnDestroy, TemplateRef, ViewContainerRef} from '@angular/core';
-import {Subscription} from 'rxjs';
-import {Principal} from '../auth/principal.service';
+import { Directive, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Principal } from '../auth/principal.service';
 
 /**
  * @whatItDoes Conditionally includes an HTML element if current user has any
@@ -15,6 +15,7 @@ import {Principal} from '../auth/principal.service';
  */
 
 @Directive({
+    // tslint:disable-next-line:directive-selector
     selector: '[permitted]',
 })
 export class PermitDirective implements OnDestroy {
@@ -29,12 +30,16 @@ export class PermitDirective implements OnDestroy {
     ) {
     }
 
-    @Input()
+    @Input('permitted')
     set permitted(value: string) {
-        this.privileges = typeof value === 'string' ? [ value as string ] : value as string[];
+        this.privileges = typeof value === 'string' ? [value as string] : value as string[];
         this.updateView();
         // Get notified each time authentication state changes.
         this.privilegeSubscription = this.principal.getAuthenticationState().subscribe((identity) => this.updateView());
+    }
+
+    public ngOnDestroy(): void {
+        this.privilegeSubscription.unsubscribe();
     }
 
     private updateView(): void {
@@ -44,10 +49,6 @@ export class PermitDirective implements OnDestroy {
                 this.viewContainerRef.createEmbeddedView(this.templateRef);
             }
         });
-    }
-
-    public ngOnDestroy(): void {
-        this.privilegeSubscription.unsubscribe();
     }
 
 }

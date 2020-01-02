@@ -26,9 +26,9 @@ export class RoleMgmtDialogComponent implements OnInit {
 
     public ngOnInit(): void {
         if (this.selectedRole) {
-            this.role = new Role(this.selectedRole.roleKey, null, this.selectedRole.description);
+            this.role = {roleKey: this.selectedRole.roleKey, basedOn: null, description: this.selectedRole.description};
         } else {
-            this.role = new Role();
+            this.role = {};
         }
         this.roleService.getRoles().subscribe((roles) => {
             this.roles = roles.map((role) => role.roleKey).sort();
@@ -42,13 +42,18 @@ export class RoleMgmtDialogComponent implements OnInit {
 
     public onSave(): void {
         this.showLoader = true;
-        this.isAddMode || (this.role.createdDate = new Date().toJSON());
+        if (!this.isAddMode) {
+            (this.role.createdDate = new Date().toJSON());
+        }
+
         this.role.updatedDate = new Date().toJSON();
         this.role.roleKey = this.role.roleKey.trim();
-        this.role.description && (this.role.description = this.role.description.trim());
+        if (this.role.description) {
+            (this.role.description = this.role.description.trim());
+        }
         this.roleService[this.isAddMode ? 'create' : 'update'](this.role)
             .subscribe((resp) => this.onSaveSuccess(resp),
-                (err) => console.log(err),
+                (err) => console.info(err),
                 () => this.showLoader = false);
     }
 

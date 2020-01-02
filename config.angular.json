@@ -167,7 +167,11 @@
                             "src/tsconfig.app.json",
                             "src/tsconfig.spec.json"
                         ],
-                        "exclude": []
+                        "exclude": [
+                            "*.d.ts",
+                            "*.json",
+                            "**/*.json"
+                        ]
                     }
                 }
             }

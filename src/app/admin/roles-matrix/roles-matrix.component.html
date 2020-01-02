@@ -45,7 +45,7 @@
                 <mat-select (selectionChange)="onChangeSort()"
                             [(ngModel)]="sortBy.permitted_filter"
                             placeholder="{{'rolesManagement.permission.privilegeKey' | translate}}">
-                  <mat-option *ngFor="let item of permitted_filter" [value]="item.value">
+                  <mat-option *ngFor="let item of permittedFilter" [value]="item.value">
                     <span *ngIf="item.trans" jhiTranslate="rolesManagement.permission.{{item.trans}}"></span>
                   </mat-option>
                 </mat-select>

@@ -24,7 +24,7 @@ export class HasAnyAuthorityDirective {
                 private viewContainerRef: ViewContainerRef) {
     }
 
-    @Input()
+    @Input('jhiHasAnyAuthority')
     set jhiHasAnyAuthority(value: string | string[]) {
         this.authorities = typeof value === 'string' ? [value as string] : value as string[];
         this.updateView();

@@ -1,72 +1,81 @@
 {
-    "rulesDirectory":[
+    "rulesDirectory": [
         "node_modules/codelyzer"
     ],
-    "extends":[
+    "extends": [
         "tslint-eslint-rules",
         "tslint:recommended",
         "tslint-sonarts"
     ],
-    "rules":{
-        "max-line-length":[
+    "linterOptions": {
+        "exclude": [
+            "node_modules",
+            "*.d.ts",
+            "*.json",
+            "**/*.json"
+        ]
+    },
+    "rules": {
+        "max-line-length": [
             true,
             120
         ],
-        "no-constant-condition":true,
-        "no-inferrable-types":true,
-        "object-literal-sort-keys":false,
-        "no-hardcoded-credentials":false,
-        "no-useless-cast":false,
-        "parameters-max-number":false,
-        "no-duplicate-string":false,
-        "class-name":true,
-        "comment-format":[
+        "no-constant-condition": true,
+        "no-inferrable-types": true,
+        "object-literal-sort-keys": false,
+        "no-hardcoded-credentials": false,
+        "no-useless-cast": false,
+        "parameters-max-number": false,
+        "no-duplicate-string": false,
+        "class-name": true,
+        "comment-format": [
             true,
             "check-space"
         ],
-        "indent":[
+        "array-type": [true, "array-simple"],
+        "indent": [
             true,
             "spaces"
         ],
-        "eofline":true,
-        "no-console":[
+        "eofline": true,
+        "no-console": [
             true,
             "log",
             "error"
         ],
-        "no-duplicate-variable":true,
-        "no-duplicate-imports":true,
-        "no-inner-declarations":[
+        "no-duplicate-variable": true,
+        "no-duplicate-imports": true,
+        "no-inner-declarations": [
             true,
             "function"
         ],
-        "no-eval":true,
-        "no-empty":false,
-        "no-arg":true,
-        "prefer-readonly":false,
-        "no-internal-module":true,
-        "interface-name":false,
+        "no-eval": true,
+        "no-empty": false,
+        "no-arg": true,
+        "prefer-readonly": false,
+        "no-internal-module": true,
+        "interface-name": false,
         "no-inferrable-types": [true, "ignore-params", "ignore-properties"],
-        "no-trailing-whitespace":true,
-        "no-bitwise":true,
-        "no-unused-expression":true,
-        "no-var-keyword":true,
-        "one-line":[
+        "no-trailing-whitespace": true,
+        "no-bitwise": true,
+        "no-unused-expression": true,
+        "no-var-keyword": true,
+        "one-line": [
             true,
             "check-catch",
             "check-open-brace",
             "check-whitespace"
         ],
-        "quotemark":[
+        "quotemark": [
             true,
             "single",
             "avoid-escape"
         ],
-        "semicolon":[
+        "semicolon": [
             true,
             "always"
         ],
-        "typedef":[
+        "typedef": [
             true,
             "call-signature",
             "parameter",
@@ -75,23 +84,23 @@
             "object-destructuring",
             "array-destructuring"
         ],
-        "typedef-whitespace":[
+        "typedef-whitespace": [
             true,
             {
-                "call-signature":"nospace",
-                "index-signature":"nospace",
-                "parameter":"nospace",
-                "property-declaration":"nospace",
-                "variable-declaration":"nospace"
+                "call-signature": "nospace",
+                "index-signature": "nospace",
+                "parameter": "nospace",
+                "property-declaration": "nospace",
+                "variable-declaration": "nospace"
             }
         ],
-        "variable-name":[
+        "variable-name": [
             true,
             "ban-keywords",
             "check-format",
             "allow-leading-underscore"
         ],
-        "whitespace":[
+        "whitespace": [
             true,
             "check-branch",
             "check-decl",
@@ -99,13 +108,13 @@
             "check-separator",
             "check-type"
         ],
-        "directive-selector":[
+        "directive-selector": [
             true,
             "attribute",
             "xm",
             "camelCase"
         ],
-        "component-selector":[
+        "component-selector": [
             true,
             "element",
             "xm",

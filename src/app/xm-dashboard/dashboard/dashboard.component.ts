@@ -160,7 +160,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     private findAndEnrichWidget(item: any, widgets: any[]): void {
-        Object.keys(item).some((k) => {
+        Object.keys(item).forEach((k) => {
             if (k === 'widget') {
                 item.widget = widgets.find((w) => w.id === item[k]);
             }

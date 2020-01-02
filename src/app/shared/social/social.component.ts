@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CSRFService } from '../auth/csrf.service';
+
 @Component({
     selector: 'xm-social',
     templateUrl: './social.component.html',
-    styleUrls: [ './social.component.scss' ],
+    styleUrls: ['./social.component.scss'],
 })
 export class JhiSocialComponent implements OnInit {
 
@@ -16,7 +17,7 @@ export class JhiSocialComponent implements OnInit {
     constructor(private csrfService: CSRFService) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.csrf = this.csrfService.getCSRF();
     }
 }

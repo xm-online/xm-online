@@ -123,7 +123,7 @@ export class LocationDetailDialogComponent implements OnInit {
             ).subscribe(
                 () => this.onSaveSuccess('xm-entity.location-detail-dialog.edit.success'),
                 // TODO: error processing
-                (err) => console.log(err));
+                (err) => console.info(err));
         } else {
             this.locationService.create(this.form.value).pipe(
                 finalize(() => this.showLoader = false),
@@ -131,7 +131,7 @@ export class LocationDetailDialogComponent implements OnInit {
                 .subscribe(
                     () => this.onSaveSuccess('xm-entity.location-detail-dialog.add.success'),
                     // TODO: error processing
-                    (err) => console.log(err));
+                    (err) => console.info(err));
         }
     }
 

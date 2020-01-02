@@ -10,23 +10,22 @@ import * as moment from 'moment';
  * It accepts two optional params: format?: string (moment.js) and offset?: string
  * If used without params, would be taken from account in Principal
  * and formating also can be override from config UI
- **/
-
+ */
 @Pipe({name: 'xmDateTime'})
 export class XmDateTimePipe implements PipeTransform {
 
-    account: any;
-    dicFormats: any;
-    dicFormatsConfig: any;
+    public account: any;
+    public dicFormats: any;
+    public dicFormatsConfig: any;
 
     constructor(private principal: Principal,
                 private xmConfigService: XmConfigService) {
         this.principal.identity().then((account) => this.account = account || {langKey: 'en'});
         this.dicFormats = {en: 'MM/DD/YYYY HH:mm',  ru: 'DD.MM.YYYY HH:mm', uk: 'DD.MM.YYYY HH:mm'};
-        this.xmConfigService.getUiConfig().subscribe(resp => this.dicFormatsConfig = resp.datesFormats || {});
+        this.xmConfigService.getUiConfig().subscribe((resp) => this.dicFormatsConfig = resp.datesFormats || {});
     }
 
-    transform(time: any, format?: string, offset?: string): any {
+    public transform(time: any, format?: string, offset?: string): any {
         const timeMoment = moment(time);
         timeMoment.utc();
         timeMoment.utcOffset(offset ? offset : this.getOffset());
@@ -39,9 +38,9 @@ export class XmDateTimePipe implements PipeTransform {
 
     private getDefaultFormat(): string {
         const lang = this.account.langKey;
-        let format = this.dicFormats['en'];
-        if (lang in this.dicFormats) {format =  this.dicFormats[lang]}
-        if (lang in this.dicFormatsConfig) {format =  this.dicFormatsConfig[lang]}
+        let format = this.dicFormats.en;
+        if (lang in this.dicFormats) {format =  this.dicFormats[lang]; }
+        if (lang in this.dicFormatsConfig) {format =  this.dicFormatsConfig[lang]; }
         return format;
     }
 }

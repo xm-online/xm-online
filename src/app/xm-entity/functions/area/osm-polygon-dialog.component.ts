@@ -11,27 +11,30 @@ export class OsmPolygonDialogComponent {
 
     public showLoader: boolean;
     public relations: any[];
-    public addPolygonInternal = new Function();
 
     constructor(public principal: Principal,
                 public activeModal: NgbActiveModal,
                 private overpassApi: OverpassApiService) {
     }
 
-    public search(searchString): void {
+    public addPolygonInternal(..._args: any): any {
+        return;
+    }
+
+    public search(searchString: string): void {
         if (searchString && searchString.length > 3) {
             this.showLoader = true;
             this.overpassApi.getBoundariesByName(searchString).subscribe((body) => {
                 this.relations = body.elements;
             }, (err) => {
-                console.log(err);
+                console.info(err);
             }, () => {
                 this.showLoader = false;
             });
         }
     }
 
-    public addPolygon(rel): void {
+    public addPolygon(rel: any): void {
         this.overpassApi.getRelGeom(rel.id).subscribe((body) => {
             const polygon = [];
             const members = body.elements.shift().members
@@ -52,7 +55,7 @@ export class OsmPolygonDialogComponent {
             }
             this.addPolygonInternal(polygon);
         }, (err) => {
-            console.log(err);
+            console.info(err);
         }, () => {
             this.activeModal.dismiss('cancel');
         });

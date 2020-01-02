@@ -34,8 +34,8 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
     public formData: any = {};
     public isJsonFormValid: boolean = true;
 
-    public showLoader$ = new BehaviorSubject<boolean>(false);
-    public showSecondStep$ = new BehaviorSubject<boolean>(false);
+    public showLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    public showSecondStep$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     constructor(private activeModal: NgbActiveModal,
                 private functionService: FunctionService,
@@ -52,10 +52,11 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
         // TODO think about correct way to work with context
         $.xmEntity = this.xmEntity;
         if (this.functionSpec) {
-            this.jsfAttributes = buildJsfAttributes(this.functionSpec.inputSpec || {}, this.functionSpec.inputForm || {});
+            this.jsfAttributes = buildJsfAttributes(this.functionSpec.inputSpec || {},
+                this.functionSpec.inputForm || {});
         }
         $.xmEntity = null;
-        console.log('ngOnInit');
+        console.info('ngOnInit');
     }
 
     public ngAfterViewInit(): void {
@@ -68,7 +69,8 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
         this.formData.xmEntity = this.xmEntity;
         const eId = this.functionSpec.withEntityId ? this.xmEntity.id : null;
 
-        const apiCall$ = this.functionService.callEntityFunction(this.functionSpec.key, eId, this.formData).pipe(share());
+        const apiCall$ = this.functionService.callEntityFunction(this.functionSpec.key, eId, this.formData)
+            .pipe(share());
 
         const isSaveContent = (r) => r.actionType && r.actionType === 'download';
 
@@ -147,7 +149,7 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
         }
     }
 
-    private saveAsFile(r): void {
+    private saveAsFile(r: any): void {
         const filename = JSON.parse(getFileNameFromResponseContentDisposition(r));
         saveFile(r.body, filename, r.headers.get('content-type'));
         this.activeModal.dismiss(true);

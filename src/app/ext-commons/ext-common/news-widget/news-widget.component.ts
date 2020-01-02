@@ -25,9 +25,7 @@ export class NewsWidgetComponent implements OnInit {
         this.size = this.config.size;
         this.feedService.getFeedContent(this.url).subscribe((feed) => {
             this.feed = feed;
-        }, (err) => {
-            console.log(err);
-        });
+        }, (err) => console.warn(err));
     }
 
 }

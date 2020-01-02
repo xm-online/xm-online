@@ -10,7 +10,7 @@ export class DynamicWidgetComponent implements OnInit {
 
     public commons: string[] = ['ext-common', 'ext-common-csp', 'ext-common-entity'];
 
-    @Input() set init(value) {
+    @Input() set init(value: any) {
         if (!value) {
             return;
         }
@@ -28,9 +28,9 @@ export class DynamicWidgetComponent implements OnInit {
             const module = factory.create(this.injector);
             const entryComponentType = module.injector.get(value.component);
             const componentFactory = module.componentFactoryResolver.resolveComponentFactory(entryComponentType);
-            const widget = this.viewRef.createComponent(componentFactory);
-            widget.instance['config'] = value.config;
-            widget.instance['spec'] = value.spec;
+            const widget: any = this.viewRef.createComponent(componentFactory);
+            widget.instance.config = value.config;
+            widget.instance.spec = value.spec;
         });
     }
 

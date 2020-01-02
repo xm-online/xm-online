@@ -54,7 +54,9 @@ export class LinkListComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     public filterBackLinkSpecs(): FullLinkSpec[] {
-        return this.backLinkSpecs ? this.backLinkSpecs.filter((backLinkSpec) => this.filterLinks(backLinkSpec.model).length > 0) : [];
+        return this.backLinkSpecs
+            ? this.backLinkSpecs.filter((backLinkSpec) => this.filterLinks(backLinkSpec.model).length > 0)
+            : [];
     }
 
     private registerModificationSubscription(): void {
@@ -64,14 +66,16 @@ export class LinkListComponent implements OnInit, OnDestroy, OnChanges {
     private load(): void {
         this.links = [];
 
-        this.xmEntityService.find(this.xmEntityId, {embed: 'targets'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
-            this.xmEntity = xmEntity.body;
-            if (xmEntity.body.targets) {
-                this.links.push(...xmEntity.body.targets);
-            }
-        });
+        this.xmEntityService.find(this.xmEntityId, {embed: 'targets'})
+            .subscribe((xmEntity: HttpResponse<XmEntity>) => {
+                this.xmEntity = xmEntity.body;
+                if (xmEntity.body.targets) {
+                    this.links.push(...xmEntity.body.targets);
+                }
+            });
 
-        // IEVGEN. DO NOT REMOVE. This code here is because user could get targets but could not get sources or vise versa
+        // IEVGEN. DO NOT REMOVE.
+        // This code here is because user could get targets but could not get sources or vise versa
         this.principal.hasPrivileges(['LINK.SOURCE.GET_LIST']).then((data) => {
             if (data) {
                 this.getSources().subscribe((items) => this.links.push(...items));

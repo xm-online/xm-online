@@ -42,16 +42,18 @@ export class CommentListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private registerListModify(): void {
-        this.modificationSubscription = this.eventManager.subscribe('commentListModification', (response) => this.load());
+        this.modificationSubscription = this.eventManager
+            .subscribe('commentListModification', (response) => this.load());
     }
 
     private load(): void {
-        this.xmEntityService.find(this.xmEntityId, {embed: 'comments'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
-            this.xmEntity = xmEntity.body;
-            if (xmEntity.body.comments) {
-                this.comments = [...xmEntity.body.comments];
-            }
-        });
+        this.xmEntityService.find(this.xmEntityId, {embed: 'comments'})
+            .subscribe((xmEntity: HttpResponse<XmEntity>) => {
+                this.xmEntity = xmEntity.body;
+                if (xmEntity.body.comments) {
+                    this.comments = [...xmEntity.body.comments];
+                }
+            });
     }
 
 }

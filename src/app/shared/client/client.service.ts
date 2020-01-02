@@ -8,7 +8,7 @@ import { Client } from './client.model';
 export class ClientService {
 
     private resourceUrl: string = 'uaa/api/clients';
-    private resourceUrlByClientId = this.resourceUrl + '/clientid-contains';
+    private resourceUrlByClientId: string = this.resourceUrl + '/clientid-contains';
 
     constructor(private http: HttpClient) {
     }

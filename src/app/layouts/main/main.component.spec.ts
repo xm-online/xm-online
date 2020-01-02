@@ -1,3 +1,4 @@
+/* tslint:disable:max-classes-per-file */
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
@@ -15,7 +16,7 @@ class Mock {
 }
 
 class MockedConfig extends Mock {
-    public isResolved(): Observable<Boolean> {
+    public isResolved(): Observable<boolean> {
         return of(true);
     }
 

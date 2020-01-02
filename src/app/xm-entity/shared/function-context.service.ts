@@ -58,8 +58,8 @@ export class FunctionContextService {
     private convertArrayResponse(res: HttpResponse<FunctionContext[]>): HttpResponse<FunctionContext[]> {
         const jsonResponse: FunctionContext[] = res.body;
         const body: FunctionContext[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+        for (const i of jsonResponse) {
+            body.push(this.convertItemFromServer(i));
         }
         return res.clone({body});
     }

@@ -58,8 +58,8 @@ export class CalendarService {
     private convertArrayResponse(res: HttpResponse<Calendar[]>): HttpResponse<Calendar[]> {
         const jsonResponse: Calendar[] = res.body;
         const body: Calendar[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+        for (const i of jsonResponse) {
+            body.push(this.convertItemFromServer(i));
         }
         return res.clone({body});
     }

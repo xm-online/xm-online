@@ -11,8 +11,8 @@ export class ClientResolvePagingParams implements Resolve<any> {
     }
 
     public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
-        const page = route.queryParams['page'] ? route.queryParams['page'] : '1';
-        const sort = route.queryParams['sort'] ? route.queryParams['sort'] : 'lastModifiedDate,asc';
+        const page = route.queryParams.page ? route.queryParams.page : '1';
+        const sort = route.queryParams.sort ? route.queryParams.sort : 'lastModifiedDate,asc';
         return {
             page: this.paginationUtil.parsePage(page),
             predicate: this.paginationUtil.parsePredicate(sort),

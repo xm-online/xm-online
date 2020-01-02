@@ -1,6 +1,6 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {TdTextEditorComponent} from '@covalent/text-editor';
-import {JsonSchemaFormService} from 'angular2-json-schema-form';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { TdTextEditorComponent } from '@covalent/text-editor';
+import { JsonSchemaFormService } from 'angular2-json-schema-form';
 
 @Component({
     selector: 'xm-ext-md-editor-widget',
@@ -9,12 +9,10 @@ import {JsonSchemaFormService} from 'angular2-json-schema-form';
 })
 
 export class ExtMdEditorComponent implements OnInit {
-    @ViewChild('mdEditor', {static: false}) private _textEditor: TdTextEditorComponent;
     @Input() public layoutNode: any;
-
     public controlValue: any;
     public options: any;
-    public isEditable = false;
+    public isEditable: boolean = false;
     public editorOptions: any = {
         autofocus: true,
         status: false,
@@ -22,25 +20,26 @@ export class ExtMdEditorComponent implements OnInit {
         spellChecker: false,
         showIcons: ['code', 'table'],
     };
+    @ViewChild('mdEditor', {static: false}) private _textEditor: TdTextEditorComponent;
 
     constructor(private jsf: JsonSchemaFormService) {
     }
 
-    public onToggleEditor() {
+    get componentText(): string {
+        return this.controlValue ? this.controlValue : '';
+    }
+
+    public onToggleEditor(): void {
         this.isEditable = !this.isEditable;
     }
 
-    public onSaveMd() {
+    public onSaveMd(): void {
         this.jsf.updateValue(this, this._textEditor.value);
         this.onToggleEditor();
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.options = this.layoutNode.options || {};
         this.jsf.initializeControl(this);
-    }
-
-    get componentText(): string {
-        return this.controlValue ? this.controlValue : '';
     }
 }

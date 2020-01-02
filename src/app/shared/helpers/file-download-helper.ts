@@ -32,6 +32,5 @@ export const getFileNameFromResponseContentDisposition = (res) => {
         return '"untitled"';
     }
     const matches = /filename=([^;]+)/ig.exec(contentDisposition);
-    const fileName = (matches[1] || 'untitled').trim();
-    return fileName;
+    return (matches[1] || 'untitled').trim();
 };

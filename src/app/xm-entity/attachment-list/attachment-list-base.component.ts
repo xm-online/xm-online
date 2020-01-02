@@ -124,7 +124,7 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
         }
     }
 
-    private openDialog(dialogClass, operation, options?): NgbModalRef {
+    private openDialog(dialogClass: any, operation: any, options?: any): NgbModalRef {
         const modalRef = this.modalService.open(dialogClass, options ? options : {backdrop: 'static'});
         modalRef.componentInstance.xmEntity = this.xmEntity;
         operation(modalRef);
@@ -136,36 +136,37 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
 
         if (!this.attachmentSpecs || !this.attachmentSpecs.length) {
             if (DEBUG_INFO_ENABLED) {
-                console.log('DBG: no spec no call');
+                console.info('DBG: no spec no call');
             }
             return;
         }
 
         if (this.xmEntity && this.xmEntity.attachments) {
             if (DEBUG_INFO_ENABLED) {
-                console.log('DBG: use existing data');
+                console.info('DBG: use existing data');
             }
             this.attachments = [...this.xmEntity.attachments];
             return;
         }
 
-        this.xmEntityService.find(this.xmEntityId, {embed: 'attachments'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
-            if (xmEntity.body.attachments) {
-                this.attachments = [...xmEntity.body.attachments];
-            }
-        });
+        this.xmEntityService.find(this.xmEntityId, {embed: 'attachments'})
+            .subscribe((xmEntity: HttpResponse<XmEntity>) => {
+                if (xmEntity.body.attachments) {
+                    this.attachments = [...xmEntity.body.attachments];
+                }
+            });
     }
 
     private registerListModify(): void {
         this.modificationSubscription = this.eventManager.subscribe(ATTACHMENT_EVENT, (response) => {
             if (DEBUG_INFO_ENABLED) {
-                console.log(`DBG: $%o`, response);
+                console.info(`DBG: $%o`, response);
             }
             this.load();
         });
     }
 
-    private saveInnerAttachment(body): void {
+    private saveInnerAttachment(body: any): void {
         const byteString = atob(body.content.value);
         const ab = new ArrayBuffer(byteString.length);
         const ia = new Uint8Array(ab);

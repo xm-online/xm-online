@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                     this.defaultWidget = this.getWidgetComponent();
                 }
             }, (err) => {
-                console.error(err);
+                console.warn(err);
                 this.defaultWidget = this.getWidgetComponent();
             });
         });

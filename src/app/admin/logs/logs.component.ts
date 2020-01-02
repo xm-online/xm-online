@@ -43,7 +43,7 @@ export class LogsComponent implements OnInit {
                     this.selectedService = this.services[1].name;
                     this.getLoggers();
                 }
-            }, (error) => console.log(error));
+            }, (error) => console.info(error));
     }
 
     public getLoggers(): void {

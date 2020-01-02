@@ -9,7 +9,8 @@ import { ProfileService } from './profile.service';
 @Component({
     selector: 'xm-page-ribbon',
     template: `
-        <div class="ribbon" *ngIf="ribbonEnv"><a href="" jhiTranslate="global.ribbon.{{ribbonEnv}}">{{ribbonEnv}}</a></div>`,
+        <div class="ribbon" *ngIf="ribbonEnv"><a href="" jhiTranslate="global.ribbon.{{ribbonEnv}}">{{ribbonEnv}}</a>
+        </div>`,
     styleUrls: [
         'page-ribbon.css',
     ],
@@ -46,7 +47,7 @@ export class PageRibbonComponent implements OnInit, OnDestroy {
                     });
                 }
             })
-            .catch((error) => console.log('PageRibbonComponent %o', error));
+            .catch((error) => console.info('PageRibbonComponent %o', error));
 
     }
 
@@ -58,7 +59,8 @@ export class PageRibbonComponent implements OnInit, OnDestroy {
 
     private registerChangeAuth(): void {
         if (this.ribbonEnv) {
-            this.eventAuthSubscriber = this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, () => this.ngOnInit());
+            this.eventAuthSubscriber = this.eventManager
+                .subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, () => this.ngOnInit());
         }
     }
 }

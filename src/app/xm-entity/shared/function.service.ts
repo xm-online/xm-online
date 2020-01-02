@@ -10,19 +10,11 @@ export class FunctionService {
 
     private resourceUrl: string = SERVER_API_URL + 'entity/api/functions';
 
-    private resourceEntityUrl = (id, key) => SERVER_API_URL + `entity/api/xm-entities/${id}/functions/${key}`;
-
-    /**
-     * There are no well defined field in spec to mark FILE UPLOAD startegy (base64, blob, arraybuffer) so for now everything started like
-     * `EXPORT-ARRAYBUFFER-` will be processed as `responseType: 'arraybuffer'`
-     * @param key function key
-     */
-    private isExportFunction = (key = '') => key.toUpperCase().startsWith('EXPORT-ARRAYBUFFER-');
-
     constructor(private http: HttpClient) {
     }
 
-    public callEntityFunction(functionKey: string, xmEntityId?: number, inputContext?: any): Observable<HttpResponse<any>> {
+    public callEntityFunction(functionKey: string, xmEntityId?: number, inputContext?: any)
+        : Observable<HttpResponse<any>> {
         const copy = this.convert(inputContext);
         if (xmEntityId) {
             return this.callWithEntityId(xmEntityId, functionKey, copy);
@@ -39,13 +31,28 @@ export class FunctionService {
         return this.callXmFunction(url, copy);
     }
 
-    public callWithEntityId(xmEntityId: number, functionKey: string, inputContext?: any): Observable<HttpResponse<any>> {
+    public callWithEntityId(xmEntityId: number, functionKey: string, inputContext?: any)
+        : Observable<HttpResponse<any>> {
         const copy = this.convert(inputContext);
         const url = this.resourceEntityUrl(xmEntityId, functionKey);
         if (this.isExportFunction(functionKey)) {
             return this.callXmDownloadFunction(url, copy);
         }
         return this.callXmFunction(url, copy);
+    }
+
+    /**
+     * There are no well defined field in spec to mark FILE UPLOAD startegy (base64, blob, arraybuffer)
+     * so for now everything started like
+     * `EXPORT-ARRAYBUFFER-` will be processed as `responseType: 'arraybuffer'`
+     * @param key function key
+     */
+    private isExportFunction(key: string = ''): any {
+        return key.toUpperCase().startsWith('EXPORT-ARRAYBUFFER-');
+    }
+
+    private resourceEntityUrl(id: any, key: string): any {
+        return SERVER_API_URL + `entity/api/xm-entities/${id}/functions/${key}`;
     }
 
     private callXmFunction(url: string, inputContext: any = {}): Observable<HttpResponse<any>> {
@@ -59,6 +66,7 @@ export class FunctionService {
      * @param url - resource url
      * @param inputContext - resource context
      */
+    // tslint:disable-next-line:no-identical-functions
     private callXmDownloadFunction(url: string, inputContext: any = {}): Observable<HttpResponse<any>> {
         return this.http
             .post(url, inputContext, {observe: 'response', responseType: 'arraybuffer'})

@@ -4,12 +4,12 @@ import { JhiDateUtils } from 'ng-jhipster';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { environment } from '../../../environments/environment';
+
 import { createRequestOption } from '../../shared/model/request-util';
 import { SERVER_API_URL } from '../../xm.constants';
 import { Link } from './link.model';
 import { XmEntity } from './xm-entity.model';
-
-import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class XmEntityService {
@@ -40,7 +40,7 @@ export class XmEntityService {
     public find(id: number, req?: any): Observable<HttpResponse<XmEntity>> {
         const options = createRequestOption(req);
         if (!environment.production) {
-            console.log(`[dbg] find for ${id} with req %o`, req);
+            console.info(`[dbg] find for ${id} with req %o`, req);
         }
         return this.http.get<XmEntity>(`${this.resourceUrl}/${id}`, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<XmEntity>) => this.convertResponse(res)));
@@ -71,7 +71,7 @@ export class XmEntityService {
     /**
      *  template  (sting) - a template identifier from the search-templates.yml.
      *  templateParams ([]|{}) - a named parameters for the template.
-     * */
+     */
     public searchByTemplate(req?: any): Observable<HttpResponse<XmEntity[]>> {
         const options = createRequestOption(req);
         return this.http.get<XmEntity[]>(this.resourceSearchTemplateUrl, {params: options, observe: 'response'}).pipe(
@@ -86,14 +86,21 @@ export class XmEntityService {
 
     public getProfileByKey(key: string, req?: any): Observable<HttpResponse<XmEntity>> {
         const options = createRequestOption(req);
-        return this.http.get<XmEntity>(`${this.resourceProfileUrl}/${key}`, {params: options, observe: 'response'}).pipe(
-            map((res: HttpResponse<XmEntity>) => this.convertResponse(res)));
+        return this.http.get<XmEntity>(
+            `${this.resourceProfileUrl}/${key}`,
+            {params: options, observe: 'response'}).pipe(
+            map((res: HttpResponse<XmEntity>) => this.convertResponse(res)),
+        );
     }
 
     public changeState(id: number, stateKey: string, inputContext?: any): Observable<HttpResponse<XmEntity>> {
         const copy = inputContext ? this.convertFormData(inputContext) : null;
-        return this.http.put<XmEntity>(`${this.resourceUrl}/${id}/states/${stateKey}`, copy, {observe: 'response'}).pipe(
-            map((res: HttpResponse<XmEntity>) => this.convertResponse(res)));
+        return this.http.put<XmEntity>(
+            `${this.resourceUrl}/${id}/states/${stateKey}`,
+            copy,
+            {observe: 'response'}).pipe(
+            map((res: HttpResponse<XmEntity>) => this.convertResponse(res)),
+        );
     }
 
     public createAvatar(file: File | Blob): Observable<string> {
@@ -114,7 +121,9 @@ export class XmEntityService {
             {params: options, observe: 'response'});
     }
 
-    public findLinkSourcesInverted(idOrKey: string, linkTypeKey: string[], req?: any): Observable<HttpResponse<Link[]>> {
+    public findLinkSourcesInverted(idOrKey: string,
+                                   linkTypeKey: string[],
+                                   req?: any): Observable<HttpResponse<Link[]>> {
         const options = createRequestOption(req);
         return this.http.get<Link[]>(`${this.v2ResourceUrl}/${idOrKey}/links/sources?typeKeys=${linkTypeKey}`,
             {params: options, observe: 'response'});
@@ -138,8 +147,9 @@ export class XmEntityService {
     private convertArrayResponse(res: HttpResponse<XmEntity[]>): HttpResponse<XmEntity[]> {
         const jsonResponse: XmEntity[] = res.body;
         const body: XmEntity[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+
+        for (const i of jsonResponse) {
+            body.push(this.convertItemFromServer(i));
         }
         return res.clone({body});
     }
@@ -164,9 +174,13 @@ export class XmEntityService {
     private convert(xmEntity: XmEntity): XmEntity {
         const copy: XmEntity = Object.assign({}, xmEntity);
 
-        copy.startDate = xmEntity.startDate instanceof Date ? xmEntity.startDate : this.dateUtils.toDate(xmEntity.startDate);
+        copy.startDate = xmEntity.startDate instanceof Date
+            ? xmEntity.startDate
+            : this.dateUtils.toDate(xmEntity.startDate);
 
-        copy.updateDate = xmEntity.updateDate instanceof Date ? xmEntity.updateDate : this.dateUtils.toDate(xmEntity.updateDate);
+        copy.updateDate = xmEntity.updateDate instanceof Date
+            ? xmEntity.updateDate
+            : this.dateUtils.toDate(xmEntity.updateDate);
 
         copy.endDate = xmEntity.endDate instanceof Date ? xmEntity.endDate : this.dateUtils.toDate(xmEntity.endDate);
         return copy;
@@ -176,8 +190,7 @@ export class XmEntityService {
      * Convert a InputContext to a JSON which can be sent to the server.
      */
     private convertFormData(inputContext: any): any {
-        const copy = Object.assign({}, inputContext);
-        return copy;
+        return Object.assign({}, inputContext);
     }
 
 }

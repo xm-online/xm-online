@@ -38,7 +38,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
         this.cleanHttpErrorListener = eventManager.subscribe('xm.httpError', (resp) => {
             const response = this.processResponse(resp);
             if (DEBUG_INFO_ENABLED) {
-                console.log(`Error xm.httpError - ${response}`);
+                console.info(`Error xm.httpError - ${response}`);
             }
             this.specService.getUiConfig().subscribe((result) => {
                 if (result &&
@@ -72,6 +72,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
         });
     }
 
+    // tslint:disable-next-line:cognitive-complexity
     public configAndSendError(config: ResponseConfigItem, response: any, params?: any): void {
         const title = this.processMessage(config.outputMessage ?
             config.outputMessage :
@@ -99,10 +100,14 @@ export class JhiAlertErrorComponent implements OnDestroy {
             case 'validation': {
 
                 const errors = new Function('rc', config.validationFieldsExtractor)(this.rc);
+                // tslint:disable-next-line:forin
                 for (const key in errors) {
                     errors[key] = this.processMessage(errors[key] ? errors[key] : null, response);
                 }
-                this.eventManager.broadcast({name: 'xm.ValidationError', content: config, rc: this.rc, title, errors});
+                this.eventManager.broadcast({
+                    name: 'xm.ValidationError',
+                    content: config, rc: this.rc, title, errors,
+                });
                 break;
             }
             case 'alert': {
@@ -114,7 +119,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
                 break;
             }
             default: {
-                console.error('Wrong responseConfigItem type - sending default error');
+                console.warn('Wrong responseConfigItem type - sending default error');
                 this.sendDefaultError(response);
             }
         }
@@ -127,7 +132,8 @@ export class JhiAlertErrorComponent implements OnDestroy {
         }
     }
 
-    public sendDefaultError(response): void {
+    // tslint:disable-next-line:cognitive-complexity
+    public sendDefaultError(response: any): void {
         let i;
         const httpErrorResponse = response.content;
         switch (httpErrorResponse.status) {
@@ -154,15 +160,17 @@ export class JhiAlertErrorComponent implements OnDestroy {
                     const fieldErrors = httpErrorResponse.error.fieldErrors;
                     for (i = 0; i < fieldErrors.length; i++) {
                         const fieldError = fieldErrors[i];
-                        // convert 'something[14].other[4].id' to 'something[].other[].id' so translations can be written to it
+                        // convert 'something[14].other[4].id' to 'something[].other[].id'
+                        // so translations can be written to it
                         const convertedField = fieldError.field.replace(/\[\d*\]/g, '[]');
                         const fieldName = this.translateService.instant(
                             'jhipsterSampleApplicationApp.' + fieldError.objectName + '.' + convertedField,
                         );
-                        this.addErrorAlert('Error on field "' + fieldName + '"', 'errors.' + fieldError.message, {fieldName});
+                        this.addErrorAlert('Error on field "' + fieldName + '"', 'errors.' + fieldError.message,
+                            {fieldName});
                     }
                 } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.error) {
-                    console.log(this.translateService.instant('errors.' + httpErrorResponse.error.error));
+                    console.info(this.translateService.instant('errors.' + httpErrorResponse.error.error));
                     this.addErrorAlert(
                         'errors.' + httpErrorResponse.error.error_description,
                         'errors.' + httpErrorResponse.error.error,
@@ -186,7 +194,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
         }
     }
 
-    public addErrorAlert(message, key?, data?): void {
+    public addErrorAlert(message: any, key?: any, data?: any): void {
         key = key && key !== null ? key : message;
         this.alerts.push(
             this.alertService.addAlert(
@@ -203,7 +211,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
         );
     }
 
-    private processMessage(config, response): string | null | any {
+    private processMessage(config: any, response: any): string | null | any {
         if (!config) {
             return null;
         }
@@ -214,7 +222,8 @@ export class JhiAlertErrorComponent implements OnDestroy {
             }
             case 'TRANSLATION_KEY_PATH': {
                 return this.translateService.instant(
-                    'errors.' + this.getFromPath(this.rc.response, config.value), this.interpolationParams(response, this.rc));
+                    'errors.' + this.getFromPath(this.rc.response, config.value),
+                    this.interpolationParams(response, this.rc));
             }
             case 'MESSAGE_PATH': {
                 return this.getFromPath(this.rc.response.error, config.value);
@@ -223,7 +232,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
                 return this.i18nNamePipe.transform(config.value, this.principal);
             }
             default: {
-                console.error('Wrong responseConfigItem outputMessage type - returning default message');
+                console.warn('Wrong responseConfigItem outputMessage type - returning default message');
                 if (response.content.error !== '' && response.content.error.error) {
                     return this.translateService.instant('errors.' + response.content.error.error);
                 } else {
@@ -233,7 +242,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
         }
     }
 
-    private interpolationParams(response, other): { rc: any } | any {
+    private interpolationParams(response: any, other: any): { rc: any } | any {
         if (response && response.content && response.content.error && response.content.error.params) {
             return Object.assign({}, response.content.error.params);
         }
@@ -250,7 +259,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
                 resp.content.error = error;
                 return resp;
             } catch (e) {
-                console.error(e);
+                console.warn(e);
             }
         }
         try {
@@ -259,7 +268,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
                 resp.content.error = JSON.parse(resp.content.error);
             }
         } catch (e) {
-            console.error(e);
+            console.warn(e);
         }
         return resp;
     }
@@ -268,12 +277,12 @@ export class JhiAlertErrorComponent implements OnDestroy {
         return typeof variable;
     }
 
-    private getFromPath(obj, path): any | undefined {
-        let paths = path.split('.')
-            , current = obj
-            , i;
+    private getFromPath(obj: any, path: any): any | undefined {
+        const paths = path.split('.');
+        let current = obj;
+        let i;
         for (i = 0; i < paths.length; ++i) {
-            if (current[paths[i]] == undefined) {
+            if (!current[paths[i]]) {
                 return undefined;
             } else {
                 current = current[paths[i]];

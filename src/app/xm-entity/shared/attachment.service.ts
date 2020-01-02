@@ -58,8 +58,8 @@ export class AttachmentService {
     private convertArrayResponse(res: HttpResponse<Attachment[]>): HttpResponse<Attachment[]> {
         const jsonResponse: Attachment[] = res.body;
         const body: Attachment[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+        for (const i of jsonResponse) {
+            body.push(this.convertItemFromServer(i));
         }
         return res.clone({body});
     }

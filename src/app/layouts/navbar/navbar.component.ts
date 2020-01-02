@@ -32,15 +32,15 @@ export class NavbarComponent implements OnInit, DoCheck {
     public modalRef: NgbModalRef;
     public version: string;
     public tenantName: string;
-    public mobile_menu_visible: any = 0;
     public title: string;
     public titleContent: string;
     public tenantLogoUrl: '../assets/img/logo-xm-online.png';
-    public searchMask = '';
-    @ViewChild('navbar-cmp', {static: false}) public button;
+    public searchMask: string = '';
+    @ViewChild('navbar-cmp', {static: false}) public button: any;
+    protected mobileMenuVisible: any = 0;
     private previousPath: string;
-    private backStep = 0;
-    private toggleButton;
+    private backStep: number = 0;
+    private toggleButton: any;
     private sidebarVisible: boolean;
 
     constructor(private languageHelper: JhiLanguageHelper,
@@ -58,15 +58,16 @@ export class NavbarComponent implements OnInit, DoCheck {
         this.sidebarVisible = false;
     }
 
+    // tslint:disable-next-line:cognitive-complexity
     public ngOnInit(): void {
         this.xmConfigService.getUiConfig().subscribe((result) => {
-            this.tenantName = result['name'] ? result['name'] : 'XM^online';
+            this.tenantName = result.name ? result.name : 'XM^online';
             if (this.tenantName === 'XM^online') {
                 this.tenantName += ' ' + this.version;
             }
-            $('#favicon').attr('href', result['favicon'] ? result['favicon'] : './assets/img/favicon.png');
-            if (result['logoUrl']) {
-                this.tenantLogoUrl = result['logoUrl'];
+            $('#favicon').attr('href', result.favicon ? result.favicon : './assets/img/favicon.png');
+            if (result.logoUrl) {
+                this.tenantLogoUrl = result.logoUrl;
             }
             this.languageHelper.getAll().then((languages) => {
                 this.languages = (result && result.langs) ? result.langs : languages;
@@ -92,14 +93,14 @@ export class NavbarComponent implements OnInit, DoCheck {
         if ($('body').hasClass('sidebar-mini')) {
             misc.sidebar_mini_active = true;
         }
-        $('#minimizeSidebar').click(function () {
+        $('#minimizeSidebar').click(() => {
 
             if (misc.sidebar_mini_active === true) {
                 $('body').removeClass('sidebar-mini');
                 misc.sidebar_mini_active = false;
 
             } else {
-                setTimeout(function () {
+                setTimeout(() => {
                     $('body').addClass('sidebar-mini');
 
                     misc.sidebar_mini_active = true;
@@ -107,12 +108,12 @@ export class NavbarComponent implements OnInit, DoCheck {
             }
 
             // we simulate the window Resize so the charts will get updated in realtime.
-            const simulateWindowResize = setInterval(function () {
+            const simulateWindowResize = setInterval(() => {
                 window.dispatchEvent(new Event('resize'));
             }, 180);
 
             // we stop the simulation of Window Resize after the animations are completed
-            setTimeout(function () {
+            setTimeout(() => {
                 clearInterval(simulateWindowResize);
             }, 1000);
         });
@@ -153,11 +154,11 @@ export class NavbarComponent implements OnInit, DoCheck {
         const $toggle = document.getElementsByClassName('navbar-toggler')[0];
         const toggleButton = this.toggleButton;
         const body = document.getElementsByTagName('body')[0];
-        setTimeout(function () {
+        setTimeout(() => {
             toggleButton.classList.add('toggled');
         }, 500);
         body.classList.add('nav-open');
-        setTimeout(function () {
+        setTimeout(() => {
             $toggle.classList.add('toggled');
         }, 430);
 
@@ -170,24 +171,24 @@ export class NavbarComponent implements OnInit, DoCheck {
             document.getElementsByClassName('wrapper-full-page')[0].appendChild($layer);
         }
 
-        setTimeout(function () {
+        setTimeout(() => {
             $layer.classList.add('visible');
         }, 100);
 
-        $layer.onclick = function () {
+        $layer.onclick = (() => {
             body.classList.remove('nav-open');
-            _this.mobile_menu_visible = 0;
+            _this.mobileMenuVisible = 0;
             _this.sidebarVisible = false;
 
             $layer.classList.remove('visible');
-            setTimeout(function () {
+            setTimeout(() => {
                 $layer.remove();
                 $toggle.classList.remove('toggled');
             }, 400);
-        }.bind(this);
+        }).bind(this);
 
         body.classList.add('nav-open');
-        this.mobile_menu_visible = 1;
+        this.mobileMenuVisible = 1;
         this.sidebarVisible = true;
     }
 
@@ -204,11 +205,11 @@ export class NavbarComponent implements OnInit, DoCheck {
             $layer.remove();
         }
 
-        setTimeout(function () {
+        setTimeout(() => {
             $toggle.classList.remove('toggled');
         }, 400);
 
-        this.mobile_menu_visible = 0;
+        this.mobileMenuVisible = 0;
     }
 
     public onBack(): void {

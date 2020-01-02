@@ -1,18 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'xm-maintenance-view',
     templateUrl: './maintenance.component.html',
-    styleUrls: ['./maintenance.component.scss']
+    styleUrls: ['./maintenance.component.scss'],
 })
-export class MaintenanceComponent implements OnInit {
+export class MaintenanceComponent {
 
-    @Input() show: any;
-
-    constructor() {
-    }
-
-    ngOnInit() {
-    }
-
+    @Input() public show: any;
 }

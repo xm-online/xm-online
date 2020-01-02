@@ -58,8 +58,8 @@ export class RatingService {
     private convertArrayResponse(res: HttpResponse<Rating[]>): HttpResponse<Rating[]> {
         const jsonResponse: Rating[] = res.body;
         const body: Rating[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+        for (const i of jsonResponse) {
+            body.push(this.convertItemFromServer(i));
         }
         return res.clone({body});
     }

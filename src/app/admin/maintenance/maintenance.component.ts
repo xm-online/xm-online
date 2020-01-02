@@ -30,11 +30,15 @@ export class MaintenanceComponent implements OnInit {
             confirmButtonClass: 'btn mat-raised-button btn-primary',
             cancelButtonClass: 'btn mat-raised-button',
             confirmButtonText: 'Yes, reindex!',
-        }).then((result) => result.value ? this.service.reindexTenantElastic().subscribe(
-            (resp) => console.log(resp),
-            (err) => console.log(err),
-            () => this.alertService.success('global.actionPerformed'),
-        ) : console.log('Cancel'));
+        }).then((result) => {
+            if (result.value) {
+                this.service.reindexTenantElastic().subscribe(
+                    null,
+                    null,
+                    () => this.alertService.success('global.actionPerformed'),
+                );
+            }
+        });
     }
 
     public updateTenantsConfiguration(): void {
@@ -46,14 +50,18 @@ export class MaintenanceComponent implements OnInit {
             confirmButtonClass: 'btn mat-raised-button btn-primary',
             cancelButtonClass: 'btn mat-raised-button',
             confirmButtonText: 'Yes, reload!',
-        }).then((result) => result.value ? this.service.updateTenantsConfig().subscribe(
-            (resp) => console.log(resp),
-            (err) => console.log(err),
-            () => {
-                this.alertService.success('global.actionPerformed');
-                window.location.reload();
-            },
-        ) : console.log('Cancel'));
+        }).then((result) => {
+            if (result.value) {
+                this.service.updateTenantsConfig().subscribe(
+                    null,
+                    null,
+                    () => {
+                        this.alertService.success('global.actionPerformed');
+                        window.location.reload();
+                    },
+                );
+            }
+        });
 
     }
 
@@ -67,15 +75,16 @@ export class MaintenanceComponent implements OnInit {
             confirmButtonText: 'Yes, reload!',
         }).then((result) => {
             this.isTenantCfgUpdating = true;
-            result.value ? this.service.updateTenantConfig().subscribe(
-                (resp) => console.log(resp),
-                (err) => console.log(err),
-                () => {
-                    this.isTenantCfgUpdating = false;
-                    this.alertService.success('global.actionPerformed');
-                    window.location.reload();
-                })
-                : console.log('Cancel');
+            if (result.value) {
+                this.service.updateTenantConfig().subscribe(
+                    null,
+                    null,
+                    () => {
+                        this.isTenantCfgUpdating = false;
+                        this.alertService.success('global.actionPerformed');
+                        window.location.reload();
+                    });
+            }
         });
     }
 

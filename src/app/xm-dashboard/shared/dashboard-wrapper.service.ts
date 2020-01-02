@@ -15,8 +15,9 @@ export class DashboardWrapperService {
     constructor(private dashboardService: DashboardService) {
     }
 
-    public dashboards(force?: boolean, mockDashboards?: boolean): Promise<Dashboard[]> {
-        if (!environment.production) { console.log(`DBG Get dashboards: ${force}`); }
+    // tslint:disable-next-line:cognitive-complexity
+    public dashboards(force: boolean = false, mockDashboards: boolean = false): Promise<Dashboard[]> {
+        if (!environment.production) { console.info(`DBG Get dashboards: ${force}`); }
         if (!force && this.promise) {
             return this.promise;
         } else {
@@ -56,7 +57,8 @@ export class DashboardWrapperService {
         }
     }
 
-    public getDashboardByIdOrSlug(idOrSlug: number | string, force?: boolean): Observable<Dashboard | undefined> {
+    public getDashboardByIdOrSlug(idOrSlug: number | string, force: boolean = false)
+        : Observable<Dashboard | undefined> {
 
         const predicate = (d: Dashboard) => (d.config && d.config.slug === idOrSlug) ||
             d.id === parseInt(idOrSlug as string, 10);
@@ -70,11 +72,11 @@ export class DashboardWrapperService {
 
         // else, get dashboards and process result
         return from(this.dashboards(force))
-                .pipe(
-                    mergeMap((dashboards) => iif(
-                        () => dashboards && dashboards.length > 0,
-                        of(getDash(dashboards)),
-                        of(getDash([]))),
+            .pipe(
+                mergeMap((dashboards) => iif(
+                    () => dashboards && dashboards.length > 0,
+                    of(getDash(dashboards)),
+                    of(getDash([]))),
                 ));
 
     }

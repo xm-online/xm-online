@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { JsonSchemaFormService } from 'angular2-json-schema-form';
 import * as _ from 'lodash';
 import { BehaviorSubject, iif, merge, Observable, of, ReplaySubject } from 'rxjs';
-import {catchError, debounceTime, filter, finalize, map, mergeMap, switchMap, takeUntil, tap} from 'rxjs/operators';
+import { catchError, debounceTime, filter, finalize, map, mergeMap, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { environment } from '../../../../../environments/environment';
 
 interface ISelectSettings {
@@ -35,16 +35,14 @@ export class ExtQuerySelectComponent implements OnInit, OnDestroy {
     public options$: Observable<ISelectOption[]>;
     public checkedOption: FormControl = new FormControl();
     public queryCtrl: FormControl = new FormControl();
-    public loading$ = new BehaviorSubject<boolean>(false);
-    public maxDisplayedOptions = 50;
+    public loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    public maxDisplayedOptions: number = 50;
 
     public controlValue: any;
-
+    @Input() public layoutNode: any;
     private initialValue$: Observable<ISelectOption[]>;
     private searchValues$: Observable<ISelectOption[]>;
     private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
-
-    @Input() public layoutNode: any;
 
     constructor(
         private jsf: JsonSchemaFormService,
@@ -52,7 +50,7 @@ export class ExtQuerySelectComponent implements OnInit, OnDestroy {
     ) {
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroyed$.next(true);
         this.destroyed$.complete();
     }
@@ -71,15 +69,15 @@ export class ExtQuerySelectComponent implements OnInit, OnDestroy {
 
         // observable1 get initial data
         const initialData$ = this.fetchOptions({id: this.controlValue}).pipe(
-            tap((list) => !environment.production && console.log('[dbg] initial ->', list)),
+            tap((list) => !environment.production && console.info('[dbg] initial ->', list)),
             tap(() => this.loading$.next(true)),
-            map( (list) => list.length ? list : []),
-            finalize(() =>  this.loading$.next(false)),
+            map((list) => list.length ? list : []),
+            finalize(() => this.loading$.next(false)),
         );
 
         // if initial value provided, call observable1 otherwise return []
         this.initialValue$ = of(this.controlValue).pipe(
-            mergeMap((value) => iif(() => !!value,  initialData$, of([]))),
+            mergeMap((value) => iif(() => !!value, initialData$, of([]))),
             filter((list) => !!list.length),
             tap((list) => this.checkedOption.setValue(list[0].value)),
         );
@@ -87,13 +85,14 @@ export class ExtQuerySelectComponent implements OnInit, OnDestroy {
         // process search events
         this.searchValues$ = this.queryCtrl.valueChanges
             .pipe(
-                tap((val) => !environment.production && console.log(`[dbg] serachValue=${val} -> ${this.valueToTransport(val)}`)),
+                tap((val) => !environment.production
+                    && console.info(`[dbg] serachValue=${val} -> ${this.valueToTransport(val)}`)),
                 filter((val) => val.length > Number(this.settings.minQueryLength)),
                 tap(() => this.checkedOption.reset('')),
                 tap(() => this.loading$.next(true)),
                 debounceTime(this.settings.debounceTime),
                 switchMap((query) => this.fetchOptions({searchQuery: this.valueToTransport(query)})),
-                tap((list) => !environment.production && console.log('[dbg] listFromSearch ->', list)),
+                tap((list) => !environment.production && console.info('[dbg] listFromSearch ->', list)),
                 tap(() => this.loading$.next(false)),
             );
 
@@ -102,12 +101,14 @@ export class ExtQuerySelectComponent implements OnInit, OnDestroy {
             .pipe(
                 takeUntil(this.destroyed$),
                 // will filter processing for prod
-                tap((list) => !environment.production && console.log('[dbg] resultList ->', list)),
+                tap((list) => !environment.production
+                    && console.info('[dbg] resultList ->', list)),
             );
 
         this.checkedOption.valueChanges
             .pipe(
-                tap((val) => !environment.production && console.log('[dbg] changeValue ->', val)),
+                tap((val) => !environment.production
+                    && console.info('[dbg] changeValue ->', val)),
                 tap((val) => this.jsf.updateValue(this, val)),
                 takeUntil(this.destroyed$),
             )

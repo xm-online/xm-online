@@ -49,8 +49,8 @@ export class WidgetService {
     private convertArrayResponse(res: HttpResponse<Widget[]>): HttpResponse<Widget[]> {
         const jsonResponse: Widget[] = res.body;
         const body: Widget[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+        for (const i of jsonResponse) {
+            body.push(this.convertItemFromServer(i));
         }
         return res.clone({body});
     }
@@ -59,15 +59,13 @@ export class WidgetService {
      * Convert a returned JSON object to Widget.
      */
     private convertItemFromServer(widget: Widget): Widget {
-        const copy: Widget = Object.assign({}, widget);
-        return copy;
+        return Object.assign({}, widget);
     }
 
     /**
      * Convert a Widget to a JSON which can be sent to the server.
      */
     private convert(widget: Widget): Widget {
-        const copy: Widget = Object.assign({}, widget);
-        return copy;
+        return Object.assign({}, widget);
     }
 }

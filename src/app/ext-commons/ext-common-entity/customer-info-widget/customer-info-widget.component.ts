@@ -19,20 +19,20 @@ const ATTACHMENT_EVENT = 'attachmentListModification';
 export class CustomerInfoWidgetComponent implements OnInit, OnDestroy {
 
     public attachments: Observable<Attachment[]>;
-    public showAttachmentLoader = true;
-    public uploadFileEnabled = false;
-    public showCurrencies = false;
+    public showAttachmentLoader: boolean = true;
+    public uploadFileEnabled: boolean = false;
+    public showCurrencies: boolean = false;
     public form: FormGroup;
     public state: string;
     public config: any;
     public profile: Observable<any>;
-    public countries = [{code: 'US', name: 'United States'}];
-    public currencies = ['USD', 'EUR'];
-    private profileId;
+    public countries: any[] = [{code: 'US', name: 'United States'}];
+    public currencies: string[] = ['USD', 'EUR'];
+    private profileId: number;
     private profileSubscription: Subscription;
     private attachmentsSubscription: Subscription;
-    private resolveStrategy = 'role';
-    private profileUpdateInterval = 30000;
+    private resolveStrategy: string = 'role';
+    private profileUpdateInterval: number = 30000;
 
     constructor(private fb: FormBuilder,
                 private principal: Principal,
@@ -74,7 +74,8 @@ export class CustomerInfoWidgetComponent implements OnInit, OnDestroy {
         this.attachmentsSubscription = this.eventManager.subscribe(ATTACHMENT_EVENT, (event) => {
             this.showAttachmentLoader = true;
             if (event.profileId || this.profileId) {
-                this.attachments = this.xmEntityService.find(event.profileId ? event.profileId : this.profileId, ['attachments'])
+                this.attachments = this.xmEntityService.find(event.profileId
+                    ? event.profileId : this.profileId, ['attachments'])
                     .pipe(
                         map((entity) => entity.body.attachments),
                         finalize(() => this.showAttachmentLoader = false),
@@ -90,8 +91,10 @@ export class CustomerInfoWidgetComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        this.profileSubscription ? this.profileSubscription.unsubscribe() : console.log('no profileSubscription');
-        this.attachmentsSubscription ? this.attachmentsSubscription.unsubscribe() : console.log('no attachmentsSubscription');
+        this.profileSubscription ? this.profileSubscription.unsubscribe()
+            : console.info('no profileSubscription');
+        this.attachmentsSubscription ? this.attachmentsSubscription.unsubscribe()
+            : console.info('no attachmentsSubscription');
     }
 
     public createForm(): void {
@@ -111,8 +114,8 @@ export class CustomerInfoWidgetComponent implements OnInit, OnDestroy {
     public resetForm(): void {
         this.profile.pipe(take(1)).subscribe((profile) => {
             this.profileId = profile.id;
-            const [firstName, lastName] = profile.name.split(/\s+/);
-            const {localCurrency = null, registrationAddress = {}} = profile.data || {};
+            const [firstName, lastName]: string[] = profile.name.split(/\s+/);
+            const {localCurrency = null, registrationAddress = {}}: any = profile.data || {};
             this.form.reset({firstName, lastName, localCurrency, ...registrationAddress});
             this.showAttachmentLoader = true;
             this.attachments = this.xmEntityService.find(profile.id, {embed: 'attachments'})
@@ -133,7 +136,9 @@ export class CustomerInfoWidgetComponent implements OnInit, OnDestroy {
 
             } else {
                 if (account.roleKey === 'UNVERIFIED_CUSTOMER') {
-                    this.profileSubscription = interval(this.profileUpdateInterval).pipe(startWith(5000), mergeMap(() => this.profile))
+                    this.profileSubscription = interval(this.profileUpdateInterval).pipe(
+                        startWith(5000),
+                        mergeMap(() => this.profile))
                         .subscribe((p) => this.updateState(p));
                 }
             }
@@ -141,10 +146,10 @@ export class CustomerInfoWidgetComponent implements OnInit, OnDestroy {
     }
 
     public updateState(profile: any): void {
-        // console.log('[refresh profile state] profile = %o', profile);
         if (profile.stateKey !== 'ON-REVIEW' && profile.stateKey !== 'VIDEO-VERIFIED') {
-            console.log('[unsubscribe] profile = %s', profile.stateKey);
-            this.profileSubscription ? this.profileSubscription.unsubscribe() : console.log('no profileSubscription');
+            console.info('[unsubscribe] profile = %s', profile.stateKey);
+            this.profileSubscription ? this.profileSubscription.unsubscribe()
+                : console.info('no profileSubscription');
         }
         switch (this.state = profile.stateKey) {
             case 'ACTIVE':
@@ -153,12 +158,12 @@ export class CustomerInfoWidgetComponent implements OnInit, OnDestroy {
                 break;
             case 'EMAIL-VERIFIED':
             case 'UPDATE-NEEDED':
-                console.log('[refresh profile state] profile = %s', profile.stateKey);
+                console.info('[refresh profile state] profile = %s', profile.stateKey);
                 this.alertService.info('nemondo.notification.' + profile.stateKey);
                 this.form.enable({emitEvent: this.form.disabled});
                 break;
             default:
-                console.log('[default] profile = %s', profile.stateKey);
+                console.info('[default] profile = %s', profile.stateKey);
                 this.form.disable({emitEvent: this.form.enabled});
                 break;
         }
@@ -168,7 +173,7 @@ export class CustomerInfoWidgetComponent implements OnInit, OnDestroy {
         if (this.form.valid) {
             this.form.markAsPending();
             this.profile.pipe(take(1)).subscribe((profile) => {
-                const {firstName, lastName, localCurrency, ...registrationAddress} = this.form.value;
+                const {firstName, lastName, localCurrency, ...registrationAddress}: any = this.form.value;
                 if (profile.data) {
                     profile.data.registrationAddress = registrationAddress;
                     profile.data.localCurrency = localCurrency;
@@ -200,7 +205,7 @@ export class CustomerInfoWidgetComponent implements OnInit, OnDestroy {
         });
     }
 
-    public onRemoveAttachment(attachment): void {
+    public onRemoveAttachment(attachment: any): void {
         this.xmAttachmentService.delete(attachment.id).subscribe(() => {
             if (this.profileId) {
                 this.removeEvent(this.profileId);
@@ -215,12 +220,14 @@ export class CustomerInfoWidgetComponent implements OnInit, OnDestroy {
 
     private runProfileInterval(stateKey: string): void {
         if (stateKey === 'ON-REVIEW' || stateKey === 'VIDEO-VERIFIED') {
-            this.profileSubscription = interval(10000).pipe(startWith(5000), mergeMap(() => this.profile))
+            this.profileSubscription = interval(10000).pipe(
+                startWith(5000),
+                mergeMap(() => this.profile))
                 .subscribe((p) => this.updateState(p));
         }
     }
 
-    private removeEvent(profileId): void {
+    private removeEvent(profileId: any): void {
         this.alertService.info('tsg.notification.attachmentRemoved');
         this.eventManager.broadcast({
             name: ATTACHMENT_EVENT,

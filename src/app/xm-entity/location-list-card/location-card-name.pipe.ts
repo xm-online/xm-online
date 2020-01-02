@@ -13,11 +13,15 @@ export class LocationCardNamePipe implements PipeTransform {
             return '';
         }
 
-        const country = location.countryKey ? this.translateService.instant('xm-entity.location-detail-dialog.countries.' +
-            location.countryKey) : null;
+        const country = location.countryKey
+            ? this.translateService.instant('xm-entity.location-detail-dialog.countries.' + location.countryKey)
+            : null;
 
-        const buildAddress = () => [country, location.region, location.city, location.addressLine1, location.addressLine2, location.zip]
-            .filter((item) => item).join(', ');
+        const buildAddress = () => [
+            country, location.region, location.city,
+            location.addressLine1,
+            location.addressLine2, location.zip,
+        ].filter((item) => item).join(', ');
 
         return (location.name ? ` - ${location.name} - ` : ' - ') + buildAddress();
     }

@@ -9,23 +9,19 @@ import { XmApplicationConfigService } from './xm-config.service';
 @Injectable()
 export class XmConfigService {
 
-    private configUrl = 'config/api/profile';
-    private configMaintenanceUrl = 'config/api/config';
-    private uaaPasswordConfigUrl = 'uaa/api/uaa/properties/settings-public';
-    private elasticReindexUrl = '/entity/api/elasticsearch/index';
+    private configUrl: string = 'config/api/profile';
+    private configMaintenanceUrl: string = 'config/api/config';
+    private uaaPasswordConfigUrl: string = 'uaa/api/uaa/properties/settings-public';
+    private elasticReindexUrl: string = '/entity/api/elasticsearch/index';
 
-    private uiConfig;
-    private uiConfigState = new AsyncSubject<any>();
+    private uiConfig: any;
+    private uiConfigState: AsyncSubject<any> = new AsyncSubject<any>();
 
     constructor(
         private http: HttpClient,
         private modulesLangHelper: ModulesLanguageHelper,
         private appConfig: XmApplicationConfigService,
     ) {
-    }
-
-    private headers(): any {
-        return {headers: new HttpHeaders({'Content-Type': 'text/plain'})};
     }
 
     public validateTimelineSpec(configContent: string): Observable<any> {
@@ -63,7 +59,7 @@ export class XmConfigService {
             map((res: any) => res));
     }
 
-    public getUiConfigData() {
+    public getUiConfigData(): void {
         if (this.uiConfig) {
             this.uiConfigState.next(this.uiConfig);
         } else {
@@ -98,17 +94,17 @@ export class XmConfigService {
             map((res: any) => res));
     }
 
-    public validateUaaSpec(configContent: string) {
+    public validateUaaSpec(configContent: string): Observable<any> {
         return this.http.post('uaa/api/uaa/properties/validate', configContent, this.headers()).pipe(
             map((res: any) => res));
     }
 
-    public updateUaaSpec(configContent: string) {
+    public updateUaaSpec(configContent: string): Observable<any> {
         return this.http.post('uaa/api/uaa/properties', configContent, this.headers()).pipe(
             map((res: any) => res));
     }
 
-    public reindexTenantElastic() {
+    public reindexTenantElastic(): Observable<any> {
         return this.http.post(this.elasticReindexUrl, {});
     }
 
@@ -147,5 +143,9 @@ export class XmConfigService {
     public updatePatternMessage(message: any, currentLang?: string): string {
         const lang = currentLang ? currentLang : this.modulesLangHelper.getLangKey();
         return message[lang] || message;
+    }
+
+    private headers(): any {
+        return {headers: new HttpHeaders({'Content-Type': 'text/plain'})};
     }
 }

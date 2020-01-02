@@ -63,7 +63,7 @@ export class NotificationsService {
             }));
     }
 
-    public byString(o, s) {
+    public byString(o: any, s: any): any {
         s = s.replace(/\[(\w+)\]/g, '.$1');
         s = s.replace(/^\./, '');
         const a = s.split('.');
@@ -78,7 +78,7 @@ export class NotificationsService {
         return o;
     }
 
-    public nullSafeLabel(x) {
+    public nullSafeLabel(x: any): string {
         return x ? '' + x.label ? '' + x.label : '' : '';
     }
 }

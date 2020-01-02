@@ -1,3 +1,4 @@
+/* tslint:disable:typedef */
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 
 import { TableData } from './md-table.component';
@@ -50,9 +51,9 @@ export class LocationCountriesWidgetComponent implements OnInit, AfterViewInit {
             zoomOnScroll: false,
             regionStyle: {
                 initial: {
-                    "fill": '#e4e4e4',
+                    'fill': '#e4e4e4',
                     'fill-opacity': 0.9,
-                    "stroke": 'none',
+                    'stroke': 'none',
                     'stroke-width': 0,
                     'stroke-opacity': 0,
                 },
@@ -80,16 +81,16 @@ export class LocationCountriesWidgetComponent implements OnInit, AfterViewInit {
 
                     $card.attr('data-count', 0);
 
-                    setTimeout(function() {
+                    setTimeout(() => {
                         $header.removeClass('fadeInDown animate');
                     }, 480);
                 });
 
                 $card.mouseenter(function() {
                     const $this = $(this);
-                    const hover_count = parseInt($this.attr('data-count'), 10) + 1 || 0;
-                    $this.attr('data-count', hover_count);
-                    if (hover_count >= 20) {
+                    const hoverCount = parseInt($this.attr('data-count'), 10) + 1 || 0;
+                    $this.attr('data-count', hoverCount);
+                    if (hoverCount >= 20) {
                         $(this).children('.card-header, .card-image').addClass('hinge animated');
                     }
                 });

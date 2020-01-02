@@ -32,7 +32,7 @@ export class DatetimePickerComponent implements OnInit {
         this.dateTimeAdapter.setLocale(this.modulesLanguageHelper.getLangKey());
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.options = this.layoutNode.options || {};
         this.jsf.initializeControl(this);
         this.setLocalizedButtons();
@@ -42,18 +42,18 @@ export class DatetimePickerComponent implements OnInit {
         }
     }
 
-    public updateValue(event) {
+    public updateValue(event: any): void {
         const value = event.value || null;
         const formatString = this.getFormat();
         this.controlValueDisplayed = moment(this.controlValue).local().format(formatString);
         this.jsf.updateValue(this, moment(value).utc().format(DEF_FORMAT));
     }
 
-    private getFormat() {
-        return this.options && this.options['formatString'] ? this.options['formatString'] : DEF_FORMAT;
+    private getFormat(): string {
+        return this.options && this.options.formatString ? this.options.formatString : DEF_FORMAT;
     }
 
-    private setLocalizedButtons() {
+    private setLocalizedButtons(): void {
         this.dateTimeAdapterLabels.cancelBtnLabel = this.translateService.instant('global.common.cancel');
         this.dateTimeAdapterLabels.setBtnLabel = this.translateService.instant('global.common.set');
     }

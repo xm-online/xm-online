@@ -33,7 +33,7 @@ export class JhiGatewayComponent implements OnInit {
         this.gatewayRoutesService
             .findAll()
             .subscribe((gatewayRoutes) => this.gatewayRoutes = gatewayRoutes,
-                (err) => console.log(err),
+                (err) => console.warn(err),
                 () => this.showLoader = false);
     }
 
@@ -46,7 +46,7 @@ export class JhiGatewayComponent implements OnInit {
             cancelButtonClass: 'btn mat-raised-button',
             confirmButtonText: 'Yes, reload!',
         }).then((result) => result.value ? this.triggerUpdate()
-            : console.log('Cancel'));
+            : console.info('Cancel'));
     }
 
     public tenantElasticUpdate(): void {
@@ -58,15 +58,15 @@ export class JhiGatewayComponent implements OnInit {
             cancelButtonClass: 'btn mat-raised-button',
             confirmButtonText: 'Yes, reload!',
         }).then((result) => result.value ? this.triggerUpdate('reindexTenantElastic')
-            : console.log('Cancel'));
+            : console.info('Cancel'));
     }
 
     private triggerUpdate(type: 'updateTenantConfig' | 'reindexTenantElastic' = 'updateTenantConfig'): void {
         this.showLoader = true;
         this.service[type]().pipe(finalize(() => this.showLoader = false)).subscribe(
-            (resp) => console.log(resp),
+            (resp) => console.warn(resp),
             (err) => {
-                console.log(err);
+                console.warn(err);
                 this.showLoader = false;
             },
             () => this.alertService.success('global.actionPerformed'));

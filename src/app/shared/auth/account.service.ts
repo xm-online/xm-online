@@ -12,8 +12,8 @@ import { ACCOUNT_TFA_DISABLE_URL, ACCOUNT_TFA_ENABLE_URL, ACCOUNT_URL } from './
 @Injectable()
 export class AccountService {
 
-    private resourceProfileUrl = SERVER_API_URL + 'entity/api/profile';
-    private resourceLogins = SERVER_API_URL + 'uaa/api/account/logins';
+    private resourceProfileUrl: string = SERVER_API_URL + 'entity/api/profile';
+    private resourceLogins: string = SERVER_API_URL + 'uaa/api/account/logins';
 
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils) {
     }

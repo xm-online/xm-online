@@ -18,8 +18,8 @@ export class IframeWidgetComponent implements OnInit {
 
     public ngOnInit(): void {
         this.name = this.config.name;
-        if (this.route.snapshot && this.route.snapshot.queryParams && this.route.snapshot.queryParams['contentUrl']) {
-            this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.route.snapshot.queryParams['contentUrl']);
+        if (this.route.snapshot && this.route.snapshot.queryParams && this.route.snapshot.queryParams.contentUrl) {
+            this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.route.snapshot.queryParams.contentUrl);
         } else if (this.config.url) {
             this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.config.url);
         }

@@ -55,7 +55,7 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
                 // tslint:disable-next-line
                 console.error(err);
                 this.languages = [DEFAULT_LANG];
-            }, () => console.log('Languages: %o', this.languages),// tslint:disable-line
+            }, () => console.info('Languages: %o', this.languages),// tslint:disable-line
         );
         this.clock = interval(1000).pipe(map(() => new Date()));
         this._clockSubscription = this.getClock().subscribe((time) => {

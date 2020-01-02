@@ -17,12 +17,12 @@ export class ExtTextareaComponent implements OnInit {
     constructor(private jsf: JsonSchemaFormService) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.options = this.layoutNode.options || {};
         this.jsf.initializeControl(this);
     }
 
-    public changeText(event) {
+    public changeText(event: any): void {
         this.jsf.updateValue(this, event.target.value);
     }
 

@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { JsonSchemaFormService } from 'angular2-json-schema-form';
-import { debounceTime, tap } from 'rxjs/operators';
 
 import { UUID } from 'angular2-uuid';
+import { debounceTime, tap } from 'rxjs/operators';
 import { Principal } from '../../../auth/principal.service';
 
 @Component({
@@ -17,8 +17,8 @@ export class EmailMatcherComponent implements OnInit {
     public controlValue: any;
     public controlNameOriginal: any;
     public controlNameMatcher: any;
-    public originalControl = new FormControl();
-    public matcherControl = new FormControl();
+    public originalControl: FormControl = new FormControl();
+    public matcherControl: FormControl = new FormControl();
     public options: any;
     @Input() public layoutNode: any;
 
@@ -27,14 +27,14 @@ export class EmailMatcherComponent implements OnInit {
         this.controlNameMatcher = UUID.UUID();
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.options = this.layoutNode.options || {};
         this.jsf.initializeControl(this);
         if (this.controlValue) {
             this.originalControl.setValue(this.controlValue);
             this.matcherControl.setValue(this.controlValue);
         }
-        if (this.options['readonly']) {
+        if (this.options.readonly) {
             this.matcherControl.disable({onlySelf: true});
             this.originalControl.disable({onlySelf: true});
         }
@@ -42,7 +42,7 @@ export class EmailMatcherComponent implements OnInit {
         this.registerMatcherChanger();
     }
 
-    public registerOriginalChanger() {
+    public registerOriginalChanger(): void {
         this.originalControl
             .valueChanges
             .pipe(
@@ -68,7 +68,7 @@ export class EmailMatcherComponent implements OnInit {
             .subscribe(() => {});
     }
 
-    public registerMatcherChanger() {
+    public registerMatcherChanger(): void {
         this.matcherControl
             .valueChanges
             .pipe(
@@ -89,7 +89,7 @@ export class EmailMatcherComponent implements OnInit {
             .subscribe(() => {});
     }
 
-    private updateValue(value): void {
+    private updateValue(value: any): void {
         this.jsf.updateValue(this, value);
     }
 

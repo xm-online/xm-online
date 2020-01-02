@@ -11,7 +11,7 @@ declare let $: any;
 })
 export class ExchangeWidgetComponent implements OnInit {
 
-    public isShowCalc = false;
+    public isShowCalc: boolean = false;
     public config: any;
 
     public calc: any = {fromValue: 1};
@@ -36,12 +36,12 @@ export class ExchangeWidgetComponent implements OnInit {
         });
     }
 
-    public onChangeCurrency(value): void {
+    public onChangeCurrency(value: any): void {
         this.currency.selected = value.target.value;
         this.currency.available = this.currency.all.filter((c) => c !== this.currency.selected);
     }
 
-    public getRate(from?, to?): number | any {
+    public getRate(from?: any, to?: any): number | any {
         from = from ? from : this.currency.selected;
         if (from === this.currency.from) {
             const code = from + '_' + to;
@@ -62,7 +62,8 @@ export class ExchangeWidgetComponent implements OnInit {
 
     public onChangeCalc(): void {
         if (this.calc.fromValue && this.calc.from && this.calc.to) {
-            this.calc.toValue = parseFloat((this.calc.fromValue * this.getRate(this.calc.from, this.calc.to)).toFixed(4));
+            this.calc.toValue = parseFloat((this.calc.fromValue * this.getRate(this.calc.from, this.calc.to))
+                .toFixed(4));
         }
     }
 

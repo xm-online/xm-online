@@ -40,7 +40,7 @@ export class WidgetListCardComponent extends BaseAdminConfigListComponent implem
             this.activatedRouteData = data;
         });
         this.activatedRoute.params.subscribe((params) => {
-            this.dashboardId = params['id'];
+            this.dashboardId = params.id;
         });
         this.eventModify = 'widgetListModification';
     }

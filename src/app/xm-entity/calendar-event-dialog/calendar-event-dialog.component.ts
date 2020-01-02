@@ -54,7 +54,7 @@ export class CalendarEventDialogComponent implements OnInit {
             this.eventService.create(this.event).pipe(finalize(() => this.showLoader = false))
                 .subscribe(
                     (eventResp: HttpResponse<Event>) => this.onSaveSuccess(this.calendar.id, eventResp.body),
-                    (err) => console.log(err),
+                    (err) => console.info(err),
                     () => this.showLoader = false);
         } else {
             const copy: Event = Object.assign({}, this.event);
@@ -65,7 +65,7 @@ export class CalendarEventDialogComponent implements OnInit {
                 .subscribe(
                     (calendarResp: HttpResponse<Calendar>) => this.onSaveSuccess(calendarResp.body.id,
                         calendarResp.body.events.shift()),
-                    (err) => console.log(err),
+                    (err) => console.info(err),
                     () => this.showLoader = false);
         }
     }

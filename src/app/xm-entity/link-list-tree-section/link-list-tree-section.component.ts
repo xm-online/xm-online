@@ -26,10 +26,10 @@ export class LinkListTreeSectionComponent implements OnInit {
     public ngOnInit(): void {
         $('.tree li:has(ul)').addClass('parent_li').find(' > span')
             .attr('title', this.translateService.instant('xm-entity.link-list-tree-section.collapse'));
-        $('.tree ul > li.parent_li > span').on('click', function (e) {
-            console.log('click');
+        $('.tree ul > li.parent_li > span').on('click', (e) => {
+            console.info('click');
             const children = $(this).parent('li.parent_li').find(' > xm-link-list-tree-section > ul > li');
-            console.log(children);
+            console.info(children);
             if (children.is(':visible')) {
                 children.hide('fast');
             } else {
@@ -39,16 +39,17 @@ export class LinkListTreeSectionComponent implements OnInit {
         });
     }
 
-    public filterByLinkType(items): any {
+    public filterByLinkType(items: any): any {
         return items ? items.filter((link: Link) => link.typeKey === this.linkSpec.key) : [];
     }
 
-    public toggle(link): void {
+    public toggle(link: any): void {
         if (!link.target.targets) {
-            this.xmEntityService.find(link.target.id, {embed: 'targets'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
-                link.target = xmEntity.body;
-                link.target.targets = link.target.targets ? link.target.targets : [];
-            });
+            this.xmEntityService.find(link.target.id, {embed: 'targets'})
+                .subscribe((xmEntity: HttpResponse<XmEntity>) => {
+                    link.target = xmEntity.body;
+                    link.target.targets = link.target.targets ? link.target.targets : [];
+                });
         }
     }
 

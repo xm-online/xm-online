@@ -58,8 +58,8 @@ export class EventService {
     private convertArrayResponse(res: HttpResponse<Event[]>): HttpResponse<Event[]> {
         const jsonResponse: Event[] = res.body;
         const body: Event[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+        for (const i of jsonResponse) {
+            body.push(this.convertItemFromServer(i));
         }
         return res.clone({body});
     }

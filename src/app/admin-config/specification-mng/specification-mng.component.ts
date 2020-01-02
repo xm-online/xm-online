@@ -85,7 +85,7 @@ export class SpecificationMngComponent implements OnInit {
                 private modalService: NgbModal,
                 private service: XmConfigService) {
         this.activatedRoute.params.subscribe((params) => {
-            this.currentSpecificationSlug = params['slug'];
+            this.currentSpecificationSlug = params.slug;
             this.isTenantSpecValid = false;
             this.tenantValidation = null;
             this.isUiSpecValid = false;

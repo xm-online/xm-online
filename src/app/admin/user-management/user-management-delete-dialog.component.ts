@@ -25,7 +25,7 @@ export class UserMgmtDeleteDialogComponent {
         this.activeModal.dismiss('cancel');
     }
 
-    public confirmDelete(userKey): void {
+    public confirmDelete(userKey: string): void {
         this.showLoader = true;
         this.userService.delete(userKey)
             .subscribe((response) => {
@@ -36,7 +36,7 @@ export class UserMgmtDeleteDialogComponent {
                     this.activeModal.dismiss(true);
                     this.eventManager.broadcast({name: XM_EVENT_LIST.XM_USER_LIST_MODIFICATION, content: 'OK'});
                 },
-                (err) => console.log(err),
+                (err) => console.info(err),
                 () => this.showLoader = false);
     }
 

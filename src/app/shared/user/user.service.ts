@@ -16,7 +16,7 @@ export class UserService {
     }
 
     public update(user: User): Observable<HttpResponse<any>> {
-        console.log(user);
+        console.info(user);
         return this.http.put(this.resourceUrl, user, {observe: 'response'});
     }
 
@@ -25,7 +25,7 @@ export class UserService {
             otpChannelSpec: {
                 channelType: 'email',
                 destination: email,
-            }
+            },
         }, {observe: 'response'});
     }
 

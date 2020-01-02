@@ -22,7 +22,7 @@ export class ChartistLineWidgetComponent implements OnInit {
     ) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.name = this.config.name;
         this.firstSeries = this.config.series[0];
         this.xmEntityService.search({
@@ -48,12 +48,15 @@ export class ChartistLineWidgetComponent implements OnInit {
         });
     }
 
-    public startAnimationForLineChart(chart: any) {
-        let seq: number, delays: number, durations: number;
+    public startAnimationForLineChart(chart: any): void {
+        let seq: number;
+        let delays: number;
+        let durations: number;
         seq = 0;
         delays = 80;
         durations = 500;
-        chart.on('draw', function (data: any) {
+
+        chart.on('draw', (data: any) => {
             if (data.type === 'line' || data.type === 'area') {
                 data.element.animate({
                     d: {

@@ -36,11 +36,11 @@ export class UserMgmtDetailComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         this.subscription = this.route.params.subscribe((params) => {
-            this.load(params['userKey']);
+            this.load(params.userKey);
         });
     }
 
-    public load(userKey): void {
+    public load(userKey: string): void {
         this.showLoader = true;
         this.userService
             .find(userKey)
@@ -50,7 +50,7 @@ export class UserMgmtDetailComponent implements OnInit, OnDestroy {
                     this.routeData.pageSubSubTitle = user.userKey;
                     this.jhiLanguageHelper.updateTitle();
                 },
-                (err) => console.log(err),
+                (err) => console.info(err),
                 () => this.showLoader = false);
     }
 
@@ -77,7 +77,7 @@ export class UserMgmtDetailComponent implements OnInit, OnDestroy {
             confirmButtonText: 'Yes, reset!',
         }).then((result) => result.value ?
             this.pwsResetService.save(this.userEmail).subscribe(console.log, console.log) :
-            console.log('Cancel'));
+            console.info('Cancel'));
     }
 
     public pwdResetDisabled(): boolean {

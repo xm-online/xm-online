@@ -21,8 +21,10 @@ export class AttachmentCardComponent implements OnInit {
     @Input() public attachment: Attachment;
     @Input() public attachmentSpec: AttachmentSpec;
     public imageSrc: string;
-    private availableFileTypeImages = ['3gp', 'av', 'divx', 'eps', 'html', 'js', 'php', 'rar', 'txt', '7z', 'bak', 'dll',
-        'exe', 'ico', 'mov', 'png', 'svg', 'wav', 'ae', 'bmp', 'doc', 'flv', 'iso', 'mp3', 'ppt', 'swf', 'zip', 'ai', 'cdr',
+    private availableFileTypeImages: string[] = [
+        '3gp', 'av', 'divx', 'eps', 'html', 'js', 'php', 'rar', 'txt', '7z', 'bak', 'dll',
+        'exe', 'ico', 'mov', 'png', 'svg', 'wav', 'ae', 'bmp', 'doc', 'flv', 'iso', 'mp3', 'ppt', 'swf', 'zip', 'ai',
+        'cdr',
         'docx', 'fw', 'jar', 'mp4', 'pptx', 'sys', 'apk', 'css', 'dw', 'gif', 'jpeg', 'mpeg', 'ps', 'tar', 'asf', 'csv',
         'dwg', 'gz', 'jpg', 'pdf', 'psd', 'tiff'];
 
@@ -39,7 +41,8 @@ export class AttachmentCardComponent implements OnInit {
     }
 
     public isImage(): boolean {
-        return this.attachment.hasOwnProperty('valueContentType') && this.attachment.valueContentType.startsWith('image');
+        return this.attachment.hasOwnProperty('valueContentType')
+            && this.attachment.valueContentType.startsWith('image');
     }
 
     public loadImage(): void {
@@ -119,7 +122,7 @@ export class AttachmentCardComponent implements OnInit {
         });
     }
 
-    private saveInnerAttachment(body): void {
+    private saveInnerAttachment(body: any): void {
         const byteString = atob(body.content.value);
         const ab = new ArrayBuffer(byteString.length);
         const ia = new Uint8Array(ab);

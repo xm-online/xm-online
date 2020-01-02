@@ -44,7 +44,9 @@ import {
     XmPasswordNeededComponent,
     XmPrivilegeDirective,
 } from './';
-import { PrivacyAndTermsDialogComponent } from './components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
+import {
+    PrivacyAndTermsDialogComponent,
+} from './components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
 import { AceEditorDirective } from './directives/ace-editor.directive';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
 import { InputPatternDirective } from './directives/input-pattern.directive';

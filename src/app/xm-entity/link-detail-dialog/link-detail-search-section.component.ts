@@ -97,7 +97,7 @@ export class LinkDetailSearchSectionComponent implements OnInit {
                 this.total = parseInt(xmEntities.headers.get('X-Total-Count'), 10);
                 this.searchXmEntities.push(...xmEntities.body);
             },
-            (err) => console.log(err), // tslint:disable-line
+            (err) => console.info(err), // tslint:disable-line
             () => this.showLoader = false);
     }
 
@@ -106,7 +106,7 @@ export class LinkDetailSearchSectionComponent implements OnInit {
             map((res) => res.applications.config.entities
                 .find((entity) => entity.typeKey === this.sourceXmEntity.typeKey) || {}),
             filter((entity) => entity.hasOwnProperty('links')),
-            map((entity) => entity.links.find((link) => link.key === this.linkSpec.key)['filterQuery']),
+            map((entity) => entity.links.find((link) => link.key === this.linkSpec.key).filterQuery),
         );
     }
 

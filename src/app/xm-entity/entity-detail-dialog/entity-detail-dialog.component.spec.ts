@@ -32,12 +32,12 @@ describe('Entity detail dialog Component', () => {
                 NoopAnimationsModule,
                 MatInputModule,
                 NgxWebstorageModule.forRoot(),
-                TranslateModule.forRoot()
+                TranslateModule.forRoot(),
             ],
             declarations: [
                 EntityDetailDialogComponent,
                 I18nNamePipe,
-                I18nJsfPipe
+                I18nJsfPipe,
             ],
             providers: [
                 NgbActiveModal,
@@ -53,13 +53,13 @@ describe('Entity detail dialog Component', () => {
                 JhiAlertService,
                 {
                     provide: JhiConfigService,
-                    useValue: new JhiConfigService({defaultI18nLang: 'en', i18nEnabled: true})
+                    useValue: new JhiConfigService({defaultI18nLang: 'en', i18nEnabled: true}),
                 },
                 JhiModuleConfig,
             ],
             schemas: [
-                NO_ERRORS_SCHEMA
-            ]
+                NO_ERRORS_SCHEMA,
+            ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(EntityDetailDialogComponent);
@@ -74,7 +74,7 @@ describe('Entity detail dialog Component', () => {
 
     it('Name input should be empty', async(() => {
         fixture.detectChanges();
-        fixture.whenRenderingDone().then(data => {
+        fixture.whenRenderingDone().then((data) => {
             element = fixture.debugElement.query(By.css('#field_name'));
             expect(element.nativeElement.value).toBe('');
         });
@@ -92,14 +92,15 @@ describe('Entity detail dialog Component', () => {
         component.nameValidPattern = PATTERN;
         fixture.detectChanges();
         component.xmEntity.name = '@w';
-        for (let i = 0; i < 100; i++) {tick(1)}
+        for (let i = 0; i < 100; i++) {tick(1); }
         fixture.detectChanges();
         element = fixture.debugElement.query(By.css('#field_name'));
         const classArr = element.nativeElement.classList;
         let result;
+        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < classArr.length; i++) {
             if (classArr[i] === 'ng-invalid') {
-                result = true
+                result = true;
             } else {
                 result = false;
             }
@@ -107,4 +108,3 @@ describe('Entity detail dialog Component', () => {
         expect(result).toBeTruthy();
     }));
 });
-

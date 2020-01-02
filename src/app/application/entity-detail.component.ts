@@ -44,7 +44,7 @@ export class EntityDetailComponent implements OnInit, OnDestroy {
                     }
                 });
             }
-            this.load(params['id']);
+            this.load(params.id);
         });
         this.registerChangeInXmEntities();
     }
@@ -70,7 +70,7 @@ export class EntityDetailComponent implements OnInit, OnDestroy {
                 this.routeData.pageSubSubTitle = this.xmEntity.name;
                 this.jhiLanguageHelper.updateTitle();
             },
-            (err) => console.log(err));
+            (err) => console.info(err));
     }
 
 }

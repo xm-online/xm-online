@@ -22,7 +22,7 @@ export class EntityCardCompactComponent extends EntityCardComponent implements O
     @ViewChild('rating', {static: false}) public rating: RatingListSectionComponent;
 
     @Input() public preventDefaultUpdateError?: boolean;
-    @Output() public onSaveError = new EventEmitter<boolean>();
+    @Output() public onSaveError: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     public jsfAttributes: any;
     public showLoader: boolean;

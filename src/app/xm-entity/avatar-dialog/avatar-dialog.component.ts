@@ -34,15 +34,14 @@ export class AvatarDialogComponent implements OnInit {
     public ngOnInit(): void {
     }
 
-    public onFileChange($event): void {
+    public onFileChange($event: any): void {
         const image = new Image();
         const file = $event.target.files[0];
         const myReader = new FileReader();
         const that = this;
-        myReader.onloadend = function (loadEvent: any) {
+        myReader.onloadend = (loadEvent: any) => {
             image.src = loadEvent.target.result;
             that.cropper.setImage(image);
-
         };
         myReader.readAsDataURL(file);
     }
@@ -53,19 +52,21 @@ export class AvatarDialogComponent implements OnInit {
         try {
             file = new File([file], 'avatar-' + this.xmEntity.id);
         } catch (err) {
-            // window.navigator.msSaveBlob(file, 'avatar-' + this.xmEntity.id);
+            // TODO:
+            //  window.navigator.msSaveBlob(file, 'avatar-' + this.xmEntity.id);
         }
         this.xmEntityService.createAvatar(file).subscribe((avatarUrl) => {
-            this.xmEntityService.find(this.xmEntity.id, {embed: 'data'}).subscribe((xmEntity: HttpResponse<XmEntity>) => {
-                const xmEntityCopy = xmEntity.body;
-                xmEntityCopy.avatarUrl = avatarUrl;
-                this.xmEntityService.update(xmEntityCopy).subscribe(() => {
-                    this.eventManager.broadcast({
-                        name: 'xmEntityDetailModification',
+            this.xmEntityService.find(this.xmEntity.id, {embed: 'data'})
+                .subscribe((xmEntity: HttpResponse<XmEntity>) => {
+                    const xmEntityCopy = xmEntity.body;
+                    xmEntityCopy.avatarUrl = avatarUrl;
+                    this.xmEntityService.update(xmEntityCopy).subscribe(() => {
+                        this.eventManager.broadcast({
+                            name: 'xmEntityDetailModification',
+                        });
+                        this.activeModal.dismiss('save');
                     });
-                    this.activeModal.dismiss('save');
                 });
-            });
         });
     }
 
@@ -73,7 +74,7 @@ export class AvatarDialogComponent implements OnInit {
         this.activeModal.dismiss('cancel');
     }
 
-    private dataURItoBlob(dataURI): Blob {
+    private dataURItoBlob(dataURI: any): Blob {
         // convert base64 to raw binary data held in a string
         // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
         const byteString = atob(dataURI.split(',')[1]);

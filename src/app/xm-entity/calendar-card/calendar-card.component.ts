@@ -81,7 +81,7 @@ export class CalendarCardComponent implements OnInit, OnChanges {
 
         if (!this.calendarSpecs || !this.calendarSpecs.length) {
             if (DEBUG_INFO_ENABLED) {
-                console.log('DBG: no spec no call');
+                console.info('DBG: no spec no call');
             }
             return;
         }
@@ -148,7 +148,7 @@ export class CalendarCardComponent implements OnInit, OnChanges {
                     timeFormat: 'H(:mm)',
                 },
             },
-            select(start: any, end: any) {
+            select: (start: any, end: any) => {
                 const modalRef = self.modalService.open(CalendarEventDialogComponent, {backdrop: 'static'});
                 modalRef.componentInstance.xmEntity = self.xmEntity;
                 modalRef.componentInstance.calendar = self.currentCalendar;
@@ -167,7 +167,7 @@ export class CalendarCardComponent implements OnInit, OnChanges {
             eventLimit: true,
             events: calendar.events ? calendar.events.map((e) => this.mapEvent(calendarSpec, e)) : [],
             timeFormat: 'H(:mm)',
-            renderEvent(event: any, element: any) {
+            renderEvent: (event: any, element: any) => {
                 const content = $(element).find('.fc-content');
                 if ($(element).find('.fc-title').is('div')) {
                     const description = $('<div></div>');
@@ -176,7 +176,7 @@ export class CalendarCardComponent implements OnInit, OnChanges {
                     content.append(description);
                 }
             },
-            eventClick(event: any) {
+            eventClick: (event: any) => {
                 self.onRemove(event.originEvent, calendar.typeKey);
             },
         });

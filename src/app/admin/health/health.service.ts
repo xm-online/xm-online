@@ -134,10 +134,8 @@ export class JhiHealthService {
         let result = false;
 
         for (const key in healthObject) {
-            if (healthObject.hasOwnProperty(key)) {
-                if (key === 'status') {
-                    result = true;
-                }
+            if (healthObject.hasOwnProperty(key) && key === 'status') {
+                result = true;
             }
         }
         return result;

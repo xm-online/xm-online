@@ -15,7 +15,7 @@ export class XmEntitySpecService {
     }
 
     public get(): Observable<HttpResponse<XmEntitySpec[]>> {
-        if (!environment.production) {console.log(`getting ${this.resourceUrl}`); }
+        if (!environment.production) {console.info(`getting ${this.resourceUrl}`); }
         return this.http.get<XmEntitySpec[]>(this.resourceUrl, {observe: 'response'});
     }
 

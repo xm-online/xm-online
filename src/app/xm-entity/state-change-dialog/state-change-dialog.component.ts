@@ -29,7 +29,7 @@ export class StateChangeDialogComponent implements OnInit {
     public jsfAttributes: any;
     public formData: any = {};
     public showLoader: boolean;
-    public isJsonFormValid = true;
+    public isJsonFormValid: boolean = true;
 
     constructor(private activeModal: NgbActiveModal,
                 private xmEntityService: XmEntityService,

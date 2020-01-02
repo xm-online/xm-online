@@ -48,29 +48,29 @@ export const getJsfWidgets = () => {
 export const buildJsfAttributes = (spec: any, form: any) => {
     const input = {dataSpec: interpolate(spec), dataForm: interpolate(form)};
     const jsfAttributes = spec && {
-            schema: typeof(input.dataSpec) === 'string' ? JSON.parse(input.dataSpec) : input.dataSpec,
-            layout: extractLayoutElement(input, 'layout'),
-            form: conditionalForm(input.dataForm, 'form') || extractLayoutElement(input, 'form'),
-            data: extractData(input) || extractElement(input, 'data'),
-            entity: conditionalForm(input.dataForm, 'entity') || extractElement(input, 'entity'),
-            options: conditionalForm(input.dataForm, 'options') || extractElement(input, 'options') || {},
-            widgets: getJsfWidgets(),
-            formLayout: formLayout(),
-        } || null;
+        schema: typeof (input.dataSpec) === 'string' ? JSON.parse(input.dataSpec) : input.dataSpec,
+        layout: extractLayoutElement(input, 'layout'),
+        form: conditionalForm(input.dataForm, 'form') || extractLayoutElement(input, 'form'),
+        data: extractData(input) || extractElement(input, 'data'),
+        entity: conditionalForm(input.dataForm, 'entity') || extractElement(input, 'entity'),
+        options: conditionalForm(input.dataForm, 'options') || extractElement(input, 'options') || {},
+        widgets: getJsfWidgets(),
+        formLayout: formLayout(),
+    } || null;
     jsfAttributes.options.data = jsfAttributes.data;
     jsfAttributes.form = addValidationComponent(jsfAttributes.form);
     jsfAttributes.layout = addValidationComponentToLayout(jsfAttributes.layout);
     // proxy data to options field for access original data inside component
     Object.defineProperty(jsfAttributes, 'data',
         {
-            set(data) { this.options.data = data; },
-            get() { return this.options.data; },
+            set: (data) => { this.options.data = data; },
+            get: () => this.options.data,
         });
 
     processValidationMessages(jsfAttributes);
 
     if (environment && !environment.production) {
-        console.log('[dbg] %o', jsfAttributes);
+        console.info('[dbg] %o', jsfAttributes);
     }
 
     return jsfAttributes;
@@ -98,7 +98,7 @@ export const toJsonString = (str) => {
 };
 
 const interpolate = (spec: any) => {
-    if (typeof(spec) === 'string') {
+    if (typeof (spec) === 'string') {
         spec = spec.replace(/\\\\/g, '\\\\\\\\');
         try {
             return new Function('$', 'return `' + spec + '`;').call(this, $);
@@ -149,19 +149,18 @@ const traverce = (obj, task) => {
 export const processValidationMessages = (jsfAttributes) => {
     jsfAttributes.options = jsfAttributes.options || {};
     jsfAttributes.options.defautWidgetOptions = jsfAttributes.options.defautWidgetOptions || {};
-    jsfAttributes.options.defautWidgetOptions.validationMessages = jsfAttributes.options.defautWidgetOptions.validationMessages || {};
-    jsfAttributes.options.defautWidgetOptions.validationMessages.BE_ERROR = function(errorMessage) {
-        return errorMessage;
-    };
+    jsfAttributes.options.defautWidgetOptions.validationMessages = jsfAttributes.options.defautWidgetOptions
+        .validationMessages || {};
+    jsfAttributes.options.defautWidgetOptions.validationMessages.BE_ERROR = (errorMessage) => errorMessage;
 
-    traverce(jsfAttributes.form, function(object, property) {
+    traverce(jsfAttributes.form, (object, property) => {
         if (property === 'validationMessages') {
             object.validationMessages = Object.assign({}, jsfAttributes.options.defautWidgetOptions.validationMessages,
                 object.validationMessages);
         }
     });
 
-    traverce(jsfAttributes.schema, function(object, property) {
+    traverce(jsfAttributes.schema, (object, property) => {
         if (property === 'type' && (object.type instanceof Array)) {
             object.type = object.type.filter((it) => it !== 'null');
             if (object.type.length === 1) {
@@ -172,33 +171,34 @@ export const processValidationMessages = (jsfAttributes) => {
 
     const validations = ['minLength', 'maxLength', 'pattern', 'format', 'minimum', 'maximum'];
 
-    traverce(jsfAttributes.form, function(object, property) {
+    traverce(jsfAttributes.form, (object, property) => {
 
         if (property !== 'key') {
             return;
         }
 
-        const hasValidations = validations.filter((key) => object.hasOwnProperty(key)).length > 0;
+        const hasValidations = validations.filter((k) => object.hasOwnProperty(k)).length > 0;
         if (!hasValidations) {
             return;
         }
 
-        let key = object['key'];
+        let key = object.key;
         key = key.replace(/\./g, '.properties.');
         key = key.replace(/\[\]/g, '.items');
 
         let field = jsfAttributes.schema || {};
-        field = field['properties'] || {};
+        field = field.properties || {};
 
         const path = key.split('.');
+        // tslint:disable-next-line:forin
         for (const i in path) {
             field = field[path[i]];
         }
 
-        validations.filter((key) => object.hasOwnProperty(key)).forEach((it) => field[it] = object[it]);
+        validations.filter((k) => object.hasOwnProperty(k)).forEach((it) => field[it] = object[it]);
 
         if (environment && !environment.production) {
-            console.log('[dbg] %o', jsfAttributes.schema);
+            console.info('[dbg] %o', jsfAttributes.schema);
         }
 
     });
@@ -206,12 +206,12 @@ export const processValidationMessages = (jsfAttributes) => {
 };
 
 const conditionalForm = (inDataForm: any, fieldName) => {
-    const dataForm = typeof(inDataForm) === 'string' ? JSON.parse(inDataForm) : inDataForm;
-    if (!dataForm || !dataForm['conditionalForms']) {
+    const dataForm = typeof (inDataForm) === 'string' ? JSON.parse(inDataForm) : inDataForm;
+    if (!dataForm || !dataForm.conditionalForms) {
         return null;
     }
 
-    const conditionalForms = dataForm['conditionalForms'];
+    const conditionalForms = dataForm.conditionalForms;
     let field = null;
     let condition = false;
     for (const conditionalFormConfig of conditionalForms) {
@@ -220,9 +220,9 @@ const conditionalForm = (inDataForm: any, fieldName) => {
         if (value && !condition) {
             field = conditionalFormConfig[fieldName];
             condition = true;
-            console.log('Use form config by condition', conditionalFormConfig.condition);
+            console.info('Use form config by condition', conditionalFormConfig.condition);
         } else if (value && condition) {
-            console.error('Error! Two conditions of conditionalForm are true!', conditionalFormConfig.condition);
+            console.warn('Error! Two conditions of conditionalForm are true!', conditionalFormConfig.condition);
         }
     }
 
@@ -236,7 +236,7 @@ const extractLayoutElement = (input: any, field: string) => {
     if (!input.dataForm) {
         return null;
     }
-    const dataForm = typeof(input.dataForm) === 'string' ? JSON.parse(input.dataForm) : input.dataForm;
+    const dataForm = typeof (input.dataForm) === 'string' ? JSON.parse(input.dataForm) : input.dataForm;
     if (dataForm instanceof Array) {
         return dataForm;
     } else {
@@ -248,13 +248,13 @@ const extractElement = (input: any, field: string) => {
     if (!input.dataForm) {
         return null;
     }
-    const dataForm = typeof(input.dataForm) === 'string' ? JSON.parse(input.dataForm) : input.dataForm;
+    const dataForm = typeof (input.dataForm) === 'string' ? JSON.parse(input.dataForm) : input.dataForm;
     return dataForm[field];
 };
 
 const extractData = (input: any) => {
     const dataForm = conditionalForm(input.dataForm, 'data')
-        || typeof(input.dataForm) === 'string' ? JSON.parse(input.dataForm) : input.dataForm;
+    || typeof (input.dataForm) === 'string' ? JSON.parse(input.dataForm) : input.dataForm;
     if (!dataForm) {
         return null;
     }
@@ -266,7 +266,7 @@ const extractData = (input: any) => {
 
 const processDataFieldExpressions = (data: any) => {
     for (const i in data) {
-        if (data[i] !== null && typeof(data[i]) === 'object') {
+        if (data[i] !== null && typeof (data[i]) === 'object') {
             processDataFieldExpressions(data[i]);
         } else {
             data[i] = new Function('expression', 'return ' + data[i])();
@@ -287,7 +287,8 @@ export const formLayout = () => {
         $('mat-form-field').addClass('mat-form-field');
         $('mat-form-field').closest('div').addClass('form-group');
         $('.json-schema-form .mat-raised-button, .json-schema-form .mat-button').addClass('btn');
-        $('.json-schema-form .mat-raised-button.mat-primary, .json-schema-form .mat-button.mat-primary').addClass('btn-primary');
+        $('.json-schema-form .mat-raised-button.mat-primary, .json-schema-form .mat-button.mat-primary')
+            .addClass('btn-primary');
     }, 50);
 };
 

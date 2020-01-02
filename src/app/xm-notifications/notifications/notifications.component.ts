@@ -50,7 +50,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     }
 
     @HostListener('document:click', ['$event'])
-    public clickout(event): void {
+    public clickout(event: any): void {
         if (!(this.eRef.nativeElement.contains(event.target))) {
             this.isOpened = false;
         }
@@ -69,7 +69,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.entityEntityStateChange);
     }
 
-    public load(initAutoUpdate?: boolean): void {
+    public load(initAutoUpdate: boolean = false): void {
         this.xmConfigService.getUiConfig().subscribe((config) => {
             this.config = config.notifications as NotificationUiConfig;
             this.mapPrviliges(this.config);
@@ -80,7 +80,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
                 const self = this;
                 self.autoUpdateEnabled = true;
                 // @TODO should be redone with webocets
-                this.updateInterval = setInterval(function() {
+                this.updateInterval = setInterval(() => {
                     if (self.principal.isAuthenticated()) {
                         self.getNotifications(self.config);
                     } else {
@@ -108,7 +108,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
             });
     }
 
-    public onRemoveItem(event, item): void {
+    public onRemoveItem(event: any, item: any): void {
         event.stopPropagation();
         if (this.config && this.config.changeStateName) {
             this.notificationsService.markRead(item.id, this.config).subscribe(() => {
@@ -121,12 +121,12 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         this.isOpened = !this.isOpened;
     }
 
-    public viewAll(url): void {
+    public viewAll(url: any): void {
         this.router.navigate([url]);
         this.toggleNotifications();
     }
 
-    public onNavigate(item, event): void {
+    public onNavigate(item: any, event: any): void {
         if (this.config.preventNavigation) {
             event.preventDefault();
             event.stopPropagation();
@@ -136,7 +136,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
             const typeKey = _.get(item, this.config.referenceTypeKeyPath);
             const id = _.get(item, this.config.referenceIdPath);
             if (!typeKey || !id) {
-                console.log('No entity found for notification ' + item.id);
+                console.warn('No entity found for notification ' + item.id);
                 return;
             }
 
@@ -148,9 +148,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     private mapPrviliges(config: NotificationUiConfig): void {
         this.privileges = [];
         if (config && config.privileges && config.privileges.length > 0) {
-            config.privileges.map((p) => {
-                this.privileges.push(p);
-            });
+            config.privileges.forEach((p) => this.privileges.push(p));
         } else {
             this.privileges = DEFAULT_PRIVILEGES;
         }

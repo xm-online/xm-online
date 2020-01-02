@@ -8,63 +8,27 @@ import 'brace/theme/chrome';
 declare var ace: any;
 
 @Directive({
-    selector: '[xmAceEditor]'
+    selector: '[xmAceEditor]',
 })
 export class AceEditorDirective {
 
-    _options: any = {};
-    _highlightActiveLine = true;
-    _showGutter = true;
-    _readOnly = false;
-    _theme = 'chrome';
-    _mode = 'json';
-    _autoUpdateContent = true;
-
-    editor: any;
-    oldText: any;
-
-    @Output('textChanged') textChanged = new EventEmitter();
+    public _highlightActiveLine: boolean = true;
+    public _showGutter: boolean = true;
+    public editor: any;
+    public oldText: any;
+    @Output('textChanged') public textChanged: EventEmitter<any> = new EventEmitter();
+    public _options: any = {};
+    public _readOnly: boolean = false;
+    public _theme: string = 'chrome';
+    public _mode: string = 'json';
+    public _autoUpdateContent: boolean = true;
 
     constructor(elementRef: ElementRef) {
         const el = elementRef.nativeElement;
         ace.config.set('basePath', '/node_modules/brace');
-        this.editor = ace['edit'](el);
+        this.editor = ace.edit(el);
         this.init();
         this.initEvents();
-    }
-
-    init() {
-        this.editor.getSession().setUseWorker(false);
-        this.editor.setOptions(this._options);
-        this.editor.setTheme(`ace/theme/${this._theme}`);
-        this.editor.getSession().setMode(`ace/mode/${this._mode}`);
-        this.editor.setHighlightActiveLine(this._highlightActiveLine);
-        this.editor.renderer.setShowGutter(this._showGutter);
-        this.editor.setReadOnly(this._readOnly);
-        this.editor.$blockScrolling = Infinity;
-    }
-
-    initEvents() {
-        this.editor.on('change', (e) => {
-            this.updateValue(e);
-        });
-        this.editor.on('keypress', (e) => {
-            this.updateValue(e);
-        });
-        this.editor.on('paste', (e) => {
-            this.updateValue(e);
-        });
-    }
-
-    private updateValue(e): void {
-        const newVal = this.editor.getValue();
-        if (newVal === this.oldText) {
-            return;
-        }
-        if (typeof this.oldText !== 'undefined') {
-            this.textChanged.emit(newVal);
-        }
-        this.oldText = newVal;
     }
 
     @Input() set options(options: any) {
@@ -87,6 +51,10 @@ export class AceEditorDirective {
         this.editor.getSession().setMode(`ace/mode/${mode}`);
     }
 
+    @Input() set autoUpdateContent(status: any) {
+        this._autoUpdateContent = status;
+    }
+
     @Input() set text(text: any) {
         if (!text) {
             text = '';
@@ -100,17 +68,46 @@ export class AceEditorDirective {
         }
     }
 
-    @Input() set autoUpdateContent(status: any) {
-        this._autoUpdateContent = status;
-    }
-
     @Input() set gotoLine(line: number) {
         if (line) {
             this.editor.resize(true);
-            this.editor.scrollToLine(line, true, true, function () {
-            });
+            this.editor.scrollToLine(line, true, true, () => {});
             this.editor.gotoLine(line, 0, true);
         }
+    }
+
+    public init(): void {
+        this.editor.getSession().setUseWorker(false);
+        this.editor.setOptions(this._options);
+        this.editor.setTheme(`ace/theme/${this._theme}`);
+        this.editor.getSession().setMode(`ace/mode/${this._mode}`);
+        this.editor.setHighlightActiveLine(this._highlightActiveLine);
+        this.editor.renderer.setShowGutter(this._showGutter);
+        this.editor.setReadOnly(this._readOnly);
+        this.editor.$blockScrolling = Infinity;
+    }
+
+    public initEvents(): void {
+        this.editor.on('change', (e) => {
+            this.updateValue(e);
+        });
+        this.editor.on('keypress', (e) => {
+            this.updateValue(e);
+        });
+        this.editor.on('paste', (e) => {
+            this.updateValue(e);
+        });
+    }
+
+    private updateValue(_e: any): void {
+        const newVal = this.editor.getValue();
+        if (newVal === this.oldText) {
+            return;
+        }
+        if (typeof this.oldText !== 'undefined') {
+            this.textChanged.emit(newVal);
+        }
+        this.oldText = newVal;
     }
 
 }

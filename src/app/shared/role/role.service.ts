@@ -15,15 +15,15 @@ export class RoleService {
 
     public create(role: Role): Observable<any> {
         const copy: Role = Object.assign({}, role);
-        copy.createdDate && (copy.createdDate = this.dateUtils.toDate(copy.createdDate));
-        copy.updatedDate && (copy.updatedDate = this.dateUtils.toDate(copy.updatedDate));
+        if (copy.createdDate) {copy.createdDate = this.dateUtils.toDate(copy.createdDate); }
+        if (copy.updatedDate) {copy.updatedDate = this.dateUtils.toDate(copy.updatedDate); }
         return this.http.post(this.resourceUrl, role);
     }
 
     public update(role: Role): Observable<any> {
         const copy: Role = Object.assign({}, role);
-        copy.createdDate && (copy.createdDate = this.dateUtils.toDate(copy.createdDate));
-        copy.updatedDate && (copy.updatedDate = this.dateUtils.toDate(copy.updatedDate));
+        if (copy.createdDate) {copy.createdDate = this.dateUtils.toDate(copy.createdDate); }
+        if (copy.updatedDate) {copy.updatedDate = this.dateUtils.toDate(copy.updatedDate); }
         return this.http.put(this.resourceUrl, role);
     }
 
@@ -31,7 +31,7 @@ export class RoleService {
         return this.http.get<Role[]>(this.resourceUrl);
     }
 
-    public getRole(roleKey): Observable<Role> {
+    public getRole(roleKey: string): Observable<Role> {
         return this.http.get<Role>(`${this.resourceUrl}/${roleKey}`);
     }
 

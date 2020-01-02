@@ -17,7 +17,7 @@ export class TranslationService {
         return this.http.get<any>(configPath).pipe(map((res: Response) => res.json()));
     }
 
-    public translate(target, q): any {
+    public translate(target: any, q: any): any {
         const self = this;
         const url = 'https://www.googleapis.com/language/translate/v2';
         const key = 'AIzaSyBqzZZrc4Wgc5nAH4mMZjnjBSdv-425qgU';
@@ -26,12 +26,12 @@ export class TranslationService {
             url: `${url}?key=${key}`,
             traditional: true,
             data: {
-                'source': 'en',
-                'target': target,
-                'q': q
+                source: 'en',
+                target,
+                q,
             },
         });
-        jqxhr.fail(function (error) {
+        jqxhr.fail((error) => {
             self.eventManager.broadcast({name: 'thirdpaty.httpError', content: error.responseJSON});
         });
         return jqxhr;

@@ -50,8 +50,8 @@ export class ContentService {
     private convertArrayResponse(res: HttpResponse<Content[]>): HttpResponse<Content[]> {
         const jsonResponse: Content[] = res.body;
         const body: Content[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+        for (const i of jsonResponse) {
+            body.push(this.convertItemFromServer(i));
         }
         return res.clone({body});
     }
@@ -60,15 +60,13 @@ export class ContentService {
      * Convert a returned JSON object to Content.
      */
     private convertItemFromServer(content: Content): Content {
-        const copy: Content = Object.assign({}, content);
-        return copy;
+        return Object.assign({}, content);
     }
 
     /**
      * Convert a Content to a JSON which can be sent to the server.
      */
     private convert(content: Content): Content {
-        const copy: Content = Object.assign({}, content);
-        return copy;
+        return Object.assign({}, content);
     }
 }

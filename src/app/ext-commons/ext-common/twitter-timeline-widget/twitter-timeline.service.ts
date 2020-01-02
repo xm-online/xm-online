@@ -14,8 +14,7 @@ export class TwitterTimelineService {
         const that = this;
         return Observable.create((observer) => {
             that.startScriptLoad();
-            window['twttr'].ready(
-                function onLoadTwitterScript(twitter) {
+            (window as any).twttr.ready((twitter) => {
                     observer.next(twitter);
                     observer.complete();
                 },
@@ -24,9 +23,9 @@ export class TwitterTimelineService {
     }
 
     private startScriptLoad(): void {
-        window['twttr'] = (function (d, s, id, url) {
+        (window as any).twttr = ((d, s, id, url) => {
             const fjs = d.getElementsByTagName(s)[0];
-            const t = window['twttr'] || {};
+            const t = (window as any).twttr || {};
 
             if (d.getElementById(id)) {
                 return t;
@@ -38,12 +37,12 @@ export class TwitterTimelineService {
             fjs.parentNode.insertBefore(js, fjs);
 
             t._e = [];
-            t.ready = function (f) {
+            t.ready = (f) => {
                 t._e.push(f);
             };
 
             return t;
-        }(document, 'script', this.TWITTER_SCRIPT_ID, this.TWITTER_WIDGET_URL));
+        })(document, 'script', this.TWITTER_SCRIPT_ID, this.TWITTER_WIDGET_URL);
     }
 
 }

@@ -12,9 +12,9 @@ export class DashboardResolvePagingParams implements Resolve<any> {
     }
 
     public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
-        const page = route.queryParams['page'] ? route.queryParams['page'] : '1';
-        const sort = route.queryParams['sort'] ? route.queryParams['sort'] : 'id,asc';
-        const size = route.queryParams['size'] ? route.queryParams['size'] : '10';
+        const page = route.queryParams.page ? route.queryParams.page : '1';
+        const sort = route.queryParams.sort ? route.queryParams.sort : 'id,asc';
+        const size = route.queryParams.size ? route.queryParams.size : '10';
         return {
             page: this.paginationUtil.parsePage(page),
             predicate: this.paginationUtil.parsePredicate(sort),

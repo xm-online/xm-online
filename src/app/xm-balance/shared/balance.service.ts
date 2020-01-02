@@ -49,8 +49,8 @@ export class BalanceService {
     private convertArrayResponse(res: HttpResponse<Balance[]>): HttpResponse<Balance[]> {
         const jsonResponse: Balance[] = res.body;
         const body: Balance[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+        for (const i of jsonResponse) {
+            body.push(this.convertItemFromServer(i));
         }
         return res.clone({body});
     }
@@ -59,15 +59,13 @@ export class BalanceService {
      * Convert a returned JSON object to Balance.
      */
     private convertItemFromServer(balance: Balance): Balance {
-        const copy: Balance = Object.assign({}, balance);
-        return copy;
+        return Object.assign({}, balance);
     }
 
     /**
      * Convert a Balance to a JSON which can be sent to the server.
      */
     private convert(balance: Balance): Balance {
-        const copy: Balance = Object.assign({}, balance);
-        return copy;
+        return Object.assign({}, balance);
     }
 }

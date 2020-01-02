@@ -20,7 +20,7 @@ export class DatetimeUtcComponent implements OnInit {
     constructor(private jsf: JsonSchemaFormService) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.options = this.layoutNode.options || {};
         this.jsf.initializeControl(this);
         if (this.controlValue) {
@@ -28,7 +28,7 @@ export class DatetimeUtcComponent implements OnInit {
         }
     }
 
-    public changeText(event) {
+    public changeText(event: any): void {
         this.jsf.updateValue(this, moment(event.target.value).utc().format('YYYY-MM-DD[T]HH:mm:ss[Z]'));
     }
 }

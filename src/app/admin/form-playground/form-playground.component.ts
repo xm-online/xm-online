@@ -130,8 +130,8 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
         // Subscribe to query string to detect schema to load
         this.route.queryParams.subscribe(
             (params) => {
-                if (params['set']) {
-                    this.selectedSet = params['set'];
+                if (params.set) {
+                    this.selectedSet = params.set;
                     this.selectedSetName = ({
                         ng2jsf: '',
                         asf: 'Angular Schema Form:',
@@ -139,13 +139,13 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
                         jsf: 'JSONForm:',
                     })[this.selectedSet];
                 }
-                if (params['example']) {
-                    this.selectedExample = params['example'];
+                if (params.example) {
+                    this.selectedExample = params.example;
                     this.selectedExampleName = this.examples[this.selectedSet].schemas
                         .find((schema) => schema.file === this.selectedExample).name;
                 }
-                if (params['framework']) {
-                    this.selectedFramework = params['framework'];
+                if (params.framework) {
+                    this.selectedFramework = params.framework;
                 }
                 this.loadSelectedExample(null, 'ng2jsf-flex-layout');
             },
@@ -220,6 +220,7 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
                 // If entered content is not valid JSON,
                 // parse as JavaScript instead to include functions
                 const newFormObject: any = null;
+                // tslint:disable-next-line:no-eval
                 eval('newFormObject = ' + newFormString);
                 this.jsonFormObject = newFormObject;
                 this.jsonFormObject.form = addValidationComponent(this.jsonFormObject.form);
@@ -246,7 +247,7 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
             map((spec) => this.updateXmFormTemplate(spec)),
         ).subscribe(
             (data) => this.xmEntityForms$.next(data),
-            (error) => console.log(error),
+            (error) => console.info(error),
         );
     }
 

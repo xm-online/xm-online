@@ -50,8 +50,9 @@ export class DashboardService {
     private convertArrayResponse(res: HttpResponse<Dashboard[]>): HttpResponse<Dashboard[]> {
         const jsonResponse: Dashboard[] = res.body;
         const body: Dashboard[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+
+        for (const i of jsonResponse) {
+            body.push(this.convertItemFromServer(i));
         }
         return res.clone({body});
     }
@@ -60,15 +61,13 @@ export class DashboardService {
      * Convert a returned JSON object to Dashboard.
      */
     private convertItemFromServer(dashboard: Dashboard): Dashboard {
-        const copy: Dashboard = Object.assign({}, dashboard);
-        return copy;
+        return Object.assign({}, dashboard);
     }
 
     /**
      * Convert a Dashboard to a JSON which can be sent to the server.
      */
     private convert(dashboard: Dashboard): Dashboard {
-        const copy: Dashboard = Object.assign({}, dashboard);
-        return copy;
+        return Object.assign({}, dashboard);
     }
 }

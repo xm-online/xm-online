@@ -4,8 +4,8 @@ import { XmModule } from './xm.module';
 
 ProdConfig();
 
-if (module['hot']) {
-    module['hot'].accept();
+if ((module as any).hot) {
+    (module as any).hot.accept();
 }
 
 platformBrowserDynamic().bootstrapModule(XmModule).finally(() => {});

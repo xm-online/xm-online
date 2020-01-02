@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { JhiOrderByPipe, JhiParseLinks } from 'ng-jhipster';
 
 import { ITEMS_PER_PAGE } from '../../shared';
+import { Link } from '../../xm-entity';
 import { Audit } from './audit.model';
 import { AuditsService } from './audits.service';
 
@@ -17,7 +18,7 @@ export class AuditsComponent implements OnInit {
     public audits: Audit[];
     public fromDate: string;
     public itemsPerPage: any;
-    public links: any;
+    public links: Link[];
     public page: number;
     public orderProp: string;
     public reverse: boolean;
@@ -62,7 +63,7 @@ export class AuditsComponent implements OnInit {
                     this.links = this.parseLinks.parse(res.headers.get('link'));
                     this.totalItems = +res.headers.get('X-Total-Count');
                 },
-                (err) => console.log(err), // tslint:disable-line
+                (err) => console.info(err), // tslint:disable-line
                 () => this.showLoader = false);
     }
 

@@ -26,8 +26,8 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
     // TODO for demo
     public tenant: string;
 
-    public backLinkSpecs$ = new BehaviorSubject<FullLinkSpec[]>([]);
-    public linkSpecs$ = new BehaviorSubject<FullLinkSpec[]>([]);
+    public backLinkSpecs$: BehaviorSubject<FullLinkSpec[]> = new BehaviorSubject<FullLinkSpec[]>([]);
+    public linkSpecs$: BehaviorSubject<FullLinkSpec[]> = new BehaviorSubject<FullLinkSpec[]>([]);
 
     public xmEntity$: Observable<XmEntity>;
 
@@ -43,8 +43,8 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.showLoader = true;
         if (DEBUG_INFO_ENABLED) {
-            console.log(`DBG entity  e=%o`, this.xmEntity);
-            console.log(`DBG spec  e=%o`, this.spec);
+            console.info(`DBG entity  e=%o`, this.xmEntity);
+            console.info(`DBG spec  e=%o`, this.spec);
         }
         this.loadEntity();
     }
@@ -60,7 +60,8 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
             this.entityUiConfig = (config && config.applications
                 && config.applications.config
                 && config.applications.config.entities
-                && config.applications.config.entities.filter((e) => e.typeKey === this.xmEntity.typeKey).shift()) as EntityUiConfig;
+                && config.applications.config.entities
+                    .filter((e) => e.typeKey === this.xmEntity.typeKey).shift()) as EntityUiConfig;
         });
     }
 
@@ -114,7 +115,10 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
 
         if (detailLayoutType === 'ALL-IN-ROW') {
             grid.unshift({class: 'row', content: [{class: 'col-sm-12', component: 'entity-data-card'}]});
-            grid.unshift({class: 'row', content: [{class: 'col-sm-12 col-xl-8 offset-xl-2', component: 'entity-card'}]});
+            grid.unshift({
+                class: 'row',
+                content: [{class: 'col-sm-12 col-xl-8 offset-xl-2', component: 'entity-card'}],
+            });
             return grid;
         } else if (detailLayoutType === 'COMPACT') {
             grid.unshift({class: 'row', content: [{class: 'col-sm-12', component: 'entity-card-compact'}]});
@@ -122,26 +126,31 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
         }
 
         grid.unshift({
-            class: 'row', content: [{class: 'col-md-6', component: 'entity-card'}, {class: 'col-md-6', component: 'entity-data-card'}],
+            class: 'row',
+            content: [{class: 'col-md-6', component: 'entity-card'}, {
+                class: 'col-md-6',
+                component: 'entity-data-card',
+            }],
         });
 
         return grid;
     }
 
     private registerModificationSubscription(): void {
-        this.modificationSubscription = this.eventManager.subscribe('xmEntityDetailModification', () => this.loadEntity());
+        this.modificationSubscription = this.eventManager
+            .subscribe('xmEntityDetailModification', () => this.loadEntity());
     }
 
     private loadEntity(): void {
         const xmEntityId = this.config.xmEntityId ? this.config.xmEntityId : this.contextService.get('xmEntityId');
-        if (!xmEntityId) {return;}
+        if (!xmEntityId) {return; }
 
         this.xmEntity$ = this.xmEntityService.find(xmEntityId, {embed: 'data'})
             .pipe(
                 map((responce) => responce.body),
                 tap((entity) => this.xmEntity = entity),
                 tap((entity) => this.xmEntitySpec = this.getXmEntitySpec(entity.typeKey)),
-                tap(() => DEBUG_INFO_ENABLED ? console.log(`DBG spec = %o`, this.xmEntitySpec) : () => {}),
+                tap(() => DEBUG_INFO_ENABLED ? console.info(`DBG spec = %o`, this.xmEntitySpec) : () => {}),
                 tap((entity) => this.backLinkSpecs = this.getBackLinkSpecs(entity.typeKey)),
                 tap(() => this.defineUiConfig()),
                 tap(() => this.linkSpecs$.next(

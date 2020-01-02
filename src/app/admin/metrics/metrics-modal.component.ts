@@ -16,7 +16,8 @@ export class JhiMetricsMonitoringModalComponent implements OnInit {
     public threadDumpWaiting: number = 0;
 
     constructor(public activeModal: NgbActiveModal) {
-        // this.jhiLanguageService.addLocation('metrics');
+        // TODO:
+        //  this.jhiLanguageService.addLocation('metrics');
     }
 
     public ngOnInit(): void {

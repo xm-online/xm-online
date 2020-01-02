@@ -11,8 +11,8 @@ export function getBrowserLocale(): string | null {
     let browserLang = w.navigator.languages ? w.navigator.languages[0] : null;
     browserLang = browserLang
         || w.navigator.language
-        || w.navigator['browserLanguage']
-        || w.navigator['userLanguage'];
+        || (w.navigator as any).browserLanguage
+        || (w.navigator as any).userLanguage;
     if (browserLang.indexOf('-') !== -1) {
         browserLang = browserLang.split('-') [0];
     }

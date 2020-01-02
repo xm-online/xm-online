@@ -6,7 +6,13 @@ import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
 import { Principal } from '../../../shared';
-import { EntityDetailDialogComponent, Spec, XmEntity, XmEntitySpec, XmEntitySpecWrapperService } from '../../../xm-entity';
+import {
+    EntityDetailDialogComponent,
+    Spec,
+    XmEntity,
+    XmEntitySpec,
+    XmEntitySpecWrapperService,
+} from '../../../xm-entity';
 import { FunctionCallDialogComponent } from '../../../xm-entity/function-call-dialog/function-call-dialog.component';
 import { XM_EVENT_LIST } from '../../../xm.constants';
 
@@ -151,7 +157,7 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
         return modalRef;
     }
 
-    private navigate(path, options): void {
+    private navigate(path: string, options: any): void {
         this.router.navigate([path], {queryParams: options});
     }
 }

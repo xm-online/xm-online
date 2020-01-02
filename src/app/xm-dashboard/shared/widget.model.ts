@@ -7,6 +7,7 @@ export class Widget implements BaseEntity {
         public selector?: string,
         public name?: string,
         public config?: any,
+        // tslint:disable-next-line:bool-param-default
         public isPublic?: boolean,
         public dashboard?: Dashboard,
         public module?: string,

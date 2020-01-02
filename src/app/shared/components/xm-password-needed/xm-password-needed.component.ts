@@ -5,16 +5,16 @@ import { JhiEventManager } from 'ng-jhipster';
 
 @Component({
     selector: 'xm-password-needed',
-    templateUrl: './xm-password-needed.component.html'
+    templateUrl: './xm-password-needed.component.html',
 })
 export class XmPasswordNeededComponent implements OnInit {
 
-    @ViewChild('passwordNeeded', {static: false}) tpl: ElementRef;
-    form: FormGroup;
-    modal: NgbModalRef;
-    showLoader: boolean;
-    incorrect: boolean;
-    event: any;
+    @ViewChild('passwordNeeded', {static: false}) public tpl: ElementRef;
+    public form: FormGroup;
+    public modal: NgbModalRef;
+    public showLoader: boolean;
+    public incorrect: boolean;
+    public event: any;
 
     constructor(private fb: FormBuilder,
                 private modalService: NgbModal,
@@ -26,20 +26,20 @@ export class XmPasswordNeededComponent implements OnInit {
         return this.form.get('password');
     }
 
-    ngOnInit() {
-        this.eventManager.subscribe('error.passwordNeeded', event => {
+    public ngOnInit(): void {
+        this.eventManager.subscribe('error.passwordNeeded', (event) => {
             this.event = event;
             this.incorrect = false;
             this.showLoader = false;
             this.password.reset(null);
             this.password.markAsUntouched();
             this.modal = this.modalService.open(this.tpl, {
-                beforeDismiss: () => false
+                beforeDismiss: () => false,
             });
         });
     }
 
-    onSubmit() {
+    public onSubmit(): void {
         if (this.form.valid) {
             this.incorrect = false;
             this.showLoader = true;
@@ -49,7 +49,7 @@ export class XmPasswordNeededComponent implements OnInit {
                     this.showLoader = false;
                     subscription.unsubscribe();
                 }).subscribe(() => {
-                    this.modal.close()
+                    this.modal.close();
                 });
             this.event.subject.next(this.password.value);
         } else {
@@ -57,7 +57,7 @@ export class XmPasswordNeededComponent implements OnInit {
         }
     }
 
-    onDismiss() {
+    public onDismiss(): void {
         this.modal.close();
         this.event.subject.error();
     }

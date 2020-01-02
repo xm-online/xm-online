@@ -6,7 +6,7 @@ export class CSRFService {
 
     constructor(private cookieService: CookieService) {}
 
-    public getCSRF(name?: string) {
+    public getCSRF(name?: string): any {
         name = `${name ? name : 'XSRF-TOKEN'}`;
         return this.cookieService.get(name);
     }

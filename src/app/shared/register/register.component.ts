@@ -5,7 +5,9 @@ import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 
 import { PasswordSpec } from '../../xm-entity/shared/password-spec.model';
 import { XM_EVENT_LIST } from '../../xm.constants';
-import { PrivacyAndTermsDialogComponent } from '../components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
+import {
+    PrivacyAndTermsDialogComponent,
+} from '../components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
 import { XmConfigService } from '../spec/config.service';
 import { RegisterService } from './register.service';
 
@@ -30,9 +32,9 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     public registerAccount: any;
     public success: boolean;
     public modalRef: NgbModalRef;
-    public needCaptcha = false;
-    public language = 'en';
-    public publicKey;
+    public needCaptcha: boolean = false;
+    public language: string = 'en';
+    public publicKey: string;
     public socialConfig: [];
     public passwordSettings: PasswordSpec;
     public patternMessage: string;
@@ -77,14 +79,17 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
             this.doNotMatch = 'ERROR';
         } else {
             if (this.config && this.config.privacyAndTermsEnabled) {
-                const modalRef = this.modalService.open(PrivacyAndTermsDialogComponent, {size: 'lg', backdrop: 'static'});
+                const modalRef = this.modalService.open(PrivacyAndTermsDialogComponent, {
+                    size: 'lg',
+                    backdrop: 'static',
+                });
                 modalRef.componentInstance.config = this.config;
                 modalRef.result.then((r) => {
                     if (r === 'accept') {
                         this.registration();
                     }
                 }).catch((err) => {
-                    console.log(err);
+                    console.info(err);
                 });
             } else {
                 this.registration();
@@ -92,12 +97,12 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    public handleCorrectCaptcha($event): void {
+    public handleCorrectCaptcha($event: any): void {
         this.registerAccount.captcha = $event;
         this.captchaRequired = null;
     }
 
-    public handleCaptchaExpired($event): void {
+    public handleCaptchaExpired(_$event: any): void {
         this.registerAccount.captcha = null;
     }
 
@@ -118,7 +123,7 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    private processError(response): void {
+    private processError(response: any): void {
         this.success = null;
         if (response.status === 400 && response.error.error === 'error.login.already.used') {
             this.errorUserExists = 'ERROR';

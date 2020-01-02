@@ -69,7 +69,7 @@ if (!String.prototype.startsWith) {
         enumerable: false,
         configurable: false,
         writable: false,
-        value: (searchString, position) => {
+        value(this: any, searchString: string, position: number): any    {
             position = position || 0;
             return this.indexOf(searchString, position) === position;
         },

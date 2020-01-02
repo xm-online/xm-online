@@ -64,8 +64,8 @@ export const buildJsfAttributes = (spec: any, form: any) => {
     // proxy data to options field for access original data inside component
     Object.defineProperty(jsfAttributes, 'data',
         {
-            set: (data) => { this.options.data = data; },
-            get: () => this.options.data,
+            set(this: any, data: any): void { this.options.data = data; },
+            get(this: any): any { return this.options.data; },
         });
 
     processValidationMessages(jsfAttributes);
@@ -102,6 +102,7 @@ const interpolate = (spec: any) => {
     if (typeof (spec) === 'string') {
         spec = spec.replace(/\\\\/g, '\\\\\\\\');
         try {
+            // @ts-ignore
             return new Function('$', 'return `' + spec + '`;').call(this, $);
         } catch (e) {
             return transpilingForIE(spec, $);

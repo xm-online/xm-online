@@ -22,6 +22,7 @@
         "module": "esnext",
         "stripInternal": false,
         "noUnusedLocals": true,
+        "noImplicitThis": true,
         "noImplicitReturns": true,
         "newLine": "lf",
         "strictFunctionTypes": true,

@@ -26,7 +26,7 @@ export class LinkListTreeSectionComponent implements OnInit {
     public ngOnInit(): void {
         $('.tree li:has(ul)').addClass('parent_li').find(' > span')
             .attr('title', this.translateService.instant('xm-entity.link-list-tree-section.collapse'));
-        $('.tree ul > li.parent_li > span').on('click', (e) => {
+        $('.tree ul > li.parent_li > span').on('click', function(this: HTMLElement, e: any): void {
             console.info('click');
             const children = $(this).parent('li.parent_li').find(' > xm-link-list-tree-section > ul > li');
             console.info(children);

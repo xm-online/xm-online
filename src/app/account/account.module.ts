@@ -18,6 +18,7 @@ import {
     SocialRegisterComponent,
 } from './';
 import { accountState } from './account.route';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
     imports: [
@@ -33,6 +34,7 @@ import { accountState } from './account.route';
         PasswordResetInitComponent,
         PasswordResetFinishComponent,
         SettingsComponent,
+        LogoutComponent,
     ],
     providers: [
         Activate,

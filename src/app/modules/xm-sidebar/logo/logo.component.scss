@@ -1,0 +1,33 @@
+@import "../base";
+
+@mixin logo-theme($theme) {
+
+    .xm-logo {
+        display:        flex;
+        flex-direction: row;
+        align-items:    center;
+        vertical-align: center;
+        padding:        $menu-item-padding-y $sidebar-padding-x;
+    }
+
+    .logo-img {
+        height:    $icon-size-y;
+        width:     $icon-size-x;
+        min-width: $icon-size-x;
+    }
+
+    .logo-title {
+        padding-left: $sidebar-padding-x;
+        font-size:    $font-size;
+        color:        $text-color;
+        font-weight:  $font-weight;
+    }
+
+    @include main-with-sidebar-mini {
+        .logo-title {
+            display: none;
+        }
+    }
+
+}
+

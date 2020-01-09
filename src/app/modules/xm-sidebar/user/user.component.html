@@ -1,0 +1,33 @@
+<ng-container *ngIf="user$ | async as user">
+
+  <!-- title -->
+  <div (click)="toggle()"
+       (keyup.enter)="toggle()"
+       [ngClass]="getState()"
+       class="user-title"
+       role="button"
+       tabindex="0">
+    <img [alt]="user.avatarUrl" [src]="user.avatarUrl" class="user-img">
+    <span class="user-name">{{ user.username }}</span>
+    <i [@indicatorRotate]="getState()"
+       class="mat-expansion-indicator"></i>
+  </div>
+
+  <!-- menu -->
+  <ul [@bodyExpansion]="getState()"
+      [ngClass]="getState()"
+      class="menu-list">
+    <ng-container *ngFor="let item of user.menu">
+      <li
+        *permitted="item.permission"
+        [item]="item"
+        class="menu-item"
+        xm-menu-link>
+      </li>
+    </ng-container>
+  </ul>
+  <!-- ./menu -->
+
+</ng-container>
+
+

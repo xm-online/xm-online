@@ -6,6 +6,14 @@ import { PasswordSpec } from '../../xm-entity/shared/password-spec.model';
 import { ModulesLanguageHelper } from '../language/modules-language.helper';
 import { XmApplicationConfigService } from './xm-config.service';
 
+interface IUIConfig {
+    logoUrl?: string;
+    name?: string;
+    iconsInMenu?: string;
+}
+
+export type UIConfig = IUIConfig | any;
+
 @Injectable()
 export class XmConfigService {
 
@@ -14,7 +22,7 @@ export class XmConfigService {
     private uaaPasswordConfigUrl: string = 'uaa/api/uaa/properties/settings-public';
     private elasticReindexUrl: string = '/entity/api/elasticsearch/index';
 
-    private uiConfig: any;
+    private uiConfig: UIConfig;
     private uiConfigState: AsyncSubject<any> = new AsyncSubject<any>();
 
     constructor(
@@ -70,7 +78,7 @@ export class XmConfigService {
         }
     }
 
-    public getUiConfig(): Observable<any> {
+    public getUiConfig(): Observable<UIConfig> {
         return of(this.appConfig.getAppConfig());
     }
 

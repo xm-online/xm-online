@@ -1,0 +1,13 @@
+<ng-container *ngIf="logo$ | async as options">
+
+  <img [alt]="options.title | translate"
+       [hidden]="!options.logoUrl"
+       [src]="options.logoUrl"
+       class="logo-img"/>
+
+  <a [routerLink]=" isAuthenticated() ? options.userRootUrl : options.rootUrl"
+     class="logo-title"
+     routerLinkActive="active">{{options.title | translate}}</a>
+
+</ng-container>
+

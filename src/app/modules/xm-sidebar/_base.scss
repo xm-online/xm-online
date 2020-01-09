@@ -1,0 +1,40 @@
+$primary:             #00af9e !default;
+$icon-size:           42px !default;
+$icon-size-x:         $icon-size !default;
+$icon-size-y:         $icon-size !default;
+$font-size:           18px !default;
+$font-size-sm:        14px !default;
+$font-weight:         400 !default;
+$text-color:          #3c4858 !default;
+$menu-item-padding-y: 15px !default;
+$sidebar-icon-color:  #a9afbb !default;
+$sidebar-padding-x:   12px !default;
+$background:          white !default;
+
+$is-shadow:           true !default;
+$is-rounded:          true !default;
+$border-radius:       3px !default;
+$tab-focus-outline:   $primary solid 1px !default;;
+
+@mixin main-with-sidebar-mini {
+    @at-root .sidebar-mini {
+        .sidebar:not(:hover) { @content; }
+    }
+}
+
+@mixin feature-rounded() {
+    @if ($is-rounded) {
+        border-radius: $border-radius;
+    }
+}
+
+@mixin on-feature-shadow() {
+    @if ($is-shadow) {
+        @content;
+    }
+}
+
+@mixin focus() {
+    &:focus { outline: none; }
+    &:focus-visible { outline: $tab-focus-outline; }
+}

@@ -7,6 +7,13 @@ import { I18nNamePipe, JhiLanguageHelper, Principal } from '../../shared';
 import { XmConfigService } from '../../shared/spec/config.service';
 import { Spec, XmEntitySpecWrapperService } from '../../xm-entity';
 
+interface DashboardLayout {
+    widget?: number | string | Widget;
+    widgetName?: string;
+
+    [key: string]: DashboardLayout | any;
+}
+
 @Component({
     selector: 'xm-dashboard',
     templateUrl: './dashboard.component.html',
@@ -159,14 +166,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
         );
     }
 
-    private findAndEnrichWidget(item: any, widgets: any[]): void {
-        Object.keys(item).forEach((k) => {
+    private findAndEnrichWidget(layout: DashboardLayout, widgets: Widget[]): void {
+        Object.keys(layout).forEach((k) => {
             if (k === 'widget') {
-                item.widget = widgets.find((w) => w.id === item[k]);
+                layout.widget = widgets.find((w) => w.id === layout[k]);
             }
 
-            if (item[k] && typeof item[k] === 'object') {
-                this.findAndEnrichWidget(item[k], widgets);
+            if (k === 'widgetName') {
+                layout.widget = widgets.find((w) => w.name === layout[k]);
+            }
+
+            if (layout[k] && typeof layout[k] === 'object') {
+                this.findAndEnrichWidget(layout[k], widgets);
             }
         });
     }

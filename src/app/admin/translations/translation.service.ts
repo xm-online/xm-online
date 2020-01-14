@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 declare let $: any;
 
@@ -14,7 +13,7 @@ export class TranslationService {
     }
 
     public getFile(configPath: string): Observable<any> {
-        return this.http.get<any>(configPath).pipe(map((res: Response) => res.json()));
+        return this.http.get<any>(configPath);
     }
 
     public translate(target: any, q: any): any {

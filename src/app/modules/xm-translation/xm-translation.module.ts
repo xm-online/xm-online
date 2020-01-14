@@ -24,7 +24,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     declarations: [TranslatePipe, TranslateDirective],
     providers: [
         JhiLanguageHelper,
-        {provide: JhiLanguageService, useClass: XmJhiLanguageService},
+        {provide: JhiLanguageService, useClass: XmJhiLanguageService, deps: [LanguageService]},
         ModulesLanguageHelper,
     ],
     exports: [TranslatePipe, TranslateDirective, TranslateModule],
@@ -34,7 +34,7 @@ export class XmTranslationModule {
         return {
             ngModule: XmTranslationModule,
             providers: [
-                {provide: JhiLanguageService, useClass: XmJhiLanguageService},
+                {provide: JhiLanguageService, useClass: XmJhiLanguageService, deps: [LanguageService]},
                 Title,
                 {provide: LOCALE_ID, useValue: 'en'},
                 LanguageService,

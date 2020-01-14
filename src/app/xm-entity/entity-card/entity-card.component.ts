@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { JhiEventManager } from 'ng-jhipster';
-import { FunctionSpec, StateSpec } from '..';
+import { FunctionSpec, NextSpec, StateSpec } from '..';
 import { Principal } from '../../shared/auth/principal.service';
 import { XM_EVENT_LIST } from '../../xm.constants';
 import { AvatarDialogComponent } from '../avatar-dialog/avatar-dialog.component';
@@ -68,14 +68,16 @@ export class EntityCardComponent implements OnInit {
         return states ? states.filter((s) => s.key === this.xmEntity.stateKey).shift() : null;
     }
 
-    public getNextStates(): Array<unknown> {
+    public getNextStates(): NextSpec[] | null {
         const state = this.getState();
-        return state && state.next ? state.next.map((n) => {
-            const nextState: any = this.xmEntitySpec.states.filter((s) => s.key === n.stateKey).shift();
-            // TODO: fix potencial undefined
-            nextState.actionName = n.name;
-            return nextState;
-        }) : null;
+        return state && state.next
+            ? state.next.map((n) => {
+                const nextState: any = this.xmEntitySpec.states.find((s) => s.key === n.stateKey);
+                // TODO: fix potencial undefined
+                nextState.actionName = n.name;
+                return nextState;
+            })
+            : null;
     }
 
     public onRefresh(_e: any): void {

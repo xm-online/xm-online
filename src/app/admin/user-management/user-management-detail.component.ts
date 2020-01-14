@@ -75,9 +75,9 @@ export class UserMgmtDetailComponent implements OnInit, OnDestroy {
             confirmButtonClass: 'btn mat-raised-button btn-primary',
             cancelButtonClass: 'btn mat-raised-button',
             confirmButtonText: 'Yes, reset!',
-        }).then((result) => result.value ?
-            this.pwsResetService.save(this.userEmail).subscribe(console.log, console.log) :
-            console.info('Cancel'));
+        }).then((result) => result.value
+            ? this.pwsResetService.save(this.userEmail).subscribe()
+            : console.info('Cancel'));
     }
 
     public pwdResetDisabled(): boolean {

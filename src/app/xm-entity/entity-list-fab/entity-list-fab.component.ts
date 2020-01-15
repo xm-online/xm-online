@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
@@ -16,7 +16,7 @@ declare let swal: any;
     templateUrl: './entity-list-fab.component.html',
     styleUrls: ['./entity-list-fab.component.scss'],
 })
-export class EntityListFabComponent implements OnInit {
+export class EntityListFabComponent {
 
     @Input() public xmEntitySpec: XmEntitySpec;
     @Input() public spec: Spec;
@@ -25,9 +25,6 @@ export class EntityListFabComponent implements OnInit {
                 private eventManager: JhiEventManager,
                 private modalService: NgbModal,
                 private translateService: TranslateService) {
-    }
-
-    public ngOnInit(): void {
     }
 
     public onRefresh(): void {

@@ -29,9 +29,6 @@ export class PerPageComponent {
     @Output() public itemsPerPageChange: EventEmitter<number> = new EventEmitter<number>();
     @Output() public onChange: EventEmitter<number> = new EventEmitter<number>();
 
-    constructor() {
-    }
-
     public onChangeSelect(): void {
         this.itemsPerPageChange.emit(this.itemsPerPage);
         this.onChange.emit(this.itemsPerPage);

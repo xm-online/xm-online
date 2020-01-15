@@ -17,10 +17,8 @@ import { Dashboard, DashboardWrapperService } from '../../xm-dashboard';
 import { XmEntitySpecWrapperService } from '../../xm-entity';
 import { DEBUG_INFO_ENABLED, VERSION, XM_EVENT_LIST } from '../../xm.constants';
 
-const misc: any = {
-    navbar_menu_visible: 0,
-    active_collapse: true,
-    disabled_collapse_init: 0,
+const misc = {
+    sidebarMiniActive: false,
 };
 
 declare let $: any;
@@ -45,21 +43,6 @@ function sortByName(a: Dashboard, b: Dashboard): number {
     return 0;
 }
 
-function sortDashboards(a: Dashboard, b: Dashboard): number {
-    if (a && b) {
-        if (a.config && b.config) {
-            return sortByConfig(a, b);
-        } else {
-            if (a.name && b.name) {
-                return sortByName(a, b);
-            } else {
-                return sortById(a, b);
-            }
-        }
-    }
-    return 0;
-}
-
 function sortByConfig(a: Dashboard, b: Dashboard): number {
     const cfgA: any = a.config;
     const cfgB: any = b.config;
@@ -71,6 +54,21 @@ function sortByConfig(a: Dashboard, b: Dashboard): number {
             return -1;
         }
         return 0;
+    }
+    return 0;
+}
+
+function sortDashboards(a: Dashboard, b: Dashboard): number {
+    if (a && b) {
+        if (a.config && b.config) {
+            return sortByConfig(a, b);
+        } else {
+            if (a.name && b.name) {
+                return sortByName(a, b);
+            } else {
+                return sortById(a, b);
+            }
+        }
     }
     return 0;
 }
@@ -242,19 +240,19 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
         if ($('body').hasClass('sidebar-mini')) {
-            misc.sidebar_mini_active = true;
+            misc.sidebarMiniActive = true;
         }
         $('#minimizeSidebar').click(() => {
 
-            if (misc.sidebar_mini_active === true) {
+            if (misc.sidebarMiniActive === true) {
                 $('body').removeClass('sidebar-mini');
-                misc.sidebar_mini_active = false;
+                misc.sidebarMiniActive = false;
 
             } else {
                 setTimeout(() => {
                     $('body').addClass('sidebar-mini');
 
-                    misc.sidebar_mini_active = true;
+                    misc.sidebarMiniActive = true;
                 }, 300);
             }
 

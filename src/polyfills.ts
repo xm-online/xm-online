@@ -80,6 +80,6 @@ if (!String.prototype.startsWith) {
     env: { DEBUG: undefined },
 };
 (window as any).global = window;
-// tslint:disable:no-var-requires
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 window.Buffer = window.Buffer || require('buffer').Buffer;

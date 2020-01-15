@@ -13,8 +13,9 @@ export class FunctionService {
     constructor(private http: HttpClient) {
     }
 
-    public callEntityFunction(functionKey: string, xmEntityId?: number, inputContext?: any)
-        : Observable<HttpResponse<any>> {
+    public callEntityFunction(functionKey: string,
+                              xmEntityId?: number,
+                              inputContext?: any): Observable<HttpResponse<any>> {
         const copy = this.convert(inputContext);
         if (xmEntityId) {
             return this.callWithEntityId(xmEntityId, functionKey, copy);
@@ -31,8 +32,9 @@ export class FunctionService {
         return this.callXmFunction(url, copy);
     }
 
-    public callWithEntityId(xmEntityId: number, functionKey: string, inputContext?: any)
-        : Observable<HttpResponse<any>> {
+    public callWithEntityId(xmEntityId: number,
+                            functionKey: string,
+                            inputContext?: any): Observable<HttpResponse<any>> {
         const copy = this.convert(inputContext);
         const url = this.resourceEntityUrl(xmEntityId, functionKey);
         if (this.isExportFunction(functionKey)) {

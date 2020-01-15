@@ -218,7 +218,9 @@ export class RolesMatrixComponent implements OnInit {
                 (sortBy.permitted_filter === 'notset' && anySet !== false) ||
                 (sortBy.permitted_filter === 'allset' && allSet !== true)
             ) {
-            } else {
+                // empty block
+            }
+            else {
                 result.push(item);
             }
             return result;
@@ -230,6 +232,7 @@ export class RolesMatrixComponent implements OnInit {
             const res = resp.body || {};
             this.alertService.error(res.error_description, res.params);
         } catch (e) {
+            // empty block
         }
     }
 }

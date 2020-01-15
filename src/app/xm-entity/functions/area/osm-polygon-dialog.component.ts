@@ -18,6 +18,7 @@ export class OsmPolygonDialogComponent {
     }
 
     public addPolygonInternal(..._args: any): any {
+        console.info('TODO: refactor', _args);
         return;
     }
 

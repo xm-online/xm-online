@@ -1,4 +1,2 @@
 export class DatetimeUtcOptionsModel {
-    constructor() {
-    }
 }

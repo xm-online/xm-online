@@ -97,9 +97,9 @@ export class JhiHealthCheckComponent implements OnInit {
     public showHealth(health: any): void {
         const modalRef = this.modalService.open(JhiHealthModalComponent, {backdrop: 'static'});
         modalRef.componentInstance.currentHealth = health;
-        modalRef.result.then((result) => {
+        modalRef.result.then(() => {
             // Left blank intentionally, nothing to do here
-        }, (reason) => {
+        }, () => {
             // Left blank intentionally, nothing to do here
         });
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { JhiAlertService } from 'ng-jhipster';
 
 import swal from 'sweetalert2';
@@ -9,7 +9,7 @@ import { XmConfigService } from '../../shared/spec/config.service';
     templateUrl: './maintenance.component.html',
     styles: [],
 })
-export class MaintenanceComponent implements OnInit {
+export class MaintenanceComponent {
 
     public isTenantCfgUpdating: boolean;
 
@@ -17,9 +17,6 @@ export class MaintenanceComponent implements OnInit {
         private service: XmConfigService,
         private alertService: JhiAlertService,
     ) {
-    }
-
-    public ngOnInit(): void {
     }
 
     public reindexElastic(): void {

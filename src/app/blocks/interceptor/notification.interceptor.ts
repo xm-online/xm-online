@@ -3,9 +3,6 @@ import { catchError } from 'rxjs/operators';
 
 export class NotificationInterceptor {
 
-    constructor() {
-    }
-
     // tslint:disable-next-line:cognitive-complexity
     public responseIntercept(observable: Observable<any>): Observable<any> {
         return observable.pipe(catchError((error) => {

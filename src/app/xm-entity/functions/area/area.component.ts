@@ -38,16 +38,15 @@ export class AreaComponent implements AfterViewInit {
     }
 
     public onClickAddPolygon(): void {
-        const self = this;
         const modalRef = this.modalService.open(OsmPolygonDialogComponent, {backdrop: 'static'});
         modalRef.componentInstance.addPolygonInternal = (polygon) => {
             const layer = L.polygon(
                 polygon.map((el) => [el.lat, el.lon]),
                 {fillColor: '#009688', fillOpacity: 0.6, opacity: 1, weight: 3, color: '#009688'},
             );
-            self.drawnItems.addLayer(layer);
-            self.saveFunction(self.drawnItems);
-            self.map.fitBounds(this.drawnItems.getBounds(), {padding: [1, 1]});
+            this.drawnItems.addLayer(layer);
+            this.saveFunction(this.drawnItems);
+            this.map.fitBounds(this.drawnItems.getBounds(), {padding: [1, 1]});
         };
     }
 
@@ -111,19 +110,18 @@ export class AreaComponent implements AfterViewInit {
     }
 
     private attachEventHandlers(): void {
-        const self = this;
         this.map.on('draw:created', (e) => {
-            self.drawnItems.addLayer(e.layer);
-            self.saveFunction(self.drawnItems);
+            this.drawnItems.addLayer(e.layer);
+            this.saveFunction(this.drawnItems);
 
         });
 
         this.map.on('draw:edited', () => {
-            self.saveFunction(self.drawnItems);
+            this.saveFunction(this.drawnItems);
         });
 
         this.map.on('draw:deleted', () => {
-            self.saveFunction(self.drawnItems);
+            this.saveFunction(this.drawnItems);
         });
 
     }

@@ -64,9 +64,8 @@ export class ExtAutocompleteComponent implements OnInit {
     }
 
     public hideAutocomplete(): void {
-        const self = this;
         setTimeout(() => {
-            self.showAutocomplete = false;
+            this.showAutocomplete = false;
             this.changeDetectorRef.detectChanges();
         }, 100);
     }

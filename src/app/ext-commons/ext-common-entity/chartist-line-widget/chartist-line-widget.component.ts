@@ -49,12 +49,9 @@ export class ChartistLineWidgetComponent implements OnInit {
     }
 
     public startAnimationForLineChart(chart: any): void {
-        let seq: number;
-        let delays: number;
-        let durations: number;
-        seq = 0;
-        delays = 80;
-        durations = 500;
+        let seq: number = 0;
+        const delays: number = 80;
+        const durations: number  = 500;
 
         chart.on('draw', (data: any) => {
             if (data.type === 'line' || data.type === 'area') {

@@ -37,7 +37,7 @@ export class AvailableOfferingsWidgetComponent implements OnInit, OnDestroy {
         this.load();
         this.availableOfferingActionSuccessSubscription = this.eventManager
             .subscribe(XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS,
-                (response) => this.load());
+                () => this.load());
     }
 
     public ngOnDestroy(): void {

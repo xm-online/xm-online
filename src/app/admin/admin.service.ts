@@ -53,9 +53,13 @@ export class BaseAdminListComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.eventModifySubscriber);
     }
 
-    public loadAll(): void { }
+    public loadAll(): void {
+        throw new Error('Not implemented');
+    }
 
-    public deleteAction(id: number): void { }
+    public deleteAction(id: number): void {
+        throw new Error('Not implemented ' + id);
+    }
 
     public sort(): string[] {
         const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];

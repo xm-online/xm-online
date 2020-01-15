@@ -34,7 +34,7 @@ export class ClientMgmtDeleteDialogComponent implements OnInit {
     public confirmDelete(id: any): void {
         this.showLoader = true;
         this.clientService.delete(id)
-            .subscribe((response) => {
+            .subscribe(() => {
                     this.eventManager.broadcast({
                         name: 'clientListModification',
                         content: {id: 'delete', msg: 'Deleted a client'},

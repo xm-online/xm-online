@@ -9,7 +9,4 @@ export class LinkedinDataItemComponent {
 
     @Input() public dataItem: any;
 
-    constructor() {
-    }
-
 }

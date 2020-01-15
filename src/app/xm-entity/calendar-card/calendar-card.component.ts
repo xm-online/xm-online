@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiDateUtils } from 'ng-jhipster';
@@ -15,15 +15,15 @@ import { EventService } from '../shared/event.service';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
 
-declare let $: any;
-declare let swal: any;
+declare const $: any;
+declare const swal: any;
 
 @Component({
     selector: 'xm-calendar-card',
     templateUrl: './calendar-card.component.html',
     styleUrls: ['./calendar-card.component.scss'],
 })
-export class CalendarCardComponent implements OnInit, OnChanges {
+export class CalendarCardComponent implements OnChanges {
 
     @Input() public xmEntityId: number;
     @Input() public calendarSpecs: CalendarSpec[];
@@ -40,9 +40,6 @@ export class CalendarCardComponent implements OnInit, OnChanges {
                 private translateService: TranslateService,
                 private modalService: NgbModal,
                 public principal: Principal) {
-    }
-
-    public ngOnInit(): void {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -115,6 +112,7 @@ export class CalendarCardComponent implements OnInit, OnChanges {
     }
 
     private initCalendar(calendar: Calendar): void {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
         const calendarSpec = this.calendarSpecs.filter((c) => c.key === calendar.typeKey).shift();
         this.calendarElements[calendar.typeKey] = $('#xm-calendar-' + calendar.id);

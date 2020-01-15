@@ -16,9 +16,6 @@ export class LocationCountriesWidgetComponent implements OnInit, AfterViewInit {
     public tasks: any[];
     public tableData: TableData;
 
-    constructor() {
-    }
-
     public ngOnInit(): void {
         this.tableData = {
             headerRow: ['ID', 'Name', 'Salary', 'Country', 'City'],

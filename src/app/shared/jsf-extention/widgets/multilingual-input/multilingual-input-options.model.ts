@@ -1,4 +1,2 @@
 export class MultilingualInputOptions {
-    constructor() {
-    }
 }

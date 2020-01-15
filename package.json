@@ -1,10 +1,15 @@
 {
   "name": "xm-webapp",
   "version": "2.0.1",
+  "private": true,
+  "description": "Xm-webapp",
+  "homepage": "https://github.com/xm-online/xm-webapp",
+  "bugs": "https://github.com/xm-online/xm-webapp/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/xm-online/xm-webapp.git"
   },
+  "license": "Apache-2.0",
   "engines": {
     "node": ">=10.9.0 <=13.6.0",
     "npm": ">=6.9.0 <=6.13.6",

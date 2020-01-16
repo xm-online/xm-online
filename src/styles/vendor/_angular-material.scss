@@ -1,0 +1,16 @@
+@import '~@angular/material/theming';
+
+@mixin angular-material() {
+
+    @include mat-core();
+
+    $xm-primary: mat-palette($mat-teal) !default;
+    $xm-accent:  mat-palette($mat-teal, A200, A100, A400) !default;
+    $xm-warn:    mat-palette($mat-red, 500) !default;
+    $xm-theme:   mat-light-theme($xm-primary, $xm-accent, $xm-warn) !default;
+
+    @include angular-material-theme($xm-theme);
+
+}
+
+@include angular-material();

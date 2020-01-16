@@ -23,19 +23,7 @@
                             "src/swagger-ui",
                             "src/robots.txt"
                         ],
-                        "styles": [
-                            "node_modules/angular-calendar/scss/angular-calendar.scss",
-                            "node_modules/ng-pick-datetime/assets/style/picker.min.css",
-                            "node_modules/sweetalert2/src/sweetalert2.scss",
-                            "src/assets/css/leaflet.css",
-                            "src/assets/css/leaflet.draw.css",
-                            "src/assets/css/swagger-ui.css",
-                            "src/assets/css/simplemde.min.css",
-                            "src/assets/css/mat-dashboard-2.1.1.min.css",
-                            "node_modules/snazzy-info-window/dist/snazzy-info-window.css",
-                            "src/assets/scss/xm-styles.scss",
-                            "src/assets/scss/theme-override.scss"
-                        ],
+                        "styles": [ "src/styles.scss" ],
                         "scripts": [
                             "node_modules/hammerjs/hammer.min.js",
                             "node_modules/jquery/dist/jquery.js",

@@ -1,6 +1,6 @@
 @import '~@angular/material/theming';
 
-@mixin angular-material() {
+@mixin angular-material($theme) {
 
     @include mat-core();
 
@@ -12,5 +12,3 @@
     @include angular-material-theme($xm-theme);
 
 }
-
-@include angular-material();

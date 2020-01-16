@@ -1,0 +1,96 @@
+@import "~@angular/material/theming";
+//
+// Based on material and bootstrap
+//
+
+// palette setup
+$xm-set-palette-default:      500 !default;
+$xm-set-palette-text-default: 500 !default;
+$xm-set-palette-darker:       100 !default;
+$xm-set-palette-lighter:      800 !default;
+$xm-set-palette-text-darker:  800 !default;
+$xm-set-palette-text-lighter: 0 !default;
+
+// text
+$xm-text:                     rgba(black, 0.87) !default;
+$xm-text-dark:                rgba(black, 0.87) !default;
+$xm-text-light:               rgba(black, 0.87) !default;
+
+// divider
+$xm-divider:                  rgba(black, 0.87) !default;
+
+// primary
+$xm-primary-palette:          $mat-teal !default;
+$xm-primary:                  map-get($xm-primary-palette, $xm-set-palette-default) !default;
+$xm-primary-dark:             map-get($xm-primary-palette, $xm-set-palette-darker) !default;
+$xm-primary-light:            map-get($xm-primary-palette, $xm-set-palette-lighter) !default;
+$xm-text-primary:             map-get($xm-primary-palette, $xm-set-palette-text-default) !default;
+$xm-text-primary-dark:        map-get($xm-primary-palette, $xm-set-palette-text-darker) !default;
+$xm-text-primary-light:       map-get($xm-primary-palette, $xm-set-palette-text-lighter) !default;
+$xm-text-on-primary:          $xm-text !default;
+$xm-text-on-primary-dark:     $xm-text-light !default;
+$xm-text-on-primary-light:    $xm-text-dark !default;
+
+// secondary or accent
+$xm-secondary-palette:        $mat-yellow !default;
+$xm-secondary:                map-get($xm-secondary-palette, $xm-set-palette-default) !default;
+$xm-text-on-secondary:        $xm-text !default;
+
+// warning
+$xm-warn-palette:          $mat-orange !default;
+$xm-warn:                  map-get($xm-error-palette, $xm-set-palette-default) !default;
+$xm-text-on-warn:          $xm-text !default;
+
+// error
+$xm-error-palette:         $mat-red !default;
+$xm-error:                 map-get($xm-error-palette, $xm-set-palette-default) !default;
+$xm-text-on-error:         $xm-text !default;
+
+// hint or info
+$xm-hint-palette:          $mat-blue !default;
+$xm-hint:                  map-get($xm-hint-palette, $xm-set-palette-default) !default;
+$xm-text-on-hint:          $xm-text !default;
+
+// success
+$xm-success-palette:       $mat-green !default;
+$xm-success:               map-get($xm-success-palette, $xm-set-palette-default) !default;
+$xm-text-on-success:       $xm-text !default;
+
+// background
+$xm-background:            #fefefe !default;
+$xm-text-on-background:    $xm-text !default;
+
+// surface or foreground
+$xm-surface:               #fff !default;
+$xm-text-on-surface:       $xm-text !default;
+
+// border-radius
+$xm-set-enable-rounded:    true !default;
+$border-radius:            4px !default;
+
+$xm-theme:                 (
+                             // Primary
+                             primary: $xm-primary,
+                             text-on-primary: $xm-text-on-primary,
+                             // Secondary
+                             secondary: $xm-secondary,
+                             text-on-secondary: $xm-secondary,
+                             // Warn
+                             warn: $xm-warn,
+                             text-on-warn: $xm-warn,
+                             // Error
+                             error: $xm-error,
+                             on-error: $xm-error,
+                             // Hint
+                             hint: $xm-hint,
+                             on-hint: $xm-hint,
+                             // Success
+                             success: $xm-hint,
+                             on-success: $xm-success,
+                             // Background
+                             background: $xm-background,
+                             text: $xm-text,
+                             // Surface
+                             surface: $xm-surface,
+                             on-surface: $xm-surface,
+                           ) !default;

@@ -1,0 +1,20 @@
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+@mixin bootstrap($theme) {
+  $primary:    map_get($theme, primary);
+  $secondary:  map_get($theme, secondary);
+
+  $success:    map_get($theme, success);
+
+  $info:       map_get($theme, hint);
+  $warning:    map_get($theme, warn);
+  $danger:     map_get($theme, error);
+
+  $light:      map_get($theme, light);
+  $dark:       map_get($theme, dark);
+
+  $body-bg:    map_get($theme, background);
+  $body-color: map_get($theme, text);
+}

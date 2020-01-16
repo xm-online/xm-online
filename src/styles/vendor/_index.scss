@@ -1,0 +1,18 @@
+@import "./angular-calendar";
+@import "./angular-material";
+@import "./chartist";
+@import "./datatables.net";
+@import "./fontawesome";
+@import "./leaflet";
+@import "./ng-pick-datetime";
+@import "./jvectormap-zoomin";
+@import "./simplemde";
+@import "./snazzy-info-window";
+@import "./sweetalert2";
+@import "./swagger-ui";
+
+@mixin vendor-xm-override() {
+  @include chartist-xm-override();
+  @include jvectormap-xm-override();
+  @include swagger-ui-xm-override();
+}

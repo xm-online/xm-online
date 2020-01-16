@@ -8,12 +8,15 @@ import { navbarRoute } from './layouts/navbar/navbar.route';
 const ROUTES: Routes = [
     navbarRoute,
     ...errorRoute,
-    {path: 'administration', loadChildren: './admin/admin.module#XmAdminModule'},
-    {path: 'configuration', loadChildren: './admin-config/admin-config.module#XmAdminConfigModule'},
-    {path: '', loadChildren: './home/home.module#GateHomeModule'},
-    {path: '', loadChildren: './account/account.module#GateAccountModule'},
-    {path: '', loadChildren: './application/application.module#ApplicationModule'},
-    {path: '', loadChildren: './xm-dashboard/xm-dashboard.module#XmDashboardModule'},
+    {path: 'administration', loadChildren: () => import('./admin/admin.module').then((m) => m.XmAdminModule) },
+    {
+        path: 'configuration',
+        loadChildren: () => import('./admin-config/admin-config.module').then((m) => m.XmAdminConfigModule)
+    },
+    {path: '', loadChildren: () => import('./home/home.module').then((m) => m.GateHomeModule) },
+    {path: '', loadChildren: () => import('./account/account.module').then((m) => m.GateAccountModule) },
+    {path: '', loadChildren: () => import('./application/application.module').then((m) => m.ApplicationModule) },
+    {path: '', loadChildren: () => import('./xm-dashboard/xm-dashboard.module').then((m) => m.XmDashboardModule) },
 ];
 
 @NgModule({

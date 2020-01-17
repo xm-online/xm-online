@@ -16,7 +16,4 @@ export class MdTableComponent {
     @Input() public subtitle: string;
     @Input() public cardClass: string;
     @Input() public data: TableData;
-
-    constructor() {
-    }
 }

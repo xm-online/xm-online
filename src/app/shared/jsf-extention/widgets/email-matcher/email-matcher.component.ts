@@ -47,7 +47,7 @@ export class EmailMatcherComponent implements OnInit {
             .valueChanges
             .pipe(
                 debounceTime(200),
-                tap((res) => {
+                tap(() => {
                         this.matcherControl.markAsUntouched();
                         this.originalControl.markAsDirty();
                         this.originalControl.markAsTouched();
@@ -65,7 +65,7 @@ export class EmailMatcherComponent implements OnInit {
                     },
                 ),
             )
-            .subscribe(() => {});
+            .subscribe();
     }
 
     public registerMatcherChanger(): void {
@@ -86,7 +86,7 @@ export class EmailMatcherComponent implements OnInit {
                     },
                 ),
             )
-            .subscribe(() => {});
+            .subscribe();
     }
 
     private updateValue(value: any): void {

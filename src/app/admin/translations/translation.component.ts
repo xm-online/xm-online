@@ -1,5 +1,5 @@
 /* tslint:disable:forin */
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import * as FileSaver from 'file-saver';
 import * as JSZip from 'jszip';
 import { LocalStorageService } from 'ngx-webstorage';
@@ -11,7 +11,7 @@ import { TranslationService } from './translation.service';
     templateUrl: './translation.component.html',
     styles: [],
 })
-export class TranslationComponent implements OnInit, AfterViewInit {
+export class TranslationComponent {
 
     public localization: any = {};
     public settings: any = {};
@@ -38,9 +38,9 @@ export class TranslationComponent implements OnInit, AfterViewInit {
 
     // tslint:disable-next-line:cognitive-complexity
     public loadLangFiles(): void {
-        const self = this;
+
         this.service.getFile('/i18n/settings.json').subscribe((result) => {
-            self.settings = result;
+            this.settings = result;
             const localization = {};
 
             this.xmConfigService.getUiConfig().subscribe((uiConfig) => {
@@ -49,7 +49,7 @@ export class TranslationComponent implements OnInit, AfterViewInit {
                     langs = uiConfig.langs;
                 }
 
-                self.settings.langs = langs;
+                this.settings.langs = langs;
 
                 langs.forEach((lang) => {
                     result.locations.forEach((location) => {
@@ -71,7 +71,7 @@ export class TranslationComponent implements OnInit, AfterViewInit {
                             }
 
                             clearTimeout(this.timer);
-                            this.timer = setTimeout(() => { self.mapToProperyArray(localization); }, 500);
+                            this.timer = setTimeout(() => { this.mapToProperyArray(localization); }, 500);
 
                         });
                     });
@@ -180,13 +180,6 @@ export class TranslationComponent implements OnInit, AfterViewInit {
         return properties;
     }
 
-    public ngOnInit(): void {
-
-    }
-
-    public ngAfterViewInit(): void {
-    }
-
     public resetLocalStorage(): void {
         if (confirm('Are you sure you want to reset all changes?')) {
             this.localStorage.clear('translationComponentState');
@@ -242,21 +235,20 @@ export class TranslationComponent implements OnInit, AfterViewInit {
     }
 
     private translateProperties(props: any, lang: string, delay: any): void {
-        const self = this;
         const properties = props;
         const sources = [];
         setTimeout(() => {
             properties.forEach((property) => {
                 sources.push(property.langs.en);
             });
-            self.service.translate(lang, sources)
+            this.service.translate(lang, sources)
                 .done((result) => {
                     let i = 0;
                     properties.forEach((property) => {
                         property.langs[lang] = result.data.translations[i].translatedText;
                         i++;
                     });
-                    self.saveState();
+                    this.saveState();
                 });
         }, delay);
     }

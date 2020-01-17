@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { DEBUG_INFO_ENABLED } from '../../xm.constants';
@@ -18,7 +18,7 @@ declare let swal: any;
     templateUrl: './rating-list-section.component.html',
     styleUrls: ['./rating-list-section.component.scss'],
 })
-export class RatingListSectionComponent implements OnInit, OnChanges {
+export class RatingListSectionComponent implements OnChanges {
 
     @Input() public xmEntityId: number;
     @Input() public ratingSpecs: RatingSpec[];
@@ -31,9 +31,6 @@ export class RatingListSectionComponent implements OnInit, OnChanges {
                 private ratingService: RatingService,
                 private voteService: VoteService,
                 private translateService: TranslateService) {
-    }
-
-    public ngOnInit(): void {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {

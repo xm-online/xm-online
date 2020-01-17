@@ -5,7 +5,7 @@ import 'brace/mode/json';
 import 'brace/mode/yaml';
 import 'brace/theme/chrome';
 
-declare var ace: any;
+declare const ace: any;
 
 @Directive({
     selector: '[xmAceEditor]',
@@ -71,7 +71,7 @@ export class AceEditorDirective {
     @Input() set gotoLine(line: number) {
         if (line) {
             this.editor.resize(true);
-            this.editor.scrollToLine(line, true, true, () => {});
+            this.editor.scrollToLine(line, true, true, () => undefined);
             this.editor.gotoLine(line, 0, true);
         }
     }

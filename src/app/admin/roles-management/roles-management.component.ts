@@ -121,6 +121,7 @@ export class RolesMgmtComponent implements OnInit, OnDestroy {
             const res = resp.body || {};
             this.alertService.error(res.error_description, res.params);
         } catch (e) {
+            // empty block
         }
     }
 }

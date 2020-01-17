@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 
-declare let $: any;
+declare const $: any;
 
 /**
  * Alerts can be used to provide feedback messages.
@@ -36,6 +36,7 @@ export class XmAlertComponent implements OnInit {
         }, {
             type,
             timer: 5000,
+            // eslint-disable-next-line @typescript-eslint/camelcase
             z_index: 2000,
             placement: {
                 from: 'top',

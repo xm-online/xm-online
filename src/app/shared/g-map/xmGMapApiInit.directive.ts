@@ -13,6 +13,10 @@ import { map, takeUntil, tap } from 'rxjs/operators';
 
 import { XmConfigService } from '../spec/config.service';
 
+declare global {
+    interface Window {google: { maps: any }}
+}
+
 @Directive({
     selector: '[xmGMapApiInit]',
 })
@@ -31,23 +35,22 @@ export class XmGMapApiInitDirective implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
-        // @ts-ignore
-        if (window.hasOwnProperty('google') && window.google.hasOwnProperty('maps')) {
+        if (window.google && window.google.maps) {
             this.statusLoaded.next(true);
         } else {
             this.xmConfigService
                 .getConfigJson('/webapp/settings-public.yml?toJson')
                 .pipe(
-                    map((res) => res.hasOwnProperty('googleApiKey') ? res.googleApiKey : ''),
+                    map((res) => res.googleApiKey ? res.googleApiKey : ''),
                     tap((apiKey) => this.loadGoogleMapApi(apiKey)),
                     takeUntil(this.destroyed$),
-                ).subscribe(() => {});
+                ).subscribe();
         }
 
         this.statusLoaded.pipe(
             tap((status) => this.updateView(status)),
             takeUntil(this.destroyed$),
-        ).subscribe(() => {});
+        ).subscribe();
     }
 
     public ngOnDestroy(): void {
@@ -70,7 +73,7 @@ export class XmGMapApiInitDirective implements OnInit, OnDestroy {
         const apiLibraries = this.libraries.length ? `&libraries=${this.libraries.join(',')}` : '';
 
         scriptNode.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}${apiLibraries}`;
-        scriptNode.onload = () => this.statusLoaded.next(true);
+        scriptNode.onload = (): void => this.statusLoaded.next(true);
 
         document.getElementsByTagName('head')[0].appendChild(scriptNode);
     }

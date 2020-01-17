@@ -69,7 +69,7 @@ export class StatsWidgetComponent implements OnInit {
         return this.functionService.call(iFunction.name, {}).pipe(
             map((resp) => resp.body),
             map((body) => this.getWidgetValue(body, iFunction)),
-            catchError((e) => of(iFunction.errorValue ? iFunction.errorValue : '?')),
+            catchError(() => of(iFunction.errorValue ? iFunction.errorValue : '?')),
         );
     }
 
@@ -80,7 +80,7 @@ export class StatsWidgetComponent implements OnInit {
             size: 1,
         }).pipe(
             map((resp: HttpResponse<XmEntity[]>) => resp.headers.get('X-Total-Count')),
-            catchError((e) => of(iFunction.errorValue ? iFunction.errorValue : '?')),
+            catchError(() => of(iFunction.errorValue ? iFunction.errorValue : '?')),
         );
     }
 

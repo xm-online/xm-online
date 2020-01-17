@@ -7,13 +7,9 @@ export class TwitterTimelineService {
     private TWITTER_SCRIPT_ID: string = 'twitter-wjs';
     private TWITTER_WIDGET_URL: string = 'https://platform.twitter.com/widgets.js';
 
-    constructor() {
-    }
-
     public loadScript(): Observable<any> {
-        const that = this;
         return Observable.create((observer) => {
-            that.startScriptLoad();
+            this.startScriptLoad();
             (window as any).twttr.ready((twitter) => {
                     observer.next(twitter);
                     observer.complete();

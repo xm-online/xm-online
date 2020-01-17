@@ -122,8 +122,7 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
                     tap((options) => this.fetchData(options)),
                     tap(() => this.jsf.updateValue(this, this.controlValue)),
                     takeUntil(this._onDestroy),
-                ).subscribe(() => {
-                });
+                ).subscribe();
             });
     }
 

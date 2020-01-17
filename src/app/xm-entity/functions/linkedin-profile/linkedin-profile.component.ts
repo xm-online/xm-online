@@ -15,9 +15,6 @@ export class LinkedinProfileComponent implements OnInit {
 
     public profile: any;
 
-    constructor() {
-    }
-
     public ngOnInit(): void {
         if (this.functionContext && this.functionContext.data) {
             this.profile = this.functionContext.data.profile;

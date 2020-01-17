@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, Routes } from '@angular/router';
 import { JhiPaginationUtil } from 'ng-jhipster';
 
 import { DashboardListCardComponent } from './dashboard-list-card/dashboard-list-card.component';
@@ -11,7 +11,7 @@ export class DashboardResolvePagingParams implements Resolve<any> {
     constructor(private paginationUtil: JhiPaginationUtil) {
     }
 
-    public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
+    public resolve(route: ActivatedRouteSnapshot): any {
         const page = route.queryParams.page ? route.queryParams.page : '1';
         const sort = route.queryParams.sort ? route.queryParams.sort : 'id,asc';
         const size = route.queryParams.size ? route.queryParams.size : '10';

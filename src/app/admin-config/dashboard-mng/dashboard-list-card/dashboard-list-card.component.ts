@@ -123,7 +123,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
                 const dashboardsArray = JSON.parse(event.target.result);
                 for (let i = 0; i < dashboardsArray.length; i++) {
                     this.setDashboard(dashboardsArray[i]).subscribe(
-                        (res) => {
+                        () => {
                             if ((i + 1) === dashboardsArray.length) {
                                 this.alert('success', 'admin-config.dashboard-detail-dialog.add.success');
                                 this.loadAll();

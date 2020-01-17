@@ -73,8 +73,7 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
         }
 
         for (const entry of user.logins) {
-            // tslint:disable-next-line:no-constant-condition no-conditional-assignment
-            if (entry.typeKey = 'LOGIN.EMAIL') {
+            if (entry.typeKey === 'LOGIN.EMAIL') {
                 return entry.login;
             }
         }
@@ -111,7 +110,7 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
             confirmButtonText: 'Yes, Disable',
         }).then((result) => result.value ?
             this.userService.disable2FA(user.userKey)
-                .subscribe((resp) => {
+                .subscribe(() => {
                         user.tfaEnabled = false;
                         this.alertService.success('userManagement.twoFADisabled');
                     },

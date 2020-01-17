@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, Routes } from '@angular/router';
 import { JhiPaginationUtil } from 'ng-jhipster';
 
 import { ITEMS_PER_PAGE, UserRouteAccessService } from '../shared';
 import { ApplicationComponent } from './application.component';
 import { EntityDetailComponent } from './entity-detail.component';
+
+export interface IApplicationResolvePagingParams { predicate: string; size: number; page: number; ascending: boolean }
 
 @Injectable()
 export class ApplicationResolvePagingParams implements Resolve<any> {
@@ -12,8 +14,7 @@ export class ApplicationResolvePagingParams implements Resolve<any> {
     constructor(private paginationUtil: JhiPaginationUtil) {
     }
 
-    public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
-        : { predicate: string; size: number; page: number; ascending: boolean } {
+    public resolve(route: ActivatedRouteSnapshot): IApplicationResolvePagingParams {
         const page = route.queryParams.page ? route.queryParams.page : '1';
         const sort = route.queryParams.sort ? route.queryParams.sort : 'id,asc';
         const size = route.queryParams.size && parseInt(route.queryParams.size, 10) || ITEMS_PER_PAGE;

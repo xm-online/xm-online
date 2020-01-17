@@ -96,7 +96,7 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
         merge(saveContent$, sendModifyEvent$, sentCallSuccessEvent$).pipe(
             finalize(() => this.cancelLoader()),
             catchError(() => this.handleError()),
-        ).subscribe(() => {});
+        ).subscribe();
     }
 
     public onCancel(): void {

@@ -12,7 +12,7 @@ export class RolesResolve implements CanActivate {
     }
 
     public canActivate(): Promise<boolean> {
-        return this.principal.identity().then((account) => this.principal.hasAnyAuthority(['ROLE_ADMIN']));
+        return this.principal.identity().then(() => this.principal.hasAnyAuthority(['ROLE_ADMIN']));
     }
 }
 

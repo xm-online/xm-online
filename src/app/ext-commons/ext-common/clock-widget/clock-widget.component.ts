@@ -12,9 +12,6 @@ export class ClockWidgetComponent implements OnInit, OnDestroy {
     public clock: any;
     private subscription: any;
 
-    constructor() {
-    }
-
     public ngOnInit(): void {
         this.subscription = interval(1000).pipe(map((tick) => new Date()),
             share(),

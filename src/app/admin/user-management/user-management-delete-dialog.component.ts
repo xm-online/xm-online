@@ -28,7 +28,7 @@ export class UserMgmtDeleteDialogComponent {
     public confirmDelete(userKey: string): void {
         this.showLoader = true;
         this.userService.delete(userKey)
-            .subscribe((response) => {
+            .subscribe(() => {
                     this.eventManager.broadcast({
                         name: XM_EVENT_LIST.XM_USER_LIST_MODIFICATION,
                         content: {id: 'delete', msg: 'Deleted a user'},

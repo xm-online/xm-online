@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
@@ -16,7 +16,7 @@ declare let swal: any;
     templateUrl: './entity-data-card.component.html',
     styleUrls: ['./entity-data-card.component.scss'],
 })
-export class EntityDataCardComponent implements OnInit, OnChanges {
+export class EntityDataCardComponent implements OnInit {
 
     @Input() public xmEntity: XmEntity;
     @Input() public xmEntitySpec: XmEntitySpec;
@@ -34,9 +34,6 @@ export class EntityDataCardComponent implements OnInit, OnChanges {
 
     public ngOnInit(): void {
         this.load();
-    }
-
-    public ngOnChanges(changes: SimpleChanges): void {
     }
 
     public onSubmitForm(data: any): void {

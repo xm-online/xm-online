@@ -57,8 +57,8 @@ export class DashboardWrapperService {
         }
     }
 
-    public getDashboardByIdOrSlug(idOrSlug: number | string, force: boolean = false)
-        : Observable<Dashboard | undefined> {
+    public getDashboardByIdOrSlug(idOrSlug: number | string,
+                                  force: boolean = false): Observable<Dashboard | undefined> {
 
         const predicate = (d: Dashboard) => (d.config && d.config.slug === idOrSlug) ||
             d.id === parseInt(idOrSlug as string, 10);

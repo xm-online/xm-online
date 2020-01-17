@@ -1,4 +1,4 @@
-import { Component, Injector, Input, NgModuleFactoryLoader, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, Injector, Input, NgModuleFactoryLoader, ViewContainerRef } from '@angular/core';
 import { from as fromPromise } from 'rxjs';
 
 @Component({
@@ -6,7 +6,7 @@ import { from as fromPromise } from 'rxjs';
     templateUrl: './dynamic-widget.component.html',
     styleUrls: ['./dynamic-widget.component.scss'],
 })
-export class DynamicWidgetComponent implements OnInit {
+export class DynamicWidgetComponent {
 
     public commons: string[] = ['ext-common', 'ext-common-csp', 'ext-common-entity'];
 
@@ -37,9 +37,6 @@ export class DynamicWidgetComponent implements OnInit {
     constructor(private loader: NgModuleFactoryLoader,
                 private injector: Injector,
                 private viewRef: ViewContainerRef) {
-    }
-
-    public ngOnInit(): void {
     }
 
 }

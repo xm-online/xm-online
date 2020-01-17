@@ -34,6 +34,7 @@ export class StateChangeDialogComponent implements OnInit {
     constructor(private activeModal: NgbActiveModal,
                 private xmEntityService: XmEntityService,
                 private translateService: TranslateService,
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore
                 private eventManager: JhiEventManager,
                 private contextService: ContextService,

@@ -97,9 +97,9 @@ export class TasksWidgetComponent implements OnInit, OnDestroy {
 
     public registerChangeInXmEntities(): void {
         this.xmEntityListModificationSubscriber = this.eventManager
-            .subscribe('xmEntityListModification', (response) => this.load());
+            .subscribe('xmEntityListModification', () => this.load());
         this.xmEntityDetailModificationSubscriber = this.eventManager
-            .subscribe('xmEntityDetailModification', (response) => this.load());
+            .subscribe('xmEntityDetailModification', () => this.load());
     }
 
     public getType(typeKey: string): XmEntitySpec {

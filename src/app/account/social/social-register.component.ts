@@ -30,6 +30,7 @@ export class SocialRegisterComponent implements OnInit {
     }
 
     public login(): void {
+        throw new Error('Not implemented');
     }
 
 }

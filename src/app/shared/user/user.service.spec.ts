@@ -23,7 +23,7 @@ describe('UserService', () => {
 
     describe('create()', () => {
         it('should call with correct URL', () => {
-            service.create({}).subscribe((data) => {});
+            service.create({}).subscribe();
             const req = httpTestingController.expectOne(SERVER_API_URL + resourceUrl);
             req.flush({id: 1});
             httpTestingController.verify();
@@ -32,7 +32,7 @@ describe('UserService', () => {
 
     describe('update()', () => {
         it('should call with correct URL', () => {
-            service.update({}).subscribe((data) => {});
+            service.update({}).subscribe();
             const req = httpTestingController.expectOne(SERVER_API_URL + resourceUrl);
             req.flush({id: 1});
             httpTestingController.verify();
@@ -41,7 +41,7 @@ describe('UserService', () => {
 
     describe('getOnlineUsers()', () => {
         it('should call with correct URL', () => {
-            service.getOnlineUsers().subscribe((data) => {});
+            service.getOnlineUsers().subscribe();
             const req = httpTestingController.expectOne(userOnline);
             req.flush({});
             httpTestingController.verify();
@@ -51,7 +51,7 @@ describe('UserService', () => {
     describe('disable2FA()', () => {
         it('should call with correct URL', () => {
             const userID = '111';
-            service.disable2FA(userID).subscribe((data) => {});
+            service.disable2FA(userID).subscribe();
             const req = httpTestingController.expectOne(SERVER_API_URL + resourceUrl + '/' + userID + '/tfa_disable');
             req.flush({});
             httpTestingController.verify();
@@ -62,7 +62,7 @@ describe('UserService', () => {
         it('should call with correct URL', () => {
             const userID = '111';
             const email = '';
-            service.enable2FA(userID, email).subscribe((data) => {});
+            service.enable2FA(userID, email).subscribe();
             const req = httpTestingController.expectOne(SERVER_API_URL + resourceUrl + '/' + userID + '/tfa_enable');
             req.flush({});
             httpTestingController.verify();

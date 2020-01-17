@@ -52,7 +52,7 @@ export class LocationMapWidgetComponent implements OnInit {
                     )
                     .subscribe(() => this.onShowMap(res.body));
             },
-            (res: Response) => console.warn('Error'),
+            () => console.warn('Error'),
         );
     }
 

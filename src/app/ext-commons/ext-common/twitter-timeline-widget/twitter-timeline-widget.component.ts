@@ -26,15 +26,13 @@ export class TwitterTimelineWidgetComponent implements OnInit, AfterViewInit {
 
     public ngAfterViewInit(): void {
         this.twitterTimelineService.loadScript().subscribe(
-            (_twitter) => {
+            () => {
                 const nativeElement = this.element.nativeElement;
 
-                (window as any).twttr.widgets.createTimeline(this.dataSrc, nativeElement, this.opts).then(() => {},
-                ).catch((message) => console.info('Could not create widget: ', message),
-                );
+                (window as any).twttr.widgets.createTimeline(this.dataSrc, nativeElement, this.opts)
+                    .catch((message) => console.info('Could not create widget: ', message));
             },
             (err) => console.info('Could not load twitter widget ', err),
-            () => {},
         );
     }
 

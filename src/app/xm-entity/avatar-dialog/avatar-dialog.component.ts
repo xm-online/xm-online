@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 import { CropperSettings, ImageCropperComponent } from 'ngx-img-cropper';
@@ -12,7 +12,7 @@ import { XmEntityService } from '../shared/xm-entity.service';
     templateUrl: './avatar-dialog.component.html',
     styleUrls: ['./avatar-dialog.component.scss'],
 })
-export class AvatarDialogComponent implements OnInit {
+export class AvatarDialogComponent {
 
     @Input() public xmEntity: XmEntity;
 
@@ -31,17 +31,13 @@ export class AvatarDialogComponent implements OnInit {
         this.data = {};
     }
 
-    public ngOnInit(): void {
-    }
-
     public onFileChange($event: any): void {
         const image = new Image();
         const file = $event.target.files[0];
         const myReader = new FileReader();
-        const that = this;
         myReader.onloadend = (loadEvent: any) => {
             image.src = loadEvent.target.result;
-            that.cropper.setImage(image);
+            this.cropper.setImage(image);
         };
         myReader.readAsDataURL(file);
     }

@@ -17,7 +17,6 @@ export class TranslationService {
     }
 
     public translate(target: any, q: any): any {
-        const self = this;
         const url = 'https://www.googleapis.com/language/translate/v2';
         const key = 'AIzaSyBqzZZrc4Wgc5nAH4mMZjnjBSdv-425qgU';
         const jqxhr = $.ajax({
@@ -31,7 +30,7 @@ export class TranslationService {
             },
         });
         jqxhr.fail((error) => {
-            self.eventManager.broadcast({name: 'thirdpaty.httpError', content: error.responseJSON});
+            this.eventManager.broadcast({name: 'thirdpaty.httpError', content: error.responseJSON});
         });
         return jqxhr;
     }

@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ParseByPathService {
 
-    constructor() {}
-
     public parse(obj: any = {}, path: string = ''): any {
         const pathArr = path.split('.');
         if (pathArr.length > 1) {

@@ -117,17 +117,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     public checkOtp(): void {
       const credentials = {
-        grant_type: 'tfa_otp_token',
+          // eslint-disable-next-line @typescript-eslint/camelcase
+          grant_type: 'tfa_otp_token',
         otp: this.otpValue,
         rememberMe: this.rememberMe,
       };
 
-      const callBack = () => {};
-
-      this.loginService.login(credentials, callBack).then(() => {
+      this.loginService.login(credentials).then(() => {
         this.isDisabled = false;
         this.loginSuccess();
-      }).catch((err) => {
+      }).catch(() => {
         this.authenticationError = true;
         this.successRegistration = false;
         this.isDisabled = false;
@@ -151,15 +150,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.successRegistration = false;
         this.stateStorageService.resetAllStates();
         const credentials = {
+            // eslint-disable-next-line @typescript-eslint/camelcase
           grant_type: 'password',
           username: this.username ? this.username.toLowerCase().trim() : '',
           password: this.password ? this.password.trim() : '',
           rememberMe: this.rememberMe,
         };
 
-        const callBack = () => {};
-
-        this.loginService.login(credentials, callBack).then((data) => {
+        this.loginService.login(credentials).then((data) => {
             this.isDisabled = false;
             this.sendingLogin = false;
             if ('otpConfirmation' === data) {
@@ -196,6 +194,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
                     this.floatLabel = true;
                 }
             } catch (e) {
+                // empty block
             }
         }, 500);
     }

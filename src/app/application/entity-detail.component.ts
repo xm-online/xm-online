@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { I18nNamePipe, JhiLanguageHelper, Principal } from '../shared';
 import { Spec, XmEntity, XmEntityService, XmEntitySpecWrapperService } from '../xm-entity';
 
-declare var $: any;
+declare const $: any;
 
 @Component({
     selector: 'xm-entity-detail',

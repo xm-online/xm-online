@@ -37,14 +37,16 @@ export class RoleMgmtDeleteDialogComponent implements OnInit {
         this.showLoader = true;
         this.roleService.delete(roleKey)
             .subscribe(
-                (resp) => {
+                () => {
                     this.eventManager.broadcast({name: 'roleListModification', content: 'Deleted a role'});
                     this.activeModal.dismiss(true);
                 }, (resp) => {
                     try {
                         const res = resp.json() || {};
                         this.alertService.error(res.error_description, res.params);
-                    } catch (e) {}
+                    } catch (e) {
+                        // empty block
+                    }
                 },
                 () => this.showLoader = false,
             );

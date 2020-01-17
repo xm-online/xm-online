@@ -18,7 +18,7 @@ export class LoginService {
 
     public login(credentials: any, callback?: any): Promise<unknown> {
 
-        const cb = callback || (() => {});
+        const cb = callback || (() => undefined);
 
         return new Promise((resolve, reject) => {
 

@@ -1,10 +1,13 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
+import { finalize } from 'rxjs/operators';
 
 import { Client, ClientService, JhiLanguageHelper } from '../../shared';
 import { RoleService } from '../../shared/role/role.service';
 import { XmConfigService } from '../../shared/spec/config.service';
+
+export const CLIENT_UNIQUE_ID_ERROR_CODE = 'client.already.exists';
 
 @Component({
     selector: 'xm-client-mgmt-dialog',
@@ -19,6 +22,7 @@ export class ClientMgmtDialogComponent implements OnInit {
     public scopes: any[];
     public authorities: any[];
     public showLoader: boolean;
+    public idNotUnique: boolean;
     @ViewChild('userLoginForm', {static: false}) public userLoginForm: any;
 
     constructor(public activeModal: NgbActiveModal,
@@ -63,6 +67,7 @@ export class ClientMgmtDialogComponent implements OnInit {
     }
 
     public save(): void {
+        this.idNotUnique = false;
         this.showLoader = true;
         this.client.clientId = this.client.clientId.trim();
         if (this.client.description) {
@@ -70,13 +75,13 @@ export class ClientMgmtDialogComponent implements OnInit {
         }
         this.client.scopes = (this.scopes || []).map((it) => it.value);
         this.clientService[this.client.id ? 'update' : 'create'](this.client)
+            .pipe(finalize(() => this.showLoader = false))
             .subscribe(
-                (response) => this.onSaveSuccess(response),
-                (err) => {
-                    console.warn(err); // tslint:disable-line
-                    this.showLoader = false;
-                },
-                () => this.showLoader = false);
+            (response) => this.onSaveSuccess(response),
+            (err) => {
+                this.showLoader = false;
+                this.idNotUnique = err && err.error && err.error.error === 'client.already.exists';
+            });
     }
 
     protected setFormSources(sources: string[]): any[] {

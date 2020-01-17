@@ -22,6 +22,7 @@
         "role": "Роль",
         "validityPeriod": "Срок действия",
         "scopes-add": "Добавить области",
-        "search-by-client-id": "Search by client ID"
+        "search-by-client-id": "Search by client ID",
+        "client.already.exists": "Клиент с таким ID уже существует"
     }
 }

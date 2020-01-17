@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { XmSidebarModule } from '../modules/xm-sidebar';
 import { XmSharedModule } from '../shared/shared.module';
 import { XmBalanceModule } from '../xm-balance/xm-balance.module';
 import { XmEntityModule } from '../xm-entity/xm-entity.module';
@@ -21,6 +22,7 @@ import { SidebarModule } from './sidebar/sidebar.module';
         XmTimelineModule,
         XmNotificationsModule,
         RouterModule,
+        XmSidebarModule,
     ],
     exports: [XmMainComponent, XmSharedModule],
     declarations: [

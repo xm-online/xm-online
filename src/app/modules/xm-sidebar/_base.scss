@@ -14,27 +14,27 @@ $background:          white !default;
 $is-shadow:           true !default;
 $is-rounded:          true !default;
 $border-radius:       3px !default;
-$tab-focus-outline:   $primary solid 1px !default;;
+$tab-focus-outline:   $primary solid 1px !default;
 
 @mixin main-with-sidebar-mini {
-    @at-root .sidebar-mini {
-        .sidebar:not(:hover) { @content; }
-    }
+  @at-root .sidebar-mini {
+    .sidebar:not(:hover) { @content; }
+  }
 }
 
 @mixin feature-rounded() {
-    @if ($is-rounded) {
-        border-radius: $border-radius;
-    }
+  @if ($is-rounded) {
+    border-radius: $border-radius;
+  }
 }
 
 @mixin on-feature-shadow() {
-    @if ($is-shadow) {
-        @content;
-    }
+  @if ($is-shadow) {
+    @content;
+  }
 }
 
 @mixin focus() {
-    &:focus { outline: none; }
-    &:focus-visible { outline: $tab-focus-outline; }
+  &:focus { outline: none; }
+  &:focus-visible { outline: $tab-focus-outline; }
 }

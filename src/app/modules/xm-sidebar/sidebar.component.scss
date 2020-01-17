@@ -7,35 +7,35 @@ $opacity:            .93 !default;
 $backdrop-z-index:   -1 !default;
 
 @mixin sidebar($theme) {
+  display:        flex;
+  flex-direction: column;
+  height:         100%;
+  position:       absolute;
+  width:          100%;
+  z-index:        $sidebar-z-index;
+  background:     $sidebar-background;
+
+  .xm-sidebar-background {
+    background: $backdrop;
+    content:    '';
+    display:    block;
+    height:     100%;
+    opacity:    $opacity;
+    position:   absolute;
+    width:      100%;
+    z-index:    $backdrop-z-index;
+    top:        0;
+    left:       0;
+    right:      0;
+    bottom:     0;
+  }
+
+  .section-scroll {
+    overflow-x:     hidden;
+    overflow-y:     auto;
     display:        flex;
     flex-direction: column;
-    height:         100%;
-    position:       absolute;
-    width:          100%;
-    z-index:        $sidebar-z-index;
-    background:     $sidebar-background;
-
-    .xm-sidebar-background {
-        background: $backdrop;
-        content:    '';
-        display:    block;
-        height:     100%;
-        opacity:    $opacity;
-        position:   absolute;
-        width:      100%;
-        z-index:    $backdrop-z-index;
-        top:        0;
-        left:       0;
-        right:      0;
-        bottom:     0;
-    }
-
-    .section-scroll {
-        overflow-x:     hidden;
-        overflow-y:     auto;
-        display:        flex;
-        flex-direction: column;
-        flex-grow:      1;
-    }
+    flex-grow:      1;
+  }
 
 }

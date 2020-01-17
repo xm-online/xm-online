@@ -1,12 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { MenuItem } from './menu-models';
 
 @Component({
@@ -17,7 +9,7 @@ import { MenuItem } from './menu-models';
            (keyup.enter)="submit.next($event)"
            class="menu-link"
            routerLinkActive="active">
-            <mat-icon>{{item.icon}}</mat-icon>
+            <mat-icon class="menu-icon">{{item.icon}}</mat-icon>
             <span>{{item.title | translate}}</span>
             <ng-content></ng-content>
         </a>
@@ -25,11 +17,9 @@ import { MenuItem } from './menu-models';
     changeDetection: ChangeDetectionStrategy.Default,
     encapsulation: ViewEncapsulation.None,
 })
-export class MenuLinkComponent implements OnInit {
+export class MenuLinkComponent {
 
     @Input() public item: MenuItem;
     @Input() public disabled: boolean;
     @Output() public submit: EventEmitter<any> = new EventEmitter<any>();
-
-    public ngOnInit(): void { }
 }

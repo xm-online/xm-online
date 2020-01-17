@@ -2,13 +2,14 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulatio
 import { matExpansionAnimations } from '@angular/material';
 import { NavigationEnd, Router } from '@angular/router';
 import * as _ from 'lodash';
-import { combineLatest, Observable, Subscription } from 'rxjs';
+import { combineLatest, Observable, of, Subscription } from 'rxjs';
 import { filter, map, share, tap } from 'rxjs/operators';
 
 import { ContextService, Principal } from '../../../shared';
 import { transpilingForIE } from '../../../shared/jsf-extention';
 import { Dashboard, DashboardService } from '../../../xm-dashboard';
 import { XmEntitySpec, XmEntitySpecWrapperService } from '../../../xm-entity';
+import { DEFAULT_MENU_LIST } from './menu-const';
 import { JavascriptCode, MenuCategory, MenuItem } from './menu-models';
 
 function checkCondition(item: { config?: { condition?: JavascriptCode } }, contextService: ContextService): boolean {
@@ -161,8 +162,10 @@ export class MenuComponent implements OnInit, OnDestroy {
             map(applicationsToCategory),
         );
 
-        this.categories$ = combineLatest([dashboards$, applications$]).pipe(
-            map(([a, b]) => [...a, ...b]),
+        const default$ = of(DEFAULT_MENU_LIST);
+
+        this.categories$ = combineLatest([dashboards$, applications$, default$]).pipe(
+            map(([a, b, c]) => [...a, ...b, ...c]),
             share(),
         );
 

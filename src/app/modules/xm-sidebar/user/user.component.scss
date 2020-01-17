@@ -4,37 +4,37 @@ $user-img-border:        solid 1px #fff !default;
 $user-img-border-radius: 50% !default;
 
 @mixin user-theme($theme) {
-    .user-img {
-        height:        $icon-size-y;
-        width:         $icon-size-x;
-        min-width:     $icon-size-x;
-        border:        $user-img-border;
-        border-radius: $user-img-border-radius;
-    }
+  .user-img {
+    height:        $icon-size-y;
+    width:         $icon-size-x;
+    min-width:     $icon-size-x;
+    border:        $user-img-border;
+    border-radius: $user-img-border-radius;
+  }
 
-    .user-title {
-        display:        flex;
-        flex-direction: row;
-        align-items:    center;
-        vertical-align: center;
-        padding:        $menu-item-padding-y $sidebar-padding-x;
+  .user-title {
+    display:        flex;
+    flex-direction: row;
+    align-items:    center;
+    vertical-align: center;
+    padding:        $menu-item-padding-y $sidebar-padding-x;
 
-        @include menu-link();
-        @include focus();
-    }
+    @include menu-link();
+    @include focus();
+  }
+  .user-name {
+    padding-left:  $sidebar-padding-x;
+    font-size:     $font-size-sm;
+    color:         $text-color;
+    font-weight:   $font-weight;
+    text-overflow: ellipsis;
+    overflow:      hidden;
+    white-space:   nowrap;
+  }
+
+  @include main-with-sidebar-mini {
     .user-name {
-        padding-left:  $sidebar-padding-x;
-        font-size:     $font-size-sm;
-        color:         $text-color;
-        font-weight:   $font-weight;
-        text-overflow: ellipsis;
-        overflow:      hidden;
-        white-space:   nowrap;
+      display: none;
     }
-
-    @include main-with-sidebar-mini {
-        .user-name {
-            display: none;
-        }
-    }
+  }
 }

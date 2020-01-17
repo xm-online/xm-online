@@ -4,12 +4,12 @@
 @import "./user/user.component";
 
 @mixin xm-sidebar($theme) {
-    @include logo-theme($theme);
-    @include user-theme($theme);
-    @include menu($theme);
-    @include sidebar($theme);
+  @include logo-theme($theme);
+  @include user-theme($theme);
+  @include menu($theme);
+  @include sidebar($theme);
 }
 
 .xm-sidebar {
-    @include xm-sidebar(null);
+  @include xm-sidebar(null);
 }

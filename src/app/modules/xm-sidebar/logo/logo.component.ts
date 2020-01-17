@@ -3,7 +3,9 @@ import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 import { map, share } from 'rxjs/operators';
 
-import { Principal, UIConfig, XmConfigService } from '../../../shared';
+import { Principal } from '../../../shared';
+import { XmUiConfigService } from '../config';
+import { XmUIConfig } from '../config';
 
 export const SPA_ROOT_URL = '/';
 export const SPA_AUTH_ROOT_URL = '/dashboard';
@@ -22,7 +24,7 @@ const DEFAULT: LogoOptions = {
     userRootUrl: '',
 };
 
-function optionsConfigToLogo(config: UIConfig): LogoOptions {
+function optionsConfigToLogo(config: XmUIConfig): LogoOptions {
 
     return _.defaults({
         logoUrl: config.logoUrl,
@@ -45,11 +47,11 @@ export class LogoComponent implements OnInit {
 
     public logo$: Observable<LogoOptions>;
 
-    constructor(protected readonly xmConfigService: XmConfigService,
+    constructor(protected readonly xmUiConfigService: XmUiConfigService,
                 protected readonly principal: Principal) { }
 
     public ngOnInit(): void {
-        this.logo$ = this.xmConfigService.getUiConfig().pipe(
+        this.logo$ = this.xmUiConfigService.cache$.pipe(
             map(optionsConfigToLogo),
             share(),
         );

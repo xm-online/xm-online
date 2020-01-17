@@ -4,91 +4,96 @@
 $menu-item-hover:        rgba(200, 200, 200, 0.2) !default;
 $menu-item-active:       0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(#000, 0.4) !default;
 $menu-list-padding-left: 0 !default;
+$menu-icon-font-size:    20px !default;
 
 @mixin menu-link() {
-    cursor: pointer;
+  cursor: pointer;
 
-    &.expanded {
-        background: $menu-item-hover;
-        @include feature-rounded();
-    }
+  &.expanded {
+    background: $menu-item-hover;
+    @include feature-rounded();
+  }
 
-    &:active {
-        background: $background;
-        @include feature-rounded();
-    }
+  &:active {
+    background: $background;
+    @include feature-rounded();
+  }
 
-    &.active {
-        @include on-feature-shadow {
-            box-shadow: $menu-item-active;
-        }
+  &.active {
+    @include on-feature-shadow {
+      box-shadow: $menu-item-active;
     }
+  }
 
-    &:hover:not(.active),
-    &:focus:not(.active) {
-        background: $menu-item-hover;
-        @include feature-rounded();
-    }
+  &:hover:not(.active),
+  &:focus:not(.active) {
+    background: $menu-item-hover;
+    @include feature-rounded();
+  }
 }
 
 @mixin menu($theme) {
 
-    .menu-title {
+  .menu-title {
 
-        &.expanded {
-            background: $menu-item-hover;
-            @include feature-rounded();
-        }
+    &.expanded {
+      background: $menu-item-hover;
+      @include feature-rounded();
+    }
+  }
+
+  .menu-list {
+    list-style-type: none;
+
+    // TODO: override default ul styles
+    padding-left:    $menu-list-padding-left;
+    margin-bottom:   0;
+
+    &.collapsed {
+      overflow: hidden;
+      // TODO: override default ul styles
+      margin:   0;
+    }
+  }
+
+  .mat-expansion-indicator {
+    margin-right: $sidebar-padding-x;
+    margin-left:  auto;
+
+    &::after {
+      @include mat-expansion-indicator();
+    }
+  }
+
+  .menu-link {
+    overflow:       hidden;
+    white-space:    nowrap;
+    display:        flex;
+    flex-direction: row;
+    color:          $text-color;
+    padding:        $menu-item-padding-y $sidebar-padding-x $menu-item-padding-y $sidebar-padding-x * 2;
+
+
+    & > .mat-icon {
+      color: $sidebar-icon-color;
     }
 
-    .menu-list {
-        list-style-type: none;
-
-        // TODO: override default ul styles
-        padding-left:    $menu-list-padding-left;
-
-        &.collapsed {
-            overflow: hidden;
-            // TODO: override default ul styles
-            margin:   0;
-        }
+    & > span {
+      padding-left: $sidebar-padding-x;
     }
 
-    .mat-expansion-indicator {
-        margin-right: $sidebar-padding-x;
-        margin-left:  auto;
+    @include menu-link();
+    @include focus();
+  }
 
-        &::after {
-            @include mat-expansion-indicator();
-        }
-    }
-
-    .menu-link {
-        overflow:       hidden;
-        white-space:    nowrap;
-        display:        flex;
-        flex-direction: row;
-        color:          $text-color;
-        padding:        $menu-item-padding-y $sidebar-padding-x $menu-item-padding-y $sidebar-padding-x * 2;
-
-
-        & > .mat-icon {
-            color: $sidebar-icon-color;
-        }
-
-        & > span {
-            padding-left: $sidebar-padding-x;
-        }
-
-        @include menu-link();
-        @include focus();
-    }
-
+  .menu-icon {
+    font-size: $menu-icon-font-size;
+  }
 
 }
 
 @include main-with-sidebar-mini {
-    .menu-link > span {
-        display: none;
-    }
+  .menu-link > span {
+    display: none;
+  }
 }

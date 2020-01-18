@@ -34,14 +34,13 @@
     "mng-ext": "node ./scripts/manage-exts.js",
     "test": "npm run prebuild && ng test --source-map=false",
     "lint": "npm run lint:js",
-    "lint:js": "eslint . --ext .ts",
-    "lint:sass": "stylelint .",
+    "lint:js": "eslint . --ext .ts --quiet",
+    "lint:sass": "stylelint */**/*.scss --quiet",
     "e2e": "ng e2e",
     "get-unwraped-labels": "node ./scripts/get-unwraped-labels.js",
     "translations": "node ./scripts/translations.js",
     "report:bundle": "webpack-bundle-analyzer dist/stats.json"
   },
-  "private": true,
   "dependencies": {
     "@agm/core": "1.1.0",
     "@agm/js-marker-clusterer": "1.1.0",

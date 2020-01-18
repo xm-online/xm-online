@@ -1,12 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
 // Import all vendors
-@import "styles/vendor";
+@import 'styles/vendor';
 @include vendor-xm-override();
 
 // Todo: Remove material-teal.css after .css migrates to .scss successfully
-@import "assets/css/themes/material-teal.css";
+@import 'assets/css/themes/material-teal.css';
 
 // xm overrides
-@import "src/assets/scss/xm-styles.scss";
-@import "src/assets/scss/theme-override.scss";
+@import 'src/assets/scss/xm-styles.scss';
+@import 'src/assets/scss/theme-override.scss';

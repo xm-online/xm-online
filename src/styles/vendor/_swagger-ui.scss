@@ -1,4 +1,4 @@
-@import "~swagger-ui-dist/swagger-ui.css";
+@import '~swagger-ui-dist/swagger-ui.css';
 
 @mixin swagger-ui-xm-override() {
 
@@ -8,8 +8,8 @@
   }
 
   .xm-swagger-container {
-    margin:      0 0 20px 0;
-    padding-top: 5px
+    margin:      0 0 20px;
+    padding-top: 5px;
   }
 
   .swag-title {
@@ -46,15 +46,15 @@
 
   .swagger-ui table thead tr td,
   .swagger-ui table thead tr th {
-    width: auto
+    width: auto;
   }
 
   .swagger-ui table tbody tr td:first-of-type {
-    width: auto
+    width: auto;
   }
 
   .swagger-ui .parameters-col_description {
-    width: auto
+    width: auto;
   }
 
   .swagger-ui .loading-container .errors-wrapper .error .errors__title {

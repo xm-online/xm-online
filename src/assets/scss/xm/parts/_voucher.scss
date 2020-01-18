@@ -9,7 +9,7 @@
   vertical-align: middle;
   width: 350px;
   height: 200px;
-  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.06);
   border: 0 none;
   border-radius: 10px;
   padding: 0;
@@ -25,9 +25,9 @@
 
 .voucher-secret-line > span > input {
   width: 150px;
-  color: #FFFFFF;
+  color: #ffffff;
   background: #616161;
-  border: 0px;
+  border: 0;
 }
 
 .voucher-footer {
@@ -35,15 +35,15 @@
 }
 
 .voucher-unknown {
-  background: #E0E0E0;
+  background: #e0e0e0;
 }
 
 .voucher-success {
-  background: #80CBC4;
+  background: #80cbc4;
 }
 
 .voucher-error {
-  background: #EF9A9A;
+  background: #ef9a9a;
 }
 
 .shell {

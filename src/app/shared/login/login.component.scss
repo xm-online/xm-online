@@ -8,11 +8,11 @@
 }
 
 .forgot-container {
-    margin: 10px 0 0 0;
+    margin: 10px 0 0;
 
     @media (min-width: 992px) {
         text-align: right;
-        margin: 20px 0 0 0;
+        margin: 20px 0 0;
     }
 }
 
@@ -47,13 +47,13 @@
 
     &:hover {
         > span {
-            -webkit-transition: all .4s cubic-bezier(.25, .8, .25, 1);
-            transition: all .4s cubic-bezier(.25, .8, .25, 1);
-            -webkit-transition-duration: .15s;
-            transition-duration: .15s;
+            -webkit-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            -webkit-transition-duration: 0.15s;
+            transition-duration: 0.15s;
             -webkit-transform: scale(1);
             transform: scale(1);
-            opacity: .9;
+            opacity: 0.9;
         }
     }
 

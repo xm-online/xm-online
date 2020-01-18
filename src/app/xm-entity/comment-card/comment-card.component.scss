@@ -1,6 +1,6 @@
 ::ng-deep {
     .comment-card {
-        color:         rgba(0, 0, 0, .87);
+        color:         rgba(0, 0, 0, 0.87);
 
         margin-bottom: 25px;
 
@@ -31,8 +31,8 @@
 
             border-radius: 100%;
 
-            &:before {
-                content:        "";
+            &::before {
+                content:        '';
                 display:        block;
                 width:          100%;
 
@@ -56,17 +56,17 @@
 
             background:    #fff;
             border-radius: 6px;
-            box-shadow:    0 1px 4px 0 rgba(0, 0, 0, .14);
+            box-shadow:    0 1px 4px 0 rgba(0, 0, 0, 0.14);
 
             padding:       20px;
 
-            &:before, &:after {
-                content:  "";
+            &::before, &::after {
+                content:  '';
                 display:  inline-block;
                 position: absolute;
             }
 
-            &:before {
+            &::before {
                 top:           26px;
                 left:          -16px;
 
@@ -76,7 +76,7 @@
                 border-bottom: 15px solid transparent;
             }
 
-            &:after {
+            &::after {
                 border-top:    14px solid transparent;
                 border-left:   0;
                 border-right:  14px solid #fff;
@@ -92,7 +92,7 @@
             }
 
             &-content {
-                padding: 12px 0 0 0;
+                padding: 12px 0 0;
             }
         }
 

@@ -76,7 +76,7 @@ export class AuthServerProvider {
             data = data.append('password', credentials.password);
         } else {
             data = data.append('grant_type', credentials.grant_type);
-            if ('tfa_otp_token' === credentials.grant_type) {
+            if (credentials.grant_type === 'tfa_otp_token') {
                 data = data.append('otp', credentials.otp);
                 data = data.append('tfa_access_token_type', 'bearer');
                 data = data.append('tfa_access_token', this.getToken());
@@ -96,6 +96,7 @@ export class AuthServerProvider {
             this.storeAuthenticationToken(jwt, rememberMe);
             return Promise.resolve(jwt);
         } else {
+            // eslint-disable-next-line prefer-promise-reject-errors
             return Promise.reject('auth-jwt-service Promise reject'); // Put appropriate error message here
         }
     }
@@ -164,7 +165,7 @@ export class AuthServerProvider {
             let accessToken;
             let tfaChannel = '';
 
-            if ('required' === resp.headers.get('icthh-xm-tfa-otp')) {
+            if (resp.headers.get('icthh-xm-tfa-otp') === 'required') {
                 tfaChannel = resp.headers.get('icthh-xm-tfa-otp-channel');
                 console.info('tfaRequired=%s using %s', true, tfaChannel);
 

@@ -224,6 +224,7 @@ export class LocationDetailDialogComponent implements OnInit {
         const filterValue = value.toLowerCase();
 
         return this.countryOptions
+            // eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with
             .filter((option) => option.name.toLowerCase().indexOf(filterValue) === 0);
     }
 }

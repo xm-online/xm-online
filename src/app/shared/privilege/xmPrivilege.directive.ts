@@ -44,6 +44,7 @@ export class XmPrivilegeDirective implements OnInit, OnDestroy, AfterContentInit
     }
 
     public ngOnDestroy(): void {
+        // eslint-disable-next-line no-unused-expressions
         this.privilegeSubscription
             ? this.privilegeSubscription.unsubscribe()
             : console.info('no privilegeSubscription');

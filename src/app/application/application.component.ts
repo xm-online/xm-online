@@ -135,6 +135,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     public load(): void {
         this.translateService.get(this.defaultFieldsKeys).subscribe(() => {
             const defaultFields = this.buildDefaultFields();
+            // eslint-disable-next-line no-unused-expressions
             this.searchParams && this.searchParams.fields
                 ? this.buildOptions(this.searchParams.fields)
                 : this.buildOptions(defaultFields);

@@ -12,6 +12,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        // eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with
         if (!request || !request.url || (/^http/.test(request.url)
             && !(SERVER_API_URL && request.url.startsWith(SERVER_API_URL)))) {
             return next.handle(request);

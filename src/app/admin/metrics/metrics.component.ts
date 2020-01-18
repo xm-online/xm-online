@@ -80,14 +80,14 @@ export class JhiMetricsMonitoringComponent implements OnInit {
         if (this.metrics && this.metrics.timers) {
             Object.keys(this.metrics.timers).forEach((key) => {
                 const value = this.metrics.timers[key];
-                if (key.indexOf('web.rest') !== -1 || key.indexOf('service') !== -1) {
+                if (key.includes('web.rest') || key.includes('service')) {
                     this.servicesStats[key] = value;
                 }
             });
         }
         if (this.metrics && this.metrics.gauges) {
             Object.keys(this.metrics.gauges).forEach((key) => {
-                if (key.indexOf('jcache.statistics') !== -1) {
+                if (key.includes('jcache.statistics')) {
                     const value = this.metrics.gauges[key].value;
                     // remove gets or puts
                     const index = key.lastIndexOf('.');

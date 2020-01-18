@@ -32,7 +32,7 @@ export class PermitDirective implements OnDestroy {
 
     @Input('permitted')
     set permitted(value: string) {
-        this.privileges = typeof value === 'string' ? [value as string] : value as string[];
+        this.privileges = typeof value === 'string' ? [value] : value;
         this.updateView();
         // Get notified each time authentication state changes.
         this.privilegeSubscription = this.principal.getAuthenticationState().subscribe((identity) => this.updateView());

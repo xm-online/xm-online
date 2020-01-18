@@ -35,8 +35,8 @@ export class UserModalService {
     }
 
     public userModalRef(component: Component, user: User): NgbModalRef {
-        const modalRef = this.modalService.open(component, {size: 'lg', backdrop: 'static'});
-        (modalRef.componentInstance as any).user = user;
+        const modalRef: any = this.modalService.open(component, {size: 'lg', backdrop: 'static'});
+        modalRef.componentInstance.user = user;
         modalRef.result.then(() => {
             this.router.navigate([{outlets: {popup: null}}], {replaceUrl: true});
             this.isOpen = false;

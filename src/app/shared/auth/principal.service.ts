@@ -132,7 +132,7 @@ export class Principal {
                         }
                         this.authenticationState.next(this.userIdentity);
                         resolve(this.userIdentity);
-                    }).catch((err) => {
+                    }).catch(() => {
                     this.promise = null;
                     this.resetCachedProfile();
                     if (mockUser) {
@@ -184,7 +184,7 @@ export class Principal {
 
     public getImageUrl(): string {
         if (this.isIdentityResolved()) {
-            if ('null' === this.userIdentity.imageUrl) {
+            if (this.userIdentity.imageUrl === 'null') {
                 return null;
             }
             return this.userIdentity.imageUrl;

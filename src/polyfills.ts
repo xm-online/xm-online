@@ -64,6 +64,7 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
  */
 // import 'intl';  // Run `npm install --save intl`.
 
+// eslint-disable-next-line @typescript-eslint/unbound-method
 if (!String.prototype.startsWith) {
     Object.defineProperty(String.prototype, 'startsWith', {
         enumerable: false,

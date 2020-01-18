@@ -182,6 +182,7 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
                 (sortBy.msName && item.msName !== sortBy.msName) ||
                 (typeof sortBy.enabled === 'boolean' && item.enabled !== sortBy.enabled) ||
                 (typeof sortBy.condition === 'boolean' && resourceCondition !== sortBy.condition) ||
+                // eslint-disable-next-line @typescript-eslint/prefer-includes
                 (sortBy.query && item.privilegeKey.indexOf(sortBy.query.toUpperCase()) === -1)
             ) {
                 // empty block

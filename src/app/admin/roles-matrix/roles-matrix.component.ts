@@ -62,6 +62,7 @@ export class RolesMatrixComponent implements OnInit {
                     result.permissions.forEach((item) => {
                         item.roles = item.roles || [];
                         item.roles = result.roles.map((el) => {
+                            // eslint-disable-next-line @typescript-eslint/prefer-includes
                             const value = item.roles.indexOf(el) !== -1;
                             return {value, valueOrg: value};
                         });
@@ -169,7 +170,8 @@ export class RolesMatrixComponent implements OnInit {
                     this.hasChanges = false;
                 },
                 (resp: Response) => {
-                    this.onError(resp), this.showLoader = false;
+                    this.onError(resp);
+                    this.showLoader = false;
                 },
                 () => this.showLoader = false,
             );
@@ -213,6 +215,7 @@ export class RolesMatrixComponent implements OnInit {
             const allSet = clearItemsbyRoles.every((x) => x.value);
             if (
                 (sortBy.msName && item.msName !== sortBy.msName) ||
+                // eslint-disable-next-line @typescript-eslint/prefer-includes
                 (sortBy.query && item.privilegeKey.indexOf(sortBy.query.toUpperCase()) === -1) ||
                 (sortBy.permitted_filter === 'anyset' && anySet !== true) ||
                 (sortBy.permitted_filter === 'notset' && anySet !== false) ||

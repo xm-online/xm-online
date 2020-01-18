@@ -144,6 +144,7 @@ export class XmMainComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
+        // eslint-disable-next-line no-unused-expressions
         this.authSucessSubscription
             ? this.authSucessSubscription.unsubscribe()
             : console.info('No authSucessSubscription');

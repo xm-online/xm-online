@@ -52,10 +52,10 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.languages = (data && data.langs) ? data.langs : [DEFAULT_LANG];
             },
             (err) => {
-                // tslint:disable-next-line
-                console.error(err);
+                console.warn(err);
                 this.languages = [DEFAULT_LANG];
-            }, () => console.info('Languages: %o', this.languages),// tslint:disable-line
+            },
+            () => console.info('Languages: %o', this.languages),
         );
         this.clock = interval(1000).pipe(map(() => new Date()));
         this._clockSubscription = this.getClock().subscribe((time) => {

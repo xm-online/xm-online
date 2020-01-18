@@ -113,6 +113,7 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
             if (this.routingUrl) {
                 const path = `application/${this.entityType}/${this.entityId}`; // by default leads to application
 
+                // eslint-disable-next-line no-unused-expressions
                 this.routingUrl.match(/dashboard/)
                     ? this.navigate(this.routingUrl, {id: this.entityId})
                     : this.navigate(path, {});

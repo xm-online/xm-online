@@ -1,7 +1,7 @@
 @import '~swagger-ui-dist/swagger-ui.css';
 
 @mixin swagger-ui-xm-override() {
-
+  /* stylelint-disable selector-class-pattern */
   #logo {
     font-size:   30px;
     font-weight: 600;
@@ -64,5 +64,5 @@
   .swagger-ui .info .title small pre {
     display: initial;
   }
-
+  /* stylelint-enable selector-class-pattern */
 }

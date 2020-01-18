@@ -95,7 +95,7 @@ export class RatingListSectionComponent implements OnChanges {
 
     private recalculateRating(voteValue: number, rating: Rating): number {
         const votesNumber = this.votesNumber.hasOwnProperty(rating.typeKey) ? this.votesNumber[rating.typeKey] : 0;
-        return (rating.value * votesNumber + voteValue) / (votesNumber + 1);
+        return ((rating.value * votesNumber) + voteValue) / (votesNumber + 1);
     }
 
     private addRating(rating: Rating, vote: Vote): void {

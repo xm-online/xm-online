@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 this.socialConfig = uiConfig && uiConfig.social;
                 this.hideRememberMe = uiConfig.hideRememberMe ? uiConfig.hideRememberMe : false;
                 this.hideResetPasswordLink = uiConfig.hideResetPasswordLink ? uiConfig.hideResetPasswordLink : false;
-                this.checkTermsOfConditions = uaaConfig && uaaConfig.isTermsOfConditionsEnabled || false;
+                this.checkTermsOfConditions = (uaaConfig && uaaConfig.isTermsOfConditionsEnabled) || false;
             });
     }
 
@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         $('body').removeClass('xm-public-screen');
         if (this.router.url === '/register'
             // eslint-disable-next-line @typescript-eslint/prefer-includes
-            || (/activate/.test(this.router.url))
+            || ((/activate/).test(this.router.url))
             || this.router.url === '/finishReset'
             || this.router.url === '/requestReset') {
             this.router.navigate(['']);

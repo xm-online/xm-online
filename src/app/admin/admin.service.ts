@@ -114,15 +114,14 @@ export class BaseAdminListComponent implements OnInit, OnDestroy {
             confirmButtonClass: 'btn mat-raised-button btn-primary',
             cancelButtonClass: 'btn mat-raised-button',
             confirmButtonText: 'Yes, delete!',
-        }).then((result) => result.value ? this.deleteAction(id)
-            : console.info('Cancel')); // tslint:disable-line
+        }).then((result) => result.value ? this.deleteAction(id) : console.info('Cancel'));
     }
 
     protected getPageAfterRemove(result: any): any {
         if (result && result.content && result.content.id === 'delete' && this.page > 1) {
             this.queryCount--;
-            const length =
-                parseInt(this.queryCount / this.itemsPerPage + '', 10) + (this.queryCount % this.itemsPerPage ? 1 : 0);
+            const length = parseInt((this.queryCount / this.itemsPerPage) + '', 10)
+                + (this.queryCount % this.itemsPerPage ? 1 : 0);
             if (this.page > length) {
                 this.previousPage = null;
                 return length;

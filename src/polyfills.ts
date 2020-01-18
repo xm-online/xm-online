@@ -52,7 +52,7 @@ import 'core-js/es6/reflect';
 /***************************************************************************************************
  * Zone JS is required by Angular itself.
  */
-import 'zone.js/dist/zone';  // Included with Angular CLI.
+import 'zone.js/dist/zone'; // Included with Angular CLI.
 
 /***************************************************************************************************
  * APPLICATION IMPORTS
@@ -70,7 +70,7 @@ if (!String.prototype.startsWith) {
         enumerable: false,
         configurable: false,
         writable: false,
-        value(this: any, searchString: string, position: number): any    {
+        value(this: any, searchString: string, position: number): any {
             position = position || 0;
             return this.indexOf(searchString, position) === position;
         },

@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 
 import * as moment from 'moment';
-import { JhiAlertService } from 'ng-jhipster';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { Observable, Subject } from 'rxjs';
 import { shareReplay, takeUntil } from 'rxjs/operators';
+import { JhiAlertService } from 'ng-jhipster';
 
-import { XmEntity } from '../../xm-entity';
 import { AccountService } from './account.service';
 import { SUPER_ADMIN } from './auth.constants';
+import { XmEntity } from '../../xm-entity';
 
 const CACHE_SIZE = 1;
 const EXPIRES_DATE_FIELD = 'authenticationTokenexpiresDate';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class Principal {
+
     private userIdentity: any;
     private authenticated: boolean = false;
     private authenticationState: Subject<any> = new Subject<any>();
@@ -23,11 +24,11 @@ export class Principal {
     private reload$: Subject<void> = new Subject<void>();
     private xmProfileCache$: Observable<XmEntity>;
 
-    constructor(
-        private account: AccountService,
-        private alertService: JhiAlertService,
-        private $localStorage: LocalStorageService,
-        private $sessionStorage: SessionStorageService) {
+    constructor(private account: AccountService,
+                private alertService: JhiAlertService,
+                private $localStorage: LocalStorageService,
+                private $sessionStorage: SessionStorageService,
+    ) {
         this.checkTokenAndForceIdentity();
     }
 
@@ -68,7 +69,6 @@ export class Principal {
             this.alertService.warning('error.privilegeOperationWrong', {name: privilegesOperation});
             return false;
         }
-
     }
 
     public hasPrivileges(privileges: string[] = [], privilegesOperation: string = 'OR'): Promise<any> {
@@ -132,25 +132,26 @@ export class Principal {
                         }
                         this.authenticationState.next(this.userIdentity);
                         resolve(this.userIdentity);
-                    }).catch(() => {
-                    this.promise = null;
-                    this.resetCachedProfile();
-                    if (mockUser) {
-                        this.userIdentity = {
-                            firstName: 'NoName',
-                            lastName: 'NoName',
-                            roleKey: 'ROLE_USER',
-                        };
-                        this.authenticated = true;
-                        this.authenticationState.next(this.userIdentity);
-                        resolve(this.userIdentity);
-                    } else {
-                        this.userIdentity = null;
-                        this.authenticated = false;
-                        this.authenticationState.next(this.userIdentity);
-                        resolve(this.userIdentity);
-                    }
-                });
+                    })
+                    .catch(() => {
+                        this.promise = null;
+                        this.resetCachedProfile();
+                        if (mockUser) {
+                            this.userIdentity = {
+                                firstName: 'NoName',
+                                lastName: 'NoName',
+                                roleKey: 'ROLE_USER',
+                            };
+                            this.authenticated = true;
+                            this.authenticationState.next(this.userIdentity);
+                            resolve(this.userIdentity);
+                        } else {
+                            this.userIdentity = null;
+                            this.authenticated = false;
+                            this.authenticationState.next(this.userIdentity);
+                            resolve(this.userIdentity);
+                        }
+                    });
             });
         }
     }
@@ -197,7 +198,7 @@ export class Principal {
     }
 
     public getName(): string {
-        if (!this.isIdentityResolved()) {return null; }
+        if (!this.isIdentityResolved()) { return null; }
         if (this.userIdentity.firstName || this.userIdentity.lastName) {
             return [this.userIdentity.firstName, this.userIdentity.lastName].join(' ');
         } else {
@@ -206,7 +207,7 @@ export class Principal {
     }
 
     public getDetailName(): string[] {
-        if (!this.isIdentityResolved()) {return null; }
+        if (!this.isIdentityResolved()) { return null; }
 
         return [
             this.userIdentity.firstName ? this.userIdentity.firstName : this.userIdentity.logins[0].login,
@@ -225,7 +226,7 @@ export class Principal {
     }
 
     public setTimezoneOffset(): string {
-        // for now setting offset from browser
+        // For now setting offset from browser
         return moment().format('Z');
     }
 

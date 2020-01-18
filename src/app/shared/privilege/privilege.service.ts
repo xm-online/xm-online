@@ -22,8 +22,7 @@ export class PrivilegeService {
                     this.privileges = this.parsePrivileges(result);
                     this.privilegeState.next(this.privileges);
                 }
-            })
-        ;
+            });
     }
 
     public observable(path?: string): Observable<any> {

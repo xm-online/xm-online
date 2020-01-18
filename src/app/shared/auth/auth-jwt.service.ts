@@ -198,8 +198,7 @@ export class AuthServerProvider {
 
         const body = new HttpParams()
             .set('grant_type', 'refresh_token')
-            .set('refresh_token', this.getRefreshToken())
-        ;
+            .set('refresh_token', this.getRefreshToken());
 
         this.http.post<any>(TOKEN_URL, body, {headers, observe: 'response'})
             .pipe(map((resp) => resp.body))

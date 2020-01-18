@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+import * as moment from 'moment';
+
 import { Principal } from '../auth/principal.service';
 import { XmConfigService } from '../index';
-
-import * as moment from 'moment';
 
 /**
  * Pipe is used to display formatted date
@@ -21,7 +21,7 @@ export class XmDateTimePipe implements PipeTransform {
     constructor(private principal: Principal,
                 private xmConfigService: XmConfigService) {
         this.principal.identity().then((account) => this.account = account || {langKey: 'en'});
-        this.dicFormats = {en: 'MM/DD/YYYY HH:mm',  ru: 'DD.MM.YYYY HH:mm', uk: 'DD.MM.YYYY HH:mm'};
+        this.dicFormats = {en: 'MM/DD/YYYY HH:mm', ru: 'DD.MM.YYYY HH:mm', uk: 'DD.MM.YYYY HH:mm'};
         this.xmConfigService.getUiConfig().subscribe((resp) => this.dicFormatsConfig = resp.datesFormats || {});
     }
 
@@ -39,8 +39,8 @@ export class XmDateTimePipe implements PipeTransform {
     private getDefaultFormat(): string {
         const lang = this.account.langKey;
         let format = this.dicFormats.en;
-        if (lang in this.dicFormats) {format =  this.dicFormats[lang]; }
-        if (lang in this.dicFormatsConfig) {format =  this.dicFormatsConfig[lang]; }
+        if (lang in this.dicFormats) { format = this.dicFormats[lang]; }
+        if (lang in this.dicFormatsConfig) { format = this.dicFormatsConfig[lang]; }
         return format;
     }
 }

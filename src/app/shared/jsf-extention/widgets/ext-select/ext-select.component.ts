@@ -195,7 +195,8 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
                 if (this.options.translations && this.options.translations[it]) {
                     this.elements.push({
                         label: this.i18nNamePipe.transform(this.options.translations[it], this.principal),
-                        value: it});
+                        value: it,
+                    });
                 } else {
                     this.elements.push({label: it, value: it});
                 }

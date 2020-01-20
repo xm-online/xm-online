@@ -75,7 +75,6 @@ import { PasswordStrengthBarComponent } from './password-strength-bar/password-s
 import { RoleService } from './role/role.service';
 import { GateSharedCommonModule } from './shared-common.module';
 import { GateSharedLibsModule } from './shared-libs.module';
-import { ValueNotUniqueDirective } from './validators/value-not-unique';
 
 const PIPES = [
     XmEntityIconPipe,
@@ -138,7 +137,6 @@ const PIPES = [
         PrivacyAndTermsDialogComponent,
         PIPES,
         InputPatternDirective,
-        ValueNotUniqueDirective,
     ],
     entryComponents: [
         LoginComponent,
@@ -238,7 +236,6 @@ const PIPES = [
         GooglePlaceModule,
         PIPES,
         InputPatternDirective,
-        ValueNotUniqueDirective,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
@@ -17,13 +18,13 @@ export const CLIENT_UNIQUE_ID_ERROR_CODE = 'client.already.exists';
 export class ClientMgmtDialogComponent implements OnInit {
 
     @Input() public selectedClient: Client;
+    @ViewChild('editForm', {static: false}) public editForm: NgForm;
     public client: Client;
     public languages: any[];
     public scopes: any[];
     public authorities: any[];
     public showLoader: boolean;
-    public idNotUnique: boolean;
-    @ViewChild('userLoginForm', {static: false}) public userLoginForm: any;
+    public clientIdNotUnique: boolean;
 
     constructor(public activeModal: NgbActiveModal,
                 private languageHelper: JhiLanguageHelper,
@@ -67,7 +68,7 @@ export class ClientMgmtDialogComponent implements OnInit {
     }
 
     public save(): void {
-        this.idNotUnique = false;
+        this.clientIdNotUnique = false;
         this.showLoader = true;
         this.client.clientId = this.client.clientId.trim();
         if (this.client.description) {
@@ -78,10 +79,7 @@ export class ClientMgmtDialogComponent implements OnInit {
             .pipe(finalize(() => this.showLoader = false))
             .subscribe(
             (response) => this.onSaveSuccess(response),
-            (err) => {
-                this.showLoader = false;
-                this.idNotUnique = err && err.error && err.error.error === 'client.already.exists';
-            });
+            (err) => this.checkErrorForClientId(err));
     }
 
     protected setFormSources(sources: string[]): any[] {
@@ -92,6 +90,15 @@ export class ClientMgmtDialogComponent implements OnInit {
     private onSaveSuccess(result: any): void {
         this.eventManager.broadcast({name: 'clientListModification', content: 'OK'});
         this.activeModal.dismiss(result);
+    }
+
+    private checkErrorForClientId(err): void {
+        this.clientIdNotUnique = err && err.error && err.error.error === CLIENT_UNIQUE_ID_ERROR_CODE;
+        const ctrlKey = 'clientId';
+        if (this.clientIdNotUnique) {
+            const ctrl = this.editForm.form.controls[ctrlKey];
+            ctrl.setErrors(['valueNotUnique'],{emitEvent: true});
+        }
     }
 
 }

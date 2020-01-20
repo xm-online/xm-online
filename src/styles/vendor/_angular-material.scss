@@ -1,14 +1,20 @@
 @import '~@angular/material/theming';
 
+
 @mixin angular-material($theme) {
 
-    @include mat-core();
+  @include mat-core();
 
-    $xm-primary: mat-palette($mat-teal) !default;
-    $xm-accent:  mat-palette($mat-teal, A200, A100, A400) !default;
-    $xm-warn:    mat-palette($mat-red, 500) !default;
-    $xm-theme:   mat-light-theme($xm-primary, $xm-accent, $xm-warn) !default;
 
-    @include angular-material-theme($xm-theme);
+  $candy-app-primary: mat-palette($mat-indigo);
+  $candy-app-accent:  mat-palette($mat-pink, A200, A100, A400);
+
+
+  $candy-app-warn:    mat-palette($mat-red);
+
+
+  $candy-app-theme:   mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+
+  @include angular-material-theme($candy-app-theme);
 
 }

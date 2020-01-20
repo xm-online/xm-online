@@ -37,60 +37,60 @@ $xm-secondary:                map-get($xm-secondary-palette, $xm-set-palette-def
 $xm-text-on-secondary:        $xm-text !default;
 
 // warning
-$xm-warn-palette:          $mat-orange !default;
-$xm-warn:                  map-get($xm-error-palette, $xm-set-palette-default) !default;
-$xm-text-on-warn:          $xm-text !default;
+$xm-warn-palette:             $mat-orange !default;
+$xm-warn:                     map-get($xm-warn-palette, $xm-set-palette-default) !default;
+$xm-text-on-warn:             $xm-text !default;
 
 // error
-$xm-error-palette:         $mat-red !default;
-$xm-error:                 map-get($xm-error-palette, $xm-set-palette-default) !default;
-$xm-text-on-error:         $xm-text !default;
+$xm-error-palette:            $mat-red !default;
+$xm-error:                    map-get($xm-error-palette, $xm-set-palette-default) !default;
+$xm-text-on-error:            $xm-text !default;
 
 // hint or info
-$xm-hint-palette:          $mat-blue !default;
-$xm-hint:                  map-get($xm-hint-palette, $xm-set-palette-default) !default;
-$xm-text-on-hint:          $xm-text !default;
+$xm-hint-palette:             $mat-blue !default;
+$xm-hint:                     map-get($xm-hint-palette, $xm-set-palette-default) !default;
+$xm-text-on-hint:             $xm-text !default;
 
 // success
-$xm-success-palette:       $mat-green !default;
-$xm-success:               map-get($xm-success-palette, $xm-set-palette-default) !default;
-$xm-text-on-success:       $xm-text !default;
+$xm-success-palette:          $mat-green !default;
+$xm-success:                  map-get($xm-success-palette, $xm-set-palette-default) !default;
+$xm-text-on-success:          $xm-text !default;
 
 // background
-$xm-background:            #fefefe !default;
-$xm-text-on-background:    $xm-text !default;
+$xm-background:               #fefefe !default;
+$xm-text-on-background:       $xm-text !default;
 
 // surface or foreground
-$xm-surface:               #fff !default;
-$xm-text-on-surface:       $xm-text !default;
+$xm-surface:                  #fff !default;
+$xm-text-on-surface:          $xm-text !default;
 
 // border-radius
-$xm-set-enable-rounded:    true !default;
-$border-radius:            4px !default;
+$xm-set-enable-rounded:       true !default;
+$border-radius:               4px !default;
 
-$xm-theme:                 (
-                             // Primary
-                             primary: $xm-primary,
-                             text-on-primary: $xm-text-on-primary,
-                             // Secondary
-                             secondary: $xm-secondary,
-                             text-on-secondary: $xm-secondary,
-                             // Warn
-                             warn: $xm-warn,
-                             text-on-warn: $xm-warn,
-                             // Error
-                             error: $xm-error,
-                             on-error: $xm-error,
-                             // Hint
-                             hint: $xm-hint,
-                             on-hint: $xm-hint,
-                             // Success
-                             success: $xm-hint,
-                             on-success: $xm-success,
-                             // Background
-                             background: $xm-background,
-                             text: $xm-text,
-                             // Surface
-                             surface: $xm-surface,
-                             on-surface: $xm-surface,
-                           ) !default;
+$xm-theme:                    (
+                                // Primary
+                                primary: $xm-primary,
+                                text-on-primary: $xm-text-on-primary,
+                                // Secondary
+                                secondary: $xm-secondary,
+                                text-on-secondary: $xm-secondary,
+                                // Warn
+                                warn: $xm-warn,
+                                text-on-warn: $xm-warn,
+                                // Error
+                                error: $xm-error,
+                                on-error: $xm-error,
+                                // Hint
+                                hint: $xm-hint,
+                                on-hint: $xm-hint,
+                                // Success
+                                success: $xm-hint,
+                                on-success: $xm-success,
+                                // Background
+                                background: $xm-background,
+                                text: $xm-text,
+                                // Surface
+                                surface: $xm-surface,
+                                on-surface: $xm-surface,
+                              ) !default;

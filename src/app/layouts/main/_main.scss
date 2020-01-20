@@ -1,0 +1,83 @@
+$sidebar-background: #fff !default;
+$sidebar-width:      260px !default;
+$sidebar-mini-width: 80px !default;
+$sidebar-z-index:    2 !default;
+
+$sidebar-transition: 300ms cubic-bezier(0.685, 0.0473, 0.346, 1) !default;
+
+$breakpoint-tablet:  991px !default;
+
+
+@mixin sidebar() {
+
+  .sidebar {
+    position:   fixed;
+    bottom:     0;
+    left:       0;
+    top:        0;
+    background: $sidebar-background;
+    width:      $sidebar-width;
+    z-index:    $sidebar-z-index;
+    display:    block;
+    height:     100vh;
+
+    @include transition(width $sidebar-transition);
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    .sidebar {
+      left:       auto;
+      right:      0;
+
+      @include transition($sidebar-transition);
+      @include transform(translate3d($sidebar-width, 0, 0));
+    }
+
+    .nav-open .sidebar {
+      @include transform(translate3d(0, 0, 0));
+    }
+  }
+
+  @media (min-width: $breakpoint-tablet) {
+    .sidebar-mini .sidebar {
+      width: $sidebar-mini-width;
+    }
+  }
+
+}
+
+@mixin main-panel() {
+
+  .main-panel {
+    float:    right;
+    position: relative;
+    width:    calc(100% - #{$sidebar-width});
+
+    @include transition($sidebar-transition);
+  }
+
+  @media (min-width: $breakpoint-tablet) {
+    .sidebar-mini .main-panel {
+      width: calc(100% - #{$sidebar-mini-width});
+    }
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    .main-panel {
+      width: 100%;
+    }
+
+    .nav-open .main-panel {
+      left: 0;
+      @include transform(translate3d(-$sidebar-width, 0, 0));
+    }
+  }
+
+}
+
+@mixin xm-layout-sidebar-with-mini() {
+  @include sidebar();
+  @include main-panel();
+}
+
+@include xm-layout-sidebar-with-mini();

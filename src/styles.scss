@@ -8,12 +8,10 @@
 
 // Vendors
 @import "styles/vendor/index";
+
 @include vendor-xm-override();
 @include angular-material($xm-theme);
 @include bootstrap($xm-theme);
-
-// Todo: Remove material-teal.css after .css migrates to .scss successfully
-@import "assets/css/themes/material-teal.css";
 
 // xm overrides
 @import "src/assets/scss/xm-styles.scss";
@@ -21,3 +19,4 @@
 
 // Components
 @import "./src/app/modules/xm-sidebar/sidebar";
+@import "src/app/layouts/main/main";

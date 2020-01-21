@@ -11,6 +11,12 @@ import { DEFAULT_LANG } from '../../xm.constants';
 @Component({
     selector: 'xm-settings',
     templateUrl: './settings.component.html',
+    styles: [`
+        :host .col-md-8 {
+            padding-top:    16px;
+            padding-bottom: 16px;
+        }
+    `]
 })
 export class SettingsComponent implements OnInit, OnDestroy, AfterViewInit {
 

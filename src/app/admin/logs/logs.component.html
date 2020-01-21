@@ -9,26 +9,25 @@
            translateValues="{total: '{{ (loggers$ | async)?.length }}'}">
           There are {{ (loggers$ | async)?.length || '0' }}loggers.</p>
         <div class="row">
-          <div class="col-sm-2">
-            <mat-form-field>
-              <mat-select [(ngModel)]="selectedService"
-                          (selectionChange)="getLoggers()"
-                          placeholder="{{'metrics.options.service-name' | translate}}">
-                <mat-option *ngFor="let s of services" [value]="s.name">
-                  {{s.name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-sm-2">
-            <mat-form-field>
-              <input matInput placeholder="{{'logs.filter' | translate}}" type="text" [(ngModel)]="filter">
-            </mat-form-field>
-          </div>
+
+          <mat-form-field>
+            <mat-select (selectionChange)="getLoggers()"
+                        [(ngModel)]="selectedService"
+                        placeholder="{{'metrics.options.service-name' | translate}}">
+              <mat-option *ngFor="let s of services" [value]="s.name">
+                {{s.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input [(ngModel)]="filter" matInput placeholder="{{'logs.filter' | translate}}" type="text">
+          </mat-form-field>
+
         </div>
       </div>
 
-      <div class="card-body">
+      <div class="card-body table-responsive">
         <ng-container *ngIf="(loggers$ | async) as loggers">
           <table class="table table-condensed table-striped table-bordered">
             <thead>
@@ -38,10 +37,11 @@
               </th>
             </tr>
             </thead>
+
             <tbody>
             <tr *ngFor="let logger of loggers | pureFilter:filter:'name'">
-              <td class="text-left">{{logger.name | slice:0:140}}</td>
-              <td class="text-center">
+              <td class="text-left text-wrap text-break">{{logger.name}}</td>
+              <td class="text-center btn-group">
                 <button (click)="changeLevel(logger.name, 'TRACE')"
                         [ngClass]="(logger.level=='TRACE') ? 'btn-danger' : 'btn-default'" class="btn btn-sm">TRACE
                 </button>
@@ -59,7 +59,10 @@
                 </button>
               </td>
             </tr>
+            <tbody>
+
           </table>
+
         </ng-container>
         <no-data [show]="!((loggers$ | async)?.length > 0) && !showLoader"></no-data>
       </div>

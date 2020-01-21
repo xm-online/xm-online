@@ -1,0 +1,136 @@
+/*
+ * Rotate
+ */
+@mixin rotate($degree) {
+  $deg: #{$degree}deg;
+  -webkit-transform: rotate($deg);
+  -moz-transform:    rotate($deg);
+  -ms-transform:     rotate($deg);
+  -o-transform:      rotate($deg);
+  transform:         rotate($deg);
+}
+
+@mixin rotateY($degrees) {
+  -webkit-transform: rotateY($degrees);
+  -moz-transform:    rotateY($degrees);
+  -ms-transform:     rotateY($degrees);
+  -o-transform:      rotateY($degrees);
+  transform:         rotateY($degrees);
+}
+
+@mixin rotateY-180() {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform:    rotateY(180deg);
+  -o-transform:      rotateY(180deg);
+  -ms-transform:     rotateY(180deg);
+  transform:         rotateY(180deg);
+}
+
+@mixin rotate-180() {
+  -webkit-transform: rotate(180deg);
+  -moz-transform:    rotate(180deg);
+  -o-transform:      rotate(180deg);
+  -ms-transform:     rotate(180deg);
+  transform:         rotate(180deg);
+}
+
+/*
+ * Translate
+ */
+@mixin translate($x, $y) {
+  @include transform(translate($x, $y));
+}
+
+/*
+ * Transitions
+ */
+@mixin transitions($time, $type) {
+  -webkit-transition: all $time $type;
+  -moz-transition:    all $time $type;
+  -o-transition:      all $time $type;
+  -ms-transition:     all $time $type;
+  transition:         all $time $type;
+}
+@mixin transitions-property($property, $time, $type) {
+  -webkit-transition: $property $time $type;
+  -moz-transition:    $property $time $type;
+  -o-transition:      $property $time $type;
+  -ms-transition:     $property $time $type;
+  transition:         $property $time $type;
+}
+
+/*
+ * Transform
+ */
+@mixin transform($transforms) {
+  -webkit-transform: $transforms;
+  -moz-transform:    $transforms;
+  -ms-transform:     $transforms;
+  transform:         $transforms;
+}
+
+@mixin transform-scale($value) {
+  -webkit-transform: scale($value);
+  -moz-transform:    scale($value);
+  -o-transform:      scale($value);
+  -ms-transform:     scale($value);
+  transform:         scale($value);
+}
+
+@mixin transform-translate-x($value) {
+  -webkit-transform: translate3d($value, 0, 0);
+  -moz-transform:    translate3d($value, 0, 0);
+  -o-transform:      translate3d($value, 0, 0);
+  -ms-transform:     translate3d($value, 0, 0);
+  transform:         translate3d($value, 0, 0);
+}
+
+@mixin transform-translate-y($value) {
+  -webkit-transform: translate3d(0, $value, 0);
+  -moz-transform:    translate3d(0, $value, 0);
+  -o-transform:      translate3d(0, $value, 0);
+  -ms-transform:     translate3d(0, $value, 0);
+  transform:         translate3d(0, $value, 0);
+}
+
+@mixin transform-style($type) {
+  -webkit-transform-style: $type;
+  -moz-transform-style:    $type;
+  -o-transform-style:      $type;
+  -ms-transform-style:     $type;
+  transform-style:         $type;
+}
+
+// Transform Origin
+@mixin transform-origin($origin) {
+  -webkit-transform-origin: $origin;
+  -moz-transform-origin:    $origin;
+  -ms-transform-origin:     $origin;
+  transform-origin:         $origin;
+}
+
+@mixin perspective($value) {
+  -webkit-perspective: $value;
+  -moz-perspective:    $value;
+  -o-perspective:      $value;
+  -ms-perspective:     $value;
+  perspective:         $value;
+}
+
+@mixin backface-visibility($type) {
+  -webkit-backface-visibility: $type;
+  -moz-backface-visibility:    $type;
+  -o-backface-visibility:      $type;
+  -ms-backface-visibility:     $type;
+  backface-visibility:         $type;
+}
+
+// Scale
+@mixin scale($scale) {
+  @include transform(scale($scale));
+}
+
+// Skew
+@mixin skew($x, $y) {
+  @include transform(skew(#{$x}deg, #{$y}deg));
+}

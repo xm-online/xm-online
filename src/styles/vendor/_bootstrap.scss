@@ -1,3 +1,27 @@
+// Colors
+$primary:               $xm-primary;
+$secondary:             $xm-secondary;
+$success:               $xm-success;
+$info:                  $xm-hint;
+$warning:               $xm-warn;
+$danger:                $xm-error;
+
+$light:                 $xm-text-light;
+$dark:                  $xm-text-dark;
+
+$body-bg:               $xm-background;
+$body-color:            $xm-text;
+
+// Card
+$card-bg:               $xm-surface;
+$card-border-color:     $card-bg;
+$card-cap-bg:           $card-bg;
+
+/**
+ * Override
+ */
+$link-hover-decoration: none;
+
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
@@ -36,19 +60,38 @@
 @import "~bootstrap/scss/utilities";
 @import "~bootstrap/scss/print";
 
-@mixin bootstrap($theme) {
-  $primary:    map_get($theme, primary);
-  $secondary:  map_get($theme, secondary);
+/**
+ * Table
+ */
+@mixin bootstrap-xm-override-table() {
+  .table {
+    th, td {
+      vertical-align: middle;
+    }
+  }
+}
 
-  $success:    map_get($theme, success);
+/**
+ * Button group
+ */
+@mixin bootstrap-xm-override-btn-group() {
+  .btn-group:not(.btn-group-vertical) {
+    margin: $spacer 0;
 
-  $info:       map_get($theme, hint);
-  $warning:    map_get($theme, warn);
-  $danger:     map_get($theme, error);
+    > .btn:first-child {
+      @include border-left-radius($badge-pill-border-radius);
+    }
 
-  $light:      map_get($theme, light);
-  $dark:       map_get($theme, dark);
+    > .btn:last-child {
+      @include border-right-radius($badge-pill-border-radius);
+    }
 
-  $body-bg:    map_get($theme, background);
-  $body-color: map_get($theme, text);
+  }
+}
+
+@mixin bootstrap-xm-override() {
+
+  @include bootstrap-xm-override-table();
+  @include bootstrap-xm-override-btn-group();
+
 }

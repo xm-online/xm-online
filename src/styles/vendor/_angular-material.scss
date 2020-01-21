@@ -1,20 +1,36 @@
 @import '~@angular/material/theming';
 
+@include mat-core();
 
-@mixin angular-material($theme) {
+@mixin xm-angular-material-theme($theme) {
+  $primary:        map-get($theme, primary-palette);
+  $secondary:      map-get($theme, secondary-palette);
+  $warn:           map-get($theme, warn-palette);
 
-  @include mat-core();
+  // @todo: pass $default, $light and $dark
+  $xm-mat-primary: mat-palette($primary);
+  $xm-mat-accent:  mat-palette($secondary, A200, A100, A400);
+  $xm-mat-warn:    mat-palette($warn);
 
+  $xm-mat-theme:   mat-light-theme($xm-mat-primary, $xm-mat-accent, $xm-mat-warn);
 
-  $candy-app-primary: mat-palette($mat-indigo);
-  $candy-app-accent:  mat-palette($mat-pink, A200, A100, A400);
+  @include angular-material-theme($xm-mat-theme);
+}
 
+@mixin angular-material-xm-override() {
+  /**
+   * Backward compatibility: full width for all input inside of .form-group.
+   * @todo: research
+   */
+  .form-group > mat-form-field {
+    width: 100%;
+  }
 
-  $candy-app-warn:    mat-palette($mat-red);
-
-
-  $candy-app-theme:   mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
-
-  @include angular-material-theme($candy-app-theme);
-
+  /**
+   * Backward compatibility: the icons shouldn't be overridden like this
+   * @todo: resolve cases locally
+   */
+  a .material-icons {
+    vertical-align: middle;
+  }
 }

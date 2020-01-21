@@ -1,3 +1,3 @@
-@import "../theme/index";
+@import "~@angular/material/theming";
 
-$xm-primary-palette:          $mat-light-blue !default;
+$xm-primary-palette: $mat-light-blue;

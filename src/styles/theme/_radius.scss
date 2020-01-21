@@ -1,0 +1,14 @@
+/*
+ * Border radius
+ */
+$xm-enable-rounded: true !default;
+
+$xm-radius-xs:      3px !default;
+$xm-radius-circle:  50% !default;
+$xm-radius-pill:    32px !default;
+
+@mixin is-enable-rounded() {
+  @if ($xm-enable-rounded) {
+    border-radius: $xm-radius-xs;
+  }
+}

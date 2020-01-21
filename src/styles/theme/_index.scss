@@ -1,3 +1,9 @@
-@import "functions";
+/*
+ * Import all variables
+ */
+@import "breakpoints";
+@import "radius";
+@import "shadow";
 @import "theme";
 @import "typography";
+@import "z-index";

@@ -1,10 +1,8 @@
-@import "./base";
-
-$sidebar-background: #282828 !default;
-$sidebar-z-index:    100 !default;
-$backdrop:           white !default;
-$opacity:            .93 !default;
-$backdrop-z-index:   -1 !default;
+$xm-sidebar-background: $xm-surface !default;
+$xm-sidebar-z-index:    $zindex-fixed !default;
+$xm-backdrop:           white !default;
+$xm-opacity:            0.93 !default;
+$xm-backdrop-z-index:   -1 !default;
 
 @mixin sidebar($theme) {
   display:        flex;
@@ -12,18 +10,19 @@ $backdrop-z-index:   -1 !default;
   height:         100%;
   position:       absolute;
   width:          100%;
-  z-index:        $sidebar-z-index;
-  background:     $sidebar-background;
+  z-index:        $xm-sidebar-z-index;
+  background:     $xm-sidebar-background;
+  @include xm-shadow-sm();
 
   .xm-sidebar-background {
-    background: $backdrop;
+    background: $xm-backdrop;
     content:    '';
     display:    block;
     height:     100%;
-    opacity:    $opacity;
+    opacity:    $xm-opacity;
     position:   absolute;
     width:      100%;
-    z-index:    $backdrop-z-index;
+    z-index:    $xm-backdrop-z-index;
     top:        0;
     left:       0;
     right:      0;

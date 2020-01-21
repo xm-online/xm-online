@@ -1,4 +1,6 @@
-@import "../base";
+$icon-size:           42px !default;
+$icon-size-x:         $icon-size !default;
+$icon-size-y:         $icon-size !default;
 
 $user-img-border:        solid 1px #fff !default;
 $user-img-border-radius: 50% !default;
@@ -20,13 +22,12 @@ $user-img-border-radius: 50% !default;
     padding:        $menu-item-padding-y $sidebar-padding-x;
 
     @include menu-link();
-    @include focus();
   }
   .user-name {
     padding-left:  $sidebar-padding-x;
-    font-size:     $font-size-sm;
-    color:         $text-color;
-    font-weight:   $font-weight;
+    font-size:     $xm-font-size-sm;
+    color:         $xm-text;
+    font-weight:   $xm-font-weight;
     text-overflow: ellipsis;
     overflow:      hidden;
     white-space:   nowrap;

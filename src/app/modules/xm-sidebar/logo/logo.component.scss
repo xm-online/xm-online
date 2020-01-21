@@ -1,4 +1,7 @@
-@import "../base";
+$xm-logo-icon-size:       42px !default;
+$xm-logo-icon-size-x:     $xm-logo-icon-size !default;
+$xm-logo-icon-size-y:     $xm-logo-icon-size !default;
+$xm-logo-title-font-size: 18px !default;
 
 @mixin logo-theme($theme) {
 
@@ -11,16 +14,16 @@
   }
 
   .logo-img {
-    height:    $icon-size-y;
-    width:     $icon-size-x;
-    min-width: $icon-size-x;
+    height:    $xm-logo-icon-size-y;
+    width:     $xm-logo-icon-size-x;
+    min-width: $xm-logo-icon-size-x;
   }
 
   .logo-title {
     padding-left: $sidebar-padding-x;
-    font-size:    $font-size;
-    color:        $text-color;
-    font-weight:  $font-weight;
+    font-size:    $xm-logo-title-font-size;
+    color:        $xm-text;
+    font-weight:  $xm-font-weight;
   }
 
   @include main-with-sidebar-mini {

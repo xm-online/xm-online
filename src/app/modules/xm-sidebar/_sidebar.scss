@@ -3,6 +3,9 @@
 @import "./sidebar.component";
 @import "./user/user.component";
 
+$menu-item-padding-y: 15px !default;
+$sidebar-padding-x:   12px !default;
+
 @mixin xm-sidebar($theme) {
   @include logo-theme($theme);
   @include user-theme($theme);
@@ -11,5 +14,5 @@
 }
 
 .xm-sidebar {
-  @include xm-sidebar(null);
+  @include xm-sidebar($xm-theme);
 }

@@ -1,34 +1,31 @@
-@import "../base";
-@import "../expansion-indicator";
-
-$menu-item-hover:        rgba(200, 200, 200, 0.2) !default;
-$menu-item-active:       0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(#000, 0.4) !default;
-$menu-list-padding-left: 0 !default;
-$menu-icon-font-size:    20px !default;
+$xm-menu-item-hover:        rgba(200, 200, 200, 0.2) !default;
+$xm-menu-item-active:       0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(#000, 0.4) !default;
+$xm-menu-list-padding-left: 0 !default;
+$xm-menu-icon-font-size:    20px !default;
+$xm-menu-icon-color:        #a9afbb !default;
 
 @mixin menu-link() {
   cursor: pointer;
 
   &.expanded {
-    background: $menu-item-hover;
-    @include feature-rounded();
+    background: $xm-menu-item-hover;
+    @include is-enable-rounded();
   }
 
   &:active {
-    background: $background;
-    @include feature-rounded();
+    background: $xm-background;
+    @include is-enable-rounded();
   }
 
   &.active {
-    @include on-feature-shadow {
-      box-shadow: $menu-item-active;
-    }
+    color: $xm-primary;
+    @include xm-shadow-xs();
   }
 
   &:hover:not(.active),
   &:focus:not(.active) {
-    background: $menu-item-hover;
-    @include feature-rounded();
+    background: $xm-menu-item-hover;
+    @include is-enable-rounded();
   }
 }
 
@@ -37,8 +34,8 @@ $menu-icon-font-size:    20px !default;
   .menu-title {
 
     &.expanded {
-      background: $menu-item-hover;
-      @include feature-rounded();
+      background: $xm-menu-item-hover;
+      @include is-enable-rounded();
     }
   }
 
@@ -46,7 +43,7 @@ $menu-icon-font-size:    20px !default;
     list-style-type: none;
 
     // TODO: override default ul styles
-    padding-left:    $menu-list-padding-left;
+    padding-left:    $xm-menu-list-padding-left;
     margin-bottom:   0;
 
     &.collapsed {
@@ -70,12 +67,12 @@ $menu-icon-font-size:    20px !default;
     white-space:    nowrap;
     display:        flex;
     flex-direction: row;
-    color:          $text-color;
+    color:          $xm-text;
     padding:        $menu-item-padding-y $sidebar-padding-x $menu-item-padding-y $sidebar-padding-x * 2;
 
 
-    & > .mat-icon {
-      color: $sidebar-icon-color;
+    &:not(.active) > .mat-icon {
+      color: $xm-menu-icon-color;
     }
 
     & > span {
@@ -83,11 +80,10 @@ $menu-icon-font-size:    20px !default;
     }
 
     @include menu-link();
-    @include focus();
   }
 
   .menu-icon {
-    font-size: $menu-icon-font-size;
+    font-size: $xm-menu-icon-font-size;
   }
 
 }

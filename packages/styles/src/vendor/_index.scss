@@ -1,0 +1,22 @@
+@import "angular-calendar";
+@import "angular-material";
+@import "bootstrap";
+@import "chartist";
+@import "datatables.net";
+@import "fullcalendar";
+@import "jvectormap-zoomin";
+@import "leaflet";
+@import "ng-pick-datetime";
+@import "simplemde";
+@import "snazzy-info-window";
+@import "swagger-ui";
+@import "sweetalert2";
+
+@mixin xm-vendor-xm-override() {
+  @include angular-material-xm-override();
+  @include bootstrap-xm-override();
+  @include chartist-xm-override();
+  @include jvectormap-xm-override();
+  @include swagger-ui-xm-override();
+  @include sweetalert2-xm-override();
+}

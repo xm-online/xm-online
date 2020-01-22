@@ -17,6 +17,7 @@
   },
   "scripts": {
     "ng": "ng",
+    "npm-link": "npm link ./packages/styles",
     "install-exts": "node ./scripts/install-exts.js",
     "start": "npm run prebuild && ng serve --proxy-config proxy.conf.js --host=0.0.0.0",
     "start-local": "npm run prebuild && ng serve --proxy-config local.proxy.conf.js --live-reload",

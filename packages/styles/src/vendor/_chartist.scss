@@ -1,0 +1,60 @@
+@import "../../../../node_modules/chartist/dist/scss/settings/chartist-settings";
+
+$ct-series-colors: (
+                     #00bcd4,
+                     #f44336,
+                     #ff9800,
+                     #d17905,
+                     #453d3f,
+                     #59922b,
+                     #0544d3,
+                     #6b0392,
+                     #f05b4f,
+                     #dda458,
+                     #eacf7d,
+                     #86797d,
+                     #b2c326,
+                     #6188e2,
+                     #a748ca
+                   );
+
+$ct-label-color:   rgba(0, 0, 0, 0.4) !default;
+
+@import "../../../../node_modules/chartist/dist/scss/chartist";
+
+@mixin chartist-xm-override() {
+
+  .ct-bar {
+    fill:         none;
+    stroke-width: 10px;
+  }
+
+  .ct-line {
+    fill:         none;
+    stroke-width: 4px;
+  }
+
+  .ct-point {
+    stroke-linecap: round;
+    stroke-width:   10px;
+  }
+
+  .ct-grid {
+    stroke:           rgba(0, 0, 0, 0.2);
+    stroke-dasharray: 2px;
+    stroke-width:     1px;
+  }
+
+  .ct-label {
+    color:   $ct-label-color;
+    display: -webkit-flex;
+    display: flex;
+    fill:    $ct-label-color;
+  }
+
+  .ct-label.ct-vertical.ct-start {
+    justify-content: flex-end;
+    text-align:      right;
+    text-anchor:     end;
+  }
+}

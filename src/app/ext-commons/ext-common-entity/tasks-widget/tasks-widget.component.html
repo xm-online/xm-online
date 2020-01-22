@@ -31,12 +31,20 @@
             </td>
             <td>{{item.title}}</td>
             <td class="td-actions text-right">
-              <button (click)="onEdit(item)" class="btn btn-just-icon btn-link btn-primary mat-raised-button mr-1" data-original-title="Edit Task"
-                      rel="tooltip" type="button">
+              <button (click)="onEdit(item)"
+                      data-original-title="Edit Task"
+                      mat-icon-button
+                      color="primary"
+                      rel="tooltip"
+                      type="button">
                 <i class="material-icons">edit</i>
               </button>
-              <button (click)="onRemove(item)" class="btn btn-just-icon btn-link btn-danger mat-raised-button" data-original-title="Remove"
-                      rel="tooltip" type="button">
+              <button (click)="onRemove(item)"
+                      data-original-title="Remove"
+                      mat-icon-button
+                      color="warn"
+                      rel="tooltip"
+                      type="button">
                 <i class="material-icons">close</i>
               </button>
             </td>

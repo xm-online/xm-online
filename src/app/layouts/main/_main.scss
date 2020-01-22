@@ -1,11 +1,17 @@
-$sidebar-background: #fff !default;
-$sidebar-width:      260px !default;
-$sidebar-mini-width: 80px !default;
-$sidebar-z-index:    2 !default;
+$xm-sidebar-background: #fff !default;
+$xm-sidebar-width:      260px !default;
+$xm-sidebar-mini-width: 80px !default;
+$xm-sidebar-z-index:    $zindex-fixed !default;
+$xm-sidebar-transition: 300ms cubic-bezier(0.685, 0.0473, 0.346, 1) !default;
 
-$sidebar-transition: 300ms cubic-bezier(0.685, 0.0473, 0.346, 1) !default;
+// @todo: take from global variables
+$breakpoint-tablet:     991px !default;
 
-$breakpoint-tablet:  991px !default;
+@mixin main-with-sidebar-mini {
+  @at-root .sidebar-mini {
+    .sidebar:not(:hover) { @content; }
+  }
+}
 
 
 @mixin sidebar() {
@@ -15,22 +21,22 @@ $breakpoint-tablet:  991px !default;
     bottom:     0;
     left:       0;
     top:        0;
-    background: $sidebar-background;
-    width:      $sidebar-width;
-    z-index:    $sidebar-z-index;
+    background: $xm-sidebar-background;
+    width:      $xm-sidebar-width;
+    z-index:    $xm-sidebar-z-index;
     display:    block;
     height:     100vh;
 
-    @include transition(width $sidebar-transition);
+    @include transition(width $xm-sidebar-transition);
   }
 
   @media (max-width: $breakpoint-tablet) {
     .sidebar {
-      left:       auto;
-      right:      0;
+      left:  auto;
+      right: 0;
 
-      @include transition($sidebar-transition);
-      @include transform(translate3d($sidebar-width, 0, 0));
+      @include transition($xm-sidebar-transition);
+      @include transform(translate3d($xm-sidebar-width, 0, 0));
     }
 
     .nav-open .sidebar {
@@ -39,9 +45,39 @@ $breakpoint-tablet:  991px !default;
   }
 
   @media (min-width: $breakpoint-tablet) {
-    .sidebar-mini .sidebar {
-      width: $sidebar-mini-width;
+    .sidebar-mini .sidebar:not(:hover) {
+      width: $xm-sidebar-mini-width;
     }
+  }
+
+  // utils
+  // @todo:
+  .perfect-scrollbar-on {
+    .sidebar,
+    .main-panel {
+      height:     100%;
+      max-height: 100%;
+    }
+  }
+
+  .sidebar-mini {
+    .visible-on-sidebar-regular {
+      display: none !important;
+    }
+
+    .visible-on-sidebar-mini {
+      display: inline-block !important;
+    }
+  }
+
+  :not(.sidebar-mini) {
+    .visible-on-sidebar-mini {
+      display: none !important;
+    }
+  }
+
+  .visible-on-sidebar-regular {
+    display: inline-block !important;
   }
 
 }
@@ -51,14 +87,14 @@ $breakpoint-tablet:  991px !default;
   .main-panel {
     float:    right;
     position: relative;
-    width:    calc(100% - #{$sidebar-width});
+    width:    calc(100% - #{$xm-sidebar-width});
 
-    @include transition($sidebar-transition);
+    @include transition($xm-sidebar-transition);
   }
 
   @media (min-width: $breakpoint-tablet) {
     .sidebar-mini .main-panel {
-      width: calc(100% - #{$sidebar-mini-width});
+      width: calc(100% - #{$xm-sidebar-mini-width});
     }
   }
 
@@ -69,7 +105,7 @@ $breakpoint-tablet:  991px !default;
 
     .nav-open .main-panel {
       left: 0;
-      @include transform(translate3d(-$sidebar-width, 0, 0));
+      @include transform(translate3d(-$xm-sidebar-width, 0, 0));
     }
   }
 

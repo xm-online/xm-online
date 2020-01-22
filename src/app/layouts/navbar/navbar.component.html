@@ -2,6 +2,7 @@
   <div class="container-fluid">
     <div class="col-sm-12">
       <div class="xm-navbar-container">
+
         <div class="navbar-container-part xm-nav-logo">
           <a [routerLink]="isAuthenticated() ? '/dashboard' : '/'"
              class="row flex-nowrap no-gutters align-items-center">
@@ -11,7 +12,7 @@
         </div>
 
         <div class="navbar-minimize navbar-container-part drawer-toggle">
-          <button class="btn btn-round btn-white btn-fill btn-just-icon" id="minimizeSidebar" mat-raised-button>
+          <button id="minimizeSidebar" mat-icon-button>
             <i class="material-icons visible-on-sidebar-regular">more_vert</i>
             <i class="material-icons visible-on-sidebar-mini">view_list</i>
           </button>
@@ -21,7 +22,7 @@
           <button (click)="onBack()"
                   *ngSwitchCase="true"
                   class="btn btn-round btn-white btn-fill btn-just-icon pull-left btn-back"
-                  mat-raised-button>
+                  mat-icon-button>
             <i class="material-icons">arrow_back</i>
           </button>
         </div>
@@ -39,7 +40,7 @@
                      xmInputPattern>
               <button (click)="search(searchBox.value)"
                       class="btn btn-white btn-round btn-just-icon"
-                      mat-raised-button
+                      mat-icon-button
                       type="submit">
                 <i class="material-icons">search</i>
                 <div class="ripple-container"></div>
@@ -77,7 +78,7 @@
         <div class="navbar-container-part sidbar-toggle">
           <button (click)="sidebarToggle()"
                   class="navbar-toggler btn btn-icon btn-just-icon btn-link btn-no-ripple"
-                  mat-raised-button
+                  mat-icon-button
                   type="button">
             <span class="sr-only">Toggle navigation</span>
             <span class="navbar-toggler-icon icon-bar"></span>

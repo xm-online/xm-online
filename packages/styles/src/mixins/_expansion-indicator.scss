@@ -2,7 +2,7 @@ $xm-mat-expansion-indicator-padding:      3px !default;
 $xm-mat-expansion-indicator-border-style: solid !default;
 $xm-mat-expansion-indicator-border-width: 0 2px 2px 0 !default;
 
-@mixin xm-mat-expansion-indicator($theme) {
+@mixin xm-mat-expansion-indicator() {
   border-style:   $xm-mat-expansion-indicator-border-style;
   border-width:   $xm-mat-expansion-indicator-border-width;
   content:        '';

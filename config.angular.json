@@ -23,7 +23,16 @@
                             "src/swagger-ui",
                             "src/robots.txt"
                         ],
-                        "styles": [ "src/styles.scss" ],
+                        "styles": [
+                            "src/styles.scss",
+                            {"input": "src/styles/themes/_teal.scss", "bundleName": "teal"},
+                            {"input": "src/styles/themes/_deep-purple.scss", "bundleName": "deep-purple"},
+                            {"input": "src/styles/themes/_indigo.scss", "bundleName": "indigo"},
+                            {"input": "src/styles/themes/_pink.scss", "bundleName": "pink"}
+                        ],
+                        "stylePreprocessorOptions": {
+                            "includePaths": ["src/styles"]
+                        },
                         "scripts": [
                             "node_modules/hammerjs/hammer.min.js",
                             "node_modules/jquery/dist/jquery.js",

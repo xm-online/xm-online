@@ -1,26 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
-// Utils
-@import "styles/mixins/index";
-
 // Theme
-@import "styles/themes/pink";
-
-// Variables
-@import "styles/theme/index";
+@import "./styles/theme";
+@include xm-ngx-styles-theme($xm-theme);
 
 // Vendors
-@import "styles/vendor/index";
+@import "~@xm-ngx/styles/src/vendor/index";
 @include xm-angular-material-theme($xm-theme);
 @include xm-vendor-xm-override();
 
 // Components
-@import "src/app/layouts/main/main";
-@import "./styles/expansion-indicator";
-@import "./styles/avatar-img-container";
-@import "./styles/card";
-@import "./styles/card-header";
-@import "./styles/card-entity-list-actions";
-@import "./styles/fab";
-@import "./styles/state";
-@import "./src/app/modules/xm-sidebar/sidebar";
+@import "app/layouts/main/main";
+@import "app/modules/xm-sidebar/sidebar";

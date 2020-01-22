@@ -58,7 +58,7 @@ $xm-menu-icon-color:        #a9afbb !default;
     margin-left:  auto;
 
     &::after {
-      @include mat-expansion-indicator();
+      @include xm-mat-expansion-indicator();
     }
   }
 

@@ -1,8 +1,10 @@
-.xm-entity-list-actions {
-  &.dropdown {
-    position: absolute;
-    right:    0;
-    top:      0;
-    z-index:  $zindex-dropdown;
+@mixin xm-entity-list-actions($theme) {
+  .xm-entity-list-actions {
+    &.dropdown {
+      position: absolute;
+      right:    0;
+      top:      0;
+      z-index:  $zindex-dropdown;
+    }
   }
 }

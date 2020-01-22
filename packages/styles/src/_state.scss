@@ -4,68 +4,70 @@
  */
 
 // State
-$xm-state-background:      #e0e0e0;
-$xm-state-color:           #fff;
-$xm-state-radius:          $xm-radius-pill;
-$xm-state-font-size:       $xm-font-size-sm;
-$xm-state-padding-x:       12px;
+$xm-state-background:      #e0e0e0 !default;
+$xm-state-color:           #fff !default;
+$xm-state-radius:          $xm-radius-pill !default;
+$xm-state-font-size:       $xm-font-size-sm !default;
+$xm-state-padding-x:       12px !default;
 
 // Icon
-$xm-state-icon-background: $xm-primary;
-$xm-state-icon-color:      $xm-text-on-primary;
-$xm-state-icon-size:       32px;
-$xm-state-icon-radius:     $xm-radius-circle;
+$xm-state-icon-background: $xm-primary !default;
+$xm-state-icon-color:      $xm-text-on-primary !default;
+$xm-state-icon-size:       32px !default;
+$xm-state-icon-radius:     $xm-radius-circle !default;
 
-.xm-state {
-  background:    $xm-state-background;
-  border-radius: $xm-state-radius;
-  display:       inline-block;
-  font-size:     $xm-state-font-size;
-  padding-left:  $xm-state-padding-x;
-  padding-right: $xm-state-padding-x;
-}
+@mixin xm-state($theme) {
 
-.xm-state-icon {
-  background:    $xm-state-icon-background;
-  border-radius: $xm-state-icon-radius;
-  color:         $xm-state-icon-color;
-  display:       block;
-  float:         left;
-  margin:        0 8px 0 -12px;
-  padding:       4px 0;
-  text-align:    center;
-  width:         $xm-state-icon-size;
-}
+  .xm-state {
+    background:    $xm-state-background;
+    border-radius: $xm-state-radius;
+    display:       inline-block;
+    font-size:     $xm-state-font-size;
+    padding-left:  $xm-state-padding-x;
+    padding-right: $xm-state-padding-x;
+  }
 
-.xm-state2 {
+  .xm-state-icon {
+    background:    $xm-state-icon-background;
+    border-radius: $xm-state-icon-radius;
+    color:         $xm-state-icon-color;
+    display:       block;
+    float:         left;
+    margin:        0 8px 0 -12px;
+    padding:       4px 0;
+    text-align:    center;
+    width:         $xm-state-icon-size;
+  }
 
-  &.act-as-button {
-    color:      $xm-state-color;
-    opacity:    1;
-    transition: opacity, .2s, ease;
+  .xm-state2 {
 
-    &:hover {
-      cursor:  pointer;
-      opacity: .8;
+    &.act-as-button {
+      color:      $xm-state-color;
+      opacity:    1;
+      transition: opacity, .2s, ease;
+
+      &:hover {
+        cursor:  pointer;
+        opacity: .8;
+      }
+
+      @media screen and (max-width: 420px) {
+        display: block;
+        width:   100%;
+      }
     }
 
-    @media screen and (max-width: 420px) {
-      display: block;
-      width:   100%;
+    &.no-wrap {
+      max-width:     100%;
+      overflow:      hidden;
+      text-overflow: ellipsis;
+      white-space:   nowrap;
     }
   }
 
-  &.no-wrap {
-    max-width:     100%;
-    overflow:      hidden;
-    text-overflow: ellipsis;
-    white-space:   nowrap;
+  .xm-state, .xm-state-icon {
+    height:      $xm-state-icon-size;
+    line-height: $xm-state-icon-size;
   }
+
 }
-
-.xm-state, .xm-state-icon {
-  height:      $xm-state-icon-size;
-  line-height: $xm-state-icon-size;
-}
-
-

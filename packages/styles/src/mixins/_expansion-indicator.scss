@@ -1,0 +1,13 @@
+$xm-mat-expansion-indicator-padding:      3px !default;
+$xm-mat-expansion-indicator-border-style: solid !default;
+$xm-mat-expansion-indicator-border-width: 0 2px 2px 0 !default;
+
+@mixin xm-mat-expansion-indicator($theme) {
+  border-style:   $xm-mat-expansion-indicator-border-style;
+  border-width:   $xm-mat-expansion-indicator-border-width;
+  content:        '';
+  display:        inline-block;
+  padding:        $xm-mat-expansion-indicator-padding;
+  transform:      rotate(45deg);
+  vertical-align: middle;
+}

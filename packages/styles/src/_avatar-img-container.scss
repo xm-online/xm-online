@@ -9,28 +9,32 @@ $xm-avatar-img-container-size:   34px !default;
 $xm-avatar-img-container-height: $xm-avatar-img-container-size !default;
 $xm-avatar-img-container-width:  $xm-avatar-img-container-size !default;
 
-.xm-avatar-img-container {
-  display:  inline-block;
-  position: relative;
-}
+@mixin xm-avatar-img-container($theme) {
 
-.xm-avatar-img-container > i {
-  border-radius: $xm-avatar-img-container-radius;
-  color:         $xm-avatar-img-container-color;
-  display:       block;
-  left:          0;
-  position:      absolute;
-  right:         0;
-  text-align:    center;
-  top:           50%;
-  transform:     translateY(-50%);
-}
+  .xm-avatar-img-container {
+    display:  inline-block;
+    position: relative;
+  }
 
-.xm-avatar-img-container > img {
-  border-radius: $xm-avatar-img-container-radius;
-  height:        $xm-avatar-img-container-height;
-  overflow:      hidden;
-  width:         $xm-avatar-img-container-width;
+  .xm-avatar-img-container > i {
+    border-radius: $xm-avatar-img-container-radius;
+    color:         $xm-avatar-img-container-color;
+    display:       block;
+    left:          0;
+    position:      absolute;
+    right:         0;
+    text-align:    center;
+    top:           50%;
+    transform:     translateY(-50%);
+  }
 
-  @include xm-shadow-xs();
+  .xm-avatar-img-container > img {
+    border-radius: $xm-avatar-img-container-radius;
+    height:        $xm-avatar-img-container-height;
+    overflow:      hidden;
+    width:         $xm-avatar-img-container-width;
+
+    @include xm-shadow-xs();
+  }
+
 }

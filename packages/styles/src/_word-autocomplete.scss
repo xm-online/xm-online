@@ -3,37 +3,40 @@
  * @todo: refactor, add vars, move to component
  */
 
-.word-container {
-  margin-bottom: 16px;
-}
+@mixin xm-word($theme) {
 
-.word-list {
-  background:         #fafafa;
-  border:             1px solid #eeeeee;
-  border-radius:      0 6px 6px;
-  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
-  box-shadow:         0 3px 9px rgba(0, 0, 0, .5);
-  overflow:           hidden;
-
-  position:           absolute;
-  z-index:            100;
-}
-
-.word-list > div {
-  padding: 6px 10px;
-
-  &:hover {
-    background: #dddddd;
-    cursor:     pointer;
+  .word-container {
+    margin-bottom: 16px;
   }
 
-  &.active {
-    background: #cccccc;
+  .word-list {
+    background:         #fafafa;
+    border:             1px solid #eeeeee;
+    border-radius:      0 6px 6px;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    box-shadow:         0 3px 9px rgba(0, 0, 0, .5);
+    overflow:           hidden;
+
+    position:           absolute;
+    z-index:            100;
   }
-}
 
+  .word-list > div {
+    padding: 6px 10px;
 
-.word-hint {
-  font-size: 11px;
-  position:  absolute;
+    &:hover {
+      background: #dddddd;
+      cursor:     pointer;
+    }
+
+    &.active {
+      background: #cccccc;
+    }
+  }
+
+  .word-hint {
+    font-size: 11px;
+    position:  absolute;
+  }
+
 }

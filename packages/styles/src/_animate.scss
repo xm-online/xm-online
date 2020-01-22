@@ -3,30 +3,34 @@
  * @todo: extend with the animatewithsass or alternative
  */
 
-.xm-animate,
-.xm-animate-hide {
-  @include transform-origin(center top);
-  transition-property: -webkit-transform, transform, opacity;
-}
+@mixin xm-animate($theme) {
 
-.xm-animate {
-  opacity:    0;
-  transition: cubic-bezier(0.25, 0.8, 0.25, 1) 250ms;
-  @include transform(translate3d(0, -10px, 0) scale(0.9));
-
-  &.show {
-    opacity: 1;
-    @include transform(translate3d(0, 0, 0) scale(1));
+  .xm-animate,
+  .xm-animate-hide {
+    @include transform-origin(center top);
+    transition-property: -webkit-transform, transform, opacity;
   }
-}
 
-.xm-animate-hide {
-  opacity: 1;
-  @include transform(translate3d(0, 0, 0) scale(1));
-
-  &.ng-hide {
+  .xm-animate {
     opacity:    0;
     transition: cubic-bezier(0.25, 0.8, 0.25, 1) 250ms;
     @include transform(translate3d(0, -10px, 0) scale(0.9));
+
+    &.show {
+      opacity: 1;
+      @include transform(translate3d(0, 0, 0) scale(1));
+    }
   }
+
+  .xm-animate-hide {
+    opacity: 1;
+    @include transform(translate3d(0, 0, 0) scale(1));
+
+    &.ng-hide {
+      opacity:    0;
+      transition: cubic-bezier(0.25, 0.8, 0.25, 1) 250ms;
+      @include transform(translate3d(0, -10px, 0) scale(0.9));
+    }
+  }
+
 }

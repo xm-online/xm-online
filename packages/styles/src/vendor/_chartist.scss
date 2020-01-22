@@ -1,4 +1,4 @@
-@import "../../../../node_modules/chartist/dist/scss/settings/chartist-settings";
+@import "~chartist/dist/scss/settings/chartist-settings";
 
 $ct-series-colors: (
                      #00bcd4,
@@ -20,7 +20,7 @@ $ct-series-colors: (
 
 $ct-label-color:   rgba(0, 0, 0, 0.4) !default;
 
-@import "../../../../node_modules/chartist/dist/scss/chartist";
+@import "~chartist/dist/scss/chartist";
 
 @mixin chartist-xm-override() {
 

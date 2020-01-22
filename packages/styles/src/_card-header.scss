@@ -1,32 +1,36 @@
-@import "packages/styles/src/card";
+@import "./card";
 
-$xm-card-header-left:        0;
-$xm-card-header-icon-radius: 3px;
-$xm-card-header-right:       16px;
-$xm-card-header-padding:     16px;
+$xm-card-header-left:        0 !default;
+$xm-card-header-icon-radius: 3px !default;
+$xm-card-header-right:       16px !default;
+$xm-card-header-padding:     16px !default;
 
-.card-icon {
-  background-color: $xm-primary;
-  border-radius:    $xm-card-header-icon-radius;
-  color:            $xm-text-on-primary;
-  float:            left;
-  margin-left:      $xm-card-header-left;
-  margin-right:     $xm-card-header-right;
-  margin-top:       -($xm-card-margin + $xm-card-header-padding);
-  padding:          $xm-card-header-padding;
-}
 
-.card-header-primary {
+@mixin xm-card-header($theme) {
+
   .card-icon {
     background-color: $xm-primary;
-    @include xm-shadow-sm($xm-primary);
+    border-radius:    $xm-card-header-icon-radius;
+    color:            $xm-text-on-primary;
+    float:            left;
+    margin-left:      $xm-card-header-left;
+    margin-right:     $xm-card-header-right;
+    margin-top:       -($xm-card-margin + $xm-card-header-padding);
+    padding:          $xm-card-header-padding;
   }
-}
 
-.card-header-secondary {
-  .card-icon {
-    background-color: $xm-secondary;
-    @include xm-shadow-sm($xm-secondary);
+  .card-header-primary {
+    .card-icon {
+      background-color: $xm-primary;
+      @include xm-shadow-sm($xm-primary);
+    }
   }
-}
 
+  .card-header-secondary {
+    .card-icon {
+      background-color: $xm-secondary;
+      @include xm-shadow-sm($xm-secondary);
+    }
+  }
+
+}

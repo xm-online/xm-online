@@ -1,6 +1,6 @@
-$xm-card-margin: 16px;
+$xm-card-margin: 16px !default;
 
-@mixin xm-card() {
+@mixin xm-card($theme) {
   .card {
     margin-bottom: $xm-card-margin;
     margin-top:    $xm-card-margin;
@@ -11,5 +11,3 @@ $xm-card-margin: 16px;
     @include xm-shadow-xs();
   }
 }
-
-@include xm-card();

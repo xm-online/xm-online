@@ -24,6 +24,8 @@ $xm-logo-title-font-size: 18px !default;
     font-size:    $xm-logo-title-font-size;
     color:        $xm-text;
     font-weight:  $xm-font-weight;
+    white-space:  nowrap;
+    overflow:     hidden;
   }
 
   @include main-with-sidebar-mini {

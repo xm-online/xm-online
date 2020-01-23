@@ -84,6 +84,8 @@ $xm-menu-icon-color:        #a9afbb !default;
 
   .menu-icon {
     font-size: $xm-menu-icon-font-size;
+    /** fix bug of side bar mini */
+    min-width: 24px;
   }
 
 }

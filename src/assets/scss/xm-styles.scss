@@ -1,66 +1,7 @@
 @charset "UTF-8";
 
 @import "xm/parts/base";
-@import "xm/parts/xm-aniamte";
-@import "xm/parts/simplemde";
-@import "xm/parts/tag-input";
-@import "xm/parts/tree";
-@import "xm/parts/voucher";
-@import "xm/parts/fab-speed-dial";
-@import "xm/parts/lot-countdown";
-@import "xm/parts/carousel";
-@import "xm/parts/word-autocomplete";
-@import "xm/parts/schema-battery";
-@import "xm/parts/states";
-@import "xm/parts/avatars";
 
-
-/**
- XM congrats
- */
-.xm-congrats {
-    position: relative;
-    width: 350px;
-    height: 100px;
-    text-align: center;
-    left: 0;
-    right: 0;
-    display: none;
-}
-
-.xm-congrats  h1 {
-    transform-origin: 50% 50%;
-    font-size: 25px;
-    cursor: pointer;
-    z-index: 2;
-    position: absolute;
-    top: 0;
-    text-align: center;
-    width: 100%;
-}
-
-.blob {
-    height: 50px;
-    width: 50px;
-    color: #ffcc00;
-    position: absolute;
-    top: 45%;
-    left: 45%;
-    z-index: 1;
-    font-size: 30px;
-    display: none;
-}
-
-.xm-word-wrap {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-.xm-ellipsis {
-    overflow:hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
 
 .xm-public-screen {
     .wrapper {
@@ -167,10 +108,6 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-}
-
-.xm-body .table-responsive .table th {
-    white-space: nowrap;
 }
 
 .xm-body .tab-content>.tab-pane {

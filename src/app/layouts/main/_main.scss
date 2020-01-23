@@ -13,6 +13,21 @@ $breakpoint-tablet:     991px !default;
   }
 }
 
+@mixin main-with-sidebar {
+  .nav-open { @content; }
+  @media (min-width: $breakpoint-tablet) { @content; }
+}
+
+@mixin main-without-sidebar {
+  :not(.nav-open) { @content; }
+  @media (min-width: $breakpoint-tablet) { @content; }
+}
+
+
+@mixin main-without-sidebar-mini {
+  :not(.sidebar-mini) { @content; }
+}
+
 
 @mixin sidebar() {
 
@@ -60,25 +75,25 @@ $breakpoint-tablet:     991px !default;
     }
   }
 
-  .sidebar-mini {
-    .visible-on-sidebar-regular {
-      display: none !important;
-    }
 
-    .visible-on-sidebar-mini {
-      display: inline-block !important;
-    }
-  }
-
-  :not(.sidebar-mini) {
-    .visible-on-sidebar-mini {
-      display: none !important;
-    }
+  .visible-on-sidebar-mini {
+    display: none;
   }
 
   .visible-on-sidebar-regular {
-    display: inline-block !important;
+    display: inline-block;
   }
+
+  .sidebar-mini {
+    .visible-on-sidebar-mini {
+      display: inline-block;
+    }
+
+    .visible-on-sidebar-regular {
+      display: none;
+    }
+  }
+
 
 }
 

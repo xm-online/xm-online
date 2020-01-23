@@ -1,0 +1,11 @@
+@import "~@angular/material/theming";
+
+$xm-primary-palette: $mat-pink;
+
+@import "~@xm-ngx/styles/theming";
+@include xm-ngx-styles-theme($xm-theme);
+
+// Vendors
+@import "~@xm-ngx/styles/src/vendor/index";
+@include xm-angular-material-theme($xm-theme);
+@include xm-vendor-xm-override();

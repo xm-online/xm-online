@@ -9,7 +9,7 @@ const THEME_STARTEGY = {
     TENANT_ONLY: 'TENANT_ONLY',
 };
 const DEFAULT_THEME_NAME = 'teal';
-const DEFAULT_THEME = `/assets/css/themes/material-${DEFAULT_THEME_NAME}.css`;
+const DEFAULT_THEME = `/themes/${DEFAULT_THEME_NAME}.css`;
 
 @Injectable()
 export class XmApplicationConfigService {
@@ -68,7 +68,7 @@ export class XmApplicationConfigService {
         if (THEME_STARTEGY.TENANT_ONLY === strategy) {
             return `/assets/css/ext/${themeName}.css`;
         } else {
-            return `/assets/css/themes/material-${themeName}.css`;
+            return `/themes/${themeName}.css`;
         }
     }
 

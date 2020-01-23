@@ -1,5 +1,7 @@
 // Theme Styles
-@import "./themes/teal";
+@import "~@angular/material/theming";
+
+$xm-primary-palette: $mat-teal;
 
 // Init theme
 @import "~@xm-ngx/styles/theming";

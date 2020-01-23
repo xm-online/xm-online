@@ -2,13 +2,13 @@ import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import swal from 'sweetalert2';
 
 import { ITEMS_PER_PAGE } from '../shared/constants/pagination.constants';
-import { Link } from '../xm-entity';
-import { takeUntil } from 'rxjs/operators';
 import { instanceDestroyed } from '../shared/helpers/instance-destroyed';
+import { Link } from '../xm-entity';
 
 @Injectable()
 export class BaseAdminConfigListComponent implements OnInit, OnDestroy {

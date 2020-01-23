@@ -3,15 +3,15 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiAlertService, JhiOrderByPipe } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { ITEMS_PER_PAGE } from '../../shared/constants/pagination.constants';
+import { instanceDestroyed } from '../../shared/helpers/instance-destroyed';
 import { JhiLanguageHelper } from '../../shared/language/language.helper';
 import { Permission } from '../../shared/role/permission.model';
 import { Role } from '../../shared/role/role.model';
 import { RoleService } from '../../shared/role/role.service';
 import { RoleConditionDialogComponent } from './roles-management-condition-dialog.component';
-import { takeUntil } from 'rxjs/operators';
-import { instanceDestroyed } from '../../shared/helpers/instance-destroyed';
 
 @Component({
     selector: 'xm-role-mgmt-datail',

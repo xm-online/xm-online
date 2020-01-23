@@ -10,8 +10,8 @@ import { Permission } from '../../shared/role/permission.model';
 import { Role } from '../../shared/role/role.model';
 import { RoleService } from '../../shared/role/role.service';
 import { RoleConditionDialogComponent } from './roles-management-condition-dialog.component';
-import {takeUntil} from "rxjs/operators";
-import {instanceDestroyed} from "../../shared/helpers/instance-destroyed";
+import { takeUntil } from 'rxjs/operators';
+import { instanceDestroyed } from '../../shared/helpers/instance-destroyed';
 
 @Component({
     selector: 'xm-role-mgmt-datail',

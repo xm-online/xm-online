@@ -7,8 +7,8 @@ import swal from 'sweetalert2';
 
 import { ITEMS_PER_PAGE } from '../shared/constants/pagination.constants';
 import { Link } from '../xm-entity';
-import {takeUntil} from "rxjs/operators";
-import {instanceDestroyed} from "../shared/helpers/instance-destroyed";
+import { takeUntil } from 'rxjs/operators';
+import { instanceDestroyed } from '../shared/helpers/instance-destroyed';
 
 @Injectable()
 export class BaseAdminConfigListComponent implements OnInit, OnDestroy {

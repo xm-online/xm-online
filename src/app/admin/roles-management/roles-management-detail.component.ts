@@ -10,6 +10,8 @@ import { Permission } from '../../shared/role/permission.model';
 import { Role } from '../../shared/role/role.model';
 import { RoleService } from '../../shared/role/role.service';
 import { RoleConditionDialogComponent } from './roles-management-condition-dialog.component';
+import {takeUntil} from "rxjs/operators";
+import {instanceDestroyed} from "../../shared/helpers/instance-destroyed";
 
 @Component({
     selector: 'xm-role-mgmt-datail',
@@ -55,7 +57,9 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
                 private activatedRoute: ActivatedRoute,
                 private orderByPipe: JhiOrderByPipe,
                 private modalService: NgbModal) {
-        this.routeDataSubscription = this.activatedRoute.data.subscribe((data) => this.routeData = data);
+        this.routeDataSubscription = this.activatedRoute.data
+            .pipe(takeUntil(instanceDestroyed(this)))
+            .subscribe((data) => this.routeData = data);
     }
 
     public ngOnInit(): void {

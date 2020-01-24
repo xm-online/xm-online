@@ -9,8 +9,7 @@ module.exports = {
     },
     plugins: ['@typescript-eslint'],
     extends: [
-        // !important do not use '--fix' in production because we are using 'eslint:all'
-        'eslint:all',
+        'eslint:recommended',
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
@@ -18,6 +17,8 @@ module.exports = {
     rules: {
         '@typescript-eslint/unbound-method': ['error', {'ignoreStatic': true}],
         'no-console': ['error', {'allow': ['warn', 'info']}],
+        '@typescript-eslint/typedef': ['error', {arrayDestructuring: false, arrowParameter: false}],
+        '@typescript-eslint/type-annotation-spacing': ['error'],
         // not fixed
         '@typescript-eslint/no-misused-promises': 'warn',
         'no-prototype-builtins': 'warn',

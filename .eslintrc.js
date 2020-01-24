@@ -65,6 +65,7 @@ module.exports = {
         'array-callback-return': 'warn',
         'arrow-body-style': 'warn',
         // Code style
+        'linebreak-style': ['warn'],
         'dot-location': ['warn', 'property'],
         'max-statements-per-line': ['warn', {'max': 2}],
         'quote-props': ['warn', 'as-needed'],
@@ -111,5 +112,6 @@ module.exports = {
         'no-invalid-this': 'off',
         'no-lonely-if': 'off',
         '@typescript-eslint/no-inferrable-types': 'off',
+        '@typescript-eslint/no-use-before-define': 'off'
     }
 };

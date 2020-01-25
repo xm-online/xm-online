@@ -1,4 +1,3 @@
-/* tslint:disable:typedef */
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 
 import { TableData } from './md-table.component';
@@ -16,20 +15,17 @@ export class LocationCountriesWidgetComponent implements OnInit, AfterViewInit {
     public tasks: any[];
     public tableData: TableData;
 
-    constructor() {
-    }
-
     public ngOnInit(): void {
         this.tableData = {
-            headerRow: ['ID', 'Name', 'Salary', 'Country', 'City'],
             dataRows: [
-                ['US', 'USA', '2.920	', '53.23%'],
+                ['US', 'USA', '2.920    ', '53.23%'],
                 ['DE', 'Germany', '1.300', '20.43%'],
                 ['AU', 'Australia', '760', '10.35%'],
-                ['GB', 'United Kingdom	', '690', '7.87%'],
+                ['GB', 'United Kingdom  ', '690', '7.87%'],
                 ['RO', 'Romania', '600', '5.94%'],
                 ['BR', 'Brasil', '550', '4.34%'],
             ],
+            headerRow: ['ID', 'Name', 'Salary', 'Country', 'City'],
         };
 
         const mapData = {
@@ -61,9 +57,9 @@ export class LocationCountriesWidgetComponent implements OnInit, AfterViewInit {
 
             series: {
                 regions: [{
-                    values: mapData,
-                    scale: ['#AAAAAA', '#444444'],
                     normalizeFunction: 'polynomial',
+                    scale: ['#AAAAAA', '#444444'],
+                    values: mapData,
                 }],
             },
         });

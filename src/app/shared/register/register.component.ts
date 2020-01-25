@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ReCaptchaComponent } from 'angular2-recaptcha';
 import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
@@ -15,7 +15,7 @@ import { RegisterService } from './register.service';
     selector: 'xm-register',
     templateUrl: './register.component.html',
 })
-export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
+export class RegisterComponent implements OnInit {
 
     @Input() public config: any;
     @ViewChild(ReCaptchaComponent, {static: false}) public captcha: ReCaptchaComponent;
@@ -55,9 +55,6 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    public ngOnDestroy(): void {
-    }
-
     public ngOnInit(): void {
         this.success = false;
         this.registerAccount = {};
@@ -69,9 +66,6 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
             .subscribe((config: any) => {
                 this.makePasswordSettings(config);
             }, () => this.makePasswordSettings());
-    }
-
-    public ngAfterViewInit(): void {
     }
 
     public register(): void {

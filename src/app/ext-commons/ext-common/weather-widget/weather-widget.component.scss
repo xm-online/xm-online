@@ -1,5 +1,5 @@
-$yellow: #FFEB3B;
-$grey:   #BDBDBD;
+$yellow: #ffeb3b;
+$grey:   #bdbdbd;
 $white:  #ffffff;
 
 /*Widget Weather*/
@@ -11,7 +11,7 @@ $white:  #ffffff;
 
 .weather-caption {
     font-size: 11px;
-    color:     rgba(0, 0, 0, 0.54)
+    color:     rgba(0, 0, 0, 0.54);
 }
 
 .weather-condition {
@@ -46,7 +46,7 @@ $white:  #ffffff;
                    2.0625em 0.9375em 0 -0.5625em $grey;
 }
 
-.weather-cloud:after {
+.weather-cloud::after {
     content:    '';
     position:   absolute;
     bottom:     0;
@@ -71,7 +71,7 @@ $white:  #ffffff;
     animation:  weather-cloud 4s linear infinite;
 }
 
-.weather-cloud:nth-child(2):after {
+.weather-cloud:nth-child(2)::after {
     background: $grey;
 }
 
@@ -101,12 +101,12 @@ $white:  #ffffff;
     box-shadow:    0 5.375em $yellow;
 }
 
-.weather-rays:before,
-.weather-rays:after {
+.weather-rays::before,
+.weather-rays::after {
     content:          '';
     position:         absolute;
-    top:              0em;
-    left:             0em;
+    top:              0;
+    left:             0;
     display:          block;
     width:            0.375em;
     height:           1.125em;
@@ -117,7 +117,7 @@ $white:  #ffffff;
     box-shadow:       0 5.375em $yellow;
 }
 
-.weather-rays:before {
+.weather-rays::before {
     transform: rotate(120deg);
 }
 
@@ -138,7 +138,7 @@ $white:  #ffffff;
     background: $white;
 }
 
-.weather-rain:after {
+.weather-rain::after {
     content:       '';
     position:      absolute;
     z-index:       2;
@@ -175,8 +175,8 @@ $white:  #ffffff;
     animation: weather-lightning 1.5s linear infinite;
 }
 
-.weather-bolt:before,
-.weather-bolt:after {
+.weather-bolt::before,
+.weather-bolt::after {
     content:       '';
     position:      absolute;
     z-index:       2;
@@ -190,7 +190,7 @@ $white:  #ffffff;
     transform:     skewX(-10deg);
 }
 
-.weather-bolt:after {
+.weather-bolt::after {
     margin:        -0.25em 0 0 -0.25em;
     border-top:    0.75em solid;
     border-right:  0.5em solid transparent;
@@ -199,7 +199,7 @@ $white:  #ffffff;
     transform:     skewX(-10deg);
 }
 
-.weather-bolt:nth-child(2):before {
+.weather-bolt:nth-child(2)::before {
     margin:        -0.75em 0 0 -0.5em;
     border-top:    0.625em solid transparent;
     border-right:  0.375em solid;
@@ -207,7 +207,7 @@ $white:  #ffffff;
     border-left:   0.25em solid transparent;
 }
 
-.weather-bolt:nth-child(2):after {
+.weather-bolt:nth-child(2)::after {
     margin:        -0.125em 0 0 -0.125em;
     border-top:    0.375em solid;
     border-right:  0.25em solid transparent;
@@ -215,34 +215,34 @@ $white:  #ffffff;
     border-left:   0.375em solid;
 }
 
-.weather-flake:before,
-.weather-flake:after {
+.weather-flake::before,
+.weather-flake::after {
     content:     '\2744';
     position:    absolute;
     top:         50%;
     left:        50%;
     margin:      -1.025em 0 0 -1.0125em;
-    color:       #84FFFF;
+    color:       #84ffff;
     list-height: 1em;
     opacity:     0.2;
     animation:   weather-spin 8s linear infinite reverse;
 }
 
-.weather-flake:after {
+.weather-flake::after {
     margin:    0.125em 0 0 -1em;
     font-size: 1.5em;
     opacity:   0.4;
     animation: weather-spin 14s linear infinite;
 }
 
-.weather-flake:nth-child(2):before {
+.weather-flake:nth-child(2)::before {
     margin:    -0.5em 0 0 0.25em;
     font-size: 1.25em;
     opacity:   0.2;
     animation: spin 10s linear infinite;
 }
 
-.weather-flake:nth-child(2):after {
+.weather-flake:nth-child(2)::after {
     margin:    0.375em 0 0 0.125em;
     font-size: 2em;
     opacity:   0.4;

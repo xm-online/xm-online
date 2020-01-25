@@ -74,7 +74,7 @@ describe('Entity detail dialog Component', () => {
 
     it('Name input should be empty', async(() => {
         fixture.detectChanges();
-        fixture.whenRenderingDone().then((data) => {
+        fixture.whenRenderingDone().then(() => {
             element = fixture.debugElement.query(By.css('#field_name'));
             expect(element.nativeElement.value).toBe('');
         });
@@ -99,11 +99,7 @@ describe('Entity detail dialog Component', () => {
         let result;
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < classArr.length; i++) {
-            if (classArr[i] === 'ng-invalid') {
-                result = true;
-            } else {
-                result = false;
-            }
+            result = classArr[i] === 'ng-invalid';
         }
         expect(result).toBeTruthy();
     }));

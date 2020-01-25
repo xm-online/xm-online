@@ -30,7 +30,7 @@ export class ValidationComponent implements OnInit, OnDestroy {
 
         this.click = observableFromEvent(document, 'click').pipe(
             debounceTime(10))
-            .subscribe((e) => {
+            .subscribe(() => {
                 this.traverseControls(formGroup, (control: AbstractControl) => {
                     if (control.enabled && !control.untouched && !control.dirty) {
                         control.markAsDirty();

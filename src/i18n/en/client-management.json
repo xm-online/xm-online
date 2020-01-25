@@ -22,6 +22,7 @@
         "role": "Role",
         "validityPeriod": "Validity period",
         "scopes-add": "Add scopes",
-        "search-by-client-id": "Search by client ID"
+        "search-by-client-id": "Search by client ID",
+        "client.already.exists": "Client with this ID already exists"
     }
 }

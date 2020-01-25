@@ -31,7 +31,7 @@ export class CurrentLocationComponent implements OnInit {
     }
 
     public onAfterGMapApiInit(): void {
-        if (!!navigator.geolocation) {
+        if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 this.latitude = position.coords.latitude;
                 this.longitude = position.coords.longitude;

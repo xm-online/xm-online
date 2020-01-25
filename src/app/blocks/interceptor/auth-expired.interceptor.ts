@@ -12,10 +12,8 @@ export class AuthExpiredInterceptor implements HttpInterceptor {
     }
 
     public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(request).pipe(tap(
-            (event: HttpEvent<any>) => {
-            },
-            (err: any) => {
+        return next.handle(request).pipe(tap({
+            error: (err: any) => {
                 if (err instanceof HttpErrorResponse && err.status === 401) {
                     const router: Router = this.injector.get(Router);
                     const stripedPath = router.parseUrl(router.url)
@@ -30,6 +28,6 @@ export class AuthExpiredInterceptor implements HttpInterceptor {
                     }
                 }
             },
-        ));
+        }));
     }
 }

@@ -140,7 +140,7 @@ export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
 
     private registerListModify(): void {
         this.modificationSubscription = this.eventManager.subscribe('locationListModification',
-            (response) => this.load());
+            () => this.load());
     }
 
     private load(): void {

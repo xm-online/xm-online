@@ -62,7 +62,7 @@ export class UserLoginService {
     }
 
     private registerChangeAuth(): void {
-        this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, (resp) => {
+        this.eventManager.subscribe(XM_EVENT_LIST.XM_SUCCESS_AUTH, () => {
             this.allLogins = {};
             this.promise = null;
             this.getAllLogins().then((logins) => this.allLogins = logins);

@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -40,7 +40,7 @@ interface FormsConfig {
         ]),
     ],
 })
-export class FormPlaygroundComponent implements OnInit, AfterViewInit {
+export class FormPlaygroundComponent implements OnInit {
 
     public examples: typeof EXAMPLES = EXAMPLES;
     public frameworkList: any = ['material-design', 'bootstrap-3', 'no-framework'];
@@ -163,9 +163,6 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
                 map((value) => this._filterSpec(value as any)),
             );
 
-    }
-
-    public ngAfterViewInit(): void {
     }
 
     public onSubmit(data: any): void {
@@ -301,6 +298,6 @@ export class FormPlaygroundComponent implements OnInit, AfterViewInit {
 
     private _filterSpec(value: string): XmEntitySpec[] {
         return this.specs
-            .filter((option) => option.key.toLowerCase().indexOf(value.toLowerCase()) === 0);
+            .filter((option) => option.key.toLowerCase().startsWith(value.toLowerCase()));
     }
 }

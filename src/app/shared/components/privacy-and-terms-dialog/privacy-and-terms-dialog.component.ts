@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
 import { AuthServerProvider } from '../../auth/auth-jwt.service';
@@ -8,7 +8,7 @@ import { AuthServerProvider } from '../../auth/auth-jwt.service';
     templateUrl: './privacy-and-terms-dialog.component.html',
     styleUrls: ['./privacy-and-terms-dialog.component.scss'],
 })
-export class PrivacyAndTermsDialogComponent implements OnInit {
+export class PrivacyAndTermsDialogComponent {
 
     @Input() public config: any;
     public iAgree: boolean = false;
@@ -21,9 +21,6 @@ export class PrivacyAndTermsDialogComponent implements OnInit {
         this.languageService.getCurrent().then((lang) => {
             this.lang = lang;
         });
-    }
-
-    public ngOnInit(): void {
     }
 
     public onCancel(): void {
@@ -42,6 +39,6 @@ export class PrivacyAndTermsDialogComponent implements OnInit {
     private acceptTerms(token: string): void {
         this.authServerProvider
             .acceptTermsAndConditions(token)
-            .subscribe(() => this.activeModal.close('accept'), (err) => this.onCancel());
+            .subscribe(() => this.activeModal.close('accept'), () => this.onCancel());
     }
 }

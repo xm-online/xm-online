@@ -18,8 +18,8 @@ export class ResponseConfigItem {
                 public validationField?: string,
                 public validationFieldsExtractor?: string,
                 public outputMessage?: {
-                    type?: string,
-                    value?: string,
+                    type?: string;
+                    value?: string;
                 },
                 public condition?: any,
                 public redirectUrl?: string) {

@@ -20,7 +20,7 @@ export class SocialRegisterComponent implements OnInit {
 
     public ngOnInit(): void {
         this.route.queryParams.subscribe((queryParams) => {
-            this.success = /true/.test(queryParams.success.toLowerCase());
+            this.success = queryParams.success.toLowerCase().includes('true');
         });
         this.route.params.subscribe((params) => {
             this.provider = params['provider?{success:boolean}'];
@@ -30,6 +30,7 @@ export class SocialRegisterComponent implements OnInit {
     }
 
     public login(): void {
+        throw new Error('Not implemented');
     }
 
 }

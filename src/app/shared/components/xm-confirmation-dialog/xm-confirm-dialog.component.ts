@@ -22,7 +22,7 @@ export class XmConfirmDialogComponent {
     }
 
     public onSubmit(): void {
-
+        throw new Error('Not implemented');
     }
 
     public onDismiss(): void {

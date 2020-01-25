@@ -67,7 +67,7 @@ export class XmEntitySpecWrapperService {
         }
     }
 
-    public specv2(force: boolean = false): Observable<Spec> {
+    public specv2(): Observable<Spec> {
         if (!this.cache$) {
             if (!environment.production) {console.info('DBG from cache$'); }
             this.cache$ = this.requestSpec().pipe(

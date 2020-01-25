@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { environment } from '../../../environments/environment';
 import { CurrentLocationComponent } from './widgets/current-location/current-location.component';
 import { DatetimePickerComponent } from './widgets/datetime-picker/datetime-picker.component';
@@ -321,6 +322,7 @@ export const parseTemplateLiterals = (str: string, obj: any = {}) => {
             try {
                 res = res[el];
             } catch (e) {
+                // empty block
             }
             return res;
         }, obj);

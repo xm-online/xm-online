@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 
 import { JhiEventManager } from 'ng-jhipster';
 import { Observable, of, Subscription } from 'rxjs';
@@ -15,7 +15,7 @@ import { XmEntityService } from '../shared/xm-entity.service';
     templateUrl: './link-list.component.html',
     styleUrls: ['./link-list.component.scss'],
 })
-export class LinkListComponent implements OnInit, OnDestroy, OnChanges {
+export class LinkListComponent implements OnDestroy, OnChanges {
 
     @Input() public xmEntityId: number;
     @Input() public linkSpecs: FullLinkSpec[];
@@ -28,9 +28,6 @@ export class LinkListComponent implements OnInit, OnDestroy, OnChanges {
                 private eventManager: JhiEventManager,
                 private principal: Principal) {
         this.registerModificationSubscription();
-    }
-
-    public ngOnInit(): void {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {

@@ -139,7 +139,6 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
             item.resources, 'rolesManagement.permission.conditionResourceInfo').result
             .then((result) => {
                 item.resourceCondition = result || '';
-            }, () => {
             });
     }
 
@@ -148,7 +147,6 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
             'rolesManagement.permission.conditionEnvInfo').result
             .then((result) => {
                 item.envCondition = result || '';
-            }, () => {
             });
     }
 
@@ -184,10 +182,12 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
                 (sortBy.msName && item.msName !== sortBy.msName) ||
                 (typeof sortBy.enabled === 'boolean' && item.enabled !== sortBy.enabled) ||
                 (typeof sortBy.condition === 'boolean' && resourceCondition !== sortBy.condition) ||
+                // eslint-disable-next-line @typescript-eslint/prefer-includes
                 (sortBy.query && item.privilegeKey.indexOf(sortBy.query.toUpperCase()) === -1)
             ) {
-            } else {
-
+                // empty block
+            }
+            else {
                 result.push(item);
             }
             return result;
@@ -199,6 +199,7 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
             const res = resp.json() || {};
             this.alertService.error(res.error_description, res.params);
         } catch (e) {
+            // empty block
         }
     }
 

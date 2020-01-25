@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 this.socialConfig = uiConfig && uiConfig.social;
                 this.hideRememberMe = uiConfig.hideRememberMe ? uiConfig.hideRememberMe : false;
                 this.hideResetPasswordLink = uiConfig.hideResetPasswordLink ? uiConfig.hideResetPasswordLink : false;
-                this.checkTermsOfConditions = uaaConfig && uaaConfig.isTermsOfConditionsEnabled || false;
+                this.checkTermsOfConditions = (uaaConfig && uaaConfig.isTermsOfConditionsEnabled) || false;
             });
     }
 
@@ -94,54 +94,56 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
 
     public loginSuccess(): void {
-      $('body').removeClass('xm-public-screen');
-      if (this.router.url === '/register' || (/activate/.test(this.router.url)) ||
-        this.router.url === '/finishReset' || this.router.url === '/requestReset') {
-        this.router.navigate(['']);
-      }
+        $('body').removeClass('xm-public-screen');
+        if (this.router.url === '/register'
+            // eslint-disable-next-line @typescript-eslint/prefer-includes
+            || ((/activate/).test(this.router.url))
+            || this.router.url === '/finishReset'
+            || this.router.url === '/requestReset') {
+            this.router.navigate(['']);
+        }
 
-      this.eventManager.broadcast({
-        name: XM_EVENT_LIST.XM_SUCCESS_AUTH,
-        content: 'Sending Authentication Success',
-      });
+        this.eventManager.broadcast({
+            name: XM_EVENT_LIST.XM_SUCCESS_AUTH,
+            content: 'Sending Authentication Success',
+        });
 
-      // previousState was set in the authExpiredInterceptor before being redirected to login modal.
-      // since login is succesful, go to stored previousState and clear previousState
-      const redirect = this.stateStorageService.getUrl();
-      if (redirect) {
-        this.router.navigate([redirect]);
-      } else {
-        this.router.navigate(['dashboard']);
-      }
+        // previousState was set in the authExpiredInterceptor before being redirected to login modal.
+        // since login is succesful, go to stored previousState and clear previousState
+        const redirect = this.stateStorageService.getUrl();
+        if (redirect) {
+            this.router.navigate([redirect]);
+        } else {
+            this.router.navigate(['dashboard']);
+        }
     }
 
     public checkOtp(): void {
-      const credentials = {
-        grant_type: 'tfa_otp_token',
-        otp: this.otpValue,
-        rememberMe: this.rememberMe,
-      };
+        const credentials = {
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            grant_type: 'tfa_otp_token',
+            otp: this.otpValue,
+            rememberMe: this.rememberMe,
+        };
 
-      const callBack = () => {};
-
-      this.loginService.login(credentials, callBack).then(() => {
-        this.isDisabled = false;
-        this.loginSuccess();
-      }).catch((err) => {
-        this.authenticationError = true;
-        this.successRegistration = false;
-        this.isDisabled = false;
-        this.backToLogin();
-      });
+        this.loginService.login(credentials).then(() => {
+            this.isDisabled = false;
+            this.loginSuccess();
+        }).catch(() => {
+            this.authenticationError = true;
+            this.successRegistration = false;
+            this.isDisabled = false;
+            this.backToLogin();
+        });
 
     }
 
     public backToLogin(): void {
-      this.checkOTP = false;
-      this.stateStorageService.resetAllStates();
-      this.password = '';
-      this.rememberMe = false;
-      this.username = '';
+        this.checkOTP = false;
+        this.stateStorageService.resetAllStates();
+        this.password = '';
+        this.rememberMe = false;
+        this.username = '';
     }
 
     public login(): void {
@@ -151,26 +153,25 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.successRegistration = false;
         this.stateStorageService.resetAllStates();
         const credentials = {
-          grant_type: 'password',
-          username: this.username ? this.username.toLowerCase().trim() : '',
-          password: this.password ? this.password.trim() : '',
-          rememberMe: this.rememberMe,
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            grant_type: 'password',
+            username: this.username ? this.username.toLowerCase().trim() : '',
+            password: this.password ? this.password.trim() : '',
+            rememberMe: this.rememberMe,
         };
 
-        const callBack = () => {};
-
-        this.loginService.login(credentials, callBack).then((data) => {
+        this.loginService.login(credentials).then((data) => {
             this.isDisabled = false;
             this.sendingLogin = false;
-            if ('otpConfirmation' === data) {
-              this.checkOTP = true;
-              this.alertService.info('login.messages.otp.notification');
+            if (data === 'otpConfirmation') {
+                this.checkOTP = true;
+                this.alertService.info('login.messages.otp.notification');
             } else {
-              this.loginSuccess();
+                this.loginSuccess();
             }
         }).catch((err) => {
             const errObj = err.error || null;
-            const termsErr =  errObj && errObj.error === TERMS_ERROR;
+            const termsErr = errObj && errObj.error === TERMS_ERROR;
             const termsToken = errObj.oneTimeToken || null;
             if (termsErr && termsToken) { this.pushTermsAccepting(termsToken); }
             this.authenticationError = !termsErr;
@@ -196,6 +197,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
                     this.floatLabel = true;
                 }
             } catch (e) {
+                // empty block
             }
         }, 500);
     }

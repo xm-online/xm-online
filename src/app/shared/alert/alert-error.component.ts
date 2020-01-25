@@ -142,7 +142,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
                 this.addErrorAlert('Server not reachable', 'error.server.not.reachable');
                 break;
 
-            case 400:
+            case 400: {
                 const arr = httpErrorResponse.headers.keys();
                 let errorHeader = null;
                 let entityKey = null;
@@ -180,10 +180,11 @@ export class JhiAlertErrorComponent implements OnDestroy {
                     this.addErrorAlert('errors.' + httpErrorResponse.error);
                 }
                 break;
-
-            case 404:
+            }
+            case 404: {
                 this.addErrorAlert('Not found', 'errors.url.not.found');
                 break;
+            }
 
             default:
                 if (httpErrorResponse.error !== '' && httpErrorResponse.error.error) {

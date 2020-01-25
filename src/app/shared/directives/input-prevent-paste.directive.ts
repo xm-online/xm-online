@@ -5,8 +5,6 @@ import { Directive, HostListener } from '@angular/core';
 })
 export class InputPreventPasteDirective {
 
-    constructor() { }
-
     @HostListener('paste', ['$event'])
     public blockPaste(e: KeyboardEvent): void {
         e.preventDefault();

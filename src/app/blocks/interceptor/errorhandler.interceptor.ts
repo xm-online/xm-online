@@ -12,10 +12,8 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     }
 
     public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(request).pipe(tap(
-            (event: HttpEvent<any>) => {
-            },
-            (err: any) => {
+        return next.handle(request).pipe(tap({
+            error: (err: any) => {
                 if (err instanceof HttpErrorResponse
                     && !(err.status === 401
                         && (err.message === '' || (err.url && err.url.includes('/api/account'))))) {
@@ -24,6 +22,6 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
                     this.eventManager.broadcast({name: 'xm.httpError', content: err, request});
                 }
             },
-        ));
+        }));
     }
 }

@@ -193,7 +193,6 @@ describe('PrincipalService', () => {
         });
     });
 
-    // TODO
-    xdescribe('hasAnyAuthority()', () => {});
+    // TODO: xdescribe('hasAnyAuthority()', () => {});
 
 });

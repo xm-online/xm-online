@@ -55,9 +55,11 @@ export class BaseAdminConfigListComponent implements OnInit, OnDestroy {
     }
 
     public loadAll(): void {
+        throw new Error('Not implemented');
     }
 
     public deleteAction(id: number): void {
+        throw new Error('Not implemented' + id);
     }
 
     public sort(): string[] {

@@ -150,7 +150,7 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
                 map((responce) => responce.body),
                 tap((entity) => this.xmEntity = entity),
                 tap((entity) => this.xmEntitySpec = this.getXmEntitySpec(entity.typeKey)),
-                tap(() => DEBUG_INFO_ENABLED ? console.info(`DBG spec = %o`, this.xmEntitySpec) : () => {}),
+                tap(() => DEBUG_INFO_ENABLED ? console.info(`DBG spec = %o`, this.xmEntitySpec) : undefined),
                 tap((entity) => this.backLinkSpecs = this.getBackLinkSpecs(entity.typeKey)),
                 tap(() => this.defineUiConfig()),
                 tap(() => this.linkSpecs$.next(

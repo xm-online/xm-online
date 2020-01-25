@@ -43,7 +43,7 @@ export class CommentListComponent implements OnInit, OnChanges, OnDestroy {
 
     private registerListModify(): void {
         this.modificationSubscription = this.eventManager
-            .subscribe('commentListModification', (response) => this.load());
+            .subscribe('commentListModification', () => this.load());
     }
 
     private load(): void {

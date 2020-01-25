@@ -14,10 +14,10 @@ export function getBrowserLocale(): string | null {
         || (w.navigator as any).browserLanguage
         || (w.navigator as any).userLanguage;
     if (browserLang.indexOf('-') !== -1) {
-        browserLang = browserLang.split('-') [0];
+        browserLang = browserLang.split('-')[0];
     }
     if (browserLang.indexOf('_') !== -1) {
-        browserLang = browserLang.split('_') [0];
+        browserLang = browserLang.split('_')[0];
     }
     return browserLang;
 }

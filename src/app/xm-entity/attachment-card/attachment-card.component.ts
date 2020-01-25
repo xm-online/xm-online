@@ -54,7 +54,7 @@ export class AttachmentCardComponent implements OnInit {
                     this.imageSrc =
                         `data:${this.attachment.body.valueContentType};base64,` + this.attachment.body.content.value;
                 } else {
-                    this.imageSrc = this.attachment.body && this.attachment.body.contentUrl || null;
+                    this.imageSrc = (this.attachment.body && this.attachment.body.contentUrl) || null;
                 }
             });
     }

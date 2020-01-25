@@ -41,13 +41,16 @@
     @if $value == row-reverse {
         -webkit-box-direction: reverse;
         -webkit-box-orient:    horizontal;
-    } @else if $value == column {
+    }
+ @else if $value == column {
         -webkit-box-direction: normal;
         -webkit-box-orient:    vertical;
-    } @else if $value == column-reverse {
+    }
+ @else if $value == column-reverse {
         -webkit-box-direction: reverse;
         -webkit-box-orient:    vertical;
-    } @else {
+    }
+ @else {
         -webkit-box-direction: normal;
         -webkit-box-orient:    horizontal;
     }
@@ -66,7 +69,8 @@
     -moz-flex-wrap:    $value;
     @if $value == nowrap {
         -ms-flex-wrap: none;
-    } @else {
+    }
+ @else {
         -ms-flex-wrap: $value;
     }
     flex-wrap:         $value;
@@ -113,15 +117,19 @@
     @if $value == flex-start {
         -webkit-box-pack: start;
         -ms-flex-pack:    start;
-    } @else if $value == flex-end {
+    }
+ @else if $value == flex-end {
         -webkit-box-pack: end;
         -ms-flex-pack:    end;
-    } @else if $value == space-between {
+    }
+ @else if $value == space-between {
         -webkit-box-pack: justify;
         -ms-flex-pack:    justify;
-    } @else if $value == space-around {
+    }
+ @else if $value == space-around {
         -ms-flex-pack:    distribute;
-    } @else {
+    }
+ @else {
         -webkit-box-pack: $value;
         -ms-flex-pack:    $value;
     }
@@ -138,10 +146,12 @@
     @if $value == flex-start {
         -webkit-box-align: start;
         -ms-flex-align:    start;
-    } @else if $value == flex-end {
+    }
+ @else if $value == flex-end {
         -webkit-box-align: end;
         -ms-flex-align:    end;
-    } @else {
+    }
+ @else {
         -webkit-box-align: $value;
         -ms-flex-align:    $value;
     }
@@ -155,9 +165,11 @@
     -moz-align-self:    $value;
     @if $value == flex-start {
         -ms-flex-item-align: start;
-    } @else if $value == flex-end {
+    }
+ @else if $value == flex-end {
         -ms-flex-item-align: end;
-    } @else {
+    }
+ @else {
         -ms-flex-item-align: $value;
     }
     align-self:         $value;
@@ -168,9 +180,11 @@
     -moz-align-content:    $value;
     @if $value == flex-start {
         -ms-flex-line-pack: start;
-    } @else if $value == flex-end {
+    }
+ @else if $value == flex-end {
         -ms-flex-line-pack: end;
-    } @else {
+    }
+ @else {
         -ms-flex-line-pack: $value;
     }
     align-content:         $value;
@@ -180,7 +194,7 @@
     @include flexbox;
     @include flex-wrap(wrap);
     @include align-items(center);
-    padding: 0 0 8px 0;
+    padding: 0 0 8px;
 
     .spacer {
         @include flex-grow(1);
@@ -253,7 +267,7 @@
     }
 
     .dropdown-toggle {
-        &:after {
+        &::after {
             display: none !important;
         }
     }

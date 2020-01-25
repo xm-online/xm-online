@@ -12,13 +12,11 @@ import { XmConfigService } from '../../shared/spec/config.service';
 import { DashboardWrapperService } from '../../xm-dashboard';
 import { DEBUG_INFO_ENABLED, VERSION } from '../../xm.constants';
 
-const misc: any = {
-    navbar_menu_visible: 0,
-    active_collapse: true,
-    disabled_collapse_init: 0,
+const misc = {
+    sidebarMiniActive: false,
 };
 
-declare let $: any;
+declare const $: any;
 
 @Component({
     selector: 'xm-navbar',
@@ -91,19 +89,19 @@ export class NavbarComponent implements OnInit, DoCheck {
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
         if ($('body').hasClass('sidebar-mini')) {
-            misc.sidebar_mini_active = true;
+            misc.sidebarMiniActive = true;
         }
         $('#minimizeSidebar').click(() => {
 
-            if (misc.sidebar_mini_active === true) {
+            if (misc.sidebarMiniActive === true) {
                 $('body').removeClass('sidebar-mini');
-                misc.sidebar_mini_active = false;
+                misc.sidebarMiniActive = false;
 
             } else {
                 setTimeout(() => {
                     $('body').addClass('sidebar-mini');
 
-                    misc.sidebar_mini_active = true;
+                    misc.sidebarMiniActive = true;
                 }, 300);
             }
 
@@ -150,7 +148,6 @@ export class NavbarComponent implements OnInit, DoCheck {
     }
 
     public sidebarOpen(): void {
-        const _this = this;
         const $toggle = document.getElementsByClassName('navbar-toggler')[0];
         const toggleButton = this.toggleButton;
         const body = document.getElementsByTagName('body')[0];
@@ -177,14 +174,15 @@ export class NavbarComponent implements OnInit, DoCheck {
 
         $layer.onclick = (() => {
             body.classList.remove('nav-open');
-            _this.mobileMenuVisible = 0;
-            _this.sidebarVisible = false;
+            this.mobileMenuVisible = 0;
+            this.sidebarVisible = false;
 
             $layer.classList.remove('visible');
             setTimeout(() => {
                 $layer.remove();
                 $toggle.classList.remove('toggled');
             }, 400);
+            // eslint-disable-next-line no-extra-bind
         }).bind(this);
 
         body.classList.add('nav-open');

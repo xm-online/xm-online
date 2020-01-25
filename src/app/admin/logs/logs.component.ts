@@ -8,10 +8,10 @@ import { Log } from './log.model';
 import { LogsService } from './logs.service';
 
 @Component({
+    providers: [JhiOrderByPipe],
     selector: 'xm-logs',
-    templateUrl: './logs.component.html',
     styleUrls: ['./logs.component.scss'],
-    providers: [ JhiOrderByPipe ],
+    templateUrl: './logs.component.html',
 })
 export class LogsComponent implements OnInit {
 
@@ -53,8 +53,8 @@ export class LogsComponent implements OnInit {
             .pipe(
                 share(),
                 map((resp) => resp.body),
-                map( (body) => this.orderBy.transform(body, this.orderProp, this.reverse)),
-                finalize(() => this.showLoader = false ),
+                map((body) => this.orderBy.transform(body, this.orderProp, this.reverse)),
+                finalize(() => this.showLoader = false),
                 share(),
             );
     }

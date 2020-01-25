@@ -52,7 +52,7 @@ import 'core-js/es6/reflect';
 /***************************************************************************************************
  * Zone JS is required by Angular itself.
  */
-import 'zone.js/dist/zone';  // Included with Angular CLI.
+import 'zone.js/dist/zone'; // Included with Angular CLI.
 
 /***************************************************************************************************
  * APPLICATION IMPORTS
@@ -64,12 +64,13 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
  */
 // import 'intl';  // Run `npm install --save intl`.
 
+// eslint-disable-next-line @typescript-eslint/unbound-method
 if (!String.prototype.startsWith) {
     Object.defineProperty(String.prototype, 'startsWith', {
         enumerable: false,
         configurable: false,
         writable: false,
-        value(this: any, searchString: string, position: number): any    {
+        value(this: any, searchString: string, position: number): any {
             position = position || 0;
             return this.indexOf(searchString, position) === position;
         },
@@ -80,6 +81,6 @@ if (!String.prototype.startsWith) {
     env: { DEBUG: undefined },
 };
 (window as any).global = window;
-// tslint:disable:no-var-requires
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 window.Buffer = window.Buffer || require('buffer').Buffer;

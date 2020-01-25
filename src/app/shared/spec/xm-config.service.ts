@@ -73,7 +73,7 @@ export class XmApplicationConfigService {
     }
 
     private applyTheme(styleSheet: string): void {
-        const head = document.head || document.getElementsByTagName('head') [0];
+        const head = document.head || document.getElementsByTagName('head')[0];
         const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.type = 'text/css';

@@ -45,10 +45,10 @@ export class PasswordStrengthBarComponent {
     public measureStrength(p: string): number {
 
         let force = 0;
-        const regex = /[$-/:-?{-~!"^_`\[\]]/g; // "
-        const lowerLetters = /[a-z]+/.test(p);
-        const upperLetters = /[A-Z]+/.test(p);
-        const numbers = /[0-9]+/.test(p);
+        const regex = /[$-/:-?{-~!"^_`[\]]/g; // "
+        const lowerLetters = (/[a-z]+/).test(p);
+        const upperLetters = (/[A-Z]+/).test(p);
+        const numbers = (/[0-9]+/).test(p);
         const symbols = regex.test(p);
 
         const flags = [lowerLetters, upperLetters, numbers, symbols];
@@ -56,7 +56,7 @@ export class PasswordStrengthBarComponent {
             return isMatchedFlag === true;
         }).length;
 
-        force += 2 * p.length + ((p.length >= 10) ? 1 : 0);
+        force += (2 * p.length) + ((p.length >= 10) ? 1 : 0);
         force += passedMatches * 10;
 
         // penality (short password)

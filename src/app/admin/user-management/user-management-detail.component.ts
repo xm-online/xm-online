@@ -88,7 +88,7 @@ export class UserMgmtDetailComponent implements OnInit, OnDestroy {
         let email = '';
         if (this.user.logins) {
             this.user.logins.forEach((item: UserLogin) => {
-                if ('LOGIN.EMAIL' === item.typeKey) {
+                if (item.typeKey === 'LOGIN.EMAIL') {
                     email = item.login;
                 }
             });

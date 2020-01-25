@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -133,7 +134,7 @@ export class CustomerInfoWidgetComponent implements OnInit, OnDestroy {
     public toggleForm(): void {
         this.principal.identity().then((account) => {
             if (this.resolveStrategy === 'state') {
-
+               // empty block
             } else {
                 if (account.roleKey === 'UNVERIFIED_CUSTOMER') {
                     this.profileSubscription = interval(this.profileUpdateInterval).pipe(

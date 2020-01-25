@@ -34,8 +34,8 @@ export function appInitializerFn(appConfig: XmApplicationConfigService): () => P
         XmRoutingModule,
         NgxWebstorageModule.forRoot({prefix: 'jhi', separator: '-'}),
         TranslateModule.forRoot({
-            loader: {deps: [HttpClient], provide: TranslateLoader, useFactory: HttpLoaderFactory},
             isolate: false,
+            loader: { deps: [HttpClient], provide: TranslateLoader, useFactory: HttpLoaderFactory },
         }),
         XmTranslationModule.forRoot(),
         XmDashboardModule.forRoot(),
@@ -72,9 +72,7 @@ export function appInitializerFn(appConfig: XmApplicationConfigService): () => P
             provide: HTTP_INTERCEPTORS,
             useClass: ErrorHandlerInterceptor,
             multi: true,
-            deps: [
-                JhiEventManager,
-            ],
+            deps: [JhiEventManager],
         },
         PaginationConfig,
         UserRouteAccessService,

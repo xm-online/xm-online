@@ -39,7 +39,7 @@ body {
         &-wrapper {
             height: calc(100vh - 70px) !important;
 
-            &.bottom-spacer  {
+            &.bottom-spacer {
                 height: calc(100vh - 120px) !important;
             }
         }
@@ -112,7 +112,7 @@ xm-per-page {
 
 .checkbox.changed {
 
-  .checkbox-material:before {
+  .checkbox-material::before {
     opacity: 0.1;
   }
 }
@@ -125,8 +125,8 @@ xm-per-page {
 }
 
 .btn {
-    &:before {
-        content: "";
+    &::before {
+        content: '';
         display: none;
         width: 20px;
         height: 20px;
@@ -136,8 +136,8 @@ xm-per-page {
         margin: -10px 0 0 -10px;
     }
 
-    &:after {
-        content: "";
+    &::after {
+        content: '';
         display: none;
         position: absolute;
         left: 50%;
@@ -147,7 +147,7 @@ xm-per-page {
         height: 20px;
         border-radius: 50%;
         border: 2px solid #fff;
-        border-color: #fff transparent #fff transparent;
+        border-color: #fff transparent;
         animation: lds-dual-ring 1.2s linear infinite;
     }
 
@@ -155,14 +155,14 @@ xm-per-page {
         color: transparent !important;
         position: relative;
 
-        &:before, &:after {
+        &::before, &::after {
             display: block;
         }
 
         &.dark-loader {
-            &:after {
+            &::after {
                 border: 2px solid #222;
-                border-color: #222 transparent #222 transparent;
+                border-color: #222 transparent;
             }
         }
     }
@@ -219,7 +219,7 @@ xm-per-page {
     &.has-ackground {
         .navbar.navbar-transparent {
             background: #fff !important;
-            box-shadow: 0 2px 2px 0 rgba(0,0,0, .1);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
             border-radius: 0;
         }
     }
@@ -227,7 +227,7 @@ xm-per-page {
     .xm-nav-logo {
         display: block;
         padding-right: 15px;
-        border-right: 1px solid rgba(#000, .2);
+        border-right: 1px solid rgba(#000, 0.2);
     }
 
     .sidebar, .sidbar-toggle, .drawer-toggle {
@@ -246,7 +246,7 @@ xm-per-page {
 
 .picker-red {
     .owl-dt-calendar-table .owl-dt-calendar-cell-selected {
-        color: rgba(255,255,255,.85);
+        color: rgba(255, 255, 255, 0.85);
         background-color: #f44336;
     }
 }

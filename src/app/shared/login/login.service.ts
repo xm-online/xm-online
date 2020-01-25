@@ -27,7 +27,7 @@ export class LoginService {
                 if (this.stateStorageService.getDestinationState()
                     && this.stateStorageService.getDestinationState().destination) {
                     const state = this.stateStorageService.getDestinationState().destination;
-                    if (state.name && 'otpConfirmation' === state.name) {
+                    if (state.name && state.name === 'otpConfirmation') {
                         resolve(state.name);
                     } else {
                         this.getUserIdentity(resolve, data);
@@ -58,8 +58,10 @@ export class LoginService {
 
     private getUserIdentity(next: any, data: any): void {
         this.principal.identity(true, true).then((account) => {
-            // After the login the language will be changed to
-            // the language selected by the user during his registration
+            /*
+             * After the login the language will be changed to
+             * the language selected by the user during his registration
+             */
             if (account !== null && account.langKey) {
                 this.jhiLanguageService.changeLanguage(account.langKey);
             }

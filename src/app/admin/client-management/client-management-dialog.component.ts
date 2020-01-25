@@ -92,7 +92,7 @@ export class ClientMgmtDialogComponent implements OnInit {
         this.activeModal.dismiss(result);
     }
 
-    private checkErrorForClientId(err): void {
+    private checkErrorForClientId(err: any): void {
         this.clientIdNotUnique = err && err.error && err.error.error === CLIENT_UNIQUE_ID_ERROR_CODE;
         const ctrlKey = 'clientId';
         if (this.clientIdNotUnique) {

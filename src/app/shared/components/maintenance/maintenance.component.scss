@@ -5,10 +5,10 @@
     height: 100%;
     z-index: 1000;
 
-    >.container-fluid {
+    > .container-fluid {
         height: 100%;
 
-        >.row {
+        > .row {
             height: 100%;
         }
     }
@@ -17,7 +17,7 @@
         width: 220px;
         height: 220px;
         display: block;
-        margin: 0 auto 40px auto;
+        margin: 0 auto 40px;
     }
 
     .technical-message {

@@ -56,9 +56,9 @@ export class StatsWidgetComponent implements OnInit {
 
     private callFunction(iFunction: IStatFunction): Observable<string | number> {
         switch (iFunction.type) {
-            case 'function' :
+            case 'function':
                 return this.executeFunction(iFunction);
-            case 'query' :
+            case 'query':
                 return this.executeQuery(iFunction);
             default:
                 return of('?');
@@ -75,8 +75,8 @@ export class StatsWidgetComponent implements OnInit {
 
     private executeQuery(iFunction: IStatFunction): Observable<string | number> {
         return this.xmEntityService.search({
-            query: iFunction.query ? iFunction.query : iFunction.name,
             page: 0,
+            query: iFunction.query ? iFunction.query : iFunction.name,
             size: 1,
         }).pipe(
             map((resp: HttpResponse<XmEntity[]>) => resp.headers.get('X-Total-Count')),

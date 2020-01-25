@@ -120,7 +120,7 @@ export class TranslationComponent {
                 if (i % 20 === 0 || i === properties.length) {
                     this.translateProperties(tmpSource, lang, delay);
                     tmpSource = [];
-                    delay = delay + 500;
+                    delay += 500;
                 }
             }
         }
@@ -135,7 +135,7 @@ export class TranslationComponent {
             if (i % 20 === 0 || i === properties.length) {
                 this.translateProperties(tmpSource, lang, delay);
                 tmpSource = [];
-                delay = delay + 500;
+                delay += 500;
             }
         }
     }
@@ -263,6 +263,7 @@ export class TranslationComponent {
         while (passedPath.length < trKey.length) {
             let key = trKey.substring(passedPath.length);
             while (key.length > 0) {
+                // eslint-disable-next-line @typescript-eslint/prefer-includes
                 if (!json.hasOwnProperty(key) && key.indexOf('.') < 0) {
                     return trKey.split('.');
                 }

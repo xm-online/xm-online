@@ -1,18 +1,18 @@
 @charset "UTF-8";
 
-@import "xm/parts/base";
-@import "xm/parts/xm-aniamte";
-@import "xm/parts/simplemde";
-@import "xm/parts/tag-input";
-@import "xm/parts/tree";
-@import "xm/parts/voucher";
-@import "xm/parts/fab-speed-dial";
-@import "xm/parts/lot-countdown";
-@import "xm/parts/carousel";
-@import "xm/parts/word-autocomplete";
-@import "xm/parts/schema-battery";
-@import "xm/parts/states";
-@import "xm/parts/avatars";
+@import 'xm/parts/base';
+@import 'xm/parts/xm-aniamte';
+@import 'xm/parts/simplemde';
+@import 'xm/parts/tag-input';
+@import 'xm/parts/tree';
+@import 'xm/parts/voucher';
+@import 'xm/parts/fab-speed-dial';
+@import 'xm/parts/lot-countdown';
+@import 'xm/parts/carousel';
+@import 'xm/parts/word-autocomplete';
+@import 'xm/parts/schema-battery';
+@import 'xm/parts/states';
+@import 'xm/parts/avatars';
 
 
 /**
@@ -71,13 +71,13 @@
     .main-panel .main-content {
         min-height: calc(100vh - 70px);
 
-        >.container-fluid, >.container {
+        > .container-fluid, > .container {
             min-height: calc(100vh - 130px);
         }
 
         xm-home {
-            >div {
-                >.row {
+            > div {
+                > .row {
                     min-height: calc(100vh - 130px);
                 }
             }
@@ -85,7 +85,7 @@
     }
 
     .forgot-link {
-        margin: 1px 0 0 0;
+        margin: 1px 0 0;
         display: inline-block;
 
         &:hover {
@@ -110,7 +110,7 @@
 }
 
 .xm-body {
-    .radio{
+    .radio {
         margin: 5px 0;
 
         span {
@@ -173,7 +173,7 @@
     white-space: nowrap;
 }
 
-.xm-body .tab-content>.tab-pane {
+.xm-body .tab-content > .tab-pane {
     display: block;
     height: 0;
     visibility: hidden;
@@ -181,7 +181,7 @@
     overflow: hidden;
 }
 
-.xm-body .tab-content>.active {
+.xm-body .tab-content > .active {
     height: auto;
     visibility: visible;
     opacity: 1;
@@ -205,7 +205,7 @@
     position: relative;
     white-space: nowrap;
     padding: 0 0 0 18px;
-    margin: 0 0 10px 0;
+    margin: 0 0 10px;
 }
 
 .xm-map-window .alert-item .status {
@@ -226,12 +226,12 @@
 }
 
 .xm-map-window .product-name {
-    margin: 6px 0 0 0;
+    margin: 6px 0 0;
 }
 
 .xm-map-window .alert-text {
     white-space: normal;
-    margin: 4px 0 0 0;
+    margin: 4px 0 0;
     color: #999;
 }
 
@@ -369,13 +369,13 @@
 }
 
 .mat-datepicker-content {
-    box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
     display: block;
     border-radius: 2px;
 }
 
 .mat-select-panel:not([class*=mat-elevation-z]) {
-    box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
 .modal-close {
@@ -393,15 +393,15 @@
 }
 
 .xm-comment-item {
-    margin: 0 0 65px 0;
+    margin: 0 0 65px;
 }
 
 .nowrap {
     white-space: nowrap;
 }
 
-@mixin transform-translate-y($value){
-    -webkit-transform:  translate3d(0,$value, 0);
+@mixin transform-translate-y($value) {
+    -webkit-transform:  translate3d(0, $value, 0);
     -moz-transform: translate3d(0, $value, 0);
     -o-transform: translate3d(0, $value, 0);
     -ms-transform: translate3d(0, $value, 0);

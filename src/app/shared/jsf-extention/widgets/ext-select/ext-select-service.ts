@@ -12,7 +12,7 @@ export class ExtSelectService {
 
     public static byString(o: any, s: any): any {
         s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-        s = s.replace(/^\./, '');           // strip a leading dot
+        s = s.replace(/^\./, ''); // strip a leading dot
         const a = s.split('.');
         for (let i = 0, n = a.length; i < n; ++i) {
             const k = a[i];

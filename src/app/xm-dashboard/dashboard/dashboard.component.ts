@@ -86,35 +86,35 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.routeDataSubscription.unsubscribe();
     }
 
-    // tslint:disable-next-line:cognitive-complexity
     public rootRedirect(): void {
-        this.principal.identity().then(() =>
-            this.principal.hasPrivileges(['DASHBOARD.GET_LIST']).then((result) => {
-                if (result) {
-                    this.xmConfigService.getUiConfig().subscribe((config) => {
-                        if ('defaultDashboard' in config && config.defaultDashboard.length) {
-                            if (typeof config.defaultDashboard === 'string') {
-                                const slugs = [];
-                                slugs.push(config.defaultDashboard);
-                                this.checkAndRedirect(slugs);
+        this.principal.identity()
+            .then(() => this.principal.hasPrivileges(['DASHBOARD.GET_LIST'])
+                .then((result) => {
+                    if (result) {
+                        this.xmConfigService.getUiConfig().subscribe((config) => {
+                            if ('defaultDashboard' in config && config.defaultDashboard.length) {
+                                if (typeof config.defaultDashboard === 'string') {
+                                    const slugs = [];
+                                    slugs.push(config.defaultDashboard);
+                                    this.checkAndRedirect(slugs);
+                                } else {
+                                    this.checkAndRedirect(config.defaultDashboard);
+                                }
                             } else {
-                                this.checkAndRedirect(config.defaultDashboard);
+                                if (!environment.production) { console.info('rootRedirect'); }
+                                this.dashboardWrapperService.dashboards().then((dashboards) => {
+                                        if (dashboards && dashboards.length && dashboards[0].id) {
+                                            const key = dashboards[0].config && dashboards[0].config.slug
+                                                ? dashboards[0].config.slug : dashboards[0].id;
+                                            this.router.navigate(['/dashboard', key]);
+                                        }
+                                    },
+                                );
                             }
-                        } else {
-                            if (!environment.production) {console.info(`rootRedirect`); }
-                            this.dashboardWrapperService.dashboards().then((dashboards) => {
-                                    if (dashboards && dashboards.length && dashboards[0].id) {
-                                        const key = dashboards[0].config && dashboards[0].config.slug
-                                            ? dashboards[0].config.slug : dashboards[0].id;
-                                        this.router.navigate([`/dashboard`, key]);
-                                    }
-                                },
-                            );
-                        }
-                    });
-                }
-            }),
-        );
+                        });
+                    }
+                }),
+            );
     }
 
     public load(idOrSlug: any): void {

@@ -6,7 +6,7 @@
   border-radius: 4px;
   position: relative;
 
-  &:before {
+  &::before {
     content: '';
     height: 19px;
     width: 4px;
@@ -18,7 +18,7 @@
     border-radius: 0 4px 4px 0;
   }
 
-  &:after {
+  &::after {
     content: '';
     display: block;
     position: absolute;
@@ -41,7 +41,7 @@
   border-radius: 2px;
 
   &.battery-warn {
-    background-color: #EFAF13;
+    background-color: #efaf13;
   }
 
   &.battery-alert {

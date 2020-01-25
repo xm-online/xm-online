@@ -18,6 +18,7 @@ export class DynamicWidgetComponent {
         const extName = value.module.split('-').reverse()[0];
         const extRootClass = extName.charAt(0).toUpperCase() + extName.slice(1) + 'WebappExtModule';
         let modulePath: string;
+        // eslint-disable-next-line @typescript-eslint/prefer-includes
         if (this.commons.indexOf(value.module) > -1) {
             modulePath = `src/app/ext-commons/${value.module}/${value.module}.module#${rootClass}Module`;
         } else {

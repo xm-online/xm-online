@@ -298,6 +298,6 @@ export class FormPlaygroundComponent implements OnInit {
 
     private _filterSpec(value: string): XmEntitySpec[] {
         return this.specs
-            .filter((option) => option.key.toLowerCase().indexOf(value.toLowerCase()) === 0);
+            .filter((option) => option.key.toLowerCase().startsWith(value.toLowerCase()));
     }
 }

@@ -19,7 +19,7 @@ describe('AccountService', () => {
             ],
         });
         httpTestingController = TestBed.get(HttpTestingController);
-        service  = TestBed.get(AccountService);
+        service = TestBed.get(AccountService);
     });
 
     describe('get()', () => {

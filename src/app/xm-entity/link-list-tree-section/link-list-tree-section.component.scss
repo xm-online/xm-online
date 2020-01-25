@@ -5,7 +5,7 @@
 .tree li {
     list-style-type: none;
     margin:          0;
-    padding:         10px 5px 0 5px;
+    padding:         10px 5px 0;
     position:        relative;
 }
 
@@ -13,7 +13,7 @@
     content:  '';
     left:     -20px;
     position: absolute;
-    right:    auto
+    right:    auto;
 }
 
 .tree li::before {
@@ -21,14 +21,14 @@
     bottom:      50px;
     height:      100%;
     top:         0;
-    width:       1px
+    width:       1px;
 }
 
 .tree li::after {
     border-top: 1px solid #e0e0e0;
     height:     20px;
     top:        30px;
-    width:      25px
+    width:      25px;
 }
 
 .tree li span {
@@ -62,18 +62,18 @@
 }
 
 .tree li > span {
-    cursor: pointer
+    cursor: pointer;
 }
 
 .tree > ul > li::before, .tree > ul > li::after {
-    border: 0
+    border: 0;
 }
 
 .tree li:last-child::before {
-    height: 32px
+    height: 32px;
 }
 
 .tree li.parent_li > span:hover, .tree li.parent_li > span:hover + ul li span {
     background: #eee;
-    color:      #000
+    color:      #000;
 }

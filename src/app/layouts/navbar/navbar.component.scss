@@ -18,13 +18,16 @@
     @if $value == row-reverse {
         -webkit-box-direction: reverse;
         -webkit-box-orient:    horizontal;
-    } @else if $value == column {
+    }
+ @else if $value == column {
         -webkit-box-direction: normal;
         -webkit-box-orient:    vertical;
-    } @else if $value == column-reverse {
+    }
+ @else if $value == column-reverse {
         -webkit-box-direction: reverse;
         -webkit-box-orient:    vertical;
-    } @else {
+    }
+ @else {
         -webkit-box-direction: normal;
         -webkit-box-orient:    horizontal;
     }
@@ -48,7 +51,8 @@
     -moz-flex-wrap:    $value;
     @if $value == nowrap {
         -ms-flex-wrap: none;
-    } @else {
+    }
+ @else {
         -ms-flex-wrap: $value;
     }
     flex-wrap:         $value;
@@ -133,7 +137,7 @@
 @media (max-width: 991px) {
     .navbar .dropdown .dropdown-menu, .navbar .dropdown.show .dropdown-menu {
         border:                   0;
-        padding:                  .3125rem 0 !important;
+        padding:                  0.3125rem 0 !important;
         -webkit-transform:        scale(1) !important;
         transform:                scale(1) !important;
         width:                    auto;
@@ -146,22 +150,22 @@
         -webkit-transform-origin: 0 0;
         transform-origin:         0 0;
         will-change:              transform, opacity;
-        transition:               transform .3s cubic-bezier(.4, 0, .2, 1), opacity .2s cubic-bezier(.4, 0, .2, 1), -webkit-transform .3s cubic-bezier(.4, 0, .2, 1) !important;
+        transition:               transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 
         position:                 absolute;
 
         z-index:                  1000;
         float:                    left;
         min-width:                10rem;
-        margin:                   .125rem 0 0;
+        margin:                   0.125rem 0 0;
         font-size:                1rem;
         color:                    #212529;
         text-align:               left;
         list-style:               none;
         background-color:         #fff;
         background-clip:          padding-box;
-        border-radius:            .25rem;
-        box-shadow:               0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+        border-radius:            0.25rem;
+        box-shadow:               0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
     }
 
     .navbar .dropdown.show .dropdown-menu {
@@ -169,8 +173,8 @@
     }
 
     .navbar .dropdown-menu .dropdown-item {
-        margin-left:  .3125rem;
-        margin-right: .3125rem;
+        margin-left:  0.3125rem;
+        margin-right: 0.3125rem;
     }
 }
 

@@ -182,6 +182,7 @@ export class NavbarComponent implements OnInit, DoCheck {
                 $layer.remove();
                 $toggle.classList.remove('toggled');
             }, 400);
+            // eslint-disable-next-line no-extra-bind
         }).bind(this);
 
         body.classList.add('nav-open');

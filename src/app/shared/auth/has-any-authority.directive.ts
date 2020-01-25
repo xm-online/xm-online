@@ -26,7 +26,7 @@ export class HasAnyAuthorityDirective {
 
     @Input('jhiHasAnyAuthority')
     set jhiHasAnyAuthority(value: string | string[]) {
-        this.authorities = typeof value === 'string' ? [value as string] : value as string[];
+        this.authorities = typeof value === 'string' ? [value] : value;
         this.updateView();
         // Get notified each time authentication state changes.
         this.principal.getAuthenticationState().subscribe((identity) => this.updateView());

@@ -134,7 +134,7 @@
                         xm-entity-state {
                             position: relative;
 
-                            &:after {
+                            &::after {
                                 content:     ':';
                                 position:    absolute;
                                 font-size:   22px;

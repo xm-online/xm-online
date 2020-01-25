@@ -39,7 +39,8 @@ export class ChartistLineWidgetComponent implements OnInit {
                 labels.push(this.firstSeries.labelSelector.split('.').reduce((a, b) => a[b], entity));
             }
 
-            const chartistLine = new Chartist.Line(this.element.nativeElement.querySelector('.chartistLine'), {
+            const chartistLine = new Chartist.Line(
+                this.element.nativeElement.querySelector('.chartistLine'), {
                     labels,
                     series,
                 },
@@ -51,7 +52,7 @@ export class ChartistLineWidgetComponent implements OnInit {
     public startAnimationForLineChart(chart: any): void {
         let seq: number = 0;
         const delays: number = 80;
-        const durations: number  = 500;
+        const durations: number = 500;
 
         chart.on('draw', (data: any) => {
             if (data.type === 'line' || data.type === 'area') {

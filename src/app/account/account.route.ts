@@ -24,7 +24,9 @@ const ACCOUNT_ROUTES = [
     settingsRoute,
 ];
 
-export const accountState: Routes = [{
-    path: '',
-    children: ACCOUNT_ROUTES,
-}];
+export const accountState: Routes = [
+    {
+        path: '',
+        children: ACCOUNT_ROUTES,
+    },
+];

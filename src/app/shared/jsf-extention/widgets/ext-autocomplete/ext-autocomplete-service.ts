@@ -9,7 +9,7 @@ import { ExtAutocompleteOptions } from './ext-autocomplete-options.model';
 
 export function byString(o: any, s: any): any {
     s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-    s = s.replace(/^\./, '');           // strip a leading dot
+    s = s.replace(/^\./, ''); // strip a leading dot
     const a = s.split('.');
     for (let i = 0, n = a.length; i < n; ++i) {
         const k = a[i];

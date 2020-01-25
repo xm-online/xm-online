@@ -20,8 +20,8 @@ $cSelected: #004a93;
         -webkit-background-clip: padding-box;
         background-clip: padding-box;
         border-radius: 4px;
-        -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
-        box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
         max-height: 300px;
         overflow: auto;
 
@@ -58,7 +58,7 @@ $cSelected: #004a93;
     .field-label {
         font-size: 11px;
         line-height: 1.07143;
-        color: #AAAAAA;
+        color: #aaaaaa;
         font-weight: 400;
     }
 }

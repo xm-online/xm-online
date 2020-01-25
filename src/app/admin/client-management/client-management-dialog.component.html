@@ -25,6 +25,9 @@
           <span jhiTranslate="xm-entity.common.validation.pattern">This field does not match the rules</span>:&nbsp;&nbsp;<span
           [innerHtml]="'^\s*[\w|\d]+\s*$'"></span>
         </mat-error>
+        <mat-error *ngIf="clientClientId.invalid && clientIdNotUnique">
+          {{'clientManagement.client.already.exists' | translate}}
+        </mat-error>
       </mat-form-field>
     </div>
     <div class="form-group">

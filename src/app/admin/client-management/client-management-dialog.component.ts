@@ -72,8 +72,7 @@ export class ClientMgmtDialogComponent implements OnInit {
         this.clientService[this.client.id ? 'update' : 'create'](this.client)
             .subscribe(
                 (response) => this.onSaveSuccess(response),
-                (err) => {
-                    console.warn(err); // tslint:disable-line
+                () => {
                     this.showLoader = false;
                 },
                 () => this.showLoader = false);

@@ -153,7 +153,7 @@ export class MenuComponent implements OnInit, OnDestroy {
             map(dashboardsToCategories),
         );
 
-        const applications$ = this.xmEntitySpecWrapperService.specv2(true).pipe(
+        const applications$ = this.xmEntitySpecWrapperService.specv2().pipe(
             map((spec) => {
                 let applications = spec.types.filter((t) => t.isApp);
                 applications = applications.filter((t) => this.principal.hasPrivilegesInline(['APPLICATION.' + t.key]));

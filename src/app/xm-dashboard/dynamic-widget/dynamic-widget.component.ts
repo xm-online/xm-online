@@ -10,7 +10,7 @@ export class DynamicWidgetComponent {
 
     public commons: string[] = ['ext-common', 'ext-common-csp', 'ext-common-entity'];
 
-    @Input() set init(value: any) {
+    @Input() public set init(value: any) {
         if (!value) {
             return;
         }

@@ -24,7 +24,7 @@ export class PasswordStrengthBarComponent {
     constructor(private renderer: Renderer, private elementRef: ElementRef) { }
 
     @Input()
-    set passwordToCheck(password: string) {
+    public set passwordToCheck(password: string) {
         if (password) {
             const c = this.getColor(this.measureStrength(password));
             const element = this.elementRef.nativeElement;

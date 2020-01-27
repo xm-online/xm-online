@@ -45,7 +45,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         this.config = null;
     }
 
-    get notificationsCount(): number {
+    public get notificationsCount(): number {
         return this.notificationsService.totalCount;
     }
 

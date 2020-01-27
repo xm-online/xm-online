@@ -36,7 +36,7 @@ export class AttachmentDetailDialogComponent implements OnInit {
                 public principal: Principal) {
     }
 
-    get acceptedFileTypes(): string[] | '' {
+    public get acceptedFileTypes(): string[] | '' {
         const attachmentSpec = this.attachmentSpecs.filter((att: any) => att.key === this.attachment.typeKey).shift();
         return (attachmentSpec && attachmentSpec.contentTypes) ?
             attachmentSpec.contentTypes : '';

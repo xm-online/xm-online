@@ -27,7 +27,7 @@ export class EntityCardComponent implements OnInit {
         protected eventManager: JhiEventManager,
     ) {}
 
-    get commonFunctionSpec(): FunctionSpec[] {
+    public get commonFunctionSpec(): FunctionSpec[] {
         return (this.xmEntitySpec && this.xmEntitySpec.functions) ?
             this.xmEntitySpec
                 .functions
@@ -36,7 +36,7 @@ export class EntityCardComponent implements OnInit {
                 .filter((item) => this.allowedByState(item)) : [];
     }
 
-    get entityFunctionSpec(): FunctionSpec[] {
+    public get entityFunctionSpec(): FunctionSpec[] {
         return (this.xmEntitySpec && this.xmEntitySpec.functions) ?
             this.xmEntitySpec
                 .functions

@@ -31,12 +31,12 @@ export class AceEditorDirective {
         this.initEvents();
     }
 
-    @Input() set options(options: any) {
+    @Input() public set options(options: any) {
         this._options = options;
         this.editor.setOptions(options || {});
     }
 
-    @Input() set readOnly(readOnly: any) {
+    @Input() public set readOnly(readOnly: any) {
         this._readOnly = readOnly;
         this.editor.setReadOnly(readOnly);
     }

@@ -19,6 +19,9 @@ module.exports = {
         'no-console': ['error', {'allow': ['warn', 'info']}],
         '@typescript-eslint/typedef': ['error', {arrayDestructuring: false, arrowParameter: false}],
         '@typescript-eslint/type-annotation-spacing': ['error'],
+        '@typescript-eslint/explicit-member-accessibility': ['error',{
+            overrides: {constructors: 'off', accessors : 'off'}
+        }],
         // not fixed
         '@typescript-eslint/no-misused-promises': 'warn',
         'no-prototype-builtins': 'warn',

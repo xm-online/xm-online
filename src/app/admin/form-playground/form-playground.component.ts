@@ -106,15 +106,15 @@ export class FormPlaygroundComponent implements OnInit {
         this.formLayout = formLayout;
     }
 
-    get prettySubmittedFormData(): string {
+    public get prettySubmittedFormData(): string {
         return JSON.stringify(this.submittedFormData, null, 2);
     }
 
-    get prettyLiveFormData(): string {
+    public get prettyLiveFormData(): string {
         return JSON.stringify(this.liveFormData, null, 2);
     }
 
-    get prettyValidationErrors(): string | null {
+    public get prettyValidationErrors(): string | null {
         if (!this.formValidationErrors) {
             return null;
         }

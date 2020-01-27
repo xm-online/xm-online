@@ -1,6 +1,9 @@
-$icon-size:           42px !default;
-$icon-size-x:         $icon-size !default;
-$icon-size-y:         $icon-size !default;
+@import '../sidebar';
+@import '../menu/menu';
+
+$icon-size:              42px !default;
+$icon-size-x:            $icon-size !default;
+$icon-size-y:            $icon-size !default;
 
 $user-img-border:        solid 1px #fff !default;
 $user-img-border-radius: 50% !default;
@@ -38,4 +41,9 @@ $user-img-border-radius: 50% !default;
       display: none;
     }
   }
+}
+
+
+::ng-deep {
+  @include user-theme($xm-theme);
 }

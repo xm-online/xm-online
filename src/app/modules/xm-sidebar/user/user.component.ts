@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { matExpansionAnimations } from '@angular/material';
 import { ActivationEnd, Router } from '@angular/router';
 import * as _ from 'lodash';
@@ -30,7 +30,7 @@ const USER_MENU: MenuItem[] = [
     },
     {
         position: 3,
-        permission: null,
+        permission: '',
         url: ['logout'],
         icon: 'logout',
         title: 'global.menu.account.logout',
@@ -64,8 +64,8 @@ function userToOptions(user: User): UserOptions {
 @Component({
     selector: 'xm-user',
     templateUrl: './user.component.html',
+    styleUrls: ['./user.component.scss'],
     changeDetection: ChangeDetectionStrategy.Default,
-    encapsulation: ViewEncapsulation.None,
     animations: [
         matExpansionAnimations.bodyExpansion,
         matExpansionAnimations.indicatorRotate,

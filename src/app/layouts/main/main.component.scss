@@ -1,0 +1,5 @@
+@import 'main';
+
+::ng-deep {
+  @include xm-layout-sidebar-with-mini();
+}

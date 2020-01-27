@@ -1,3 +1,5 @@
+@import 'theme';
+
 $xm-sidebar-background: #fff !default;
 $xm-sidebar-width:      260px !default;
 $xm-sidebar-mini-width: 80px !default;
@@ -8,24 +10,26 @@ $xm-sidebar-transition: 300ms cubic-bezier(0.685, 0.0473, 0.346, 1) !default;
 $breakpoint-tablet:     991px !default;
 
 @mixin main-with-sidebar-mini {
-  @at-root .sidebar-mini {
-    .sidebar:not(:hover) { @content; }
+  @at-root ::ng-deep .sidebar-mini {
+    @media (min-width: $breakpoint-tablet) {
+      .sidebar:not(:hover) { @content; }
+    }
   }
 }
 
 @mixin main-with-sidebar {
-  .nav-open { @content; }
+  ::ng-deep .nav-open { @content; }
   @media (min-width: $breakpoint-tablet) { @content; }
 }
 
 @mixin main-without-sidebar {
-  :not(.nav-open) { @content; }
+  ::ng-deep :not(.nav-open) { @content; }
   @media (min-width: $breakpoint-tablet) { @content; }
 }
 
 
 @mixin main-without-sidebar-mini {
-  :not(.sidebar-mini) { @content; }
+  ::ng-deep :not(.sidebar-mini) { @content; }
 }
 
 
@@ -49,7 +53,6 @@ $breakpoint-tablet:     991px !default;
     .sidebar {
       left:  auto;
       right: 0;
-
       @include transition($xm-sidebar-transition);
       @include transform(translate3d($xm-sidebar-width, 0, 0));
     }
@@ -76,20 +79,20 @@ $breakpoint-tablet:     991px !default;
   }
 
 
-  .visible-on-sidebar-mini {
+  ::ng-deep .visible-on-sidebar-mini {
     display: none;
   }
 
-  .visible-on-sidebar-regular {
+  ::ng-deep .visible-on-sidebar-regular {
     display: inline-block;
   }
 
-  .sidebar-mini {
-    .visible-on-sidebar-mini {
+  ::ng-deep .sidebar-mini {
+    ::ng-deep .visible-on-sidebar-mini {
       display: inline-block;
     }
 
-    .visible-on-sidebar-regular {
+    ::ng-deep .visible-on-sidebar-regular {
       display: none;
     }
   }
@@ -98,6 +101,11 @@ $breakpoint-tablet:     991px !default;
 }
 
 @mixin main-panel() {
+
+  .wrapper {
+    /* background image */
+    min-height: 100vh;
+  }
 
   .main-panel {
     float:    right;
@@ -126,9 +134,20 @@ $breakpoint-tablet:     991px !default;
 
 }
 
+@mixin xm-guest() {
+
+  .xm-guest-layout .sidebar {
+    display: none !important;
+  }
+
+  .xm-guest-layout .main-panel {
+    width:      100%;
+    transition: none;
+  }
+}
+
 @mixin xm-layout-sidebar-with-mini() {
   @include sidebar();
   @include main-panel();
+  @include xm-guest();
 }
-
-@include xm-layout-sidebar-with-mini();

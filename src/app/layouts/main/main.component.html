@@ -13,14 +13,7 @@
   <xm-loader [absolute]="true" [showLoader]="!(resolved$ | async)"></xm-loader>
 
   <div class="sidebar" data-background-color="" data-color="white">
-    <ng-container *ngIf="isXmSidebar$ | async; else defaultSidebar">
-      <xm-sidebar></xm-sidebar>
-    </ng-container>
-
-    <ng-template #defaultSidebar>
-      <xm-sidebar-cmp></xm-sidebar-cmp>
-      <div class="sidebar-background"></div>
-    </ng-template>
+    <xm-sidebar></xm-sidebar>
   </div>
 
   <div *ngIf="resolved$ | async" class="main-panel">

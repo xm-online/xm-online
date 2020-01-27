@@ -1,14 +1,10 @@
-/* tslint:disable:typedef */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { Idle } from 'idlejs/dist';
 import { JhiEventManager } from 'ng-jhipster';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { XM_SIDEBAR_KEY } from '../../modules/xm-sidebar';
-import { XmUiConfigService } from '../../modules/xm-sidebar/config';
 import { LanguageService } from '../../modules/xm-translation/language.service';
 import { TitleService } from '../../modules/xm-translation/title.service';
 import { Principal } from '../../shared/auth/principal.service';
@@ -17,11 +13,12 @@ import { XmConfigService } from '../../shared/spec/config.service';
 import { XmApplicationConfigService } from '../../shared/spec/xm-config.service';
 import { XM_EVENT_LIST } from '../../xm.constants';
 
-declare let $: any;
+declare const $: any;
 
 @Component({
     selector: 'xm-main',
     templateUrl: './main.component.html',
+    styleUrls: ['./main.component.scss'],
 })
 export class XmMainComponent implements OnInit, OnDestroy {
     public showSidebar: boolean = true;
@@ -35,7 +32,6 @@ export class XmMainComponent implements OnInit, OnDestroy {
     public userAutoLogoutEnabled: boolean;
     public userAutoLogoutSeconds: number;
     public idle: Idle;
-    public isXmSidebar$: Observable<boolean>;
     private excludePathsForViewSidebar: string[] = ['/social-auth'];
 
     constructor(private configService: XmConfigService,
@@ -44,7 +40,6 @@ export class XmMainComponent implements OnInit, OnDestroy {
                 private loginService: LoginService,
                 private languageService: LanguageService,
                 private principal: Principal,
-                private xmUiConfigService: XmUiConfigService,
                 protected titleService: TitleService,
                 private eventManager: JhiEventManager) {
         this.resolved$ = new BehaviorSubject<boolean>(false);
@@ -53,16 +48,7 @@ export class XmMainComponent implements OnInit, OnDestroy {
         this.xmConfigService.isMaintenanceProgress().subscribe((res: boolean) => this.isMaintenanceProgress$.next(res));
     }
 
-    // tslint:disable-next-line:cognitive-complexity
     public ngOnInit(): void {
-        this.isXmSidebar$ = this.xmUiConfigService.cache$.pipe(
-            map((i) => i
-                && i.layoutSidebar
-                && i.layoutSidebar.selector
-                && i.layoutSidebar.selector === XM_SIDEBAR_KEY
-            )
-        );
-
         this.languageService.init();
         this.titleService.init();
         this.configService.getUiConfig().subscribe((config) => {

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import swal from 'sweetalert2';
 import { LoginService } from '../../shared';
 import { XmEntitySpecWrapperService } from '../../xm-entity';
 
@@ -12,10 +14,26 @@ export class LogoutComponent implements OnInit {
 
     constructor(protected readonly loginService: LoginService,
                 protected readonly xmEntitySpecWrapperService: XmEntitySpecWrapperService,
+                protected readonly translateService: TranslateService,
+                protected readonly route: ActivatedRoute,
                 protected readonly router: Router) { }
 
     public ngOnInit(): void {
-        this.logout();
+        const isForce = this.route.snapshot.paramMap.get('force');
+
+        if (isForce) {
+            this.logout();
+        }
+
+        swal({
+            title: this.translateService.instant('global.common.are-you-sure'),
+            showCancelButton: true,
+            buttonsStyling: false,
+            confirmButtonClass: 'btn mat-raised-button btn-primary',
+            cancelButtonClass: 'btn mat-raised-button',
+            confirmButtonText: this.translateService.instant('global.common.yes-exit'),
+            cancelButtonText: this.translateService.instant('global.common.cancel'),
+        }).then((result) => result.value ? this.logout() : history.back());
     }
 
     public logout(): void {

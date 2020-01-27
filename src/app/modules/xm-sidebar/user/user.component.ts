@@ -30,7 +30,7 @@ const USER_MENU: MenuItem[] = [
     },
     {
         position: 3,
-        permission: '',
+        permission: 'ACCOUNT.CHECK_AUTH',
         url: ['logout'],
         icon: 'logout',
         title: 'global.menu.account.logout',

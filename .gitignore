@@ -25,3 +25,5 @@ src/app/ext/*
 src/assets/img/ext/
 angular.json
 
+# theme - this file is used to define the default theme
+src/styles/_theme.scss

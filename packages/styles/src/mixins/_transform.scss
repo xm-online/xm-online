@@ -2,7 +2,7 @@
  * Rotate
  */
 @mixin rotate($degree) {
-  $deg: #{$degree}deg;
+  $deg:              #{$degree}deg;
   -webkit-transform: rotate($deg);
   -moz-transform:    rotate($deg);
   -ms-transform:     rotate($deg);
@@ -51,6 +51,7 @@
   -ms-transition:     all $time $type;
   transition:         all $time $type;
 }
+
 @mixin transitions-property($property, $time, $type) {
   -webkit-transition: $property $time $type;
   -moz-transition:    $property $time $type;

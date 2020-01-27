@@ -1,0 +1,27 @@
+// Colors
+$primary:               $xm-primary;
+$secondary:             $xm-secondary;
+$success:               $xm-success;
+$info:                  $xm-hint;
+$warning:               $xm-warn;
+$danger:                $xm-error;
+
+$light:                 $xm-text-light;
+$dark:                  $xm-text-dark;
+
+$body-bg:               $xm-background;
+$body-color:            $xm-text;
+
+// Card
+$card-bg:               $xm-surface;
+$card-border-color:     $card-bg;
+$card-cap-bg:           $card-bg;
+
+/**
+ * Override
+ */
+$link-hover-decoration: none;
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";

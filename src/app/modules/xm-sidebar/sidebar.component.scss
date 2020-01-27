@@ -1,40 +1,5 @@
-$xm-sidebar-background: $xm-surface !default;
-$xm-sidebar-z-index:    $zindex-fixed !default;
-$xm-backdrop:           white !default;
-$xm-opacity:            0.93 !default;
-$xm-backdrop-z-index:   -1 !default;
+@import 'sidebar';
 
-@mixin sidebar($theme) {
-  display:        flex;
-  flex-direction: column;
-  height:         100%;
-  position:       absolute;
-  width:          100%;
-  z-index:        $xm-sidebar-z-index;
-  background:     $xm-sidebar-background;
-  @include xm-shadow-sm();
-
-  .xm-sidebar-background {
-    background: $xm-backdrop;
-    content:    '';
-    display:    block;
-    height:     100%;
-    opacity:    $xm-opacity;
-    position:   absolute;
-    width:      100%;
-    z-index:    $xm-backdrop-z-index;
-    top:        0;
-    left:       0;
-    right:      0;
-    bottom:     0;
-  }
-
-  .section-scroll {
-    overflow-x:     hidden;
-    overflow-y:     auto;
-    display:        flex;
-    flex-direction: column;
-    flex-grow:      1;
-  }
-
+::ng-deep .xm-sidebar {
+  @include xm-sidebar($xm-theme);
 }

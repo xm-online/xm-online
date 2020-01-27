@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
     selector: 'xm-sidebar',
     host: {
         class: 'xm-sidebar',
     },
+    styleUrls: ['./sidebar.component.scss'],
     templateUrl: './sidebar.component.html',
     changeDetection: ChangeDetectionStrategy.Default,
-    encapsulation: ViewEncapsulation.None,
 })
 export class SidebarComponent {
 

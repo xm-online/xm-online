@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 import { map, share } from 'rxjs/operators';
@@ -37,11 +37,8 @@ function optionsConfigToLogo(config: XmUIConfig): LogoOptions {
 @Component({
     selector: 'xm-logo',
     templateUrl: './logo.component.html',
-    host: {
-        class: 'xm-logo',
-    },
+    styleUrls: ['./logo.component.scss'],
     changeDetection: ChangeDetectionStrategy.Default,
-    encapsulation: ViewEncapsulation.None,
 })
 export class LogoComponent implements OnInit {
 

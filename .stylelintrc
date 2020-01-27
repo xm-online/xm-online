@@ -85,7 +85,7 @@
     "no-eol-whitespace": true,
     "max-line-length": 120,
     "linebreaks": "unix",
-    "selector-class-pattern": ["^_?(xm-|demo-)", {
+    "selector-class-pattern": ["^_?(xm-|demo-|mat-)", {
       "resolveNestedSelectors": true
     }]
 

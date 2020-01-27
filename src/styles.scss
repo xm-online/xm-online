@@ -1,14 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
 // Theme
-@import "./styles/theme";
+@import './styles/theme';
+
 @include xm-ngx-styles-theme($xm-theme);
 
 // Vendors
-@import "~@xm-ngx/styles/src/vendor/index";
+@import '~@xm-ngx/styles/src/vendor/index';
 @include xm-angular-material-theme($xm-theme);
 @include xm-vendor-xm-override();
-
-// Components
-@import "app/layouts/main/main";
-@import "app/modules/xm-sidebar/sidebar";

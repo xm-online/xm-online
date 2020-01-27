@@ -31,7 +31,7 @@
               {"input": "src/styles/prebuild-themes/_pink.scss", "lazy": true, "bundleName": "themes/pink"}
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": ["src/styles", "src/app/ext"]
             },
             "scripts": [
               "node_modules/hammerjs/hammer.min.js",

@@ -3,6 +3,7 @@
   <!-- category-link -->
   <ng-template #categoryLink>
     <div (submit)="toggleMenu(category)"
+         *permitted="category.permission"
          [item]="category"
          xm-menu-link>
     </div>
@@ -12,6 +13,7 @@
   <ng-container *ngIf="!category.isLink; else categoryLink">
 
     <div (click)="toggleMenu(category)"
+         *permitted="category.permission"
          (keyup.enter)="toggleMenu(category)"
          [ngClass]="getCategoryState(category)"
          class="menu-title menu-link"
@@ -26,11 +28,13 @@
     <ul [@bodyExpansion]="getCategoryState(category)"
         [ngClass]="getCategoryState(category)"
         class="menu-list">
-      <li *ngFor="let item of category.children"
-          [item]="item"
-          class="menu-item"
-          xm-menu-link>
-      </li>
+      <ng-container *ngFor="let item of category.children">
+        <li *permitted="item.permission"
+            [item]="item"
+            class="menu-item {{ item.class }}"
+            xm-menu-link>
+        </li>
+      </ng-container>
     </ul>
 
   </ng-container>

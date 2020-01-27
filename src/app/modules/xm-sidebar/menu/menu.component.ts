@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { matExpansionAnimations } from '@angular/material';
 import { NavigationEnd, Router } from '@angular/router';
 import * as _ from 'lodash';
@@ -45,7 +45,7 @@ function dashboardToCategory(dashboard: Dashboard): MenuCategory {
 
     return ({
         position: group.orderIndex,
-        permission: group.permission,
+        permission: group.permission || 'DASHBOARD.GET_LIST',
         url: ['dashboard', (groupKey || dashboard.id)],
         key: groupKey,
         title: group.name || dashboard.name || '',
@@ -83,16 +83,17 @@ function dashboardToMenuItem(dashboard: Dashboard): MenuItem {
 
     return ({
         position: config.orderIndex,
-        permission: config.permission,
+        class: config.hidden ? 'd-none' : '',
+        permission: config.permission || 'DASHBOARD.GET_LIST',
         url: ['dashboard', (config.slug || dashboard.id)],
-        title: menu.name || dashboard.name || '',
+        title: config.name || menu.name || dashboard.name || '',
         icon: config.icon || '',
     });
 }
 
 function dashboardsToCategories(dashboards: Dashboard[]): MenuCategory[] {
 
-    const categories: MenuCategory[] = [];
+    let categories: MenuCategory[] = [];
 
     _.forEach(dashboards, (dashboard) => {
 
@@ -113,8 +114,8 @@ function dashboardsToCategories(dashboards: Dashboard[]): MenuCategory[] {
 
     });
 
-    _.sortBy(categories, ['position', 'title']);
-    _.forEach(categories, (i) => _.sortBy(i.children, ['position', 'title']));
+    categories = _.orderBy(categories, 'position', 'asc');
+    _.forEach(categories, (i) => i.children = _.orderBy(i.children, 'position', 'asc'));
 
     return categories;
 }
@@ -125,12 +126,12 @@ function dashboardsToCategories(dashboards: Dashboard[]): MenuCategory[] {
     host: {
         class: 'xm-menu',
     },
+    styleUrls: ['./menu.component.scss'],
     animations: [
         matExpansionAnimations.bodyExpansion,
         matExpansionAnimations.indicatorRotate,
     ],
     changeDetection: ChangeDetectionStrategy.Default,
-    encapsulation: ViewEncapsulation.None,
 })
 export class MenuComponent implements OnInit, OnDestroy {
 

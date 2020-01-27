@@ -1,0 +1,93 @@
+@import '../sidebar';
+
+$xm-menu-item-hover:        rgba(200, 200, 200, 0.2) !default;
+$xm-menu-item-active:       0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(#000, 0.4) !default;
+$xm-menu-list-padding-left: 0 !default;
+$xm-menu-icon-font-size:    20px !default;
+$xm-menu-icon-color:        #a9afbb !default;
+
+@mixin menu-link() {
+  cursor: pointer;
+
+  &.expanded {
+    background: $xm-menu-item-hover;
+    @include is-enable-rounded();
+  }
+
+  &:active {
+    background: $xm-background;
+    @include is-enable-rounded();
+  }
+
+  &.active {
+    color: $xm-primary;
+    @include xm-shadow-xs();
+  }
+
+  &:hover:not(.active),
+  &:focus:not(.active) {
+    background: $xm-menu-item-hover;
+    @include is-enable-rounded();
+  }
+}
+
+@mixin menu($theme) {
+
+  .menu-title {
+
+    &.expanded {
+      background: $xm-menu-item-hover;
+      @include is-enable-rounded();
+    }
+  }
+
+  .menu-list {
+    list-style-type: none;
+
+    // TODO: override default ul styles
+    padding-left:    $xm-menu-list-padding-left;
+    margin-bottom:   0;
+
+    &.collapsed {
+      overflow: hidden;
+      // TODO: override default ul styles
+      margin:   0;
+    }
+  }
+
+  .mat-expansion-indicator {
+    margin-right: $sidebar-padding-x;
+    margin-left:  auto;
+
+    &::after {
+      @include xm-mat-expansion-indicator();
+    }
+  }
+
+  .menu-link {
+    overflow:       hidden;
+    white-space:    nowrap;
+    display:        flex;
+    flex-direction: row;
+    color:          $xm-text;
+    padding:        $menu-item-padding-y $sidebar-padding-x $menu-item-padding-y $sidebar-padding-x * 2;
+
+
+    &:not(.active) > .mat-icon {
+      color: $xm-menu-icon-color;
+    }
+
+    & > span {
+      padding-left: $sidebar-padding-x;
+    }
+
+    @include menu-link();
+  }
+
+  .menu-icon {
+    font-size: $xm-menu-icon-font-size;
+    /** fix bug of side bar mini */
+    min-width: 24px;
+  }
+
+}

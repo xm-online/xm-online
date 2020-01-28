@@ -36,11 +36,6 @@ $user-img-border-radius: 50% !default;
     white-space:   nowrap;
   }
 
-  @include main-with-sidebar-mini {
-    .user-name {
-      display: none;
-    }
-  }
 }
 
 

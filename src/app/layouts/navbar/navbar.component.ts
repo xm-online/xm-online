@@ -12,10 +12,6 @@ import { XmConfigService } from '../../shared/spec/config.service';
 import { DashboardWrapperService } from '../../xm-dashboard';
 import { DEBUG_INFO_ENABLED, VERSION } from '../../xm.constants';
 
-const misc = {
-    sidebarMiniActive: false,
-};
-
 declare const $: any;
 
 @Component({
@@ -88,33 +84,6 @@ export class NavbarComponent implements OnInit, DoCheck {
 
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
-        if ($('body').hasClass('sidebar-mini')) {
-            misc.sidebarMiniActive = true;
-        }
-        $('#minimizeSidebar').click(() => {
-
-            if (misc.sidebarMiniActive === true) {
-                $('body').removeClass('sidebar-mini');
-                misc.sidebarMiniActive = false;
-
-            } else {
-                setTimeout(() => {
-                    $('body').addClass('sidebar-mini');
-
-                    misc.sidebarMiniActive = true;
-                }, 300);
-            }
-
-            // we simulate the window Resize so the charts will get updated in realtime.
-            const simulateWindowResize = setInterval(() => {
-                window.dispatchEvent(new Event('resize'));
-            }, 180);
-
-            // we stop the simulation of Window Resize after the animations are completed
-            setTimeout(() => {
-                clearInterval(simulateWindowResize);
-            }, 1000);
-        });
     }
 
     public ngDoCheck(): void {

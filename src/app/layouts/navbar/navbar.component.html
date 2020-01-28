@@ -11,13 +11,6 @@
           </a>
         </div>
 
-        <div class="navbar-minimize navbar-container-part drawer-toggle">
-          <button id="minimizeSidebar" mat-icon-button>
-            <i class="material-icons visible-on-sidebar-regular">more_vert</i>
-            <i class="material-icons visible-on-sidebar-mini">view_list</i>
-          </button>
-        </div>
-
         <div class="navbar-container-part">
           <button (click)="onBack()"
                   *ngSwitchCase="true"
@@ -35,9 +28,11 @@
         <div *ngIf="isMobileMenu()" class="navbar-container-part search-part">
           <form *ngSwitchCase="true" class="navbar-form navbar-right" role="search">
             <div class="input-group no-border">
-              <input #searchBox [regexp]="searchMask" class="form-control search-input"
+              <input #searchBox [regexp]="searchMask"
+                     class="form-control search-input"
                      matInput
-                     placeholder="{{ 'navbar.search' | translate }}" type="text"
+                     placeholder="{{ 'navbar.search' | translate }}"
+                     type="text"
                      xmInputPattern>
               <button (click)="search(searchBox.value)"
                       class="btn btn-white btn-round btn-just-icon"

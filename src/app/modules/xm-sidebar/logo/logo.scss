@@ -30,10 +30,4 @@ $xm-logo-title-font-size: 18px !default;
     overflow:     hidden;
   }
 
-  @include main-with-sidebar-mini {
-    .logo-title {
-      display: none;
-    }
-  }
-
 }

@@ -4,10 +4,4 @@
 
   @include menu($xm-theme);
 
-  @include main-with-sidebar-mini {
-    .menu-link > span {
-      display: none;
-    }
-  }
-
 }

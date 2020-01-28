@@ -2,20 +2,11 @@
 
 $xm-sidebar-background: #fff !default;
 $xm-sidebar-width:      260px !default;
-$xm-sidebar-mini-width: 80px !default;
 $xm-sidebar-z-index:    $zindex-fixed !default;
 $xm-sidebar-transition: 300ms cubic-bezier(0.685, 0.0473, 0.346, 1) !default;
 
 // @todo: take from global variables
 $breakpoint-tablet:     991px !default;
-
-@mixin main-with-sidebar-mini {
-  @at-root ::ng-deep .sidebar-mini {
-    @media (min-width: $breakpoint-tablet) {
-      .sidebar:not(:hover) { @content; }
-    }
-  }
-}
 
 @mixin main-with-sidebar {
   ::ng-deep .nav-open { @content; }
@@ -26,12 +17,6 @@ $breakpoint-tablet:     991px !default;
   ::ng-deep :not(.nav-open) { @content; }
   @media (min-width: $breakpoint-tablet) { @content; }
 }
-
-
-@mixin main-without-sidebar-mini {
-  ::ng-deep :not(.sidebar-mini) { @content; }
-}
-
 
 @mixin sidebar() {
 
@@ -62,12 +47,6 @@ $breakpoint-tablet:     991px !default;
     }
   }
 
-  @media (min-width: $breakpoint-tablet) {
-    .sidebar-mini .sidebar:not(:hover) {
-      width: $xm-sidebar-mini-width;
-    }
-  }
-
   // utils
   // @todo:
   .perfect-scrollbar-on {
@@ -78,25 +57,9 @@ $breakpoint-tablet:     991px !default;
     }
   }
 
-
-  ::ng-deep .visible-on-sidebar-mini {
-    display: none;
-  }
-
   ::ng-deep .visible-on-sidebar-regular {
     display: inline-block;
   }
-
-  ::ng-deep .sidebar-mini {
-    ::ng-deep .visible-on-sidebar-mini {
-      display: inline-block;
-    }
-
-    ::ng-deep .visible-on-sidebar-regular {
-      display: none;
-    }
-  }
-
 
 }
 
@@ -113,12 +76,6 @@ $breakpoint-tablet:     991px !default;
     width:    calc(100% - #{$xm-sidebar-width});
 
     @include transition($xm-sidebar-transition);
-  }
-
-  @media (min-width: $breakpoint-tablet) {
-    .sidebar-mini .main-panel {
-      width: calc(100% - #{$xm-sidebar-mini-width});
-    }
   }
 
   @media (max-width: $breakpoint-tablet) {

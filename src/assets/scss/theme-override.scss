@@ -1,9 +1,3 @@
-@mixin dShadow {
-    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0 1px 1px 0 rgba(0, 0, 0, 0.14),
-    0 1px 3px 0 rgba(0, 0, 0, 0.12);
-}
-
 
 /* mat form items */
 .mat-form-field-appearance-legacy {
@@ -22,83 +16,9 @@
     }
 }
 
-.mat-slide-toggle-thumb {
-    @include dShadow;
-}
-
 .mat-label-m-0 {
     label {
         margin: 0;
-    }
-}
-
-
-/* Sidebar */
-.sidebar {
-    .xm-sidebar-logo.logo {
-        a.logo-normal {
-            text-transform: none;
-        }
-    }
-
-    .user {
-        overflow: hidden;
-
-        .user-name {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-    }
-
-    .nav {
-        .caret {
-            top: 0;
-        }
-    }
-
-    .truncated {
-        font-style: inherit;
-        display: block;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-}
-
-.sidebar .sidebar-wrapper .user .user-info [data-toggle=collapse] ~ div > ul > li > a .sidebar-mini, .sidebar .sidebar-wrapper > .nav [data-toggle=collapse] ~ div > ul > li > a .sidebar-mini {
-    min-height: 1px;
-}
-
-.sidebar .sidebar-wrapper .user .user-info [data-toggle=collapse] ~ div > ul > li > a .sidebar-normal, .sidebar .sidebar-wrapper > .nav [data-toggle=collapse] ~ div > ul > li > a .sidebar-normal {
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.sidebar .nav p {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.sidebar {
-    .user.has-user-description {
-        .user-info {
-            .caret {
-                top: 18px;
-            }
-
-            > a {
-                padding-top: 0;
-                padding-bottom: 0;
-            }
-        }
-    }
-
-    .user-description {
-        font-size: 12px;
-        margin-top: 2px;
-        line-height: 14px;
     }
 }
 

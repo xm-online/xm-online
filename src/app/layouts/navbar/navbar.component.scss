@@ -64,7 +64,6 @@
     @include flex-wrap(nowrap);
     align-items: center;
 
-    ::ng-deep .navbar-minimize,
     .navbar-brand,
     .navbar-header {
       float: none;
@@ -72,10 +71,6 @@
 
     ::ng-deep .navbar-toggler {
       display: none;
-    }
-
-    .navbar-minimize {
-      padding: 0;
     }
 
     .navbar-form {
@@ -248,12 +243,6 @@
       @media (max-width: 480px) {
         display: none;
       }
-    }
-  }
-
-  @media (max-width: 991px) {
-    .navbar-minimize {
-      display: none;
     }
   }
 }

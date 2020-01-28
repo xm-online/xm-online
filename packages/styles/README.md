@@ -4,13 +4,6 @@ This package is a collection of mixins, functions, and variables.
 
 [xm-webapp]: https://github.com/xm-online/xm-webapp
 
-### How to start
-Provide the dependency into the root `/node_modules`.
-In the root directory of the `xm-webapp` project you should run:
-```shell script
-npm run npm-link 
-```
-
 ### How to create theme
 You should create a `src/app/styles/theme.scss` file.
 

@@ -29,6 +29,10 @@ export class XmApplicationConfigService {
         return this.http.get(this.configUrl).toPromise().then((data: any) => {
             this.appConfig = data;
             if (data) {
+                if (!data.theme) {
+                    this.setResolved(true);
+                    return;
+                }
                 const themeName = data.theme ? data.theme : DEFAULT_THEME_NAME;
                 const themeStrategy = data.themeStrategy ? data.themeStrategy : THEME_STARTEGY.DEFAULT;
                 const themePath = this.resolveThemePath(themeStrategy, themeName);

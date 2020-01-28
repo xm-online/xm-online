@@ -29,6 +29,12 @@ $xm-menu-icon-color:        #a9afbb !default;
     background: $xm-menu-item-hover;
     @include is-enable-rounded();
   }
+
+  &:focus,
+  &.focus {
+    outline: 0;
+    box-shadow: $btn-focus-box-shadow;
+  }
 }
 
 @mixin menu($theme) {

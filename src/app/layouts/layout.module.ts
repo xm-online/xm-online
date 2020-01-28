@@ -11,11 +11,9 @@ import { FooterComponent } from './footer/footer.component';
 import { XmMainComponent } from './main/main.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PageRibbonComponent } from './profiles/page-ribbon.component';
-import { SidebarModule } from './sidebar/sidebar.module';
 
 @NgModule({
     imports: [
-        SidebarModule,
         XmBalanceModule,
         XmEntityModule,
         XmSharedModule,

@@ -1,0 +1,11 @@
+@mixin angular2-json-schema-form-xm-override() {
+  /**
+    * angular2-json-schema incorrectly override this class with ::ng-deep
+    * restore default value
+    */
+  mat-form-field.mat-form-field {
+    display:    initial;
+    position:   initial;
+    text-align: initial;
+  }
+}

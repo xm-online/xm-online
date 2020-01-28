@@ -1,27 +1,38 @@
 // Colors
-$primary:               $xm-primary;
-$secondary:             $xm-secondary;
-$success:               $xm-success;
-$info:                  $xm-hint;
-$warning:               $xm-warn;
-$danger:                $xm-error;
+$primary:                $xm-primary;
+$secondary:              $xm-secondary;
+$success:                $xm-success;
+$info:                   $xm-hint;
+$warning:                $xm-warn;
+$danger:                 $xm-error;
 
-$light:                 $xm-text-light;
-$dark:                  $xm-text-dark;
+$light:                  $xm-text-light;
+$dark:                   $xm-text-dark;
 
-$body-bg:               $xm-background;
-$body-color:            $xm-text;
+$body-bg:                $xm-background;
+$body-color:             $xm-text;
 
 // Card
-$card-bg:               $xm-surface;
-$card-border-color:     $card-bg;
-$card-cap-bg:           $card-bg;
+$card-bg:                $xm-surface;
+$card-border-color:      $card-bg;
+$card-cap-bg:            $card-bg;
 
 /**
  * Override
  */
-$link-hover-decoration: none;
+$link-hover-decoration:  none;
 
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
+// Typography
+$font-size-base:         1rem * 0.875;
+$font-family-sans-serif: Roboto, 'Helvetica Neue', sans-serif;
+$display1-size:          2.42rem;
+$display2-size:          3.21rem;
+$display3-size:          4rem;
+$display4-size:          8rem;
+$font-size-lg:           1rem * 1.14;
+$font-size-sm:           1rem * 0.857;
+$lead-font-size:         1rem * 1.08;
+
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';

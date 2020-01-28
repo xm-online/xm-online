@@ -1,8 +1,8 @@
 @import 'theme';
 @import '../../layouts/main/main';
 
-$menu-item-padding-y: 15px !default;
-$sidebar-padding-x:   12px !default;
+$menu-item-padding-y:   15px !default;
+$sidebar-padding-x:     12px !default;
 $xm-sidebar-background: $xm-surface !default;
 $xm-sidebar-z-index:    $zindex-fixed !default;
 $xm-backdrop:           white !default;
@@ -17,7 +17,7 @@ $xm-backdrop-z-index:   -1 !default;
   width:          100%;
   z-index:        $xm-sidebar-z-index;
   background:     $xm-sidebar-background;
-  @include xm-shadow-sm();
+  @include xm-shadow-xs();
 
   .xm-sidebar-background {
     background: $xm-backdrop;

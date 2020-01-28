@@ -1,7 +1,7 @@
 /**
  * Based on material and bootstrap
  */
-@import "~@angular/material/theming";
+@import '~@angular/material/theming';
 
 // Palette setup
 $xm-set-palette-default:      500 !default;
@@ -50,17 +50,17 @@ $xm-warn:                     map-get($xm-warn-palette, $xm-set-palette-default)
 $xm-text-on-warn:             $xm-text !default;
 
 // error
-$xm-error-palette:            $mat-red !default;
+$xm-error-palette:            $xm-warn-palette !default;
 $xm-error:                    map-get($xm-error-palette, $xm-set-palette-default) !default;
 $xm-text-on-error:            $xm-text !default;
 
 // hint or info
-$xm-hint-palette:             $mat-blue !default;
+$xm-hint-palette:             $xm-secondary-palette !default;
 $xm-hint:                     map-get($xm-hint-palette, $xm-set-palette-default) !default;
 $xm-text-on-hint:             $xm-text !default;
 
 // success
-$xm-success-palette:          $mat-green !default;
+$xm-success-palette:          $xm-primary-palette !default;
 $xm-success:                  map-get($xm-success-palette, $xm-set-palette-default) !default;
 $xm-text-on-success:          $xm-text !default;
 

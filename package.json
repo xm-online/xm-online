@@ -31,7 +31,7 @@
     "build-prod-v1-stat": "npm run prebuild && ng build -pr --prod --statsJson",
     "build-prod-v2": "npm run prebuild && node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng build --prod --aot=true --build-optimizer=true --vendor-chunk=true --common-chunk=true",
     "build-prod-v2-stat": "npm run prebuild && node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng build --prod --aot=true --build-optimizer=true --vendor-chunk=true --common-chunk=true --statsJson",
-    "prebuild": "npm run mng-ext && npm run install-exts && node ./scripts/merge-translations.js",
+    "prebuild": "npm run mng-ext && npm run install-exts && npm run npm-link && node ./scripts/merge-translations.js",
     "mng-ext": "node ./scripts/manage-exts.js",
     "test": "npm run prebuild && ng test --source-map=false",
     "lint": "npm run lint:js",

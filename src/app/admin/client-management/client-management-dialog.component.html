@@ -102,11 +102,11 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button mat-raised-button type="button" class="btn mr-1" data-dismiss="modal" (click)="clear()">
+    <button mat-button type="button" class="btn mr-1" data-dismiss="modal" (click)="clear()">
       <span class="fa fa-ban"></span>&nbsp;<span
       jhiTranslate="entity.action.cancel">Cancel</span>
     </button>
-    <button mat-raised-button
+    <button mat-button
             type="submit"
             (click)="save()"
             [disabled]="editForm.form.invalid || showLoader" class="btn btn-primary">

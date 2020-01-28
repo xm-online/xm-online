@@ -289,8 +289,8 @@ export const formLayout = () => {
         $('.textarea-auto-height textarea').trigger('keyup');
         $('mat-form-field').addClass('mat-form-field');
         $('mat-form-field').closest('div').addClass('form-group');
-        $('.json-schema-form .mat-raised-button, .json-schema-form .mat-button').addClass('btn');
-        $('.json-schema-form .mat-raised-button.mat-primary, .json-schema-form .mat-button.mat-primary')
+        $('.json-schema-form .mat-button, .json-schema-form .mat-button').addClass('btn');
+        $('.json-schema-form .mat-button.mat-primary, .json-schema-form .mat-button.mat-primary')
             .addClass('btn-primary');
     }, 50);
 };

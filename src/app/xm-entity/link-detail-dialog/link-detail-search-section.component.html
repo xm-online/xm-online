@@ -49,7 +49,7 @@
   <div class="row">
     <div class="col-sm-12 text-center">
       <button (click)="onShowMore()" *ngIf="searchXmEntities?.length < total" [disabled]="showLoader" class="btn btn-primary btn-round"
-              mat-raised-button>
+              mat-button>
         <span jhiTranslate="xm-entity.link-detail-dialog.show-more">Show more</span>
       </button>
     </div>
@@ -57,7 +57,7 @@
 </div>
 
 <div class="modal-footer">
-  <button (click)="onCancel()" class="btn" data-dismiss="modal" mat-raised-button type="button">
+  <button (click)="onCancel()" class="btn" data-dismiss="modal" mat-button type="button">
     <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
   </button>
 </div>

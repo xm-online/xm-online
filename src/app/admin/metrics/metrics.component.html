@@ -82,7 +82,7 @@
                 {{metrics.gauges['jvm.threads.count'].value}})
 
                 <button type="button"
-                        mat-raised-button
+                        mat-button
                         (click)="refreshThreadDumpData()"
                         class="btn btn-sm btn-icon btn-just-icon btn-link action abs-link"
                         data-toggle="modal"
@@ -341,7 +341,7 @@
 </div>
 
 <div class="xm-fab">
-  <button mat-raised-button
+  <button mat-button
           class="btn btn-primary btn-icon btn-just-icon btn-round btn-lg"
           (click)="initMonitoring()">
     <i class="material-icons">refresh</i>

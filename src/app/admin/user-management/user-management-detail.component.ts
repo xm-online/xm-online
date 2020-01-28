@@ -72,8 +72,8 @@ export class UserMgmtDetailComponent implements OnInit, OnDestroy {
             title: `Initiate password reset for ${this.userEmail}?`,
             showCancelButton: true,
             buttonsStyling: false,
-            confirmButtonClass: 'btn mat-raised-button btn-primary',
-            cancelButtonClass: 'btn mat-raised-button',
+            confirmButtonClass: 'btn mat-button btn-primary',
+            cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes, reset!',
         }).then((result) => result.value
             ? this.pwsResetService.save(this.userEmail).subscribe()

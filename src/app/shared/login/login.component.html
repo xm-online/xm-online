@@ -74,7 +74,7 @@
   </div>
 
   <div class="text-right">
-    <button mat-raised-button type="submit"
+    <button mat-button type="submit"
             class="btn btn-primary display-block"
             [ngClass]="{'loading' : sendingLogin}"
             [disabled]="isFormDisabled()">
@@ -97,14 +97,14 @@
   </div>
 
   <div class="text-right">
-    <button mat-raised-button
+    <button mat-button
             type="button"
             class="btn mr-1"
             [disabled]="isFormDisabled()"
             (click)="backToLogin()">
       <span jhiTranslate="login.form.otpValidateCancel">Cancel</span>
     </button>
-    <button mat-raised-button
+    <button mat-button
             type="submit"
             class="btn btn-primary"
             [disabled]="isFormDisabled()">

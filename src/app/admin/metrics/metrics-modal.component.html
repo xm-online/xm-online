@@ -6,7 +6,7 @@
 <div class="modal-body">
   <div class="row align-items-center no-gutters flex-nowrap mb-3">
     <div class="col-auto">
-      <button mat-raised-button
+      <button mat-button
               (click)="threadDumpFilter = {}"
               class="btn btn-sm btn-round btn-primary mr-2 ml-2"
               type="button">
@@ -15,7 +15,7 @@
       </button>
     </div>
     <div class="col-auto">
-      <button mat-raised-button
+      <button mat-button
               (click)="threadDumpFilter = {threadState: 'RUNNABLE'}"
               class="btn btn-sm btn-round btn-success mr-2 ml-2"
               type="button">
@@ -24,7 +24,7 @@
       </button>
     </div>
     <div class="col-auto">
-      <button mat-raised-button
+      <button mat-button
               (click)="threadDumpFilter = {threadState: 'WAITING'}"
               class="btn btn-sm btn-round btn-info mr-2 ml-2"
               type="button">
@@ -33,7 +33,7 @@
       </button>
     </div>
     <div class="col-auto">
-      <button mat-raised-button
+      <button mat-button
               (click)="threadDumpFilter = {threadState: 'TIMED_WAITING'}"
               class="btn btn-sm btn-round btn-warning mr-2 ml-2"
               type="button">
@@ -42,7 +42,7 @@
       </button>
     </div>
     <div class="col-auto">
-      <button mat-raised-button
+      <button mat-button
               (click)="threadDumpFilter = {threadState: 'BLOCKED'}"
               class="btn btn-sm btn-round btn-danger mr-2 ml-2"
               type="button">
@@ -106,7 +106,7 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button mat-raised-button
+  <button mat-button
           type="button"
           class="btn btn-primary"
           data-dismiss="modal"

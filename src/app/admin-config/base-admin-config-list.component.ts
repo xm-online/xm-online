@@ -112,8 +112,8 @@ export class BaseAdminConfigListComponent implements OnInit, OnDestroy {
             title: `Delete ${itemName}?`,
             showCancelButton: true,
             buttonsStyling: false,
-            confirmButtonClass: 'btn btn mat-raised-button btn-primary',
-            cancelButtonClass: 'btn btn mat-raised-button',
+            confirmButtonClass: 'btn btn mat-button btn-primary',
+            cancelButtonClass: 'btn btn mat-button',
             confirmButtonText: 'Yes, delete!',
         }).then((result) => result.value ? this.deleteAction(id)
             : console.info('Cancel')); // tslint:disable-line

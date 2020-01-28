@@ -79,14 +79,14 @@
                       *ngIf="!isHideAll(item.typeKey)"
                       [class.disabled]="item.currentQuery === getDefaultSearch(item)"
                       class="btn btn-primary btn-sm btn-round"
-                      mat-raised-button>
+                      mat-button>
                 <span jhiTranslate="global.all">All</span>
               </button>
               <button (click)="onApplyFastSearch(item, fastSearch.query)"
                       *ngFor="let fastSearch of getFastSearches(item)"
                       [class.disabled]="item.currentQuery === fastSearch.query"
                       class="btn btn-primary btn-sm btn-round"
-                      mat-raised-button>
+                      mat-button>
                 {{fastSearch.name | i18nName: principal}}
               </button>
             </div>

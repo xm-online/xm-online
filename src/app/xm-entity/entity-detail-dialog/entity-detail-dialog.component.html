@@ -97,13 +97,13 @@
     </json-schema-form>
   </div>
   <div *ngIf="!(jsfAttributes?.entity?.formDefaultFooterHide)" class="modal-footer">
-    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-raised-button type="button">
+    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
       <span *ngIf="jsfAttributes?.entity?.cancelName">{{jsfAttributes.entity.cancelName | i18nName: principal}}</span>
       <span *ngIf="!jsfAttributes?.entity?.cancelName" jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
     <button [disabled]="entityForm.form.invalid || showLoader || !isJsonFormValid"
             class="btn btn-primary"
-            mat-raised-button
+            mat-button
             type="submit">
       <span *ngIf="jsfAttributes?.entity?.saveName">{{jsfAttributes.entity.saveName | i18nName: principal}}</span>
       <span *ngIf="!jsfAttributes?.entity?.saveName" jhiTranslate="xm-entity.common.save">Save</span>

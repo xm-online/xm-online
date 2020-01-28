@@ -59,14 +59,14 @@
             <button (click)="onCancel()"
                     *permitted="'DASHBOARD.UPDATE'"
                     [disabled]="!hasChanges"
-                    class="btn btn-sm mat-raised-button mr-1"
+                    class="btn btn-sm mat-button mr-1"
                     type="button">
               <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
             </button>
             <button (click)="onSave()"
                     *permitted="'DASHBOARD.UPDATE'"
                     [disabled]="!hasChanges"
-                    class="btn btn-primary btn-sm mat-raised-button"
+                    class="btn btn-primary btn-sm mat-button"
                     type="button">
               <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
             </button>
@@ -145,14 +145,14 @@
             <button (click)="onCancel()"
                     *permitted="'DASHBOARD.UPDATE'"
                     [disabled]="!hasChanges"
-                    class="btn btn-default btn-sm mat-raised-button mr-1"
+                    class="btn btn-default btn-sm mat-button mr-1"
                     type="button">
               <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
             </button>
             <button (click)="onSave()"
                     *permitted="'DASHBOARD.UPDATE'"
                     [disabled]="!hasChanges"
-                    class="btn btn-primary btn-sm mat-raised-button"
+                    class="btn btn-primary btn-sm mat-button"
                     type="button">
               <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
             </button>

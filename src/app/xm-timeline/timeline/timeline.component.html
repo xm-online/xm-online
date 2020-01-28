@@ -10,14 +10,14 @@
         <button (click)="applyFastSearch('')"
                 [class.disabled]="!currentSearch"
                 class="btn btn-primary btn-sm btn-round"
-                mat-raised-button>
+                mat-button>
           <span jhiTranslate="global.all">All</span>
         </button>
         <button (click)="applyFastSearch(item.state)"
                 *ngFor="let item of filter.states"
                 [class.disabled]="currentSearch === item.state"
                 class="btn btn-primary btn-sm btn-round"
-                mat-raised-button>
+                mat-button>
           {{item.name}}
         </button>
       </div>

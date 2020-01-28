@@ -53,8 +53,8 @@ export class CalendarCardComponent implements OnChanges {
             title: this.translateService.instant('xm-entity.calendar-card.delete.title'),
             showCancelButton: true,
             buttonsStyling: false,
-            confirmButtonClass: 'btn mat-raised-button btn-primary',
-            cancelButtonClass: 'btn mat-raised-button',
+            confirmButtonClass: 'btn mat-button btn-primary',
+            cancelButtonClass: 'btn mat-button',
             confirmButtonText: this.translateService.instant('xm-entity.calendar-card.delete.button'),
         }).then((result) => {
             if (result.value) {

@@ -1,5 +1,5 @@
 <form ngNoForm action="{{ 'uaa/social/signin/' + providerId }}" method="POST">
-  <button mat-raised-button type="submit" [ngClass]="icon.class" [class.has-image]="icon.src">
+  <button mat-button type="submit" [ngClass]="icon.class" [class.has-image]="icon.src">
     <i [ngClass]="icon.style" *ngIf="icon.style"></i>
     <img [src]="icon.src" *ngIf="icon.src">
   </button>

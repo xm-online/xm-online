@@ -8,19 +8,19 @@
   <div class="actions text-right">
     <button (click)="magnifyViewport(2)"
             class="btn btn-just-icon btn-icon btn-link"
-            mat-raised-button
+            mat-button
             type="button">
       <i class="material-icons">zoom_in</i>
     </button>
     <button (click)="resetViewport()"
             class="btn btn-just-icon btn-icon btn-link"
-            mat-raised-button
+            mat-button
             type="button">
       <i class="material-icons">center_focus_strong</i>
     </button>
     <button (click)="magnifyViewport(-2)"
             class="btn btn-just-icon btn-icon btn-link"
-            mat-raised-button
+            mat-button
             type="button">
       <i class="material-icons">zoom_out</i>
     </button>
@@ -40,7 +40,7 @@
        href="javascript: void(0);">
       {{'admin-config.common.save' | translate}} SVG
     </a>
-    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-raised-button type="button">
+    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
       <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
 

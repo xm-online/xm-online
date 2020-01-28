@@ -59,8 +59,8 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
             title: user.activated ? `Block user?` : `Unblock user?`,
             showCancelButton: true,
             buttonsStyling: false,
-            confirmButtonClass: 'btn mat-raised-button btn-primary',
-            cancelButtonClass: 'btn mat-raised-button',
+            confirmButtonClass: 'btn mat-button btn-primary',
+            cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes',
         }).then((result) => result.value ?
             this.changeUserState(user) :
@@ -87,8 +87,8 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
             title: `Enable 2FA?`,
             showCancelButton: true,
             buttonsStyling: false,
-            confirmButtonClass: 'btn mat-raised-button btn-primary',
-            cancelButtonClass: 'btn mat-raised-button',
+            confirmButtonClass: 'btn mat-button btn-primary',
+            cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes, Enable',
         }).then((result) => result.value ?
             this.userService.enable2FA(user.userKey, this.getRegistrationEmail(user))
@@ -105,8 +105,8 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
             title: `Disable 2FA?`,
             showCancelButton: true,
             buttonsStyling: false,
-            confirmButtonClass: 'btn mat-raised-button btn-primary',
-            cancelButtonClass: 'btn mat-raised-button',
+            confirmButtonClass: 'btn mat-button btn-primary',
+            cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes, Disable',
         }).then((result) => result.value ?
             this.userService.disable2FA(user.userKey)

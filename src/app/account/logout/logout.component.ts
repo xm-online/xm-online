@@ -29,8 +29,8 @@ export class LogoutComponent implements OnInit {
             title: this.translateService.instant('global.common.are-you-sure'),
             showCancelButton: true,
             buttonsStyling: false,
-            confirmButtonClass: 'btn mat-raised-button btn-primary',
-            cancelButtonClass: 'btn mat-raised-button',
+            confirmButtonClass: 'btn mat-button btn-primary',
+            cancelButtonClass: 'btn mat-button',
             confirmButtonText: this.translateService.instant('global.common.yes-exit'),
             cancelButtonText: this.translateService.instant('global.common.cancel'),
         }).then((result) => result.value ? this.logout() : history.back());

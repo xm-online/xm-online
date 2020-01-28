@@ -10,10 +10,10 @@
                                                                                                      User?</p>
   </div>
   <div class="modal-footer">
-    <button (click)="clear()" class="btn mr-1" data-dismiss="modal" mat-raised-button type="button">
+    <button (click)="clear()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
       <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
     </button>
-    <button [disabled]="showLoader" class="btn btn-danger" mat-raised-button type="submit">
+    <button [disabled]="showLoader" class="btn btn-danger" mat-button type="submit">
       <span class="fa fa-trash"></span>&nbsp;<span jhiTranslate="entity.action.delete">Delete</span>
     </button>
   </div>

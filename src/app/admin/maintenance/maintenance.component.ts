@@ -24,8 +24,8 @@ export class MaintenanceComponent {
             title: 'Warning. Elastic index will be re-indexed. Time consuming operation.',
             showCancelButton: true,
             buttonsStyling: false,
-            confirmButtonClass: 'btn mat-raised-button btn-primary',
-            cancelButtonClass: 'btn mat-raised-button',
+            confirmButtonClass: 'btn mat-button btn-primary',
+            cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes, reindex!',
         }).then((result) => {
             if (result.value) {
@@ -44,8 +44,8 @@ export class MaintenanceComponent {
             title: 'Reload configuration for ALL tenants?',
             showCancelButton: true,
             buttonsStyling: false,
-            confirmButtonClass: 'btn mat-raised-button btn-primary',
-            cancelButtonClass: 'btn mat-raised-button',
+            confirmButtonClass: 'btn mat-button btn-primary',
+            cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes, reload!',
         }).then((result) => {
             if (result.value) {
@@ -67,8 +67,8 @@ export class MaintenanceComponent {
             title: 'Reload tenant configuration?',
             showCancelButton: true,
             buttonsStyling: false,
-            confirmButtonClass: 'btn mat-raised-button btn-primary',
-            cancelButtonClass: 'btn mat-raised-button',
+            confirmButtonClass: 'btn mat-button btn-primary',
+            cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes, reload!',
         }).then((result) => {
             this.isTenantCfgUpdating = true;

@@ -20,10 +20,10 @@
     </json-schema-form>
   </div>
   <div class="modal-footer">
-    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-raised-button type="button">
+    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
       <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
-    <button [disabled]="showLoader || !isJsonFormValid" class="btn btn-primary" mat-raised-button type="submit">
+    <button [disabled]="showLoader || !isJsonFormValid" class="btn btn-primary" mat-button type="submit">
       <span>{{buttonTitle | i18nName : principal}}</span>
     </button>
   </div>

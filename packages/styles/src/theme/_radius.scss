@@ -4,11 +4,30 @@
 $xm-enable-rounded: true !default;
 
 $xm-radius-xs:      3px !default;
+$xm-radius-sm:      5px !default;
 $xm-radius-circle:  50% !default;
 $xm-radius-pill:    32px !default;
 
 @mixin is-enable-rounded() {
   @if ($xm-enable-rounded) {
+    @content;
+  }
+}
+
+@mixin xm-radius($radius) {
+  @include is-enable-rounded {
+    border-radius: $radius;
+  }
+}
+
+@mixin xm-radius-xs() {
+  @include is-enable-rounded {
     border-radius: $xm-radius-xs;
+  }
+}
+
+@mixin xm-radius-sm() {
+  @include is-enable-rounded {
+    border-radius: $xm-radius-sm;
   }
 }

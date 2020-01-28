@@ -17,6 +17,8 @@ $card-bg:                $xm-surface;
 $card-border-color:      $card-bg;
 $card-cap-bg:            $card-bg;
 
+$enable-rounded:         $xm-enable-rounded;
+
 /**
  * Override
  */
@@ -32,6 +34,13 @@ $display4-size:          8rem;
 $font-size-lg:           1rem * 1.14;
 $font-size-sm:           1rem * 0.857;
 $lead-font-size:         1rem * 1.08;
+
+// Remove border radius from bootstrap
+@if ($xm-enable-rounded == false) {
+  $border-radius:    0;
+  $border-radius-lg: 0;
+  $border-radius-sm: 0;
+}
 
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';

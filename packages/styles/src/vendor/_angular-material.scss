@@ -1,5 +1,23 @@
 @import '~@angular/material/theming';
 
+// Remove border radius from angular material
+@if ($xm-enable-rounded == false) {
+  $mat-autocomplete-panel-border-radius:     0;
+  $mat-button-toggle-standard-border-radius: 0;
+  $mat-button-toggle-legacy-border-radius:   0;
+  $mat-card-border-radius:                   0;
+  $mat-dialog-border-radius:                 0;
+  $mat-form-field-fill-border-radius:        0;
+  $mat-form-field-outline-border-radius:     0;
+  $mat-menu-border-radius:                   0;
+  $mat-slide-toggle-bar-border-radius:       0;
+
+  // Override mat-select-panel
+  div.mat-select-panel {
+    border-radius: 0;
+  }
+}
+
 @include mat-core();
 
 @mixin xm-angular-material-theme($theme) {

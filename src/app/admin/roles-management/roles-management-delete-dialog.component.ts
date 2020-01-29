@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
 import { RoleService } from '../../shared';
@@ -17,7 +18,7 @@ export class RoleMgmtDeleteDialogComponent implements OnInit {
 
     constructor(
         private roleService: RoleService,
-        public activeModal: NgbActiveModal,
+        public activeModal: MatDialogRef<RoleMgmtDeleteDialogComponent>,
         private eventManager: JhiEventManager,
         private alertService: JhiAlertService,
     ) {
@@ -30,7 +31,7 @@ export class RoleMgmtDeleteDialogComponent implements OnInit {
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     public onConfirmDelete(roleKey: string): void {
@@ -39,7 +40,7 @@ export class RoleMgmtDeleteDialogComponent implements OnInit {
             .subscribe(
                 () => {
                     this.eventManager.broadcast({name: 'roleListModification', content: 'Deleted a role'});
-                    this.activeModal.dismiss(true);
+                    this.activeModal.close(true);
                 }, (resp) => {
                     try {
                         const res = resp.json() || {};

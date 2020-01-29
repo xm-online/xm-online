@@ -1,5 +1,5 @@
 <form #dashboardForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="dashboardForm" novalidate role="form">
-  <div class="modal-header">
+  <div mat-dialog-title>
     <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <h4 *ngIf="!dashboard.id" class="modal-title text-left">
       <span jhiTranslate="admin-config.dashboard-detail-dialog.add.title">Add a new dashboard</span>
@@ -8,7 +8,8 @@
       <span jhiTranslate="admin-config.dashboard-detail-dialog.edit.title">Edit a dashboard</span>
     </h4>
   </div>
-  <div class="modal-body">
+
+  <div mat-dialog-content>
     <xm-loader [showLoader]="showLoader"></xm-loader>
 
     <input *ngIf="dashboard.id" [(ngModel)]="dashboard.id" class="form-control" id="id" name="id" readonly
@@ -70,7 +71,7 @@
       </div>
     </div>
   </div>
-  <div class="modal-footer">
+  <div mat-dialog-actions>
     <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
       <span jhiTranslate="admin-config.common.cancel">Cancel</span>
     </button>

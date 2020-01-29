@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { JhiEventManager } from 'ng-jhipster';
 import { XM_EVENT_LIST } from '../../../app/xm.constants';
 
@@ -16,28 +17,28 @@ export class UserMgmtDeleteDialogComponent {
 
     constructor(
         private userService: UserService,
-        public activeModal: NgbActiveModal,
+        public activeModal: MatDialogRef<UserMgmtDeleteDialogComponent>,
         private eventManager: JhiEventManager,
     ) {
     }
 
     public clear(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     public confirmDelete(userKey: string): void {
         this.showLoader = true;
-        this.userService.delete(userKey)
-            .subscribe(() => {
-                    this.eventManager.broadcast({
-                        name: XM_EVENT_LIST.XM_USER_LIST_MODIFICATION,
-                        content: {id: 'delete', msg: 'Deleted a user'},
-                    });
-                    this.activeModal.dismiss(true);
-                    this.eventManager.broadcast({name: XM_EVENT_LIST.XM_USER_LIST_MODIFICATION, content: 'OK'});
-                },
-                (err) => console.info(err),
-                () => this.showLoader = false);
+        this.userService.delete(userKey).subscribe(
+            () => {
+                this.eventManager.broadcast({
+                    name: XM_EVENT_LIST.XM_USER_LIST_MODIFICATION,
+                    content: {id: 'delete', msg: 'Deleted a user'},
+                });
+                this.activeModal.close(true);
+                this.eventManager.broadcast({name: XM_EVENT_LIST.XM_USER_LIST_MODIFICATION, content: 'OK'});
+            },
+            (err) => console.info(err),
+            () => this.showLoader = false);
     }
 
 }

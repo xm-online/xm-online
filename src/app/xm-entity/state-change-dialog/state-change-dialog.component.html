@@ -1,9 +1,9 @@
 <form (ngSubmit)="onChangeState()" class="m-0" name="changeStateForm">
-  <div class="modal-header">
+  <div mat-dialog-title>
     <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <h4 [innerHTML]="dialogTitle | i18nName : principal" class="modal-title text-left"></h4>
   </div>
-  <div class="modal-body">
+  <div mat-dialog-content>
     <xm-loader [showLoader]="showLoader"></xm-loader>
     <json-schema-form (formLayout)="jsfAttributes.formLayout"
                       (isValid)="isJsonFormValid = $event"
@@ -19,7 +19,7 @@
                       class="json-form-hide-submit">
     </json-schema-form>
   </div>
-  <div class="modal-footer">
+  <div mat-dialog-actions>
     <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
       <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>

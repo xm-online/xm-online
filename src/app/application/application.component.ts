@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { Observable, of, Subscription } from 'rxjs';
@@ -57,7 +57,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                 protected principal: Principal,
                 protected activatedRoute: ActivatedRoute,
                 protected router: Router,
-                protected modalService: NgbModal,
+                protected modalService: MatDialog,
                 protected eventManager: JhiEventManager,
                 protected i18nNamePipe: I18nNamePipe,
                 protected dashboardWrapperService: DashboardWrapperService) {

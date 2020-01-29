@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 
 import { JhiEventManager } from 'ng-jhipster';
@@ -29,7 +29,7 @@ export class EntityCardCompactComponent extends EntityCardComponent implements O
     public isDescFull: boolean;
 
     constructor(
-        protected modalService: NgbModal,
+        protected modalService: MatDialog,
         public principal: Principal,
         protected eventManager: JhiEventManager,
         protected translateService: TranslateService,

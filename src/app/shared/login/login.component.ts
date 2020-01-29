@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TERMS_ERROR, XM_EVENT_LIST } from '../../xm.constants';
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         protected elementRef: ElementRef,
         protected router: Router,
         protected alertService: JhiAlertService,
-        protected modalService: NgbModal,
+        protected modalService: MatDialog,
     ) {
         this.checkOTP = false;
         this.credentials = {};
@@ -209,10 +209,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
 
     private pushTermsAccepting(token: string): void {
-        const modalRef = this.modalService.open(PrivacyAndTermsDialogComponent, {size: 'lg', backdrop: 'static'});
+        const modalRef = this.modalService.open(PrivacyAndTermsDialogComponent, {width: '500px'});
         modalRef.componentInstance.config = this.config;
         modalRef.componentInstance.termsToken = token;
-        modalRef.result.then((r) => {
+        modalRef.afterClosed().subscribe((r) => {
             if (r === 'accept') {
                 this.login();
             }

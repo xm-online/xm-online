@@ -1,6 +1,7 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { TranslateService } from '@ngx-translate/core';
 import { JhiDateUtils } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
@@ -32,7 +33,7 @@ export class CalendarEventDialogComponent implements OnInit {
     public event: Event = {};
     public showLoader: boolean;
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(private activeModal: MatDialogRef<CalendarEventDialogComponent>,
                 private eventService: EventService,
                 private calendarService: CalendarService,
                 private dateUtils: JhiDateUtils,
@@ -71,11 +72,11 @@ export class CalendarEventDialogComponent implements OnInit {
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     private onSaveSuccess(calendarId: number, event: Event): void {
-        this.activeModal.dismiss(true);
+        this.activeModal.close(true);
         this.alert('success', 'xm-entity.calendar-event-dialog.add.success');
         this.calendar.id = calendarId;
         this.onAddEvent(event);

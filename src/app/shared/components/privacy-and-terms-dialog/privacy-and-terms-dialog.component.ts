@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { JhiLanguageService } from 'ng-jhipster';
 import { AuthServerProvider } from '../../auth/auth-jwt.service';
 
@@ -15,7 +16,7 @@ export class PrivacyAndTermsDialogComponent {
     public lang: string;
     public termsToken: string;
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(private activeModal: MatDialogRef<PrivacyAndTermsDialogComponent>,
                 private authServerProvider: AuthServerProvider,
                 private languageService: JhiLanguageService) {
         this.languageService.getCurrent().then((lang) => {
@@ -24,7 +25,7 @@ export class PrivacyAndTermsDialogComponent {
     }
 
     public onCancel(): void {
-        this.activeModal.close('cancel');
+        this.activeModal.close(false);
     }
 
     public onAccept(): void {

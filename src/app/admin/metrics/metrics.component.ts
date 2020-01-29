@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material';
 import { finalize, take } from 'rxjs/operators';
 
 import { JhiMetricsMonitoringModalComponent } from './metrics-modal.component';
@@ -25,7 +25,7 @@ export class JhiMetricsMonitoringComponent implements OnInit {
     public selectedInstance: string = '';
 
     constructor(
-        private modalService: NgbModal,
+        private modalService: MatDialog,
         private metricsService: JhiMetricsService,
     ) {
         this.JCACHE_KEY = 'jcache.statistics';
@@ -104,14 +104,8 @@ export class JhiMetricsMonitoringComponent implements OnInit {
 
     public refreshThreadDumpData(): void {
         this.metricsService.threadDump().subscribe((data) => {
-            const modalRef = this.modalService.open(JhiMetricsMonitoringModalComponent,
-                {size: 'lg', backdrop: 'static'});
+            const modalRef = this.modalService.open(JhiMetricsMonitoringModalComponent, { width: '500px'});
             modalRef.componentInstance.threadDump = (data && data.threads) || [];
-            modalRef.result.then(() => {
-                // Left blank intentionally, nothing to do here
-            }, () => {
-                // Left blank intentionally, nothing to do here
-            });
         });
     }
 

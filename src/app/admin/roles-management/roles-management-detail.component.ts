@@ -1,6 +1,7 @@
+import { ComponentType } from '@angular/cdk/overlay';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiAlertService, JhiOrderByPipe } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
@@ -54,7 +55,7 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
                 private alertService: JhiAlertService,
                 private activatedRoute: ActivatedRoute,
                 private orderByPipe: JhiOrderByPipe,
-                private modalService: NgbModal) {
+                private modalService: MatDialog) {
         this.routeDataSubscription = this.activatedRoute.data.subscribe((data) => this.routeData = data);
     }
 
@@ -136,18 +137,17 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
 
     public onEditResource(item: Permission): void {
         this.openDialog(RoleConditionDialogComponent, item, item.resourceCondition,
-            item.resources, 'rolesManagement.permission.conditionResourceInfo').result
-            .then((result) => {
+            item.resources, 'rolesManagement.permission.conditionResourceInfo').afterClosed().subscribe(
+            (result) => {
                 item.resourceCondition = result || '';
             });
     }
 
     public onEditEnv(item: Permission): void {
         this.openDialog(RoleConditionDialogComponent, item, item.envCondition, this.role.env,
-            'rolesManagement.permission.conditionEnvInfo').result
-            .then((result) => {
-                item.envCondition = result || '';
-            });
+            'rolesManagement.permission.conditionEnvInfo').afterClosed().subscribe((result) => {
+            item.envCondition = result || '';
+        });
     }
 
     public onSave(): void {
@@ -186,8 +186,7 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
                 (sortBy.query && item.privilegeKey.indexOf(sortBy.query.toUpperCase()) === -1)
             ) {
                 // empty block
-            }
-            else {
+            } else {
                 result.push(item);
             }
             return result;
@@ -203,9 +202,14 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    private openDialog(component: any, perm: Permission, condition: string,
-                       variables: string[], transInfo: string): NgbModalRef {
-        const modalRef = this.modalService.open(component, {backdrop: 'static'});
+    private openDialog(
+        component: ComponentType<RoleConditionDialogComponent>,
+        perm: Permission,
+        condition: string,
+        variables: string[],
+        transInfo: string,
+    ): MatDialogRef<any> {
+        const modalRef = this.modalService.open(component, {width: '500px'});
         modalRef.componentInstance.condition = condition;
         modalRef.componentInstance.variables = variables;
         modalRef.componentInstance.transInfo = transInfo;

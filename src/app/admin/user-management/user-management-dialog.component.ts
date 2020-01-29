@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { JhiEventManager } from 'ng-jhipster';
 
 import { XM_EVENT_LIST } from '../../../app/xm.constants';
@@ -21,7 +22,7 @@ export class UserMgmtDialogComponent implements OnInit {
     @Input() public selectedUser: User;
 
     constructor(
-        public activeModal: NgbActiveModal,
+        public activeModal: MatDialogRef<UserMgmtDialogComponent>,
         private languageHelper: JhiLanguageHelper,
         private xmConfigService: XmConfigService,
         private userService: UserService,
@@ -46,7 +47,7 @@ export class UserMgmtDialogComponent implements OnInit {
     }
 
     public clear(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     public save(): void {
@@ -60,7 +61,7 @@ export class UserMgmtDialogComponent implements OnInit {
 
     private onSaveSuccess(result: any): void {
         this.eventManager.broadcast({name: XM_EVENT_LIST.XM_USER_LIST_MODIFICATION, content: 'OK'});
-        this.activeModal.dismiss(result);
+        this.activeModal.close(result);
     }
 
 }

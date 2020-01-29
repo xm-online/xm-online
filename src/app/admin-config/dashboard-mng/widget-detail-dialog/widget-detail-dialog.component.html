@@ -1,5 +1,5 @@
 <form #widgetForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="widgetForm" novalidate role="form">
-  <div class="modal-header">
+  <div mat-dialog-title>
     <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <h4 *ngIf="!widget.id" class="modal-title text-left">
       <span jhiTranslate="admin-config.widget-detail-dialog.add.title">Add a new widget</span>
@@ -8,7 +8,7 @@
       <span jhiTranslate="admin-config.widget-detail-dialog.edit.title">Edit a widget</span>
     </h4>
   </div>
-  <div class="modal-body">
+  <div mat-dialog-content>
     <xm-loader [showLoader]="showLoader"></xm-loader>
 
     <input *ngIf="widget.id" [(ngModel)]="widget.id" class="form-control" id="id" name="id" readonly
@@ -57,7 +57,7 @@
       </div>
     </div>
   </div>
-  <div class="modal-footer">
+  <div mat-dialog-actions>
     <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
       <span jhiTranslate="admin-config.common.cancel">Cancel</span>
     </button>

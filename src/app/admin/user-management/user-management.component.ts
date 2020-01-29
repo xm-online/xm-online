@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 import swal from 'sweetalert2';
@@ -33,7 +33,7 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
                 protected eventManager: JhiEventManager,
                 protected parseLinks: JhiParseLinks,
                 protected router: Router,
-                private modalService: NgbModal,
+                private modalService: MatDialog,
                 private userLoginService: UserLoginService,
                 private userService: UserService,
                 private roleService: RoleService,
@@ -92,7 +92,8 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
             confirmButtonText: 'Yes, Enable',
         }).then((result) => result.value ?
             this.userService.enable2FA(user.userKey, this.getRegistrationEmail(user))
-                .subscribe(() => {
+                .subscribe(
+                    () => {
                         user.tfaEnabled = true;
                         this.alertService.success('userManagement.twoFAEnabled');
                     },
@@ -166,7 +167,8 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
             login: this.login,
         })
             .pipe(finalize(() => this.showLoader = false))
-            .subscribe((res) => {
+            .subscribe(
+                (res) => {
                     this.list = [];
                     this.previousPage = null;
                     this.list = this.onSuccess(res.body, res.headers);
@@ -178,21 +180,21 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
     }
 
     public onAdd(): void {
-        this.modalService.open(UserMgmtDialogComponent, {backdrop: 'static', size: 'lg'});
+        this.modalService.open(UserMgmtDialogComponent, {width: '500px'});
     }
 
     public onEdit(user: User): void {
-        const modalRef = this.modalService.open(UserMgmtDialogComponent, {backdrop: 'static', size: 'lg'});
+        const modalRef = this.modalService.open(UserMgmtDialogComponent, {width: '500px'});
         modalRef.componentInstance.selectedUser = user;
     }
 
     public onLoginEdit(user: User): void {
-        const modalRef = this.modalService.open(UserLoginMgmtDialogComponent, {backdrop: 'static', size: 'lg'});
+        const modalRef = this.modalService.open(UserLoginMgmtDialogComponent, {width: '500px'});
         modalRef.componentInstance.user = user;
     }
 
     public onDelete(user: User): void {
-        const modalRef = this.modalService.open(UserMgmtDeleteDialogComponent, {backdrop: 'static', size: 'lg'});
+        const modalRef = this.modalService.open(UserMgmtDeleteDialogComponent, {width: '500px'});
         modalRef.componentInstance.user = user;
     }
 

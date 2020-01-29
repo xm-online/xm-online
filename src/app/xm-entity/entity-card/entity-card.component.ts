@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material';
 
 import { JhiEventManager } from 'ng-jhipster';
 import { FunctionSpec, NextSpec, StateSpec } from '..';
@@ -22,15 +22,14 @@ export class EntityCardComponent implements OnInit {
     public isAvatarEnabled: boolean;
 
     constructor(
-        protected modalService: NgbModal,
+        protected modalService: MatDialog,
         public principal: Principal,
         protected eventManager: JhiEventManager,
     ) {}
 
     public get commonFunctionSpec(): FunctionSpec[] {
         return (this.xmEntitySpec && this.xmEntitySpec.functions) ?
-            this.xmEntitySpec
-                .functions
+            this.xmEntitySpec.functions
                 .filter((item) => !item.withEntityId)
                 .filter((item) => this.hasPrivilege(item))
                 .filter((item) => this.allowedByState(item)) : [];
@@ -38,8 +37,7 @@ export class EntityCardComponent implements OnInit {
 
     public get entityFunctionSpec(): FunctionSpec[] {
         return (this.xmEntitySpec && this.xmEntitySpec.functions) ?
-            this.xmEntitySpec
-                .functions
+            this.xmEntitySpec.functions
                 .filter((item) => item.withEntityId)
                 .filter((item) => this.hasPrivilege(item))
                 .filter((item) => this.allowedByState(item, this.xmEntity.stateKey)) : [];
@@ -55,7 +53,7 @@ export class EntityCardComponent implements OnInit {
     }
 
     public onAvatarChangeClick(): void {
-        const modalRef = this.modalService.open(AvatarDialogComponent, {backdrop: 'static'});
+        const modalRef = this.modalService.open(AvatarDialogComponent, {width: '500px'});
         modalRef.componentInstance.xmEntity = this.xmEntity;
     }
 

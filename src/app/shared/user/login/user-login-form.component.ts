@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { JhiEventManager } from 'ng-jhipster';
 
 import { XM_EVENT_LIST } from '../../../../app/xm.constants';
@@ -26,7 +27,7 @@ export class UserLoginFormComponent implements OnChanges {
     @Input()
     private user: User;
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(private activeModal: MatDialogRef<UserLoginFormComponent>,
                 private userService: UserService,
                 private accountService: AccountService,
                 private principal: Principal,
@@ -49,7 +50,7 @@ export class UserLoginFormComponent implements OnChanges {
 
     public clear(): void {
         if (this.isUser && !this.isCreate) {
-            this.activeModal.dismiss('cancel');
+            this.activeModal.close(false);
         }
     }
 
@@ -106,7 +107,7 @@ export class UserLoginFormComponent implements OnChanges {
         this.success = true;
         if (this.isUser) {
             this.eventManager.broadcast({name: XM_EVENT_LIST.XM_USER_LIST_MODIFICATION, content: 'OK'});
-            this.activeModal.dismiss(result);
+            this.activeModal.close(result);
         } else {
             this.principal.identity(true).then((account) => {
                 this.user = account;

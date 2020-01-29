@@ -1,6 +1,7 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, ViewChild } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { JhiEventManager } from 'ng-jhipster';
 import { CropperSettings, ImageCropperComponent } from 'ngx-img-cropper';
 import { XmEntity } from '../shared/xm-entity.model';
@@ -22,7 +23,7 @@ export class AvatarDialogComponent {
     public data: any;
     public showLoader: boolean;
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(private activeModal: MatDialogRef<AvatarDialogComponent>,
                 private xmEntityService: XmEntityService,
                 private eventManager: JhiEventManager) {
         this.cropperSettings = new CropperSettings();
@@ -60,14 +61,14 @@ export class AvatarDialogComponent {
                         this.eventManager.broadcast({
                             name: 'xmEntityDetailModification',
                         });
-                        this.activeModal.dismiss('save');
+                        this.activeModal.close('save');
                     });
                 });
         });
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     private dataURItoBlob(dataURI: any): Blob {

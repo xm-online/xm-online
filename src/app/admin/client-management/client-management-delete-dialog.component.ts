@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { JhiEventManager } from 'ng-jhipster';
 
 import { Client, ClientService } from '../../shared';
@@ -16,7 +17,7 @@ export class ClientMgmtDeleteDialogComponent implements OnInit {
 
     constructor(
         private clientService: ClientService,
-        public activeModal: NgbActiveModal,
+        public activeModal: MatDialogRef<ClientMgmtDeleteDialogComponent>,
         private eventManager: JhiEventManager,
     ) {
     }
@@ -28,23 +29,23 @@ export class ClientMgmtDeleteDialogComponent implements OnInit {
     }
 
     public clear(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     public confirmDelete(id: any): void {
         this.showLoader = true;
-        this.clientService.delete(id)
-            .subscribe(() => {
-                    this.eventManager.broadcast({
-                        name: 'clientListModification',
-                        content: {id: 'delete', msg: 'Deleted a client'},
-                    });
-                    this.activeModal.dismiss(true);
-                },
-                (err) => {
-                    console.info(err); // tslint:disable-line
-                    this.showLoader = false;
-                },
-                () => this.showLoader = false);
+        this.clientService.delete(id).subscribe(
+            () => {
+                this.eventManager.broadcast({
+                    name: 'clientListModification',
+                    content: {id: 'delete', msg: 'Deleted a client'},
+                });
+                this.activeModal.close(true);
+            },
+            (err) => {
+                console.info(err);
+                this.showLoader = false;
+            },
+            () => this.showLoader = false);
     }
 }

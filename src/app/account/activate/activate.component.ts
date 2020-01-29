@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { Activate } from './activate.service';
 
@@ -11,7 +11,7 @@ import { Activate } from './activate.service';
 export class ActivateComponent implements OnInit {
     public error: string;
     public success: string;
-    public modalRef: NgbModalRef;
+    public modalRef: MatDialogRef<any>;
 
     constructor(private activate: Activate,
                 private route: ActivatedRoute,

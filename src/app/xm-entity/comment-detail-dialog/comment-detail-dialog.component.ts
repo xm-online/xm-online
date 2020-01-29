@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -24,7 +25,7 @@ export class CommentDetailDialogComponent implements OnInit {
     public comment: Comment = {};
     public showLoader: boolean;
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(private activeModal: MatDialogRef<CommentDetailDialogComponent>,
                 private commentService: CommentService,
                 private eventManager: JhiEventManager,
                 private translateService: TranslateService,
@@ -49,7 +50,7 @@ export class CommentDetailDialogComponent implements OnInit {
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     private onError(e: any): void {
@@ -60,7 +61,7 @@ export class CommentDetailDialogComponent implements OnInit {
     private onSaveSuccess(): void {
         // TODO: use constant for the broadcast and analyse listeners
         this.eventManager.broadcast({name: 'commentListModification'});
-        this.activeModal.dismiss(true);
+        this.activeModal.close(true);
         this.alert('success', 'xm-entity.comment-detail-dialog.add.success');
     }
 

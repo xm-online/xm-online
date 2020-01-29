@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
 
 import * as nomnoml from 'nomnoml';
 
@@ -28,7 +28,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     @ViewChild('downloadLinkSvg', {static: false}) public downloadLinkSvg: ElementRef;
     @ViewChild('canvasHolder', {static: false}) public canvasHolder: ElementRef;
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(private activeModal: MatDialogRef<ConfigVisualizerDialogComponent>,
                 public principal: Principal) {
     }
 
@@ -41,7 +41,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     public sourceChanged(): void {

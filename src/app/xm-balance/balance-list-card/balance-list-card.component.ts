@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material';
 
 import * as Chartist from 'chartist';
 
@@ -53,7 +53,7 @@ export class BalanceListCardComponent implements OnInit {
     constructor(protected balanceService: BalanceService,
                 protected balanceSpecWrapperService: BalanceSpecWrapperService,
                 protected metricService: MetricService,
-                protected modalService: NgbModal,
+                protected modalService: MatDialog,
                 public principal: Principal) {
     }
 
@@ -71,7 +71,7 @@ export class BalanceListCardComponent implements OnInit {
     }
 
     public onClickDetail(balanceId: number): void {
-        const modalRef = this.modalService.open(BalanceDetailDialogComponent, {backdrop: 'static'});
+        const modalRef = this.modalService.open(BalanceDetailDialogComponent, {width: '500px'});
         modalRef.componentInstance.balanceId = balanceId;
     }
 

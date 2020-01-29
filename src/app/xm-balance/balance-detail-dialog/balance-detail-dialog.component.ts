@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
 
 import { Pocket } from '..';
 import { PocketService } from '../shared/pocket.service';
@@ -16,7 +16,7 @@ export class BalanceDetailDialogComponent implements OnInit {
 
     public pockets: Pocket[];
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(private activeModal: MatDialogRef<BalanceDetailDialogComponent>,
                 private pocketService: PocketService) {
     }
 
@@ -27,7 +27,7 @@ export class BalanceDetailDialogComponent implements OnInit {
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
 }

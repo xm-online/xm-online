@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { JhiEventManager } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 
@@ -26,7 +27,7 @@ export class ClientMgmtDialogComponent implements OnInit {
     public showLoader: boolean;
     public clientIdNotUnique: boolean;
 
-    constructor(public activeModal: NgbActiveModal,
+    constructor(public activeModal: MatDialogRef<ClientMgmtDialogComponent>,
                 private languageHelper: JhiLanguageHelper,
                 private clientService: ClientService,
                 private roleService: RoleService,
@@ -64,7 +65,7 @@ export class ClientMgmtDialogComponent implements OnInit {
     }
 
     public clear(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     public save(): void {
@@ -89,7 +90,7 @@ export class ClientMgmtDialogComponent implements OnInit {
 
     private onSaveSuccess(result: any): void {
         this.eventManager.broadcast({name: 'clientListModification', content: 'OK'});
-        this.activeModal.dismiss(result);
+        this.activeModal.close(result);
     }
 
     private checkErrorForClientId(err: any): void {

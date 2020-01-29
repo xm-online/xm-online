@@ -1,5 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { TranslateService } from '@ngx-translate/core';
 import { UUID } from 'angular2-uuid';
 import { JhiEventManager } from 'ng-jhipster';
@@ -36,7 +37,7 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
     public isJsonFormValid: boolean = true;
     public isEdit: boolean;
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(private activeModal: MatDialogRef<LinkDetailNewSectionComponent>,
                 private xmEntityService: XmEntityService,
                 private changeDetector: ChangeDetectorRef,
                 private eventManager: JhiEventManager,
@@ -95,7 +96,7 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     public onChangeForm(data: any): void {
@@ -110,7 +111,7 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
         // TODO: use constant for the broadcast and analyse listeners
         this.eventManager.broadcast({name: 'xmEntityListModification'});
         this.eventManager.broadcast({name: 'linkListModification'});
-        this.activeModal.dismiss(true);
+        this.activeModal.close(true);
         this.alert('success', 'xm-entity.link-detail-dialog.add.success');
     }
 

@@ -1,7 +1,7 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 
@@ -29,7 +29,7 @@ export class WidgetListCardComponent extends BaseAdminConfigListComponent implem
     constructor(protected dashboardService: DashboardService,
                 protected widgetService: WidgetService,
                 protected jhiLanguageHelper: JhiLanguageHelper,
-                protected modalService: NgbModal,
+                protected modalService: MatDialog,
                 protected activatedRoute: ActivatedRoute,
                 protected alertService: JhiAlertService,
                 protected eventManager: JhiEventManager,
@@ -60,12 +60,12 @@ export class WidgetListCardComponent extends BaseAdminConfigListComponent implem
     }
 
     public onAddNew(): void {
-        const modalRef = this.modalService.open(WidgetDetailDialogComponent, {backdrop: 'static', size: 'lg'});
+        const modalRef = this.modalService.open(WidgetDetailDialogComponent, {width: '500px'});
         modalRef.componentInstance.dashboardId = this.dashboardId;
     }
 
     public onEdit(w: Widget): void {
-        const modalRef = this.modalService.open(WidgetDetailDialogComponent, {backdrop: 'static', size: 'lg'});
+        const modalRef = this.modalService.open(WidgetDetailDialogComponent, {width: '500px'});
         modalRef.componentInstance.dashboardId = this.dashboardId;
         modalRef.componentInstance.widget = Object.assign({}, w);
     }

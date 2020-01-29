@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -23,7 +23,7 @@ export class EntityListFabComponent {
 
     constructor(private xmEntitySpecService: XmEntitySpecService,
                 private eventManager: JhiEventManager,
-                private modalService: NgbModal,
+                private modalService: MatDialog,
                 private translateService: TranslateService) {
     }
 
@@ -49,7 +49,7 @@ export class EntityListFabComponent {
     }
 
     public onAddNew(): void {
-        const modalRef = this.modalService.open(EntityDetailDialogComponent, {backdrop: 'static'});
+        const modalRef = this.modalService.open(EntityDetailDialogComponent, {width: '500px'});
         modalRef.componentInstance.xmEntitySpec = this.xmEntitySpec;
         modalRef.componentInstance.spec = this.spec;
     }

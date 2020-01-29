@@ -1,5 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { UUID } from 'angular2-uuid';
 import { JhiEventManager } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
@@ -35,7 +36,7 @@ export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
     public isJsonFormValid: boolean = true;
     public smartDescription: any;
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(private activeModal: MatDialogRef<EntityDetailDialogComponent>,
                 private changeDetector: ChangeDetectorRef,
                 private xmEntityService: XmEntityService,
                 private eventManager: JhiEventManager,
@@ -113,7 +114,7 @@ export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     public onChangeForm(data: any): void {
@@ -134,7 +135,7 @@ export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
             entityId: entity.id,
             entityType: entity.typeKey,
         });
-        this.activeModal.dismiss(true);
+        this.activeModal.close(true);
         if (this.onSuccess) {
             this.onSuccess();
         }

@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 
 @Component({
     selector: 'xm-confirm-dialog',
@@ -10,7 +11,7 @@ export class XmConfirmDialogComponent {
 
     @ViewChild('xmConfirmDialog', {static: false}) public tpl: ElementRef;
     public form: FormGroup;
-    public modal: NgbModalRef;
+    public modal: MatDialogRef<any>;
     public showLoader: boolean;
     public incorrect: boolean;
     public event: any;

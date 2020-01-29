@@ -1,6 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { XmSharedModule } from '../shared/shared.module';
 import {
@@ -41,7 +40,6 @@ import { LogoutComponent } from './logout/logout.component';
         Password,
         PasswordResetInit,
         PasswordResetFinish,
-        NgbActiveModal,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

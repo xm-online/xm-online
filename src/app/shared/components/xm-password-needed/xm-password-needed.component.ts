@@ -1,6 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog, MatDialogRef } from '@angular/material';
+
 import { JhiEventManager } from 'ng-jhipster';
 
 @Component({
@@ -9,15 +10,15 @@ import { JhiEventManager } from 'ng-jhipster';
 })
 export class XmPasswordNeededComponent implements OnInit {
 
-    @ViewChild('passwordNeeded', {static: false}) public tpl: ElementRef;
+    @ViewChild('passwordNeeded', {static: false}) public tpl: TemplateRef<any>;
     public form: FormGroup;
-    public modal: NgbModalRef;
+    public modal: MatDialogRef<any>;
     public showLoader: boolean;
     public incorrect: boolean;
     public event: any;
 
     constructor(private fb: FormBuilder,
-                private modalService: NgbModal,
+                private modalService: MatDialog,
                 private eventManager: JhiEventManager) {
         this.form = this.fb.group({password: [null, Validators.required]});
     }
@@ -33,9 +34,8 @@ export class XmPasswordNeededComponent implements OnInit {
             this.showLoader = false;
             this.password.reset(null);
             this.password.markAsUntouched();
-            this.modal = this.modalService.open(this.tpl, {
-                beforeDismiss: () => false,
-            });
+            this.modal = this.modalService.open(this.tpl, {});
+            this.modal.beforeClosed().subscribe(() => false);
         });
     }
 

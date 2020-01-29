@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -54,7 +54,7 @@ export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor(private xmEntityService: XmEntityService,
                 private locationService: LocationService,
-                private modalService: NgbModal,
+                private modalService: MatDialog,
                 private eventManager: JhiEventManager,
                 private translateService: TranslateService,
                 public principal: Principal) {
@@ -109,7 +109,7 @@ export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public onManage(location: any): void {
-        const modalRef = this.modalService.open(LocationDetailDialogComponent, {size: 'lg', backdrop: 'static'});
+        const modalRef = this.modalService.open(LocationDetailDialogComponent, {width: '500px'});
         modalRef.componentInstance.xmEntity = this.xmEntity;
         modalRef.componentInstance.locationSpecs = this.locationSpecs;
         modalRef.componentInstance.location = Object.assign({}, location);

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { JhiEventManager } from 'ng-jhipster';
 import { Role } from '../../shared/role/role.model';
 
@@ -18,7 +19,7 @@ export class RoleMgmtDialogComponent implements OnInit {
     public isAddMode: boolean;
 
     constructor(
-        public activeModal: NgbActiveModal,
+        public activeModal: MatDialogRef<RoleMgmtDialogComponent>,
         private roleService: RoleService,
         private eventManager: JhiEventManager,
     ) {
@@ -37,7 +38,7 @@ export class RoleMgmtDialogComponent implements OnInit {
     }
 
     public onClose(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     public onSave(): void {
@@ -59,6 +60,6 @@ export class RoleMgmtDialogComponent implements OnInit {
 
     private onSaveSuccess(resp: any): void {
         this.eventManager.broadcast({name: 'roleListModification', content: 'OK'});
-        this.activeModal.dismiss(resp);
+        this.activeModal.close(resp);
     }
 }

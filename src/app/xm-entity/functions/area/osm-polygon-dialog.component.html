@@ -1,7 +1,8 @@
-<div class="modal-header">
+<div mat-dialog-title>
   <a (click)="clear()" class="modal-close material-icons" href="javascript: void(0);">close</a>
 </div>
-<div class="modal-body">
+
+<div mat-dialog-content>
   <div class="row">
     <div class="col">
       <div class="form-group">
@@ -40,7 +41,8 @@
     </table>
   </div>
 </div>
-<div class="modal-footer">
+
+<div mat-dialog-actions>
   <button (click)="clear()" class="btn" data-dismiss="modal" mat-button type="button">
     <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
   </button>

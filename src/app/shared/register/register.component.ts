@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog, MatDialogRef } from '@angular/material';
+
 import { ReCaptchaComponent } from 'angular2-recaptcha';
 import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 
@@ -31,7 +32,7 @@ export class RegisterComponent implements OnInit {
     public captchaRequired: string;
     public registerAccount: any;
     public success: boolean;
-    public modalRef: NgbModalRef;
+    public modalRef: MatDialogRef<any>;
     public needCaptcha: boolean = false;
     public language: string = 'en';
     public publicKey: string;
@@ -43,7 +44,7 @@ export class RegisterComponent implements OnInit {
                 private xmConfigService: XmConfigService,
                 private registerService: RegisterService,
                 private eventManager: JhiEventManager,
-                private modalService: NgbModal) {
+                private modalService: MatDialog) {
 
         this.jhiLanguageService.getCurrent().then((lang) => {
             this.language = lang;
@@ -74,16 +75,13 @@ export class RegisterComponent implements OnInit {
         } else {
             if (this.config && this.config.privacyAndTermsEnabled) {
                 const modalRef = this.modalService.open(PrivacyAndTermsDialogComponent, {
-                    size: 'lg',
-                    backdrop: 'static',
+                    width: '500px',
                 });
                 modalRef.componentInstance.config = this.config;
-                modalRef.result.then((r) => {
+                modalRef.afterClosed().subscribe((r) => {
                     if (r === 'accept') {
                         this.registration();
                     }
-                }).catch((err) => {
-                    console.info(err);
                 });
             } else {
                 this.registration();

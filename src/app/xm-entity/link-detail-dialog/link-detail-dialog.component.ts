@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
 
 import { LinkSpec } from '../shared/link-spec.model';
 import { Spec } from '../shared/spec.model';
@@ -19,7 +19,7 @@ export class LinkDetailDialogComponent implements OnInit {
     public xmEntity: XmEntity;
     public mode: string;
 
-    constructor(private activeModal: NgbActiveModal) {
+    constructor(private activeModal: MatDialogRef<LinkDetailDialogComponent>) {
     }
 
     public ngOnInit(): void {
@@ -27,6 +27,6 @@ export class LinkDetailDialogComponent implements OnInit {
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 }

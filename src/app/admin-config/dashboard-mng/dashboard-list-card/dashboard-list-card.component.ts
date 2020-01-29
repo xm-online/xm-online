@@ -1,7 +1,7 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { Observable } from 'rxjs';
@@ -29,7 +29,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
     public showLoader: boolean;
 
     constructor(protected dashboardService: DashboardService,
-                protected modalService: NgbModal,
+                protected modalService: MatDialog,
                 protected activatedRoute: ActivatedRoute,
                 protected alertService: JhiAlertService,
                 protected eventManager: JhiEventManager,
@@ -60,11 +60,11 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
     }
 
     public onAddNew(): void {
-        this.modalService.open(DashboardDetailDialogComponent, {backdrop: 'static', size: 'lg'});
+        this.modalService.open(DashboardDetailDialogComponent, {width: '500px'});
     }
 
     public onEdit(d: Dashboard): void {
-        const modalRef = this.modalService.open(DashboardDetailDialogComponent, {backdrop: 'static', size: 'lg'});
+        const modalRef = this.modalService.open(DashboardDetailDialogComponent, {width: '500px'});
         modalRef.componentInstance.dashboard = Object.assign({}, d);
     }
 

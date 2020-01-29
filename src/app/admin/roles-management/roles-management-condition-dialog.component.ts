@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { Permission } from '../../shared/role/permission.model';
 
 @Component({
@@ -15,7 +16,7 @@ export class RoleConditionDialogComponent implements OnInit {
     public isAddMode: boolean;
 
     constructor(
-        public activeModal: NgbActiveModal,
+        public activeModal: MatDialogRef<RoleConditionDialogComponent>,
     ) {
     }
 
@@ -24,7 +25,7 @@ export class RoleConditionDialogComponent implements OnInit {
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     public onSave(): void {

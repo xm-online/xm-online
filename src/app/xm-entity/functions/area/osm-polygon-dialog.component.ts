@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { Principal } from '../../../shared/auth/principal.service';
 import { OverpassApiService } from './overpass-api.service';
 
@@ -13,7 +14,7 @@ export class OsmPolygonDialogComponent {
     public relations: any[];
 
     constructor(public principal: Principal,
-                public activeModal: NgbActiveModal,
+                public activeModal: MatDialogRef<OsmPolygonDialogComponent>,
                 private overpassApi: OverpassApiService) {
     }
 
@@ -57,12 +58,12 @@ export class OsmPolygonDialogComponent {
         }, (err) => {
             console.info(err);
         }, () => {
-            this.activeModal.dismiss('cancel');
+            this.activeModal.close(false);
         });
     }
 
     public clear(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
 }

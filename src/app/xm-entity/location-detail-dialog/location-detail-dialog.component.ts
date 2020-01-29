@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { Observable } from 'rxjs';
@@ -42,7 +43,7 @@ export class LocationDetailDialogComponent implements OnInit {
     public filteredCountryOptions: Observable<CountryOption[]>;
     public countryOptions: CountryOption[];
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(private activeModal: MatDialogRef<LocationDetailDialogComponent>,
                 private locationService: LocationService,
                 private eventManager: JhiEventManager,
                 private translateService: TranslateService,
@@ -136,7 +137,7 @@ export class LocationDetailDialogComponent implements OnInit {
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     private loadMap(): any {
@@ -207,7 +208,7 @@ export class LocationDetailDialogComponent implements OnInit {
     private onSaveSuccess(key: string): void {
         // TODO: use constant for the broadcast and analyse listeners
         this.eventManager.broadcast({name: 'locationListModification'});
-        this.activeModal.dismiss(true);
+        this.activeModal.close(true);
         this.alert('success', key);
     }
 

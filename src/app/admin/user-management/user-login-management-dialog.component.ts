@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
 
 import { User } from '../../shared';
 
@@ -11,9 +11,9 @@ export class UserLoginMgmtDialogComponent {
 
     @Input() public user: User;
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: MatDialogRef<UserLoginMgmtDialogComponent>) {}
 
     public close(): void {
-        this.activeModal.dismiss();
+        this.activeModal.close();
     }
 }

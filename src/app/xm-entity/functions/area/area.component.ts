@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material';
 
 import { buildMapId } from '../../../shared/helpers/google-map-helper';
 import { FunctionContext } from '../../shared/function-context.model';
@@ -26,7 +26,7 @@ export class AreaComponent implements AfterViewInit {
     private drawControl: any;
 
     constructor(private functionContextService: FunctionContextService,
-                private modalService: NgbModal) {
+                private modalService: MatDialog) {
         this.mapId = buildMapId('area');
         this.context = {};
         this.context.key = this.mapId;
@@ -37,17 +37,20 @@ export class AreaComponent implements AfterViewInit {
         this.init();
     }
 
+    public addPolygonInternal(polygon: any): void {
+        const layer = L.polygon(
+            polygon.map((el) => [el.lat, el.lon]),
+            {fillColor: '#009688', fillOpacity: 0.6, opacity: 1, weight: 3, color: '#009688'},
+        );
+        this.drawnItems.addLayer(layer);
+        this.saveFunction(this.drawnItems);
+        this.map.fitBounds(this.drawnItems.getBounds(), {padding: [1, 1]});
+    }
+
     public onClickAddPolygon(): void {
-        const modalRef = this.modalService.open(OsmPolygonDialogComponent, {backdrop: 'static'});
-        modalRef.componentInstance.addPolygonInternal = (polygon) => {
-            const layer = L.polygon(
-                polygon.map((el) => [el.lat, el.lon]),
-                {fillColor: '#009688', fillOpacity: 0.6, opacity: 1, weight: 3, color: '#009688'},
-            );
-            this.drawnItems.addLayer(layer);
-            this.saveFunction(this.drawnItems);
-            this.map.fitBounds(this.drawnItems.getBounds(), {padding: [1, 1]});
-        };
+        const modalRef = this.modalService.open(OsmPolygonDialogComponent, {width: '500px'});
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        modalRef.componentInstance.addPolygonInternal = this.addPolygonInternal.bind(this);
     }
 
     private init(): void {

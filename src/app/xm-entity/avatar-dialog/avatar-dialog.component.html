@@ -1,8 +1,9 @@
-<div class="modal-header">
+<div mat-dialog-title>
   <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
   <h4 class="modal-title text-left" jhiTranslate="xm-entity.common.change-avatar">Change Avatar</h4>
 </div>
-<div class="modal-body">
+
+<div mat-dialog-content>
   <div class="text-center">
     <div class="fileinput fileinput-new text-center" data-provides="fileinput">
       <div>
@@ -18,7 +19,8 @@
     </div>
   </div>
 </div>
-<div class="modal-footer">
+
+<div mat-dialog-actions>
   <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
     <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
   </button>

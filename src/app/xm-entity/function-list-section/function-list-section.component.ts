@@ -1,7 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { MatTabChangeEvent } from '@angular/material';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog, MatTabChangeEvent } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -46,7 +45,7 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
     private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
     constructor(protected xmEntityService: XmEntityService,
-                protected modalService: NgbModal,
+                protected modalService: MatDialog,
                 protected eventManager: JhiEventManager,
                 protected translateService: TranslateService,
                 protected contextService: ContextService,
@@ -81,12 +80,12 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
         let title = this.translateService.instant('xm-entity.function-list-card.change-state.title');
         title = nextSpec.actionName || nextSpec.name || title;
 
-        const modalRef = this.modalService.open(StateChangeDialogComponent, {backdrop: 'static'});
+        const modalRef = this.modalService.open(StateChangeDialogComponent, {width: '500px'});
         modalRef.componentInstance.xmEntity = this.xmEntity;
         modalRef.componentInstance.nextSpec = nextSpec;
         modalRef.componentInstance.dialogTitle = title;
         modalRef.componentInstance.buttonTitle = title;
-        modalRef.result.then((result) => {
+        modalRef.afterClosed().subscribe((result) => {
             console.info(result);
         }, (reason) => {
             console.info(reason);
@@ -106,7 +105,7 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
 
     public onCallFunction(functionSpec: FunctionSpec): void {
         const title = functionSpec.actionName ? functionSpec.actionName : functionSpec.name;
-        const modalRef = this.modalService.open(FunctionCallDialogComponent, {backdrop: 'static'});
+        const modalRef = this.modalService.open(FunctionCallDialogComponent, {width: '500px'});
         modalRef.componentInstance.xmEntity = this.xmEntity || {id: this.xmEntityId || undefined};
         modalRef.componentInstance.functionSpec = functionSpec;
         modalRef.componentInstance.dialogTitle = title;

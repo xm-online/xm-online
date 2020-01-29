@@ -1,10 +1,11 @@
-<div class="modal-header">
+<div mat-dialog-title>
   <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
   <h4 class="modal-title text-left">
     <span jhiTranslate="xm-entity.link-detail-dialog.add.title">Add new Link for the</span> [<b>{{xmEntity.name}}</b>]
   </h4>
 </div>
-<div class="modal-body">
+
+<div mat-dialog-content>
   <div *ngIf="linkSpec.builderType === 'NEW-OR-SEARCH'" class="raw col-sm-12 text-center">
     <div class="btn-group">
       <button (click)="mode = 'NEW';"

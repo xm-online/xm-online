@@ -1,10 +1,10 @@
 <form #editForm="ngForm" (ngSubmit)="save()" class="m-0" name="editForm" novalidate role="form">
-  <div class="modal-header">
+  <div mat-dialog-title>
     <a (click)="clear()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <h4 class="modal-title text-left" id="myUserLabel" jhiTranslate="userManagement.home.createOrEditLabel">
       Create or edit a User</h4>
   </div>
-  <div class="modal-body">
+  <div mat-dialog-content>
     <xm-loader [showLoader]="showLoader"></xm-loader>
 
     <div class="form-group">
@@ -111,7 +111,7 @@
       </mat-form-field>
     </div>
   </div>
-  <div class="modal-footer">
+  <div mat-dialog-actions>
     <button (click)="clear()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
       <span class="fa fa-ban"></span>&nbsp;<span
       jhiTranslate="entity.action.cancel">Cancel</span>

@@ -2,10 +2,10 @@ import { HttpClient, HttpHandler } from '@angular/common/http';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { MatInputModule, MatSelectModule } from '@angular/material';
+import { MatDialog, MatInputModule, MatSelectModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { TranslateModule } from '@ngx-translate/core';
 import { JhiAlertService, JhiConfigService, JhiDateUtils, JhiEventManager, JhiModuleConfig } from 'ng-jhipster';
 
@@ -40,7 +40,7 @@ describe('Entity detail dialog Component', () => {
                 I18nJsfPipe,
             ],
             providers: [
-                NgbActiveModal,
+                MatDialog,
                 XmEntityService,
                 I18nJsfPipe,
                 I18nNamePipe,

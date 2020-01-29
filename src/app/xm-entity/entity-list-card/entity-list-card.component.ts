@@ -1,7 +1,8 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+
 import { TranslateService } from '@ngx-translate/core';
 
 import * as _ from 'lodash';
@@ -53,7 +54,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     constructor(private xmEntitySpecWrapperService: XmEntitySpecWrapperService,
                 private xmEntityService: XmEntityService,
                 private eventManager: JhiEventManager,
-                private modalService: NgbModal,
+                private modalService: MatDialog,
                 private xmConfigService: XmConfigService,
                 private translateService: TranslateService,
                 private i18nNamePipe: I18nNamePipe,
@@ -181,13 +182,13 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
         this.loadEntities(entityOptions).subscribe((resp) => this.list[this.activeItemId].entities = resp);
     }
 
-    public onAction(entityOptions: EntityOptions, xmEntity: XmEntity, action: ActionOptions): NgbModalRef | null {
+    public onAction(entityOptions: EntityOptions, xmEntity: XmEntity, action: ActionOptions): MatDialogRef<any> | null {
         if (action.handler) {
             action.handler(xmEntity);
             return null;
         }
 
-        const modalRef = this.modalService.open(FunctionCallDialogComponent, {backdrop: 'static'});
+        const modalRef = this.modalService.open(FunctionCallDialogComponent, {width: '500px'});
         this.translateService.get('xm-entity.entity-list-card.action-dialog.question', {
             action: this.i18nNamePipe.transform(action.name, this.principal),
             name: xmEntity.name,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 
 import { JhiHealthService } from './health.service';
 
@@ -19,7 +20,7 @@ export class JhiHealthModalComponent implements OnInit {
     };
     public editorValue: string;
 
-    constructor(public activeModal: NgbActiveModal,
+    constructor(public activeModal: MatDialogRef<JhiHealthModalComponent>,
                 private healthService: JhiHealthService) {
     }
 

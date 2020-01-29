@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/prefer-string-starts-ends-with */
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, tap } from 'rxjs/operators';
 import { NextSpec, XmEntitySpec } from '..';
@@ -25,7 +26,7 @@ export class StatesManagementDialogComponent implements OnInit {
 
     constructor(
         private xmEntitySpecWrapperService: XmEntitySpecWrapperService,
-        private activeModal: NgbActiveModal,
+        private activeModal: MatDialogRef<StatesManagementDialogComponent>,
     ) {
     }
 
@@ -86,7 +87,7 @@ export class StatesManagementDialogComponent implements OnInit {
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     private _filterSpec(value: string): XmEntitySpec[] {

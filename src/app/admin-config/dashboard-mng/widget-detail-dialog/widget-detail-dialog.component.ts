@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -22,7 +23,7 @@ export class WidgetDetailDialogComponent implements OnInit {
     public configStringOut: string;
     public showLoader: boolean;
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(private activeModal: MatDialogRef<WidgetDetailDialogComponent>,
                 private widgetService: WidgetService,
                 private eventManager: JhiEventManager,
                 private translateService: TranslateService,
@@ -59,13 +60,13 @@ export class WidgetDetailDialogComponent implements OnInit {
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     private onSaveSuccess(key: string): void {
         // TODO: use constant for the broadcast and analyse listeners
         this.eventManager.broadcast({name: 'widgetListModification'});
-        this.activeModal.dismiss(true);
+        this.activeModal.close(true);
         this.alert('success', key);
     }
 

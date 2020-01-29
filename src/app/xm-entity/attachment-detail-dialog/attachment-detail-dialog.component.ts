@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { TranslateService } from '@ngx-translate/core';
 import { JhiDataUtils, JhiEventManager } from 'ng-jhipster';
 
@@ -28,7 +29,7 @@ export class AttachmentDetailDialogComponent implements OnInit {
     public readOnlyInputs: boolean;
     public wrongFileType: string;
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(private activeModal: MatDialogRef<AttachmentDetailDialogComponent>,
                 private attachmentService: AttachmentService,
                 private eventManager: JhiEventManager,
                 private dataUtils: JhiDataUtils,
@@ -103,14 +104,14 @@ export class AttachmentDetailDialogComponent implements OnInit {
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     private onSaveSuccess(): void {
         // TODO: use constant for the broadcast and analyse listeners
         console.info('Fire %s', ATTACHMENT_EVENT);
         this.eventManager.broadcast({name: ATTACHMENT_EVENT});
-        this.activeModal.dismiss(true);
+        this.activeModal.close(true);
         this.alert('success');
     }
 

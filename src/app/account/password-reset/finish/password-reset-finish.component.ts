@@ -1,8 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatInput } from '@angular/material';
+import { MatDialogRef, MatInput } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -33,7 +32,7 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     public keyUsed: boolean;
     public resetAccount: any;
     public success: string;
-    public modalRef: NgbModalRef;
+    public modalRef: MatDialogRef<any>;
     public key: string;
     public config: IResetPasswordFormConfig;
     public passwordSettings: PasswordSpec;

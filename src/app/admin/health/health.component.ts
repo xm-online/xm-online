@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material';
 import { JhiHealthModalComponent } from './health-modal.component';
 
 import { JhiHealthService } from './health.service';
@@ -21,7 +21,7 @@ export class JhiHealthCheckComponent implements OnInit {
     public selectedInstanceStatus: string;
 
     constructor(
-        private modalService: NgbModal,
+        private modalService: MatDialog,
         private healthService: JhiHealthService,
     ) {
     }
@@ -95,13 +95,8 @@ export class JhiHealthCheckComponent implements OnInit {
     }
 
     public showHealth(health: any): void {
-        const modalRef = this.modalService.open(JhiHealthModalComponent, {backdrop: 'static'});
+        const modalRef = this.modalService.open(JhiHealthModalComponent, {width: '500px'});
         modalRef.componentInstance.currentHealth = health;
-        modalRef.result.then(() => {
-            // Left blank intentionally, nothing to do here
-        }, () => {
-            // Left blank intentionally, nothing to do here
-        });
     }
 
     public subSystemName(name: string): string {

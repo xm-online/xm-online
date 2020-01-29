@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
@@ -44,7 +44,7 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
         public principal: Principal,
         private router: Router,
         protected translateService: TranslateService,
-        protected modalService: NgbModal,
+        protected modalService: MatDialog,
         protected eventManager: JhiEventManager,
         protected xmEntitySpecWrapperService: XmEntitySpecWrapperService,
     ) {
@@ -106,7 +106,7 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
     }
 
     public callEntityDetailAction(key: string): any {
-        const modalRef = this.modalService.open(EntityDetailDialogComponent, {backdrop: 'static'});
+        const modalRef = this.modalService.open(EntityDetailDialogComponent, {width: '500px'});
         modalRef.componentInstance.xmEntitySpec = this.getType(key);
         modalRef.componentInstance.spec = this.spec;
         modalRef.componentInstance.onSuccess = () => {
@@ -135,7 +135,7 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
         const functionSpecArray = entitySpec.functions || [];
         const functionSpec = functionSpecArray.filter((x) => x.key === funcName).shift();
         const title = functionSpec.actionName ? functionSpec.actionName : functionSpec.name;
-        const modalRef = this.modalService.open(FunctionCallDialogComponent, {backdrop: 'static'});
+        const modalRef = this.modalService.open(FunctionCallDialogComponent, {width: '500px'});
 
         // setup xmEntity only if selected
         if (this.selectedNode) {

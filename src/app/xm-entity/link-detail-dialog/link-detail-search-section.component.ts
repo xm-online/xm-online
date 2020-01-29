@@ -1,6 +1,7 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { filter, map } from 'rxjs/operators';
@@ -35,7 +36,7 @@ export class LinkDetailSearchSectionComponent implements OnInit {
     private page: number;
     private linkSpecQuery: any;
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(private activeModal: MatDialogRef<LinkDetailSearchSectionComponent>,
                 private xmEntityService: XmEntityService,
                 private linkService: LinkService,
                 private eventManager: JhiEventManager,
@@ -58,7 +59,7 @@ export class LinkDetailSearchSectionComponent implements OnInit {
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     public onAdd(targetXmEntity: XmEntity): void {
@@ -76,7 +77,7 @@ export class LinkDetailSearchSectionComponent implements OnInit {
                 this.alert('error', 'xm-entity.link-detail-dialog.add.error');
                 this.showLoader = false;
             },
-            () => this.activeModal.dismiss(true));
+            () => this.activeModal.close(true));
     }
 
     public onSearch(): void {

@@ -1,6 +1,8 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog/typings/dialog-ref';
+
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
@@ -37,7 +39,7 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
                 private eventManager: JhiEventManager,
                 private translateService: TranslateService,
                 public principal: Principal,
-                private modalService: NgbModal) {
+                private modalService: MatDialog) {
     }
 
     public ngOnInit(): void {
@@ -124,8 +126,8 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
         }
     }
 
-    private openDialog(dialogClass: any, operation: any, options?: any): NgbModalRef {
-        const modalRef = this.modalService.open(dialogClass, options ? options : {backdrop: 'static'});
+    private openDialog(dialogClass: any, operation: any, options?: any): MatDialogRef<any> {
+        const modalRef = this.modalService.open<any>(dialogClass, options ? options : {width: '500px'});
         modalRef.componentInstance.xmEntity = this.xmEntity;
         operation(modalRef);
         return modalRef;

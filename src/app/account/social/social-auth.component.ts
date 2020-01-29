@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CookieService } from 'angular2-cookie/core';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
@@ -24,7 +24,7 @@ export class SocialAuthComponent extends LoginComponent implements OnInit {
                 protected elementRef: ElementRef,
                 protected router: Router,
                 protected alertService: JhiAlertService,
-                protected modalService: NgbModal,
+                protected modalService: MatDialog,
                 protected authService: AuthService,
                 protected cookieService: CookieService) {
         super(

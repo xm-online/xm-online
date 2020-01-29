@@ -1,12 +1,13 @@
-<form #attachmentForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="attachmentForm" novalidate role="form">
-  <div class="modal-header">
-    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
-    <h4 class="modal-title text-left">
-      <span jhiTranslate="xm-entity.attachment-detail-dialog.title">Add new attachment for the</span>
-      [<b>{{xmEntity.name}}</b>]
-    </h4>
-  </div>
-  <div class="modal-body">
+<div mat-dialog-title>
+  <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
+  <h4 class="modal-title text-left">
+    <span jhiTranslate="xm-entity.attachment-detail-dialog.title">Add new attachment for the</span>
+    [<b>{{xmEntity.name}}</b>]
+  </h4>
+</div>
+
+<div mat-dialog-content>
+  <form #attachmentForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="attachmentForm" novalidate role="form">
     <xm-loader [showLoader]="showLoader"></xm-loader>
 
     <div class="form-group">
@@ -65,7 +66,10 @@
         <input (change)="setFileData($event, nameCtrl)" [accept]="acceptedFileTypes" id="uploadFile" type="file">
         <input [(ngModel)]="attachment.content.value" class="form-control" id="field_value" name="value" required
                type="hidden"/>
-        <input [(ngModel)]="attachment.valueContentType" class="form-control" id="field_valueContentType" name="valueContentType"
+        <input [(ngModel)]="attachment.valueContentType"
+               class="form-control"
+               id="field_valueContentType"
+               name="valueContentType"
                type="hidden"/>
         <div [hidden]="!(attachmentForm.controls.value?.dirty && attachmentForm.controls.value?.invalid)">
           <small [hidden]="!attachmentForm.controls.value?.errors?.required" class="form-text text-danger">
@@ -87,21 +91,22 @@
     <small [hidden]="!wrongFileType" class="form-text text-danger">
       <span>{{ "xm-entity.attachment-detail-dialog.wrong-type-error" | translate: {fileType: wrongFileType} }}</span>
     </small>
-  </div>
-  <div class="modal-footer">
-    <button (click)="onCancel()"
-            [disabled]="showLoader"
-            class="btn mr-1"
-            data-dismiss="modal"
-            mat-button
-            type="button">
-      <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
-    </button>
-    <button [disabled]="attachmentForm.form.invalid || showLoader"
-            class="btn btn-primary"
-            mat-button
-            type="submit">
-      <span jhiTranslate="xm-entity.common.save">Save</span>
-    </button>
-  </div>
-</form>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button (click)="onCancel()"
+          [disabled]="showLoader"
+          class="btn mr-1"
+          data-dismiss="modal"
+          mat-button
+          type="button">
+    <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
+  </button>
+  <button [disabled]="attachmentForm.form.invalid || showLoader"
+          class="btn btn-primary"
+          mat-button
+          type="submit">
+    <span jhiTranslate="xm-entity.common.save">Save</span>
+  </button>
+</div>

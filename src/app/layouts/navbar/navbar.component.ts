@@ -1,7 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, DoCheck, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+
 import { TranslateService } from '@ngx-translate/core';
 import { JhiLanguageService } from 'ng-jhipster';
 
@@ -23,7 +24,7 @@ export class NavbarComponent implements OnInit, DoCheck {
 
     public routeData: any = {};
     public languages: any[];
-    public modalRef: NgbModalRef;
+    public modalRef: MatDialogRef<any>;
     public version: string;
     public tenantName: string;
     public title: string;

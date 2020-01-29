@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 
 @Component({
     selector: 'xm-metrics-modal',
@@ -15,7 +16,7 @@ export class JhiMetricsMonitoringModalComponent implements OnInit {
     public threadDumpTimedWaiting: number = 0;
     public threadDumpWaiting: number = 0;
 
-    constructor(public activeModal: NgbActiveModal) {
+    constructor(public activeModal: MatDialogRef<JhiMetricsMonitoringModalComponent>) {
         // TODO:
         //  this.jhiLanguageService.addLocation('metrics');
     }

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material';
 import { JhiAlertService, JhiEventManager, JhiOrderByPipe } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
@@ -35,7 +35,7 @@ export class RolesMgmtComponent implements OnInit, OnDestroy {
         private principal: Principal,
         private eventManager: JhiEventManager,
         private orderByPipe: JhiOrderByPipe,
-        private modalService: NgbModal,
+        private modalService: MatDialog,
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.registerChangeInRoles();
@@ -93,16 +93,16 @@ export class RolesMgmtComponent implements OnInit, OnDestroy {
     }
 
     public onAdd(): void {
-        this.modalService.open(RoleMgmtDialogComponent, {backdrop: 'static'});
+        this.modalService.open(RoleMgmtDialogComponent, {width: '500px'});
     }
 
-    public onEdit(role: string): void {
-        const modalRef = this.modalService.open(RoleMgmtDialogComponent, {backdrop: 'static'});
+    public onEdit(role: Role): void {
+        const modalRef = this.modalService.open(RoleMgmtDialogComponent, {width: '500px'});
         modalRef.componentInstance.selectedRole = role;
     }
 
-    public onDelete(role: string): void {
-        const modalRef = this.modalService.open(RoleMgmtDeleteDialogComponent, {backdrop: 'static'});
+    public onDelete(role: Role): void {
+        const modalRef = this.modalService.open(RoleMgmtDeleteDialogComponent, {width: '500px'});
         modalRef.componentInstance.selectedRole = role;
     }
 

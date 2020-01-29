@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -16,7 +16,7 @@ import { XmEntityService } from '../shared/xm-entity.service';
 export class FunctionListSectionCompactComponent extends FunctionListSectionComponent {
 
     constructor(protected xmEntityService: XmEntityService,
-                protected modalService: NgbModal,
+                protected modalService: MatDialog,
                 protected eventManager: JhiEventManager,
                 protected translateService: TranslateService,
                 protected contextService: ContextService,

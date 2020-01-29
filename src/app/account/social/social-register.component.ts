@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
     selector: 'xm-social-register',
@@ -11,7 +12,7 @@ export class SocialRegisterComponent implements OnInit {
     public error: boolean;
     public provider: string;
     public providerLabel: string;
-    public modalRef: NgbModalRef;
+    public modalRef: MatDialogRef<any>;
 
     constructor(
         private route: ActivatedRoute,

@@ -1,7 +1,8 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 
 import { Router } from '@angular/router';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { JhiEventManager } from 'ng-jhipster';
 import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { catchError, filter, finalize, share, tap } from 'rxjs/operators';
@@ -37,7 +38,7 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
     public showLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public showSecondStep$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(private activeModal: MatDialogRef<FunctionCallDialogComponent>,
                 private functionService: FunctionService,
                 private eventManager: JhiEventManager,
                 private contextService: ContextService,
@@ -100,7 +101,7 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     public onChangeForm(data: any): void {
@@ -120,11 +121,11 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
         const data = r.body && r.body.data;
         // if onSuccess handler passes, close popup and pass processing to function
         if (this.onSuccess) {
-            this.activeModal.dismiss(true);
+            this.activeModal.close(true);
             this.onSuccess(data, this.formData);
             // if response should be shown but there are no form provided
         } else if (data && this.functionSpec.showResponse && !this.functionSpec.contextDataForm) {
-            this.activeModal.dismiss(true);
+            this.activeModal.close(true);
             swal({
                 type: 'success',
                 html: `<pre style="text-align: left"><code>${JSON.stringify(data, null, '  ')}</code></pre>`,
@@ -139,19 +140,19 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
             this.jsfAttributes.data = data;
             // if contains a location header, go to location specified
         } else if (r.headers.get('location')) {
-            this.activeModal.dismiss(true);
+            this.activeModal.close(true);
             this.router.navigate(
                 [r.headers.get('location')],
                 {queryParams: data},
             );
         } else {
-            this.activeModal.dismiss(true);
+            this.activeModal.close(true);
         }
     }
 
     private saveAsFile(r: any): void {
         const filename = JSON.parse(getFileNameFromResponseContentDisposition(r));
         saveFile(r.body, filename, r.headers.get('content-type'));
-        this.activeModal.dismiss(true);
+        this.activeModal.close(true);
     }
 }

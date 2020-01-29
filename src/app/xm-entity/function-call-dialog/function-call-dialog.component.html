@@ -1,9 +1,10 @@
 <form (ngSubmit)="onConfirmFunctionCall()" class="m-0" name="functionCallForm">
-  <div class="modal-header">
+  <div mat-dialog-title>
     <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <h4 [innerHTML]="dialogTitle | i18nName : principal" class="modal-title text-left"></h4>
   </div>
-  <div class="modal-body">
+
+  <div mat-dialog-content>
     <xm-loader [showLoader]="showLoader$ | async"></xm-loader>
     <json-schema-form (formLayout)="jsfAttributes.formLayout"
                       (isValid)="isJsonFormValid = $event"
@@ -19,7 +20,8 @@
                       class="json-form-hide-submit">
     </json-schema-form>
   </div>
-  <div *ngIf="showSecondStep$ | async; else firstStep" class="modal-footer">
+
+  <div *ngIf="showSecondStep$ | async; else firstStep" mat-dialog-actions>
     <button (click)="onCancel()"
             class="btn mr-1"
             data-dismiss="modal"
@@ -29,8 +31,9 @@
       <span *ngIf="!jsfAttributes?.entity?.closeName" jhiTranslate="xm-entity.common.close">Close</span>
     </button>
   </div>
+
   <ng-template #firstStep>
-    <div class="modal-footer">
+    <div mat-dialog-actions>
       <button (click)="onCancel()"
               class="btn mr-1"
               data-dismiss="modal"

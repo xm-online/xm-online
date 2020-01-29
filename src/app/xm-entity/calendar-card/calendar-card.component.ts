@@ -1,6 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiDateUtils } from 'ng-jhipster';
 
@@ -14,6 +13,7 @@ import { Event } from '../shared/event.model';
 import { EventService } from '../shared/event.service';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
+import { MatDialog } from '@angular/material';
 
 declare const $: any;
 declare const swal: any;
@@ -38,7 +38,7 @@ export class CalendarCardComponent implements OnChanges {
                 private dateUtils: JhiDateUtils,
                 private i18nNamePipe: I18nNamePipe,
                 private translateService: TranslateService,
-                private modalService: NgbModal,
+                private modalService: MatDialog,
                 public principal: Principal) {
     }
 
@@ -147,7 +147,7 @@ export class CalendarCardComponent implements OnChanges {
                 },
             },
             select: (start: any, end: any) => {
-                const modalRef = self.modalService.open(CalendarEventDialogComponent, {backdrop: 'static'});
+                const modalRef = self.modalService.open(CalendarEventDialogComponent, {width: '500px'});
                 modalRef.componentInstance.xmEntity = self.xmEntity;
                 modalRef.componentInstance.calendar = self.currentCalendar;
                 modalRef.componentInstance.startDate = start.format('YYYY-MM-DD') + 'T' + start.format('HH:mm:ss');

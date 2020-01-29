@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { JhiEventManager } from 'ng-jhipster';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -17,7 +18,7 @@ import { DEFAULT_AUTH_TOKEN, DEFAULT_CONTENT_TYPE, XM_EVENT_LIST } from '../xm.c
 export class HomeComponent implements OnInit, OnDestroy {
 
     public account: Account;
-    public modalRef: NgbModalRef;
+    public modalRef: MatDialogRef<any>;
     public defaultWidget: Widget;
     public defaultLayout: any;
     public signWidget: Widget;

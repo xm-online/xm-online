@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material';
+
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
@@ -31,7 +32,7 @@ export class StateChangeDialogComponent implements OnInit {
     public showLoader: boolean;
     public isJsonFormValid: boolean = true;
 
-    constructor(private activeModal: NgbActiveModal,
+    constructor(private activeModal: MatDialogRef<StateChangeDialogComponent>,
                 private xmEntityService: XmEntityService,
                 private translateService: TranslateService,
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -78,11 +79,11 @@ export class StateChangeDialogComponent implements OnInit {
         } else {
             this.alert('success', 'xm-entity.function-list-card.change-state.success');
         }
-        this.activeModal.dismiss('OK');
+        this.activeModal.close('OK');
     }
 
     public onCancel(): void {
-        this.activeModal.dismiss('cancel');
+        this.activeModal.close(false);
     }
 
     public onChangeForm(data: any): void {

@@ -1,11 +1,12 @@
-<form #eventForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="eventForm" novalidate role="form">
-  <div class="modal-header">
-    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
-    <h4 class="modal-title text-left">
-      <span jhiTranslate="xm-entity.calendar-event-dialog.title">Add new event for the</span> [<b>{{xmEntity.name}}</b>]
-    </h4>
-  </div>
-  <div class="modal-body">
+<div mat-dialog-title>
+  <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
+  <h4 class="modal-title text-left">
+    <span jhiTranslate="xm-entity.calendar-event-dialog.title">Add new event for the</span> [<b>{{xmEntity.name}}</b>]
+  </h4>
+</div>
+
+<div mat-dialog-content>
+  <form #eventForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="eventForm" novalidate role="form">
     <xm-loader [showLoader]="showLoader"></xm-loader>
 
     <div class="form-group">
@@ -97,13 +98,14 @@
         </textarea>
       </mat-form-field>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
-      <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
-    </button>
-    <button [disabled]="eventForm.form.invalid || showLoader" class="btn btn-primary" mat-button type="submit">
-      <span jhiTranslate="xm-entity.common.save">Save</span>
-    </button>
-  </div>
-</form>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
+    <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
+  </button>
+  <button [disabled]="eventForm.form.invalid || showLoader" class="btn btn-primary" mat-button type="submit">
+    <span jhiTranslate="xm-entity.common.save">Save</span>
+  </button>
+</div>

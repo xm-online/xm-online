@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 
@@ -27,7 +27,7 @@ export class ClientMgmtComponent extends BaseAdminListComponent {
         protected alertService: JhiAlertService,
         protected eventManager: JhiEventManager,
         protected parseLinks: JhiParseLinks,
-        private modalService: NgbModal,
+        private modalService: MatDialog,
         protected router: Router,
     ) {
         super(activatedRoute, alertService, eventManager, parseLinks, router);
@@ -60,7 +60,6 @@ export class ClientMgmtComponent extends BaseAdminListComponent {
         } else {
             this.loadAll();
         }
-
     }
 
     public filterByClientId(clientId: string): void | null {
@@ -74,17 +73,17 @@ export class ClientMgmtComponent extends BaseAdminListComponent {
     }
 
     public onDelete(client: any): void {
-        const modalRef = this.modalService.open(ClientMgmtDeleteDialogComponent, {backdrop: 'static'});
+        const modalRef = this.modalService.open(ClientMgmtDeleteDialogComponent, {width: '500px'});
         modalRef.componentInstance.selectedClient = client;
     }
 
     public onEdit(client: any): void {
-        const modalRef = this.modalService.open(ClientMgmtDialogComponent, {backdrop: 'static'});
+        const modalRef = this.modalService.open(ClientMgmtDialogComponent, {width: '500px'});
         modalRef.componentInstance.selectedClient = client;
     }
 
     public onAdd(): void {
-        this.modalService.open(ClientMgmtDialogComponent, {backdrop: 'static'});
+        this.modalService.open(ClientMgmtDialogComponent, {width: '500px'});
     }
 
     private loadClientsById(clientId: string): void {

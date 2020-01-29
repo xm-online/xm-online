@@ -1,8 +1,9 @@
-<div class="modal-header">
+<div mat-dialog-title>
   <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
   <h4 class="modal-title text-left" jhiTranslate="global.shared.privacy-and-terms-dialog.title">Privacy and Terms</h4>
 </div>
-<div class="modal-body">
+
+<div mat-dialog-content>
   <div class="xm-terms-viewer">
     <markdown [src]="config?.privacyAndTerms[lang ? lang : 'en']"></markdown>
     <div class="form-group checkbox accept-terms">
@@ -15,7 +16,8 @@
     </div>
   </div>
 </div>
-<div class="modal-footer">
+
+<div mat-dialog-actions>
   <button mat-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()">
     <span jhiTranslate="global.common.cancel">Cancel</span>
   </button>

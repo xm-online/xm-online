@@ -1,13 +1,13 @@
-<form #editForm="ngForm" (ngSubmit)="onSave()" class="m-0" name="deleteForm" novalidate>
-  <div class="modal-header">
-    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
-    <h4 class="modal-title text-left">
-      <span *ngIf="isAddMode" jhiTranslate="rolesManagement.permission.createCondition">Create Condition</span>
-      <span *ngIf="!isAddMode" jhiTranslate="rolesManagement.permission.editCondition">Edit Condition</span>
-    </h4>
-  </div>
+<div mat-dialog-title>
+  <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
+  <h4 class="modal-title text-left">
+    <span *ngIf="isAddMode" jhiTranslate="rolesManagement.permission.createCondition">Create Condition</span>
+    <span *ngIf="!isAddMode" jhiTranslate="rolesManagement.permission.editCondition">Edit Condition</span>
+  </h4>
+</div>
 
-  <div class="modal-body">
+<div mat-dialog-content>
+  <form #editForm="ngForm" (ngSubmit)="onSave()" class="m-0" name="deleteForm" novalidate>
     <p jhiTranslate="{{transInfo}}"></p>
 
     <div class="form-group">
@@ -38,14 +38,14 @@
         <span *ngFor="let item of variables; last as last">{{item}}<span *ngIf="!last">, </span></span>
       </label>
     </div>
-  </div>
+  </form>
+</div>
 
-  <div class="modal-footer">
-    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
-      <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-    </button>
-    <button class="btn btn-primary" mat-button type="submit">
-      <i class="material-icons">done</i>&nbsp;<span jhiTranslate="rolesManagement.ok">Ok</span>
-    </button>
-  </div>
-</form>
+<div mat-dialog-actions>
+  <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
+    <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+  </button>
+  <button class="btn btn-primary" mat-button type="submit">
+    <i class="material-icons">done</i>&nbsp;<span jhiTranslate="rolesManagement.ok">Ok</span>
+  </button>
+</div>

@@ -3,7 +3,7 @@ import { Component, ElementRef, Input, OnInit } from '@angular/core';
 @Component({
     selector: 'xm-loader',
     templateUrl: './loader.component.html',
-    styleUrls: ['./loader.component.css'],
+    styleUrls: ['./loader.component.scss'],
 })
 export class LoaderComponent implements OnInit {
 

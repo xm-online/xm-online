@@ -12,7 +12,7 @@
 
   <xm-loader [absolute]="true" [showLoader]="!(resolved$ | async)"></xm-loader>
 
-  <div class="sidebar" data-background-color="" data-color="white">
+  <div *ngIf="!isGuestLayout" class="sidebar" data-background-color="" data-color="white">
     <xm-sidebar></xm-sidebar>
   </div>
 

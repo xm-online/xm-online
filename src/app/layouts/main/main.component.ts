@@ -25,7 +25,7 @@ export class XmMainComponent implements OnInit, OnDestroy {
     public config: any;
     public resolved$: BehaviorSubject<boolean>;
     public isIdleEnabled: boolean;
-    public isGuestLayout: boolean;
+    public isGuestLayout: boolean = true;
     public guestBg: string;
     public authSucessSubscription: Subscription;
     public isMaintenanceProgress$: BehaviorSubject<boolean>;

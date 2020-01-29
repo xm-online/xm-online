@@ -8,7 +8,8 @@ import { filter, map, share, tap } from 'rxjs/operators';
 import { ContextService, Principal } from '../../../shared';
 import { transpilingForIE } from '../../../shared/jsf-extention';
 import { Dashboard, DashboardService } from '../../../xm-dashboard';
-import { XmEntitySpec, XmEntitySpecWrapperService } from '../../../xm-entity';
+import { XmEntitySpec } from '../../../xm-entity';
+import { XmEntityConfigService } from '../config';
 import { DEFAULT_MENU_LIST } from './menu-const';
 import { JavascriptCode, MenuCategory, MenuItem } from './menu-models';
 
@@ -143,7 +144,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     constructor(protected readonly dashboardService: DashboardService,
                 protected readonly router: Router,
                 protected readonly principal: Principal,
-                protected readonly xmEntitySpecWrapperService: XmEntitySpecWrapperService,
+                protected readonly entityConfigService: XmEntityConfigService,
                 protected readonly contextService: ContextService) { }
 
     public ngOnInit(): void {
@@ -154,9 +155,9 @@ export class MenuComponent implements OnInit, OnDestroy {
             map(dashboardsToCategories),
         );
 
-        const applications$ = this.xmEntitySpecWrapperService.specv2().pipe(
+        const applications$ = this.entityConfigService.cache$.pipe(
             map((spec) => {
-                let applications = spec.types.filter((t) => t.isApp);
+                let applications = spec.filter((t) => t.isApp);
                 applications = applications.filter((t) => this.principal.hasPrivilegesInline(['APPLICATION.' + t.key]));
                 return applications;
             }),

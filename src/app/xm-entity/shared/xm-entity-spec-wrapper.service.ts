@@ -98,7 +98,7 @@ export class XmEntitySpecWrapperService {
         }
     }
 
-    private requestSpec(): Observable<Spec> {
+    private  requestSpec(): Observable<Spec> {
         return this.xmEntitySpecService.get().pipe(
             map((httpResp) => ({types: httpResp.body})));
     }

@@ -212,6 +212,11 @@
     box-shadow:    0 2px 2px 0 rgba(0, 0, 0, .1);
   }
 
+  // @todo: refactor
+  .xm-guest-layout .sidbar-toggle {
+    display: none !important;
+  }
+
   .xm-guest-layout .xm-nav-logo {
     // @todo: refactor, implement with .ts
     display: block !important;

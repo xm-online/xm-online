@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 import { ACache } from './a-cache';
 import { UIConfig } from './ui-config-model';
 
-export const UI_CONFIG_URL: string = 'config/api/profile/webapp/settings-public.yml?toJson';
+export const UI_CONFIG_URL = 'config/api/profile/webapp/settings-public.yml?toJson';
 
 @Injectable({ providedIn: 'root' })
 export class UiConfigService extends ACache<UIConfig> {
 
-    public url = UI_CONFIG_URL;
+    public url: string = UI_CONFIG_URL;
 
     constructor(protected httpClient: HttpClient) {
         super();

@@ -45,7 +45,7 @@ interface IUIConfig {
     social: {
         providerId: string;
         scope: string;
-        icon: { style: string, class: string };
+        icon: { style: string; class: string };
     }[];
     defaultLayout: ILayout[];
     layoutSidebar: IWidget;

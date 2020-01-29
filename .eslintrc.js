@@ -19,8 +19,12 @@ module.exports = {
         'no-console': ['error', {'allow': ['warn', 'info']}],
         '@typescript-eslint/typedef': ['error', {arrayDestructuring: false, arrowParameter: false}],
         '@typescript-eslint/type-annotation-spacing': ['error'],
-        '@typescript-eslint/explicit-member-accessibility': ['error',{
-            overrides: {constructors: 'off', accessors : 'off'}
+        '@typescript-eslint/explicit-member-accessibility': ['error', {
+            overrides: {constructors: 'off', accessors: 'off'}
+        }],
+        '@typescript-eslint/no-inferrable-types': ['error', {
+            'ignoreParameters': true,
+            'ignoreProperties': true,
         }],
         // not fixed
         '@typescript-eslint/no-misused-promises': 'warn',
@@ -115,7 +119,6 @@ module.exports = {
         'newline-per-chained-call': 'off',
         'no-invalid-this': 'off',
         'no-lonely-if': 'off',
-        '@typescript-eslint/no-inferrable-types': 'off',
         '@typescript-eslint/no-use-before-define': 'off'
     }
 };

@@ -11,6 +11,8 @@ import { FooterComponent } from './footer/footer.component';
 import { XmMainComponent } from './main/main.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PageRibbonComponent } from './profiles/page-ribbon.component';
+import { FeedbackComponent } from './navbar/feedback/feedback.component';
+import { FeedbackDialogComponent } from './navbar/feedback/feedback-dialog/feedback-dialog.component';
 
 @NgModule({
     imports: [
@@ -29,10 +31,13 @@ import { PageRibbonComponent } from './profiles/page-ribbon.component';
         ErrorComponent,
         PageRibbonComponent,
         FooterComponent,
+        FeedbackComponent,
+        FeedbackDialogComponent,
     ],
     entryComponents: [
         NavbarComponent,
         XmMainComponent,
+        FeedbackDialogComponent,
     ],
     providers: [],
 })

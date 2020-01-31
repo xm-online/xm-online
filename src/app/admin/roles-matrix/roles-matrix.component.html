@@ -93,6 +93,7 @@
               <th jhiSortBy="privilegeKey">
                 <span jhiTranslate="rolesManagement.permission.privilegeKey">Privilege key</span>
                 <span class="fa fa-sort"></span></th>
+              <th>{{'rolesManagement.permission.desc' | translate}}</th>
               <th jhiSortBy="msName"><span jhiTranslate="rolesManagement.permission.msName">MS name</span>
                 <span class="fa fa-sort"></span></th>
               <th *ngFor="let item of matrix?.roles; index as i" [ngClass]="'col-' + i" class="text-center">
@@ -113,6 +114,11 @@
             <tbody>
             <tr *ngFor="let item of permissions">
               <td>{{item.privilegeKey}}</td>
+              <td class="text-center text-muted">
+                <mat-icon [matTooltip]="item.description" *ngIf="item?.description">
+                  info
+                </mat-icon>
+              </td>
               <td>{{item.msName}}</td>
               <td *ngFor="let role of item.roles; index as i" [ngClass]="'col-' + i" class="text-center align-middle">
                 <mat-checkbox (change)="isChanged(permissions)"

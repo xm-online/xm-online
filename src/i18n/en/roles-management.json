@@ -25,6 +25,7 @@
         "permission": {
             "checkAll": "Check All",
             "privilegeKey": "Privilege key",
+            "desc": "Description",
             "msName": "MS name",
             "permit": "Permit",
             "permitted": "permitted",

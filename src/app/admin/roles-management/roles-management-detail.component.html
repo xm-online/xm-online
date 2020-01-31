@@ -91,6 +91,7 @@
                 <th jhiSortBy="privilegeKey"><span
                   jhiTranslate="rolesManagement.permission.privilegeKey">Privilege key</span> <span
                   class="fa fa-sort"></span></th>
+                <th>{{'rolesManagement.permission.desc' | translate}}</th>
                 <th jhiSortBy="msName"><span jhiTranslate="rolesManagement.permission.msName">MS name</span> <span
                   class="fa fa-sort"></span></th>
                 <th><span jhiTranslate="rolesManagement.permission.permit">Permit</span></th>
@@ -106,6 +107,11 @@
               <tbody>
               <tr *ngFor="let item of permissions">
                 <td>{{item.privilegeKey}}</td>
+                <td class="text-center text-muted">
+                  <mat-icon [matTooltip]="item.description" *ngIf="item?.description">
+                      info
+                  </mat-icon>
+                </td>
                 <td>{{item.msName}}</td>
                 <td>
                   <mat-checkbox [(ngModel)]="item.enabled" color="primary"></mat-checkbox>

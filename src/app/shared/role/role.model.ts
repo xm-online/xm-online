@@ -21,4 +21,5 @@ export interface RoleMatrixPermission {
     msName?: string;
     privilegeKey?: string;
     roles?: any[];
+    description?: string;
 }

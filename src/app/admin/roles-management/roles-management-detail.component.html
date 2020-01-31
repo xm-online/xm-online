@@ -108,7 +108,7 @@
               <tr *ngFor="let item of permissions">
                 <td>{{item.privilegeKey}}</td>
                 <td class="text-center text-muted">
-                  <mat-icon [matTooltip]="item?.description">
+                  <mat-icon [matTooltip]="item.description" *ngIf="item?.description">
                       info
                   </mat-icon>
                 </td>

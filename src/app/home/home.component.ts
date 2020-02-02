@@ -13,6 +13,7 @@ import { DEFAULT_AUTH_TOKEN, DEFAULT_CONTENT_TYPE, XM_EVENT_LIST } from '../xm.c
 
 @Component({
     selector: 'xm-home',
+    styleUrls: ['./home.component.scss'],
     templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit, OnDestroy {

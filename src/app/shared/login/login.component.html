@@ -74,8 +74,10 @@
   </div>
 
   <div class="text-right">
-    <button mat-button type="submit"
+    <button mat-button
+            type="submit"
             class="btn btn-primary display-block"
+            color="primary"
             [ngClass]="{'loading' : sendingLogin}"
             [disabled]="isFormDisabled()">
       <span jhiTranslate="login.form.button">Sign in</span>

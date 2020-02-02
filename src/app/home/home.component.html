@@ -13,7 +13,7 @@
   </div>
 </div>
 
-<div *ngIf="defaultLayout">
+<ng-container *ngIf="defaultLayout">
   <div *ngFor="let row of defaultLayout" [className]="row.class">
     <div *ngFor="let item of row?.content" [className]="item.class">
       <xm-dynamic-widget *ngIf="item.widget?.module"
@@ -21,4 +21,4 @@
       </xm-dynamic-widget>
     </div>
   </div>
-</div>
+</ng-container>

@@ -7,26 +7,28 @@
 
 <div [class.has-ackground]="guestBg"
      [class.xm-guest-layout]="isGuestLayout"
-     [style.backgroundImage]="guestBg"
      class="wrapper">
+
+  <div *ngIf="isGuestLayout" [style.backgroundImage]="guestBg" class="main--custom-bg"></div>
 
   <xm-loader [absolute]="true" [showLoader]="!(resolved$ | async)"></xm-loader>
 
-  <div *ngIf="!isGuestLayout" class="sidebar" data-background-color="" data-color="white">
+  <div *ngIf="!isGuestLayout" class="sidebar">
     <xm-sidebar></xm-sidebar>
   </div>
 
-  <div *ngIf="resolved$ | async" class="main-panel">
+  <div *ngIf="resolved$ | async" class="main-panel xm-main-panel">
+
     <router-outlet name="navbar"></router-outlet>
 
-    <div class="main-content">
-      <div [class]="isGuestLayout ? 'container' : 'container-fluid'">
-        <router-outlet></router-outlet>
-      </div>
+    <div [ngClass]="isGuestLayout ? 'container' : 'container-fluid'" class="main-content xm-main-content">
+      <router-outlet></router-outlet>
     </div>
 
     <router-outlet name="popup"></router-outlet>
+
     <xm-footer></xm-footer>
+
   </div>
 
 </div>

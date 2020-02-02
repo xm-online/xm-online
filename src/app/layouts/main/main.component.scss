@@ -3,3 +3,27 @@
 ::ng-deep {
   @include xm-layout-sidebar-with-mini();
 }
+
+.main--custom-bg {
+  background-position: 0 0;
+  background-repeat:   no-repeat;
+  background-size:     cover;
+  bottom:              0;
+  left:                0;
+  position:            absolute;
+  right:               0;
+  top:                 0;
+  z-index:             -1;
+}
+
+.xm-main-panel {
+  display:        flex;
+  flex-direction: column;
+  min-height:     100vh;
+}
+
+.xm-main-content {
+  display:        flex;
+  flex-direction: column;
+  flex-grow:      1;
+}

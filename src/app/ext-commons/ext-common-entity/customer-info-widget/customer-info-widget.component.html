@@ -147,7 +147,8 @@
       <div *ngIf="form.enabled" class="row">
         <div class="col-md-12">
           <button [disabled]="form.invalid"
-                  class="btn btn-primary pull-right"
+                  class="btn pull-right"
+                  color="primary"
                   mat-button>
             Submit
           </button>
@@ -191,7 +192,7 @@
         <button (click)="onAddAttachment()"
                 *permitted="'ATTACHMENT.CREATE'"
                 [class.hidden]="!form.enabled"
-                class="btn btn-primary btn-round pull-right"
+                class="btn btn-round pull-right"
                 mat-button>
           {{'tsg.tsgAddAttachments' | translate}}
         </button>

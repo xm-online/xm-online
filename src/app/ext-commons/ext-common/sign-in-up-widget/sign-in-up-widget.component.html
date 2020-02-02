@@ -20,15 +20,17 @@
       <div *ngIf="config?.signUpEnabled" class="btn-group">
         <button (click)="changeMode()"
                 [disabled]="isLoginFormView"
-                class="btn btn-primary btn-sm btn-round"
+                class="btn btn-sm btn-round"
                 mat-button
+                color="primary"
                 type="button">
           <span jhiTranslate="ext-common.sign-in-up-widget.sign-in">Sign in</span>
         </button>
         <button (click)="changeMode()"
                 [disabled]="!isLoginFormView"
-                class="btn btn-primary btn-sm btn-round"
+                class="btn btn-sm btn-round"
                 mat-button
+                color="primary"
                 type="button">
           <span jhiTranslate="ext-common.sign-in-up-widget.sign-up">Sign up</span>
         </button>

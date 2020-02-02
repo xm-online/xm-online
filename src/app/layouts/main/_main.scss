@@ -65,11 +65,6 @@ $breakpoint-tablet:     991px !default;
 
 @mixin main-panel() {
 
-  .wrapper {
-    /* background image */
-    min-height: 100vh;
-  }
-
   .main-panel {
     float:    right;
     position: relative;

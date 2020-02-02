@@ -61,7 +61,11 @@
     <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
       <span jhiTranslate="admin-config.common.cancel">Cancel</span>
     </button>
-    <button [disabled]="widgetForm.form.invalid || showLoader" class="btn btn-primary" mat-button type="submit">
+    <button [disabled]="widgetForm.form.invalid || showLoader"
+            color="primary"
+            class="btn"
+            mat-button
+            type="submit">
       <span jhiTranslate="admin-config.common.save">Save</span>
     </button>
   </div>

@@ -43,8 +43,9 @@
         <span *ngIf="!jsfAttributes?.entity?.cancelName" jhiTranslate="xm-entity.common.cancel">Cancel</span>
       </button>
       <button [disabled]="(showLoader$ | async) || !isJsonFormValid"
-              class="btn btn-primary"
+              class="btn"
               mat-button
+              color="primary"
               type="submit">
         <span *ngIf="jsfAttributes?.entity?.saveName">{{jsfAttributes.entity.saveName | i18nName: principal}}</span>
         <span *ngIf="!jsfAttributes?.entity?.saveName">{{buttonTitle | i18nName : principal}}</span>

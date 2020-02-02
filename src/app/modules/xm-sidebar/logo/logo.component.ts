@@ -27,8 +27,8 @@ const DEFAULT: LogoOptions = {
 function optionsConfigToLogo(config: XmUIConfig): LogoOptions {
 
     return _.defaults({
-        logoUrl: config.logoUrl,
-        title: config.name,
+        logoUrl: config ? config.logoUrl: '',
+        title: config? config.name: '',
         rootUrl: SPA_ROOT_URL,
         userRootUrl: SPA_AUTH_ROOT_URL,
     }, DEFAULT);

@@ -8,9 +8,12 @@ const REQUEST_TIMEOUT = 60000;
 
 export abstract class ACache<T> implements OnDestroy {
 
-    private _cache$: ReplaySubject<T>;
+    constructor(protected reloadInterval: number = TEN_MIN_INTERVAL,
+                protected requestTimeOut: number = REQUEST_TIMEOUT) {}
 
-    public get cache$(): Observable<T> {
+    private _cache$: ReplaySubject<T | null>;
+
+    public get cache$(): Observable<T | null> {
         if (!this._cache$) {
             this.initialize();
         }
@@ -25,6 +28,10 @@ export abstract class ACache<T> implements OnDestroy {
         this.updateData();
     }
 
+    public clear(): void {
+        this._cache$.next(null);
+    }
+
     protected next(value: T): void {
         this._cache$.next(value);
     }
@@ -33,17 +40,17 @@ export abstract class ACache<T> implements OnDestroy {
 
     private initialize(): void {
         this._cache$ = new ReplaySubject<T>(1);
-        interval(TEN_MIN_INTERVAL).pipe(
+        interval(this.reloadInterval).pipe(
             startWith(0),
         ).subscribe(this.updateData.bind(this));
     }
 
     private updateData(): void {
         this.request().pipe(
-            takeUntil(interval(REQUEST_TIMEOUT)),
+            takeUntil(interval(this.requestTimeOut)),
         ).subscribe({
             next: this._cache$.next.bind(this._cache$),
-            error: this._cache$.error.bind(this._cache$)
+            error: this._cache$.error.bind(this._cache$),
         });
     }
 }

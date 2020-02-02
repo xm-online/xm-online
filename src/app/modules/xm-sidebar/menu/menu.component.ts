@@ -157,6 +157,9 @@ export class MenuComponent implements OnInit, OnDestroy {
 
         const applications$ = this.entityConfigService.cache$.pipe(
             map((spec) => {
+                if (!spec) {
+                    spec = [];
+                }
                 let applications = spec.filter((t) => t.isApp);
                 applications = applications.filter((t) => this.principal.hasPrivilegesInline(['APPLICATION.' + t.key]));
                 return applications;

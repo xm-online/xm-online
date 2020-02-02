@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, Optional } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 
@@ -27,7 +27,7 @@ export class UserLoginFormComponent implements OnChanges {
     @Input()
     private user: User;
 
-    constructor(private activeModal: MatDialogRef<UserLoginFormComponent>,
+    constructor(@Optional() private activeModal: MatDialogRef<UserLoginFormComponent>,
                 private userService: UserService,
                 private accountService: AccountService,
                 private principal: Principal,

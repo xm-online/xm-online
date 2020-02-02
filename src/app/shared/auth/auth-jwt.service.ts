@@ -2,8 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, ReplaySubject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 import { DEFAULT_AUTH_TOKEN, DEFAULT_CONTENT_TYPE } from '../../xm.constants';
 import { CustomUriEncoder } from '../helpers/custom-uri-encoder';
@@ -34,6 +34,7 @@ export const CONFIG_SETTINGS_API = _CONFIG_SETTINGS_API;
 @Injectable()
 export class AuthServerProvider {
 
+    public session$: ReplaySubject<{ active: boolean }> = new ReplaySubject<any>(1);
     private updateTokenTimer: any;
 
     constructor(
@@ -86,7 +87,9 @@ export class AuthServerProvider {
             }
         }
 
-        return this.getAccessToken(data, DEFAULT_HEADERS, credentials.rememberMe);
+        return this.getAccessToken(data, DEFAULT_HEADERS, credentials.rememberMe).pipe(
+            tap(() => this.session$.next({active: true})),
+        );
 
     }
 
@@ -132,7 +135,9 @@ export class AuthServerProvider {
             clearTimeout(this.updateTokenTimer);
             observer.next();
             observer.complete();
-        });
+        }).pipe(
+            tap(() => this.session$.next({active: false})),
+        );
 
     }
 

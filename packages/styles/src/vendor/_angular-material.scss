@@ -51,4 +51,14 @@
   a .material-icons {
     vertical-align: middle;
   }
+
+  /**
+   * Bootstrap conflict: bootstrap _reboot.scss assign button:focus
+   * @todo: remove bootstrap
+   */
+  .mat-button:focus,
+  .mat-button-base:focus {
+    outline: 0;
+    box-shadow: none;
+  }
 }

@@ -2,6 +2,7 @@
 
 // Remove border radius from angular material
 @if ($xm-enable-rounded == false) {
+  // this variables aren't working(because we use compiled angular material)
   $mat-autocomplete-panel-border-radius:     0;
   $mat-button-toggle-standard-border-radius: 0;
   $mat-button-toggle-legacy-border-radius:   0;
@@ -12,8 +13,22 @@
   $mat-menu-border-radius:                   0;
   $mat-slide-toggle-bar-border-radius:       0;
 
-  // Override mat-select-panel
-  div.mat-select-panel {
+  /* Override mat radius
+   * using .xm-body to increase css classes below weight
+   * @todo: integrate source of angular material
+   */
+  .xm-body .mat-menu-panel,
+  .xm-body .mat-form-field-outline,
+  .xm-body .mat-form-field-appearance-fill .mat-form-field-flex,
+  .xm-body .mat-dialog-container,
+  .xm-body .mat-card,
+  .xm-body .mat-button-base:not(.mat-mini-fab):not(.mat-fab),
+  .xm-body .mat-button-toggle-standalone,
+  .xm-body .mat-button-toggle-group,
+  .xm-body .mat-button-toggle-standalone.mat-button-toggle-appearance-standard,
+  .xm-body .mat-button-toggle-group-appearance-standard,
+  .xm-body .mat-slide-toggle-bar,
+  .xm-body .mat-select-panel {
     border-radius: 0;
   }
 }
@@ -58,7 +73,7 @@
    */
   .mat-button:focus,
   .mat-button-base:focus {
-    outline: 0;
+    outline:    0;
     box-shadow: none;
   }
 }

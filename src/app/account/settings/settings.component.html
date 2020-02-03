@@ -2,9 +2,6 @@
   <div class="col-md-8 offset-md-2">
     <div class="card">
       <div class="card-header card-header-icon card-header-primary">
-        <div class="card-icon">
-          <i class="material-icons">settings_applications</i>
-        </div>
         <h4 class="card-title" jhiTranslate="settings.form.general">General info</h4>
       </div>
       <div class="card-body">
@@ -120,9 +117,6 @@
   <div class="col-md-8 offset-md-2">
     <div class="card">
       <div class="card-header card-header-icon card-header-primary">
-        <div class="card-icon">
-          <i class="material-icons">verified_user</i>
-        </div>
         <h4 class="card-title" jhiTranslate="settings.security.name">Security</h4>
       </div>
       <div class="card-body">
@@ -166,11 +160,6 @@
 <div class="row" *xmPermitted="['TENANT.LOGIN.GET_LIST']">
   <div class="col-md-8 offset-md-2">
     <div class="card">
-      <div class="card-header card-header-icon card-header-primary">
-        <div class="card-icon">
-          <i class="material-icons">settings_applications</i>
-        </div>
-      </div>
       <div class="card-body">
         <h4 class="card-title" jhiTranslate="settings.form.logins">Logins</h4>
         <xm-user-login-form [user]="settingsAccount"></xm-user-login-form>

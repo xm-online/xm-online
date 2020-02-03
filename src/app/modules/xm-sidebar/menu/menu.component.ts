@@ -38,7 +38,7 @@ function dashboardToCategory(dashboard: Dashboard): MenuCategory {
     const menu = config.menu || {};
     const group = menu.group || {};
 
-    let groupKey = !menu ? 'DASHBOARD' : menu.group.key;
+    let groupKey = Object.keys(menu).length > 0 ? menu.group.key : 'DASHBOARD';
 
     if (menu.groupIsLink) {
         groupKey = dashboard.config && dashboard.config.slug ? dashboard.config.slug : null;

@@ -15,7 +15,7 @@ export interface FeedbackConfig {
 @Component({
     selector: 'xm-feedback',
     template: `
-        <button *ngIf="showFeedback$ | async as config" (click)="create(config.feedback.url)" mat-button>
+        <button *ngIf="showFeedback$ | async as config" (click)="create(config.feedback.url)" mat-icon-button>
             <mat-icon>feedback</mat-icon>
         </button>
     `,

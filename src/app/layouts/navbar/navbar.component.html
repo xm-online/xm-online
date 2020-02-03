@@ -14,7 +14,7 @@
         <div class="navbar-container-part">
           <button (click)="onBack()"
                   *ngSwitchCase="true"
-                  class="btn btn-round btn-white btn-fill btn-just-icon pull-left btn-back"
+                  class="bg-white rounded-circle shadow-sm"
                   mat-icon-button>
             <i class="material-icons">arrow_back</i>
           </button>
@@ -35,7 +35,7 @@
                      type="text"
                      xmInputPattern>
               <button (click)="search(searchBox.value)"
-                      class="btn btn-white btn-round btn-just-icon"
+                      class="bg-white rounded-circle shadow-sm mr-2"
                       mat-icon-button
                       type="submit">
                 <i class="material-icons">search</i>
@@ -56,7 +56,7 @@
                       class="btn btn-icon btn-just-icon btn-link nav-link"
                       data-toggle="dropdown"
                       id="navbarLanguageMenuLink"
-                      mat-button>
+                      mat-icon-button>
                 <i class="material-icons">language</i>
               </button>
               <div aria-labelledby="navbarDropdownMenuLink"

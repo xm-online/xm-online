@@ -17,6 +17,13 @@
   display: inline-flex;
 }
 
+//.back-button {
+//  padding: 0;
+//  min-width: 36px;
+//  border-radius: 50%;
+//  color: #bdbdbd;
+//}
+
 @mixin flex-direction($value: row) {
   @if $value == row-reverse {
     -webkit-box-direction: reverse;

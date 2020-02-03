@@ -2,10 +2,29 @@
  * Typography
  */
 
-$xm-font-size-xm: 11px !default;
-$xm-font-size-sm: 13px !default;
-$xm-font-size-md: 16px !default;
-$xm-font-size-lg: 18px !default;
-$xm-font-size-xl: 22px !default;
+$xm-font-size-xm:      11px !default;
+$xm-font-size-sm:      1rem * 0.857 !default;
+$xm-font-size-md:      16px !default;
+$xm-font-size-lg:      1rem * 1.14 !default;
+$xm-font-size-xl:      22px !default;
 
-$xm-font-weight:  400 !default;
+$xm-font-weight:       400 !default;
+
+// Font
+$xm-font-family:       Roboto, 'Helvetica Neue', sans-serif !default;
+$xm-font-family-icons: 'Material Icons' !default;
+
+$xm-display-4:         mat-typography-level(8rem, 112px, 300, $letter-spacing: -0.05em) !default;
+$xm-display-3:         mat-typography-level(4rem, 56px, 400, $letter-spacing: -0.02em) !default;
+$xm-display-2:         mat-typography-level(3.21rem, 48px, 400, $letter-spacing: -0.005em) !default;
+$xm-display-1:         mat-typography-level(2.42rem, 40px, 400) !default;
+$xm-headline:          mat-typography-level(24px, 32px, 400) !default;
+$xm-title:             mat-typography-level(20px, 32px, 500) !default;
+$xm-subheading-2:      mat-typography-level(16px, 28px, 400) !default;
+$xm-subheading-1:      mat-typography-level(1rem * 1.08, 24px, 400) !default;
+$xm-body-2:            mat-typography-level(14px, 24px, 500) !default;
+$xm-body-1:            mat-typography-level(14px, 20px, 400) !default;
+$xm-caption:           mat-typography-level(12px, 20px, 400) !default;
+$xm-button:            mat-typography-level(14px, 14px, 500) !default;
+// Line-height must be unit-less fraction of the font-size.
+$xm-input:             mat-typography-level(inherit, 1.125, 400) !default;

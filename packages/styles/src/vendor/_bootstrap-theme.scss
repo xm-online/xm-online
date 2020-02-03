@@ -27,13 +27,16 @@ $link-hover-decoration:  none;
 // Typography
 $font-size-base:         1rem * 0.875;
 $font-family-sans-serif: $xm-font-family;
-$display1-size:          2.42rem;
-$display2-size:          3.21rem;
-$display3-size:          4rem;
-$display4-size:          8rem;
-$font-size-lg:           1rem * 1.14;
-$font-size-sm:           1rem * 0.857;
-$lead-font-size:         1rem * 1.08;
+
+$display1-size:          map_get($xm-display-1, font-size);
+$display2-size:          map_get($xm-display-2, font-size);
+$display3-size:          map_get($xm-display-3, font-size);
+$display4-size:          map_get($xm-display-4, font-size);
+
+$font-size-lg:           $xm-font-size-lg;
+$font-size-sm:           $xm-font-size-sm;
+
+$lead-font-size:         map_get($xm-subheading-1, font-size);
 
 // Remove border radius from bootstrap
 @if ($xm-enable-rounded == false) {

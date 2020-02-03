@@ -77,3 +77,24 @@
     box-shadow: none;
   }
 }
+
+$xm-mat-typography: mat-typography-config(
+                      $font-family:  $xm-font-family,
+                      $display-4:    $xm-display-4,
+                      $display-3:    $xm-display-3,
+                      $display-2:    $xm-display-2,
+                      $display-1:    $xm-display-1,
+                      $headline:     $xm-headline,
+                      $title:        $xm-title,
+                      $subheading-2: $xm-subheading-2,
+                      $subheading-1: $xm-subheading-1,
+                      $body-2:       $xm-body-2,
+                      $body-1:       $xm-body-1,
+                      $caption:      $xm-caption,
+                      $button:       $xm-button,
+                      $input:        $xm-input
+                    );
+
+@mixin xm-angular-material-typography() {
+  @include angular-material-typography($xm-mat-typography);
+}

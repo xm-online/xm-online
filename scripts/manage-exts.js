@@ -1,36 +1,62 @@
+const _ = require('lodash');
 const fs = require('fs');
-const fse = require('fs-extra');
-const {join} = require('path');
-const LOCAL_EXT_PATH = 'src/app/ext';
-const LOCAL_ASSETS_PATH = 'src/assets/css/ext/';
-const LOCAL_ASSETS_IMG_PATH = 'src/assets/img/ext/';
-const dirs = p => fs.readdirSync(p).filter(f => fs.statSync(join(p, f)).isDirectory());
-fs.readFile('config.angular.json', function (err, data) {
-    let json = JSON.parse(data);
-    const KEY_LAZY = 'lazyModules';
-    const LAZY_ARRAY = dirs(LOCAL_EXT_PATH).map(p => {
-        const CSS_ASSET = `${LOCAL_EXT_PATH}/${p}/assets/css/`;
-        const IMG_ASSET = `${LOCAL_EXT_PATH}/${p}/assets/img/`;
-        if (fs.existsSync(CSS_ASSET)) {
-            fse.copy(CSS_ASSET, LOCAL_ASSETS_PATH, function (err) {
-                if (err) {
-                    return console.error(err)
-                }
-            });
-        }
-        if (fs.existsSync(IMG_ASSET)) {
-            fse.copy(IMG_ASSET, LOCAL_ASSETS_IMG_PATH, function (err) {
-                if (err) {
-                    return console.error(err)
-                }
-            });
-        }
-        return LOCAL_EXT_PATH + '/' + p + '/module/' + p + '.module';
+const glob = require('glob');
+
+const ANGULAR_CONFIG_PATH = 'config.angular.json';
+const ANGULAR_CONFIG_DIST = 'angular.json';
+const ANGULAR_CONFIG_ASSETS_JSON_PATH = 'projects.xm-webapp.architect.build.options.assets';
+const ANGULAR_CONFIG_LAZY_MODULES_JSON_PATH = 'projects.xm-webapp.architect.build.options.lazyModules';
+const EXT_PATH = 'src/app/ext/*';
+const EXT_ASSETS_PATH = 'src/app/ext/**/assets';
+
+const isDirectory = (source) => fs.lstatSync(source).isDirectory();
+
+const getDirectories = (source) => glob.sync(source).filter(isDirectory);
+
+function saveAsJson(path, data) {
+    fs.writeFileSync(path, JSON.stringify(data, null, 2), {encoding: 'utf8'});
+}
+
+function readAsJson(file) {
+    let json = {};
+    try {
+        json = JSON.parse(fs.readFileSync(file));
+    } catch (e) {
+        console.log('Problem with: %o; \n %o', file, e);
+    }
+    return json;
+}
+
+function updateAssets(config) {
+    let assets = _.get(config, ANGULAR_CONFIG_ASSETS_JSON_PATH, []);
+    const extAssets = getDirectories(EXT_ASSETS_PATH);
+
+    _.forEach(extAssets, (i) => {
+        assets.push(i);
+        console.info('angular.json assets:', i);
     });
-    const CURRENT_LAZY_ARRAY = json['projects']['xm-webapp']['architect']['build']['options'][KEY_LAZY];
-    LAZY_ARRAY.map(l => CURRENT_LAZY_ARRAY.push(l));
-    json['projects']['xm-webapp']['architect']['build']['options'][KEY_LAZY] = CURRENT_LAZY_ARRAY;
-    fs.writeFile('angular.json', JSON.stringify(json, null, 4), () => {
-        console.log('Extensions processed!')
+    assets = _.uniq(assets);
+    _.set(config, ANGULAR_CONFIG_ASSETS_JSON_PATH, assets);
+}
+
+
+function updateLazyModules(config) {
+    let lazyModules = _.get(config, ANGULAR_CONFIG_LAZY_MODULES_JSON_PATH, []);
+    const exts = getDirectories(EXT_PATH);
+
+    _.forEach(exts, (i) => {
+        const dirName = i.slice(i.lastIndexOf('/'), i.length);
+        const modulePath = 'src/app/ext' + dirName + '/module' + dirName + '.module';
+        lazyModules.push(modulePath);
+        console.info('angular.json lazyModules:', modulePath);
     });
-});
+    lazyModules = _.uniq(lazyModules);
+    _.set(config, ANGULAR_CONFIG_LAZY_MODULES_JSON_PATH, lazyModules);
+}
+
+(function getAngularConfig() {
+    const config = readAsJson(ANGULAR_CONFIG_PATH);
+    updateAssets(config);
+    updateLazyModules(config);
+    saveAsJson(ANGULAR_CONFIG_DIST, config);
+}());

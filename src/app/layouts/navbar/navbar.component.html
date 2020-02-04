@@ -29,8 +29,7 @@
           <form *ngSwitchCase="true" class="navbar-form navbar-right" role="search">
             <div class="input-group no-border">
               <input #searchBox [regexp]="searchMask"
-                     class="form-control search-input"
-                     matInput
+                     class="search-input"
                      placeholder="{{ 'navbar.search' | translate }}"
                      type="text"
                      xmInputPattern>

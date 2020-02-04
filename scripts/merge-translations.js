@@ -1,60 +1,53 @@
 let fs = require('fs');
+const { join } = require('path');
+let _ = require('lodash');
 let glob = require('glob');
 
-const I_18_N = 'src/i18n/';
-const I_18_N_EXT = 'src/app/ext/**/i18n/';
+const core = 'src/i18n/';
+const custom = 'src/app/ext/**/i18n/';
 
+const corePathMask = (lang) => core + lang + '/**/*.json';
+const customPathMask = (lang) => custom + lang + '/**/*.json';
+const distPathMask = (lang) => core + lang + '.json';
 
-function mergeDeep(target, source) {
-    if (typeof target == 'object' && typeof source == 'object') {
-        for (const key in source) {
-            if (source[key] === null && (target[key] === undefined || target[key] === null)) {
-                target[key] = null;
-            }
-            else if (source[key] instanceof Array) {
-                if (!target[key])
-                    target[key] = [];
-                target[key] = target[key].concat(source[key]);
-            }
-            else if (typeof source[key] == 'object') {
-                if (!target[key])
-                    target[key] = {};
-                mergeDeep(target[key], source[key]);
-            }
-            else {
-                target[key] = source[key];
-            }
-        }
-    }
-    return target;
+function saveJson(path, data) {
+    fs.writeFileSync(path, JSON.stringify(data, null, 4), {encoding: 'utf8'});
 }
 
-for (let langFolder of glob(I_18_N + '*', {sync: true})) {
-    let lang = langFolder.substring(I_18_N.length);
-    if (lang.length > 2) {
-        continue;
+function readJson(file) {
+    let json = {};
+    try {
+        json = JSON.parse(fs.readFileSync(file, 'utf8'));
+    } catch (e) {
+        console.log('Problem with: %o; \n %o', file, e);
     }
+    return json;
+}
 
+function getTranslations(pathMask) {
     let translations = {};
-    for (let file of glob(I_18_N + lang + '/**/*.json', {sync: true})) {
-        try {
-            let fileContent = JSON.parse(fs.readFileSync(file, 'utf8'));
-            translations = mergeDeep(translations, fileContent)
-        } catch (e) {
-            console.log('Problem with %o %o', file, e);
-            throw e;
-        }
-    }
 
-    for (let file of glob(I_18_N_EXT + lang + '/**/*.json', {sync: true})) {
-        try {
-            let fileContent = JSON.parse(fs.readFileSync(file, 'utf8'));
-            translations = mergeDeep(translations, fileContent)
-        } catch (e) {
-            console.log('Problem with %o %o', file, e);
-            throw e;
-        }
-    }
+    glob.sync(pathMask).forEach(file => {
+        translations = _.merge(translations, readJson(file));
+    });
 
-    fs.writeFileSync(I_18_N + lang + '.json', JSON.stringify(translations, null, 4), {encoding: 'utf8'});
+    return translations;
 }
+
+const isDirectory = source => fs.lstatSync(source).isDirectory();
+const getDirectories = source => fs.readdirSync(source).map(name => join(source, name)).filter(isDirectory);
+
+(function loadTranslates() {
+
+    getDirectories(core).forEach(langFolder => {
+        const lang = langFolder.substring(core.length);
+
+        const coreTranslations = getTranslations(corePathMask(lang));
+        const customTranslations = getTranslations(customPathMask(lang));
+
+        const savePath = distPathMask(lang);
+        saveJson(savePath, _.merge(coreTranslations, customTranslations));
+        console.info('Updated: ', savePath);
+    });
+
+})();

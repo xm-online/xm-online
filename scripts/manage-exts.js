@@ -32,7 +32,7 @@ function updateAssets(config) {
     const extAssets = getDirectories(EXT_ASSETS_PATH);
 
     _.forEach(extAssets, (i) => {
-        assets.push(i);
+        assets.push({ glob: '**/*', input: i, output: '/assets' });
         console.info('angular.json assets:', i);
     });
     assets = _.uniq(assets);
@@ -46,7 +46,7 @@ function updateLazyModules(config) {
 
     _.forEach(exts, (i) => {
         const dirName = i.slice(i.lastIndexOf('/'), i.length);
-        const modulePath = 'src/app/ext' + dirName + '/module' + dirName + '.module';
+        const modulePath = `src/app/ext${  dirName  }/module${  dirName  }.module`;
         lazyModules.push(modulePath);
         console.info('angular.json lazyModules:', modulePath);
     });

@@ -29,7 +29,7 @@ $user-img-border-radius: 50% !default;
   .user-name {
     padding-left:  $sidebar-padding-x;
     font-size:     $xm-font-size-sm;
-    color:         $xm-text;
+    color:         $xm-sidebar-color;
     font-weight:   $xm-font-weight;
     text-overflow: ellipsis;
     overflow:      hidden;

@@ -1,7 +1,9 @@
 @import '../sidebar';
 
+$xm-menu-item-color:        $xm-sidebar-color !default;
 $xm-menu-item-hover:        rgba(200, 200, 200, 0.2) !default;
 $xm-menu-item-active:       0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(#000, 0.4) !default;
+$xm-menu-item-active-color: $xm-primary !default;
 $xm-menu-list-padding-left: 0 !default;
 $xm-menu-icon-font-size:    20px !default;
 $xm-menu-icon-color:        #a9afbb !default;
@@ -15,19 +17,20 @@ $xm-menu-icon-color:        #a9afbb !default;
   }
 
   &:active {
-    background: $xm-background;
+    background: $xm-menu-item-hover;
     @include is-enable-rounded();
   }
 
   &.active {
     outline:    0;
-    color:      $xm-primary;
+    color:      $xm-menu-item-active-color;
     background: $xm-menu-item-hover;
   }
 
   &:hover:not(.active),
   &:focus:not(.active) {
     background: $xm-menu-item-hover;
+    color:      $xm-menu-item-active-color;
     @include is-enable-rounded();
   }
 
@@ -76,7 +79,7 @@ $xm-menu-icon-color:        #a9afbb !default;
     white-space:    nowrap;
     display:        flex;
     flex-direction: row;
-    color:          $xm-text;
+    color:          $xm-menu-item-color;
     padding:        $menu-item-padding-y $sidebar-padding-x $menu-item-padding-y $sidebar-padding-x * 2;
 
 

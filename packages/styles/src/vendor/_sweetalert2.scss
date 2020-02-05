@@ -1,9 +1,24 @@
-@import "~sweetalert2/src/sweetalert2";
+$swal2-fade-filter:                     blur(5px) !default;
+
+$swal2-success:                         $xm-success;
+$swal2-success-border:                  rgba($xm-success, .3);
+$swal2-error:                           $xm-error;
+$swal2-warning:                         $xm-warn;
+$swal2-info:                            $xm-hint;
+$swal2-question:                        $xm-secondary;
+
+$swal2-confirm-button-background-color: $xm-success;
+$swal2-confirm-button-font-size:        $xm-font-size-sm;
+$swal2-cancel-button-font-size:         $xm-font-size-sm;
+
+$swal2-confirm-button-border-radius:    $xm-radius-sm;
+$swal2-cancel-button-border-radius:     $xm-radius-sm;
+@import '~sweetalert2/src/sweetalert2';
 
 @mixin sweetalert2-xm-override() {
 
-  .swal2-container .swal2-modal .swal2-actions .btn {
-    margin: 0 5px;
+  .swal2-fade {
+    -webkit-backdrop-filter: $swal2-fade-filter;
+    backdrop-filter:         $swal2-fade-filter;
   }
-
 }

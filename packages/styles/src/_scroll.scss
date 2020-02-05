@@ -1,0 +1,26 @@
+/*
+ * Custom scrollbar
+ */
+@mixin xm-scrollbar($xm-scrollbar-size: 10px, $xm-scrollbar-border-radius: 10px, $xm-scrollbar-foreground-color: #777777, $xm-scrollbar-background-color: #cbcbcb) {
+  // For Google Chrome
+  &::-webkit-scrollbar {
+    width:  $xm-scrollbar-size;
+    height: $xm-scrollbar-size;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: padding-box $xm-scrollbar-foreground-color;
+    border-radius: $xm-scrollbar-border-radius;
+    border: 2px solid transparent;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $xm-scrollbar-background-color;
+  }
+
+  // For Internet Explorer
+  & {
+    scrollbar-face-color:  $xm-scrollbar-foreground-color;
+    scrollbar-track-color: $xm-scrollbar-background-color;
+  }
+}

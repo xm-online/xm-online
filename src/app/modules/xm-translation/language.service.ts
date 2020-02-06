@@ -10,6 +10,10 @@ import { XmApplicationConfigService } from '../../shared/spec/xm-config.service'
 import { getBrowserLocale } from './getBrowserLocale';
 import { OnInitialize } from './title.service';
 
+/** @description Translates as json
+ * @example:
+ *  {en: 'Hi', ru: 'хай'}
+ */
 export interface ITranslate {
     en?: string;
     ru?: string;
@@ -18,6 +22,12 @@ export interface ITranslate {
     [locale: string]: string;
 }
 
+/** @description Translate for a translate pipe.
+ * @example:
+ * {en: 'Hi', ru: 'хай'}
+ * @example:
+ * 'Hi'
+ */
 export type Translate = ITranslate | string;
 
 export const EVENT_CHANGE_LOCALE = 'TRANSLATION.EVENT_CHANGE_LOCALE';

@@ -19,7 +19,9 @@
             "dom"
         ],
         "paths": {
-            "@xm-ngx/styles": ["packages/styles"]
+            "@xm-ngx/styles": ["packages/styles"],
+            "@xm-ngx/translation": ["src/app/modules/xm-translation"],
+            "@xm-ngx/dynamic": ["src/app/xm-dashboard"]
         },
         "inlineSources": true,
         "module": "esnext",

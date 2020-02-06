@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 
 import { Account, AuthServerProvider, Principal } from '../shared';
 import { XmConfigService } from '../shared/spec/config.service';
-import { Widget } from '../xm-dashboard';
+import { Widget } from '@xm-ngx/dynamic';
 import { DEFAULT_AUTH_TOKEN, DEFAULT_CONTENT_TYPE, XM_EVENT_LIST } from '../xm.constants';
 
 @Component({
@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         const data = new HttpParams().set('grant_type', 'client_credentials');
         const headers = {
             'Content-Type': DEFAULT_CONTENT_TYPE,
-            'Authorization': DEFAULT_AUTH_TOKEN,
+            Authorization: DEFAULT_AUTH_TOKEN,
         };
         return this.http.post<any>('uaa/oauth/token', data, {headers, observe: 'response'})
             .pipe(map((resp) => {

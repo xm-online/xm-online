@@ -1,5 +1,21 @@
-import { Component, Injector, Input, NgModuleFactoryLoader, ViewContainerRef } from '@angular/core';
-import { from as fromPromise } from 'rxjs';
+import {Component, Injector, Input, NgModuleFactoryLoader, ViewContainerRef} from '@angular/core';
+import {from as fromPromise} from 'rxjs';
+
+export interface IWidget<C = any, S = any> {
+    config?: C;
+    spec?: S;
+}
+
+export interface WidgetFn {
+    new(...args: any): IWidget;
+}
+
+export interface WidgetConfig<C = any, S = any> extends IWidget<C, S>{
+    module: string;
+    component: string;
+    config?: C;
+    spec?: S;
+}
 
 @Component({
     selector: 'xm-dynamic-widget',
@@ -10,13 +26,14 @@ export class DynamicWidgetComponent {
 
     public commons: string[] = ['ext-common', 'ext-common-csp', 'ext-common-entity'];
 
-    @Input() public set init(value: any) {
+    @Input()
+    public set init(value: WidgetConfig) {
         if (!value) {
             return;
         }
         const rootClass = value.module.split('-').map((e) => e[0].toUpperCase() + e.slice(1)).join('');
         const extName = value.module.split('-').reverse()[0];
-        const extRootClass = extName.charAt(0).toUpperCase() + extName.slice(1) + 'WebappExtModule';
+        const extRootClass = `${extName.charAt(0).toUpperCase() + extName.slice(1)}WebappExtModule`;
         let modulePath: string;
         // eslint-disable-next-line @typescript-eslint/prefer-includes
         if (this.commons.indexOf(value.module) > -1) {
@@ -27,9 +44,9 @@ export class DynamicWidgetComponent {
         const moduleFactory = fromPromise(this.loader.load(modulePath));
         moduleFactory.subscribe((factory) => {
             const module = factory.create(this.injector);
-            const entryComponentType = module.injector.get(value.component);
+            const entryComponentType: WidgetFn = module.injector.get(value.component);
             const componentFactory = module.componentFactoryResolver.resolveComponentFactory(entryComponentType);
-            const widget: any = this.viewRef.createComponent(componentFactory);
+            const widget = this.viewRef.createComponent<IWidget>(componentFactory);
             widget.instance.config = value.config;
             widget.instance.spec = value.spec;
         });

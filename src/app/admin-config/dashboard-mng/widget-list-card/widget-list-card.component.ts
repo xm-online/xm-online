@@ -1,16 +1,16 @@
-import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
-import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
-import { finalize } from 'rxjs/operators';
+import {HttpResponse} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
+import {ActivatedRoute, Router} from '@angular/router';
+import {JhiAlertService, JhiEventManager, JhiParseLinks} from 'ng-jhipster';
+import {finalize} from 'rxjs/operators';
 
-import { JhiLanguageHelper } from '../../../shared/language/language.helper';
-import { Dashboard, Widget, WidgetService } from '../../../xm-dashboard';
-import { DashboardService } from '../../../xm-dashboard/shared/dashboard.service';
-import { XmEntity } from '../../../xm-entity';
-import { BaseAdminConfigListComponent } from '../../base-admin-config-list.component';
-import { WidgetDetailDialogComponent } from '../widget-detail-dialog/widget-detail-dialog.component';
+import {JhiLanguageHelper} from '../../../shared';
+import {Dashboard, Widget, WidgetService} from '@xm-ngx/dynamic';
+import {DashboardService} from '@xm-ngx/dynamic';
+import {XmEntity} from '../../../xm-entity';
+import {BaseAdminConfigListComponent} from '../../base-admin-config-list.component';
+import {WidgetDetailDialogComponent} from '../widget-detail-dialog/widget-detail-dialog.component';
 
 @Component({
     selector: 'xm-widget-list-card',

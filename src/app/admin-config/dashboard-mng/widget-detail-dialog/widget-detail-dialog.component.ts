@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { Principal } from '../../../shared/auth/principal.service';
-import { Widget, WidgetService } from '../../../xm-dashboard';
+import { Widget, WidgetService } from '@xm-ngx/dynamic';
 
 declare let swal: any;
 
@@ -17,7 +17,7 @@ declare let swal: any;
 export class WidgetDetailDialogComponent implements OnInit {
 
     @Input() public dashboardId: number;
-    @Input() public widget: Widget = new Widget();
+    @Input() public widget: Widget = {};
 
     public configStringIn: string;
     public configStringOut: string;

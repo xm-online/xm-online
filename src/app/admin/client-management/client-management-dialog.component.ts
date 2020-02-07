@@ -29,7 +29,7 @@ export class ClientMgmtDialogComponent implements OnInit {
     public scopesVariants: any[] = [];
 
     public separatorKeysCodes: number[] = [ENTER, COMMA];
-    public scopeCtrl = new FormControl();
+    public scopeCtrl: FormControl = new FormControl();
     public filteredScopes: Observable<string[]>;
 
     @ViewChild('scopeInput', {static: false})

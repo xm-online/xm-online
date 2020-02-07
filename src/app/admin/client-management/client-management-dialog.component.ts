@@ -33,7 +33,7 @@ export class ClientMgmtDialogComponent implements OnInit {
     public filteredScopes: Observable<string[]>;
 
     @ViewChild('scopeInput', {static: false})
-    public fruitInput: ElementRef<HTMLInputElement>;
+    public scopeInput: ElementRef<HTMLInputElement>;
     @ViewChild('auto', {static: false})
     public matAutocomplete: MatAutocomplete;
 
@@ -72,7 +72,7 @@ export class ClientMgmtDialogComponent implements OnInit {
 
     public selected(event: MatAutocompleteSelectedEvent): void {
         this.scopes.push(event.option.viewValue);
-        this.fruitInput.nativeElement.value = '';
+        this.scopeInput.nativeElement.value = '';
         this.scopeCtrl.setValue(null);
     }
 

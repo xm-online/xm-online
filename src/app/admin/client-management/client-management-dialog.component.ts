@@ -19,23 +19,23 @@ export const CLIENT_UNIQUE_ID_ERROR_CODE = 'client.already.exists';
 export class ClientMgmtDialogComponent implements OnInit {
 
     @Input() public selectedClient: Client;
+
     @ViewChild('editForm', {static: false}) public editForm: NgForm;
     public client: Client;
+    @ViewChild('scopeInput', {static: false})
+    public scopeInput: ElementRef<HTMLInputElement>;
+    @ViewChild('auto', {static: false})
+    public matAutocomplete: MatAutocomplete;
+
     public languages: any[];
     public scopes: any[] = [];
     public authorities: any[];
     public showLoader: boolean;
     public clientIdNotUnique: boolean;
     public scopesVariants: any[] = [];
-
     public separatorKeysCodes: number[] = [ENTER, COMMA];
     public scopeCtrl: FormControl = new FormControl();
     public filteredScopes: Observable<string[]>;
-
-    @ViewChild('scopeInput', {static: false})
-    public scopeInput: ElementRef<HTMLInputElement>;
-    @ViewChild('auto', {static: false})
-    public matAutocomplete: MatAutocomplete;
 
     constructor(public activeModal: NgbActiveModal,
                 private languageHelper: JhiLanguageHelper,

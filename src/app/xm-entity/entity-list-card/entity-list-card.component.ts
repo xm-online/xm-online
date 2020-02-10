@@ -134,7 +134,8 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
         this.load();
     }
 
-    public onLoadPage(entityOptions: EntityOptions): void {
+    public onLoadPage(event: any,  entityOptions: EntityOptions): void {
+        entityOptions.page = event;
         this.loadEntities(entityOptions).subscribe((result) => entityOptions.entities = result);
     }
 

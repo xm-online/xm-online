@@ -1,3 +1,4 @@
+/* tslint:disable:unbound-method */
 import { OnDestroy } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 

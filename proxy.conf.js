@@ -2,6 +2,7 @@ const PROXY_CONFIG = [
     {
         context: [
             "/api",
+            "/activation/api",
             "/audit/management",
             "/balance/api",
             "/balance/management",

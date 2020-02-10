@@ -90,15 +90,32 @@
       </mat-form-field>
     </div>
     <div class="form-group">
-      <div class="sources-holder">
-        <tag-input class="xm-sources-tags"
-                   theme="filled-theme"
-                   secondaryPlaceholder="{{'clientManagement.scopes-add' | translate}}"
-                   placeholder="{{'clientManagement.scopes-add' | translate}}"
-                   [(ngModel)]='scopes'
-                   name="scopes">
-        </tag-input>
-      </div>
+        <mat-form-field class="xm-sources-tags">
+          <mat-chip-list #chipList aria-label="{{'clientManagement.scopes-add' | translate}}">
+            <mat-chip
+              color="primary"
+              *ngFor="let scope of scopes"
+              [selectable]="true"
+              [removable]="true"
+              (removed)="remove(scope)">
+              {{scope}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="{{'clientManagement.scopes-add' | translate}}"
+              #scopeInput
+              [formControl]="scopeCtrl"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let scope of filteredScopes | async" [value]="scope">
+              {{scope}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
     </div>
   </div>
   <div class="modal-footer">

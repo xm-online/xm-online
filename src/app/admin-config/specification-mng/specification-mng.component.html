@@ -11,7 +11,6 @@
         </a>
       </li>
     </ul>
-
     <div [ngSwitch]="currentSpecificationSlug">
       <div *ngSwitchCase="'ui'">
         <div class="card">
@@ -251,6 +250,49 @@
                    [style.min-height]="'150px'"
                    [style.width]="'100%'"
                    [text]="tenantSpecificationIn"
+                   style="overflow-x: auto; border: 1px solid lightgray;"
+                   xmAceEditor>
+                <span jhiTranslate="admin-config.specification-mng.loading">loading specification...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchCase="'privateui'">
+        <div class="card">
+          <div class="card-body">
+            <div class="text-center pb-3">
+              <button (click)="updatePrivateUiConfig();"
+                      *ngIf="isUiPrivateSpecValid"
+                      [class.loading]="uiPrivateSpecificationProgress"
+                      [disabled]="uiPrivateSpecificationProgress"
+                      class="btn btn-primary"
+                      type="button">
+                {{'admin-config.specification-mng.privateui.save' | translate}}
+              </button>
+              <button (click)="validatePrivateUiSpecification();"
+                      *ngIf="!isUiPrivateSpecValid"
+                      class="btn btn-primary"
+                      type="button">
+                {{'admin-config.specification-mng.validate' | translate}}
+              </button>
+
+              <div class="text-center">
+                <div *ngIf="uiPrivateValidation && !uiPrivateValidation.valid"
+                     [innerHtml]="uiPrivateValidation?.errorMessage"
+                     class="text-danger">
+                </div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div (textChanged)="onPrivateUiSpecificationChange($event)"
+                   [autoUpdateContent]="true"
+                   [mode]="'yaml'"
+                   [options]="aceEditorOptions"
+                   [readOnly]="false"
+                   [style.min-height]="'150px'"
+                   [style.width]="'100%'"
+                   [text]="uiPrivateSpecificationIn"
                    style="overflow-x: auto; border: 1px solid lightgray;"
                    xmAceEditor>
                 <span jhiTranslate="admin-config.specification-mng.loading">loading specification...</span>

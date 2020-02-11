@@ -51,4 +51,4 @@ interface IUIConfig {
     layoutSidebar?: IWidget;
 }
 
-export type UIConfig = IUIConfig | any;
+export type XmUIConfig = IUIConfig | any;

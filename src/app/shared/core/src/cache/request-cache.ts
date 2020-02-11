@@ -24,7 +24,7 @@ export interface IRequestCache<T> extends OnDestroy {
 
 export class RequestCache<T> implements IRequestCache<T> {
 
-    constructor(protected request: () => Observable<T>,
+    constructor(public request: () => Observable<T>,
                 protected options: typeof DEFAULT_OPTIONS = DEFAULT_OPTIONS) {
     }
 

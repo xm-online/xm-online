@@ -1,30 +1,40 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable, OnDestroy} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Inject, Injectable, OnDestroy} from '@angular/core';
+import {Observable, of, zip} from 'rxjs';
 
-import {UIConfig} from './xm-ui-config-model';
+import {XmUIConfig} from './xm-ui-config-model';
 import {takeUntilOnDestroy} from '@xm-ngx/shared/operators';
 import {XmSessionService} from './xm-session.service';
 import {RequestCache} from './cache/request-cache';
-import {tap} from "rxjs/operators";
-
-export const UI_CONFIG_URL = 'config/api/profile/webapp/settings-public.yml?toJson';
+import {XM_CORE_CONFIG, XmCoreConfig} from './xm-core-config';
+import {catchError, map} from 'rxjs/operators';
+import {merge} from 'lodash';
 
 @Injectable({providedIn: 'root'})
-export class XmUiConfigService<T = UIConfig> implements OnDestroy {
+export class XmUiConfigService<T = XmUIConfig> implements OnDestroy {
 
-    public url: string = UI_CONFIG_URL;
     protected requestCache: RequestCache<T>;
 
     constructor(protected httpClient: HttpClient,
+                @Inject(XM_CORE_CONFIG) protected xmCoreConfig: XmCoreConfig,
                 protected sessionService: XmSessionService) {
-        this.requestCache = new RequestCache(() => this.httpClient.get<T>(this.url));
+        const publicAPI = (): Observable<T> => this.httpClient.get<T>(xmCoreConfig.UI_CONFIG_PUBLIC_URL);
+        const privateAPI = (): Observable<T> => this.httpClient.get<T>(xmCoreConfig.UI_CONFIG_PRIVATE_URL);
+
+        const privateAndPublicAPI = (): Observable<T> => zip(
+            privateAPI().pipe(catchError(() => of(null))),
+            publicAPI().pipe(catchError(() => of(null))),
+        ).pipe(map(([pr, pu]) => merge(pu, pr)));
+
+        this.requestCache = new RequestCache(publicAPI);
+
         this.sessionService.get().pipe(takeUntilOnDestroy(this)).subscribe((session) => {
             if (session.active) {
-                this.requestCache.forceReload();
+                this.requestCache.request = privateAndPublicAPI;
             } else {
-                this.requestCache.clear();
+                this.requestCache.request = publicAPI;
             }
+            this.requestCache.forceReload();
         });
     }
 
@@ -37,12 +47,8 @@ export class XmUiConfigService<T = UIConfig> implements OnDestroy {
         return this.requestCache.get();
     }
 
-    public getAll(): Observable<T> {
-        return this.httpClient.get<T>(this.url)
-            .pipe(tap((res) => this.requestCache.next(res)));
-    }
-
     public ngOnDestroy(): void {
         this.requestCache.ngOnDestroy();
     }
+
 }

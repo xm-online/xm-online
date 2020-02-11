@@ -107,12 +107,14 @@ function dashboardsToCategories(dashboards: Dashboard[]): MenuCategory[] {
         }
 
         let group = _.find(categories, (i) => i.key === groupKey);
-        if (!group) {
+        if (!group && !dashboard.config.hidden)  {
             group = dashboardToCategory(dashboard);
             categories.push(group);
         }
-        group.children.push(dashboardToMenuItem(dashboard));
 
+        if (group && group.children) {
+            group.children.push(dashboardToMenuItem(dashboard));
+        }
     });
 
     categories = _.orderBy(categories, 'position', 'asc');

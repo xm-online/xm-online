@@ -17,6 +17,7 @@ import { UserRouteAccessService } from './shared';
 import { XmApplicationConfigService } from './shared/spec/xm-config.service';
 import { XmDashboardModule } from './xm-dashboard/xm-dashboard.module';
 import { XmRoutingModule } from './xm-routing.module';
+import {XmCoreModule} from '@xm-ngx/core';
 
 export function appInitializerFn(appConfig: XmApplicationConfigService): () => Promise<any> {
     // tslint:disable-next-line
@@ -32,6 +33,7 @@ export function appInitializerFn(appConfig: XmApplicationConfigService): () => P
         HttpClientModule,
         BrowserAnimationsModule,
         XmRoutingModule,
+        XmCoreModule.forRoot(),
         NgxWebstorageModule.forRoot({prefix: 'jhi', separator: '-'}),
         TranslateModule.forRoot({
             isolate: false,

@@ -21,6 +21,7 @@
         "paths": {
             "@xm-ngx/styles": ["packages/styles"],
             "@xm-ngx/translation": ["src/app/modules/xm-translation"],
+            "@xm-ngx/shared/operators": ["src/app/shared/operators"],
             "@xm-ngx/dynamic": ["src/app/xm-dashboard"]
         },
         "inlineSources": true,

@@ -25,6 +25,7 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
     public entityUiConfig: EntityUiConfig;
     // TODO for demo
     public tenant: string;
+    public defaultDetailLayoutType: EntityDetailLayout;
 
     public backLinkSpecs$: BehaviorSubject<FullLinkSpec[]> = new BehaviorSubject<FullLinkSpec[]>([]);
     public linkSpecs$: BehaviorSubject<FullLinkSpec[]> = new BehaviorSubject<FullLinkSpec[]>([]);
@@ -57,6 +58,7 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
         this.xmConfigService.getUiConfig().subscribe((config) => {
             // TODO for demo
             this.tenant = config.name;
+            this.defaultDetailLayoutType = config.defaultDetailLayoutType
             this.entityUiConfig = (config && config.applications
                 && config.applications.config
                 && config.applications.config.entities
@@ -167,8 +169,8 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
 
     private defineLayoutGrid(typeKey: string): void {
         let detailLayoutType: EntityDetailLayout = this.getXmEntitySpec(typeKey).dataSpec ? 'DEFAULT' : 'ALL-IN-ROW';
-        if (this.entityUiConfig && this.entityUiConfig.detailLayoutType) {
-            detailLayoutType = this.entityUiConfig.detailLayoutType;
+        if (this.defaultDetailLayoutType) {
+            detailLayoutType = this.defaultDetailLayoutType;
         }
 
         this.grid = this.config.grid ?

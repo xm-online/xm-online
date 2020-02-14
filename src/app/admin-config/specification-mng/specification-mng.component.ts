@@ -126,7 +126,10 @@ export class SpecificationMngComponent implements OnInit {
             this.tenantSpecificationIn = result;
             this.tenantSpecificationOut = result;
         });
-        this.principal.hasAuthority('CONFIG.CLIENT.WEBAPP.GET_LIST.ITEM').then(() => {
+        this.principal.hasPrivileges(['CONFIG.CLIENT.WEBAPP.GET_LIST.ITEM']).then((allow) => {
+            if (!allow) {
+                return;
+            }
             this.specificationTypes.push({slug: 'privateui', icon: 'view_quilt'});
             this.service.getConfig('/webapp/settings-private.yml').subscribe((result) => {
                 this.uiPrivateSpecificationIn = result;

@@ -64,6 +64,10 @@
             "tenant": {
                 "title": "Tenant",
                 "save": "Update Tenant specification"
+            },
+            "privateui": {
+                "title": "Private UI specification",
+                "save": "Update private ui specification"
             }
         },
         "widget-detail-dialog": {

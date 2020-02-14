@@ -1,13 +1,12 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { MatDialogRef } from '@angular/material';
-
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { FormControl, NgForm } from '@angular/forms';
+import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialogRef } from '@angular/material';
 import { JhiEventManager } from 'ng-jhipster';
-import { finalize } from 'rxjs/operators';
+import { finalize, map, startWith } from 'rxjs/operators';
 
-import { Client, ClientService, JhiLanguageHelper } from '../../shared';
-import { RoleService } from '../../shared/role/role.service';
-import { XmConfigService } from '../../shared/spec/config.service';
+import { Client, ClientService, JhiLanguageHelper, RoleService, XmConfigService } from '../../shared';
+import { Observable } from 'rxjs';
 
 export const CLIENT_UNIQUE_ID_ERROR_CODE = 'client.already.exists';
 
@@ -19,13 +18,23 @@ export const CLIENT_UNIQUE_ID_ERROR_CODE = 'client.already.exists';
 export class ClientMgmtDialogComponent implements OnInit {
 
     @Input() public selectedClient: Client;
+
     @ViewChild('editForm', {static: false}) public editForm: NgForm;
     public client: Client;
+    @ViewChild('scopeInput', {static: false})
+    public scopeInput: ElementRef<HTMLInputElement>;
+    @ViewChild('auto', {static: false})
+    public matAutocomplete: MatAutocomplete;
+
     public languages: any[];
-    public scopes: any[];
+    public scopes: any[] = [];
     public authorities: any[];
     public showLoader: boolean;
     public clientIdNotUnique: boolean;
+    public scopesVariants: any[] = [];
+    public separatorKeysCodes: number[] = [ENTER, COMMA];
+    public scopeCtrl: FormControl = new FormControl();
+    public filteredScopes: Observable<string[]>;
 
     constructor(public activeModal: MatDialogRef<ClientMgmtDialogComponent>,
                 private languageHelper: JhiLanguageHelper,
@@ -33,6 +42,42 @@ export class ClientMgmtDialogComponent implements OnInit {
                 private roleService: RoleService,
                 private eventManager: JhiEventManager,
                 private xmConfigService: XmConfigService) {
+        this.filteredScopes = this.scopeCtrl.valueChanges.pipe(
+            startWith(null),
+            map((scope: string | null) => scope ? this._filter(scope) : this.scopesVariants.slice()));
+    }
+
+    public add(event: MatChipInputEvent): void {
+        const input = event.input;
+        const value = event.value;
+
+        if ((value || '').trim()) {
+            this.scopes.push(value.trim());
+        }
+
+        if (input) {
+            input.value = '';
+        }
+
+        this.scopeCtrl.setValue(null);
+    }
+
+    public remove(scope: string): void {
+        const index = this.scopes.indexOf(scope);
+        if (index >= 0) {
+            this.scopes.splice(index, 1);
+        }
+    }
+
+    public selected(event: MatAutocompleteSelectedEvent): void {
+        this.scopes.push(event.option.viewValue);
+        this.scopeInput.nativeElement.value = '';
+        this.scopeCtrl.setValue(null);
+    }
+
+    private _filter(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.scopesVariants.filter(scope => scope.toLowerCase().indexOf(filterValue) >= 0);
     }
 
     public ngOnInit(): void {
@@ -48,7 +93,7 @@ export class ClientMgmtDialogComponent implements OnInit {
                 this.selectedClient.lastModifiedBy,
                 this.selectedClient.lastModifiedDate,
                 this.selectedClient.accessTokenValiditySeconds,
-                this.setFormSources(this.selectedClient.scopes),
+                this.selectedClient.scopes || [],
             );
         } else {
             this.client = new Client();
@@ -56,10 +101,13 @@ export class ClientMgmtDialogComponent implements OnInit {
         this.roleService.getRoles().subscribe((roles) => {
             this.authorities = roles.map((role) => role.roleKey).sort();
         });
-        this.languageHelper.getAll().then((languages) => {
-            this.xmConfigService.getUiConfig().subscribe((config) => {
+        this.xmConfigService.getUiConfig().subscribe((config) => {
+            this.languageHelper.getAll().then((languages) => {
                 this.languages = (config && config.langs) ? config.langs : languages;
             });
+            if (config.client) {
+                this.scopesVariants = config.client.scopes || [];
+            }
         });
         this.scopes = this.client.scopes;
     }
@@ -75,17 +123,12 @@ export class ClientMgmtDialogComponent implements OnInit {
         if (this.client.description) {
             this.client.description = this.client.description.trim();
         }
-        this.client.scopes = (this.scopes || []).map((it) => it.value);
+        this.client.scopes = this.scopes || [];
         this.clientService[this.client.id ? 'update' : 'create'](this.client)
             .pipe(finalize(() => this.showLoader = false))
             .subscribe(
             (response) => this.onSaveSuccess(response),
             (err) => this.checkErrorForClientId(err));
-    }
-
-    protected setFormSources(sources: string[]): any[] {
-        if (!sources) {return []; }
-        return sources.map((s) => ({display: s, value: s}));
     }
 
     private onSaveSuccess(result: any): void {

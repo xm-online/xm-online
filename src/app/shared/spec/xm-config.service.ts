@@ -17,6 +17,7 @@ export class XmApplicationConfigService {
     public resolved$: BehaviorSubject<boolean>;
     public maintenance$: BehaviorSubject<boolean>;
     private configUrl: string = 'config/api/profile/webapp/settings-public.yml?toJson';
+    private privateConfigUrl: string = 'config/api/profile/webapp/settings-private.yml?toJson';
     private appConfig: any;
 
     constructor(private http: HttpClient) {
@@ -45,6 +46,17 @@ export class XmApplicationConfigService {
         }, (err) => {
             console.warn(err);
             this.setMaintenanceProgress(true);
+        });
+    }
+
+    public loadPrivateConfig(): Promise<void> {
+        return this.http.get(this.privateConfigUrl).toPromise().then((data: any) => {
+            this.appConfig = {
+                ...this.appConfig,
+                ...data,
+            };
+        }, (err) => {
+            console.warn(err);
         });
     }
 

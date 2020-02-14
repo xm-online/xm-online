@@ -7,4 +7,5 @@ export interface Permission {
     envCondition?: string;
     resourceCondition?: string;
     resources?: string[];
+    description?: string;
 }

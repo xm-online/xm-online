@@ -8,6 +8,7 @@ import { XmConfigService } from '../../shared/spec/config.service';
 import { StatesManagementDialogComponent } from '../../xm-entity';
 import { ConfigValidatorUtil } from './config-validator/config-validator.util';
 import { ConfigVisualizerDialogComponent } from './config-visualizer-dialog/config-visualizer-dialog.component';
+import { Principal } from '../../shared';
 
 const TENANT_SPEC_PATH = '/tenant-config.yml';
 
@@ -72,6 +73,12 @@ export class SpecificationMngComponent implements OnInit {
     public uiSpecificationOut: string;
     public uiValidation: any;
 
+    public uiPrivateSpecificationIn: string;
+    public uiPrivateSpecificationOut: string;
+    public uiPrivateValidation: any;
+    public isUiPrivateSpecValid: boolean;
+    public uiPrivateSpecificationProgress: boolean;
+
     public tenantSpecificationIn: string;
     public tenantSpecificationOut: string;
     public tenantValidation: any;
@@ -83,6 +90,7 @@ export class SpecificationMngComponent implements OnInit {
 
     constructor(private activatedRoute: ActivatedRoute,
                 private modalService: MatDialog,
+                private principal: Principal,
                 private service: XmConfigService) {
         this.activatedRoute.params.subscribe((params) => {
             this.currentSpecificationSlug = params.slug;
@@ -118,13 +126,28 @@ export class SpecificationMngComponent implements OnInit {
             this.tenantSpecificationIn = result;
             this.tenantSpecificationOut = result;
         });
-
+        this.principal.hasPrivileges(['CONFIG.CLIENT.WEBAPP.GET_LIST.ITEM']).then((allow) => {
+            if (!allow) {
+                return;
+            }
+            this.specificationTypes.push({slug: 'privateui', icon: 'view_quilt'});
+            this.service.getConfig('/webapp/settings-private.yml').subscribe((result) => {
+                this.uiPrivateSpecificationIn = result;
+                this.uiPrivateSpecificationOut = result;
+            });
+        });
     }
 
     public onUiSpecificationChange(textChanged: any): void {
         this.uiSpecificationOut = textChanged;
         this.isUiSpecValid = false;
         this.uiValidation = null;
+    }
+
+    public onPrivateUiSpecificationChange(textChanged: any): void {
+        this.uiPrivateSpecificationOut = textChanged;
+        this.isUiPrivateSpecValid = false;
+        this.uiPrivateValidation = null;
     }
 
     public onTenantSpecificationChange(textChanged: any): void {
@@ -138,6 +161,14 @@ export class SpecificationMngComponent implements OnInit {
         this.service
             .updateConfig('/webapp/settings-public.yml', this.uiSpecificationOut)
             .pipe(finalize(() => this.uiSpecificationProgress = false))
+            .subscribe(() => window.location.reload());
+    }
+
+    public updatePrivateUiConfig(): void {
+        this.uiPrivateSpecificationProgress = true;
+        this.service
+            .updateConfig('/webapp/settings-private.yml', this.uiPrivateSpecificationOut)
+            .pipe(finalize(() => this.uiPrivateSpecificationProgress = false))
             .subscribe(() => window.location.reload());
     }
 
@@ -225,6 +256,21 @@ export class SpecificationMngComponent implements OnInit {
             this.isTimelineSpecValid = false;
             window.location.reload();
         });
+    }
+
+    public validatePrivateUiSpecification(): void {
+        const errors = ConfigValidatorUtil.validateYAML(this.uiPrivateSpecificationOut);
+        if (errors && errors.length) {
+            this.uiPrivateValidation = {errorMessage: ''};
+            for (const err of errors) {
+                this.uiPrivateValidation.errorMessage += err.message + (err.path ? ' path: ' + err.path : '') + '<br/>';
+                if (err.line) {
+                    this.line = err.line;
+                }
+            }
+        } else {
+            this.isUiPrivateSpecValid = true;
+        }
     }
 
     public onLoginsSpecificationChange(textChanged: any): void {

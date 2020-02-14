@@ -25,6 +25,7 @@
         "permission": {
             "checkAll": "Отметить все",
             "privilegeKey": "Ключ привилегии",
+            "desc": "Описание",
             "msName": "Название МС",
             "permit": "Разрешить",
             "permitted": "разрешенные",

@@ -25,6 +25,7 @@
         "permission": {
             "checkAll": "Відзначити всі",
             "privilegeKey": "Ключ привілею",
+            "desc": "Опис",
             "msName": "Назва МС",
             "permit": "Дозвіл",
             "permitted": "дозволенi",

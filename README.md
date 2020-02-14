@@ -171,7 +171,34 @@ Also you can check active services in consul by url: `http://<IP>:8500` and ensu
  - uaa
 
 ### Debugging
-For debugging you can open logs service 
+
+In order to debug particular xm microservice:
+
+Update docker file in microservice you want to debug:
+```sh
+{microservice-name}/src/main/docker/Dockerfile 
+```
+Add to JAVA_OPTS variable (or simple pass this options after java -jar myservice.jar -Dagentlib:...): 
+```sh
+-Dagentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000
+```
+Add port to expose command (or use any other options from Docker to expose port for container): 
+```sh
+EXPOSE 9999 8000 
+```
+Update docker-compose.yml file and add/update microservice configuration you want to debug: 
+```sh
+ports:
+     - 8000:8000 
+```
+(Intellij idea) Run Remote configuration
+Open microservice you previously added debug to,
+In Run/Debug Configuration click on "+" button and find "Remote" configuration,
+Update "Port" field inside Remote configuration with value 8000,
+Click Apply and Ok,
+Run this Remote configuration from menu by click on the green "->" button.
+
+For checking microservice logs you can run 
  ```sh
 $ docker service logs {SERVICE_ID}
 ```

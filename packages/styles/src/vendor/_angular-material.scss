@@ -1,5 +1,10 @@
 @import '~@angular/material/theming';
 
+$xm-mat-secondary-default: 500 !default;
+$xm-mat-secondary-lighter: 100 !default;
+$xm-mat-secondary-darker:  700 !default;
+$xm-mat-secondary-text:    $xm-mat-secondary-default !default;
+
 // Remove border radius from angular material
 @if ($xm-enable-rounded == false) {
   // this variables aren't working(because we use compiled angular material)
@@ -43,7 +48,12 @@
 
   // @todo: pass $default, $light and $dark
   $xm-mat-primary: mat-palette($primary);
-  $xm-mat-accent:  mat-palette($secondary);
+  $xm-mat-accent:  mat-palette(
+                       $secondary,
+                       $xm-mat-secondary-default,
+                       $xm-mat-secondary-lighter,
+                       $xm-mat-secondary-darker,
+                       $xm-mat-secondary-text);
   $xm-mat-warn:    mat-palette($warn);
 
   $xm-mat-theme:   mat-light-theme($xm-mat-primary, $xm-mat-accent, $xm-mat-warn);

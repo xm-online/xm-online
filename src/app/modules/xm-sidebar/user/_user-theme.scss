@@ -1,0 +1,8 @@
+@import '../sidebar';
+@import '../menu/menu-theme';
+
+@mixin user-theme($theme) {
+  .user-title {
+    @include menu-link($theme);
+  }
+}

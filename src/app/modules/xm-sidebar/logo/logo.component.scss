@@ -1,5 +1,29 @@
-@import 'logo';
+@import '../sidebar';
 
-::ng-deep {
-  @include logo-theme($xm-theme);
+$xm-logo-icon-size:       42px !default;
+$xm-logo-icon-size-x:     $xm-logo-icon-size !default;
+$xm-logo-icon-size-y:     $xm-logo-icon-size !default;
+$xm-logo-title-font-size: 18px !default;
+
+:host {
+  display:        flex;
+  flex-direction: row;
+  align-items:    center;
+  vertical-align: center;
+  padding:        $menu-item-padding-y $sidebar-padding-x;
+}
+
+.logo-img {
+  height:    $xm-logo-icon-size-y;
+  width:     $xm-logo-icon-size-x;
+  min-width: $xm-logo-icon-size-x;
+}
+
+.logo-title {
+  padding-left: $sidebar-padding-x;
+  font-size:    $xm-logo-title-font-size;
+  color:        $xm-sidebar-color;
+  font-weight:  $xm-font-weight;
+  white-space:  nowrap;
+  overflow:     hidden;
 }

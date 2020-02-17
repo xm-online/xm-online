@@ -8,7 +8,7 @@ $xm-menu-list-padding-left: 0 !default;
 $xm-menu-icon-font-size:    20px !default;
 $xm-menu-icon-color:        #a9afbb !default;
 
-@mixin menu-link() {
+@mixin menu-link($theme) {
   cursor: pointer;
 
   &.expanded {
@@ -91,7 +91,7 @@ $xm-menu-icon-color:        #a9afbb !default;
       padding-left: $sidebar-padding-x;
     }
 
-    @include menu-link();
+    @include menu-link($theme);
   }
 
   .menu-icon {

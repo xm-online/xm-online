@@ -1,7 +1,5 @@
-@import 'menu';
+@import 'menu-theme';
 
 ::ng-deep {
-
   @include menu($xm-theme);
-
 }

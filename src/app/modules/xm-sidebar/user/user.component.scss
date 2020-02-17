@@ -1,5 +1,5 @@
 @import '../sidebar';
-@import '../menu/menu';
+@import 'user-theme';
 
 $icon-size:              42px !default;
 $icon-size-x:            $icon-size !default;
@@ -24,7 +24,7 @@ $user-img-border-radius: 50% !default;
     vertical-align: center;
     padding:        $menu-item-padding-y $sidebar-padding-x;
 
-    @include menu-link();
+    @include menu-link($theme);
   }
   .user-name {
     padding-left:  $sidebar-padding-x;
@@ -37,7 +37,6 @@ $user-img-border-radius: 50% !default;
   }
 
 }
-
 
 ::ng-deep {
   @include user-theme($xm-theme);

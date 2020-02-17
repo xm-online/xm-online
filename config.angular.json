@@ -25,10 +25,25 @@
             ],
             "styles": [
               "src/styles.scss",
-              {"input": "src/styles/prebuild-themes/_teal.scss", "lazy": true, "bundleName": "themes/teal"},
+              {"input": "src/styles/prebuild-themes/_amber.scss", "lazy": true, "bundleName": "themes/amber"},
+              {"input": "src/styles/prebuild-themes/_blue.scss", "lazy": true, "bundleName": "themes/blue"},
+              {"input": "src/styles/prebuild-themes/_blue-grey.scss", "lazy": true, "bundleName": "themes/blue-grey"},
+              {"input": "src/styles/prebuild-themes/_brown.scss", "lazy": true, "bundleName": "themes/brown"},
+              {"input": "src/styles/prebuild-themes/_cyan.scss", "lazy": true, "bundleName": "themes/cyan"},
+              {"input": "src/styles/prebuild-themes/_deep-orange.scss", "lazy": true, "bundleName": "themes/deep-orange"},
               {"input": "src/styles/prebuild-themes/_deep-purple.scss", "lazy": true, "bundleName": "themes/deep-purple"},
+              {"input": "src/styles/prebuild-themes/_green.scss", "lazy": true, "bundleName": "themes/green"},
+              {"input": "src/styles/prebuild-themes/_grey.scss", "lazy": true, "bundleName": "themes/grey"},
               {"input": "src/styles/prebuild-themes/_indigo.scss", "lazy": true, "bundleName": "themes/indigo"},
-              {"input": "src/styles/prebuild-themes/_pink.scss", "lazy": true, "bundleName": "themes/pink"}
+              {"input": "src/styles/prebuild-themes/_light-blue.scss", "lazy": true, "bundleName": "themes/light-blue"},
+              {"input": "src/styles/prebuild-themes/_light-green.scss", "lazy": true, "bundleName": "themes/light-green"},
+              {"input": "src/styles/prebuild-themes/_lime.scss", "lazy": true, "bundleName": "themes/lime"},
+              {"input": "src/styles/prebuild-themes/_orange.scss", "lazy": true, "bundleName": "themes/orange"},
+              {"input": "src/styles/prebuild-themes/_pink.scss", "lazy": true, "bundleName": "themes/pink"},
+              {"input": "src/styles/prebuild-themes/_purple.scss", "lazy": true, "bundleName": "themes/purple"},
+              {"input": "src/styles/prebuild-themes/_red.scss", "lazy": true, "bundleName": "themes/red"},
+              {"input": "src/styles/prebuild-themes/_teal.scss", "lazy": true, "bundleName": "themes/teal"},
+              {"input": "src/styles/prebuild-themes/_yellow.scss", "lazy": true, "bundleName": "themes/yellow"}
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles", "src/app/ext"]
@@ -90,6 +105,56 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ]
+            }
+          }
+        },
+        "themes": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "tsConfig": "src/tsconfig.app.json",
+            "polyfills": "src/polyfills.ts",
+            "styles": [
+              {"input": "src/styles/prebuild-themes/_amber.scss", "lazy": true, "bundleName": "themes/amber"},
+              {"input": "src/styles/prebuild-themes/_blue.scss", "lazy": true, "bundleName": "themes/blue"},
+              {"input": "src/styles/prebuild-themes/_blue-grey.scss", "lazy": true, "bundleName": "themes/blue-grey"},
+              {"input": "src/styles/prebuild-themes/_brown.scss", "lazy": true, "bundleName": "themes/brown"},
+              {"input": "src/styles/prebuild-themes/_cyan.scss", "lazy": true, "bundleName": "themes/cyan"},
+              {"input": "src/styles/prebuild-themes/_deep-orange.scss", "lazy": true, "bundleName": "themes/deep-orange"},
+              {"input": "src/styles/prebuild-themes/_deep-purple.scss", "lazy": true, "bundleName": "themes/deep-purple"},
+              {"input": "src/styles/prebuild-themes/_green.scss", "lazy": true, "bundleName": "themes/green"},
+              {"input": "src/styles/prebuild-themes/_grey.scss", "lazy": true, "bundleName": "themes/grey"},
+              {"input": "src/styles/prebuild-themes/_indigo.scss", "lazy": true, "bundleName": "themes/indigo"},
+              {"input": "src/styles/prebuild-themes/_light-blue.scss", "lazy": true, "bundleName": "themes/light-blue"},
+              {"input": "src/styles/prebuild-themes/_light-green.scss", "lazy": true, "bundleName": "themes/light-green"},
+              {"input": "src/styles/prebuild-themes/_lime.scss", "lazy": true, "bundleName": "themes/lime"},
+              {"input": "src/styles/prebuild-themes/_orange.scss", "lazy": true, "bundleName": "themes/orange"},
+              {"input": "src/styles/prebuild-themes/_pink.scss", "lazy": true, "bundleName": "themes/pink"},
+              {"input": "src/styles/prebuild-themes/_purple.scss", "lazy": true, "bundleName": "themes/purple"},
+              {"input": "src/styles/prebuild-themes/_red.scss", "lazy": true, "bundleName": "themes/red"},
+              {"input": "src/styles/prebuild-themes/_teal.scss", "lazy": true, "bundleName": "themes/teal"},
+              {"input": "src/styles/prebuild-themes/_yellow.scss", "lazy": true, "bundleName": "themes/yellow"}
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles", "src/app/ext"]
+            }
+          },
+          "configurations": {
+            "serve": {
+              "extractCss": true
+            },
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
             }
           }
         },

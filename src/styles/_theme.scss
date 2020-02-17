@@ -7,7 +7,11 @@
 // Theme Styles
 @import '~@angular/material/theming';
 
-$xm-primary-palette: $mat-teal;
+$xm-primary-palette:       $mat-teal !default;
+$xm-secondary-palette:     $xm-primary-palette !default;
+$xm-mat-secondary-default: A200;
+$xm-mat-secondary-lighter: A100;
+$xm-mat-secondary-darker:  A400;
 
 // Init theme
 @import '~@xm-ngx/styles/theming';

@@ -10,3 +10,10 @@
 @include xm-angular-material-theme($xm-theme);
 @include xm-angular-material-typography();
 @include xm-vendor-xm-override();
+
+// Components
+@import 'src/app/modules/xm-sidebar/sidebar-theme';
+// increase css priority with xm-body class
+.xm-body {
+  @include xm-sidebar-theme($xm-theme);
+}

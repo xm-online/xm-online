@@ -3,7 +3,7 @@ export type JavascriptCode = string;
 export interface MenuItem {
     class?: string;
     position: number;
-    permission: string | string[];
+    permission?: string | string[];
     url: string[];
     icon: string;
     title: string;

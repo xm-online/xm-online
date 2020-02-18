@@ -72,7 +72,7 @@ function userToOptions(user: User): UserOptions {
     ],
 })
 export class UserComponent implements OnInit {
-    public logoutControl = LOGOUT_CONTROL;
+    public logoutControl: MenuItem = LOGOUT_CONTROL;
     public user$: Observable<UserOptions>;
     public active: boolean = false;
     protected subscriptions: Subscription[] = [];

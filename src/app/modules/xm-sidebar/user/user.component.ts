@@ -82,7 +82,6 @@ export class UserComponent implements OnInit {
     ) { }
 
     public ngOnInit(): void {
-        debugger;
         this.user$ = this.accountService.get().pipe(
             map((i) => i.body),
             map(userToOptions),

@@ -1,6 +1,5 @@
 <form #commentForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="commentForm" novalidate role="form">
   <div mat-dialog-title>
-    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <h4 class="modal-title text-left">
       <span jhiTranslate="xm-entity.comment-detail-dialog.title">Add new comment for the</span>
       [<b>{{xmEntity.name}}</b>]

@@ -1,6 +1,5 @@
 <form #dashboardForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="dashboardForm" novalidate role="form">
   <div mat-dialog-title>
-    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <h4 *ngIf="!dashboard.id" class="modal-title text-left">
       <span jhiTranslate="admin-config.dashboard-detail-dialog.add.title">Add a new dashboard</span>
     </h4>

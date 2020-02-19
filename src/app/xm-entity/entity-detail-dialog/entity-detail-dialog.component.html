@@ -1,6 +1,5 @@
 <form #entityForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="entityForm" novalidate role="form">
   <div mat-dialog-title>
-    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <div *ngIf="jsfAttributes?.entity?.formHeaderTitle; then
                 hasHeaderConfig else
                 hasNotHeaderConfig;">

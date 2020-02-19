@@ -1,6 +1,5 @@
 <form #editForm="ngForm" (ngSubmit)="onSave()" *ngIf="role" class="m-0" name="editForm" novalidate role="form">
   <div mat-dialog-title>
-    <a (click)="onClose()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <h4 class="modal-title text-left">
       <span *ngIf="isAddMode" jhiTranslate="rolesManagement.home.labelCreate">Create new Role</span>
       <span *ngIf="!isAddMode" jhiTranslate="rolesManagement.home.labelEdit">Edit a Role</span>

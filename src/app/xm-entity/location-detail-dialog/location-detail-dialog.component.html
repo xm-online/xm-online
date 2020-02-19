@@ -1,8 +1,6 @@
 <div class="location-detail-dialog">
   <form (ngSubmit)="onConfirmSave()" *ngIf="xmEntity" [formGroup]="form">
     <div mat-dialog-title>
-      <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
-
       <h4 class="modal-title text-left">
         <span jhiTranslate="{{form.value.id ? 'xm-entity.location-detail-dialog.edit.title' : 'xm-entity.location-detail-dialog.add.title'}}">
           {{ form.value.id ? 'Edit a location for the' : 'Add a new location for the' }}

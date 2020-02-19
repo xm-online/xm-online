@@ -11,15 +11,17 @@
       <div *ngIf="modes.length > 1" class="btn-group">
         <button (click)="mode = 'list';"
                 [disabled]="mode === 'list'"
-                class="btn btn-primary btn-sm btn-round"
-                mat-button
+                class="btn btn-round"
+                color="primary"
+                mat-flat-button
                 type="button">
           <span jhiTranslate="xm-entity.link-list-card.list-view">List view</span>
         </button>
         <button (click)="mode = 'tree';"
                 [disabled]="mode === 'tree'"
-                class="btn btn-primary btn-sm btn-round"
-                mat-button
+                class="btn btn-round"
+                mat-flat-button
+                color="primary"
                 type="button">
           <span jhiTranslate="xm-entity.link-list-card.tree-view">Tree view</span>
         </button>

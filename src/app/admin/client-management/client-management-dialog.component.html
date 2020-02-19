@@ -124,10 +124,12 @@
       <span class="fa fa-ban"></span>&nbsp;<span
       jhiTranslate="entity.action.cancel">Cancel</span>
     </button>
+
     <button mat-button
+            color="primary"
             type="submit"
             (click)="save()"
-            [disabled]="editForm.form.invalid || showLoader" class="btn btn-primary">
+            [disabled]="editForm.form.invalid || showLoader">
       <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
     </button>
   </div>

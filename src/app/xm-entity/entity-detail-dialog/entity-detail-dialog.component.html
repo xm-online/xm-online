@@ -103,6 +103,7 @@
       <span *ngIf="jsfAttributes?.entity?.cancelName">{{jsfAttributes.entity.cancelName | i18nName: principal}}</span>
       <span *ngIf="!jsfAttributes?.entity?.cancelName" jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
+
     <button [disabled]="entityForm.form.invalid || showLoader || !isJsonFormValid"
             class="btn"
             mat-button

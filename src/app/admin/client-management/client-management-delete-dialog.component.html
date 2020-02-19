@@ -19,7 +19,11 @@
             type="button">
       <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
     </button>
-    <button [disabled]="showLoader" class="btn btn-danger" mat-button type="submit">
+
+    <button [disabled]="showLoader"
+            color="warn"
+            mat-button
+            type="submit">
       <span class="fa fa-trash"></span>&nbsp;<span jhiTranslate="entity.action.delete">Delete</span>
     </button>
   </div>

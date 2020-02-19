@@ -45,7 +45,11 @@
             type="button">
       <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
-    <button [disabled]="commentForm.form.invalid || showLoader" class="btn btn-primary" mat-button type="submit">
+
+    <button [disabled]="commentForm.form.invalid || showLoader"
+            color="primary"
+            mat-button
+            type="submit">
       <span jhiTranslate="xm-entity.common.save">Save</span>
     </button>
   </div>

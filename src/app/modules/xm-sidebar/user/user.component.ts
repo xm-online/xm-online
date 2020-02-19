@@ -28,14 +28,14 @@ const USER_MENU: MenuItem[] = [
         icon: 'lock',
         title: 'global.menu.account.password',
     },
-    {
-        position: 3,
-        permission: 'ACCOUNT.CHECK_AUTH',
-        url: ['logout'],
-        icon: 'logout',
-        title: 'global.menu.account.logout',
-    },
 ];
+
+const LOGOUT_CONTROL: MenuItem = {
+    position: 3,
+    url: ['logout'],
+    icon: 'logout',
+    title: 'global.menu.account.logout',
+}
 
 const DEFAULT: UserOptions = {
     username: '',
@@ -72,7 +72,7 @@ function userToOptions(user: User): UserOptions {
     ],
 })
 export class UserComponent implements OnInit {
-
+    public logoutControl: MenuItem = LOGOUT_CONTROL;
     public user$: Observable<UserOptions>;
     public active: boolean = false;
     protected subscriptions: Subscription[] = [];

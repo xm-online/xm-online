@@ -162,6 +162,9 @@
                   <div *ngSwitchCase="'startDate'">
                     {{xmEntity.startDate | xmDateTime}}
                   </div>
+                  <div *ngSwitchCase="'updateDate'">
+                    {{xmEntity.updateDate | xmDateTime}}
+                  </div>
                   <div *ngSwitchCase="'actions'">
                     <div *permitted="field.actionsListPrivileges" class="xm-table-options dropdown">
                       <span aria-expanded="false" class="dropdown-toggle" data-toggle="dropdown" href="#pablo">

@@ -1,8 +1,11 @@
 <div *ngIf="timelinePage && timelinePage.timelines?.length > 0" class="container-fluid">
+
   <div *ngIf="showTimelineHeader" class="header text-center">
     <h3 class="title text-muted" jhiTranslate="xm-timeline.timeline.title">Timeline</h3>
   </div>
+
   <div>
+
     <xm-loader [showLoader]="showLoader"></xm-loader>
 
     <div style="display: flex; flex-direction: row; align-items: center;">
@@ -13,6 +16,7 @@
                 mat-button>
           <span jhiTranslate="global.all">All</span>
         </button>
+
         <button (click)="applyFastSearch(item.state)"
                 *ngFor="let item of filter.states"
                 [class.disabled]="currentSearch === item.state"
@@ -26,10 +30,13 @@
     <ul class="timeline timeline-simple">
       <li *ngFor="let tl of timelinePage.timelines"
           class="timeline-inverted">
+
         <div class="timeline-badge primary">
           <i class="material-icons">history</i>
         </div>
+
         <div class="timeline-panel">
+
           <div class="timeline-heading">
             <h6>
               {{tl.operationName}} {{timeAgo(tl.startDate)}}
@@ -49,16 +56,21 @@
             <span class="badge badge-primary">{{tl.opSystem}}</span>&nbsp;
             <span class="badge badge-primary">{{tl.requestHeaders['x-forwarded-for']}}</span>&nbsp;
           </div>
+
           <div *ngIf="!template && (tl.requestBody || tl.responseBody)" class="timeline-body">
             <span>{{tl.requestBody}}</span>&nbsp;
             <span>{{tl.responseBody}}</span>
           </div>
+
           <div *ngIf="template" [innerHTML]="template(tl)"
                class="timeline-body">
           </div>
+
         </div>
+
       </li>
     </ul>
+
     <button (click)="onNextPage(timelinePage.next)"
             *ngIf="timelinePage.next"
             [disabled]="showLoader"
@@ -66,5 +78,7 @@
             type="submit">
       <span jhiTranslate="xm-timeline.timeline.more">more timeline events...</span>
     </button>
+
   </div>
+
 </div>

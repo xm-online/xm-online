@@ -71,7 +71,7 @@
     </div>
   </div>
   <div mat-dialog-actions>
-    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
+    <button (click)="onCancel()" class="btn mr-1 ml-auto" data-dismiss="modal" mat-button type="button">
       <span jhiTranslate="admin-config.common.cancel">Cancel</span>
     </button>
     <button [disabled]="dashboardForm.form.invalid || showLoader"

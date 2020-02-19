@@ -38,7 +38,11 @@
     </div>
   </div>
   <div mat-dialog-actions>
-    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
+    <button (click)="onCancel()"
+            class="btn mr-1 ml-auto"
+            data-dismiss="modal"
+            mat-button
+            type="button">
       <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
     <button [disabled]="commentForm.form.invalid || showLoader" class="btn btn-primary" mat-button type="submit">

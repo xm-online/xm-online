@@ -1,6 +1,5 @@
 <div mat-dialog-title>
-  <a href="javascript: void(0);" class="modal-close material-icons" (click)="activeModal.close(false)">close</a>
-  <h3 class="modal-title text-left mt-0" id="showHealthLabel">
+ <h3 class="modal-title text-left mt-0" id="showHealthLabel">
     {{'health.indicator.' + baseName(currentHealth.name) | translate}}
     {{subSystemName(currentHealth.name)}}
   </h3>
@@ -22,7 +21,8 @@
 <div mat-dialog-actions>
   <button mat-button
           data-dismiss="modal"
-          class="btn btn-primary"
+          class="ml-auto"
+          color="primary"
           type="button"
           (click)="activeModal.close(false)">
     {{'health.options.done' | translate}}

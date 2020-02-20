@@ -1,6 +1,5 @@
 <form #entityForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="entityForm" novalidate role="form">
   <div mat-dialog-title>
-    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <div *ngIf="jsfAttributes?.entity?.formHeaderTitle; then
                 hasHeaderConfig else
                 hasNotHeaderConfig;">
@@ -100,10 +99,11 @@
   </div>
 
   <div *ngIf="!(jsfAttributes?.entity?.formDefaultFooterHide)" mat-dialog-actions>
-    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
+    <button (click)="onCancel()" class="btn mr-1 ml-auto" data-dismiss="modal" mat-button type="button">
       <span *ngIf="jsfAttributes?.entity?.cancelName">{{jsfAttributes.entity.cancelName | i18nName: principal}}</span>
       <span *ngIf="!jsfAttributes?.entity?.cancelName" jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
+
     <button [disabled]="entityForm.form.invalid || showLoader || !isJsonFormValid"
             class="btn"
             mat-button

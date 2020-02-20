@@ -1,8 +1,11 @@
 <div mat-dialog-title>
-  <a (click)="close()" class="modal-close material-icons" href="javascript: void(0);">close</a>
   <h4 class="modal-title text-left" id="editUserLogin" jhiTranslate="userManagement.home.editLoginsLabel">
     Edit user logins</h4>
 </div>
 <div mat-dialog-content>
   <xm-user-login-form [isUser]="true" [user]="user"></xm-user-login-form>
+</div>
+
+<div mat-dialog-actions>
+  <button class="ml-auto" mat-button color="primary" (click)="close()">{{ 'cancel' | translate }}</button>
 </div>

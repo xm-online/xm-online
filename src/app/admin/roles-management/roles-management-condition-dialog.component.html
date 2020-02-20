@@ -1,5 +1,4 @@
 <div mat-dialog-title>
-  <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
   <h4 class="modal-title text-left">
     <span *ngIf="isAddMode" jhiTranslate="rolesManagement.permission.createCondition">Create Condition</span>
     <span *ngIf="!isAddMode" jhiTranslate="rolesManagement.permission.editCondition">Edit Condition</span>
@@ -42,10 +41,10 @@
 </div>
 
 <div mat-dialog-actions>
-  <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
+  <button (click)="onCancel()" class="btn mr-1 ml-auto" data-dismiss="modal" mat-button type="button">
     <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
   </button>
-  <button class="btn btn-primary" mat-button type="submit">
+  <button color="primary" mat-button type="submit">
     <i class="material-icons">done</i>&nbsp;<span jhiTranslate="rolesManagement.ok">Ok</span>
   </button>
 </div>

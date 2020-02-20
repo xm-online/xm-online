@@ -1,5 +1,4 @@
 <div mat-dialog-title>
-  <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
   <h4 class="modal-title text-left">
     <span jhiTranslate="xm-entity.calendar-event-dialog.title">Add new event for the</span> [<b>{{xmEntity.name}}</b>]
   </h4>
@@ -102,9 +101,14 @@
 </div>
 
 <div mat-dialog-actions>
-  <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
+  <button (click)="onCancel()"
+          class="btn mr-1 ml-auto"
+          data-dismiss="modal"
+          mat-button
+          type="button">
     <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
   </button>
+
   <button [disabled]="eventForm.form.invalid || showLoader"
           class="btn"
           mat-button

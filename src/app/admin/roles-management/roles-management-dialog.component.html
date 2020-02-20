@@ -1,6 +1,5 @@
 <form #editForm="ngForm" (ngSubmit)="onSave()" *ngIf="role" class="m-0" name="editForm" novalidate role="form">
   <div mat-dialog-title>
-    <a (click)="onClose()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <h4 class="modal-title text-left">
       <span *ngIf="isAddMode" jhiTranslate="rolesManagement.home.labelCreate">Create new Role</span>
       <span *ngIf="!isAddMode" jhiTranslate="rolesManagement.home.labelEdit">Edit a Role</span>
@@ -56,12 +55,12 @@
   </div>
 
   <div mat-dialog-actions>
-    <button (click)="onClose()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
+    <button (click)="onClose()" class="btn mr-1 ml-auto" data-dismiss="modal" mat-button type="button">
       <span class="fa fa-ban"></span>&nbsp;<span
       jhiTranslate="entity.action.cancel">Cancel</span>
     </button>
     <button [disabled]="editForm.form.invalid || showLoader"
-            class="btn btn-primary"
+            color="primary"
             mat-button
             type="submit">
       <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>

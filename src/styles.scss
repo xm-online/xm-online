@@ -17,3 +17,7 @@
 .xm-body {
   @include xm-sidebar-theme($xm-theme);
 }
+
+// BC deps below will be removed!
+// Backward compatibility
+@import 'styles/backward-compatibility';

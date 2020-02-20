@@ -100,14 +100,14 @@
   <div class="text-right">
     <button mat-button
             type="button"
-            class="btn mr-1"
+            class="btn mr-1 ml-auto"
             [disabled]="isFormDisabled()"
             (click)="backToLogin()">
       <span jhiTranslate="login.form.otpValidateCancel">Cancel</span>
     </button>
     <button mat-button
             type="submit"
-            class="btn btn-primary"
+            color="primary"
             [disabled]="isFormDisabled()">
       <span jhiTranslate="login.form.otpValidateButton">
         Validate OTP

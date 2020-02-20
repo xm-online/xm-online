@@ -1,5 +1,4 @@
 <div mat-dialog-title>
-  <a href="javascript: void(0);" class="modal-close material-icons" (click)="onCancel()">close</a>
   <h4 class="modal-title text-left" jhiTranslate="global.shared.privacy-and-terms-dialog.title">Privacy and Terms</h4>
 </div>
 
@@ -18,12 +17,12 @@
 </div>
 
 <div mat-dialog-actions>
-  <button mat-button type="button" class="btn mr-1" data-dismiss="modal" (click)="onCancel()">
+  <button mat-button type="button" class="btn mr-1 ml-auto" data-dismiss="modal" (click)="onCancel()">
     <span jhiTranslate="global.common.cancel">Cancel</span>
   </button>
   <button mat-button
           type="button"
-          class="btn btn-primary"
+          color="primary"
           data-dismiss="modal"
           [disabled]="!iAgree" (click)="onAccept()">
     <span jhiTranslate="global.common.accept">Accept</span>

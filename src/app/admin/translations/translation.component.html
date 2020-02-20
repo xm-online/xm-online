@@ -121,8 +121,10 @@
                   </label>
                 </div>
 
-                <button (click)="addTranslationToFile(i, missedTranslation)" *ngIf="missedTranslation.targetFile"
-                        class="btn btn-primary">Move to file
+                <button (click)="addTranslationToFile(i, missedTranslation)"
+                        *ngIf="missedTranslation.targetFile"
+                        mat-button
+                        color="primary">Move to file
                 </button>
               </ng-container>
             </td>

@@ -1,5 +1,4 @@
 <div mat-dialog-title>
-  <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
   <h4 class="modal-title text-left">
     <span jhiTranslate="xm-entity.attachment-detail-dialog.title">Add new attachment for the</span>
     [<b>{{xmEntity.name}}</b>]
@@ -97,7 +96,7 @@
 <div mat-dialog-actions>
   <button (click)="onCancel()"
           [disabled]="showLoader"
-          class="btn mr-1"
+          class="btn mr-1 ml-auto"
           data-dismiss="modal"
           mat-button
           type="button">

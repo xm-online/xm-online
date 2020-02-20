@@ -1,5 +1,4 @@
 <div mat-dialog-title>
-  <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
   <h4 class="modal-title text-left" jhiTranslate="xm-entity.common.change-avatar">Change Avatar</h4>
 </div>
 
@@ -21,12 +20,15 @@
 </div>
 
 <div mat-dialog-actions>
-  <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
+  <button (click)="onCancel()"
+          class="btn mr-1 ml-auto"
+          data-dismiss="modal" mat-button type="button">
     <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
   </button>
+
   <button (click)="onSave()"
           [disabled]="showLoader || !data.image"
-          class="btn btn-primary"
+          color="primary"
           mat-button
           type="submit">
     <span jhiTranslate="xm-entity.common.save">Save</span>

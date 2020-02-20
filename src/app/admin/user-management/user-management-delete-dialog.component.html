@@ -1,6 +1,5 @@
 <form (ngSubmit)="confirmDelete(user.userKey)" class="m-0" name="deleteForm">
   <div mat-dialog-title>
-    <a (click)="clear()" class="modal-close material-icons" data-dismiss="modal" href="javascript: void(0);">close</a>
     <h4 class="modal-title text-left" jhiTranslate="entity.delete.title">Confirm delete operation</h4>
   </div>
   <div mat-dialog-content>
@@ -10,7 +9,7 @@
                                                                                                      User?</p>
   </div>
   <div mat-dialog-actions>
-    <button (click)="clear()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
+    <button (click)="clear()" class="btn mr-1 ml-auto" data-dismiss="modal" mat-button type="button">
       <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
     </button>
     <button [disabled]="showLoader" class="btn btn-danger" mat-button type="submit">

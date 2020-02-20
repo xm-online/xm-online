@@ -1,6 +1,5 @@
 <div mat-dialog-title>
-  <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
-  <h4 class="modal-title text-left" jhiTranslate="xm-balance.balance-detail-dialog.title">Balance detail</h4>
+ <h4 class="modal-title text-left" jhiTranslate="xm-balance.balance-detail-dialog.title">Balance detail</h4>
 </div>
 <div mat-dialog-content>
   <div *ngIf="pockets?.length" class="table-responsive">
@@ -36,7 +35,7 @@
 </div>
 <div mat-dialog-actions>
   <button (click)="onCancel()"
-          class="btn"
+          class="btn ml-auto"
           data-dismiss="modal"
           mat-button
           type="button">

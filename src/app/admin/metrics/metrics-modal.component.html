@@ -1,6 +1,5 @@
 <!-- Modal used to display the threads dump -->
 <div mat-dialog-title>
-  <a href="javascript: void(0);" class="modal-close material-icons" (click)="activeModal.close(false)">close</a>
   <h3 class="modal-title text-left mt-0" jhiTranslate="metrics.jvm.threads.dump.title">Threads dump</h3>
 </div>
 <div mat-dialog-content>
@@ -108,7 +107,7 @@
 <div mat-dialog-actions>
   <button mat-button
           type="button"
-          class="btn btn-primary"
+          color="primary"
           data-dismiss="modal"
           (click)="activeModal.close(false)">
     {{'metrics.options.done' | translate}}

@@ -1,6 +1,5 @@
 <form #commentForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="commentForm" novalidate role="form">
   <div mat-dialog-title>
-    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <h4 class="modal-title text-left">
       <span jhiTranslate="xm-entity.comment-detail-dialog.title">Add new comment for the</span>
       [<b>{{xmEntity.name}}</b>]
@@ -39,10 +38,18 @@
     </div>
   </div>
   <div mat-dialog-actions>
-    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
+    <button (click)="onCancel()"
+            class="btn mr-1 ml-auto"
+            data-dismiss="modal"
+            mat-button
+            type="button">
       <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
-    <button [disabled]="commentForm.form.invalid || showLoader" class="btn btn-primary" mat-button type="submit">
+
+    <button [disabled]="commentForm.form.invalid || showLoader"
+            color="primary"
+            mat-button
+            type="submit">
       <span jhiTranslate="xm-entity.common.save">Save</span>
     </button>
   </div>

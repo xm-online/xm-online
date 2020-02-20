@@ -1,6 +1,5 @@
 <form (ngSubmit)="onChangeState()" class="m-0" name="changeStateForm">
   <div mat-dialog-title>
-    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <h4 [innerHTML]="dialogTitle | i18nName : principal" class="modal-title text-left"></h4>
   </div>
   <div mat-dialog-content>
@@ -20,10 +19,10 @@
     </json-schema-form>
   </div>
   <div mat-dialog-actions>
-    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
+    <button (click)="onCancel()" class="btn mr-1 ml-auto" data-dismiss="modal" mat-button type="button">
       <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
-    <button [disabled]="showLoader || !isJsonFormValid" class="btn btn-primary" mat-button type="submit">
+    <button [disabled]="showLoader || !isJsonFormValid" color="primary" mat-button type="submit">
       <span>{{buttonTitle | i18nName : principal}}</span>
     </button>
   </div>

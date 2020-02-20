@@ -1,6 +1,5 @@
 <form #dashboardForm="ngForm" (ngSubmit)="onConfirmSave()" class="m-0" name="dashboardForm" novalidate role="form">
   <div mat-dialog-title>
-    <a (click)="onCancel()" class="modal-close material-icons" href="javascript: void(0);">close</a>
     <h4 *ngIf="!dashboard.id" class="modal-title text-left">
       <span jhiTranslate="admin-config.dashboard-detail-dialog.add.title">Add a new dashboard</span>
     </h4>
@@ -72,9 +71,10 @@
     </div>
   </div>
   <div mat-dialog-actions>
-    <button (click)="onCancel()" class="btn mr-1" data-dismiss="modal" mat-button type="button">
+    <button (click)="onCancel()" class="btn mr-1 ml-auto" data-dismiss="modal" mat-button type="button">
       <span jhiTranslate="admin-config.common.cancel">Cancel</span>
     </button>
+
     <button [disabled]="dashboardForm.form.invalid || showLoader"
             class="btn"
             color="primary"

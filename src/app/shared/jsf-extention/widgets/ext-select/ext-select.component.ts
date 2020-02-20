@@ -85,7 +85,6 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
         const savedLiteralsValue = {};
-        const self = this;
 
         this.disabled$.next(true);
         this.options.url
@@ -100,7 +99,7 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
                 of(eLiteral).pipe(
                     filter((fieldLiteral) => !!fieldLiteral),
                     tap((fieldName) => currentFieldName = fieldName),
-                    mergeMap((fieldName) => ExtSelectService.controlByKey(fieldName, self._parent.jsf.formGroup, self.dataIndex).valueChanges),
+                    mergeMap((fieldName) => ExtSelectService.controlByKey(fieldName, this._parent.jsf.formGroup, this.dataIndex).valueChanges),
                     tap(() => this.disabled$.next(true)),
                     filter((fieldValue) => !!fieldValue),
                     tap((fieldValue) => savedLiteralsValue[`@{${currentFieldName}}`] = fieldValue),
@@ -149,7 +148,7 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
             this.options.relatedFields.forEach((field) => {
                 const relativeControl = ExtSelectService.controlByKey(field.key, fg, this.dataIndex);
                 if (relativeControl) {
-                    let value = ExtSelectService.byString(item.object, field.value);
+                    const value = ExtSelectService.byString(item.object, field.value);
                     relativeControl.setValue(value);
                     relativeControl.updateValueAndValidity({emitEvent: true});
                 }

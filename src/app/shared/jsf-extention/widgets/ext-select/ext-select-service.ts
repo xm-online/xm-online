@@ -28,6 +28,7 @@ export class ExtSelectService {
 
     public static controlByKey(key: string, rootFormGroup: FormGroup, dataIndex: number[]): AbstractControl {
         let fieldPath = key;
+        // eslint-disable-next-line @typescript-eslint/no-for-in-array
         for (const i in dataIndex) {
             const index: number = dataIndex[i];
             if (fieldPath.indexOf('[]') < 0) {
@@ -36,11 +37,13 @@ export class ExtSelectService {
             fieldPath = fieldPath.replace('[]', `.${index}`);
         }
         let targetField: AbstractControl = rootFormGroup;
-        let pathParts = fieldPath.split('.');
+        const pathParts = fieldPath.split('.');
+        // eslint-disable-next-line @typescript-eslint/no-for-in-array
         for (const i in pathParts) {
             if (targetField != null) {
                 targetField = targetField.get(pathParts[i]);
             } else {
+                // eslint-disable-next-line no-console
                 console.error(`Field by key ${key} not found`);
                 break;
             }

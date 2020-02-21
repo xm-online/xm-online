@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { Principal } from '../../../auth/principal.service';
 import { I18nNamePipe } from '../../../language/i18n-name.pipe';
 import { ExtSelectOptions } from './ext-select-options.model';
+import { AbstractControl, FormGroup } from '@angular/forms';
 
 @Injectable()
 export class ExtSelectService {
@@ -23,6 +24,31 @@ export class ExtSelectService {
             }
         }
         return o;
+    }
+
+    public static controlByKey(key: string, rootFormGroup: FormGroup, dataIndex: number[]): AbstractControl {
+        let fieldPath = key;
+        // eslint-disable-next-line @typescript-eslint/no-for-in-array
+        for (const i in dataIndex) {
+            const index: number = dataIndex[i];
+            if (fieldPath.indexOf('[]') < 0) {
+                break;
+            }
+            fieldPath = fieldPath.replace('[]', `.${index}`);
+        }
+        let targetField: AbstractControl = rootFormGroup;
+        const pathParts = fieldPath.split('.');
+        // eslint-disable-next-line @typescript-eslint/no-for-in-array
+        for (const i in pathParts) {
+            if (targetField != null) {
+                targetField = targetField.get(pathParts[i]);
+            } else {
+                // eslint-disable-next-line no-console
+                console.error(`Field by key ${key} not found`);
+                break;
+            }
+        }
+        return targetField;
     }
 
     constructor(

@@ -44,8 +44,9 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild('singleSelect', {static: false}) protected singleSelect: MatSelect;
     @Input() private layoutNode: any;
     private controlValue: any;
-    private regTemplateLiteral: RegExp = /@{\w+}/g;
+    private regTemplateLiteral: RegExp = /@{(\w+(\[\])?.?)+}/g;
     private _onDestroy: Subject<void> = new Subject<void>();
+    private dataIndex: number[];
 
     constructor(
         @Inject(forwardRef(() => JsonSchemaFormComponent)) private _parent: JsonSchemaFormComponent,
@@ -95,11 +96,10 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
             .map((result) => result.replace(/@{|}/g, ''))
             .forEach((eLiteral) => {
                 let currentFieldName: string;
-
                 of(eLiteral).pipe(
                     filter((fieldLiteral) => !!fieldLiteral),
                     tap((fieldName) => currentFieldName = fieldName),
-                    mergeMap((fieldName) => this._parent.jsf.formGroup.get(fieldName).valueChanges),
+                    mergeMap((fieldName) => ExtSelectService.controlByKey(fieldName, this._parent.jsf.formGroup, this.dataIndex).valueChanges),
                     tap(() => this.disabled$.next(true)),
                     filter((fieldValue) => !!fieldValue),
                     tap((fieldValue) => savedLiteralsValue[`@{${currentFieldName}}`] = fieldValue),
@@ -146,7 +146,12 @@ export class ExtSelectComponent implements OnInit, OnDestroy, AfterViewInit {
         const fg: FormGroup = this.jsf.formGroup;
         if (this.options.relatedFields) {
             this.options.relatedFields.forEach((field) => {
-                fg.get(field.key).setValue(ExtSelectService.byString(item.object, field.value));
+                const relativeControl = ExtSelectService.controlByKey(field.key, fg, this.dataIndex);
+                if (relativeControl) {
+                    const value = ExtSelectService.byString(item.object, field.value);
+                    relativeControl.setValue(value);
+                    relativeControl.updateValueAndValidity({emitEvent: true});
+                }
             });
         }
         if (this.layoutNode.dataType === 'array') {

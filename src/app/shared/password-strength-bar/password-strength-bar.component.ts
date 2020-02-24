@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, Renderer } from '@angular/core';
+import { Component, ElementRef, Input, Renderer2 } from '@angular/core';
 
 @Component({
     selector: 'xm-password-strength-bar',
@@ -21,7 +21,7 @@ export class PasswordStrengthBarComponent {
 
     public colors: string[] = ['#F00', '#F90', '#FF0', '#9F0', '#0F0'];
 
-    constructor(private renderer: Renderer, private elementRef: ElementRef) { }
+    constructor(private renderer: Renderer2, private elementRef: ElementRef) { }
 
     @Input()
     public set passwordToCheck(password: string) {
@@ -29,14 +29,14 @@ export class PasswordStrengthBarComponent {
             const c = this.getColor(this.measureStrength(password));
             const element = this.elementRef.nativeElement;
             if (element.className) {
-                this.renderer.setElementClass(element, element.className, false);
+                this.renderer.addClass(element, element.className);
             }
             const lis = element.getElementsByTagName('li');
             for (let i = 0; i < lis.length; i++) {
                 if (i < c.idx) {
-                    this.renderer.setElementStyle(lis[i], 'backgroundColor', c.col);
+                    this.renderer.setStyle(lis[i], 'backgroundColor', c.col);
                 } else {
-                    this.renderer.setElementStyle(lis[i], 'backgroundColor', '#DDD');
+                    this.renderer.setStyle(lis[i], 'backgroundColor', '#DDD');
                 }
             }
         }

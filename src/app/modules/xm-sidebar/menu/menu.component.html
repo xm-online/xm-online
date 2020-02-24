@@ -3,14 +3,14 @@
   <!-- category-link -->
   <ng-template #categoryLink>
     <div (submit)="toggleMenu(category)"
-         *permitted="category.permission"
+         *permitted="category.permission && category?.children?.length"
          [item]="category"
          xm-menu-link>
     </div>
   </ng-template>
 
   <!-- category list -->
-  <ng-container *ngIf="!category.isLink; else categoryLink">
+  <ng-container *ngIf="!category.isLink && category?.children?.length; else categoryLink">
 
     <div (click)="toggleMenu(category)"
          *permitted="category.permission"

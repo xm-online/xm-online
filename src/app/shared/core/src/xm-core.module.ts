@@ -16,6 +16,10 @@ export function xmCoreConfigFactory(externalConfig?: XmCoreConfig): XmCoreConfig
 })
 export class XmCoreModule {
 
+    constructor(xmUiConfigService: XmUiConfigService) {
+        xmUiConfigService.init();
+    }
+
     public static forRoot(externalConfig?: XmCoreConfig): ModuleWithProviders {
         return {
             ngModule: XmCoreModule,

@@ -3,8 +3,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { JhiAlert, JhiAlertService } from 'ng-jhipster';
 import { Observable } from 'rxjs';
 
-export interface ToasterConfig extends JhiAlert {
-    params?: { value?: string } | any;
+export interface ToasterConfig extends Partial<JhiAlert> {
+    text?: string;
+    msg?: string | undefined;
 }
 
 @Injectable({
@@ -17,6 +18,15 @@ export class XmToasterService {
     }
 
     public create(params: ToasterConfig): Observable<ToasterConfig[]> {
+
+        if (params.text) {
+            params.msg = params.text;
+        }
+
+        if (params.msg) {
+            params.msg = this.translateService.instant(params.msg);
+        }
+
         return new Observable((observer) => {
 
             if (params.close) {
@@ -29,8 +39,33 @@ export class XmToasterService {
                 params.close = close;
             }
 
-            this.alertService.addAlert(params, []);
+            this.alertService.addAlert(params as JhiAlert, []);
         });
+    }
+
+    /** @deprecated user create instead */
+    public success(text: string, params?: any, position?: string): void {
+        this.create({type: 'success', text, params, position}).subscribe();
+    }
+
+    /** @deprecated user create instead */
+    public danger(text: string, params?: any, position?: string): void {
+        this.create({type: 'danger', text, params, position}).subscribe();
+    }
+
+    /** @deprecated user danger instead */
+    public error(text: string, params?: any, position?: string): void {
+        this.danger(text, params, position);
+    }
+
+    /** @deprecated user create instead */
+    public warning(text: string, params?: any, position?: string): void {
+        this.create({type: 'warning', text, params, position}).subscribe();
+    }
+
+    /** @deprecated user create instead */
+    public info(text: string, params?: any, position?: string): void {
+        this.create({type: 'info', text, params, position}).subscribe();
     }
 
 }

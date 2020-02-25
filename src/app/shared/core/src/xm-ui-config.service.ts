@@ -1,21 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { Observable, of, zip } from 'rxjs';
-
-import { XmUIConfig } from './xm-ui-config-model';
 import { takeUntilOnDestroy } from '@xm-ngx/shared/operators';
-import { XmSessionService } from './xm-session.service';
+import { merge } from 'lodash';
+import { Observable, of, zip } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { RequestCache } from './cache/request-cache';
 import { XM_CORE_CONFIG, XmCoreConfig } from './xm-core-config';
-import { catchError, map } from 'rxjs/operators';
-import { merge } from 'lodash';
+import { XmSessionService } from './xm-session.service';
+
+import { XmUIConfig } from './xm-ui-config-model';
 
 @Injectable({providedIn: 'root'})
 export class XmUiConfigService<T = XmUIConfig> implements OnDestroy {
 
-    protected requestCache: RequestCache<T>;
-
     constructor(protected httpClient: HttpClient,
+                protected requestCache: RequestCache<T>,
                 @Inject(XM_CORE_CONFIG) protected xmCoreConfig: XmCoreConfig,
                 protected sessionService: XmSessionService) {
     }
@@ -42,7 +41,7 @@ export class XmUiConfigService<T = XmUIConfig> implements OnDestroy {
             publicAPI().pipe(catchError(() => of(null))),
         ).pipe(map(([pr, pu]) => merge(pu, pr)));
 
-        this.requestCache = new RequestCache(publicAPI);
+        this.requestCache.request = publicAPI;
 
         this.sessionService.get().pipe(takeUntilOnDestroy(this)).subscribe((session) => {
             if (session.active) {

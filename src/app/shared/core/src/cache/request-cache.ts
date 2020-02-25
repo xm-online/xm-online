@@ -1,7 +1,7 @@
-import {interval, ReplaySubject} from 'rxjs';
-import {Observable} from 'rxjs/Observable';
-import {startWith, takeUntil} from 'rxjs/operators';
-import {OnDestroy} from '@angular/core';
+import { OnDestroy } from '@angular/core';
+import { interval, of, ReplaySubject } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { startWith, takeUntil } from 'rxjs/operators';
 
 const TEN_MIN_INTERVAL = 600000;
 const REQUEST_TIMEOUT = 60000;
@@ -24,11 +24,10 @@ export interface IRequestCache<T> extends OnDestroy {
 
 export class RequestCache<T> implements IRequestCache<T> {
 
-    constructor(public request: () => Observable<T>,
-                protected options: typeof DEFAULT_OPTIONS = DEFAULT_OPTIONS) {
-    }
-
     private _cache$: ReplaySubject<T | null>;
+
+    public options: typeof DEFAULT_OPTIONS = DEFAULT_OPTIONS;
+    public request: () => Observable<T> = () => of(null);
 
     public get(): Observable<T | null> {
         if (!this._cache$) {

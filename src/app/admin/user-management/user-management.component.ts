@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
+import { XmToasterService } from '@xm-ngx/toaster';
 
-import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 import swal from 'sweetalert2';
 import { XM_EVENT_LIST } from '../../../app/xm.constants';
@@ -29,7 +30,7 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
     public onlineUsers: number = 0;
 
     constructor(protected activatedRoute: ActivatedRoute,
-                protected alertService: JhiAlertService,
+                protected alertService: XmToasterService,
                 protected eventManager: JhiEventManager,
                 protected parseLinks: JhiParseLinks,
                 protected router: Router,

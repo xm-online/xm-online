@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { XmToasterService } from '@xm-ngx/toaster';
+import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 import swal from 'sweetalert2';
 
@@ -28,7 +29,7 @@ export class BaseAdminListComponent implements OnInit, OnDestroy {
 
     constructor(
         protected activatedRoute: ActivatedRoute,
-        protected alertService: JhiAlertService,
+        protected alertService: XmToasterService,
         protected eventManager: JhiEventManager,
         protected parseLinks: JhiParseLinks,
         protected router: Router,

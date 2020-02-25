@@ -2,7 +2,8 @@ import { ComponentType } from '@angular/cdk/overlay';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { JhiAlertService, JhiOrderByPipe } from 'ng-jhipster';
+import { XmToasterService } from '@xm-ngx/toaster';
+import { JhiOrderByPipe } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
 import { ITEMS_PER_PAGE } from '../../shared/constants/pagination.constants';
@@ -52,7 +53,7 @@ export class RoleMgmtDetailComponent implements OnInit, OnDestroy {
 
     constructor(private jhiLanguageHelper: JhiLanguageHelper,
                 private roleService: RoleService,
-                private alertService: JhiAlertService,
+                private alertService: XmToasterService,
                 private activatedRoute: ActivatedRoute,
                 private orderByPipe: JhiOrderByPipe,
                 private modalService: MatDialog) {

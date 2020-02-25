@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef } from '@angular/material';
 
 import { TranslateService } from '@ngx-translate/core';
+import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager } from 'ng-jhipster';
 import { Observable } from 'rxjs';
 import { finalize, map, startWith } from 'rxjs/operators';
@@ -15,7 +16,6 @@ import { LocationService } from '../shared/location.service';
 import { XmEntity } from '../shared/xm-entity.model';
 import { ISO3166_CODES } from './iso-3166-codes';
 
-declare let swal: any;
 declare let google: any;
 
 export interface CountryOption {
@@ -45,6 +45,7 @@ export class LocationDetailDialogComponent implements OnInit {
 
     constructor(private activeModal: MatDialogRef<LocationDetailDialogComponent>,
                 private locationService: LocationService,
+                private xmToasterService: XmToasterService,
                 private eventManager: JhiEventManager,
                 private translateService: TranslateService,
                 private xmConfigService: XmConfigService,
@@ -205,20 +206,11 @@ export class LocationDetailDialogComponent implements OnInit {
         this.form.reset({...this.location});
     }
 
-    private onSaveSuccess(key: string): void {
+    private onSaveSuccess(text: string): void {
         // TODO: use constant for the broadcast and analyse listeners
         this.eventManager.broadcast({name: 'locationListModification'});
         this.activeModal.close(true);
-        this.alert('success', key);
-    }
-
-    private alert(type: string, key: string): void {
-        swal({
-            type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary',
-        });
+        this.xmToasterService.create({type: 'success', text}).subscribe();
     }
 
     private _filterCountry(value: string): CountryOption[] {

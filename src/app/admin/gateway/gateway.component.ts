@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { JhiAlertService } from 'ng-jhipster';
+import { XmToasterService } from '@xm-ngx/toaster';
 import { finalize } from 'rxjs/operators';
 import swal from 'sweetalert2';
 import { XmConfigService } from '../../shared/spec/config.service';
@@ -20,7 +20,7 @@ export class JhiGatewayComponent implements OnInit {
     constructor(
         private gatewayRoutesService: GatewayRoutesService,
         private service: XmConfigService,
-        private alertService: JhiAlertService,
+        private alertService: XmToasterService,
     ) {
     }
 

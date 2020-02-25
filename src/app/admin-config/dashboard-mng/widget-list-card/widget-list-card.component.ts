@@ -2,7 +2,8 @@ import {HttpResponse} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
-import {JhiAlertService, JhiEventManager, JhiParseLinks} from 'ng-jhipster';
+import { XmToasterService } from '@xm-ngx/toaster';
+import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import {finalize} from 'rxjs/operators';
 
 import {JhiLanguageHelper} from '../../../shared';
@@ -31,7 +32,7 @@ export class WidgetListCardComponent extends BaseAdminConfigListComponent implem
                 protected jhiLanguageHelper: JhiLanguageHelper,
                 protected modalService: MatDialog,
                 protected activatedRoute: ActivatedRoute,
-                protected alertService: JhiAlertService,
+                protected alertService: XmToasterService,
                 protected eventManager: JhiEventManager,
                 protected parseLinks: JhiParseLinks,
                 protected router: Router) {

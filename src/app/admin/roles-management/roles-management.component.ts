@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { JhiAlertService, JhiEventManager, JhiOrderByPipe } from 'ng-jhipster';
+import { XmToasterService } from '@xm-ngx/toaster';
+import { JhiEventManager, JhiOrderByPipe } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
 import { Principal } from '../../shared/auth/principal.service';
@@ -31,7 +32,7 @@ export class RolesMgmtComponent implements OnInit, OnDestroy {
 
     constructor(
         private roleService: RoleService,
-        private alertService: JhiAlertService,
+        private alertService: XmToasterService,
         private principal: Principal,
         private eventManager: JhiEventManager,
         private orderByPipe: JhiOrderByPipe,

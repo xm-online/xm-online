@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { XmToasterService } from '@xm-ngx/toaster';
 
 import * as moment from 'moment';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { Observable, Subject } from 'rxjs';
 import { shareReplay, takeUntil } from 'rxjs/operators';
-import { JhiAlertService } from 'ng-jhipster';
 
 import { AccountService } from './account.service';
 import { SUPER_ADMIN } from './auth.constants';
@@ -25,7 +25,7 @@ export class Principal {
     private xmProfileCache$: Observable<XmEntity>;
 
     constructor(private account: AccountService,
-                private alertService: JhiAlertService,
+                private alertService: XmToasterService,
                 private $localStorage: LocalStorageService,
                 private $sessionStorage: SessionStorageService,
     ) {

@@ -1,4 +1,5 @@
 export * from './jsf-attributes-helper';
+export * from './xm-json-scheme-form.module';
 
 export * from './widgets/ext-query-select/ext-query-select.component';
 export * from './widgets/current-location/current-location.component';

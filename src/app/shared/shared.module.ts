@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CovalentTextEditorModule } from '@covalent/text-editor';
+import { XmJsonSchemeFormModule } from '@xm-ngx/json-scheme-form';
 import { CookieOptions, CookieService } from 'angular2-cookie/core';
 import { ReCaptchaModule } from 'angular2-recaptcha';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
@@ -82,6 +83,7 @@ const PIPES = [
 
 @NgModule({
     imports: [
+        XmJsonSchemeFormModule,
         GateSharedLibsModule,
         GateSharedCommonModule,
         ReCaptchaModule,
@@ -236,6 +238,7 @@ const PIPES = [
         GooglePlaceModule,
         PIPES,
         InputPatternDirective,
+        XmJsonSchemeFormModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 

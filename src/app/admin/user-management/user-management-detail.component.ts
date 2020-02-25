@@ -11,6 +11,7 @@ import { UserLoginService } from '../../shared/user/login/user-login.service';
 @Component({
     selector: 'xm-user-mgmt-detail',
     templateUrl: './user-management-detail.component.html',
+    providers: [PasswordResetInit],
 })
 export class UserMgmtDetailComponent implements OnInit, OnDestroy {
 

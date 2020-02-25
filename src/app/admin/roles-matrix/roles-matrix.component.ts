@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { JhiAlertService, JhiOrderByPipe } from 'ng-jhipster';
+import { XmToasterService } from '@xm-ngx/toaster';
+import { JhiOrderByPipe } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 import { Principal } from '../../shared';
 
@@ -44,7 +45,7 @@ export class RolesMatrixComponent implements OnInit {
     constructor(
         private principal: Principal,
         private roleService: RoleService,
-        private alertService: JhiAlertService,
+        private alertService: XmToasterService,
         private orderByPipe: JhiOrderByPipe,
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;

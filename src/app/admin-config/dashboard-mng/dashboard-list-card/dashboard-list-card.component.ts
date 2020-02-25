@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { XmToasterService } from '@xm-ngx/toaster';
+import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { Observable } from 'rxjs';
 import 'rxjs/add/observable/of';
 import { finalize } from 'rxjs/operators';
@@ -31,7 +32,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
     constructor(protected dashboardService: DashboardService,
                 protected modalService: MatDialog,
                 protected activatedRoute: ActivatedRoute,
-                protected alertService: JhiAlertService,
+                protected alertService: XmToasterService,
                 protected eventManager: JhiEventManager,
                 protected parseLinks: JhiParseLinks,
                 protected translateService: TranslateService,

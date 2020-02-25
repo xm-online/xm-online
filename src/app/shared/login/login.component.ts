@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
+import { XmToasterService } from '@xm-ngx/toaster';
+import { JhiEventManager } from 'ng-jhipster';
 
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -50,7 +51,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         protected stateStorageService: StateStorageService,
         protected elementRef: ElementRef,
         protected router: Router,
-        protected alertService: JhiAlertService,
+        protected alertService: XmToasterService,
         protected modalService: MatDialog,
     ) {
         this.checkOTP = false;

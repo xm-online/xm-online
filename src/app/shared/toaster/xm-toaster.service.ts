@@ -43,27 +43,27 @@ export class XmToasterService {
         });
     }
 
-    /** @deprecated user create instead */
+    /** @deprecated use create instead */
     public success(text: string, params?: any, position?: string): void {
         this.create({type: 'success', text, params, position}).subscribe();
     }
 
-    /** @deprecated user create instead */
+    /** @deprecated use create instead */
     public danger(text: string, params?: any, position?: string): void {
         this.create({type: 'danger', text, params, position}).subscribe();
     }
 
-    /** @deprecated user danger instead */
+    /** @deprecated use danger instead */
     public error(text: string, params?: any, position?: string): void {
         this.danger(text, params, position);
     }
 
-    /** @deprecated user create instead */
+    /** @deprecated use create instead */
     public warning(text: string, params?: any, position?: string): void {
         this.create({type: 'warning', text, params, position}).subscribe();
     }
 
-    /** @deprecated user create instead */
+    /** @deprecated use create instead */
     public info(text: string, params?: any, position?: string): void {
         this.create({type: 'info', text, params, position}).subscribe();
     }

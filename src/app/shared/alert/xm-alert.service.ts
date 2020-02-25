@@ -3,11 +3,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { from, Observable } from 'rxjs';
 import swal, { SweetAlertOptions, SweetAlertResult } from 'sweetalert2';
 
-export interface XmAlertOptions extends SweetAlertOptions {
-}
-
-export interface XmAlertResult extends SweetAlertResult {
-}
+export type XmAlertOptions = SweetAlertOptions;
+export type XmAlertResult = SweetAlertResult;
 
 @Injectable({
     providedIn: 'root',

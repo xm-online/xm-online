@@ -7,7 +7,8 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TranslateModule } from '@ngx-translate/core';
-import { JhiAlertService, JhiConfigService, JhiDateUtils, JhiEventManager, JhiModuleConfig } from 'ng-jhipster';
+import { XmToasterService } from '@xm-ngx/toaster';
+import { JhiConfigService, JhiDateUtils, JhiEventManager, JhiModuleConfig } from 'ng-jhipster';
 
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { XmEntityService } from '..';
@@ -50,7 +51,7 @@ describe('Entity detail dialog Component', () => {
                 JhiEventManager,
                 Principal,
                 AccountService,
-                JhiAlertService,
+                XmToasterService,
                 {
                     provide: JhiConfigService,
                     useValue: new JhiConfigService({defaultI18nLang: 'en', i18nEnabled: true}),

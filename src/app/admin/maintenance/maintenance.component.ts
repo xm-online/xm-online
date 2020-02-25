@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { JhiAlertService } from 'ng-jhipster';
+import { XmToasterService } from '@xm-ngx/toaster';
+
 
 import swal from 'sweetalert2';
 import { XmConfigService } from '../../shared/spec/config.service';
@@ -15,7 +16,7 @@ export class MaintenanceComponent {
 
     constructor(
         private service: XmConfigService,
-        private alertService: JhiAlertService,
+        private alertService: XmToasterService,
     ) {
     }
 

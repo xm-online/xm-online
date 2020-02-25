@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
+import { XmToasterService } from '@xm-ngx/toaster';
 
-import { JhiAlertService } from 'ng-jhipster';
 import { Principal } from './principal.service';
 import { StateStorageService } from './state-storage.service';
 
@@ -12,7 +12,7 @@ export class UserRouteAccessService implements CanActivate, CanActivateChild {
         private router: Router,
         private principal: Principal,
         private stateStorageService: StateStorageService,
-        private alertService: JhiAlertService) {
+        private alertService: XmToasterService) {
     }
 
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {

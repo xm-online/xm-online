@@ -2,7 +2,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
+import { XmToasterService } from '@xm-ngx/toaster';
+import { JhiEventManager } from 'ng-jhipster';
 import { interval, Observable, of, Subscription } from 'rxjs';
 import { catchError, finalize, map, mergeMap, startWith, take } from 'rxjs/operators';
 
@@ -37,7 +38,7 @@ export class CustomerInfoWidgetComponent implements OnInit, OnDestroy {
 
     constructor(private fb: FormBuilder,
                 private principal: Principal,
-                private alertService: JhiAlertService,
+                private alertService: XmToasterService,
                 private eventManager: JhiEventManager,
                 private modalService: MatDialog,
                 private xmEntityService: XmEntityService,

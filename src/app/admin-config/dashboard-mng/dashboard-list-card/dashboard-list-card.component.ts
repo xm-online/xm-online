@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { XmAlertService } from '@xm-ngx/alert';
 import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { Observable } from 'rxjs';
@@ -15,7 +16,6 @@ import { DashboardService } from '../../../xm-dashboard/shared/dashboard.service
 import { BaseAdminConfigListComponent } from '../../base-admin-config-list.component';
 import { DashboardDetailDialogComponent } from '../dashboard-detail-dialog/dashboard-detail-dialog.component';
 
-declare let swal: any;
 
 @Component({
     selector: 'xm-dashboard-list-card',
@@ -32,12 +32,13 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
     constructor(protected dashboardService: DashboardService,
                 protected modalService: MatDialog,
                 protected activatedRoute: ActivatedRoute,
-                protected alertService: XmToasterService,
+                protected toasterService: XmToasterService,
+                protected alertService: XmAlertService,
                 protected eventManager: JhiEventManager,
                 protected parseLinks: JhiParseLinks,
                 protected translateService: TranslateService,
                 protected router: Router) {
-        super(activatedRoute, alertService, eventManager, parseLinks, router);
+        super(activatedRoute, toasterService, alertService, eventManager, parseLinks, router);
         this.itemsPerPage = ITEMS_PER_PAGE;
     }
 
@@ -110,7 +111,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
     }
 
     public onReaderLoad(event: any): void {
-        swal({
+        this.alertService.open({
             type: 'warning',
             text: this.translateService.instant('admin-config.common.confirm'),
             buttonsStyling: false,
@@ -118,7 +119,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
             cancelButtonText: this.translateService.instant('admin-config.common.cancel'),
             confirmButtonClass: 'btn btn-primary',
             cancelButtonClass: 'btn',
-        }).then((confirm) => {
+        }).subscribe((confirm) => {
             if (confirm.value) {
                 this.showLoader = true;
                 const dashboardsArray = JSON.parse(event.target.result);
@@ -126,7 +127,7 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
                     this.setDashboard(dashboardsArray[i]).subscribe(
                         () => {
                             if ((i + 1) === dashboardsArray.length) {
-                                this.alert('success', 'admin-config.dashboard-detail-dialog.add.success');
+                                this.toasterService.success('admin-config.dashboard-detail-dialog.add.success');
                                 this.loadAll();
                             }
                         }, (err) => {
@@ -153,12 +154,4 @@ export class DashboardListCardComponent extends BaseAdminConfigListComponent imp
         document.body.removeChild(a);
     }
 
-    private alert(type: string, key: string): void {
-        swal({
-            type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary',
-        });
-    }
 }

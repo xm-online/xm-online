@@ -9,8 +9,8 @@ import { DEBUG_INFO_ENABLED } from '../../xm.constants';
 import { I18nNamePipe } from '../language/i18n-name.pipe';
 import { XmConfigService } from '../spec/config.service';
 import { ResponseConfig, ResponseConfigItem, ResponseContext } from './response-config.model';
+import { XmAlertService } from './xm-alert.service';
 
-declare let swal: any;
 declare let $: any;
 
 @Component({
@@ -25,7 +25,8 @@ export class JhiAlertErrorComponent implements OnDestroy {
     public responseConfig: ResponseConfig;
 
     /* tslint:disable */
-    constructor(private alertService: JhiAlertService,
+    constructor(private toasterService: JhiAlertService,
+                private alertService: XmAlertService,
                 private eventManager: JhiEventManager,
                 private principal: Principal,
                 protected router: Router,
@@ -80,13 +81,13 @@ export class JhiAlertErrorComponent implements OnDestroy {
         const messageSettings = config.type.split('.') || [];
         switch (messageSettings[0]) {
             case 'swal': {
-                swal({
+                this.alertService.open({
                     title,
                     width: '42rem',
                     type: messageSettings[1],
                     buttonsStyling: false,
                     confirmButtonClass: 'btn btn-primary',
-                }).then((result) => {
+                }).subscribe((result) => {
                     if (result && config.redirectUrl) {
                         const redirect = (config.redirectUrl === '/') ? '' : config.redirectUrl;
                         this.router.navigate([redirect]);
@@ -198,7 +199,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
     public addErrorAlert(message: any, key?: any, data?: any): void {
         key = key && key !== null ? key : message;
         this.alerts.push(
-            this.alertService.addAlert(
+            this.toasterService.addAlert(
                 {
                     type: 'danger',
                     msg: key,

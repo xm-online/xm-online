@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import swal from 'sweetalert2';
+import { XmAlertService } from '@xm-ngx/alert';
+
 import { LoginService } from '../../shared';
 import { XmEntitySpecWrapperService } from '../../xm-entity';
 
@@ -15,6 +16,7 @@ export class LogoutComponent implements OnInit {
     constructor(protected readonly loginService: LoginService,
                 protected readonly xmEntitySpecWrapperService: XmEntitySpecWrapperService,
                 protected readonly translateService: TranslateService,
+                private alertService: XmAlertService,
                 protected readonly route: ActivatedRoute,
                 protected readonly router: Router) { }
 
@@ -25,7 +27,7 @@ export class LogoutComponent implements OnInit {
             this.logout();
         }
 
-        swal({
+        this.alertService.open({
             title: this.translateService.instant('global.common.are-you-sure'),
             showCancelButton: true,
             buttonsStyling: false,
@@ -33,7 +35,7 @@ export class LogoutComponent implements OnInit {
             cancelButtonClass: 'btn mat-button',
             confirmButtonText: this.translateService.instant('global.common.yes-exit'),
             cancelButtonText: this.translateService.instant('global.common.cancel'),
-        }).then((result) => result.value ? this.logout() : history.back());
+        }).subscribe((result) => result.value ? this.logout() : history.back());
     }
 
     public logout(): void {

@@ -2,6 +2,8 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
+import { XmAlertService } from '@xm-ngx/alert';
+import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { Subscription } from 'rxjs';
@@ -15,7 +17,6 @@ import { XmEntityService } from '../shared/xm-entity.service';
 
 declare let $: any;
 declare let google: any;
-declare let swal: any;
 
 @Component({
     selector: 'xm-location-list-card',
@@ -56,6 +57,8 @@ export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
                 private locationService: LocationService,
                 private modalService: MatDialog,
                 private eventManager: JhiEventManager,
+                private alertService: XmAlertService,
+                private toasterService: XmToasterService,
                 private translateService: TranslateService,
                 public principal: Principal) {
     }
@@ -116,23 +119,23 @@ export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public onRemove(location: Location): void {
-        swal({
+        this.alertService.open({
             title: this.translateService.instant('xm-entity.location-list-card.delete.title'),
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
             confirmButtonText: this.translateService.instant('xm-entity.location-list-card.delete.button'),
-        }).then((result) => {
+        }).subscribe((result) => {
             if (result.value) {
                 this.locationService.delete(location.id).subscribe(
                     () => {
                         this.eventManager.broadcast({
                             name: 'locationListModification',
                         });
-                        this.alert('success', 'xm-entity.location-list-card.delete.remove-success');
+                        this.toasterService.success('xm-entity.location-list-card.delete.remove-success');
                     },
-                    () => this.alert('error', 'xm-entity.location-list-card.delete.remove-error'),
+                    () => this.toasterService.error('xm-entity.location-list-card.delete.remove-error'),
                 );
             }
         });
@@ -153,15 +156,6 @@ export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
                     this.locations = [...xmEntity.body.locations];
                 }
             });
-    }
-
-    private alert(type: string, key: string): void {
-        swal({
-            type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary',
-        });
     }
 
 }

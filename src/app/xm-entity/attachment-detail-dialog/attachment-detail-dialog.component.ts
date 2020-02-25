@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
 import { TranslateService } from '@ngx-translate/core';
+import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiDataUtils, JhiEventManager } from 'ng-jhipster';
 
 import { Principal } from '../../shared/auth/principal.service';
@@ -10,7 +11,7 @@ import { Attachment } from '../shared/attachment.model';
 import { AttachmentService } from '../shared/attachment.service';
 import { XmEntity } from '../shared/xm-entity.model';
 
-declare let swal: any;
+
 
 const ATTACHMENT_EVENT = 'attachmentListModification';
 
@@ -29,11 +30,12 @@ export class AttachmentDetailDialogComponent implements OnInit {
     public readOnlyInputs: boolean;
     public wrongFileType: string;
 
-    constructor(private activeModal: MatDialogRef<AttachmentDetailDialogComponent>,
-                private attachmentService: AttachmentService,
-                private eventManager: JhiEventManager,
-                private dataUtils: JhiDataUtils,
-                private translateService: TranslateService,
+    constructor(protected activeModal: MatDialogRef<AttachmentDetailDialogComponent>,
+                protected attachmentService: AttachmentService,
+                protected eventManager: JhiEventManager,
+                protected dataUtils: JhiDataUtils,
+                protected toasterService: XmToasterService,
+                protected translateService: TranslateService,
                 public principal: Principal) {
     }
 
@@ -112,16 +114,7 @@ export class AttachmentDetailDialogComponent implements OnInit {
         console.info('Fire %s', ATTACHMENT_EVENT);
         this.eventManager.broadcast({name: ATTACHMENT_EVENT});
         this.activeModal.close(true);
-        this.alert('success');
-    }
-
-    private alert(type: string): void {
-        swal({
-            type,
-            text: this.translateService.instant('xm-entity.attachment-detail-dialog.add.success'),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary',
-        });
+        this.toasterService.success('xm-entity.attachment-detail-dialog.add.success');
     }
 
 }

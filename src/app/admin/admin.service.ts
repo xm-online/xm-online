@@ -1,9 +1,9 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { XmAlertService } from '@xm-ngx/alert';
 import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
-import swal from 'sweetalert2';
 
 import { ITEMS_PER_PAGE } from '../shared/constants/pagination.constants';
 import { Link } from '../xm-entity';
@@ -29,7 +29,8 @@ export class BaseAdminListComponent implements OnInit, OnDestroy {
 
     constructor(
         protected activatedRoute: ActivatedRoute,
-        protected alertService: XmToasterService,
+        protected toasterService: XmToasterService,
+        protected alertService: XmAlertService,
         protected eventManager: JhiEventManager,
         protected parseLinks: JhiParseLinks,
         protected router: Router,
@@ -104,18 +105,18 @@ export class BaseAdminListComponent implements OnInit, OnDestroy {
     }
 
     public onError(error: any): void {
-        this.alertService.error(error.error, error.message, null);
+        this.toasterService.error(error.error, error.message, null);
     }
 
     protected onDeleteItem(id: number, itemName: string): void {
-        swal({
+        this.alertService.open({
             title: `Delete ${itemName}?`,
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes, delete!',
-        }).then((result) => result.value ? this.deleteAction(id) : console.info('Cancel'));
+        }).subscribe((result) => result.value ? this.deleteAction(id) : console.info('Cancel'));
     }
 
     protected getPageAfterRemove(result: any): any {

@@ -2,7 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
-import { TranslateService } from '@ngx-translate/core';
+import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager } from 'ng-jhipster';
 import { filter, map } from 'rxjs/operators';
 
@@ -15,7 +15,6 @@ import { Spec } from '../shared/spec.model';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
 
-declare let swal: any;
 
 @Component({
     selector: 'xm-link-detail-search-section',
@@ -40,7 +39,7 @@ export class LinkDetailSearchSectionComponent implements OnInit {
                 private xmEntityService: XmEntityService,
                 private linkService: LinkService,
                 private eventManager: JhiEventManager,
-                private translateService: TranslateService,
+                private toasterService: XmToasterService,
                 private configService: XmConfigService) {
     }
 
@@ -72,9 +71,9 @@ export class LinkDetailSearchSectionComponent implements OnInit {
 
         this.linkService.create(link).subscribe(() => {
                 this.eventManager.broadcast({name: 'linkListModification'});
-                this.alert('success', 'xm-entity.link-detail-dialog.add.success');
+                this.toasterService.success('xm-entity.link-detail-dialog.add.success');
             }, () => {
-                this.alert('error', 'xm-entity.link-detail-dialog.add.error');
+                this.toasterService.error('xm-entity.link-detail-dialog.add.error');
                 this.showLoader = false;
             },
             () => this.activeModal.close(true));
@@ -109,15 +108,6 @@ export class LinkDetailSearchSectionComponent implements OnInit {
             filter((entity) => entity.hasOwnProperty('links')),
             map((entity) => entity.links.find((link) => link.key === this.linkSpec.key).filterQuery),
         );
-    }
-
-    private alert(type: string, key: string): void {
-        swal({
-            type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary',
-        });
     }
 
 }

@@ -4,6 +4,8 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
+import { XmAlertService } from '@xm-ngx/alert';
+import { XmToasterService } from '@xm-ngx/toaster';
 
 import * as _ from 'lodash';
 import { JhiEventManager } from 'ng-jhipster';
@@ -23,7 +25,6 @@ import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
 import { ActionOptions, EntityListCardOptions, EntityOptions, FieldOptions } from './entity-list-card-options.model';
 
-declare let swal: any;
 
 @Component({
     selector: 'xm-entity-list-card',
@@ -57,6 +58,8 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
                 private modalService: MatDialog,
                 private xmConfigService: XmConfigService,
                 private translateService: TranslateService,
+                private toasterService: XmToasterService,
+                private alertService: XmAlertService,
                 private i18nNamePipe: I18nNamePipe,
                 private router: Router,
                 private contextService: ContextService,
@@ -220,23 +223,23 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public onRemove(xmEntity: XmEntity): void {
-        swal({
+        this.alertService.open({
             title: this.translateService.instant('xm-entity.entity-list-card.delete.title'),
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
             confirmButtonText: this.translateService.instant('xm-entity.entity-list-card.delete.button'),
-        }).then((result) => {
+        }).subscribe((result) => {
             if (result.value) {
                 this.xmEntityService.delete(xmEntity.id).subscribe(
                     () => {
                         this.eventManager.broadcast({
                             name: XM_EVENT_LIST.XM_ENTITY_LIST_MODIFICATION,
                         });
-                        this.alert('success', 'xm-entity.entity-list-card.delete.remove-success');
+                        this.toasterService.success('xm-entity.entity-list-card.delete.remove-success');
                     },
-                    () => this.alert('error', 'xm-entity.entity-list-card.delete.remove-error'),
+                    () => this.toasterService.error('xm-entity.entity-list-card.delete.remove-error'),
                 );
             }
         });
@@ -407,15 +410,6 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
             entity.state = states.filter((s) => s.key === entity.stateKey).shift();
         }
         return entity;
-    }
-
-    private alert(type: any, key: string): void {
-        swal({
-            type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary',
-        });
     }
 
 }

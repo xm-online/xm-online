@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
+import { XmAlertService } from '@xm-ngx/alert';
 import { XmToasterService } from '@xm-ngx/toaster';
 
-
-import swal from 'sweetalert2';
 import { XmConfigService } from '../../shared/spec/config.service';
 
 @Component({
@@ -16,24 +15,25 @@ export class MaintenanceComponent {
 
     constructor(
         private service: XmConfigService,
-        private alertService: XmToasterService,
+        private alertService: XmAlertService,
+        private toasterService: XmToasterService,
     ) {
     }
 
     public reindexElastic(): void {
-        swal({
+        this.alertService.open({
             title: 'Warning. Elastic index will be re-indexed. Time consuming operation.',
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes, reindex!',
-        }).then((result) => {
+        }).subscribe((result) => {
             if (result.value) {
                 this.service.reindexTenantElastic().subscribe(
                     null,
                     null,
-                    () => this.alertService.success('global.actionPerformed'),
+                    () => this.toasterService.success('global.actionPerformed'),
                 );
             }
         });
@@ -41,20 +41,20 @@ export class MaintenanceComponent {
 
     public updateTenantsConfiguration(): void {
 
-        swal({
+        this.alertService.open({
             title: 'Reload configuration for ALL tenants?',
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes, reload!',
-        }).then((result) => {
+        }).subscribe((result) => {
             if (result.value) {
                 this.service.updateTenantsConfig().subscribe(
                     null,
                     null,
                     () => {
-                        this.alertService.success('global.actionPerformed');
+                        this.toasterService.success('global.actionPerformed');
                         window.location.reload();
                     },
                 );
@@ -64,14 +64,14 @@ export class MaintenanceComponent {
     }
 
     public updateTenantConfiguration(): void {
-        swal({
+        this.alertService.open({
             title: 'Reload tenant configuration?',
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes, reload!',
-        }).then((result) => {
+        }).subscribe((result) => {
             this.isTenantCfgUpdating = true;
             if (result.value) {
                 this.service.updateTenantConfig().subscribe(
@@ -79,7 +79,7 @@ export class MaintenanceComponent {
                     null,
                     () => {
                         this.isTenantCfgUpdating = false;
-                        this.alertService.success('global.actionPerformed');
+                        this.toasterService.success('global.actionPerformed');
                         window.location.reload();
                     });
             }

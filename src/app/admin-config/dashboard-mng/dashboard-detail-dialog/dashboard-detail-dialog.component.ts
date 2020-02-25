@@ -1,14 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
-import { TranslateService } from '@ngx-translate/core';
+import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { environment } from '../../../../environments/environment';
 import { Principal } from '../../../shared/auth/principal.service';
 import { Dashboard, DashboardService } from '../../../xm-dashboard';
 
-declare let swal: any;
 
 @Component({
     selector: 'xm-dashboard-detail-dialog',
@@ -28,7 +27,7 @@ export class DashboardDetailDialogComponent implements OnInit {
     constructor(private activeModal: MatDialogRef<DashboardDetailDialogComponent>,
                 private dashboardService: DashboardService,
                 private eventManager: JhiEventManager,
-                private translateService: TranslateService,
+                private toasterService: XmToasterService,
                 public principal: Principal) {
     }
 
@@ -78,16 +77,7 @@ export class DashboardDetailDialogComponent implements OnInit {
         // TODO: use constant for the broadcast and analyse listeners
         this.eventManager.broadcast({name: 'dashboardListModification'});
         this.activeModal.close(true);
-        this.alert('success', key);
-    }
-
-    private alert(type: string, key: string): void {
-        swal({
-            type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary',
-        });
+        this.toasterService.success(key);
     }
 
 }

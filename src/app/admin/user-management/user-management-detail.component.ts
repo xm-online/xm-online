@@ -1,7 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import swal from 'sweetalert2';
+import { XmAlertService } from '@xm-ngx/alert';
+
 import { PasswordResetInit } from '../../account/password-reset/init/password-reset-init.service';
 import { User, UserService } from '../../shared';
 import { JhiLanguageHelper } from '../../shared/language/language.helper';
@@ -23,6 +24,7 @@ export class UserMgmtDetailComponent implements OnInit, OnDestroy {
 
     constructor(
         private jhiLanguageHelper: JhiLanguageHelper,
+        private alertService: XmAlertService,
         private userService: UserService,
         private userLoginService: UserLoginService,
         private pwsResetService: PasswordResetInit,
@@ -68,14 +70,14 @@ export class UserMgmtDetailComponent implements OnInit, OnDestroy {
     }
 
     public initPasswordReset(): void {
-        swal({
+        this.alertService.open({
             title: `Initiate password reset for ${this.userEmail}?`,
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes, reset!',
-        }).then((result) => result.value
+        }).subscribe((result) => result.value
             ? this.pwsResetService.save(this.userEmail).subscribe()
             : console.info('Cancel'));
     }

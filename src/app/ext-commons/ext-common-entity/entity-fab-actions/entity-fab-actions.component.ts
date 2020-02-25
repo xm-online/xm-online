@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
@@ -15,8 +16,6 @@ import {
 } from '../../../xm-entity';
 import { FunctionCallDialogComponent } from '../../../xm-entity/function-call-dialog/function-call-dialog.component';
 import { XM_EVENT_LIST } from '../../../xm.constants';
-
-declare let swal: any;
 
 const ENTITY_SELECTED = 'xm-entity-selected';
 
@@ -44,6 +43,7 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
         public principal: Principal,
         private router: Router,
         protected translateService: TranslateService,
+        protected toasterService: XmToasterService,
         protected modalService: MatDialog,
         protected eventManager: JhiEventManager,
         protected xmEntitySpecWrapperService: XmEntitySpecWrapperService,
@@ -119,12 +119,7 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
                     : this.navigate(path, {});
                 return;
             }
-            swal({
-                type: 'success',
-                text: this.translateService.instant('ext-common-entity.entity-fab-actions.operation-success'),
-                buttonsStyling: false,
-                confirmButtonClass: 'btn btn-primary',
-            });
+            this.toasterService.success('ext-common-entity.entity-fab-actions.operation-success');
         };
         return modalRef;
     }
@@ -147,12 +142,7 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
         modalRef.componentInstance.buttonTitle = title;
         modalRef.componentInstance.onSuccess = () => {
             this.eventManager.broadcast({name: XM_EVENT_LIST.XM_FUNCTION_CALL_SUCCESS});
-            swal({
-                type: 'success',
-                text: this.translateService.instant('ext-common-entity.entity-fab-actions.operation-success'),
-                buttonsStyling: false,
-                confirmButtonClass: 'btn btn-primary',
-            });
+            this.toasterService.success('ext-common-entity.entity-fab-actions.operation-success');
         };
 
         return modalRef;

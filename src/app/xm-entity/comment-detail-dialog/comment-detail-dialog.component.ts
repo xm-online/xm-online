@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
-import { TranslateService } from '@ngx-translate/core';
+import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { Principal } from '../../shared/auth/principal.service';
@@ -10,7 +10,6 @@ import { Comment } from '../shared/comment.model';
 import { CommentService } from '../shared/comment.service';
 import { XmEntity } from '../shared/xm-entity.model';
 
-declare let swal: any;
 
 @Component({
     selector: 'xm-comment-detail-dialog',
@@ -28,7 +27,7 @@ export class CommentDetailDialogComponent implements OnInit {
     constructor(private activeModal: MatDialogRef<CommentDetailDialogComponent>,
                 private commentService: CommentService,
                 private eventManager: JhiEventManager,
-                private translateService: TranslateService,
+                private toasterService: XmToasterService,
                 public principal: Principal) {
     }
 
@@ -62,16 +61,7 @@ export class CommentDetailDialogComponent implements OnInit {
         // TODO: use constant for the broadcast and analyse listeners
         this.eventManager.broadcast({name: 'commentListModification'});
         this.activeModal.close(true);
-        this.alert('success', 'xm-entity.comment-detail-dialog.add.success');
-    }
-
-    private alert(type: string, key: string): void {
-        swal({
-            type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary',
-        });
+        this.toasterService.success('xm-entity.comment-detail-dialog.add.success');
     }
 
 }

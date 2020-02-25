@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { XmToasterService } from '@xm-ngx/toaster';
 
 import { DEBUG_INFO_ENABLED } from '../../xm.constants';
 import { RatingSpec } from '../shared/rating-spec.model';
@@ -10,8 +10,6 @@ import { Vote } from '../shared/vote.model';
 import { VoteService } from '../shared/vote.service';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
-
-declare let swal: any;
 
 @Component({
     selector: 'xm-rating-list-section',
@@ -30,7 +28,7 @@ export class RatingListSectionComponent implements OnChanges {
     constructor(private xmEntityService: XmEntityService,
                 private ratingService: RatingService,
                 private voteService: VoteService,
-                private translateService: TranslateService) {
+                private toasterService: XmToasterService) {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -102,30 +100,21 @@ export class RatingListSectionComponent implements OnChanges {
         this.ratingService.create(rating).subscribe((response: HttpResponse<Rating>) => {
             vote.rating = response.body;
             this.addVote(vote);
-        }, () => this.alert('success', 'xm-entity.rating-list-section.vote-error'));
+        }, () => this.toasterService.success('xm-entity.rating-list-section.vote-error'));
     }
 
     private updateRating(rating: Rating, vote: Vote): void {
         this.ratingService.update(rating).subscribe((response: HttpResponse<Rating>) => {
             vote.rating = response.body;
             this.addVote(vote);
-        }, () => this.alert('success', 'xm-entity.rating-list-section.vote-error'));
+        }, () => this.toasterService.success('xm-entity.rating-list-section.vote-error'));
     }
 
     private addVote(vote: Vote): void {
         this.voteService.create(vote).subscribe(() => {
             this.load();
-            this.alert('success', 'xm-entity.rating-list-section.vote-success');
-        }, () => this.alert('error', 'xm-entity.rating-list-section.vote-error'));
-    }
-
-    private alert(type: string, key: string): void {
-        swal({
-            type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary',
-        });
+            this.toasterService.success('xm-entity.rating-list-section.vote-success');
+        }, () => this.toasterService.error('xm-entity.rating-list-section.vote-error'));
     }
 
 }

@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
-import { TranslateService } from '@ngx-translate/core';
+import { XmAlertService } from '@xm-ngx/alert';
+import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 
@@ -12,7 +13,6 @@ import { NextSpec } from '../shared/state-spec.model';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
 
-declare let swal: any;
 declare let $: any;
 
 @Component({
@@ -34,10 +34,11 @@ export class StateChangeDialogComponent implements OnInit {
 
     constructor(private activeModal: MatDialogRef<StateChangeDialogComponent>,
                 private xmEntityService: XmEntityService,
-                private translateService: TranslateService,
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore
                 private eventManager: JhiEventManager,
+                private alertService: XmAlertService,
+                private toasterService: XmToasterService,
                 private contextService: ContextService,
                 public principal: Principal) {
     }
@@ -62,22 +63,21 @@ export class StateChangeDialogComponent implements OnInit {
             (r) => {
                 this.onSuccessFunctionCall(r);
             },
-            () => this.alert('error', 'xm-entity.function-list-card.change-state.error'),
+            () => this.toasterService.error('xm-entity.function-list-card.change-state.error'),
         );
-
     }
 
     public onSuccessFunctionCall(r: any): void {
         const data = r.body;
         if (data && this.nextSpec.showResponse) {
-            swal({
+            this.alertService.open({
                 type: 'success',
                 html: `<pre style="text-align: left"><code>${JSON.stringify(data, null, '  ')}</code></pre>`,
                 buttonsStyling: false,
                 confirmButtonClass: 'btn btn-primary',
-            });
+            }).subscribe();
         } else {
-            this.alert('success', 'xm-entity.function-list-card.change-state.success');
+            this.toasterService.success('xm-entity.function-list-card.change-state.success');
         }
         this.activeModal.close('OK');
     }
@@ -88,15 +88,6 @@ export class StateChangeDialogComponent implements OnInit {
 
     public onChangeForm(data: any): void {
         this.formData = data;
-    }
-
-    private alert(type: string, key: string): void {
-        swal({
-            type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary',
-        });
     }
 
 }

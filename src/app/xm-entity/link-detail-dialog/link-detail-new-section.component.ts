@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
-import { TranslateService } from '@ngx-translate/core';
+import { XmToasterService } from '@xm-ngx/toaster';
 import { UUID } from 'angular2-uuid';
 import { JhiEventManager } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
@@ -16,7 +16,6 @@ import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
 
 declare let $: any;
-declare let swal: any;
 
 @Component({
     selector: 'xm-link-detail-new-section',
@@ -41,7 +40,7 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
                 private xmEntityService: XmEntityService,
                 private changeDetector: ChangeDetectorRef,
                 private eventManager: JhiEventManager,
-                private translateService: TranslateService,
+                private toasterService: XmToasterService,
                 public principal: Principal) {
         $.isAddNewLink = true;
     }
@@ -112,16 +111,7 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
         this.eventManager.broadcast({name: 'xmEntityListModification'});
         this.eventManager.broadcast({name: 'linkListModification'});
         this.activeModal.close(true);
-        this.alert('success', 'xm-entity.link-detail-dialog.add.success');
-    }
-
-    private alert(type: string, key: string): void {
-        swal({
-            type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary',
-        });
+        this.toasterService.success('xm-entity.link-detail-dialog.add.success');
     }
 
 }

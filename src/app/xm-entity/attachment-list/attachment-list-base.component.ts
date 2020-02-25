@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material';
 import { MatDialogRef } from '@angular/material/dialog/typings/dialog-ref';
 
 import { TranslateService } from '@ngx-translate/core';
+import { XmAlertService } from '@xm-ngx/alert';
+import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 import { Principal } from '../../shared';
@@ -17,7 +19,6 @@ import { AttachmentService } from '../shared/attachment.service';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
 
-declare let swal: any;
 
 const ATTACHMENT_EVENT = XM_EVENT_LIST.XM_ATTACHMENT_LIST_MODIFICATION;
 
@@ -34,12 +35,14 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
     @Input() public entityUiConfig: EntityUiConfig;
     private modificationSubscription: Subscription;
 
-    constructor(private attachmentService: AttachmentService,
-                private xmEntityService: XmEntityService,
-                private eventManager: JhiEventManager,
-                private translateService: TranslateService,
+    constructor(protected attachmentService: AttachmentService,
+                protected xmEntityService: XmEntityService,
+                protected eventManager: JhiEventManager,
+                protected toasterService: XmToasterService,
+                protected alertService: XmAlertService,
+                protected translateService: TranslateService,
                 public principal: Principal,
-                private modalService: MatDialog) {
+                protected modalService: MatDialog) {
     }
 
     public ngOnInit(): void {
@@ -91,23 +94,23 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
     }
 
     public onRemove(attachment: Attachment): void {
-        swal({
+        this.alertService.open({
             title: this.translateService.instant('xm-entity.attachment-card.delete.title'),
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
             confirmButtonText: this.translateService.instant('xm-entity.attachment-card.delete.button'),
-        }).then((result) => {
+        }).subscribe((result) => {
             if (result.value) {
                 this.attachmentService.delete(attachment.id).subscribe(
                     () => {
                         this.eventManager.broadcast({
                             name: 'attachmentListModification',
                         });
-                        this.alert('success', 'xm-entity.attachment-card.delete.remove-success');
+                        this.toasterService.success( 'xm-entity.attachment-card.delete.remove-success');
                     },
-                    () => this.alert('error', 'xm-entity.attachment-card.delete.remove-error'),
+                    () => this.toasterService.error( 'xm-entity.attachment-card.delete.remove-error'),
                 );
             }
         });
@@ -178,15 +181,6 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
         const blob = new Blob([ab], {type: body.valueContentType});
         const filename = body.contentUrl;
         saveFile(blob, filename, body.valueContentType);
-    }
-
-    private alert(type: string, key: string): void {
-        swal({
-            type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary',
-        });
     }
 
 }

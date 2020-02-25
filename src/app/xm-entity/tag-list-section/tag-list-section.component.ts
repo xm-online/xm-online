@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 import { DEBUG_INFO_ENABLED, XM_EVENT_LIST } from '../../xm.constants';
@@ -10,8 +10,6 @@ import { Tag } from '../shared/tag.model';
 import { TagService } from '../shared/tag.service';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
-
-declare let swal: any;
 
 @Component({
     selector: 'xm-tag-list-section',
@@ -29,7 +27,7 @@ export class TagListSectionComponent implements OnInit, OnChanges, OnDestroy {
     constructor(private eventManager: JhiEventManager,
                 private tagService: TagService,
                 private xmEntityService: XmEntityService,
-                private translateService: TranslateService) {
+                private toasterService: XmToasterService) {
     }
 
     public ngOnInit(): void {
@@ -57,7 +55,7 @@ export class TagListSectionComponent implements OnInit, OnChanges, OnDestroy {
         this.tagService.create(tag).subscribe(
             () => this.load(),
             () => {
-                this.alert('error', 'xm-entity.tag-list-section.add-error');
+                this.toasterService.error('xm-entity.tag-list-section.add-error');
                 this.load();
             });
     }
@@ -66,7 +64,7 @@ export class TagListSectionComponent implements OnInit, OnChanges, OnDestroy {
         this.tagService.delete(xmTag.id).subscribe(
             () => this.load(),
             () => {
-                this.alert('error', 'xm-entity.tag-list-section.remove-error');
+                this.toasterService.error('xm-entity.tag-list-section.remove-error');
                 this.load();
             });
     }
@@ -83,15 +81,6 @@ export class TagListSectionComponent implements OnInit, OnChanges, OnDestroy {
             if (xmEntity.body.tags) {
                 this.tags = [...xmEntity.body.tags];
             }
-        });
-    }
-
-    private alert(type: string, key: string): void {
-        swal({
-            type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary',
         });
     }
 

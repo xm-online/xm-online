@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
+import { XmAlertService } from '@xm-ngx/alert';
 import { XmToasterService } from '@xm-ngx/toaster';
 
 import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
-import swal from 'sweetalert2';
+
 import { XM_EVENT_LIST } from '../../../app/xm.constants';
 import { Principal, RoleService, User, UserLogin, UserLoginService, UserService } from '../../shared';
 import { BaseAdminListComponent } from '../admin.service';
@@ -30,7 +31,8 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
     public onlineUsers: number = 0;
 
     constructor(protected activatedRoute: ActivatedRoute,
-                protected alertService: XmToasterService,
+                protected toasterService: XmToasterService,
+                protected alertService: XmAlertService,
                 protected eventManager: JhiEventManager,
                 protected parseLinks: JhiParseLinks,
                 protected router: Router,
@@ -39,7 +41,7 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
                 private userService: UserService,
                 private roleService: RoleService,
                 public principal: Principal) {
-        super(activatedRoute, alertService, eventManager, parseLinks, router);
+        super(activatedRoute, toasterService, alertService, eventManager, parseLinks, router);
         this.currentSearch = activatedRoute.snapshot.params.search || '';
     }
 
@@ -56,14 +58,14 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
     }
 
     public changeState(user: User): void {
-        swal({
+        this.alertService.open({
             title: user.activated ? `Block user?` : `Unblock user?`,
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes',
-        }).then((result) => result.value ?
+        }).subscribe((result) => result.value ?
             this.changeUserState(user) :
             console.info('Cancel'));
     }
@@ -84,39 +86,39 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
     }
 
     public enable2FA(user: User): void {
-        swal({
+        this.alertService.open({
             title: `Enable 2FA?`,
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes, Enable',
-        }).then((result) => result.value ?
+        }).subscribe((result) => result.value ?
             this.userService.enable2FA(user.userKey, this.getRegistrationEmail(user))
                 .subscribe(
                     () => {
                         user.tfaEnabled = true;
-                        this.alertService.success('userManagement.twoFAEnabled');
+                        this.toasterService.success('userManagement.twoFAEnabled');
                     },
-                    (error) => this.alertService.error(error)) :
+                    (error) => this.toasterService.error(error)) :
             console.info('Cancel'));
     }
 
     public disable2FA(user: User): void {
-        swal({
+        this.alertService.open({
             title: `Disable 2FA?`,
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes, Disable',
-        }).then((result) => result.value ?
+        }).subscribe((result) => result.value ?
             this.userService.disable2FA(user.userKey)
                 .subscribe(() => {
                         user.tfaEnabled = false;
-                        this.alertService.success('userManagement.twoFADisabled');
+                        this.toasterService.success('userManagement.twoFADisabled');
                     },
-                    (error) => this.alertService.error(error)) :
+                    (error) => this.toasterService.error(error)) :
             console.info('Cancel'));
     }
 
@@ -210,10 +212,10 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
     private changeUserState(user: User): void {
         user.activated = !user.activated;
         this.userService.update(user).subscribe(() => {
-            this.alertService.success('userManagement.success');
+            this.toasterService.success('userManagement.success');
         }, (err) => {
             console.info(err);
-            this.alertService.error('userManagement.error');
+            this.toasterService.error('userManagement.error');
             user.activated = !user.activated;
         });
     }

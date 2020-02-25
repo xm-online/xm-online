@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@ang
 import { MatDialogRef } from '@angular/material';
 
 import { Router } from '@angular/router';
+import { XmAlertService } from '@xm-ngx/alert';
 
 import { JhiEventManager } from 'ng-jhipster';
 import { BehaviorSubject, merge, Observable, of } from 'rxjs';
@@ -15,7 +16,6 @@ import { FunctionSpec } from '../shared/function-spec.model';
 import { FunctionService } from '../shared/function.service';
 import { XmEntity } from '../shared/xm-entity.model';
 
-declare let swal: any;
 declare let $: any;
 
 @Component({
@@ -42,6 +42,7 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
                 private functionService: FunctionService,
                 private eventManager: JhiEventManager,
                 private contextService: ContextService,
+                private alertService: XmAlertService,
                 public principal: Principal,
                 private ref: ChangeDetectorRef,
                 private router: Router) {
@@ -126,12 +127,12 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
             // if response should be shown but there are no form provided
         } else if (data && this.functionSpec.showResponse && !this.functionSpec.contextDataForm) {
             this.activeModal.close(true);
-            swal({
+            this.alertService.open({
                 type: 'success',
                 html: `<pre style="text-align: left"><code>${JSON.stringify(data, null, '  ')}</code></pre>`,
                 buttonsStyling: false,
                 confirmButtonClass: 'btn btn-primary',
-            });
+            }).subscribe();
         } else if (data && this.functionSpec.showResponse && this.functionSpec.contextDataForm) {
             this.showSecondStep$.next(true);
             this.jsfAttributes = buildJsfAttributes(

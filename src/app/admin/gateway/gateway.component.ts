@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { XmAlertService } from '@xm-ngx/alert';
 import { XmToasterService } from '@xm-ngx/toaster';
 import { finalize } from 'rxjs/operators';
-import swal from 'sweetalert2';
+
 import { XmConfigService } from '../../shared/spec/config.service';
 import { GatewayRoute } from './gateway-route.model';
 
@@ -20,7 +21,8 @@ export class JhiGatewayComponent implements OnInit {
     constructor(
         private gatewayRoutesService: GatewayRoutesService,
         private service: XmConfigService,
-        private alertService: XmToasterService,
+        private alertService: XmAlertService,
+        private toasterService: XmToasterService,
     ) {
     }
 
@@ -38,26 +40,26 @@ export class JhiGatewayComponent implements OnInit {
     }
 
     public tenantConfigRefresh(): void {
-        swal({
+        this.alertService.open({
             title: 'Reload tenant configuration?',
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes, reload!',
-        }).then((result) => result.value ? this.triggerUpdate()
+        }).subscribe((result) => result.value ? this.triggerUpdate()
             : console.info('Cancel'));
     }
 
     public tenantElasticUpdate(): void {
-        swal({
+        this.alertService.open({
             title: 'Reload Elastic?',
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes, reload!',
-        }).then((result) => result.value ? this.triggerUpdate('reindexTenantElastic')
+        }).subscribe((result) => result.value ? this.triggerUpdate('reindexTenantElastic')
             : console.info('Cancel'));
     }
 
@@ -69,7 +71,7 @@ export class JhiGatewayComponent implements OnInit {
                 console.warn(err);
                 this.showLoader = false;
             },
-            () => this.alertService.success('global.actionPerformed'));
+            () => this.toasterService.success('global.actionPerformed'));
     }
 
 }

@@ -2,6 +2,7 @@ import {HttpResponse} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
+import { XmAlertService } from '@xm-ngx/alert';
 import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import {finalize} from 'rxjs/operators';
@@ -32,11 +33,12 @@ export class WidgetListCardComponent extends BaseAdminConfigListComponent implem
                 protected jhiLanguageHelper: JhiLanguageHelper,
                 protected modalService: MatDialog,
                 protected activatedRoute: ActivatedRoute,
-                protected alertService: XmToasterService,
+                protected alertService: XmAlertService,
+                protected toasterService: XmToasterService,
                 protected eventManager: JhiEventManager,
                 protected parseLinks: JhiParseLinks,
                 protected router: Router) {
-        super(activatedRoute, alertService, eventManager, parseLinks, router);
+        super(activatedRoute, toasterService, alertService, eventManager, parseLinks, router);
         this.activatedRoute.data.subscribe((data) => {
             this.activatedRouteData = data;
         });

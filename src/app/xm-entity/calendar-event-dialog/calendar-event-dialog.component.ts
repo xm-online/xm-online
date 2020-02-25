@@ -2,7 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
-import { TranslateService } from '@ngx-translate/core';
+import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiDateUtils } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 
@@ -14,7 +14,6 @@ import { Event } from '../shared/event.model';
 import { EventService } from '../shared/event.service';
 import { XmEntity } from '../shared/xm-entity.model';
 
-declare let swal: any;
 
 @Component({
     selector: 'xm-calendar-event-dialog',
@@ -37,7 +36,7 @@ export class CalendarEventDialogComponent implements OnInit {
                 private eventService: EventService,
                 private calendarService: CalendarService,
                 private dateUtils: JhiDateUtils,
-                private translateService: TranslateService,
+                private toasterService: XmToasterService,
                 public principal: Principal) {
     }
 
@@ -77,18 +76,9 @@ export class CalendarEventDialogComponent implements OnInit {
 
     private onSaveSuccess(calendarId: number, event: Event): void {
         this.activeModal.close(true);
-        this.alert('success', 'xm-entity.calendar-event-dialog.add.success');
+        this.toasterService.success('xm-entity.calendar-event-dialog.add.success');
         this.calendar.id = calendarId;
         this.onAddEvent(event);
-    }
-
-    private alert(type: string, key: string): void {
-        swal({
-            type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary',
-        });
     }
 
 }

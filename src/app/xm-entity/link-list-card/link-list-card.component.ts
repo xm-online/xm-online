@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { XmAlertService } from '@xm-ngx/alert';
+import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { Principal } from '../../shared/auth/principal.service';
@@ -9,8 +11,6 @@ import { FullLinkSpec } from '../shared/link-spec.model';
 import { Link } from '../shared/link.model';
 import { LinkService } from '../shared/link.service';
 import { XmEntity } from '../shared/xm-entity.model';
-
-declare let swal: any;
 
 @Component({
     selector: 'xm-link-list-card',
@@ -41,6 +41,8 @@ export class LinkListCardComponent implements OnInit, OnChanges {
 
     constructor(private linkService: LinkService,
                 private eventManager: JhiEventManager,
+                private toasterService: XmToasterService,
+                private alertService: XmAlertService,
                 private translateService: TranslateService,
                 public principal: Principal) {
     }
@@ -61,18 +63,18 @@ export class LinkListCardComponent implements OnInit, OnChanges {
     }
 
     public onRemove(link: Link): void {
-        swal({
+        this.alertService.open({
             title: this.translateService.instant('xm-entity.link-list-card.delete.title'),
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
             confirmButtonText: this.translateService.instant('xm-entity.link-list-card.delete.button'),
-        }).then((result) => {
+        }).subscribe((result) => {
             if (result.value) {
                 this.linkService.delete(link.id).subscribe(
-                    () => this.alert('success', 'xm-entity.link-list-card.delete.remove-success'),
-                    () => this.alert('error', 'xm-entity.link-list-card.delete.remove-error'),
+                    () => this.toasterService.success('xm-entity.link-list-card.delete.remove-success'),
+                    () => this.toasterService.error('xm-entity.link-list-card.delete.remove-error'),
                     () => this.eventManager.broadcast({
                         name: 'linkListModification',
                     }),
@@ -88,14 +90,4 @@ export class LinkListCardComponent implements OnInit, OnChanges {
     private valueToLength(value: any[]): any {
         return value ? value.length : 0;
     }
-
-    private alert(type: string, key: string): void {
-        swal({
-            type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary',
-        });
-    }
-
 }

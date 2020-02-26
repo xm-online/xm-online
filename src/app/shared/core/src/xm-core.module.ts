@@ -1,6 +1,7 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {defaults} from 'lodash';
+import { RequestCache } from './cache/request-cache';
 
 import {XmSessionService} from './xm-session.service';
 import {XmUiConfigService} from './xm-ui-config.service';
@@ -24,6 +25,7 @@ export class XmCoreModule {
         return {
             ngModule: XmCoreModule,
             providers: [
+                RequestCache,
                 XmSessionService,
                 XmUiConfigService,
                 {provide: XM_CORE_EXTERNAL_CONFIG, useValue: externalConfig},

@@ -2,15 +2,7 @@ import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import {
-    Framework,
-    FrameworkLibraryService,
-    JsonSchemaFormModule,
-    JsonSchemaFormService,
-    MaterialDesignFramework,
-    MaterialDesignFrameworkModule,
-    WidgetLibraryService,
-} from 'angular2-json-schema-form';
+
 
 import { TagInputModule } from 'ngx-chips';
 import { XmSharedModule } from '../shared/shared.module';
@@ -61,16 +53,6 @@ import { TranslationService } from './translations/translation.service';
         CommonModule,
         TagInputModule,
         XmSharedModule,
-        MaterialDesignFrameworkModule,
-        {
-            ngModule: JsonSchemaFormModule,
-            providers: [
-                JsonSchemaFormService,
-                FrameworkLibraryService,
-                WidgetLibraryService,
-                {provide: Framework, useClass: MaterialDesignFramework, multi: true},
-            ],
-        },
         FormsModule,
         RouterModule.forChild(adminState),
     ],

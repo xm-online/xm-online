@@ -1,14 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import {
-    Framework,
-    FrameworkLibraryService,
-    JsonSchemaFormModule,
-    JsonSchemaFormService,
-    MaterialDesignFramework,
-    MaterialDesignFrameworkModule,
-    WidgetLibraryService,
-} from 'angular2-json-schema-form';
 import { TagInputModule } from 'ngx-chips';
 import { RatingModule } from 'ngx-rating';
 import { XmSharedModule } from '../shared/shared.module';
@@ -24,16 +15,6 @@ import { EntityDetailComponent } from './entity-detail.component';
         XmSharedModule,
         RouterModule.forChild(applicationRoute),
         TagInputModule,
-        MaterialDesignFrameworkModule,
-        {
-            ngModule: JsonSchemaFormModule,
-            providers: [
-                JsonSchemaFormService,
-                FrameworkLibraryService,
-                WidgetLibraryService,
-                {provide: Framework, useClass: MaterialDesignFramework, multi: true},
-            ],
-        },
         RatingModule,
         XmDashboardModule,
         XmEntityModule,

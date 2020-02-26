@@ -22,6 +22,7 @@
             "@xm-ngx/styles": ["packages/styles"],
             "@xm-ngx/core": ["src/app/shared/core"],
             "@xm-ngx/alert": ["src/app/shared/alert"],
+            "@xm-ngx/json-scheme-form": ["src/app/shared/jsf-extention"],
             "@xm-ngx/toaster": ["src/app/shared/toaster"],
             "@xm-ngx/translation": ["src/app/modules/xm-translation"],
             "@xm-ngx/shared/operators": ["src/app/shared/operators"],

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JhiConfigService, NgJhipsterModule } from 'ng-jhipster';
-import { XmTranslationModule } from '../modules/xm-translation/xm-translation.module';
+import { XmTranslationModule } from '@xm-ngx/translation';
 
 @NgModule({
     imports: [

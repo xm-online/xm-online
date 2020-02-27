@@ -111,6 +111,7 @@
 
   <button [disabled]="eventForm.form.invalid || showLoader"
           class="btn"
+          (click)="onConfirmSave()"
           mat-button
           color="primary"
           type="submit">

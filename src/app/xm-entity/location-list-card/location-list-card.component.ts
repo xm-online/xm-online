@@ -7,7 +7,6 @@ import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { Subscription } from 'rxjs';
-import { Principal } from '../../shared/auth/principal.service';
 import { LocationDetailDialogComponent } from '../location-detail-dialog/location-detail-dialog.component';
 import { LocationSpec } from '../shared/location-spec.model';
 import { Location } from '../shared/location.model';
@@ -59,8 +58,7 @@ export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
                 private eventManager: JhiEventManager,
                 private alertService: XmAlertService,
                 private toasterService: XmToasterService,
-                private translateService: TranslateService,
-                public principal: Principal) {
+                private translateService: TranslateService) {
     }
 
     public ngOnInit(): void {

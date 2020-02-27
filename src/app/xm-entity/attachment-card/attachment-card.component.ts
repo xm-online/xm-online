@@ -5,7 +5,6 @@ import { XmAlertService } from '@xm-ngx/alert';
 import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { Principal } from '../../shared/auth/principal.service';
 import { saveFile, saveFileFromUrl } from '../../shared/helpers/file-download-helper';
 import { AttachmentSpec } from '../shared/attachment-spec.model';
 import { Attachment } from '../shared/attachment.model';
@@ -33,8 +32,7 @@ export class AttachmentCardComponent implements OnInit {
                 private alertService: XmAlertService,
                 private toasterService: XmToasterService,
                 private eventManager: JhiEventManager,
-                private translateService: TranslateService,
-                public principal: Principal) {
+                private translateService: TranslateService) {
     }
 
     public ngOnInit(): void {

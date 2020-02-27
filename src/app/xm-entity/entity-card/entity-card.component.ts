@@ -23,7 +23,7 @@ export class EntityCardComponent implements OnInit {
 
     constructor(
         protected modalService: MatDialog,
-        public principal: Principal,
+        protected principal: Principal,
         protected eventManager: JhiEventManager,
     ) {}
 

@@ -4,7 +4,6 @@ import { XmAlertService } from '@xm-ngx/alert';
 import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { Principal } from '../../shared/auth/principal.service';
 import { getFieldValue } from '../../shared/helpers/entity-list-helper';
 import { FieldOptions } from '../entity-list-card/entity-list-card-options.model';
 import { FullLinkSpec } from '../shared/link-spec.model';
@@ -43,8 +42,7 @@ export class LinkListCardComponent implements OnInit, OnChanges {
                 private eventManager: JhiEventManager,
                 private toasterService: XmToasterService,
                 private alertService: XmAlertService,
-                private translateService: TranslateService,
-                public principal: Principal) {
+                private translateService: TranslateService) {
     }
 
     public ngOnInit(): void {

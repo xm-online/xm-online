@@ -7,7 +7,6 @@ import { XmAlertService } from '@xm-ngx/alert';
 import { JhiEventManager } from 'ng-jhipster';
 import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { catchError, filter, finalize, share, tap } from 'rxjs/operators';
-import { Principal } from '../../shared/auth/principal.service';
 import { ContextService } from '../../shared/context/context.service';
 import { getFileNameFromResponseContentDisposition, saveFile } from '../../shared/helpers/file-download-helper';
 import { buildJsfAttributes } from '../../shared/jsf-extention/jsf-attributes-helper';
@@ -43,7 +42,6 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
                 private eventManager: JhiEventManager,
                 private contextService: ContextService,
                 private alertService: XmAlertService,
-                public principal: Principal,
                 private ref: ChangeDetectorRef,
                 private router: Router) {
     }

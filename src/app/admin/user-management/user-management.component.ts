@@ -40,7 +40,7 @@ export class UserMgmtComponent extends BaseAdminListComponent implements OnInit 
                 private userLoginService: UserLoginService,
                 private userService: UserService,
                 private roleService: RoleService,
-                public principal: Principal) {
+                private principal: Principal) {
         super(activatedRoute, toasterService, alertService, eventManager, parseLinks, router);
         this.currentSearch = activatedRoute.snapshot.params.search || '';
     }

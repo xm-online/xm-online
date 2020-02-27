@@ -3,7 +3,6 @@ import { MatDialogRef } from '@angular/material';
 
 import * as nomnoml from 'nomnoml';
 
-import { Principal } from '../../../shared/auth/principal.service';
 import { saveFile } from '../../../shared/helpers/file-download-helper';
 import { Link } from '../../../xm-entity';
 
@@ -28,8 +27,7 @@ export class ConfigVisualizerDialogComponent implements OnInit, AfterViewInit {
     @ViewChild('downloadLinkSvg', {static: false}) public downloadLinkSvg: ElementRef;
     @ViewChild('canvasHolder', {static: false}) public canvasHolder: ElementRef;
 
-    constructor(private activeModal: MatDialogRef<ConfigVisualizerDialogComponent>,
-                public principal: Principal) {
+    constructor(private activeModal: MatDialogRef<ConfigVisualizerDialogComponent>) {
     }
 
     public ngOnInit(): void {

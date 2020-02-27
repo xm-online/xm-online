@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
-import { Principal } from '../../../shared/auth/principal.service';
 import { OverpassApiService } from './overpass-api.service';
 
 @Component({
@@ -13,8 +12,7 @@ export class OsmPolygonDialogComponent {
     public showLoader: boolean;
     public relations: any[];
 
-    constructor(public principal: Principal,
-                public activeModal: MatDialogRef<OsmPolygonDialogComponent>,
+    constructor(public activeModal: MatDialogRef<OsmPolygonDialogComponent>,
                 private overpassApi: OverpassApiService) {
     }
 

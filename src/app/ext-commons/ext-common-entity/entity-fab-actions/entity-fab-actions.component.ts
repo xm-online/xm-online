@@ -5,8 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
-
 import { Principal } from '../../../shared';
+
 import {
     EntityDetailDialogComponent,
     Spec,
@@ -40,7 +40,7 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
     public routingUrl: string;
 
     constructor(
-        public principal: Principal,
+        private principal: Principal,
         private router: Router,
         protected translateService: TranslateService,
         protected toasterService: XmToasterService,

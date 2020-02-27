@@ -28,7 +28,7 @@ export class DashboardDetailDialogComponent implements OnInit {
                 private dashboardService: DashboardService,
                 private eventManager: JhiEventManager,
                 private toasterService: XmToasterService,
-                public principal: Principal) {
+                private principal: Principal) {
     }
 
     public ngOnInit(): void {

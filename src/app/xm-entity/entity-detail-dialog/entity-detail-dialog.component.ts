@@ -6,7 +6,6 @@ import { JhiEventManager } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 import * as formatString from 'string-template';
 
-import { Principal } from '../../shared/auth/principal.service';
 import { buildJsfAttributes, nullSafe } from '../../shared/jsf-extention/jsf-attributes-helper';
 import { XM_EVENT_LIST } from '../../xm.constants';
 import { Spec } from '../shared/spec.model';
@@ -39,8 +38,7 @@ export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
     constructor(private activeModal: MatDialogRef<EntityDetailDialogComponent>,
                 private changeDetector: ChangeDetectorRef,
                 private xmEntityService: XmEntityService,
-                private eventManager: JhiEventManager,
-                public principal: Principal) {
+                private eventManager: JhiEventManager) {
         this.nameValidPattern = null;
         this.smartDescription = {
             active: false,

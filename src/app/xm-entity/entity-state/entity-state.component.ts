@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 
-import { Principal } from '../../shared/auth/principal.service';
 import { StateSpec } from '../shared/state-spec.model';
 
 @Component({
@@ -11,8 +10,4 @@ import { StateSpec } from '../shared/state-spec.model';
 export class EntityStateComponent {
 
     @Input() public stateSpec: StateSpec;
-
-    constructor(public principal: Principal) {
-    }
-
 }

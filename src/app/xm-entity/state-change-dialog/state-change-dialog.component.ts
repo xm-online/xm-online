@@ -6,7 +6,6 @@ import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 
-import { Principal } from '../../shared/auth/principal.service';
 import { ContextService } from '../../shared/context/context.service';
 import { buildJsfAttributes } from '../../shared/jsf-extention/jsf-attributes-helper';
 import { NextSpec } from '../shared/state-spec.model';
@@ -39,8 +38,7 @@ export class StateChangeDialogComponent implements OnInit {
                 private eventManager: JhiEventManager,
                 private alertService: XmAlertService,
                 private toasterService: XmToasterService,
-                private contextService: ContextService,
-                public principal: Principal) {
+                private contextService: ContextService) {
     }
 
     public ngOnInit(): void {

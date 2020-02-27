@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 import { finalize, map, startWith } from 'rxjs/operators';
 
 import { XmConfigService } from '../../shared';
-import { Principal } from '../../shared/auth/principal.service';
 import { LocationSpec } from '../shared/location-spec.model';
 import { Location } from '../shared/location.model';
 import { LocationService } from '../shared/location.service';
@@ -49,8 +48,7 @@ export class LocationDetailDialogComponent implements OnInit {
                 private eventManager: JhiEventManager,
                 private translateService: TranslateService,
                 private xmConfigService: XmConfigService,
-                private fb: FormBuilder,
-                public principal: Principal) {
+                private fb: FormBuilder) {
     }
 
     public get coordinatesInvalid(): boolean {

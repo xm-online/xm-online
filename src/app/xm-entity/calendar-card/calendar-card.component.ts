@@ -39,7 +39,7 @@ export class CalendarCardComponent implements OnChanges {
                 private i18nNamePipe: I18nNamePipe,
                 private translateService: TranslateService,
                 private modalService: MatDialog,
-                public principal: Principal) {
+                private principal: Principal) {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {

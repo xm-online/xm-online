@@ -20,7 +20,7 @@ export class NoDataComponent implements OnChanges {
     @Input() public text: any;
     @Input() public hideImage: boolean = false;
 
-    constructor(public principal: Principal) { }
+    constructor(protected principal: Principal) { }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (!changes.text || !changes.text.currentValue) {

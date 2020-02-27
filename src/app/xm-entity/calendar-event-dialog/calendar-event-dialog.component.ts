@@ -6,7 +6,6 @@ import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiDateUtils } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 
-import { Principal } from '../../shared/auth/principal.service';
 import { CalendarSpec } from '../shared/calendar-spec.model';
 import { Calendar } from '../shared/calendar.model';
 import { CalendarService } from '../shared/calendar.service';
@@ -36,8 +35,7 @@ export class CalendarEventDialogComponent implements OnInit {
                 private eventService: EventService,
                 private calendarService: CalendarService,
                 private dateUtils: JhiDateUtils,
-                private toasterService: XmToasterService,
-                public principal: Principal) {
+                private toasterService: XmToasterService) {
     }
 
     public ngOnInit(): void {

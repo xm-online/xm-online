@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { takeUntilOnDestroy } from '@xm-ngx/shared/operators';
 import { Observable } from 'rxjs';
 import { ACache } from './a-cache';
-import { takeUntilOnDestroy } from './takeUntilOnDestroy';
 import { UIConfig } from './ui-config-model';
 import {XmSessionService} from '@xm-ngx/core';
 

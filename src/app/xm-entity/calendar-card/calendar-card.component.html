@@ -9,7 +9,7 @@
                         name="calendarSpec">
               <mat-option *ngFor="let calendar of calendars"
                           [value]="calendar">
-                {{ calendar.name?.toUpperCase() }}
+                {{ calendar.name | uppercase }}
               </mat-option>
             </mat-select>
           </mat-form-field>

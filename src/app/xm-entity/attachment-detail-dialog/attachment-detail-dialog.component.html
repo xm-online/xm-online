@@ -20,7 +20,7 @@
           <mat-option *ngFor="let attachmentSpec of attachmentSpecs"
                       [selected]="attachmentSpec.key == attachment.typeKey ? true : null"
                       [value]="attachmentSpec.key">
-            {{(attachmentSpec.name | i18nName: principal).toUpperCase()}}
+            {{attachmentSpec.name | translate | uppercase}}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="attachmentType.hasError('required')">

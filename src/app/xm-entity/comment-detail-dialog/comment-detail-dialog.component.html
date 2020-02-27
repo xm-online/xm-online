@@ -15,7 +15,7 @@
                     name="typeKey"
                     placeholder="{{'xm-entity.comment-detail-dialog.choose-type' | translate}}">
           <mat-option *ngFor="let commentSpec of commentSpecs" [value]="commentSpec.key">
-            {{(commentSpec.name | i18nName: principal)?.toUpperCase()}}
+            {{commentSpec.name | translate | uppercase}}
           </mat-option>
         </mat-select>
       </mat-form-field>

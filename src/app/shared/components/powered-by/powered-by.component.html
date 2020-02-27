@@ -1,6 +1,6 @@
 <div class="row no-gutters flex-nowrap justify-content-center align-items-center xm-powered-by" *ngIf="config">
   <div class="col-auto text-content" *ngIf="config.text">
-    <span class="truncate">{{config.text | i18nName: principal}}</span>
+    <span class="truncate">{{config.text | translate}}</span>
   </div>
   <div class="col-auto" *ngIf="config.redirectUrl">
     <img [class.has-url]="config.redirectUrl"

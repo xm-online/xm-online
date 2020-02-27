@@ -1,6 +1,6 @@
-<div *ngIf="stateSpec" class="xm-state no-wrap" title="{{stateSpec.name | i18nName: principal}}">
+<div *ngIf="stateSpec" class="xm-state no-wrap" title="{{stateSpec.name | translate}}">
   <div [style.background]="stateSpec.color" class="xm-state-icon">
     <i class="material-icons">{{stateSpec.icon}}</i>
   </div>
-  <span>{{stateSpec.name | i18nName: principal}}</span>
+  <span>{{stateSpec.name | translate}}</span>
 </div>

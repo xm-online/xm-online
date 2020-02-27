@@ -21,7 +21,7 @@
           <mat-option *ngFor="let spec of availableSpecs"
                       [selected]="spec.key == xmEntity.typeKey ? true : null"
                       [value]="spec.key">
-            {{(spec.name | i18nName: principal)?.toUpperCase()}}
+            {{spec.name | translate | uppercase}}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="entityType.hasError('required')">

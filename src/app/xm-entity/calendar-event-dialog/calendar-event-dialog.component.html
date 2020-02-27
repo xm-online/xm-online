@@ -18,7 +18,7 @@
           <mat-option *ngFor="let eventSpec of calendarSpec.events"
                       [selected]="event && eventSpec.key == event.typeKey ? true : null"
                       [value]="eventSpec.key">
-            <span [style.borderColor]="eventSpec.color">{{eventSpec?.name | i18nName: principal | uppercase}}</span>
+            <span [style.borderColor]="eventSpec.color">{{eventSpec?.name | translate | uppercase}}</span>
           </mat-option>
         </mat-select>
         <mat-error *ngIf="eventType.hasError('required')">

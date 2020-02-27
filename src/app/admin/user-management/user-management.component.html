@@ -21,7 +21,7 @@
                   *ngFor="let authority of authorities"
                   [class.disabled]="currentSearch === authority"
                   class="btn btn-primary btn-sm btn-round"
-                  mat-button>{{ authority | i18nName: principal }}
+                  mat-button>{{ authority | translate }}
           </button>
         </div>
         <div class="row align-items-center mt2 mb-2">

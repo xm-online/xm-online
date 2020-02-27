@@ -101,10 +101,10 @@
                               (onSubmit)="onApplyFilter(item, $event)"
                               *ngIf="item.filterJsfAttributes?.schema"
                               [data]="item.filterJsfAttributes.data"
-                              [form]="item.filterJsfAttributes.form | i18nJsf :principal"
+                              [form]="item.filterJsfAttributes.form | i18nJsf"
                               [framework]="'material-design'"
-                              [layout]="item.filterJsfAttributes.layout | i18nJsf :principal"
-                              [options]="item.filterJsfAttributes.options | i18nJsf :principal"
+                              [layout]="item.filterJsfAttributes.layout | i18nJsf"
+                              [options]="item.filterJsfAttributes.options | i18nJsf"
                               [schema]="item.filterJsfAttributes.schema"
                               [widgets]="item.filterJsfAttributes.widgets">
             </json-schema-form>

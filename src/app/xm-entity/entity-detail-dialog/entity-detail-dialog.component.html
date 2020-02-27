@@ -88,10 +88,10 @@
                       (onChanges)="onChangeForm($event)"
                       *ngIf="!isEdit && jsfAttributes?.schema"
                       [data]="jsfAttributes.data"
-                      [form]="jsfAttributes.form | i18nJsf :principal"
+                      [form]="jsfAttributes.form | i18nJsf"
                       [framework]="'material-design'"
-                      [layout]="jsfAttributes.layout | i18nJsf :principal"
-                      [options]="jsfAttributes.options | i18nJsf :principal"
+                      [layout]="jsfAttributes.layout | i18nJsf"
+                      [options]="jsfAttributes.options | i18nJsf"
                       [schema]="jsfAttributes.schema"
                       [widgets]="jsfAttributes.widgets"
                       class="json-form-hide-submit">

@@ -34,8 +34,8 @@
                 <div class="table-responsive">
                   <table class="table table-striped" *ngIf="route">
                     <tr *ngFor="let instance of route.serviceInstances">
-                      <td><a href="{{instance.uri}}" target="_blank">{{instance.uri}}</a></td>
-                      <td>
+                      <td [style.width]="'20%'"><a href="{{instance.uri}}" target="_blank">{{instance.uri}}</a></td>
+                      <td [style.width]="'5%'">
                         <div *ngIf="route.serviceInstancesStatus"
                              class="badge badge-{{route.serviceInstancesStatus[instance.uri] === 'UP'?'success':'danger'}}">
                           {{route.serviceInstancesStatus[instance.uri]}}

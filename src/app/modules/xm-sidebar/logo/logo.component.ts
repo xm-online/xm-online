@@ -4,8 +4,7 @@ import { Observable } from 'rxjs';
 import { map, share } from 'rxjs/operators';
 
 import { Principal } from '../../../shared';
-import { XmUiConfigService } from '../config';
-import { XmUIConfig } from '../config';
+import { XmUIConfig, XmUiConfigService } from '@xm-ngx/core';
 
 export const SPA_ROOT_URL = '/';
 export const SPA_AUTH_ROOT_URL = '/dashboard';

@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { XmUiConfigService } from '@xm-ngx/core';
 
 import { XmSharedModule } from '../../shared/shared.module';
 
-import { XmUiConfigService } from './config';
 import { LogoComponent } from './logo/logo.component';
 import { MenuLinkComponent } from './menu/menu-link.component';
 import { MenuComponent } from './menu/menu.component';

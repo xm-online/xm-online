@@ -1,6 +1,6 @@
 <ng-container *ngIf="options['staticContent'] && options['staticContent']['value']">
   <div [ngClass]="options['staticContent']['class'] || 'mat-form-field-wrapper'"
-       [innerHTML]="options['staticContent']['value'] | i18nName: principal"
+       [innerHTML]="options['staticContent']['value'] | translate"
        [ngStyle]="options['staticContent']['styles']">
   </div>
 </ng-container>

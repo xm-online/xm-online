@@ -23,7 +23,7 @@ export class AvailableOfferingsWidgetComponent implements OnInit, OnDestroy {
     public noOfferings: boolean = false;
     private availableOfferingActionSuccessSubscription: Subscription;
 
-    constructor(public principal: Principal,
+    constructor(private principal: Principal,
                 private eventManager: JhiEventManager,
                 private xmEntityService: XmEntityService,
                 private functionService: FunctionService,

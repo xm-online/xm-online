@@ -7,7 +7,7 @@
   </div>
 
   <ng-template #hasHeaderConfig>
-    <h4 class="modal-title text-left">{{jsfAttributes.entity.formHeaderTitle | i18nName: principal}}</h4>
+    <h4 class="modal-title text-left">{{jsfAttributes.entity.formHeaderTitle | translate}}</h4>
   </ng-template>
 
   <ng-template #hasNotHeaderConfig>
@@ -41,7 +41,7 @@
           <mat-option *ngFor="let spec of availableSpecs"
                       [selected]="spec.key == xmEntity.typeKey ? true : null"
                       [value]="spec.key">
-            {{(spec.name | i18nName: principal)?.toUpperCase()}}
+            {{spec.name | translate | uppercase}}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="entityType.hasError('required')">
@@ -88,10 +88,10 @@
                       (onChanges)="onChangeForm($event)"
                       *ngIf="!isEdit && jsfAttributes?.schema"
                       [data]="jsfAttributes.data"
-                      [form]="jsfAttributes.form | i18nJsf :principal"
+                      [form]="jsfAttributes.form | i18nJsf"
                       [framework]="'material-design'"
-                      [layout]="jsfAttributes.layout | i18nJsf :principal"
-                      [options]="jsfAttributes.options | i18nJsf :principal"
+                      [layout]="jsfAttributes.layout | i18nJsf"
+                      [options]="jsfAttributes.options | i18nJsf"
                       [schema]="jsfAttributes.schema"
                       [widgets]="jsfAttributes.widgets"
                       class="json-form-hide-submit">
@@ -100,7 +100,7 @@
 
   <div *ngIf="!(jsfAttributes?.entity?.formDefaultFooterHide)" mat-dialog-actions>
     <button (click)="onCancel()" class="btn mr-1 ml-auto" data-dismiss="modal" mat-button type="button">
-      <span *ngIf="jsfAttributes?.entity?.cancelName">{{jsfAttributes.entity.cancelName | i18nName: principal}}</span>
+      <span *ngIf="jsfAttributes?.entity?.cancelName">{{jsfAttributes.entity.cancelName | translate}}</span>
       <span *ngIf="!jsfAttributes?.entity?.cancelName" jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
 
@@ -109,7 +109,7 @@
             mat-button
             color="primary"
             type="submit">
-      <span *ngIf="jsfAttributes?.entity?.saveName">{{jsfAttributes.entity.saveName | i18nName: principal}}</span>
+      <span *ngIf="jsfAttributes?.entity?.saveName">{{jsfAttributes.entity.saveName | translate}}</span>
       <span *ngIf="!jsfAttributes?.entity?.saveName" jhiTranslate="xm-entity.common.save">Save</span>
     </button>
   </div>

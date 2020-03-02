@@ -5,7 +5,6 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map, startWith, tap } from 'rxjs/operators';
-import { Principal } from '../../shared/auth/principal.service';
 
 import {
     addValidationComponent,
@@ -100,7 +99,6 @@ export class FormPlaygroundComponent implements OnInit {
 
     constructor(private xmEntitySpecWrapperService: XmEntitySpecWrapperService,
                 private route: ActivatedRoute,
-                public principal: Principal,
                 private http: HttpClient) {
         this.widgets = getJsfWidgets();
         this.formLayout = formLayout;

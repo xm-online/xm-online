@@ -13,7 +13,7 @@
                       [style.color]="button?.color"
                       class="xm-fab-option fab-link">
                 <ng-container *ngIf="button?.icon === 'no-icon'; then noIconTpl else iconTpl"></ng-container>
-                <span *ngIf="button?.title" class="fab-title">{{ button?.title | i18nName: principal }}</span>
+                <span *ngIf="button?.title" class="fab-title">{{ button?.title | translate }}</span>
               </button>
             </ng-template>
 
@@ -24,12 +24,12 @@
                       [style.color]="button?.color"
                       class="xm-fab-option fab-link">
                 <ng-container *ngIf="button?.icon === 'no-icon'; then noIconTpl else iconTpl"></ng-container>
-                <span *ngIf="button?.title" class="fab-title">{{ button?.title | i18nName: principal }}</span>
+                <span *ngIf="button?.title" class="fab-title">{{ button?.title | translate }}</span>
               </button>
             </ng-template>
 
             <ng-template #noIconTpl>
-              <span class="chars-like-icon">{{button?.label | i18nName: principal}}</span>
+              <span class="chars-like-icon">{{button?.label | translate}}</span>
             </ng-template>
 
             <ng-template #iconTpl>
@@ -44,7 +44,7 @@
               [style.color]="mainButton?.color"
               class="xm-fab-button fab-main-button">
         <i class="material-icons">{{ mainButton?.icon }}</i>
-        <span *ngIf="mainButton?.title" class="fab-title">{{ mainButton?.title | i18nName: principal }}</span>
+        <span *ngIf="mainButton?.title" class="fab-title">{{ mainButton?.title | translate }}</span>
       </button>
     </div>
   </div>

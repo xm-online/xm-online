@@ -36,7 +36,7 @@ export class AttachmentDetailDialogComponent implements OnInit {
                 protected dataUtils: JhiDataUtils,
                 protected toasterService: XmToasterService,
                 protected translateService: TranslateService,
-                public principal: Principal) {
+                protected principal: Principal) {
     }
 
     public get acceptedFileTypes(): string[] | '' {

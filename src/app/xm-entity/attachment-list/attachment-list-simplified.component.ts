@@ -52,7 +52,7 @@ import { AttachmentListBaseComponent } from './attachment-list-base.component';
                                     </div>
                                 </td>
                                 <td>{{attachment.name}}</td>
-                                <td>{{getAttachmentSpec(attachment)?.name | i18nName : principal}}</td>
+                                <td>{{getAttachmentSpec(attachment)?.name | translate}}</td>
                                 <td>{{getFileSize(attachment, 2)}} ({{attachment.valueContentType}})</td>
                                 <td>
                                     <a href="javascript: void(0);"

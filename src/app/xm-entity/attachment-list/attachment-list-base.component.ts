@@ -41,7 +41,7 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
                 protected toasterService: XmToasterService,
                 protected alertService: XmAlertService,
                 protected translateService: TranslateService,
-                public principal: Principal,
+                protected principal: Principal,
                 protected modalService: MatDialog) {
     }
 

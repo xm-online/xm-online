@@ -30,7 +30,7 @@
               placeholder="{{'xm-entity.location-detail-dialog.choose-type' | translate}}"
             >
               <mat-option *ngFor="let locationSpec of locationSpecs" [value]="locationSpec.key">
-                {{(locationSpec.name | i18nName: principal).toUpperCase()}}
+                {{(locationSpec.name | translate | uppercase)}}
               </mat-option>
             </mat-select>
           </mat-form-field>

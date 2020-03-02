@@ -25,7 +25,7 @@
   <input matInput
          xmInputPreventPaste
          name="{{controlNameMatcher}}"
-         [placeholder]="options['matcherTitle'] | i18nName: principal"
+         [placeholder]="options['matcherTitle'] | translate"
          [required]="options['required']"
          [formControl]="matcherControl">
   <mat-error class="error" *ngIf="matcherControl.hasError('required')" [title]="options?.validationMessages?.required || ''">

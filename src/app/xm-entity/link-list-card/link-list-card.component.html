@@ -3,7 +3,7 @@
     <div class="card-icon">
       <i class="material-icons">{{isBackLink ? 'link' : linkSpec.model.icon}}</i>
     </div>
-    <h4 class="card-title">{{linkSpec.model.name | i18nName: principal}}</h4>
+    <h4 class="card-title">{{linkSpec.model.name | translate}}</h4>
   </div>
 
   <div class="card-body">
@@ -34,7 +34,7 @@
         <tr>
           <th></th>
           <th *ngFor="let field of fields">
-            <span>{{field.title | i18nName :principal}}</span>
+            <span>{{field.title | translate}}</span>
           </th>
           <th *ngIf="!isBackLink"></th>
         </tr>

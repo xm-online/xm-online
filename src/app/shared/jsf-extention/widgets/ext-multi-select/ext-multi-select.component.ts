@@ -45,7 +45,7 @@ export class ExtMultiSelectComponent implements OnInit, OnDestroy, AfterViewInit
                 private selectService: ExtSelectService,
                 private i18nNamePipe: I18nNamePipe,
                 private changeDetectorRef: ChangeDetectorRef,
-                public principal: Principal) {
+                private principal: Principal) {
     }
 
     public ngOnInit(): void {

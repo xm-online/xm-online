@@ -1,6 +1,6 @@
 <form (ngSubmit)="onChangeState()" class="m-0" name="changeStateForm">
   <div mat-dialog-title>
-    <h4 [innerHTML]="dialogTitle | i18nName : principal" class="modal-title text-left"></h4>
+    <h4 [innerHTML]="dialogTitle | translate" class="modal-title text-left"></h4>
   </div>
   <div mat-dialog-content>
     <xm-loader [showLoader]="showLoader"></xm-loader>
@@ -9,10 +9,10 @@
                       (onChanges)="onChangeForm($event)"
                       *ngIf="xmEntity && jsfAttributes?.schema"
                       [data]="jsfAttributes.data"
-                      [form]="jsfAttributes.form | i18nJsf :principal"
+                      [form]="jsfAttributes.form | i18nJsf"
                       [framework]="'material-design'"
-                      [layout]="jsfAttributes.layout | i18nJsf :principal"
-                      [options]="jsfAttributes.options | i18nJsf :principal"
+                      [layout]="jsfAttributes.layout | i18nJsf"
+                      [options]="jsfAttributes.options | i18nJsf"
                       [schema]="jsfAttributes.schema"
                       [widgets]="jsfAttributes.widgets"
                       class="json-form-hide-submit">
@@ -23,7 +23,7 @@
       <span jhiTranslate="xm-entity.common.cancel">Cancel</span>
     </button>
     <button [disabled]="showLoader || !isJsonFormValid" color="primary" mat-button type="submit">
-      <span>{{buttonTitle | i18nName : principal}}</span>
+      <span>{{buttonTitle | translate}}</span>
     </button>
   </div>
 </form>

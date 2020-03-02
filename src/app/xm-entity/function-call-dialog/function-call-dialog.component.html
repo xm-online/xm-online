@@ -1,6 +1,6 @@
 <form (ngSubmit)="onConfirmFunctionCall()" class="m-0" name="functionCallForm">
   <div mat-dialog-title>
-    <h4 [innerHTML]="dialogTitle | i18nName : principal" class="modal-title text-left"></h4>
+    <h4 [innerHTML]="dialogTitle | translate" class="modal-title text-left"></h4>
   </div>
 
   <div mat-dialog-content>
@@ -10,10 +10,10 @@
                       (onChanges)="onChangeForm($event)"
                       *ngIf="jsfAttributes?.schema"
                       [data]="jsfAttributes.data"
-                      [form]="jsfAttributes.form | i18nJsf :principal"
+                      [form]="jsfAttributes.form | i18nJsf"
                       [framework]="'material-design'"
-                      [layout]="jsfAttributes.layout | i18nJsf :principal"
-                      [options]="jsfAttributes.options | i18nJsf :principal"
+                      [layout]="jsfAttributes.layout | i18nJsf"
+                      [options]="jsfAttributes.options | i18nJsf"
                       [schema]="jsfAttributes.schema"
                       [widgets]="jsfAttributes.widgets"
                       class="json-form-hide-submit">
@@ -26,7 +26,7 @@
             data-dismiss="modal"
             mat-button
             type="button">
-      <span *ngIf="jsfAttributes?.entity?.closeName">{{jsfAttributes.entity.closeName | i18nName: principal}}</span>
+      <span *ngIf="jsfAttributes?.entity?.closeName">{{jsfAttributes.entity.closeName | translate}}</span>
       <span *ngIf="!jsfAttributes?.entity?.closeName" jhiTranslate="xm-entity.common.close">Close</span>
     </button>
   </div>
@@ -38,7 +38,7 @@
               data-dismiss="modal"
               mat-button
               type="button">
-        <span *ngIf="jsfAttributes?.entity?.cancelName">{{jsfAttributes.entity.cancelName | i18nName: principal}}</span>
+        <span *ngIf="jsfAttributes?.entity?.cancelName">{{jsfAttributes.entity.cancelName | translate}}</span>
         <span *ngIf="!jsfAttributes?.entity?.cancelName" jhiTranslate="xm-entity.common.cancel">Cancel</span>
       </button>
       <button [disabled]="(showLoader$ | async) || !isJsonFormValid"
@@ -46,8 +46,8 @@
               mat-button
               color="primary"
               type="submit">
-        <span *ngIf="jsfAttributes?.entity?.saveName">{{jsfAttributes.entity.saveName | i18nName: principal}}</span>
-        <span *ngIf="!jsfAttributes?.entity?.saveName">{{buttonTitle | i18nName : principal}}</span>
+        <span *ngIf="jsfAttributes?.entity?.saveName">{{jsfAttributes.entity.saveName | translate}}</span>
+        <span *ngIf="!jsfAttributes?.entity?.saveName">{{buttonTitle | translate}}</span>
       </button>
     </div>
   </ng-template>

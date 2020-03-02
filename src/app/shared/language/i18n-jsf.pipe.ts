@@ -5,14 +5,15 @@ import { I18nNamePipe } from './i18n-name.pipe';
 @Pipe({name: 'i18nJsf'})
 export class I18nJsfPipe implements PipeTransform {
 
-    constructor(private pipe: I18nNamePipe) {
+    constructor(private pipe: I18nNamePipe,
+                private principal: Principal) {
     }
 
-    public transform(formOrLayoutOrOptions: any, principal: Principal): any {
+    public transform(formOrLayoutOrOptions: any, principal: Principal = this.principal): any {
         return this.transformTitles(formOrLayoutOrOptions, principal);
     }
 
-    public transformTitles(obj: any, principal: any): any {
+    public transformTitles(obj: any, principal: Principal): any {
         for (const property in obj) {
             if (obj.hasOwnProperty(property)) {
                 if (property === 'validationMessages') {
@@ -30,7 +31,7 @@ export class I18nJsfPipe implements PipeTransform {
         return obj;
     }
 
-    public transformValidationMessages(obj: any, principal: any): void {
+    public transformValidationMessages(obj: any, principal: Principal): void {
         for (const property in obj) {
             if (obj.hasOwnProperty(property)) {
                 obj[property] = this.pipe.transform(obj[property], principal);

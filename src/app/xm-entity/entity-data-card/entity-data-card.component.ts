@@ -3,7 +3,6 @@ import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiEventManager } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 
-import { Principal } from '../../shared/auth/principal.service';
 import { buildJsfAttributes, nullSafe } from '../../shared/jsf-extention/jsf-attributes-helper';
 import { XmEntitySpec } from '../shared/xm-entity-spec.model';
 import { XmEntity } from '../shared/xm-entity.model';
@@ -27,8 +26,7 @@ export class EntityDataCardComponent implements OnInit {
 
     constructor(private xmEntityService: XmEntityService,
                 private toasterService: XmToasterService,
-                private eventManager: JhiEventManager,
-                public principal: Principal) {
+                private eventManager: JhiEventManager) {
     }
 
     public ngOnInit(): void {

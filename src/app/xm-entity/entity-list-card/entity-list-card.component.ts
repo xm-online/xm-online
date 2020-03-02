@@ -63,7 +63,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
                 private i18nNamePipe: I18nNamePipe,
                 private router: Router,
                 private contextService: ContextService,
-                public principal: Principal) {
+                private principal: Principal) {
         this.entitiesPerPage = ITEMS_PER_PAGE;
         this.firstPage = 1;
         this.activeItemId = 0;

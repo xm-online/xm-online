@@ -6,7 +6,6 @@ import { UUID } from 'angular2-uuid';
 import { JhiEventManager } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 
-import { Principal } from '../../shared/auth/principal.service';
 import { buildJsfAttributes, nullSafe } from '../../shared/jsf-extention/jsf-attributes-helper';
 import { LinkSpec } from '../shared/link-spec.model';
 import { Link } from '../shared/link.model';
@@ -40,8 +39,7 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
                 private xmEntityService: XmEntityService,
                 private changeDetector: ChangeDetectorRef,
                 private eventManager: JhiEventManager,
-                private toasterService: XmToasterService,
-                public principal: Principal) {
+                private toasterService: XmToasterService) {
         $.isAddNewLink = true;
     }
 

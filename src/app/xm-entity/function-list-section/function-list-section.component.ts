@@ -49,7 +49,7 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
                 protected eventManager: JhiEventManager,
                 protected translateService: TranslateService,
                 protected contextService: ContextService,
-                public principal: Principal) {
+                protected principal: Principal) {
     }
 
     public ngOnInit(): void {

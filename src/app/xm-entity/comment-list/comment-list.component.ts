@@ -3,7 +3,6 @@ import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@
 import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
-import { Principal } from '../../shared/auth/principal.service';
 import { CommentSpec } from '../shared/comment-spec.model';
 import { Comment } from '../shared/comment.model';
 import { XmEntity } from '../shared/xm-entity.model';
@@ -23,8 +22,7 @@ export class CommentListComponent implements OnInit, OnChanges, OnDestroy {
     private modificationSubscription: Subscription;
 
     constructor(private xmEntityService: XmEntityService,
-                private eventManager: JhiEventManager,
-                public principal: Principal) {
+                private eventManager: JhiEventManager) {
     }
 
     public ngOnInit(): void {

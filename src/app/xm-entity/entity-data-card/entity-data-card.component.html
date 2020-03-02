@@ -11,10 +11,10 @@
                       (onSubmit)="onSubmitForm($event)"
                       *ngIf="jsfAttributes?.schema"
                       [data]="jsfAttributes.data"
-                      [form]="jsfAttributes.form | i18nJsf :principal"
+                      [form]="jsfAttributes.form | i18nJsf"
                       [framework]="'material-design'"
-                      [layout]="jsfAttributes.layout | i18nJsf :principal"
-                      [options]="jsfAttributes.options | i18nJsf :principal"
+                      [layout]="jsfAttributes.layout | i18nJsf"
+                      [options]="jsfAttributes.options | i18nJsf"
                       [schema]="jsfAttributes.schema"
                       [widgets]="jsfAttributes.widgets">
     </json-schema-form>
@@ -26,7 +26,7 @@
     <div class="card-icon">
       <i class="material-icons">{{jsfAttributes.entity.formHeaderIconName}}</i>
     </div>
-    <h4 class="card-title">{{jsfAttributes.entity.formHeaderTitle | i18nName: principal}}</h4>
+    <h4 class="card-title">{{jsfAttributes.entity.formHeaderTitle | translate}}</h4>
   </div>
 </ng-template>
 <ng-template #hasNotHeaderConfig>

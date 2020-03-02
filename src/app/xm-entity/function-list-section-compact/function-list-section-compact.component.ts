@@ -20,7 +20,7 @@ export class FunctionListSectionCompactComponent extends FunctionListSectionComp
                 protected eventManager: JhiEventManager,
                 protected translateService: TranslateService,
                 protected contextService: ContextService,
-                public principal: Principal) {
+                protected principal: Principal) {
         super(xmEntityService, modalService, eventManager, translateService, contextService, principal);
     }
 

@@ -20,7 +20,7 @@ export class TextSectionComponent implements OnInit {
 
     constructor(private jsf: JsonSchemaFormService,
                 private i18nNamePipe: I18nNamePipe,
-                public principal: Principal) {}
+                private principal: Principal) {}
 
     public ngOnInit(): void {
         this.options = this.layoutNode.options || {};

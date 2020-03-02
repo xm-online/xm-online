@@ -28,7 +28,7 @@ export class CommentDetailDialogComponent implements OnInit {
                 private commentService: CommentService,
                 private eventManager: JhiEventManager,
                 private toasterService: XmToasterService,
-                public principal: Principal) {
+                private principal: Principal) {
     }
 
     public ngOnInit(): void {

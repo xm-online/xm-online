@@ -30,7 +30,7 @@ export class EntityCardCompactComponent extends EntityCardComponent implements O
 
     constructor(
         protected modalService: MatDialog,
-        public principal: Principal,
+        protected principal: Principal,
         private toasterService: XmToasterService,
         protected eventManager: JhiEventManager,
         protected translateService: TranslateService,

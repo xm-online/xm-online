@@ -9,7 +9,7 @@
            data-toggle="tab"
            href="{{'#wdt-entity-group-' + i}}">
           <i class="material-icons">{{ item.xmEntitySpec?.icon ? item.xmEntitySpec?.icon : 'view_list'}}</i>
-          {{item.name | i18nName: principal}}
+          {{item.name | translate}}
         </a>
       </li>
     </ul>
@@ -21,7 +21,7 @@
     <div class="card-icon">
       <i class="material-icons">{{list[0]?.xmEntitySpec?.icon ? list[0]?.xmEntitySpec?.icon : 'search'}}</i>
     </div>
-    <h4 *ngSwitchCase="true" class="card-title">{{list[0].name | i18nName: principal}}</h4>
+    <h4 *ngSwitchCase="true" class="card-title">{{list[0].name | translate}}</h4>
   </div>
   <!-- end header for the one entity type  -->
 
@@ -87,7 +87,7 @@
                       [class.disabled]="item.currentQuery === fastSearch.query"
                       class="btn btn-primary btn-sm btn-round"
                       mat-button>
-                {{fastSearch.name | i18nName: principal}}
+                {{fastSearch.name | translate}}
               </button>
             </div>
           </div>
@@ -101,10 +101,10 @@
                               (onSubmit)="onApplyFilter(item, $event)"
                               *ngIf="item.filterJsfAttributes?.schema"
                               [data]="item.filterJsfAttributes.data"
-                              [form]="item.filterJsfAttributes.form | i18nJsf :principal"
+                              [form]="item.filterJsfAttributes.form | i18nJsf"
                               [framework]="'material-design'"
-                              [layout]="item.filterJsfAttributes.layout | i18nJsf :principal"
-                              [options]="item.filterJsfAttributes.options | i18nJsf :principal"
+                              [layout]="item.filterJsfAttributes.layout | i18nJsf"
+                              [options]="item.filterJsfAttributes.options | i18nJsf"
                               [schema]="item.filterJsfAttributes.schema"
                               [widgets]="item.filterJsfAttributes.widgets">
             </json-schema-form>
@@ -121,12 +121,12 @@
                 <ng-container *ngFor="let field of item.fields">
                   <th *ngIf="field.sortable === false"
                       [ngClass]="{'th-hidden' : field.hiddenTitle}">
-                    <span *ngIf="field.title">{{field.title | i18nName :principal}}</span>
+                    <span *ngIf="field.title">{{field.title | translate}}</span>
                   </th>
                   <th *ngIf="field.sortable !== false"
                       [jhiSortBy]="field.useKeyword ? field.field + '.keyword' : field.field"
                       [ngClass]="{'th-hidden' : field.hiddenTitle}">
-                    <span *ngIf="field.title">{{field.title | i18nName :principal}}</span>
+                    <span *ngIf="field.title">{{field.title | translate}}</span>
                     <span *ngIf="field.title" class="fa fa-sort"></span>
                   </th>
                 </ng-container>
@@ -157,7 +157,7 @@
                     </ng-template>
                   </div>
                   <div *ngSwitchCase="'typeKey'">
-                    <h6>{{xmEntity.type?.name | i18nName: principal}}</h6>
+                    <h6>{{xmEntity.type?.name | translate}}</h6>
                   </div>
                   <div *ngSwitchCase="'startDate'">
                     {{xmEntity.startDate | xmDateTime}}
@@ -172,7 +172,7 @@
                           <ng-container *ngIf="!action.actionCondition || (action.actionCondition(xmEntity))">
                             <li *permitted="action.privilege">
                               <a (click)="onAction(item, xmEntity, action)">
-                                {{ action.name | i18nName: principal }}
+                                {{ action.name | translate }}
                               </a>
                             </li>
                           </ng-container>
@@ -185,14 +185,14 @@
                       <div [style.background]="xmEntity.state?.color" class="xm-state-icon">
                         <i class="material-icons">{{xmEntity.state?.icon}}</i>
                       </div>
-                      {{xmEntity.state?.name | i18nName: principal}}
+                      {{xmEntity.state?.name | translate}}
                     </div>
                   </div>
                   <div *ngSwitchDefault [innerHtml]="getFieldValue(xmEntity, field)">
                   </div>
                   <button (click)="onAction(item, xmEntity, field.action)" *ngIf="field.action"
                           class="btn btn-primary btn-round btn-sm">
-                    {{field.action.name | i18nName: principal}}
+                    {{field.action.name | translate}}
                   </button>
                 </td>
                 <td *ngIf="!(options?.hideDelete) && !(item?.hideDelete)">

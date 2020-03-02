@@ -67,6 +67,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     public ngOnDestroy(): void {
         this.eventManager.destroy(this.entityListModifications);
         this.eventManager.destroy(this.entityEntityStateChange);
+        clearInterval(this.updateInterval);
     }
 
     public load(initAutoUpdate: boolean = false): void {

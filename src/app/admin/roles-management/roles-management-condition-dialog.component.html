@@ -44,7 +44,7 @@
   <button (click)="onCancel()" class="btn mr-1 ml-auto" data-dismiss="modal" mat-button type="button">
     <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
   </button>
-  <button color="primary" mat-button type="submit">
+  <button color="primary" (click)="onSave()" mat-button type="submit">
     <i class="material-icons">done</i>&nbsp;<span jhiTranslate="rolesManagement.ok">Ok</span>
   </button>
 </div>

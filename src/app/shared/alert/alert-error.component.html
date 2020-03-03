@@ -1,5 +1,7 @@
 <div class="alerts" role="alert">
-  <div *ngFor="let alert of alerts" [ngClass]="{'alert.position': true, 'toast': alert.toast}">
+  <div *ngFor="let alert of alerts"
+                [ngClass]="{'alert.position': true, 'toast': alert.toast}"
+                class="mb-0 border-0">
     <xm-alert message="{{alert.msg}}" type="{{alert.type}}"></xm-alert>
   </div>
 </div>

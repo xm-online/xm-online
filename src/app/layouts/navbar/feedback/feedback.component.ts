@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { XmUiConfigService } from '@xm-ngx/core';
 import { Observable } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
-import { UiConfigService } from '../../../modules/xm-sidebar/config/ui-config.service';
 import { FeedbackDialogComponent } from './feedback-dialog/feedback-dialog.component';
 import { FeedbackService } from './feedback.service';
 
@@ -24,7 +24,7 @@ export class FeedbackComponent implements OnInit {
 
     public showFeedback$: Observable<FeedbackConfig>;
 
-    constructor(protected uiConfigService: UiConfigService<FeedbackConfig>,
+    constructor(protected uiConfigService: XmUiConfigService<FeedbackConfig>,
                 protected dialog: MatDialog,
                 protected feedbackService: FeedbackService) {
     }

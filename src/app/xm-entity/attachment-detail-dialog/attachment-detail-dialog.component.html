@@ -105,6 +105,7 @@
   <button [disabled]="attachmentForm.form.invalid || showLoader"
           class="btn"
           color="primary"
+          (click)="onConfirmSave()"
           mat-button
           type="submit">
     <span jhiTranslate="xm-entity.common.save">Save</span>

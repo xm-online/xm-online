@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 
 import 'brace';
 import 'brace/mode/json';
@@ -10,7 +10,7 @@ declare const ace: any;
 @Directive({
     selector: '[xmAceEditor]',
 })
-export class AceEditorDirective {
+export class AceEditorDirective implements OnDestroy{
 
     public _highlightActiveLine: boolean = true;
     public _showGutter: boolean = true;
@@ -108,6 +108,10 @@ export class AceEditorDirective {
             this.textChanged.emit(newVal);
         }
         this.oldText = newVal;
+    }
+
+    public ngOnDestroy(): void {
+        this.editor.destroy();
     }
 
 }

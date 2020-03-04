@@ -27,19 +27,17 @@ export class XmAlertService {
 
     public open(settings: XmAlertOptions): Observable<XmAlertResult> {
 
-        if (!settings.confirmButtonClass) {
-            settings.confirmButtonClass = this.config.confirmButtonClass;
-        }
-        if (!settings.cancelButtonClass) {
-            settings.cancelButtonClass = this.config.cancelButtonClass;
-        }
-
-        if (!settings.confirmButtonText) {
-            settings.confirmButtonText = this.config.yesLabel;
-        }
-        if (!settings.cancelButtonText) {
-            settings.cancelButtonText = this.config.cancelLabel;
-        }
+        const DEFAULT: XmAlertOptions = {
+            width: this.config.width,
+            buttonsStyling: this.config.buttonsStyling,
+            reverseButtons: this.config.reverseButtons,
+            showCloseButton: this.config.showCloseButton,
+            confirmButtonClass: this.config.confirmButtonClass,
+            cancelButtonClass: this.config.cancelButtonClass,
+            confirmButtonText: this.config.yesLabel,
+            cancelButtonText: this.config.cancelLabel,
+        };
+        settings = _.merge(DEFAULT, settings);
 
         if (settings.title) {
             settings.title = this.translateService.instant(settings.title);
@@ -58,14 +56,7 @@ export class XmAlertService {
             settings.cancelButtonText = this.translateService.instant(settings.cancelButtonText);
         }
 
-        const DEFAULT: XmAlertOptions = {
-            width: this.config.width,
-            buttonsStyling: this.config.buttonsStyling,
-            reverseButtons: this.config.reverseButtons,
-            showCloseButton: this.config.showCloseButton,
-        };
-
-        return from(swal(_.merge(DEFAULT, settings)));
+        return from(swal(settings));
     }
 
 }

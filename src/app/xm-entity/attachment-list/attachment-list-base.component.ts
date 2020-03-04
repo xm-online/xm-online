@@ -95,12 +95,12 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
 
     public onRemove(attachment: Attachment): void {
         this.alertService.open({
-            title: this.translateService.instant('xm-entity.attachment-card.delete.title'),
+            title: 'xm-entity.attachment-card.delete.title',
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
-            confirmButtonText: this.translateService.instant('xm-entity.attachment-card.delete.button'),
+            confirmButtonText: 'xm-entity.attachment-card.delete.button',
         }).subscribe((result) => {
             if (result.value) {
                 this.attachmentService.delete(attachment.id).subscribe(

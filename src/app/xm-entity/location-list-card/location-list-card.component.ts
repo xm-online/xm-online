@@ -118,12 +118,12 @@ export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
 
     public onRemove(location: Location): void {
         this.alertService.open({
-            title: this.translateService.instant('xm-entity.location-list-card.delete.title'),
+            title: 'xm-entity.location-list-card.delete.title',
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
-            confirmButtonText: this.translateService.instant('xm-entity.location-list-card.delete.button'),
+            confirmButtonText: 'xm-entity.location-list-card.delete.button',
         }).subscribe((result) => {
             if (result.value) {
                 this.locationService.delete(location.id).subscribe(

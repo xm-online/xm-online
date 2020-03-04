@@ -13,6 +13,20 @@ $swal2-cancel-button-font-size:         $xm-font-size-sm;
 
 $swal2-confirm-button-border-radius:    $xm-radius-sm;
 $swal2-cancel-button-border-radius:     $xm-radius-sm;
+
+
+// Confirm button
+$swal2-confirm-button-border-radius:    $xm-radius-sm;
+$swal2-confirm-button-background-color: $xm-primary;
+$swal2-confirm-button-color:            $xm-text-on-primary;
+$swal2-confirm-button-font-size:        $xm-font-size-sm;
+
+// Cancel button
+$swal2-cancel-button-border-radius:     $xm-radius-sm;
+$swal2-cancel-button-background-color:  $xm-secondary;
+$swal2-cancel-button-color:             $xm-text-on-secondary;
+$swal2-cancel-button-font-size:         $xm-font-size-sm;
+
 @import '~sweetalert2/src/sweetalert2';
 
 @mixin sweetalert2-xm-override() {
@@ -20,5 +34,9 @@ $swal2-cancel-button-border-radius:     $xm-radius-sm;
   .swal2-fade {
     -webkit-backdrop-filter: $swal2-fade-filter;
     backdrop-filter:         $swal2-fade-filter;
+  }
+
+  .swal2-actions {
+    align-items: end;
   }
 }

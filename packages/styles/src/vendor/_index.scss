@@ -11,7 +11,6 @@
 @import 'simplemde';
 @import 'snazzy-info-window';
 @import 'swagger-ui';
-@import 'sweetalert2';
 
 @mixin xm-vendor-xm-override() {
   @include angular2-json-schema-form-xm-override();
@@ -20,5 +19,4 @@
   @include chartist-xm-override();
   @include jvectormap-xm-override();
   @include swagger-ui-xm-override();
-  @include sweetalert2-xm-override();
 }

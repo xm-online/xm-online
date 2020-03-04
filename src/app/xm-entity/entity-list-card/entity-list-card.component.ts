@@ -224,12 +224,12 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
 
     public onRemove(xmEntity: XmEntity): void {
         this.alertService.open({
-            title: this.translateService.instant('xm-entity.entity-list-card.delete.title'),
+            title: 'xm-entity.entity-list-card.delete.title',
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
-            confirmButtonText: this.translateService.instant('xm-entity.entity-list-card.delete.button'),
+            confirmButtonText: 'xm-entity.entity-list-card.delete.button',
         }).subscribe((result) => {
             if (result.value) {
                 this.xmEntityService.delete(xmEntity.id).subscribe(

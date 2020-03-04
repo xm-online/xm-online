@@ -1,6 +1,8 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material';
+import { XmAlertService } from '@xm-ngx/alert';
+import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiDateUtils } from 'ng-jhipster';
 
 import { Principal } from '../../shared/auth/principal.service';
@@ -13,10 +15,8 @@ import { Event } from '../shared/event.model';
 import { EventService } from '../shared/event.service';
 import { XmEntity } from '../shared/xm-entity.model';
 import { XmEntityService } from '../shared/xm-entity.service';
-import { MatDialog } from '@angular/material';
 
 declare const $: any;
-declare const swal: any;
 
 @Component({
     selector: 'xm-calendar-card',
@@ -37,7 +37,8 @@ export class CalendarCardComponent implements OnChanges {
                 private eventService: EventService,
                 private dateUtils: JhiDateUtils,
                 private i18nNamePipe: I18nNamePipe,
-                private translateService: TranslateService,
+                private toasterService: XmToasterService,
+                private alertService: XmAlertService,
                 private modalService: MatDialog,
                 private principal: Principal) {
     }
@@ -49,21 +50,21 @@ export class CalendarCardComponent implements OnChanges {
     }
 
     public onRemove(event: Event, calendarTypeKey: string): void {
-        swal({
-            title: this.translateService.instant('xm-entity.calendar-card.delete.title'),
+        this.alertService.open({
+            title: 'xm-entity.calendar-card.delete.title',
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
-            confirmButtonText: this.translateService.instant('xm-entity.calendar-card.delete.button'),
-        }).then((result) => {
+            confirmButtonText: 'xm-entity.calendar-card.delete.button',
+        }).subscribe((result) => {
             if (result.value) {
                 this.eventService.delete(event.id).subscribe(
                     () => {
-                        this.alert('success', 'xm-entity.calendar-card.delete.remove-success');
+                        this.toasterService.success('xm-entity.calendar-card.delete.remove-success');
                         this.calendarElements[calendarTypeKey].fullCalendar('removeEvents', [event.id]);
                     },
-                    () => this.alert('error', 'xm-entity.calendar-card.delete.remove-error'),
+                    () => this.toasterService.error('xm-entity.calendar-card.delete.remove-error'),
                 );
             }
         });
@@ -191,15 +192,6 @@ export class CalendarCardComponent implements OnChanges {
             color: eventSpec.color,
             originEvent: event,
         };
-    }
-
-    private alert(type: string, key: string): void {
-        swal({
-            type,
-            text: this.translateService.instant(key),
-            buttonsStyling: false,
-            confirmButtonClass: 'btn btn-primary',
-        });
     }
 
 }

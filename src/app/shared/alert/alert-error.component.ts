@@ -9,7 +9,7 @@ import { DEBUG_INFO_ENABLED } from '../../xm.constants';
 import { I18nNamePipe } from '../language/i18n-name.pipe';
 import { XmConfigService } from '../spec/config.service';
 import { ResponseConfig, ResponseConfigItem, ResponseContext } from './response-config.model';
-import { XmAlertService } from './xm-alert.service';
+import { XmAlertService } from '@xm-ngx/alert';
 
 declare let $: any;
 

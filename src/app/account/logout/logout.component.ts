@@ -28,13 +28,13 @@ export class LogoutComponent implements OnInit {
         }
 
         this.alertService.open({
-            title: this.translateService.instant('global.common.are-you-sure'),
+            title: 'global.common.are-you-sure',
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonClass: 'btn mat-button btn-primary',
             cancelButtonClass: 'btn mat-button',
-            confirmButtonText: this.translateService.instant('global.common.yes-exit'),
-            cancelButtonText: this.translateService.instant('global.common.cancel'),
+            confirmButtonText: 'global.common.yes-exit',
+            cancelButtonText: 'global.common.cancel',
         }).subscribe((result) => result.value ? this.logout() : history.back());
     }
 

@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { XmAlertIntlService } from './xm-alert-intl.service';
+import { XmAlertConfigService } from './xm-alert-config.service';
 
-describe('XmAlertIntlService', () => {
+describe('XmAlertConfigService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: XmAlertIntlService = TestBed.get(XmAlertIntlService);
+    const service: XmAlertConfigService = TestBed.get(XmAlertConfigService);
     expect(service).toBeTruthy();
   });
 });

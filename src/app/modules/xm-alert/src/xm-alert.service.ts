@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
 import { from, Observable } from 'rxjs';
 import swal, { SweetAlertOptions, SweetAlertResult, SweetAlertType } from 'sweetalert2';
-import { XmAlertIntlService } from './xm-alert-intl.service';
+import { XmAlertConfigService } from './xm-alert-config.service';
 
 export interface XmAlertOptions extends Partial<SweetAlertOptions> {
     type?: string | SweetAlertType | any;
@@ -22,23 +22,23 @@ export type XmAlertResult = SweetAlertResult;
 export class XmAlertService {
 
     constructor(protected translateService: TranslateService,
-                protected intl: XmAlertIntlService) {
+                protected config: XmAlertConfigService) {
     }
 
     public open(settings: XmAlertOptions): Observable<XmAlertResult> {
 
         if (!settings.confirmButtonClass) {
-            settings.confirmButtonClass = this.intl.confirmButtonClass;
+            settings.confirmButtonClass = this.config.confirmButtonClass;
         }
         if (!settings.cancelButtonClass) {
-            settings.cancelButtonClass = this.intl.cancelButtonClass;
+            settings.cancelButtonClass = this.config.cancelButtonClass;
         }
 
         if (!settings.confirmButtonText) {
-            settings.confirmButtonText = this.intl.yesLabel;
+            settings.confirmButtonText = this.config.yesLabel;
         }
         if (!settings.cancelButtonText) {
-            settings.cancelButtonText = this.intl.cancelLabel;
+            settings.cancelButtonText = this.config.cancelLabel;
         }
 
         if (settings.title) {
@@ -59,10 +59,10 @@ export class XmAlertService {
         }
 
         const DEFAULT: XmAlertOptions = {
-            width: this.intl.width,
-            buttonsStyling: this.intl.buttonsStyling,
-            reverseButtons: this.intl.reverseButtons,
-            showCloseButton: this.intl.showCloseButton,
+            width: this.config.width,
+            buttonsStyling: this.config.buttonsStyling,
+            reverseButtons: this.config.reverseButtons,
+            showCloseButton: this.config.showCloseButton,
         };
 
         return from(swal(_.merge(DEFAULT, settings)));

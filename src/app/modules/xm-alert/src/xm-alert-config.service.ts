@@ -3,7 +3,7 @@ import { Injectable, Optional, SkipSelf } from '@angular/core';
 @Injectable({
     providedIn: 'root',
 })
-export class XmAlertIntlService {
+export class XmAlertConfigService {
 
     public yesLabel: string = 'global.common.yes';
     public width: number = 400;
@@ -17,12 +17,12 @@ export class XmAlertIntlService {
     public cancelButtonClass: string = 'btn btn-outline-dark border-0 mx-1';
 }
 
-export function XM_ALERT_INTL_PROVIDER_FACTORY(parentIntl: XmAlertIntlService) {
-    return parentIntl || new XmAlertIntlService();
+export function XM_ALERT_CONFIG_PROVIDER_FACTORY(parentConfig: XmAlertConfigService): XmAlertConfigService {
+    return parentConfig || new XmAlertConfigService();
 }
 
-export const XM_ALERT_INTL_PROVIDER = {
-    provide: XmAlertIntlService,
-    deps: [[new Optional(), new SkipSelf(), XmAlertIntlService]],
-    useFactory: XM_ALERT_INTL_PROVIDER_FACTORY,
+export const XM_ALERT_CONFIG_PROVIDER = {
+    provide: XmAlertConfigService,
+    deps: [[new Optional(), new SkipSelf(), XmAlertConfigService]],
+    useFactory: XM_ALERT_CONFIG_PROVIDER_FACTORY,
 };

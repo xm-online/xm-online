@@ -53,8 +53,6 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
     }
 
     public ngOnInit(): void {
-        // TODO: this is workaround to get eventManager from root injector
-        this.eventManager = this.contextService.eventManager;
         this.load();
     }
 

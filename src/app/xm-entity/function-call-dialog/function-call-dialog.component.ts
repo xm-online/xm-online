@@ -6,7 +6,6 @@ import { XmAlertService } from '@xm-ngx/alert';
 import { XmEventManager } from '@xm-ngx/core';
 import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { catchError, filter, finalize, share, tap } from 'rxjs/operators';
-import { ContextService } from '../../shared/context/context.service';
 import { getFileNameFromResponseContentDisposition, saveFile } from '../../shared/helpers/file-download-helper';
 import { buildJsfAttributes } from '../../shared/jsf-extention/jsf-attributes-helper';
 import { XM_EVENT_LIST } from '../../xm.constants';
@@ -39,15 +38,12 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
     constructor(private activeModal: MatDialogRef<FunctionCallDialogComponent>,
                 private functionService: FunctionService,
                 private eventManager: XmEventManager,
-                private contextService: ContextService,
                 private alertService: XmAlertService,
                 private ref: ChangeDetectorRef,
                 private router: Router) {
     }
 
     public ngOnInit(): void {
-        // TODO: this is workaround to get eventManager from root injector
-        this.eventManager = this.contextService.eventManager;
         // TODO think about correct way to work with context
         $.xmEntity = this.xmEntity;
         if (this.functionSpec) {

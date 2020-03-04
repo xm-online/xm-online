@@ -1,6 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -17,7 +17,7 @@ export class NotificationsService {
     constructor(
         private http: HttpClient,
         private principal: Principal,
-        private eventManager: JhiEventManager,
+        private eventManager: XmEventManager,
         private i18nNamePipe: I18nNamePipe,
         private functionService: FunctionService,
         private entityService: XmEntityService,

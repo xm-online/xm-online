@@ -1,18 +1,18 @@
-import {HttpResponse} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {ActivatedRoute, Router} from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 import { XmAlertService } from '@xm-ngx/alert';
+import { XmEventManager } from '@xm-ngx/core';
+import { Dashboard, DashboardService, Widget, WidgetService } from '@xm-ngx/dynamic';
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
-import {finalize} from 'rxjs/operators';
+import { JhiParseLinks } from 'ng-jhipster';
+import { finalize } from 'rxjs/operators';
 
-import {JhiLanguageHelper} from '../../../shared';
-import {Dashboard, Widget, WidgetService} from '@xm-ngx/dynamic';
-import {DashboardService} from '@xm-ngx/dynamic';
-import {XmEntity} from '../../../xm-entity';
-import {BaseAdminConfigListComponent} from '../../base-admin-config-list.component';
-import {WidgetDetailDialogComponent} from '../widget-detail-dialog/widget-detail-dialog.component';
+import { JhiLanguageHelper } from '../../../shared';
+import { XmEntity } from '../../../xm-entity';
+import { BaseAdminConfigListComponent } from '../../base-admin-config-list.component';
+import { WidgetDetailDialogComponent } from '../widget-detail-dialog/widget-detail-dialog.component';
 
 @Component({
     selector: 'xm-widget-list-card',
@@ -35,7 +35,7 @@ export class WidgetListCardComponent extends BaseAdminConfigListComponent implem
                 protected activatedRoute: ActivatedRoute,
                 protected alertService: XmAlertService,
                 protected toasterService: XmToasterService,
-                protected eventManager: JhiEventManager,
+                protected eventManager: XmEventManager,
                 protected parseLinks: JhiParseLinks,
                 protected router: Router) {
         super(activatedRoute, toasterService, alertService, eventManager, parseLinks, router);

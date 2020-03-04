@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
@@ -37,7 +37,7 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
     constructor(private xmEntityService: XmEntityService,
                 private xmConfigService: XmConfigService,
                 private contextService: ContextService,
-                private eventManager: JhiEventManager) {
+                private eventManager: XmEventManager) {
         this.registerModificationSubscription();
     }
 
@@ -58,7 +58,7 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
         this.xmConfigService.getUiConfig().subscribe((config) => {
             // TODO for demo
             this.tenant = config.name;
-            this.defaultDetailLayoutType = config.defaultDetailLayoutType
+            this.defaultDetailLayoutType = config.defaultDetailLayoutType;
             this.entityUiConfig = (config && config.applications
                 && config.applications.config
                 && config.applications.config.entities
@@ -145,7 +145,9 @@ export class EntityWidgetComponent implements OnInit, OnDestroy {
 
     private loadEntity(): void {
         const xmEntityId = this.config.xmEntityId ? this.config.xmEntityId : this.contextService.get('xmEntityId');
-        if (!xmEntityId) {return; }
+        if (!xmEntityId) {
+            return;
+        }
 
         this.xmEntity$ = this.xmEntityService.find(xmEntityId, {embed: 'data'})
             .pipe(

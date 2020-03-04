@@ -9,6 +9,7 @@ import { Subject } from 'rxjs/Subject';
 import { JhiLanguageHelper } from '../../shared';
 import { Principal } from '../../shared/auth/principal.service';
 import { PermitDirective } from '../../shared/privilege/privilege.directive';
+import { XmEventManager } from '@xm-ngx/core';
 
 class Mock {
     public authenticationState: Subject<any> = new Subject<any>();
@@ -52,7 +53,7 @@ describe('Directive: PermitDirective', () => {
                 TestDuplicateComponent,
             ],
             providers: [
-                JhiEventManager,
+                XmEventManager,
                 ViewContainerRef,
                 {
                     provide: JhiLanguageHelper,

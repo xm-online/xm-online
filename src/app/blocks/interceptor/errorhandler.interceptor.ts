@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -7,7 +7,7 @@ import { ContextService } from '../../shared';
 
 export class ErrorHandlerInterceptor implements HttpInterceptor {
 
-    constructor(private eventManager: JhiEventManager,
+    constructor(private eventManager: XmEventManager,
                 private contextService: ContextService) {
     }
 

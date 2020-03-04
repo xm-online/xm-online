@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
-
-import { JhiEventManager } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 import { Principal } from '../../shared/auth/principal.service';
 import { buildJsfAttributes, nullSafe } from '../../shared/jsf-extention/jsf-attributes-helper';
@@ -32,7 +31,7 @@ export class EntityCardCompactComponent extends EntityCardComponent implements O
         protected modalService: MatDialog,
         protected principal: Principal,
         private toasterService: XmToasterService,
-        protected eventManager: JhiEventManager,
+        protected eventManager: XmEventManager,
         protected translateService: TranslateService,
         protected xmEntityService: XmEntityService,
     ) {

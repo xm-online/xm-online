@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 
 import { XM_EVENT_LIST } from '../../../app/xm.constants';
 import { JhiLanguageHelper, User, UserService } from '../../shared';
@@ -27,8 +26,9 @@ export class UserMgmtDialogComponent implements OnInit {
         private xmConfigService: XmConfigService,
         private userService: UserService,
         private roleService: RoleService,
-        private eventManager: JhiEventManager,
-    ) {}
+        private eventManager: XmEventManager,
+    ) {
+    }
 
     public ngOnInit(): void {
         if (this.selectedUser) {
@@ -52,7 +52,9 @@ export class UserMgmtDialogComponent implements OnInit {
 
     public save(): void {
         this.showLoader = true;
-        if (!this.user.id) { this.userLoginForm.createLogins(); }
+        if (!this.user.id) {
+            this.userLoginForm.createLogins();
+        }
         this.userService[this.user.id ? 'update' : 'create'](this.user)
             .subscribe((response) => this.onSaveSuccess(response),
                 (err) => console.info(err),

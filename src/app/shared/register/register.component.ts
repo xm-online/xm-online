@@ -1,14 +1,13 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { XmEventManager } from '@xm-ngx/core';
 
 import { ReCaptchaComponent } from 'angular2-recaptcha';
-import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
+import { JhiLanguageService } from 'ng-jhipster';
 
 import { PasswordSpec } from '../../xm-entity/shared/password-spec.model';
 import { XM_EVENT_LIST } from '../../xm.constants';
-import {
-    PrivacyAndTermsDialogComponent,
-} from '../components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
+import { PrivacyAndTermsDialogComponent } from '../components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
 import { XmConfigService } from '../spec/config.service';
 import { RegisterService } from './register.service';
 
@@ -43,7 +42,7 @@ export class RegisterComponent implements OnInit {
     constructor(private jhiLanguageService: JhiLanguageService,
                 private xmConfigService: XmConfigService,
                 private registerService: RegisterService,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private modalService: MatDialog) {
 
         this.jhiLanguageService.getCurrent().then((lang) => {
@@ -128,7 +127,9 @@ export class RegisterComponent implements OnInit {
         } else {
             this.error = 'ERROR';
         }
-        if (this.captcha) {this.captcha.reset(); }
+        if (this.captcha) {
+            this.captcha.reset();
+        }
     }
 
     private makeLogins(): void {

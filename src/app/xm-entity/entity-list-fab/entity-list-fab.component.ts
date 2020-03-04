@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiEventManager } from 'ng-jhipster';
 
 import { XM_EVENT_LIST } from '../../xm.constants';
 import { EntityDetailDialogComponent } from '../entity-detail-dialog/entity-detail-dialog.component';
@@ -21,7 +21,7 @@ export class EntityListFabComponent {
     @Input() public spec: Spec;
 
     constructor(private xmEntitySpecService: XmEntitySpecService,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private modalService: MatDialog,
                 private toasterService: XmToasterService) {
     }

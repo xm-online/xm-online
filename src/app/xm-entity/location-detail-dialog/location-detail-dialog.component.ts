@@ -3,8 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef } from '@angular/material';
 
 import { TranslateService } from '@ngx-translate/core';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiEventManager } from 'ng-jhipster';
 import { Observable } from 'rxjs';
 import { finalize, map, startWith } from 'rxjs/operators';
 
@@ -45,7 +45,7 @@ export class LocationDetailDialogComponent implements OnInit {
     constructor(private activeModal: MatDialogRef<LocationDetailDialogComponent>,
                 private locationService: LocationService,
                 private xmToasterService: XmToasterService,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private translateService: TranslateService,
                 private xmConfigService: XmConfigService,
                 private fb: FormBuilder) {

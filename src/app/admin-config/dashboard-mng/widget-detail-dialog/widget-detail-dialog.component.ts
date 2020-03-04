@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
+import { XmEventManager } from '@xm-ngx/core';
 import { Widget, WidgetService } from '@xm-ngx/dynamic';
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiEventManager } from 'ng-jhipster';
 
 @Component({
     selector: 'xm-widget-detail-dialog',
@@ -20,7 +20,7 @@ export class WidgetDetailDialogComponent implements OnInit {
 
     constructor(private activeModal: MatDialogRef<WidgetDetailDialogComponent>,
                 private widgetService: WidgetService,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private toasterService: XmToasterService) {
     }
 

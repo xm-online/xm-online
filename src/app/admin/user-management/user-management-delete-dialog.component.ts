@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { XM_EVENT_LIST } from '../../../app/xm.constants';
 
 import { User, UserService } from '../../shared';
@@ -18,7 +17,7 @@ export class UserMgmtDeleteDialogComponent {
     constructor(
         private userService: UserService,
         public activeModal: MatDialogRef<UserMgmtDeleteDialogComponent>,
-        private eventManager: JhiEventManager,
+        private eventManager: XmEventManager,
     ) {
     }
 

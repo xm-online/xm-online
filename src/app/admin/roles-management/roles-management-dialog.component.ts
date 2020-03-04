@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { Role } from '../../shared/role/role.model';
 
 import { RoleService } from '../../shared/role/role.service';
@@ -21,7 +20,7 @@ export class RoleMgmtDialogComponent implements OnInit {
     constructor(
         public activeModal: MatDialogRef<RoleMgmtDialogComponent>,
         private roleService: RoleService,
-        private eventManager: JhiEventManager,
+        private eventManager: XmEventManager,
     ) {
     }
 

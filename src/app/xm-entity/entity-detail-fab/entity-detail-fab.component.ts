@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
-
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { Subscription } from 'rxjs';
 
 import { AttachmentDetailDialogComponent } from '../attachment-detail-dialog/attachment-detail-dialog.component';
@@ -28,7 +27,7 @@ export class EntityDetailFabComponent implements OnInit, OnChanges, OnDestroy {
     public showEditSubOptions: boolean = false;
     private eventSubscriber: Subscription;
 
-    constructor(private eventManager: JhiEventManager,
+    constructor(private eventManager: XmEventManager,
                 private modalService: MatDialog) {
         this.registerChangeInXmEntities();
     }
@@ -98,7 +97,7 @@ export class EntityDetailFabComponent implements OnInit, OnChanges, OnDestroy {
     public onAddALocation(): void {
         this.openDialog(LocationDetailDialogComponent, (modalRef) => {
             modalRef.componentInstance.locationSpecs = this.xmEntitySpec.locations;
-        }, { width: '500px'});
+        }, {width: '500px'});
     }
 
     public onEdit(): void {

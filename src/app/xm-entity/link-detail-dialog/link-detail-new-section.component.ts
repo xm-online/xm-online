@@ -1,9 +1,9 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
+import { XmEventManager } from '@xm-ngx/core';
 
 import { XmToasterService } from '@xm-ngx/toaster';
 import { UUID } from 'angular2-uuid';
-import { JhiEventManager } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 
 import { buildJsfAttributes, nullSafe } from '../../shared/jsf-extention/jsf-attributes-helper';
@@ -38,7 +38,7 @@ export class LinkDetailNewSectionComponent implements OnInit, OnDestroy, AfterVi
     constructor(private activeModal: MatDialogRef<LinkDetailNewSectionComponent>,
                 private xmEntityService: XmEntityService,
                 private changeDetector: ChangeDetectorRef,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private toasterService: XmToasterService) {
         $.isAddNewLink = true;
     }

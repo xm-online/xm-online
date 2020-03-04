@@ -2,8 +2,8 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { XmAlertService } from '@xm-ngx/alert';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiEventManager } from 'ng-jhipster';
 
 import { saveFile, saveFileFromUrl } from '../../shared/helpers/file-download-helper';
 import { AttachmentSpec } from '../shared/attachment-spec.model';
@@ -31,7 +31,7 @@ export class AttachmentCardComponent implements OnInit {
     constructor(private attachmentService: AttachmentService,
                 private alertService: XmAlertService,
                 private toasterService: XmToasterService,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private translateService: TranslateService) {
     }
 

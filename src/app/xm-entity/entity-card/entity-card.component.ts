@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { FunctionSpec, NextSpec, StateSpec } from '..';
 import { Principal } from '../../shared/auth/principal.service';
 import { XM_EVENT_LIST } from '../../xm.constants';
@@ -24,8 +23,9 @@ export class EntityCardComponent implements OnInit {
     constructor(
         protected modalService: MatDialog,
         protected principal: Principal,
-        protected eventManager: JhiEventManager,
-    ) {}
+        protected eventManager: XmEventManager,
+    ) {
+    }
 
     public get commonFunctionSpec(): FunctionSpec[] {
         return (this.xmEntitySpec && this.xmEntitySpec.functions) ?

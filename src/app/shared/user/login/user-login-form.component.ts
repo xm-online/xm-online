@@ -1,8 +1,7 @@
 import { Component, Input, OnChanges, Optional } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
-
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 
 import { XM_EVENT_LIST } from '../../../../app/xm.constants';
 import { AccountService } from '../../auth/account.service';
@@ -31,7 +30,7 @@ export class UserLoginFormComponent implements OnChanges {
                 private userService: UserService,
                 private accountService: AccountService,
                 private principal: Principal,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private userLoginService: UserLoginService) {
     }
 

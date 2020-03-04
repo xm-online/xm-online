@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
 import { CookieService } from 'angular2-cookie/core';
-import { JhiEventManager } from 'ng-jhipster';
 
 import { AuthService, LoginComponent, LoginService } from '../../shared';
 import { StateStorageService } from '../../shared/auth/state-storage.service';
@@ -18,7 +18,7 @@ const SOCIAL_AUTH = 'social-authentication';
 })
 export class SocialAuthComponent extends LoginComponent implements OnInit {
 
-    constructor(protected eventManager: JhiEventManager,
+    constructor(protected eventManager: XmEventManager,
                 protected xmConfigService: XmConfigService,
                 protected loginService: LoginService,
                 protected stateStorageService: StateStorageService,

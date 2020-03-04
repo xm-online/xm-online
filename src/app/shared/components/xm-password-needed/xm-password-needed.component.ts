@@ -1,8 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material';
-
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 
 @Component({
     selector: 'xm-password-needed',
@@ -19,7 +18,7 @@ export class XmPasswordNeededComponent implements OnInit {
 
     constructor(private fb: FormBuilder,
                 private modalService: MatDialog,
-                private eventManager: JhiEventManager) {
+                private eventManager: XmEventManager) {
         this.form = this.fb.group({password: [null, Validators.required]});
     }
 

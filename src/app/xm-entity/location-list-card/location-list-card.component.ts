@@ -3,8 +3,8 @@ import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@
 import { MatDialog } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { XmAlertService } from '@xm-ngx/alert';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiEventManager } from 'ng-jhipster';
 
 import { Subscription } from 'rxjs';
 import { LocationDetailDialogComponent } from '../location-detail-dialog/location-detail-dialog.component';
@@ -55,7 +55,7 @@ export class LocationListCardComponent implements OnInit, OnChanges, OnDestroy {
     constructor(private xmEntityService: XmEntityService,
                 private locationService: LocationService,
                 private modalService: MatDialog,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private alertService: XmAlertService,
                 private toasterService: XmToasterService,
                 private translateService: TranslateService) {

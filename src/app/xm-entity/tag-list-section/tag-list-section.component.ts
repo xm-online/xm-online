@@ -1,7 +1,7 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 import { DEBUG_INFO_ENABLED, XM_EVENT_LIST } from '../../xm.constants';
 
@@ -24,7 +24,7 @@ export class TagListSectionComponent implements OnInit, OnChanges, OnDestroy {
     public tags: Tag[];
     private eventSubscriber: Subscription;
 
-    constructor(private eventManager: JhiEventManager,
+    constructor(private eventManager: XmEventManager,
                 private tagService: TagService,
                 private xmEntityService: XmEntityService,
                 private toasterService: XmToasterService) {

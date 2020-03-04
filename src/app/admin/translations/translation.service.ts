@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { Observable } from 'rxjs';
 
 declare let $: any;
@@ -9,7 +9,7 @@ declare let $: any;
 export class TranslationService {
 
     constructor(private http: HttpClient,
-                private eventManager: JhiEventManager) {
+                private eventManager: XmEventManager) {
     }
 
     public getFile(configPath: string): Observable<any> {

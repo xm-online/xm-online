@@ -1,8 +1,9 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { XmAlertService } from '@xm-ngx/alert';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { JhiParseLinks } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
 
@@ -32,7 +33,7 @@ export class BaseAdminConfigListComponent implements OnInit, OnDestroy {
         protected activatedRoute: ActivatedRoute,
         protected toasterService: XmToasterService,
         protected alertService: XmAlertService,
-        protected eventManager: JhiEventManager,
+        protected eventManager: XmEventManager,
         protected parseLinks: JhiParseLinks,
         protected router: Router,
     ) {

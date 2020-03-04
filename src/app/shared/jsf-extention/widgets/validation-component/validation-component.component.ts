@@ -1,8 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { XmEventManager } from '@xm-ngx/core';
 import { JsonSchemaFormService } from 'angular2-json-schema-form';
-
-import { JhiEventManager } from 'ng-jhipster';
 import { fromEvent as observableFromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -19,7 +18,7 @@ export class ValidationComponent implements OnInit, OnDestroy {
     public options: any;
 
     constructor(private jsf: JsonSchemaFormService,
-                private eventManager: JhiEventManager) {
+                private eventManager: XmEventManager) {
     }
 
     // tslint:disable-next-line:cognitive-complexity

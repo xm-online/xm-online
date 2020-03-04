@@ -3,10 +3,7 @@ import { MatDialogRef } from '@angular/material';
 
 import { XmAlertService } from '@xm-ngx/alert';
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiEventManager } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
-
-import { ContextService } from '../../shared/context/context.service';
 import { buildJsfAttributes } from '../../shared/jsf-extention/jsf-attributes-helper';
 import { NextSpec } from '../shared/state-spec.model';
 import { XmEntity } from '../shared/xm-entity.model';
@@ -33,17 +30,11 @@ export class StateChangeDialogComponent implements OnInit {
 
     constructor(private activeModal: MatDialogRef<StateChangeDialogComponent>,
                 private xmEntityService: XmEntityService,
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
-                private eventManager: JhiEventManager,
                 private alertService: XmAlertService,
-                private toasterService: XmToasterService,
-                private contextService: ContextService) {
+                private toasterService: XmToasterService) {
     }
 
     public ngOnInit(): void {
-        // TODO: this is workaround to get eventManager from root injector
-        this.eventManager = this.contextService.eventManager;
         // TODO think about correct way to work with context
         $.xmEntity = this.xmEntity;
         if (this.nextSpec && this.nextSpec.inputSpec) {

@@ -2,7 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { Subscription } from 'rxjs';
 
 import { I18nNamePipe, Principal } from '../../../shared/';
@@ -24,7 +24,7 @@ export class AvailableOfferingsWidgetComponent implements OnInit, OnDestroy {
     private availableOfferingActionSuccessSubscription: Subscription;
 
     constructor(private principal: Principal,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private xmEntityService: XmEntityService,
                 private functionService: FunctionService,
                 private modalService: MatDialog,

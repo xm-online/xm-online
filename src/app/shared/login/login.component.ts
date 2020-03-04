@@ -1,16 +1,14 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiEventManager } from 'ng-jhipster';
 
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TERMS_ERROR, XM_EVENT_LIST } from '../../xm.constants';
 import { StateStorageService } from '../auth/state-storage.service';
-import {
-    PrivacyAndTermsDialogComponent,
-} from '../components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
+import { PrivacyAndTermsDialogComponent } from '../components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
 import { XmConfigService } from '../spec/config.service';
 import { LoginService } from './login.service';
 
@@ -45,7 +43,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     public checkTermsOfConditions: boolean;
 
     constructor(
-        protected eventManager: JhiEventManager,
+        protected eventManager: XmEventManager,
         protected xmConfigService: XmConfigService,
         protected loginService: LoginService,
         protected stateStorageService: StateStorageService,
@@ -174,7 +172,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
             const errObj = err.error || null;
             const termsErr = errObj && errObj.error === TERMS_ERROR;
             const termsToken = errObj.oneTimeToken || null;
-            if (termsErr && termsToken) { this.pushTermsAccepting(termsToken); }
+            if (termsErr && termsToken) {
+                this.pushTermsAccepting(termsToken);
+            }
             this.authenticationError = !termsErr;
             this.successRegistration = false;
             this.isDisabled = false;

@@ -3,8 +3,7 @@ import { MatDialogRef } from '@angular/material';
 
 import { Router } from '@angular/router';
 import { XmAlertService } from '@xm-ngx/alert';
-
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { catchError, filter, finalize, share, tap } from 'rxjs/operators';
 import { ContextService } from '../../shared/context/context.service';
@@ -39,7 +38,7 @@ export class FunctionCallDialogComponent implements OnInit, AfterViewInit {
 
     constructor(private activeModal: MatDialogRef<FunctionCallDialogComponent>,
                 private functionService: FunctionService,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private contextService: ContextService,
                 private alertService: XmAlertService,
                 private ref: ChangeDetectorRef,

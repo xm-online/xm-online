@@ -5,9 +5,11 @@
        [src]="options.logoUrl"
        class="logo-img"/>
 
-  <a [routerLink]=" isAuthenticated() ? options.userRootUrl : options.rootUrl"
-     class="logo-title"
-     routerLinkActive="active">{{options.title | translate}}</a>
+  <ng-container *ngIf="session$ | async as session">
+    <a [routerLink]="session.active ? options.userRootUrl : options.rootUrl"
+       class="logo-title"
+       routerLinkActive="active">{{options.title | translate}}</a>
+  </ng-container>
 
 </ng-container>
 

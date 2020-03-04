@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { XmSessionService, XmUIConfig, XmUiConfigService, ISession } from '@xm-ngx/core';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 import { map, share } from 'rxjs/operators';
-
-import { Principal } from '../../../shared';
-import { XmUIConfig, XmUiConfigService } from '@xm-ngx/core';
 
 export const SPA_ROOT_URL = '/';
 export const SPA_AUTH_ROOT_URL = '/dashboard';
@@ -26,8 +24,8 @@ const DEFAULT: LogoOptions = {
 function optionsConfigToLogo(config: XmUIConfig): LogoOptions {
 
     return _.defaults({
-        logoUrl: config ? config.logoUrl: '',
-        title: config? config.name: '',
+        logoUrl: config ? config.logoUrl : '',
+        title: config ? config.name : '',
         rootUrl: SPA_ROOT_URL,
         userRootUrl: SPA_AUTH_ROOT_URL,
     }, DEFAULT);
@@ -42,19 +40,19 @@ function optionsConfigToLogo(config: XmUIConfig): LogoOptions {
 export class LogoComponent implements OnInit {
 
     public logo$: Observable<LogoOptions>;
+    public session$: Observable<ISession>;
 
     constructor(protected readonly xmUiConfigService: XmUiConfigService,
-                protected readonly principal: Principal) { }
+                protected readonly sessionService: XmSessionService) {
+    }
 
     public ngOnInit(): void {
         this.logo$ = this.xmUiConfigService.cache$.pipe(
             map(optionsConfigToLogo),
             share(),
         );
-    }
 
-    public isAuthenticated(): boolean {
-        return this.principal.isAuthenticated();
+        this.session$ = this.sessionService.get();
     }
 
 }

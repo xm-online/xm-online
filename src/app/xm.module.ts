@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MarkdownModule } from 'ngx-markdown';
+import { XmAlertModule } from '@xm-ngx/alert';
 import { LocalStorageService, NgxWebstorageModule, SessionStorageService } from 'ngx-webstorage';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
@@ -38,6 +39,7 @@ export function appInitializerFn(appConfig: XmApplicationConfigService): () => P
             isolate: false,
             loader: { deps: [HttpClient], provide: TranslateLoader, useFactory: HttpLoaderFactory },
         }),
+        XmAlertModule.forRoot(),
         XmTranslationModule.forRoot(),
         XmDashboardModule.forRoot(),
         MarkdownModule.forRoot(),

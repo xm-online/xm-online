@@ -5,6 +5,8 @@
             "cancel": "Cancel",
             "accept": "Accept",
             "are-you-sure": "Are you sure?",
+            "yes": "Yes",
+            "no": "No",
             "yes-exit": "Yes, exit!",
             "maintenance-message": "Technical work in progress...<br>Please, try again later.",
             "maintenance-description": "It usually takes a few minutes, otherwise contact your system administrator."

@@ -109,7 +109,7 @@ export class ClientMgmtDialogComponent implements OnInit {
                 this.scopesVariants = config.client.scopes || [];
             }
         });
-        this.scopes = this.client.scopes;
+        this.scopes = this.client.scopes || [];
     }
 
     public clear(): void {

@@ -2,7 +2,8 @@ import { Component, NO_ERRORS_SCHEMA, TemplateRef, ViewContainerRef } from '@ang
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
+import { JhiLanguageService } from 'ng-jhipster';
 import { Subject } from 'rxjs/Subject';
 
 import { JhiLanguageHelper } from '../../shared';
@@ -75,7 +76,7 @@ describe('Directive: PermitDirective', () => {
                 TestComponent,
             ],
             providers: [
-                JhiEventManager,
+                XmEventManager,
                 ViewContainerRef,
                 TemplateRef,
                 {provide: JhiLanguageHelper, useClass: Mock},

@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
-
-import { JhiEventManager } from 'ng-jhipster';
 
 import { RoleService } from '../../shared';
 import { Role } from '../../shared/role/role.model';
@@ -20,7 +19,7 @@ export class RoleMgmtDeleteDialogComponent implements OnInit {
     constructor(
         private roleService: RoleService,
         public activeModal: MatDialogRef<RoleMgmtDeleteDialogComponent>,
-        private eventManager: JhiEventManager,
+        private eventManager: XmEventManager,
         private alertService: XmToasterService,
     ) {
     }

@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 
 import { Client, ClientService } from '../../shared';
 
@@ -18,7 +17,7 @@ export class ClientMgmtDeleteDialogComponent implements OnInit {
     constructor(
         private clientService: ClientService,
         public activeModal: MatDialogRef<ClientMgmtDeleteDialogComponent>,
-        private eventManager: JhiEventManager,
+        private eventManager: XmEventManager,
     ) {
     }
 

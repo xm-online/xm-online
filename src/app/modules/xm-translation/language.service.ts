@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { SessionStorageService } from 'ngx-webstorage';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -43,7 +43,7 @@ export class LanguageService implements OnDestroy, OnInitialize {
     protected $locale: BehaviorSubject<Locale>;
 
     constructor(protected principal: Principal,
-                protected eventManager: JhiEventManager,
+                protected eventManager: XmEventManager,
                 protected translate: TranslateService,
                 protected appConfig: XmApplicationConfigService,
                 protected sessionStorage: SessionStorageService) {

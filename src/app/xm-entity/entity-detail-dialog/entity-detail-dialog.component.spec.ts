@@ -7,8 +7,9 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TranslateModule } from '@ngx-translate/core';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiConfigService, JhiDateUtils, JhiEventManager, JhiModuleConfig } from 'ng-jhipster';
+import { JhiConfigService, JhiDateUtils, JhiModuleConfig } from 'ng-jhipster';
 
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { XmEntityService } from '..';
@@ -48,7 +49,7 @@ describe('Entity detail dialog Component', () => {
                 HttpClient,
                 HttpHandler,
                 JhiDateUtils,
-                JhiEventManager,
+                XmEventManager,
                 Principal,
                 AccountService,
                 XmToasterService,
@@ -93,7 +94,9 @@ describe('Entity detail dialog Component', () => {
         component.nameValidPattern = PATTERN;
         fixture.detectChanges();
         component.xmEntity.name = '@w';
-        for (let i = 0; i < 100; i++) {tick(1); }
+        for (let i = 0; i < 100; i++) {
+            tick(1);
+        }
         fixture.detectChanges();
         element = fixture.debugElement.query(By.css('#field_name'));
         const classArr = element.nativeElement.classList;

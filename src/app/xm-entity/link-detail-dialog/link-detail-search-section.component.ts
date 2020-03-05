@@ -1,9 +1,9 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
+import { XmEventManager } from '@xm-ngx/core';
 
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiEventManager } from 'ng-jhipster';
 import { filter, map } from 'rxjs/operators';
 
 import { XmConfigService } from '../../shared';
@@ -38,7 +38,7 @@ export class LinkDetailSearchSectionComponent implements OnInit {
     constructor(private activeModal: MatDialogRef<LinkDetailSearchSectionComponent>,
                 private xmEntityService: XmEntityService,
                 private linkService: LinkService,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private toasterService: XmToasterService,
                 private configService: XmConfigService) {
     }

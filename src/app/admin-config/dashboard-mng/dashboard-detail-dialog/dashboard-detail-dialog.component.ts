@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
+import { XmEventManager } from '@xm-ngx/core';
 
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiEventManager } from 'ng-jhipster';
 
 import { environment } from '../../../../environments/environment';
 import { Principal } from '../../../shared/auth/principal.service';
@@ -26,7 +26,7 @@ export class DashboardDetailDialogComponent implements OnInit {
 
     constructor(private activeModal: MatDialogRef<DashboardDetailDialogComponent>,
                 private dashboardService: DashboardService,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private toasterService: XmToasterService,
                 private principal: Principal) {
     }

@@ -5,10 +5,10 @@ import { Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
 import { XmAlertService } from '@xm-ngx/alert';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
 
 import * as _ from 'lodash';
-import { JhiEventManager } from 'ng-jhipster';
 import { Observable, of, Subscription } from 'rxjs';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
 
@@ -54,7 +54,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor(private xmEntitySpecWrapperService: XmEntitySpecWrapperService,
                 private xmEntityService: XmEntityService,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private modalService: MatDialog,
                 private xmConfigService: XmConfigService,
                 private translateService: TranslateService,

@@ -1,8 +1,8 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
+import { XmEventManager } from '@xm-ngx/core';
 
 import { UUID } from 'angular2-uuid';
-import { JhiEventManager } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 import * as formatString from 'string-template';
 
@@ -38,7 +38,7 @@ export class EntityDetailDialogComponent implements OnInit, AfterViewInit {
     constructor(private activeModal: MatDialogRef<EntityDetailDialogComponent>,
                 private changeDetector: ChangeDetectorRef,
                 private xmEntityService: XmEntityService,
-                private eventManager: JhiEventManager) {
+                private eventManager: XmEventManager) {
         this.nameValidPattern = null;
         this.smartDescription = {
             active: false,

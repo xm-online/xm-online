@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { Subscription } from 'rxjs';
 
 import { ModulesLanguageHelper } from '../../../shared/language/modules-language.helper';
@@ -21,7 +21,7 @@ export class SignInUpWidgetComponent implements OnInit, OnDestroy {
     private changeLanguageSubscriber: Subscription;
 
     constructor(
-        private eventManager: JhiEventManager,
+        private eventManager: XmEventManager,
         private modulesLangHelper: ModulesLanguageHelper,
         private route: ActivatedRoute,
         private router: Router) {

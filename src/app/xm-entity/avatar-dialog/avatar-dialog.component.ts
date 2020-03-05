@@ -1,8 +1,7 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { CropperSettings, ImageCropperComponent } from 'ngx-img-cropper';
 import { XmEntity } from '../shared/xm-entity.model';
 
@@ -25,7 +24,7 @@ export class AvatarDialogComponent {
 
     constructor(private activeModal: MatDialogRef<AvatarDialogComponent>,
                 private xmEntityService: XmEntityService,
-                private eventManager: JhiEventManager) {
+                private eventManager: XmEventManager) {
         this.cropperSettings = new CropperSettings();
         this.cropperSettings.noFileInput = true;
         this.cropperSettings.preserveSize = true;

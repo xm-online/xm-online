@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { Subscription } from 'rxjs';
 
 import { I18nNamePipe, JhiLanguageHelper, Principal } from '../shared';
@@ -21,7 +21,7 @@ export class EntityDetailComponent implements OnInit, OnDestroy {
     private routeParamsSubscription: any;
     private routeDataSubscription: Subscription;
 
-    constructor(private eventManager: JhiEventManager,
+    constructor(private eventManager: XmEventManager,
                 private jhiLanguageHelper: JhiLanguageHelper,
                 private xmEntityService: XmEntityService,
                 private xmEntitySpecWrapperService: XmEntitySpecWrapperService,

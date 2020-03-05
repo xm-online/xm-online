@@ -5,8 +5,8 @@ import { MatDialogRef } from '@angular/material/dialog/typings/dialog-ref';
 
 import { TranslateService } from '@ngx-translate/core';
 import { XmAlertService } from '@xm-ngx/alert';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 import { Principal } from '../../shared';
 import { saveFile, saveFileFromUrl } from '../../shared/helpers/file-download-helper';
@@ -37,7 +37,7 @@ export class AttachmentListBaseComponent implements OnInit, OnChanges, OnDestroy
 
     constructor(protected attachmentService: AttachmentService,
                 protected xmEntityService: XmEntityService,
-                protected eventManager: JhiEventManager,
+                protected eventManager: XmEventManager,
                 protected toasterService: XmToasterService,
                 protected alertService: XmAlertService,
                 protected translateService: TranslateService,

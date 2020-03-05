@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { TimeAgoService, TimelineService } from '..';
@@ -33,7 +33,7 @@ export class TimelineComponent implements OnInit, OnChanges, OnDestroy {
 
     private modifySubscription: Subscription;
 
-    constructor(private eventManager: JhiEventManager,
+    constructor(private eventManager: XmEventManager,
                 private timelineService: TimelineService,
                 private timeAgoService: TimeAgoService,
     ) {

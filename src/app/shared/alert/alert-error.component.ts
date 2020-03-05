@@ -1,7 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
+import { XmAlertService } from '@xm-ngx/alert';
+import { XmEventManager } from '@xm-ngx/core';
+import { JhiAlertService } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
 import { Principal } from '../../shared/auth/principal.service';
@@ -9,7 +11,6 @@ import { DEBUG_INFO_ENABLED } from '../../xm.constants';
 import { I18nNamePipe } from '../language/i18n-name.pipe';
 import { XmConfigService } from '../spec/config.service';
 import { ResponseConfig, ResponseConfigItem, ResponseContext } from './response-config.model';
-import { XmAlertService } from '@xm-ngx/alert';
 
 declare let $: any;
 
@@ -27,7 +28,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
     /* tslint:disable */
     constructor(private toasterService: JhiAlertService,
                 private alertService: XmAlertService,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private principal: Principal,
                 protected router: Router,
                 private i18nNamePipe: I18nNamePipe,

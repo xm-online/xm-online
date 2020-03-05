@@ -2,9 +2,9 @@ import { Component, ElementRef, HostListener, OnDestroy, OnInit } from '@angular
 
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { XmEventManager } from '@xm-ngx/core';
 
 import * as _ from 'lodash';
-import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Principal, XmConfigService } from '../../shared';
@@ -34,7 +34,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
     constructor(
         private xmConfigService: XmConfigService,
-        private eventManager: JhiEventManager,
+        private eventManager: XmEventManager,
         private router: Router,
         private sanitized: DomSanitizer,
         private eRef: ElementRef,

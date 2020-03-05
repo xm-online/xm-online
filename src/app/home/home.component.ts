@@ -1,14 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
+import { Widget } from '@xm-ngx/dynamic';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Account, AuthServerProvider, Principal } from '../shared';
 import { XmConfigService } from '../shared/spec/config.service';
-import { Widget } from '@xm-ngx/dynamic';
 import { DEFAULT_AUTH_TOKEN, DEFAULT_CONTENT_TYPE, XM_EVENT_LIST } from '../xm.constants';
 
 @Component({
@@ -26,7 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private eventAuthSubscriber: Subscription;
 
     constructor(private principal: Principal,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private xmConfigService: XmConfigService,
                 private http: HttpClient,
                 private authServerProvider: AuthServerProvider) {

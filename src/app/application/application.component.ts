@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -58,7 +58,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                 protected activatedRoute: ActivatedRoute,
                 protected router: Router,
                 protected modalService: MatDialog,
-                protected eventManager: JhiEventManager,
+                protected eventManager: XmEventManager,
                 protected i18nNamePipe: I18nNamePipe,
                 protected dashboardWrapperService: DashboardWrapperService) {
         this.searchQuery = activatedRoute.snapshot.params.search ? activatedRoute.snapshot.params.search : '';
@@ -266,6 +266,8 @@ export class ApplicationComponent implements OnInit, OnDestroy {
                 map((dash) => dash && dash.config),
                 map((config) => config && config.search),
             );
-        } else { return of(''); }
+        } else {
+            return of('');
+        }
     }
 }

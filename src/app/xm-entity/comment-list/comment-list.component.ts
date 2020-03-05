@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { Subscription } from 'rxjs';
 
 import { CommentSpec } from '../shared/comment-spec.model';
@@ -22,7 +22,7 @@ export class CommentListComponent implements OnInit, OnChanges, OnDestroy {
     private modificationSubscription: Subscription;
 
     constructor(private xmEntityService: XmEntityService,
-                private eventManager: JhiEventManager) {
+                private eventManager: XmEventManager) {
     }
 
     public ngOnInit(): void {

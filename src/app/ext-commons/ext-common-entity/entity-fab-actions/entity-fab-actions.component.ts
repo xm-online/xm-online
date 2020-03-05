@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 import { Principal } from '../../../shared';
 
@@ -45,7 +45,7 @@ export class EntityFabActionsComponent implements OnInit, OnDestroy {
         protected translateService: TranslateService,
         protected toasterService: XmToasterService,
         protected modalService: MatDialog,
-        protected eventManager: JhiEventManager,
+        protected eventManager: XmEventManager,
         protected xmEntitySpecWrapperService: XmEntitySpecWrapperService,
     ) {
         this.spec = null;

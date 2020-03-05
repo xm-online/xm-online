@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
+import { JhiLanguageService } from 'ng-jhipster';
 import { XM_EVENT_LIST } from '../../../xm.constants';
 import { Principal } from '../../auth/principal.service';
 import { XmConfigService } from '../../spec/config.service';
@@ -14,7 +15,7 @@ export class UserLoginService {
     constructor(
         private jhiLanguageService: JhiLanguageService,
         private specService: XmConfigService,
-        private eventManager: JhiEventManager,
+        private eventManager: XmEventManager,
         private principal: Principal,
     ) {
         this.getAllLogins().then((logins) => this.allLogins = logins);

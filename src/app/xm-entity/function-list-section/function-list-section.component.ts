@@ -2,7 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog, MatTabChangeEvent } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -46,15 +46,13 @@ export class FunctionListSectionComponent implements OnInit, OnChanges, OnDestro
 
     constructor(protected xmEntityService: XmEntityService,
                 protected modalService: MatDialog,
-                protected eventManager: JhiEventManager,
+                protected eventManager: XmEventManager,
                 protected translateService: TranslateService,
                 protected contextService: ContextService,
                 protected principal: Principal) {
     }
 
     public ngOnInit(): void {
-        // TODO: this is workaround to get eventManager from root injector
-        this.eventManager = this.contextService.eventManager;
         this.load();
     }
 

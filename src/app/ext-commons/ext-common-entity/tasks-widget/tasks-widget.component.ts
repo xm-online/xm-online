@@ -1,7 +1,7 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 import { Subscription } from 'rxjs';
 
 import { EntityDetailDialogComponent, Spec, XmEntity, XmEntityService, XmEntitySpec } from '../../../xm-entity';
@@ -30,7 +30,7 @@ export class TasksWidgetComponent implements OnInit, OnDestroy {
     private xmEntityListModificationSubscriber: Subscription;
     private xmEntityDetailModificationSubscriber: Subscription;
 
-    constructor(private eventManager: JhiEventManager,
+    constructor(private eventManager: XmEventManager,
                 private modalService: MatDialog,
                 private xmEntityService: XmEntityService) {
     }

@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { XmAlertService } from '@xm-ngx/alert';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiEventManager } from 'ng-jhipster';
 
 import { getFieldValue } from '../../shared/helpers/entity-list-helper';
 import { FieldOptions } from '../entity-list-card/entity-list-card-options.model';
@@ -39,7 +39,7 @@ export class LinkListCardComponent implements OnInit, OnChanges {
     ];
 
     constructor(private linkService: LinkService,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private toasterService: XmToasterService,
                 private alertService: XmAlertService,
                 private translateService: TranslateService) {

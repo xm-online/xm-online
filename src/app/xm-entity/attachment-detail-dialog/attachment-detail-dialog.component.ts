@@ -2,15 +2,15 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
 import { TranslateService } from '@ngx-translate/core';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiDataUtils, JhiEventManager } from 'ng-jhipster';
+import { JhiDataUtils } from 'ng-jhipster';
 
 import { Principal } from '../../shared/auth/principal.service';
 import { AttachmentSpec } from '../shared/attachment-spec.model';
 import { Attachment } from '../shared/attachment.model';
 import { AttachmentService } from '../shared/attachment.service';
 import { XmEntity } from '../shared/xm-entity.model';
-
 
 
 const ATTACHMENT_EVENT = 'attachmentListModification';
@@ -32,7 +32,7 @@ export class AttachmentDetailDialogComponent implements OnInit {
 
     constructor(protected activeModal: MatDialogRef<AttachmentDetailDialogComponent>,
                 protected attachmentService: AttachmentService,
-                protected eventManager: JhiEventManager,
+                protected eventManager: XmEventManager,
                 protected dataUtils: JhiDataUtils,
                 protected toasterService: XmToasterService,
                 protected translateService: TranslateService,

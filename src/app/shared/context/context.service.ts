@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ContextService {
 
     private data: any = {};
 
-    constructor(public eventManager: JhiEventManager) {
+    constructor(public eventManager: XmEventManager) {
     }
 
     public get(key: string): any {

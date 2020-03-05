@@ -2,11 +2,11 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialogRef } from '@angular/material';
-import { JhiEventManager } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
+import { Observable } from 'rxjs';
 import { finalize, map, startWith } from 'rxjs/operators';
 
 import { Client, ClientService, JhiLanguageHelper, RoleService, XmConfigService } from '../../shared';
-import { Observable } from 'rxjs';
 
 export const CLIENT_UNIQUE_ID_ERROR_CODE = 'client.already.exists';
 
@@ -40,7 +40,7 @@ export class ClientMgmtDialogComponent implements OnInit {
                 private languageHelper: JhiLanguageHelper,
                 private clientService: ClientService,
                 private roleService: RoleService,
-                private eventManager: JhiEventManager,
+                private eventManager: XmEventManager,
                 private xmConfigService: XmConfigService) {
         this.filteredScopes = this.scopeCtrl.valueChanges.pipe(
             startWith(null),

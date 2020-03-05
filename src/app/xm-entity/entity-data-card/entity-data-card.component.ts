@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
-import { JhiEventManager } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
 
 import { buildJsfAttributes, nullSafe } from '../../shared/jsf-extention/jsf-attributes-helper';
@@ -26,7 +26,7 @@ export class EntityDataCardComponent implements OnInit {
 
     constructor(private xmEntityService: XmEntityService,
                 private toasterService: XmToasterService,
-                private eventManager: JhiEventManager) {
+                private eventManager: XmEventManager) {
     }
 
     public ngOnInit(): void {

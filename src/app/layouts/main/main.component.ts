@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { XmEventManager } from '@xm-ngx/core';
 import { Idle } from 'idlejs/dist';
-import { JhiEventManager } from 'ng-jhipster';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
@@ -41,7 +41,7 @@ export class XmMainComponent implements OnInit, OnDestroy {
                 private languageService: LanguageService,
                 private principal: Principal,
                 protected titleService: TitleService,
-                private eventManager: JhiEventManager) {
+                private eventManager: XmEventManager) {
         this.resolved$ = new BehaviorSubject<boolean>(false);
         this.isMaintenanceProgress$ = new BehaviorSubject<boolean>(false);
         this.xmConfigService.isResolved().subscribe((res: boolean) => this.resolved$.next(res));
@@ -77,7 +77,7 @@ export class XmMainComponent implements OnInit, OnDestroy {
         });
 
         // TODO #14219. workaround for dynamic expand height of textarea
-        $('body').on('keyup', '.textarea-auto-height textarea', function(this: HTMLElement) {
+        $('body').on('keyup', '.textarea-auto-height textarea', function (this: HTMLElement) {
             this.style.overflow = 'hidden';
             this.style.height = '52px';
             this.style.height = this.scrollHeight + 'px';
@@ -168,7 +168,7 @@ export class XmMainComponent implements OnInit, OnDestroy {
             if (allowToRead) {
                 this.xmConfigService.loadPrivateConfig();
             }
-        })
+        });
     }
 
     private idleLogoutInit(): void {
@@ -198,7 +198,9 @@ export class XmMainComponent implements OnInit, OnDestroy {
     }
 
     private idleAction(time: any): void {
-        if (!environment.production) { console.info('>>> init idle logout in ' + time); }
+        if (!environment.production) {
+            console.info('>>> init idle logout in ' + time);
+        }
         this.isIdleEnabled = true;
         this.idle = new Idle()
             .whenNotInteractive()

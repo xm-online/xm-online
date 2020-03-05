@@ -4,6 +4,7 @@ import { defaults } from 'lodash';
 import { JhiEventManager } from 'ng-jhipster';
 import { XM_CORE_CONFIG, XM_CORE_CONFIG_DEFAULT, XM_CORE_EXTERNAL_CONFIG, XmCoreConfig } from './xm-core-config';
 import { XmEventManagerService } from './xm-event-manager.service';
+import { XmPermissionService } from './xm-permission.service';
 
 import { XmSessionService } from './xm-session.service';
 import { XmUiConfigService } from './xm-ui-config.service';
@@ -34,6 +35,7 @@ export class XmCoreModule {
                 XmSessionService,
                 XmUiConfigService,
                 XmUserService,
+                XmPermissionService,
                 {provide: XM_CORE_EXTERNAL_CONFIG, useValue: externalConfig},
                 {provide: XM_CORE_CONFIG, useFactory: xmCoreConfigFactory, deps: [XM_CORE_EXTERNAL_CONFIG]},
             ],

@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import * as _ from 'lodash';
 import { JhiAlert, JhiAlertService } from 'ng-jhipster';
 import { Observable } from 'rxjs';
 
 export interface ToasterConfig extends Partial<JhiAlert> {
     text?: string;
+    textOptions?: {
+        value?: string;
+        [value: string]: string | object;
+    };
+    /** @deprecated msg use text instead */
     msg?: string | undefined;
 }
 
@@ -24,7 +30,10 @@ export class XmToasterService {
         }
 
         if (params.msg) {
-            params.msg = this.translateService.instant(params.msg);
+            const opts = params.textOptions || {};
+            _.defaults(opts, {value: ''});
+
+            params.msg = this.translateService.instant(params.msg, opts);
         }
 
         return new Observable((observer) => {

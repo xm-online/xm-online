@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { OnDestroy } from '@angular/core';
 import { interval, of, ReplaySubject } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { startWith, takeUntil } from 'rxjs/operators';
@@ -22,7 +22,6 @@ export interface IRequestCache<T> extends OnDestroy {
     clear(): void;
 }
 
-@Injectable()
 export class RequestCache<T> implements IRequestCache<T> {
 
     private _cache$: ReplaySubject<T | null>;
@@ -38,10 +37,16 @@ export class RequestCache<T> implements IRequestCache<T> {
     }
 
     public ngOnDestroy(): void {
-        this._cache$.complete();
+        if (this._cache$) {
+            this._cache$.complete();
+        }
     }
 
     public forceReload(): void {
+        if (!this._cache$) {
+            this.initialize();
+            return;
+        }
         this.updateData();
     }
 

@@ -26,7 +26,6 @@ export class I18nJsfPipe implements PipeTransform {
                         obj[property] = this.pipe.transform(obj[property], principal);
                     }
                 }
-
             }
         }
         return obj;

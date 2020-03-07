@@ -178,9 +178,9 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
+            "karmaConfig": "karma.conf.js",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
+            "tsConfig": "tsconfig.spec.json",
             "scripts": [
               "node_modules/hammerjs/hammer.min.js",
               "node_modules/jquery/dist/jquery.js",
@@ -211,8 +211,14 @@
               "node_modules/yamljs/dist/yaml.js",
               "node_modules/ajv/dist/ajv.min.js"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles",
+                "src/app/ext"
+              ]
+            },
             "styles": [
-              "node_modules/snazzy-info-window/dist/snazzy-info-window.css"
+              "src/styles.scss"
             ],
             "assets": [
               "src/assets",

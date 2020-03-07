@@ -1,15 +1,17 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement, NO_ERRORS_SCHEMA, ViewContainerRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
+import { XmEventManager } from '@xm-ngx/core';
+import { XmSharedTestingModule } from '@xm-ngx/shared';
+import { JhiLanguageService } from 'ng-jhipster';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { JhiLanguageHelper } from '../../shared';
 import { Principal } from '../../shared/auth/principal.service';
 import { PermitDirective } from '../../shared/privilege/privilege.directive';
-import { XmEventManager } from '@xm-ngx/core';
 
 class Mock {
     public authenticationState: Subject<any> = new Subject<any>();
@@ -48,6 +50,8 @@ describe('Directive: PermitDirective', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
+            schemas: [NO_ERRORS_SCHEMA],
+            imports: [XmSharedTestingModule, HttpClientTestingModule],
             declarations: [
                 PermitDirective,
                 TestDuplicateComponent,
@@ -71,9 +75,6 @@ describe('Directive: PermitDirective', () => {
                     provide: Principal,
                     useClass: Mock,
                 },
-            ],
-            schemas: [
-                NO_ERRORS_SCHEMA,
             ],
         }).compileComponents();
 

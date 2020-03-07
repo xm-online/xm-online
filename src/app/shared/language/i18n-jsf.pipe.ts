@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Principal } from '../auth/principal.service';
+import { Principal } from '@xm-ngx/core/auth';
+
 import { I18nNamePipe } from './i18n-name.pipe';
 
 @Pipe({name: 'i18nJsf'})

@@ -1,8 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
-import { XmSharedModule } from '../shared/shared.module';
-import { XmDashboardModule } from '../xm-dashboard/xm-dashboard.module';
+import { XmSharedModule } from '@xm-ngx/shared';
+import { XmDashboardModule } from '@xm-ngx/dynamic';
 import { HomeComponent } from './';
 import { HOME_ROUTE } from './home.route';
 

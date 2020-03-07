@@ -7,7 +7,8 @@ import { XmEventManager } from '@xm-ngx/core';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Principal, XmConfigService } from '../../shared';
+import { Principal } from '@xm-ngx/core/auth';
+import { XmConfigService } from '../../shared/spec/config.service';
 import { Notification, NotificationUiConfig } from '../shared/notification.model';
 
 import { NotificationsService } from '../shared/notifications.service';

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Routes } from '@angular/router';
 
-import { Principal } from '../../shared';
+import { Principal } from '@xm-ngx/core/auth';
 import { RoleMgmtDetailComponent } from './roles-management-detail.component';
 import { RolesMgmtComponent } from './roles-management.component';
 

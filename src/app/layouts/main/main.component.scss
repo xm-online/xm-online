@@ -1,9 +1,3 @@
-@import 'main';
-
-::ng-deep {
-  @include xm-layout-sidebar-with-mini();
-}
-
 .main--custom-bg {
   background-position: 0 0;
   background-repeat:   no-repeat;

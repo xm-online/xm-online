@@ -1,7 +1,13 @@
+@import './sidebar';
+@import '../../layouts/main/main-theme';
 @import './menu/menu-theme';
 @import './user/user-theme';
 
 @mixin xm-sidebar-theme($theme) {
   @include menu($theme);
   @include user-theme($theme);
+
+  .xm-sidebar {
+    @include xm-sidebar($theme);
+  }
 }

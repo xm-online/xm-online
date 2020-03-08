@@ -1,8 +1,11 @@
-@import '../sidebar';
-@import '../menu/menu-theme';
-
 @mixin user-theme($theme) {
   .user-title {
     @include menu-link($theme);
+  }
+
+  .user-name {
+    font-size:     $xm-font-size-sm;
+    color:         $xm-sidebar-color;
+    font-weight:   $xm-font-weight;
   }
 }

@@ -1,16 +1,14 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { XmAlertService } from '@xm-ngx/alert';
 import { XmEventManager } from '@xm-ngx/core';
 import { JhiAlertService } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
-
-import { Principal } from '../../shared/auth/principal.service';
-import { DEBUG_INFO_ENABLED } from '../../xm.constants';
-import { I18nNamePipe } from '../language/i18n-name.pipe';
-import { XmConfigService } from '../spec/config.service';
+import { I18nNamePipe } from '../../../shared/language';
+import { XmConfigService } from '../../../shared/spec/config.service';
+import { DEBUG_INFO_ENABLED } from '../../../xm.constants';
 import { ResponseConfig, ResponseConfigItem, ResponseContext } from './response-config.model';
+import { XmAlertService } from './xm-alert.service';
 
 declare let $: any;
 
@@ -29,7 +27,6 @@ export class JhiAlertErrorComponent implements OnDestroy {
     constructor(private toasterService: JhiAlertService,
                 private alertService: XmAlertService,
                 private eventManager: XmEventManager,
-                private principal: Principal,
                 protected router: Router,
                 private i18nNamePipe: I18nNamePipe,
                 private translateService: TranslateService,
@@ -232,7 +229,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
                 return this.getFromPath(this.rc.response.error, config.value);
             }
             case 'MESSAGE_OBJECT': {
-                return this.i18nNamePipe.transform(config.value, this.principal);
+                return this.i18nNamePipe.transform(config.value);
             }
             default: {
                 console.warn('Wrong responseConfigItem outputMessage type - returning default message');

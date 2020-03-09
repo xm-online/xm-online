@@ -20,6 +20,7 @@ module.exports = {
         '@typescript-eslint/typedef': ['error', {arrayDestructuring: false, arrowParameter: false}],
         '@typescript-eslint/type-annotation-spacing': ['error'],
         '@typescript-eslint/explicit-member-accessibility': ['error', {
+            accessibility: 'off',
             overrides: {constructors: 'off', accessors: 'off'}
         }],
         '@typescript-eslint/no-inferrable-types': ['error', {
@@ -37,7 +38,7 @@ module.exports = {
         'line-comment-position': 'warn',
         'class-methods-use-this': 'warn',
         'no-plusplus': 'warn',
-        'indent': ['warn', 4, {'SwitchCase': 1}],
+        'indent': ['off', 4, {'SwitchCase': 1}],
         'no-param-reassign': 'warn',
         'prefer-template': 'warn',
         'no-inline-comments': 'warn',

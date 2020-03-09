@@ -5,7 +5,7 @@ import { merge } from 'lodash';
 import { Observable, of, zip } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { RequestCache } from './cache/request-cache';
-import { XM_CORE_CONFIG, XmCoreConfig } from './xm-core-config';
+import { XmCoreConfig } from './xm-core-config';
 import { XmSessionService } from './xm-session.service';
 
 import { XmUIConfig } from './xm-ui-config-model';
@@ -16,7 +16,7 @@ export class XmUiConfigService<T = XmUIConfig> implements OnDestroy {
     protected requestCache: RequestCache<T> = new RequestCache<T>();
 
     constructor(protected httpClient: HttpClient,
-                @Inject(XM_CORE_CONFIG) protected xmCoreConfig: XmCoreConfig,
+                @Inject(XmCoreConfig) protected xmCoreConfig: XmCoreConfig,
                 protected sessionService: XmSessionService) {
     }
 

@@ -14,6 +14,11 @@ function getPrivileges(permissions: XmUserPermission[]): string[] {
     }, []);
 }
 
+export enum PermissionCheckStrategy {
+    ALL = 'all',
+    ANY = 'any'
+}
+
 @Injectable({
     providedIn: 'root',
 })
@@ -51,5 +56,19 @@ export class XmPermissionService {
             throw new Error('The privileges array is empty!');
         }
         return this.privileges$.pipe(map((arr) => _.intersection(arr, privileges).length !== 0));
+    }
+
+    public hasPrivilegesBy(
+        privileges: string[],
+        strategy: PermissionCheckStrategy = PermissionCheckStrategy.ALL,
+    ): Observable<boolean> {
+        switch (strategy) {
+            case PermissionCheckStrategy.ALL:
+                return this.hasPrivileges(privileges);
+            case PermissionCheckStrategy.ANY:
+                return this.hasAnyPrivilege(privileges);
+            default:
+                return this.hasPrivileges(privileges);
+        }
     }
 }

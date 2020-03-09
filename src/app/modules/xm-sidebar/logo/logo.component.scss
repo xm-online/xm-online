@@ -1,16 +1,18 @@
-@import '../sidebar';
-
+$xm-logo-font-weight:     400 !default;
 $xm-logo-icon-size:       42px !default;
 $xm-logo-icon-size-x:     $xm-logo-icon-size !default;
 $xm-logo-icon-size-y:     $xm-logo-icon-size !default;
 $xm-logo-title-font-size: 18px !default;
+$xm-logo-sidebar-color:   inherit !default;
+$xm-logo-padding-x:       12px !default;
+$xm-logo-padding-y:       15px !default;
 
 :host {
   display:        flex;
   flex-direction: row;
   align-items:    center;
   vertical-align: center;
-  padding:        $menu-item-padding-y $sidebar-padding-x;
+  padding:        $xm-logo-padding-y $xm-logo-padding-x;
 }
 
 .logo-img {
@@ -20,10 +22,10 @@ $xm-logo-title-font-size: 18px !default;
 }
 
 .logo-title {
-  padding-left: $sidebar-padding-x;
+  padding-left: $xm-logo-padding-x;
   font-size:    $xm-logo-title-font-size;
-  color:        $xm-sidebar-color;
-  font-weight:  $xm-font-weight;
+  color:        $xm-logo-sidebar-color;
+  font-weight:  $xm-logo-font-weight;
   white-space:  nowrap;
   overflow:     hidden;
 }

@@ -8,7 +8,7 @@ import { XmConfigService } from '../../shared/spec/config.service';
 import { StatesManagementDialogComponent } from '../../xm-entity';
 import { ConfigValidatorUtil } from './config-validator/config-validator.util';
 import { ConfigVisualizerDialogComponent } from './config-visualizer-dialog/config-visualizer-dialog.component';
-import { Principal } from '../../shared';
+import { Principal } from '@xm-ngx/core/auth';
 
 const TENANT_SPEC_PATH = '/tenant-config.yml';
 

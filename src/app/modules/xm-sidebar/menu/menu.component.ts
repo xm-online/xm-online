@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { matExpansionAnimations } from '@angular/material';
 import { NavigationEnd, Router } from '@angular/router';
+import { Dashboard, DashboardService } from '@xm-ngx/dynamic';
+import { XmEntitySpec } from '@xm-ngx/entity';
+import { transpilingForIE } from '@xm-ngx/json-scheme-form';
 import * as _ from 'lodash';
 import { combineLatest, Observable, of, Subscription } from 'rxjs';
 import { filter, map, share, tap } from 'rxjs/operators';
 
 import { ContextService, Principal } from '../../../shared';
-import { transpilingForIE } from '../../../shared/jsf-extention';
-import { Dashboard, DashboardService } from '../../../xm-dashboard';
-import { XmEntitySpec } from '../../../xm-entity';
 import { XmEntityConfigService } from '../config';
 import { DEFAULT_MENU_LIST } from './menu-const';
 import { JavascriptCode, MenuCategory, MenuItem } from './menu-models';
@@ -109,7 +109,7 @@ function dashboardsToCategories(dashboards: Dashboard[]): MenuCategory[] {
         let group = _.find(categories, (i) => i.key === groupKey);
 
         const isHidden = dashboard.config && dashboard.config.hidden;
-        if (!group && !isHidden)  {
+        if (!group && !isHidden) {
             group = dashboardToCategory(dashboard);
             categories.push(group);
         }
@@ -149,7 +149,8 @@ export class MenuComponent implements OnInit, OnDestroy {
                 protected readonly router: Router,
                 protected readonly principal: Principal,
                 protected readonly entityConfigService: XmEntityConfigService,
-                protected readonly contextService: ContextService) { }
+                protected readonly contextService: ContextService) {
+    }
 
     public ngOnInit(): void {
         const dashboards$ = this.dashboardService.query().pipe(

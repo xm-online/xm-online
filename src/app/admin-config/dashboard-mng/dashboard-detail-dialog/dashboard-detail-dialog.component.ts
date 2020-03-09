@@ -5,7 +5,7 @@ import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
 
 import { environment } from '../../../../environments/environment';
-import { Principal } from '../../../shared/auth/principal.service';
+import { Principal } from '@xm-ngx/core/auth';
 import { Dashboard, DashboardService } from '../../../xm-dashboard';
 
 

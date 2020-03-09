@@ -5,7 +5,7 @@ import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiOrderByPipe } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
-import { Principal } from '../../shared/auth/principal.service';
+import { Principal } from '@xm-ngx/core/auth';
 import { ITEMS_PER_PAGE } from '../../shared/constants/pagination.constants';
 import { Role } from '../../shared/role/role.model';
 import { RoleService } from '../../shared/role/role.service';

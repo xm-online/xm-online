@@ -1,15 +1,17 @@
 /* tslint:disable:max-classes-per-file */
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { XmEventManager } from '@xm-ngx/core';
+import { XmSharedTestingModule } from '@xm-ngx/shared';
 import { JhiLanguageService } from 'ng-jhipster';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { Observable, of } from 'rxjs';
 
 import { JhiLanguageHelper, LoginService, ModulesLanguageHelper, XmConfigService } from '../../shared';
-import { Principal } from '../../shared/auth/principal.service';
+import { Principal } from '@xm-ngx/core/auth';
 import { XmApplicationConfigService } from '../../shared/spec/xm-config.service';
 import { XmMainComponent } from './main.component';
 
@@ -29,11 +31,10 @@ class MockedConfig extends Mock {
 describe('XmMainComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
+            schemas: [NO_ERRORS_SCHEMA],
+            imports: [XmSharedTestingModule, HttpClientTestingModule, NgxWebstorageModule.forRoot()],
             declarations: [
                 XmMainComponent,
-            ],
-            imports: [
-                NgxWebstorageModule.forRoot(),
             ],
             providers: [
                 XmEventManager,
@@ -77,9 +78,6 @@ describe('XmMainComponent', () => {
                     provide: LoginService,
                     useClass: Mock,
                 },
-            ],
-            schemas: [
-                NO_ERRORS_SCHEMA,
             ],
         }).compileComponents();
     }));

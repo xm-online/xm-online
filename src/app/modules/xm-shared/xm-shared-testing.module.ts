@@ -10,7 +10,11 @@ import { XmSharedModule } from './xm-shared.module';
 @Injectable()
 @Pipe({name: 'translate'})
 export class TranslatePipe {
-   public transform: any = (arg) => of(arg);
+    public transform: any = (arg) => of(arg);
+}
+
+export class TranslateServiceMock {
+    public get: (i: any) => any = (arg) => of(arg);
 }
 
 @NgModule({
@@ -28,7 +32,7 @@ export class TranslatePipe {
     ],
     providers: [
         TranslatePipe,
-        {provide: TranslateService, useValue: {get: (i) => of(i)}},
+        {provide: TranslateService, useClass: TranslateServiceMock},
         {provide: MatDialogRef, useValue: {}},
     ],
 })

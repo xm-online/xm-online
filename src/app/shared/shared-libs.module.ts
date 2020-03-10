@@ -24,6 +24,9 @@ import { LanguageModule } from './language/language.module';
         NgbModule,
         NgJhipsterModule,
         XmTranslationModule.forChild(),
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule,
     ],
     providers: [
         {
@@ -33,15 +36,18 @@ import { LanguageModule } from './language/language.module';
     ],
     exports: [
         LoaderModule,
-        XmPasswordNeededModule,
-        FormsModule,
+        InputModule,
         NoDataModule,
+        LanguageModule,
+        XmPasswordNeededModule,
+        XmMaintenanceViewModule,
         XmSharedModule,
+        NgbModule,
         NgJhipsterModule,
         XmTranslationModule,
+        FormsModule,
         ReactiveFormsModule,
         CommonModule,
-        NgbModule,
     ],
 })
 export class GateSharedLibsModule {

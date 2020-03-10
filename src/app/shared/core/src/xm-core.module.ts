@@ -18,15 +18,6 @@ export function xmCoreConfigFactory(externalConfig?: XmCoreConfig): XmCoreConfig
     imports: [CommonModule],
 })
 export class XmCoreModule {
-
-    constructor(
-        xmUiConfigService: XmUiConfigService,
-        xmUserService: XmUserService,
-    ) {
-        xmUiConfigService.init();
-        xmUserService.init();
-    }
-
     public static forRoot(externalConfig?: XmCoreConfig): ModuleWithProviders {
         return {
             ngModule: XmCoreModule,

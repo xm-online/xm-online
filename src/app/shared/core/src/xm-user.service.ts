@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { takeUntilOnDestroy } from '@xm-ngx/shared/operators';
 import { Observable, of } from 'rxjs';
+import { distinctUntilChanged, filter, map, pluck } from 'rxjs/operators';
 import { RequestCache } from './cache/request-cache';
 import { XmCoreConfig } from './xm-core-config';
-import { XmSessionService } from './xm-session.service';
+import { ISession, XmSessionService } from './xm-session.service';
 import { XmUser } from './xm-user-model';
 
 @Injectable({
@@ -12,11 +13,23 @@ import { XmUser } from './xm-user-model';
 })
 export class XmUserService<T = XmUser> implements OnDestroy {
 
-    protected requestCache: RequestCache<T> = new RequestCache<T>();
+    protected requestCache: RequestCache<T> = new RequestCache<T>(() => of(null));
 
-    constructor(protected httpClient: HttpClient,
-                @Inject(XmCoreConfig) protected xmCoreConfig: XmCoreConfig,
-                protected sessionService: XmSessionService) {
+    constructor(
+        protected httpClient: HttpClient,
+        @Inject(XmCoreConfig) protected xmCoreConfig: XmCoreConfig,
+        protected sessionService: XmSessionService,
+    ) {
+        this.sessionService.get().pipe(
+            takeUntilOnDestroy(this),
+            filter<ISession>(Boolean),
+            pluck('active'),
+            distinctUntilChanged(),
+            map((isActive: boolean) => isActive ? this.getUser : (): Observable<null> => of(null)),
+        ).subscribe((request) => {
+            this.requestCache.request = request;
+            this.requestCache.forceReload();
+        });
     }
 
     public get user$(): Observable<T | null> {
@@ -32,18 +45,6 @@ export class XmUserService<T = XmUser> implements OnDestroy {
         this.requestCache.ngOnDestroy();
     }
 
-    public init(): void {
-        const getUser = (): Observable<T> => this.httpClient.get<T>(this.xmCoreConfig.USER_URL);
+    private getUser: () => Observable<T> = () => this.httpClient.get<T>(this.xmCoreConfig.USER_URL);
 
-        this.requestCache.request = getUser;
-
-        this.sessionService.get().pipe(takeUntilOnDestroy(this)).subscribe((session) => {
-            if (session.active) {
-                this.requestCache.request = getUser;
-            } else {
-                this.requestCache.request = () => of(null);
-            }
-            this.requestCache.forceReload();
-        });
-    }
 }

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { XmSessionService } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
 
 import * as moment from 'moment';
@@ -28,7 +27,6 @@ export class Principal {
     constructor(private account: AccountService,
                 private alertService: XmToasterService,
                 private $localStorage: LocalStorageService,
-                private sessionService: XmSessionService,
                 private $sessionStorage: SessionStorageService,
     ) {
         this.checkTokenAndForceIdentity();
@@ -132,7 +130,6 @@ export class Principal {
                             this.userIdentity = null;
                             this.authenticated = false;
                         }
-                        this.sessionService.create();
                         this.authenticationState.next(this.userIdentity);
                         resolve(this.userIdentity);
                     })
@@ -152,7 +149,6 @@ export class Principal {
                             this.userIdentity = null;
                             this.authenticated = false;
                             this.authenticationState.next(this.userIdentity);
-                            this.sessionService.clear();
                             resolve(this.userIdentity);
                         }
                     });

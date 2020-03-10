@@ -2,11 +2,25 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { JhiConfigService, NgJhipsterModule } from 'ng-jhipster';
+import { LoaderModule } from '@xm-ngx/components/loader';
+import { XmPasswordNeededModule } from '@xm-ngx/components/xm-password-needed';
+import { XmSharedModule } from '@xm-ngx/shared';
 import { XmTranslationModule } from '@xm-ngx/translation';
+import { JhiConfigService, NgJhipsterModule } from 'ng-jhipster';
+import { XmMaintenanceViewModule } from './components/maintenance/xm-maintenance-view.module';
+import { NoDataModule } from './components/no-data/no-data.module';
+import { InputModule } from './directives/input.module';
+import { LanguageModule } from './language/language.module';
 
 @NgModule({
     imports: [
+        LoaderModule,
+        InputModule,
+        NoDataModule,
+        LanguageModule,
+        XmPasswordNeededModule,
+        XmMaintenanceViewModule,
+        XmSharedModule,
         NgbModule,
         NgJhipsterModule,
         XmTranslationModule.forChild(),
@@ -18,7 +32,11 @@ import { XmTranslationModule } from '@xm-ngx/translation';
         },
     ],
     exports: [
+        LoaderModule,
+        XmPasswordNeededModule,
         FormsModule,
+        NoDataModule,
+        XmSharedModule,
         NgJhipsterModule,
         XmTranslationModule,
         ReactiveFormsModule,

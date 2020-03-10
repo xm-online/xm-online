@@ -1,4 +1,3 @@
-export { XmPermissionService } from './src/xm-permission.service';
 export { XmEventManagerService as XmEventManager } from './src/xm-event-manager.service';
 export { RequestCache } from './src/cache/request-cache';
 export { XmSessionService, ISession } from './src/xm-session.service';

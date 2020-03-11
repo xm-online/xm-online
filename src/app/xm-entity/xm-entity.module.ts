@@ -3,7 +3,8 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TagInputModule } from 'ngx-chips';
 import { ImageCropperModule } from 'ngx-img-cropper';
-import { RatingModule } from 'ngx-rating';
+import { RatingModule } from '../modules/components/xm-rating';
+
 import { XmSharedModule } from '../shared/shared.module';
 import {
     AreaComponent,

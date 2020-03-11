@@ -7,7 +7,7 @@
     <div class="col-auto">
       <button mat-button
               (click)="threadDumpFilter = {}"
-              class="btn btn-sm btn-round btn-primary mr-2 ml-2"
+              class="btn btn-sm rounded-circle btn-primary mr-2 ml-2"
               type="button">
         {{'metrics.options.f-all' | translate}}
         <span class="badge badge-pill pr-0">{{threadDumpAll}}</span>
@@ -16,7 +16,7 @@
     <div class="col-auto">
       <button mat-button
               (click)="threadDumpFilter = {threadState: 'RUNNABLE'}"
-              class="btn btn-sm btn-round btn-success mr-2 ml-2"
+              class="btn btn-sm rounded-circle btn-success mr-2 ml-2"
               type="button">
         {{'metrics.options.f-runnable' | translate}}
         <span class="badge badge-pill pr-0">{{threadDumpRunnable}}</span>
@@ -25,7 +25,7 @@
     <div class="col-auto">
       <button mat-button
               (click)="threadDumpFilter = {threadState: 'WAITING'}"
-              class="btn btn-sm btn-round btn-info mr-2 ml-2"
+              class="btn btn-sm rounded-circle btn-info mr-2 ml-2"
               type="button">
         {{'metrics.options.f-waiting' | translate}}
         <span class="badge badge-pill pr-0">{{threadDumpWaiting}}</span>
@@ -34,7 +34,7 @@
     <div class="col-auto">
       <button mat-button
               (click)="threadDumpFilter = {threadState: 'TIMED_WAITING'}"
-              class="btn btn-sm btn-round btn-warning mr-2 ml-2"
+              class="btn btn-sm rounded-circle btn-warning mr-2 ml-2"
               type="button">
         {{'metrics.options.f-timed-waiting' | translate}}
         <span class="badge badge-pill pr-0">{{threadDumpTimedWaiting}}</span>
@@ -43,7 +43,7 @@
     <div class="col-auto">
       <button mat-button
               (click)="threadDumpFilter = {threadState: 'BLOCKED'}"
-              class="btn btn-sm btn-round btn-danger mr-2 ml-2"
+              class="btn btn-sm rounded-circle btn-danger mr-2 ml-2"
               type="button">
         {{'metrics.options.f-blocked' | translate}}
         <span class="badge badge-pill pr-0">{{threadDumpBlocked}}</span>

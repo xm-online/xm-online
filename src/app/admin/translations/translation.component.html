@@ -1,13 +1,13 @@
 <div class="row">
   <div class="col-md-12 text-center">
     <span>
-      <button (click)="zipTranslations()" class="btn btn-primary btn-round" type="submit">Upload result</button>
+      <button (click)="zipTranslations()" class="btn btn-primary rounded-circle" type="submit">Upload result</button>
     </span>
     <span>
-      <button (click)="resetLocalStorage()" class="btn btn-primary btn-round" type="submit">Reset local storage</button>
+      <button (click)="resetLocalStorage()" class="btn btn-primary rounded-circle" type="submit">Reset local storage</button>
     </span>
     <span *ngFor="let lang of settings.langs">
-      <button (click)="translateAllTo(lang)" *ngIf="lang != 'en'" class="btn btn-primary btn-round">
+      <button (click)="translateAllTo(lang)" *ngIf="lang != 'en'" class="btn btn-primary rounded-circle">
         Translate ALL to {{lang}}</button>
     </span>
   </div>
@@ -37,7 +37,7 @@
                    class="tab-pane" id="function-{{location}}">
                 <span *ngFor="let lang of settings.langs">
                   <button (click)="translateLocationTo(location, lang)" *ngIf="lang != 'en'"
-                          class="btn btn-primary btn-round btn-sm">Translate {{location}} to {{lang}}</button>
+                          class="btn btn-primary rounded-circle btn-sm">Translate {{location}} to {{lang}}</button>
                 </span>
 
                 <table class="table">

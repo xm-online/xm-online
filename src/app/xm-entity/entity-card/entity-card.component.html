@@ -35,7 +35,7 @@
           <img src="{{xmEntity.avatarUrl ? xmEntity.avatarUrl : './assets/img/placeholder.png'}}">
           <i *ngIf="xmEntitySpec.icon && !xmEntity.avatarUrl" class="material-icons">{{xmEntitySpec.icon}}</i>
           <button (click)="onAvatarChangeClick()"
-                  class="btn btn-sm btn-just-icon btn-round btn-icon edit-avatar"
+                  class="btn btn-sm btn-just-icon rounded-circle btn-icon edit-avatar"
                   role="button">
             <mat-icon>edit</mat-icon>
           </button>

@@ -128,14 +128,14 @@
                   <div class="btn-group" v-if="!isForgotForm">
                     <button :disabled="isLoginForm"
                             @click.prevent="toogleForm()"
-                            class="btn btn-primary btn-sm btn-round"
+                            class="btn btn-primary btn-sm rounded-circle"
                             type="button">
                       <span>{{$t('signIn')}}</span>
                     </button>
 
                     <button :disabled="!isLoginForm"
                             @click.prevent="toogleForm()"
-                            class="btn btn-primary btn-sm btn-round"
+                            class="btn btn-primary btn-sm rounded-circle"
                             type="button">
                       <span>{{$t('signUp')}}</span>
                     </button>

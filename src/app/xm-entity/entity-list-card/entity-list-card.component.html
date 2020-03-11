@@ -78,14 +78,14 @@
               <button (click)="onApplyFastSearch(item, getDefaultSearch(item))"
                       *ngIf="!isHideAll(item.typeKey)"
                       [class.disabled]="item.currentQuery === getDefaultSearch(item)"
-                      class="btn btn-primary btn-sm btn-round"
+                      class="btn btn-primary btn-sm rounded-circle"
                       mat-button>
                 <span jhiTranslate="global.all">All</span>
               </button>
               <button (click)="onApplyFastSearch(item, fastSearch.query)"
                       *ngFor="let fastSearch of getFastSearches(item)"
                       [class.disabled]="item.currentQuery === fastSearch.query"
-                      class="btn btn-primary btn-sm btn-round"
+                      class="btn btn-primary btn-sm rounded-circle"
                       mat-button>
                 {{fastSearch.name | translate}}
               </button>
@@ -191,7 +191,7 @@
                   <div *ngSwitchDefault [innerHtml]="getFieldValue(xmEntity, field)">
                   </div>
                   <button (click)="onAction(item, xmEntity, field.action)" *ngIf="field.action"
-                          class="btn btn-primary btn-round btn-sm">
+                          class="btn btn-primary rounded-circle btn-sm">
                     {{field.action.name | translate}}
                   </button>
                 </td>

@@ -13,14 +13,14 @@
         <div *ngIf="authorities" class="btn-group flex-wrap">
           <button (click)="applySearchByRole(null)"
                   [class.disabled]="!currentSearch"
-                  class="btn btn-primary btn-sm btn-round"
+                  class="btn btn-primary btn-sm rounded-circle"
                   mat-button>
             <span jhiTranslate="global.all">All</span>
           </button>
           <button (click)="applySearchByRole(authority)"
                   *ngFor="let authority of authorities"
                   [class.disabled]="currentSearch === authority"
-                  class="btn btn-primary btn-sm btn-round"
+                  class="btn btn-primary btn-sm rounded-circle"
                   mat-button>{{ authority | translate }}
           </button>
         </div>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="col-auto pl-0">
                   <button (click)="searchByLogin()"
-                          class="btn btn-white btn-round btn-just-icon"
+                          class="btn btn-white rounded-circle btn-just-icon"
                           mat-button>
                     <i class="material-icons">search</i>
                   </button>
@@ -174,7 +174,7 @@
 
 <div class="xm-fab">
   <button (click)="onAdd()" *permitted="'USER.CREATE'"
-          class="btn btn-icon btn-just-icon btn-round btn-lg"
+          class="btn btn-icon btn-just-icon rounded-circle btn-lg"
           mat-button>
     <i class="material-icons">add</i>
   </button>

@@ -5,7 +5,6 @@ import { XmConfigService } from '../../shared/spec/config.service';
 import { PasswordSpec } from '../../xm-entity/shared/password-spec.model';
 import { ChangePassword } from './password.model';
 import { Password } from './password.service';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'xm-password',
@@ -23,12 +22,10 @@ export class PasswordComponent implements OnInit {
     public password: ChangePassword;
     public passwordSettings: PasswordSpec;
     public patternMessage: string;
-    public cardTitle: string;
 
     constructor(
         private passwordService: Password,
         private xmConfigService: XmConfigService,
-        private translateSrvice: TranslateService,
         private principal: Principal,
     ) {
         this.password = new ChangePassword();
@@ -37,11 +34,6 @@ export class PasswordComponent implements OnInit {
     public ngOnInit(): void {
         this.principal.identity().then((account) => {
             this.account = account;
-            this.cardTitle =
-                this.translateSrvice
-                    .instant('password.title', {
-                        username: account.firstName +' '+ (account.lastName ? account.lastName: '')
-                    });
             this.xmConfigService
                 .getPasswordConfig()
                 .subscribe((config: any) => {

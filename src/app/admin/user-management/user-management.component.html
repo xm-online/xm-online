@@ -158,7 +158,7 @@
           </div>
           <div class="col-sm"></div>
           <div class="col-auto">
-            <ngb-pagination (pageChange)="loadPage(page)"
+            <ngb-pagination (pageChange)="loadPage($event)"
                             [(page)]="page"
                             [collectionSize]="totalItems" [maxSize]="5"
                             [pageSize]="itemsPerPage">

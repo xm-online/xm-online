@@ -82,6 +82,7 @@ export class BaseAdminListComponent implements OnInit, OnDestroy {
     }
 
     public loadPage(page: number): void {
+        this.page = page;
         if (page !== this.previousPage) {
             this.previousPage = page;
             this.transition();

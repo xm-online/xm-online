@@ -138,7 +138,7 @@
             <jhi-item-count [itemsPerPage]="itemsPerPage" [page]="page" [total]="totalItems"></jhi-item-count>
           </div>
           <div class="col-auto mt-1 mb-1">
-            <ngb-pagination (pageChange)="onLoadPage(page)"
+            <ngb-pagination (pageChange)="onLoadPage($event)"
                             [(page)]="page"
                             [collectionSize]="totalItems"
                             [maxSize]="5"

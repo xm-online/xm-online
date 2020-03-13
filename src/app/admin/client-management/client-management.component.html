@@ -112,7 +112,7 @@
                             [pageSize]="itemsPerPage"
                             [maxSize]="5"
                             [(page)]="page"
-                            (pageChange)="loadPage(page)"
+                            (pageChange)="loadPage($event)"
             ></ngb-pagination>
           </div>
         </div>

@@ -160,7 +160,7 @@
             </div>
           </div>
           <div class="row align-items-center list-pagination wrap">
-            <ngb-pagination (pageChange)="onLoadPage(page)"
+            <ngb-pagination (pageChange)="onLoadPage($event)"
                             [(page)]="page"
                             [collectionSize]="totalItems"
                             [pageSize]="itemsPerPage">

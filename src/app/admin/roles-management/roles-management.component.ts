@@ -74,6 +74,7 @@ export class RolesMgmtComponent implements OnInit, OnDestroy {
     }
 
     public onLoadPage(page: number): void {
+        this.page = page;
         if (page !== this.previousPage) {
             this.previousPage = page;
             this.roles = this.getItemsByPage(page);

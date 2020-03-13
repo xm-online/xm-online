@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { distinctUntilChanged, filter, pluck } from 'rxjs/operators';
 
 export interface ISession {
     active: boolean;
@@ -33,6 +33,10 @@ export class XmSessionService {
     }
 
     public isActive(): Observable<boolean> {
-        return this.get().pipe(map((i) => i.active));
+        return this.get().pipe(
+            filter<ISession>(Boolean),
+            pluck('active'),
+            distinctUntilChanged(),
+        );
     }
 }

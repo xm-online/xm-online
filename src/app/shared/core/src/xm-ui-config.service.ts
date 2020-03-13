@@ -3,33 +3,25 @@ import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { takeUntilOnDestroy } from '@xm-ngx/shared/operators';
 import { merge } from 'lodash';
 import { Observable, of, zip } from 'rxjs';
-import { catchError, distinctUntilChanged, filter, map, pluck } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { RequestCache } from './cache/request-cache';
 import { XmCoreConfig } from './xm-core-config';
-import { ISession, XmSessionService } from './xm-session.service';
+import { XmSessionService } from './xm-session.service';
 
 import { XmUIConfig } from './xm-ui-config-model';
 
 @Injectable({providedIn: 'root'})
 export class XmUiConfigService<T = XmUIConfig> implements OnDestroy {
 
-    protected requestCache: RequestCache<T>;
+    protected requestCache: RequestCache<T> = new RequestCache<T>(() => this.publicAPI());
 
     constructor(protected httpClient: HttpClient,
                 @Inject(XmCoreConfig) protected xmCoreConfig: XmCoreConfig,
                 protected sessionService: XmSessionService) {
-        this.requestCache = new RequestCache<T>(() => this.publicAPI());
-
-        this.sessionService.get().pipe(
+        this.sessionService.isActive().pipe(
             takeUntilOnDestroy(this),
-            filter<ISession>(Boolean),
-            pluck('active'),
-            distinctUntilChanged(),
             map((isActive: boolean) => isActive ? this.privateAndPublicAPI : this.publicAPI),
-        ).subscribe((request) => {
-            this.requestCache.request = request;
-            this.requestCache.forceReload();
-        });
+        ).subscribe((request) => this.requestCache.setAndReload(request));
     }
 
     public get cache$(): Observable<T | null> {

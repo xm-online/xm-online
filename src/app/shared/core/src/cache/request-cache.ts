@@ -43,6 +43,11 @@ export class RequestCache<T> implements IRequestCache<T> {
         }
     }
 
+    public setAndReload(request: () => Observable<T>): void{
+        this.request = request;
+        this.forceReload();
+    }
+
     public forceReload(): void {
         if (!this._cache$) {
             this.initialize();

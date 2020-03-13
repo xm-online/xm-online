@@ -34,7 +34,6 @@ export class PasswordComponent implements OnInit {
     public ngOnInit(): void {
         this.principal.identity().then((account) => {
             this.account = account;
-
             this.xmConfigService
                 .getPasswordConfig()
                 .subscribe((config: any) => {

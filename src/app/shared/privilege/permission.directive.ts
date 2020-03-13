@@ -18,29 +18,32 @@ function permissionContextFactory(): PermissionContext {
 
 /**
  *
- * @Examples
- *  Primitive types:
- *  *xmPermission="undefined" // Shows template
- *  *xmPermission="null" // Shows template
- *  *xmPermission="''" // Shows template
- *  *xmPermission="true" // Shows template
- *  *xmPermission="[]" // Shows template
- *  *xmPermission="" // Shows template
- *  *xmPermission="false" // Hides template
+ * @Examples:
  *
- *  *xmPermission="'RIGHT_PERMISSION'" // Shows template
- *  *xmPermission="['RIGHT_PERMISSION']" // Shows template
- *  *xmPermission="['WRONG_PERMISSION']" // Hides template
+ * <div *xmPermission="undefined"> Show template </div>
+ * <div *xmPermission="null"> Show template </div>
+ * <div *xmPermission="''"> Show template </div>
+ * <div *xmPermission="[]"> Show template </div>
+ * <div *xmPermission=""> Show template </div>
  *
- *  *xmPermission="['WRONG_PERMISSION']; else noPermittedRef" // Hides template and shows #noPermittedRef template
+ * <div *xmPermission="true"> Show template </div>
+ * <div *xmPermission="false"> Hide template </div>
  *
- *  <ng-template #permittedRef>true</ng-template>
- *  <ng-template #noPermittedRef>false</ng-template>
+ * <div *xmPermission="'RIGHT_PERMISSION'" Show template </div>
+ * <div *xmPermission="['RIGHT_PERMISSION']" Show template </div>
+ * <div *xmPermission="['WRONG_PERMISSION']" Hide template </div>
+ * <div *xmPermission="['RIGHT_PERMISSION', 'WRONG_PERMISSION']" Hide template </div>
+ *
+ *  <ng-template #permittedRef> Show template </ng-template>
+ *  <ng-template #noPermittedRef> Hide template </ng-template>
+ *
+ *  <!-- Result: Hide template -->
  *  <ng-template [xmPermission]="['WRONG_PERMISSION']"
  *               [xmPermissionThen]="permittedRef"
- *               [xmPermissionElse]="noPermittedRef">
- *  // Hides #permittedRef and shows #noPermittedRef template
+ *               [xmPermissionElse]="noPermittedRef">Remove xmPermissionThen to show</ng-template>
  *
+ *  <!-- Result: Shows template -->
+ *  <div *xmPermission="['RIGHT_PERMISSION']; else noPermittedRef"> Shows template </div>
  */
 @Directive({
     selector: '[xmPermission]',
@@ -63,10 +66,11 @@ export class PermissionDirective {
     }
 
     @Input()
-    public set xmPermission(value: string | string[]) {
-        if (!value) {
+    public set xmPermission(value: string | boolean | string[]) {
+        if (!value || value === true || value.length === 0) {
             // Show by default
-            this.context.allow = true;
+            this.context.$implicit = [];
+            this.context.allow = value !== false;
             this.updateView();
             return;
         }

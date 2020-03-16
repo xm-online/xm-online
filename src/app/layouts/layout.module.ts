@@ -13,6 +13,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PageRibbonComponent } from './profiles/page-ribbon.component';
 import { FeedbackComponent } from './navbar/feedback/feedback.component';
 import { FeedbackDialogComponent } from './navbar/feedback/feedback-dialog/feedback-dialog.component';
+import {XmRibbonModule} from "../modules/xm-ribbon/xm-ribbon.module";
 
 @NgModule({
     imports: [
@@ -23,6 +24,7 @@ import { FeedbackDialogComponent } from './navbar/feedback/feedback-dialog/feedb
         XmNotificationsModule,
         RouterModule,
         XmSidebarModule,
+        XmRibbonModule,
     ],
     exports: [XmMainComponent, XmSharedModule],
     declarations: [

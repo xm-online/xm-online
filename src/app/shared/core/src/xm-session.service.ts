@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { distinctUntilChanged, filter, pluck } from 'rxjs/operators';
 
 export interface ISession {
     active: boolean;
@@ -16,9 +16,12 @@ export class XmSessionService {
 
     protected session$: ReplaySubject<ISession> = new ReplaySubject<ISession>(1);
 
-    public create(session: ISession = {active: true}): Observable<ISession> {
+    public create(session: ISession = {active: true}): void {
         this.session$.next(session);
-        return this.get();
+    }
+
+    public update(session: ISession = {active: true}): void {
+        this.session$.next(session);
     }
 
     public get(): Observable<ISession> {
@@ -29,7 +32,11 @@ export class XmSessionService {
         this.session$.next({active: false});
     }
 
-    public isActive(): Observable<boolean>{
-        return this.get().pipe(map((i)=>i.active));
+    public isActive(): Observable<boolean> {
+        return this.get().pipe(
+            filter<ISession>(Boolean),
+            pluck('active'),
+            distinctUntilChanged(),
+        );
     }
 }

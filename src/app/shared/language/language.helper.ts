@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
 import { LanguageService } from '../../modules/xm-translation/language.service';
 import { TitleService } from '../../modules/xm-translation/title.service';
 import { LANGUAGES } from './language.constants';

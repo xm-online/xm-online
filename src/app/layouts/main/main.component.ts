@@ -5,9 +5,9 @@ import { Idle } from 'idlejs/dist';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { LanguageService } from '../../modules/xm-translation/language.service';
-import { TitleService } from '../../modules/xm-translation/title.service';
-import { Principal } from '../../shared/auth/principal.service';
+import { LanguageService } from '@xm-ngx/translation';
+import { TitleService } from '@xm-ngx/translation';
+import { Principal } from '@xm-ngx/core/auth';
 import { LoginService } from '../../shared/login/login.service';
 import { XmConfigService } from '../../shared/spec/config.service';
 import { XmApplicationConfigService } from '../../shared/spec/xm-config.service';

@@ -8,7 +8,7 @@ import { XmAlertService } from '@xm-ngx/alert';
 import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
 import { Subscription } from 'rxjs';
-import { Principal } from '../../shared';
+import { Principal } from '@xm-ngx/core/auth';
 import { saveFile, saveFileFromUrl } from '../../shared/helpers/file-download-helper';
 import { EntityUiConfig } from '../../shared/spec/xm-ui-config-model';
 import { DEBUG_INFO_ENABLED, XM_EVENT_LIST } from '../../xm.constants';

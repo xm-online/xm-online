@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiOrderByPipe } from 'ng-jhipster';
 import { finalize } from 'rxjs/operators';
-import { Principal } from '../../shared';
+import { Principal } from '@xm-ngx/core/auth';
 
 import { ITEMS_PER_PAGE } from '../../shared/constants/pagination.constants';
 import { RoleMatrix, RoleMatrixPermission } from '../../shared/role/role.model';

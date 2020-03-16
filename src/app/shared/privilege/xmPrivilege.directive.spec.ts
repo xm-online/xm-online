@@ -1,8 +1,10 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, NO_ERRORS_SCHEMA, TemplateRef, ViewContainerRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { XmEventManager } from '@xm-ngx/core';
+import { XmSharedTestingModule } from '@xm-ngx/shared';
 import { JhiLanguageService } from 'ng-jhipster';
 import { Subject } from 'rxjs/Subject';
 
@@ -71,6 +73,8 @@ describe('Directive: PermitDirective', () => {
         mockPrincipalService.hasPrivileges.and.callFake(permissionResolver);
 
         TestBed.configureTestingModule({
+            schemas: [NO_ERRORS_SCHEMA],
+            imports: [XmSharedTestingModule, HttpClientTestingModule],
             declarations: [
                 XmPrivilegeDirective,
                 TestComponent,
@@ -83,9 +87,6 @@ describe('Directive: PermitDirective', () => {
                 {provide: JhiLanguageService, useClass: Mock},
                 {provide: Router, useClass: Mock},
                 {provide: Principal, useValue: mockPrincipalService},
-            ],
-            schemas: [
-                NO_ERRORS_SCHEMA,
             ],
         });
 

@@ -1,6 +1,3 @@
-@import '../sidebar';
-@import 'user-theme';
-
 $icon-size:              42px !default;
 $icon-size-x:            $icon-size !default;
 $icon-size-y:            $icon-size !default;
@@ -8,7 +5,10 @@ $icon-size-y:            $icon-size !default;
 $user-img-border:        solid 1px #fff !default;
 $user-img-border-radius: 50% !default;
 
-@mixin user-theme($theme) {
+$user-padding-y:         15px !default;
+$user-padding-x:         12px !default;
+
+:host {
   .user-img {
     height:        $icon-size-y;
     width:         $icon-size-x;
@@ -22,22 +22,14 @@ $user-img-border-radius: 50% !default;
     flex-direction: row;
     align-items:    center;
     vertical-align: center;
-    padding:        $menu-item-padding-y $sidebar-padding-x;
-
-    @include menu-link($theme);
+    padding:        $user-padding-y $user-padding-x;
   }
+
   .user-name {
-    padding-left:  $sidebar-padding-x;
-    font-size:     $xm-font-size-sm;
-    color:         $xm-sidebar-color;
-    font-weight:   $xm-font-weight;
+    padding-left:  $user-padding-x;
     text-overflow: ellipsis;
     overflow:      hidden;
     white-space:   nowrap;
   }
 
-}
-
-::ng-deep {
-  @include user-theme($xm-theme);
 }

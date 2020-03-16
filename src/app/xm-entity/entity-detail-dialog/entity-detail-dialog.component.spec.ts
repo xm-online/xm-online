@@ -3,11 +3,13 @@ import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatDialog, MatInputModule, MatSelectModule } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { XmEventManager } from '@xm-ngx/core';
+import { XmSharedModule } from '@xm-ngx/shared';
 import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiConfigService, JhiDateUtils, JhiModuleConfig } from 'ng-jhipster';
 
@@ -29,6 +31,7 @@ describe('Entity detail dialog Component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                XmSharedModule,
                 FormsModule,
                 MatSelectModule,
                 NoopAnimationsModule,
@@ -43,6 +46,7 @@ describe('Entity detail dialog Component', () => {
             ],
             providers: [
                 MatDialog,
+                {provide: MatDialogRef, useValue: {}},
                 XmEntityService,
                 I18nJsfPipe,
                 I18nNamePipe,

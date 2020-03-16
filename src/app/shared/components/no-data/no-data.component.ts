@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {Principal} from '../../../shared/auth/principal.service';
+import {Principal} from '@xm-ngx/core/auth';
 
 @Component({
     selector: 'xm-no-data, no-data',

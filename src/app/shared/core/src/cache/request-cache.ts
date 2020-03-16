@@ -24,10 +24,11 @@ export interface IRequestCache<T> extends OnDestroy {
 
 export class RequestCache<T> implements IRequestCache<T> {
 
+    public options: typeof DEFAULT_OPTIONS = DEFAULT_OPTIONS;
     private _cache$: ReplaySubject<T | null>;
 
-    public options: typeof DEFAULT_OPTIONS = DEFAULT_OPTIONS;
-    public request: () => Observable<T> = () => of(null);
+    constructor(public request: () => Observable<T> = (): Observable<null> => of(null)) {
+    }
 
     public get(): Observable<T | null> {
         if (!this._cache$) {
@@ -40,6 +41,11 @@ export class RequestCache<T> implements IRequestCache<T> {
         if (this._cache$) {
             this._cache$.complete();
         }
+    }
+
+    public setAndReload(request: () => Observable<T>): void{
+        this.request = request;
+        this.forceReload();
     }
 
     public forceReload(): void {

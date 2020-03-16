@@ -6,7 +6,7 @@ import { XmEventManager } from '@xm-ngx/core';
 
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Principal } from '../../shared';
+import { Principal } from '@xm-ngx/core/auth';
 import { ContextService } from '../../shared/context/context.service';
 import { FunctionCallDialogComponent } from '../function-call-dialog/function-call-dialog.component';
 import { AreaComponent } from '../functions/area/area.component';

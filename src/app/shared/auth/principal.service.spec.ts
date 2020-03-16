@@ -1,4 +1,6 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { XmSharedTestingModule } from '@xm-ngx/shared';
 import { JhiAlertService } from 'ng-jhipster';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { of } from 'rxjs/observable/of';
@@ -31,6 +33,7 @@ describe('PrincipalService', () => {
         mockAccountService.get.and.returnValue(of(mockedUser));
 
         TestBed.configureTestingModule({
+            imports: [XmSharedTestingModule, HttpClientTestingModule],
             providers: [
                 Principal,
                 {provide: AccountService, useValue: mockAccountService},

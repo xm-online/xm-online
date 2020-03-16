@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/
 import { XmEventManager } from '@xm-ngx/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Principal } from '../../shared';
+import { Principal } from '@xm-ngx/core/auth';
 import { FullLinkSpec, LinkSpec } from '../shared/link-spec.model';
 import { Link } from '../shared/link.model';
 import { XmEntity } from '../shared/xm-entity.model';

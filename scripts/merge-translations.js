@@ -1,13 +1,13 @@
 let fs = require('fs');
-const { join } = require('path');
+const {join} = require('path');
 let _ = require('lodash');
 let glob = require('glob');
 
 const core = 'src/i18n/';
-const custom = 'src/app/ext/**/i18n/';
+const custom = 'src/app/ext/*/i18n/';
 
-const corePathMask = (lang) => core + lang + '/**/*.json';
-const customPathMask = (lang) => custom + lang + '/**/*.json';
+const corePathMask = (lang) => core + lang + '/*.json';
+const customPathMask = (lang) => custom + lang + '/*.json';
 const distPathMask = (lang) => core + lang + '.json';
 
 function saveJson(path, data) {

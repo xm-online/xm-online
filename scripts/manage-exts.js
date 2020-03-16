@@ -7,7 +7,7 @@ const ANGULAR_CONFIG_DIST = 'angular.json';
 const ANGULAR_CONFIG_ASSETS_JSON_PATH = 'projects.xm-webapp.architect.build.options.assets';
 const ANGULAR_CONFIG_LAZY_MODULES_JSON_PATH = 'projects.xm-webapp.architect.build.options.lazyModules';
 const EXT_PATH = 'src/app/ext/*';
-const EXT_ASSETS_PATH = 'src/app/ext/**/assets';
+const EXT_ASSETS_PATH = 'src/app/ext/*/assets';
 
 const isDirectory = (source) => fs.lstatSync(source).isDirectory();
 

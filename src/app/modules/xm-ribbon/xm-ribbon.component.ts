@@ -21,7 +21,7 @@ export class XmRibbonComponent {
     public ngOnInit(): void {
         this.show$ = this.uiConfigService.cache$.pipe(
             filter((i) => Boolean(i)),
-            map((i) => i.ribbon && environment.environment !== 'prod'),
+            map((i) => i.ribbon),
         );
     }
 }

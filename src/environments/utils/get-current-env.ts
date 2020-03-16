@@ -4,7 +4,7 @@ const TEST_API = 'assets/img/favicon.png';
 /**
  * Returns current environment form X-ENV header variable
  */
-export function getServerEnvironment(): string {
+export function getServerEnvironment(): string | null {
     try {
         const req = new XMLHttpRequest();
         req.open('GET', String(TEST_API), false);
@@ -12,6 +12,6 @@ export function getServerEnvironment(): string {
         const header = req.getResponseHeader(X_ENV_HEADER);
         return header.toLocaleLowerCase();
     } catch (e) {
-        return 'local';
+        return null;
     }
 }

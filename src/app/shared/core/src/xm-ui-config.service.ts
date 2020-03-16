@@ -5,7 +5,7 @@ import { merge } from 'lodash';
 import { Observable, of, zip } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { RequestCache } from './cache/request-cache';
-import { XM_CORE_CONFIG, XmCoreConfig } from './xm-core-config';
+import { XmCoreConfig } from './xm-core-config';
 import { XmSessionService } from './xm-session.service';
 
 import { XmUIConfig } from './xm-ui-config-model';
@@ -13,11 +13,15 @@ import { XmUIConfig } from './xm-ui-config-model';
 @Injectable({providedIn: 'root'})
 export class XmUiConfigService<T = XmUIConfig> implements OnDestroy {
 
-    protected requestCache: RequestCache<T> = new RequestCache<T>();
+    protected requestCache: RequestCache<T> = new RequestCache<T>(() => this.publicAPI());
 
     constructor(protected httpClient: HttpClient,
-                @Inject(XM_CORE_CONFIG) protected xmCoreConfig: XmCoreConfig,
+                @Inject(XmCoreConfig) protected xmCoreConfig: XmCoreConfig,
                 protected sessionService: XmSessionService) {
+        this.sessionService.isActive().pipe(
+            takeUntilOnDestroy(this),
+            map((isActive: boolean) => isActive ? this.privateAndPublicAPI : this.publicAPI),
+        ).subscribe((request) => this.requestCache.setAndReload(request));
     }
 
     public get cache$(): Observable<T | null> {
@@ -33,25 +37,12 @@ export class XmUiConfigService<T = XmUIConfig> implements OnDestroy {
         this.requestCache.ngOnDestroy();
     }
 
-    public init(): void {
-        const publicAPI = (): Observable<T> => this.httpClient.get<T>(this.xmCoreConfig.UI_CONFIG_PUBLIC_URL);
-        const privateAPI = (): Observable<T> => this.httpClient.get<T>(this.xmCoreConfig.UI_CONFIG_PRIVATE_URL);
+    private publicAPI: () => Observable<T> = () => this.httpClient.get<T>(this.xmCoreConfig.UI_CONFIG_PUBLIC_URL);
 
-        const privateAndPublicAPI = (): Observable<T> => zip(
-            privateAPI().pipe(catchError(() => of(null))),
-            publicAPI().pipe(catchError(() => of(null))),
-        ).pipe(map(([pr, pu]) => merge(pu, pr)));
+    private privateAPI: () => Observable<T> = () => this.httpClient.get<T>(this.xmCoreConfig.UI_CONFIG_PRIVATE_URL);
 
-        this.requestCache.request = publicAPI;
-
-        this.sessionService.get().pipe(takeUntilOnDestroy(this)).subscribe((session) => {
-            if (session.active) {
-                this.requestCache.request = privateAndPublicAPI;
-            } else {
-                this.requestCache.request = publicAPI;
-            }
-            this.requestCache.forceReload();
-        });
-    }
-
+    private privateAndPublicAPI: () => Observable<T> = () => zip(
+        this.privateAPI().pipe(catchError(() => of(null))),
+        this.publicAPI().pipe(catchError(() => of(null))),
+    ).pipe(map(([pr, pu]) => merge(pu, pr)));
 }

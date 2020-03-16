@@ -3,7 +3,7 @@ import { AfterViewInit, Component } from '@angular/core';
 
 import { SwaggerUIBundle } from 'swagger-ui-dist';
 
-import { AuthServerProvider } from '../../shared/auth/auth-jwt.service';
+import { AuthServerProvider } from '@xm-ngx/core/auth';
 
 @Component({
     selector: 'xm-docs',

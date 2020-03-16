@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { Principal } from '../../shared/auth/principal.service';
 import { I18nNamePipe } from '../../shared/language/i18n-name.pipe';
-import { FunctionService, XmEntityService } from '../../xm-entity';
+import { FunctionService, XmEntityService } from '@xm-ngx/entity';
 import { NotificationUiConfig } from './notification.model';
 
 @Injectable()

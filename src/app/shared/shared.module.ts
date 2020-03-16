@@ -18,17 +18,11 @@ import {
     CSRFService,
     FocusDirective,
     HasAnyAuthorityDirective,
-    I18nJsfPipe,
-    I18nNamePipe,
     InputPreventPasteDirective,
     JhiSocialComponent,
-    LoaderComponent,
     LoginComponent,
     LoginService,
-    MaintenanceComponent,
-    NoDataComponent,
     ParseByPathService,
-    PermitDirective,
     PerPageComponent,
     PoweredByComponent,
     PrivilegeService,
@@ -42,15 +36,10 @@ import {
     XmConfigService,
     XmConfirmDialogComponent,
     XmGMapApiInitDirective,
-    XmPasswordNeededComponent,
-    XmPrivilegeDirective,
 } from './';
-import {
-    PrivacyAndTermsDialogComponent,
-} from './components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
+import { PrivacyAndTermsDialogComponent } from './components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
 import { AceEditorDirective } from './directives/ace-editor.directive';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
-import { InputPatternDirective } from './directives/input-pattern.directive';
 import { SafeNamePipe } from './helpers/safe-name.pipe';
 import { XmCondition } from './helpers/xm-condition';
 import { XmDateTimePipe } from './helpers/xm-date-time.pipe';
@@ -74,7 +63,6 @@ import { TextSectionComponent } from './jsf-extention/widgets/text-section/text-
 import { ValidationComponent } from './jsf-extention/widgets/validation-component/validation-component.component';
 import { PasswordStrengthBarComponent } from './password-strength-bar/password-strength-bar.component';
 import { RoleService } from './role/role.service';
-import { GateSharedCommonModule } from './shared-common.module';
 import { GateSharedLibsModule } from './shared-libs.module';
 
 const PIPES = [
@@ -85,7 +73,6 @@ const PIPES = [
     imports: [
         XmJsonSchemeFormModule,
         GateSharedLibsModule,
-        GateSharedCommonModule,
         ReCaptchaModule,
         MarkdownModule.forChild(),
         MatModule,
@@ -100,27 +87,19 @@ const PIPES = [
         LoginComponent,
         RegisterComponent,
         HasAnyAuthorityDirective,
-        I18nNamePipe,
-        I18nJsfPipe,
         SafeNamePipe,
         XmCondition,
         XmEntityStateSpecPipe,
         XmDateTimePipe,
         UserLoginFormComponent,
-        LoaderComponent,
         WordAutocompleteDirective,
         FocusDirective,
         InputPreventPasteDirective,
         DigitOnlyDirective,
         PerPageComponent,
-        NoDataComponent,
         PoweredByComponent,
-        MaintenanceComponent,
-        PermitDirective,
-        XmPrivilegeDirective,
         XmGMapApiInitDirective,
         PasswordStrengthBarComponent,
-        XmPasswordNeededComponent,
         XmConfirmDialogComponent,
         CurrentLocationComponent,
         ExtSelectComponent,
@@ -138,7 +117,6 @@ const PIPES = [
         FileUploadComponent,
         PrivacyAndTermsDialogComponent,
         PIPES,
-        InputPatternDirective,
     ],
     entryComponents: [
         LoginComponent,
@@ -178,8 +156,6 @@ const PIPES = [
         ExtAutocompleteService,
         UserLoginService,
         DatePipe,
-        I18nNamePipe,
-        I18nJsfPipe,
         SafeNamePipe,
         XmCondition,
         XmDateTimePipe,
@@ -191,34 +167,26 @@ const PIPES = [
         PIPES,
     ],
     exports: [
+        GateSharedLibsModule,
         AceEditorDirective,
-        GateSharedCommonModule,
         JhiSocialComponent,
         LoginComponent,
         UserLoginFormComponent,
         RegisterComponent,
         HasAnyAuthorityDirective,
         DatePipe,
-        I18nNamePipe,
-        I18nJsfPipe,
         SafeNamePipe,
         XmCondition,
         XmEntityStateSpecPipe,
         XmDateTimePipe,
-        LoaderComponent,
         PerPageComponent,
-        NoDataComponent,
         PoweredByComponent,
-        MaintenanceComponent,
         WordAutocompleteDirective,
         FocusDirective,
         InputPreventPasteDirective,
         DigitOnlyDirective,
-        PermitDirective,
-        XmPrivilegeDirective,
         XmGMapApiInitDirective,
         PasswordStrengthBarComponent,
-        XmPasswordNeededComponent,
         XmConfirmDialogComponent,
         CurrentLocationComponent,
         ExtSelectComponent,
@@ -237,7 +205,6 @@ const PIPES = [
         FileUploadComponent,
         GooglePlaceModule,
         PIPES,
-        InputPatternDirective,
         XmJsonSchemeFormModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

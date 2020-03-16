@@ -1,0 +1,5 @@
+@mixin xm-navbar($theme) {
+  .search-input {
+    background-image: linear-gradient(to top, $xm-primary 2px, rgba(0, 150, 136, 0) 2px), linear-gradient(to top, $border-color 1px, rgba(210, 210, 210, 0) 1px);
+  }
+}

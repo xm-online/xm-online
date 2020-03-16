@@ -8,9 +8,10 @@ import { JhiLanguageService } from 'ng-jhipster';
 
 import { iif, Observable, of } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
-import { JhiLanguageHelper, Principal } from '../../shared';
+import { JhiLanguageHelper } from '../../shared/language';
+import { Principal } from '@xm-ngx/core/auth';
 import { XmConfigService } from '../../shared/spec/config.service';
-import { DashboardWrapperService } from '../../xm-dashboard';
+import { DashboardWrapperService } from '@xm-ngx/dynamic';
 import { DEBUG_INFO_ENABLED, VERSION } from '../../xm.constants';
 
 declare const $: any;

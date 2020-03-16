@@ -3,10 +3,10 @@ import { MatDialog } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { XmEventManager } from '@xm-ngx/core';
 
-import { Principal } from '../../shared';
+import { Principal } from '@xm-ngx/core/auth';
 import { ContextService } from '../../shared/context/context.service';
 import { FunctionListSectionComponent } from '../function-list-section/function-list-section.component';
-import { XmEntityService } from '../shared/xm-entity.service';
+import { XmEntityService } from '@xm-ngx/entity';
 
 @Component({
     selector: 'xm-function-list-section-compact',

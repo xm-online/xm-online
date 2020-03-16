@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { XmSharedModule } from '@xm-ngx/shared';
+import { NoDataModule } from '../shared/components/no-data/no-data.module';
 
-import { XmSharedModule } from '../shared/shared.module';
 import {
     BalanceDetailComponent,
     BalanceDetailDialogComponent,
@@ -16,6 +17,7 @@ import {
 @NgModule({
     imports: [
         CommonModule,
+        NoDataModule,
         XmSharedModule,
     ],
     declarations: [
@@ -39,7 +41,6 @@ import {
         MetricService,
         PocketService,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class XmBalanceModule {
 }

@@ -1,5 +1,5 @@
-import { BaseSpec } from './../../shared';
 import { AttachmentSpec } from './attachment-spec.model';
+import { BaseSpec } from './base-spec';
 import { CalendarSpec } from './calendar-spec.model';
 import { CommentSpec } from './comment-spec.model';
 import { FastSearchSpec } from './fast-search-spec.model';

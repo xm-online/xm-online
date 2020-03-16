@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { JhiLanguageService } from 'ng-jhipster';
-import { AuthServerProvider } from '../auth/auth-jwt.service';
-import { Principal } from '../auth/principal.service';
-import { StateStorageService } from '../auth/state-storage.service';
+import { AuthServerProvider } from './auth-jwt.service';
+import { Principal } from './principal.service';
+import { StateStorageService } from './state-storage.service';
 
 @Injectable()
 export class LoginService {

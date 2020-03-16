@@ -1,8 +1,8 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { createRequestOption } from '@xm-ngx/entity';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { createRequestOption } from '../../shared';
 
 import { SERVER_API_URL } from '../../xm.constants';
 import { Balance } from './balance.model';
@@ -10,7 +10,7 @@ import { Balance } from './balance.model';
 @Injectable()
 export class BalanceService {
 
-    private resourceUrl: string = SERVER_API_URL + 'balance/api/balances';
+    private resourceUrl: string = `${SERVER_API_URL  }balance/api/balances`;
 
     constructor(private http: HttpClient) { }
 
@@ -59,13 +59,13 @@ export class BalanceService {
      * Convert a returned JSON object to Balance.
      */
     private convertItemFromServer(balance: Balance): Balance {
-        return Object.assign({}, balance);
+        return { ...balance};
     }
 
     /**
      * Convert a Balance to a JSON which can be sent to the server.
      */
     private convert(balance: Balance): Balance {
-        return Object.assign({}, balance);
+        return { ...balance};
     }
 }

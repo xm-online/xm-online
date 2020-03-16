@@ -1,4 +1,4 @@
-import { BaseSpec } from './../../shared';
+import { BaseSpec } from './base-spec';
 
 export interface AttachmentSpec extends BaseSpec {
     key?: string;

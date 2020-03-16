@@ -1,4 +1,4 @@
-import { BaseEntity } from './../../shared';
+import { BaseEntity } from '@xm-ngx/entity';
 
 export class Pocket implements BaseEntity {
     constructor(

@@ -1,3 +1,4 @@
+export { LoginService } from './login.service';
 export { AccountService } from './account.service';
 export * from './auth.constants';
 export { AuthService } from './auth.service';

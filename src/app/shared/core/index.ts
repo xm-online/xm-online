@@ -7,3 +7,5 @@ export { XmUIConfig } from './src/xm-ui-config-model';
 export { XmUser } from './src/xm-user-model';
 export { XmUserService } from './src/xm-user.service';
 export * from './src/xm-core-config';
+// TODO: transfer to core or delete
+export * from 'src/app/shared/spec';

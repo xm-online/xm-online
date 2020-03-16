@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { XmEventManager } from '@xm-ngx/core';
 import { JhiLanguageService } from 'ng-jhipster';
+
 import { XM_EVENT_LIST } from '../../../xm.constants';
-import { Principal } from '../../auth/principal.service';
+import { Principal } from '@xm-ngx/core/auth';
 import { XmConfigService } from '../../spec/config.service';
 import { UserLogin } from './user-login.model';
 

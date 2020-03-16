@@ -2,27 +2,22 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
-
 import { TranslateService } from '@ngx-translate/core';
 import { XmAlertService } from '@xm-ngx/alert';
 import { XmEventManager } from '@xm-ngx/core';
+import { Spec, XmEntity, XmEntityService, XmEntitySpec, XmEntitySpecWrapperService } from '@xm-ngx/entity';
+import { buildJsfAttributes, transpilingForIE } from '@xm-ngx/json-scheme-form';
 import { XmToasterService } from '@xm-ngx/toaster';
-
 import * as _ from 'lodash';
 import { Observable, of, Subscription } from 'rxjs';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
 
-import { ContextService, I18nNamePipe, ITEMS_PER_PAGE, Principal, XmConfigService } from '../../shared';
+import { ContextService, ITEMS_PER_PAGE, Principal, XmConfigService } from '../../shared';
 import { getFieldValue } from '../../shared/helpers/entity-list-helper';
 import { saveFile } from '../../shared/helpers/file-download-helper';
-import { buildJsfAttributes, transpilingForIE } from '../../shared/jsf-extention/jsf-attributes-helper';
+import { I18nNamePipe } from '../../shared/language';
 import { XM_EVENT_LIST } from '../../xm.constants';
 import { FunctionCallDialogComponent } from '../function-call-dialog/function-call-dialog.component';
-import { Spec } from '../shared/spec.model';
-import { XmEntitySpecWrapperService } from '../shared/xm-entity-spec-wrapper.service';
-import { XmEntitySpec } from '../shared/xm-entity-spec.model';
-import { XmEntity } from '../shared/xm-entity.model';
-import { XmEntityService } from '../shared/xm-entity.service';
 import { ActionOptions, EntityListCardOptions, EntityOptions, FieldOptions } from './entity-list-card-options.model';
 
 

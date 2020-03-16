@@ -1,6 +1,8 @@
 export * from './attachment.model';
 export * from './attachment.service';
 export * from './attachment-spec.model';
+export * from './base-entity';
+export * from './base-spec';
 
 export * from './calendar.model';
 export * from './calendar.service';
@@ -32,11 +34,13 @@ export * from './location.model';
 export * from './location.service';
 export * from './location-spec.model';
 
-export * from './password-spec.model';
+export * from '../../shared/spec/password-spec.model';
 
 export * from './rating.model';
 export * from './rating.service';
 export * from './rating-spec.model';
+
+export { createRequestOption } from './request-util';
 
 export * from './spec.model';
 export * from './state-spec.model';

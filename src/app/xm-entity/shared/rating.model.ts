@@ -1,4 +1,4 @@
-import { BaseEntity } from '../../shared';
+import { BaseEntity } from './base-entity';
 import { Vote } from './vote.model';
 import { XmEntity } from './xm-entity.model';
 

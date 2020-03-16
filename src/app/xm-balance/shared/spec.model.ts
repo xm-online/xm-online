@@ -1,4 +1,4 @@
-import { BaseSpec } from './../../shared';
+import { BaseSpec } from '@xm-ngx/entity';
 
 export class Spec implements BaseSpec {
     constructor(public key?: string,

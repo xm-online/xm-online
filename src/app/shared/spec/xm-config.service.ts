@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { VERSION } from '../../../app/xm.constants';
+import { VERSION } from '../../xm.constants';
 
 const THEME_STARTEGY = {
     DEFAULT: 'THEME',

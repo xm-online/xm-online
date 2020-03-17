@@ -227,6 +227,7 @@ export class EntityListCardComponent implements OnInit, OnChanges, OnDestroy {
             confirmButtonClass: 'btn mat-raised-button btn-primary',
             cancelButtonClass: 'btn mat-raised-button',
             confirmButtonText: this.translateService.instant('xm-entity.entity-list-card.delete.button'),
+            cancelButtonText: this.translateService.instant('xm-entity.entity-list-card.delete.button-cancel'),
         }).then((result) => {
             if (result.value) {
                 this.xmEntityService.delete(xmEntity.id).subscribe(

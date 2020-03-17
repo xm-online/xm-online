@@ -66,6 +66,10 @@
                 "button-cancel": "Cancel",
                 "remove-success": "Event removed successfully.",
                 "remove-error": "Event not removed. Try again."
+            },
+            "calendar": {
+              "btn-list-day": "day (list)",
+              "btn-list-week": "week (list)"
             }
         },
         "calendar-event-dialog": {

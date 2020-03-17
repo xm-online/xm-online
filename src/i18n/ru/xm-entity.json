@@ -66,6 +66,10 @@
                 "button-cancel": "Отмена",
                 "remove-success": "Событие успешно удалено.",
                 "remove-error": "Событие не удалено. Попробуй еще раз."
+            },
+            "calendar": {
+              "btn-list-day": "День (список)",
+              "btn-list-week": "Неделя (список)"
             }
         },
         "calendar-event-dialog": {

@@ -67,6 +67,10 @@
                 "button-cancel": "Скасувати",
                 "remove-success": "Подію успішно видалено.",
                 "remove-error": "Подію не видалено. Спробуй ще раз."
+            },
+            "calendar": {
+              "btn-list-day": "День (список)",
+              "btn-list-week": "Тиждень (список)"
             }
         },
         "calendar-event-dialog": {
@@ -78,7 +82,7 @@
         },
         "comment-detail-dialog": {
             "title": "Додати коментар для",
-            "choose-type": "Виберіть тип коментаря",
+          "choose-type": "Виберіть тип коментаря",
             "add": {
                 "success": "Коментар успішно додано."
             }

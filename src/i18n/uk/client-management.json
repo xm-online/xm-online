@@ -22,7 +22,7 @@
         "role": "Роль",
         "validityPeriod": "Термін дії",
         "scopes-add": "Додати обсяги",
-        "search-by-client-id": "Search by client ID",
+        "search-by-client-id": "Пошук за ID клієнта",
         "client.already.exists": "Клієнт з цим ID вже існує"
     }
 }

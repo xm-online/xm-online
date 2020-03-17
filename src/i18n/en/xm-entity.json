@@ -46,6 +46,7 @@
             "delete": {
                 "title": "Are you sure you want to delete Attachment?",
                 "button": "Yes, delete!",
+                "button-cancel": "Cancel",
                 "remove-success": "Attachment removed successfully.",
                 "remove-error": "Attachment not removed. Try again."
             }
@@ -62,8 +63,13 @@
             "delete": {
                 "title": "Are you sure you want to delete Event?",
                 "button": "Yes, delete!",
+                "button-cancel": "Cancel",
                 "remove-success": "Event removed successfully.",
                 "remove-error": "Event not removed. Try again."
+            },
+            "calendar": {
+              "btn-list-day": "day (list)",
+              "btn-list-week": "week (list)"
             }
         },
         "calendar-event-dialog": {
@@ -108,6 +114,7 @@
             "delete": {
                 "title": "Are you sure you want to delete?",
                 "button": "Yes, delete!",
+                "button-cancel": "Cancel",
                 "remove-success": "Removed successfully.",
                 "remove-error": "Not removed. Try again."
             },
@@ -176,6 +183,7 @@
             "delete": {
                 "title": "Are you sure you want to delete Link?",
                 "button": "Yes, delete!",
+                "button-cancel": "Cancel",
                 "remove-success": "Link removed successfully.",
                 "remove-error": "Link not removed. Try again."
             }
@@ -452,6 +460,7 @@
             "delete": {
                 "title": "Are you sure you want to delete Location?",
                 "button": "Yes, delete!",
+                "button-cancel": "Cancel",
                 "remove-success": "Location removed successfully.",
                 "remove-error": "Location not removed. Try again."
             }

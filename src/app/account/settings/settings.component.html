@@ -145,7 +145,7 @@
                      name="autoLogoutTime"
                      [(ngModel)]="autoLogoutTime"
                      [disabled]="!autoLogoutEnabled"
-                     placeholder="seconds">
+                     [placeholder]="'settings.security.seconds' | translate">
             </mat-form-field>
           </div>
           <div class="text-right">

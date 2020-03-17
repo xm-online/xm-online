@@ -107,6 +107,7 @@ export class AttachmentCardComponent implements OnInit {
             confirmButtonClass: 'btn mat-raised-button btn-primary',
             cancelButtonClass: 'btn mat-raised-button',
             confirmButtonText: this.translateService.instant('xm-entity.attachment-card.delete.button'),
+            cancelButtonText: this.translateService.instant('xm-entity.attachment-card.delete.button-cancel'),
         }).then((result) => {
             if (result.value) {
                 this.attachmentService.delete(this.attachment.id).subscribe(

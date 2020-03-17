@@ -17,7 +17,8 @@
         "security" : {
             "name" : "Security settings",
             "twoFAStatus" : "Two Factor Authentication",
-            "autoLogout" : "Auto logout"
+            "autoLogout" : "Auto logout",
+            "seconds": "seconds"
         }
     }
 }

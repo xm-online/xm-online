@@ -1,3 +1,6 @@
+// Backward compatibility
+export { createRequestOption } from '@xm-ngx/entity';
+
 export * from './auth/csrf.service';
 export * from './auth/state-storage.service';
 export * from './auth/account.service';

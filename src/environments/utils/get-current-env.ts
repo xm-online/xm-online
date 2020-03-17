@@ -1,4 +1,4 @@
-const X_ENV_HEADER = 'X_ENV';
+const X_ENV_HEADER = 'X-ENV';
 const TEST_API = 'assets/img/favicon.png';
 
 /**

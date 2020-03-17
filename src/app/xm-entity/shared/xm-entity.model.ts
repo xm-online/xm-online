@@ -1,16 +1,16 @@
-import {BaseEntity} from './../../shared';
-import {Attachment} from './attachment.model';
-import {Calendar} from './calendar.model';
-import {Comment} from './comment.model';
-import {Event} from './event.model';
-import {FunctionContext} from './function-context.model';
-import {Link} from './link.model';
-import {Location} from './location.model';
-import {Rating} from './rating.model';
-import {Tag} from './tag.model';
-import {Vote} from './vote.model';
-import {XmEntitySpec} from './xm-entity-spec.model';
-import {StateSpec} from './state-spec.model';
+import { Attachment } from './attachment.model';
+import { BaseEntity } from './base-entity';
+import { Calendar } from './calendar.model';
+import { Comment } from './comment.model';
+import { Event } from './event.model';
+import { FunctionContext } from './function-context.model';
+import { Link } from './link.model';
+import { Location } from './location.model';
+import { Rating } from './rating.model';
+import { StateSpec } from './state-spec.model';
+import { Tag } from './tag.model';
+import { Vote } from './vote.model';
+import { XmEntitySpec } from './xm-entity-spec.model';
 
 export interface XmEntity<D = any> extends BaseEntity {
     type?: XmEntitySpec;

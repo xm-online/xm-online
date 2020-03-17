@@ -4,7 +4,7 @@ import { JhiDateUtils } from 'ng-jhipster';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { createRequestOption } from '../../shared/model/request-util';
+import { createRequestOption } from './request-util';
 import { SERVER_API_URL } from '../../xm.constants';
 import { Comment } from './comment.model';
 

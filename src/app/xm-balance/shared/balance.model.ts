@@ -1,5 +1,5 @@
+import { BaseEntity } from '@xm-ngx/entity';
 import { Metric, Pocket } from '../';
-import { BaseEntity } from '../../shared';
 
 export class Balance implements BaseEntity {
     constructor(

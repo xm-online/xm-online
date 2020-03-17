@@ -3,6 +3,7 @@ import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { UserRouteAccessService } from '@xm-ngx/core/auth';
 import { MarkdownModule } from 'ngx-markdown';
 import { XmAlertModule } from '@xm-ngx/alert';
 import { LocalStorageService, NgxWebstorageModule, SessionStorageService } from 'ngx-webstorage';
@@ -12,10 +13,10 @@ import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
 import { ProfileService, XmMainComponent } from './layouts';
 import { LayoutModule } from './layouts/layout.module';
-import { HttpLoaderFactory, XmTranslationModule } from './modules/xm-translation/xm-translation.module';
-import { UserRouteAccessService } from './shared';
-import { XmApplicationConfigService } from './shared/spec/xm-config.service';
-import { XmDashboardModule } from './xm-dashboard/xm-dashboard.module';
+import { HttpLoaderFactory, XmTranslationModule } from '@xm-ngx/translation';
+
+import { XmApplicationConfigService } from '@xm-ngx/core';
+import { XmDashboardModule } from '@xm-ngx/dynamic';
 import { XmRoutingModule } from './xm-routing.module';
 import { XmCoreModule, XmEventManager } from '@xm-ngx/core';
 

@@ -5,7 +5,7 @@ import { XmEventManager } from '@xm-ngx/core';
 import { ReCaptchaComponent } from 'angular2-recaptcha';
 import { JhiLanguageService } from 'ng-jhipster';
 
-import { PasswordSpec } from '../../xm-entity/shared/password-spec.model';
+import { PasswordSpec } from '../spec/password-spec.model';
 import { XM_EVENT_LIST } from '../../xm.constants';
 import { PrivacyAndTermsDialogComponent } from '../components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
 import { XmConfigService } from '../spec/config.service';

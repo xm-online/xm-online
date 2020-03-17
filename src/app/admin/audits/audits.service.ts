@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { createRequestOption } from '@xm-ngx/entity';
 import { Observable } from 'rxjs';
 
-import { createRequestOption } from '../../shared';
 import { SERVER_API_URL } from '../../xm.constants';
 import { Audit } from './audit.model';
 

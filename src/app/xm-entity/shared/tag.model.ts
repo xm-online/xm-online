@@ -1,4 +1,4 @@
-import { BaseEntity } from './../../shared';
+import { BaseEntity } from './base-entity';
 import { XmEntity } from './xm-entity.model';
 
 export interface Tag extends BaseEntity {

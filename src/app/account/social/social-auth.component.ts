@@ -5,9 +5,8 @@ import { XmEventManager } from '@xm-ngx/core';
 import { XmToasterService } from '@xm-ngx/toaster';
 import { CookieService } from 'angular2-cookie/core';
 
-import { AuthService, LoginComponent, LoginService } from '../../shared';
-import { StateStorageService } from '../../shared/auth/state-storage.service';
-import { XmConfigService } from '../../shared/spec/config.service';
+import { AuthService, LoginComponent, LoginService, XmConfigService } from '../../shared';
+import { StateStorageService } from '@xm-ngx/core/auth';
 import { XM_EVENT_LIST } from '../../xm.constants';
 
 const SOCIAL_AUTH = 'social-authentication';

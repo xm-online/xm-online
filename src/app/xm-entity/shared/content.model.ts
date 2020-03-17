@@ -1,4 +1,4 @@
-import { BaseEntity } from './../../shared';
+import { BaseEntity } from './base-entity';
 
 export interface Content extends BaseEntity {
     id?: number;

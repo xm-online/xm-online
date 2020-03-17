@@ -1,16 +1,16 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { createRequestOption } from '@xm-ngx/entity';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { createRequestOption } from '../../shared';
 import { SERVER_API_URL } from '../../xm.constants';
 import { Dashboard } from './dashboard.model';
 
 @Injectable()
 export class DashboardService {
 
-    private resourceUrl: string = SERVER_API_URL + 'dashboard/api/dashboards';
+    private resourceUrl: string = `${SERVER_API_URL  }dashboard/api/dashboards`;
 
     constructor(private http: HttpClient) {
     }
@@ -61,13 +61,13 @@ export class DashboardService {
      * Convert a returned JSON object to Dashboard.
      */
     private convertItemFromServer(dashboard: Dashboard): Dashboard {
-        return Object.assign({}, dashboard);
+        return { ...dashboard};
     }
 
     /**
      * Convert a Dashboard to a JSON which can be sent to the server.
      */
     private convert(dashboard: Dashboard): Dashboard {
-        return Object.assign({}, dashboard);
+        return { ...dashboard};
     }
 }

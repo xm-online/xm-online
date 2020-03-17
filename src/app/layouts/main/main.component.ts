@@ -1,16 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { XmEventManager } from '@xm-ngx/core';
+import { XmApplicationConfigService, XmEventManager } from '@xm-ngx/core';
+import { LoginService, Principal } from '@xm-ngx/core/auth';
+import { LanguageService, TitleService } from '@xm-ngx/translation';
 import { Idle } from 'idlejs/dist';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { LanguageService } from '@xm-ngx/translation';
-import { TitleService } from '@xm-ngx/translation';
-import { Principal } from '@xm-ngx/core/auth';
-import { LoginService } from '../../shared/login/login.service';
-import { XmConfigService } from '../../shared/spec/config.service';
-import { XmApplicationConfigService } from '../../shared/spec/xm-config.service';
+import { XmConfigService } from '../../shared';
 import { XM_EVENT_LIST } from '../../xm.constants';
 
 declare const $: any;

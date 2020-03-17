@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { createRequestOption } from '../../shared/model/request-util';
+import { createRequestOption } from './request-util';
 import { SERVER_API_URL } from '../../xm.constants';
 import { Content } from './content.model';
 

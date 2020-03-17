@@ -1,10 +1,10 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { createRequestOption } from '@xm-ngx/entity';
 import { JhiDateUtils } from 'ng-jhipster';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { createRequestOption } from '../../shared';
 import { SERVER_API_URL } from '../../xm.constants';
 import { Pocket } from './pocket.model';
 
@@ -13,7 +13,8 @@ export class PocketService {
 
     private resourceUrl: string = SERVER_API_URL + 'balance/api/pockets';
 
-    constructor(private http: HttpClient, private dateUtils: JhiDateUtils) { }
+    constructor(private http: HttpClient, private dateUtils: JhiDateUtils) {
+    }
 
     public create(pocket: Pocket): Observable<HttpResponse<Pocket>> {
         const copy = this.convert(pocket);

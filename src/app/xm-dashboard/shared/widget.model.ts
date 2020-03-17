@@ -1,5 +1,5 @@
-import {BaseEntity} from './../../shared';
-import {Dashboard} from './dashboard.model';
+import { BaseEntity } from '@xm-ngx/entity';
+import { Dashboard } from './dashboard.model';
 
 export interface Widget extends BaseEntity {
     id?: number;

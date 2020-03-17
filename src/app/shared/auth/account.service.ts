@@ -1,12 +1,11 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { createRequestOption, XmEntity } from '@xm-ngx/entity';
 import { JhiDateUtils } from 'ng-jhipster';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { XmEntity } from '../../xm-entity/shared/xm-entity.model';
 import { SERVER_API_URL } from '../../xm.constants';
-import { createRequestOption } from '../model/request-util';
 import { ACCOUNT_TFA_DISABLE_URL, ACCOUNT_TFA_ENABLE_URL, ACCOUNT_URL } from './auth.constants';
 
 @Injectable()

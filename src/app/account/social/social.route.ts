@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 
-import { UserRouteAccessService } from '../../shared';
+import { UserRouteAccessService } from '@xm-ngx/core/auth';
 import { SocialAuthComponent } from './social-auth.component';
 import { SocialRegisterComponent } from './social-register.component';
 

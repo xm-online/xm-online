@@ -1,5 +1,5 @@
-import { EntityLinkUiConfig } from '../../shared/spec/xm-ui-config-model';
-import { BaseSpec } from './../../shared';
+import { EntityLinkUiConfig } from '../../shared/spec';
+import { BaseSpec } from './base-spec';
 
 export interface LinkSpec extends BaseSpec {
     key?: string;

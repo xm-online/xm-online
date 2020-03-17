@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AsyncSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { PasswordSpec } from '../../xm-entity/shared/password-spec.model';
-import { ModulesLanguageHelper } from '../language/modules-language.helper';
+import { PasswordSpec } from './password-spec.model';
+import { ModulesLanguageHelper } from '../language';
 import { XmApplicationConfigService } from './xm-config.service';
 
 interface IUIConfig {

@@ -1,4 +1,4 @@
-import { BaseEntity } from './../../shared';
+import { BaseEntity } from '@xm-ngx/entity';
 import { Widget } from './widget.model';
 
 export class Dashboard implements BaseEntity {
@@ -9,7 +9,7 @@ export class Dashboard implements BaseEntity {
         public typeKey?: string,
         public layout?: any,
         public config?: any,
-        // tslint:disable-next-line:bool-param-default
+        // Tslint:disable-next-line:bool-param-default
         public isPublic?: boolean,
         public widgets?: Widget[],
     ) {

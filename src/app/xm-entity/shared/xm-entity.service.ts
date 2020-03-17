@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 
-import { createRequestOption } from '../../shared/model/request-util';
+import { createRequestOption } from './request-util';
 import { SERVER_API_URL } from '../../xm.constants';
 import { Link } from './link.model';
 import { XmEntity } from './xm-entity.model';

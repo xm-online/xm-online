@@ -10,7 +10,7 @@ import { TERMS_ERROR, XM_EVENT_LIST } from '../../xm.constants';
 import { StateStorageService } from '../auth/state-storage.service';
 import { PrivacyAndTermsDialogComponent } from '../components/privacy-and-terms-dialog/privacy-and-terms-dialog.component';
 import { XmConfigService } from '../spec/config.service';
-import { LoginService } from './login.service';
+import { LoginService } from '../auth/login.service';
 
 declare let $: any;
 

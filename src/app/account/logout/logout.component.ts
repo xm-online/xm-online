@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { XmAlertService } from '@xm-ngx/alert';
 
 import { LoginService } from '../../shared';
-import { XmEntitySpecWrapperService } from '../../xm-entity';
+import { XmEntitySpecWrapperService } from '@xm-ngx/entity';
 
 @Component({
     selector: 'xm-logout',

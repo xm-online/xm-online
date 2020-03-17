@@ -1,0 +1,6 @@
+<ng-container *ngIf="(show$ | async) && serverEnv">
+  <div class="xm-ribbon">
+    <div class="xm-ribbon-text">server: {{serverEnv}}</div>
+    <div class="xm-ribbon-text">release: {{environment.release}}</div>
+  </div>
+</ng-container>

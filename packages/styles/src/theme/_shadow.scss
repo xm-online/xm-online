@@ -1,10 +1,12 @@
 /*
  * Elevation, shadow, box-shadow
  */
-@import '~@angular/material/theming';
 
 // Variables
 $xm-enable-shadows:    true !default;
+
+$xm-elevation-color:   black !default;
+$xm-elevation-opacity: 1 !default;
 
 $xm-shadow-xm-z-value: 2 !default;
 $xm-shadow-sm-z-value: 6 !default;
@@ -24,25 +26,25 @@ $xm-shadow-lg-z-value: 16 !default;
   }
 }
 
-@mixin xm-shadow-xs($color: $mat-elevation-color, $opacity: $mat-elevation-opacity) {
+@mixin xm-shadow-xs($color: $xm-elevation-color, $opacity: $xm-elevation-opacity) {
   @include is-enable-shadow {
     @include mat-elevation($xm-shadow-xm-z-value, $color, $opacity);
   }
 }
 
-@mixin xm-shadow-sm($color: $mat-elevation-color, $opacity: $mat-elevation-opacity) {
+@mixin xm-shadow-sm($color: $xm-elevation-color, $opacity: $xm-elevation-opacity) {
   @include is-enable-shadow {
     @include mat-elevation($xm-shadow-sm-z-value, $color, $opacity);
   }
 }
 
-@mixin xm-shadow-md($color: $mat-elevation-color, $opacity: $mat-elevation-opacity) {
+@mixin xm-shadow-md($color: $xm-elevation-color, $opacity: $xm-elevation-opacity) {
   @include is-enable-shadow {
     @include mat-elevation($xm-shadow-md-z-value, $color, $opacity);
   }
 }
 
-@mixin xm-shadow-lg($color: $mat-elevation-color, $opacity: $mat-elevation-opacity) {
+@mixin xm-shadow-lg($color: $xm-elevation-color, $opacity: $xm-elevation-opacity) {
   @include is-enable-shadow {
     @include mat-elevation($xm-shadow-lg-z-value, $color, $opacity);
   }

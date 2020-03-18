@@ -5,6 +5,9 @@ $xm-mat-secondary-lighter: 100 !default;
 $xm-mat-secondary-darker:  700 !default;
 $xm-mat-secondary-text:    $xm-mat-secondary-default !default;
 
+$mat-elevation-color:      $xm-elevation-color;
+$mat-elevation-opacity:    $xm-elevation-opacity;
+
 // Remove border radius from angular material
 @if ($xm-enable-rounded == false) {
   // this variables aren't working(because we use compiled angular material)
@@ -89,22 +92,22 @@ $xm-mat-secondary-text:    $xm-mat-secondary-default !default;
   }
 }
 
-$xm-mat-typography: mat-typography-config(
-                      $font-family:  $xm-font-family,
-                      $display-4:    $xm-display-4,
-                      $display-3:    $xm-display-3,
-                      $display-2:    $xm-display-2,
-                      $display-1:    $xm-display-1,
-                      $headline:     $xm-headline,
-                      $title:        $xm-title,
-                      $subheading-2: $xm-subheading-2,
-                      $subheading-1: $xm-subheading-1,
-                      $body-2:       $xm-body-2,
-                      $body-1:       $xm-body-1,
-                      $caption:      $xm-caption,
-                      $button:       $xm-button,
-                      $input:        $xm-input
-                    );
+$xm-mat-typography:        mat-typography-config(
+                             $font-family:  $xm-font-family,
+                             $display-4:    $xm-display-4,
+                             $display-3:    $xm-display-3,
+                             $display-2:    $xm-display-2,
+                             $display-1:    $xm-display-1,
+                             $headline:     $xm-headline,
+                             $title:        $xm-title,
+                             $subheading-2: $xm-subheading-2,
+                             $subheading-1: $xm-subheading-1,
+                             $body-2:       $xm-body-2,
+                             $body-1:       $xm-body-1,
+                             $caption:      $xm-caption,
+                             $button:       $xm-button,
+                             $input:        $xm-input
+                           );
 
 @mixin xm-angular-material-typography() {
   @include angular-material-typography($xm-mat-typography);

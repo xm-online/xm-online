@@ -27,6 +27,8 @@ export interface WidgetConfig<C = any, S = any> extends IWidget<C, S> {
     spec?: S;
 }
 
+export const ELEMENT_NOT_FOUND = 'ELEMENT_NOT_FOUND';
+
 export type LazyComponent = NgModuleFactory<any>;
 
 @Component({
@@ -54,10 +56,16 @@ export class DynamicWidgetComponent {
 
         moduleFactory.subscribe((factory) => {
             const module = factory.create(this.injector);
-            const componentTypeOrLazyComponentType = module.injector.get(value.component);
+            const componentTypeOrLazyComponentType = module.injector.get(value.component, ELEMENT_NOT_FOUND);
+
+            if (componentTypeOrLazyComponentType === ELEMENT_NOT_FOUND) {
+                // eslint-disable-next-line no-console
+                console.error(`ERROR: The "${value.component}" does not exist in the "${value.module}" module!`);
+                return;
+            }
 
             if (componentTypeOrLazyComponentType instanceof Promise) {
-                this.createLazyComponent(value, componentTypeOrLazyComponentType);
+                this.createLazyComponent(value, componentTypeOrLazyComponentType, module.injector);
             } else {
                 this.createComponent(value, module, componentTypeOrLazyComponentType);
             }
@@ -82,6 +90,7 @@ export class DynamicWidgetComponent {
     private async createLazyComponent<T>(
         value: WidgetConfig,
         lazy: Promise<LazyComponent>,
+        injector: Injector,
     ): Promise<void> {
         const module = await lazy;
 
@@ -94,7 +103,15 @@ export class DynamicWidgetComponent {
             moduleFactory = await this.compiler.compileModuleAsync(module);
         }
         const entryComponent = moduleFactory.moduleType.entry;
-        const activeModule = moduleFactory.create(this.injector);
+
+        if (!entryComponent) {
+            // eslint-disable-next-line no-console
+            console.error(`ERROR: the "${value.module}" module expected to have a "static entry" filed!`
+                + 'E.g. static entry = YourComponent;');
+            return;
+        }
+
+        const activeModule = moduleFactory.create(injector);
         this.createComponent(value, activeModule, entryComponent);
     }
 

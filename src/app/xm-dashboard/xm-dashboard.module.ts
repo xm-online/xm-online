@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, ModuleWithProviders, NgModule } from '@angular/core';
+import { LoaderModule } from '@xm-ngx/components/loader';
 import { XmSharedModule } from '@xm-ngx/shared';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -14,6 +15,7 @@ import { XmDashboardRoutingModule } from './xm-dashboard-routing.module';
         CommonModule,
         XmSharedModule,
         XmDashboardRoutingModule,
+        LoaderModule,
     ],
     declarations: [
         DynamicWidgetComponent,

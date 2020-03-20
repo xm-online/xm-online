@@ -2,6 +2,7 @@
 
 // Theme
 @import './styles/theme';
+@import '~@xm-ngx/styles/components';
 
 @include xm-ngx-styles-theme($xm-theme);
 

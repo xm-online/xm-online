@@ -1,7 +1,7 @@
 /**
  * Based on material and bootstrap
  */
-@import '~@angular/material/theming';
+@import 'mat-palette';
 
 // Palette setup
 $xm-set-palette-default:      500 !default;
@@ -24,7 +24,7 @@ $xm-divider:                  rgba(black, 0.87) !default;
  */
 
 // map of material colors, where a key is an index and a value is a color
-$xm-primary-palette:          $mat-teal !default;
+$xm-primary-palette:          $mat-white !default;
 /* css gradient, such as linear-gradient */
 //  todo: gradient
 $xm-primary-gradient:         map-get($xm-primary-palette, $xm-set-palette-default) !default;
@@ -40,12 +40,12 @@ $xm-text-on-primary-dark:     $xm-text-light !default;
 $xm-text-on-primary-light:    $xm-text-dark !default;
 
 // secondary or accent
-$xm-secondary-palette:        $mat-brown !default;
+$xm-secondary-palette:        $mat-white !default;
 $xm-secondary:                map-get($xm-secondary-palette, $xm-set-palette-default) !default;
 $xm-text-on-secondary:        $xm-text !default;
 
 // warning
-$xm-warn-palette:             $mat-orange !default;
+$xm-warn-palette:             $xm-mat-red !default;
 $xm-warn:                     map-get($xm-warn-palette, $xm-set-palette-default) !default;
 $xm-text-on-warn:             $xm-text !default;
 

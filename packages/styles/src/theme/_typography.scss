@@ -2,6 +2,22 @@
  * Typography
  */
 
+@function mat-typography-level(
+  $font-size,
+  $line-height: $font-size,
+  $font-weight: 400,
+  $font-family: null,
+  $letter-spacing: null) {
+
+  @return (
+    font-size: $font-size,
+    line-height: $line-height,
+    font-weight: $font-weight,
+    font-family: $font-family,
+    letter-spacing: $letter-spacing
+  );
+}
+
 $xm-font-size-xm:      11px !default;
 $xm-font-size-sm:      1rem * 0.857 !default;
 $xm-font-size-md:      16px !default;

@@ -1,32 +1,3 @@
 // Utils
 @import './src/mixins/index';
 @import './src/theme/index';
-
-// Bootstrap utils
-@import './src/vendor/bootstrap-theme';
-
-// Components
-// @todo: move to separate module/package
-@import './src/scroll';
-@import './src/animate';
-@import './src/avatar-img-container';
-@import './src/card';
-@import './src/card-entity-list-actions';
-@import './src/card-header';
-@import './src/fab';
-@import './src/state';
-@import './src/word-autocomplete';
-
-@mixin xm-ngx-styles-theme($theme) {
-
-  // Components
-  @include xm-animate($theme);
-  @include xm-avatar-img-container($theme);
-  @include xm-card($theme);
-  @include xm-entity-list-actions($theme);
-  @include xm-card-header($theme);
-  @include xm-fab($theme);
-  @include xm-state($theme);
-  @include xm-word($theme);
-
-}

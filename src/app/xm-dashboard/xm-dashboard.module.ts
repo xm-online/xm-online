@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { LoaderModule } from '@xm-ngx/components/loader';
+import { NoDataModule } from '@xm-ngx/components/no-data';
 import { XmSharedModule } from '@xm-ngx/shared';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -16,6 +17,7 @@ import { XmDashboardRoutingModule } from './xm-dashboard-routing.module';
         XmSharedModule,
         XmDashboardRoutingModule,
         LoaderModule,
+        NoDataModule,
     ],
     declarations: [
         DynamicWidgetComponent,
@@ -27,7 +29,6 @@ import { XmDashboardRoutingModule } from './xm-dashboard-routing.module';
     providers: [
         WidgetService,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class XmDashboardModule {
     public static forRoot(): ModuleWithProviders {

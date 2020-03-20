@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LanguageModule } from '@xm-ngx/components/language';
 
@@ -43,7 +43,6 @@ import { LogoutComponent } from './logout/logout.component';
         PasswordResetInit,
         PasswordResetFinish,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class GateAccountModule {
 }

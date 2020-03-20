@@ -14,8 +14,8 @@ import { buildFormGroup, JsonSchemaFormService, removeRecursiveReferences } from
 import { ReplaySubject, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
-import { Principal } from '../../../auth/principal.service';
-import { I18nNamePipe } from '../../../language/i18n-name.pipe';
+import { Principal } from '@xm-ngx/core/auth';
+import { I18nNamePipe } from '@xm-ngx/components/language';
 import { ExtSelectService } from '../ext-select/ext-select-service';
 import { ExtMultiSelectOptions } from './ext-multi-select-options.model';
 

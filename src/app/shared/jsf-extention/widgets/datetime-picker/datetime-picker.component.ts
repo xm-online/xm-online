@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { JsonSchemaFormService } from 'angular2-json-schema-form';
 import { DateTimeAdapter, OwlDateTimeIntl } from 'ng-pick-datetime';
 
-import { ModulesLanguageHelper } from '../../../language/modules-language.helper';
+import { ModulesLanguageHelper } from '@xm-ngx/components/language';
 import { DatetimePickerOptionsModel } from './datetime-picker-options.model';
 
 declare let moment;

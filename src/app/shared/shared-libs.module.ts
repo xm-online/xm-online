@@ -8,7 +8,7 @@ import { XmSharedModule } from '@xm-ngx/shared';
 import { XmTranslationModule } from '@xm-ngx/translation';
 import { JhiConfigService, NgJhipsterModule } from 'ng-jhipster';
 import { XmMaintenanceViewModule } from './components/maintenance/xm-maintenance-view.module';
-import { NoDataModule } from './components/no-data/no-data.module';
+import { NoDataModule } from '@xm-ngx/components/no-data';
 import { InputModule } from './directives/input.module';
 import { LanguageModule } from './language/language.module';
 

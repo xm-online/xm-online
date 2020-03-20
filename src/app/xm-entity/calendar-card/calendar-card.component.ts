@@ -5,8 +5,8 @@ import { XmAlertService } from '@xm-ngx/alert';
 import { XmToasterService } from '@xm-ngx/toaster';
 import { JhiDateUtils } from 'ng-jhipster';
 
-import { Principal } from '../../shared/auth/principal.service';
-import { I18nNamePipe } from '../../shared/language/i18n-name.pipe';
+import { Principal } from '@xm-ngx/core/auth';
+import { I18nNamePipe } from '@xm-ngx/components/language';
 import { DEBUG_INFO_ENABLED } from '../../xm.constants';
 import { CalendarEventDialogComponent } from '../calendar-event-dialog/calendar-event-dialog.component';
 import { CalendarSpec } from '../shared/calendar-spec.model';

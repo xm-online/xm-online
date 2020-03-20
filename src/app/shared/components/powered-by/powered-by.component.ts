@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { Principal } from '../../auth/principal.service';
-import { I18nNamePipe } from '../../language/i18n-name.pipe';
+import { I18nNamePipe } from '@xm-ngx/components/language';
 import { PoweredBy } from './powered-by.model';
 
 @Component({

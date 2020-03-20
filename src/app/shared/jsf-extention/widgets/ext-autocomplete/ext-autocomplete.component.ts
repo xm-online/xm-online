@@ -7,8 +7,8 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
-import { Principal } from '../../../auth/principal.service';
-import { I18nNamePipe } from '../../../language/i18n-name.pipe';
+import { Principal } from '@xm-ngx/core/auth';
+import { I18nNamePipe } from '@xm-ngx/components/language';
 import { ExtAutocompleteOptions } from './ext-autocomplete-options.model';
 import { byString, ExtAutocompleteService } from './ext-autocomplete-service';
 

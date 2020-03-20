@@ -7,7 +7,7 @@ import { JhiOrderByPipe } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
 import { ITEMS_PER_PAGE } from '../../shared/constants/pagination.constants';
-import { JhiLanguageHelper } from '../../shared/language/language.helper';
+import { JhiLanguageHelper } from '@xm-ngx/components/language';
 import { Permission } from '../../shared/role/permission.model';
 import { Role } from '../../shared/role/role.model';
 import { RoleService } from '../../shared/role/role.service';

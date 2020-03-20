@@ -4,8 +4,8 @@ import { JsonSchemaFormService } from 'angular2-json-schema-form';
 import { startWith } from 'rxjs/operators';
 import * as formatString from 'string-template';
 
-import { Principal } from '../../../auth/principal.service';
-import { I18nNamePipe } from '../../../language/i18n-name.pipe';
+import { Principal } from '@xm-ngx/core/auth';
+import { I18nNamePipe } from '@xm-ngx/components/language';
 
 @Component({
     selector: 'xm-text-section',

@@ -15,7 +15,7 @@ import { catchError, finalize, map, tap } from 'rxjs/operators';
 import { ContextService, ITEMS_PER_PAGE, Principal, XmConfigService } from '../../shared';
 import { getFieldValue } from '../../shared/helpers/entity-list-helper';
 import { saveFile } from '../../shared/helpers/file-download-helper';
-import { I18nNamePipe } from '../../shared/language';
+import { I18nNamePipe } from '@xm-ngx/components/language';
 import { XM_EVENT_LIST } from '../../xm.constants';
 import { FunctionCallDialogComponent } from '../function-call-dialog/function-call-dialog.component';
 import { ActionOptions, EntityListCardOptions, EntityOptions, FieldOptions } from './entity-list-card-options.model';

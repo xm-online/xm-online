@@ -33,6 +33,8 @@
       "@xm-ngx/entity": ["src/app/xm-entity/shared"],
       "@xm-ngx/dynamic": ["src/app/xm-dashboard"],
       "@xm-ngx/components/loader": ["src/app/shared/components/loader"],
+      "@xm-ngx/components/no-data": ["src/app/shared/components/no-data"],
+      "@xm-ngx/components/language": ["src/app/shared/language"],
       "@xm-ngx/components/xm-password-needed": ["src/app/shared/components/xm-password-needed"]
     },
     "inlineSources": true,

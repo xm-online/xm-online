@@ -39,7 +39,6 @@
                     placeholder="{{'xm-entity.entity-detail-dialog.add.choose-type' | translate}}"
                     required>
           <mat-option *ngFor="let spec of availableSpecs"
-                      [selected]="spec.key == xmEntity.typeKey ? true : null"
                       [value]="spec.key">
             {{spec.name | translate | uppercase}}
           </mat-option>

@@ -10,7 +10,7 @@ interface ILayout {
     widget?: IWidget;
 }
 
-interface IUIConfig {
+export interface UIPublicConfig {
     logoUrl?: string;
     name?: string;
     iconsInMenu?: string | boolean;
@@ -49,6 +49,13 @@ interface IUIConfig {
     }[];
     defaultLayout?: ILayout[];
     layoutSidebar?: IWidget;
+}
+
+export interface UIPrivateConfig {
+    favicon?: string;
+}
+
+interface IUIConfig extends UIPublicConfig, UIPrivateConfig {
 }
 
 export type XmUIConfig = IUIConfig | any;

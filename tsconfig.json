@@ -22,6 +22,7 @@
       "@xm-ngx/styles": ["packages/styles"],
       "@xm-ngx/core": ["src/app/shared/core"],
       "@xm-ngx/core/auth": ["src/app/shared/auth"],
+      "@xm-ngx/ext/*": ["src/app/ext/*"],
       "@xm-ngx/core/environment": ["src/environments"],
       "@xm-ngx/core/permission": ["src/app/shared/privilege"],
       "@xm-ngx/alert": ["src/app/modules/xm-alert"],

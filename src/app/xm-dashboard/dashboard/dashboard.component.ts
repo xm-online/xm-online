@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Spec, XmEntitySpecWrapperService } from '@xm-ngx/entity';
 
-import { environment } from '../../../environments/environment';
+import { environment } from '@xm-ngx/core/environment';
 import { Principal } from '@xm-ngx/core/auth';
-import { I18nNamePipe, JhiLanguageHelper } from '../../shared/language';
+import { I18nNamePipe, JhiLanguageHelper } from '@xm-ngx/components/language';
 import { XmConfigService } from '../../shared/spec/config.service';
 import { DashboardWrapperService } from '../shared/dashboard-wrapper.service';
 import { Dashboard } from '../shared/dashboard.model';

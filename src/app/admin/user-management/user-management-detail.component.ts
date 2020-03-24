@@ -5,7 +5,7 @@ import { XmAlertService } from '@xm-ngx/alert';
 
 import { PasswordResetInit } from '../../account/password-reset/init/password-reset-init.service';
 import { User, UserService } from '../../shared';
-import { JhiLanguageHelper } from '../../shared/language/language.helper';
+import { JhiLanguageHelper } from '@xm-ngx/components/language';
 import { UserLogin } from '../../shared/user/login/user-login.model';
 import { UserLoginService } from '../../shared/user/login/user-login.service';
 

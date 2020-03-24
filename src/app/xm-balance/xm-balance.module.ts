@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { XmSharedModule } from '@xm-ngx/shared';
-import { NoDataModule } from '../shared/components/no-data/no-data.module';
+import { NoDataModule } from '@xm-ngx/components/no-data';
 
 import {
     BalanceDetailComponent,

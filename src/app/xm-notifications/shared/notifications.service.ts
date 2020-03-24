@@ -4,8 +4,8 @@ import { XmEventManager } from '@xm-ngx/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Principal } from '../../shared/auth/principal.service';
-import { I18nNamePipe } from '../../shared/language/i18n-name.pipe';
+import { Principal } from '@xm-ngx/core/auth';
+import { I18nNamePipe } from '@xm-ngx/components/language';
 import { FunctionService, XmEntityService } from '@xm-ngx/entity';
 import { NotificationUiConfig } from './notification.model';
 

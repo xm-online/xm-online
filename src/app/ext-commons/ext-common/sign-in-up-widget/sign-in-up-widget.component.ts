@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { XmEventManager } from '@xm-ngx/core';
 import { Subscription } from 'rxjs';
 
-import { ModulesLanguageHelper } from '../../../shared/language/modules-language.helper';
+import { ModulesLanguageHelper } from '@xm-ngx/components/language';
 import { XM_EVENT_LIST } from '../../../xm.constants';
 
 @Component({

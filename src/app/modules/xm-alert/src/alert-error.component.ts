@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { XmEventManager } from '@xm-ngx/core';
 import { JhiAlertService } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
-import { I18nNamePipe } from '../../../shared/language';
+import { I18nNamePipe } from '@xm-ngx/components/language';
 import { XmConfigService } from '../../../shared/spec/config.service';
 import { DEBUG_INFO_ENABLED } from '../../../xm.constants';
 import { ResponseConfig, ResponseConfigItem, ResponseContext } from './response-config.model';

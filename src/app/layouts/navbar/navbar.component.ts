@@ -8,7 +8,7 @@ import { JhiLanguageService } from 'ng-jhipster';
 
 import { iif, Observable, of } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
-import { JhiLanguageHelper } from '../../shared/language';
+import { JhiLanguageHelper } from '@xm-ngx/components/language';
 import { Principal } from '@xm-ngx/core/auth';
 import { XmConfigService } from '../../shared/spec/config.service';
 import { DashboardWrapperService } from '@xm-ngx/dynamic';

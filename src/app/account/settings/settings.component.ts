@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { TitleService } from '@xm-ngx/translation';
 import { XmConfigService } from '../../shared';
 
-import { ModulesLanguageHelper } from '../../shared/language';
+import { ModulesLanguageHelper } from '@xm-ngx/components/language';
 import { DEFAULT_LANG } from '../../xm.constants';
 
 @Component({

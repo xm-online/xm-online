@@ -15,9 +15,9 @@ import { JsonSchemaFormComponent, JsonSchemaFormService } from 'angular2-json-sc
 import { BehaviorSubject, Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { filter, finalize, map, mergeMap, takeUntil, tap } from 'rxjs/operators';
 
-import { environment } from '../../../../../environments/environment';
-import { Principal } from '../../../auth/principal.service';
-import { I18nNamePipe } from '../../../language/i18n-name.pipe';
+import { environment } from '@xm-ngx/core/environment';
+import { Principal } from '@xm-ngx/core/auth';
+import { I18nNamePipe } from '@xm-ngx/components/language';
 import { ExtSelectOptions } from './ext-select-options.model';
 import { ExtSelectService } from './ext-select-service';
 

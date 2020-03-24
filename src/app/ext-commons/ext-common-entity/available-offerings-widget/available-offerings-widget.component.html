@@ -22,7 +22,7 @@
       <div class="card-footer">
         <div class="card-description">
           <h4 class="offering-description">{{offering.description}}</h4>
-          <button (click)="onAction(offering)" *ngIf="config.action?.enabled" class="btn btn-primary rounded-circle">
+          <button (click)="onAction(offering)" *ngIf="config.action?.enabled" class="btn btn-primary">
             {{config.action.name | translate}}
           </button>
         </div>

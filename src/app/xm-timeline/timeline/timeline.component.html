@@ -9,14 +9,14 @@
       <div *ngIf="filter?.states?.length" class="btn-group empty-style" style="margin-right: 20px">
         <button (click)="applyFastSearch('')"
                 [class.disabled]="!currentSearch"
-                class="btn btn-primary btn-sm rounded-circle"
+                class="btn btn-primary btn-sm"
                 mat-button>
           <span jhiTranslate="global.all">All</span>
         </button>
         <button (click)="applyFastSearch(item.state)"
                 *ngFor="let item of filter.states"
                 [class.disabled]="currentSearch === item.state"
-                class="btn btn-primary btn-sm rounded-circle"
+                class="btn btn-primary btn-sm"
                 mat-button>
           {{item.name}}
         </button>

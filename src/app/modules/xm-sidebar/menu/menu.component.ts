@@ -2,14 +2,13 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/
 import { matExpansionAnimations } from '@angular/material';
 import { NavigationEnd, Router } from '@angular/router';
 import { Dashboard, DashboardService } from '@xm-ngx/dynamic';
-import { XmEntitySpec } from '@xm-ngx/entity';
+import { XmEntitySpec, XmEntitySpecWrapperService } from '@xm-ngx/entity';
 import { transpilingForIE } from '@xm-ngx/json-scheme-form';
 import * as _ from 'lodash';
 import { combineLatest, Observable, of, Subscription } from 'rxjs';
 import { filter, map, share, tap } from 'rxjs/operators';
 
 import { ContextService, Principal } from '../../../shared';
-import { XmEntityConfigService } from '../config';
 import { DEFAULT_MENU_LIST } from './menu-const';
 import { JavascriptCode, MenuCategory, MenuItem } from './menu-models';
 
@@ -148,7 +147,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     constructor(protected readonly dashboardService: DashboardService,
                 protected readonly router: Router,
                 protected readonly principal: Principal,
-                protected readonly entityConfigService: XmEntityConfigService,
+                protected readonly entityConfigService: XmEntitySpecWrapperService,
                 protected readonly contextService: ContextService) {
     }
 
@@ -160,7 +159,7 @@ export class MenuComponent implements OnInit, OnDestroy {
             map(dashboardsToCategories),
         );
 
-        const applications$ = this.entityConfigService.cache$.pipe(
+        const applications$ = this.entityConfigService.entitySpec$().pipe(
             map((spec) => {
                 if (!spec) {
                     spec = [];

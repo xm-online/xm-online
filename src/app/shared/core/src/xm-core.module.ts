@@ -7,7 +7,7 @@ import { XM_CORE_CONFIG_DEFAULT, XM_CORE_EXTERNAL_CONFIG, XmCoreConfig } from '.
 import { XmEventManagerService } from './xm-event-manager.service';
 
 import { XmSessionService } from './xm-session.service';
-import { XmUiConfigService } from './xm-ui-config.service';
+import { XmUiConfigService } from './config/xm-ui-config.service';
 import { XmUserService } from './xm-user.service';
 
 export function xmCoreConfigFactory(externalConfig?: XmCoreConfig): XmCoreConfig {

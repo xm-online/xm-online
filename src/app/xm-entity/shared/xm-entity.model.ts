@@ -38,4 +38,5 @@ export interface XmEntity<D = any> extends BaseEntity {
     targets?: Link[];
     functionContexts?: FunctionContext[];
     events?: Event[];
+    createdBy?: string;
 }

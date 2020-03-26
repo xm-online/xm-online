@@ -42,6 +42,7 @@ export class XmConfigService {
             map((res: any) => res));
     }
 
+    /** @deprecated use XmEntitySpecService update instead */
     public updateXmEntitySpec(configContent: string): Observable<any> {
         return this.http.post('entity/api/xm-entity-specs', configContent, this.headers()).pipe(
             map((res: any) => res));

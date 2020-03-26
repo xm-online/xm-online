@@ -1,106 +1,55 @@
 import { Injectable } from '@angular/core';
+import { RequestCache } from '@xm-ngx/core';
 import { Observable } from 'rxjs';
-import { defaultIfEmpty, filter, flatMap, map, shareReplay } from 'rxjs/operators';
-
-import { environment } from '../../../environments/environment';
+import { map, take } from 'rxjs/operators';
 import { Spec } from './spec.model';
 import { XmEntitySpec } from './xm-entity-spec.model';
 import { XmEntitySpecService } from './xm-entity-spec.service';
 
-const CACHE_SIZE = 1;
-
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class XmEntitySpecWrapperService {
 
-    private promise: Promise<Spec>;
-    private _spec: Spec;
-
-    private cache$: Observable<Spec>;
+    private entitySpec: RequestCache<XmEntitySpec[]> = new RequestCache<XmEntitySpec[]>(() => this.requestSpec());
 
     constructor(private xmEntitySpecService: XmEntitySpecService) {
-        if (!environment.production) {
-            console.info(`DBG Creating XmEntitySpecWrapperService`);
-        }
     }
 
-    // tslint:disable-next-line:cognitive-complexity
-    public spec(force: boolean = false, mockSpec: boolean = false): Promise<Spec> {
-        if (!force && this.promise) {
-            if (!environment.production) {console.info('DBG Promise from cache'); }
-            return this.promise;
-        } else {
-            return this.promise = new Promise((resolve) => {
-                if (force === true) {
-                    this._spec = undefined;
-                }
-
-                // check and see if we have retrieved the spec data from the server.
-                // if we have, reuse it by immediately resolving
-                if (this._spec) {
-                    this.promise = null;
-                    resolve(this._spec);
-                    return;
-                }
-
-                if (!environment.production) {console.info('DBG New Promise'); }
-
-                // retrieve the spec data from the server, update the _spec object, and then resolve.
-                this.xmEntitySpecService.get().toPromise().then((spec) => {
-                    this.promise = null;
-                    if (spec.body) {
-                        this._spec = {types: spec.body};
-                    } else {
-                        this._spec = null;
-                    }
-                    resolve(this._spec);
-                }).catch((err) => {
-                    this.promise = null;
-                    if (mockSpec) {
-                        this._spec = {};
-                        resolve(this._spec);
-                    } else {
-                        this._spec = null;
-                        throw (err);
-                    }
-                });
-            });
-        }
+    public entitySpec$(): Observable<XmEntitySpec[]> {
+        return this.entitySpec.get();
     }
 
+    /** @deprecated use entitySpec$() instead */
+    public spec(force: boolean = false): Promise<Spec> {
+        if (force) {
+            this.entitySpec.forceReload();
+        }
+        return this.specv2().pipe(take(1)).toPromise();
+    }
+
+    /** @deprecated use entitySpec$() instead */
     public specv2(): Observable<Spec> {
-        if (!this.cache$) {
-            if (!environment.production) {console.info('DBG from cache$'); }
-            this.cache$ = this.requestSpec().pipe(
-                shareReplay(CACHE_SIZE),
-            );
-        }
-        return this.cache$;
-    }
-
-    public xmSpecByKey(typeKey: string): Observable<XmEntitySpec> {
-        return this.specv2().pipe(
-            defaultIfEmpty({types: []} as Spec),
-            flatMap((spec) => spec.types),
-            filter((xmSpec) => typeKey === xmSpec.key),
+        return this.entitySpec.get().pipe(
+            map((res) => ({types: res})),
         );
     }
 
-    public clear(): void {
-        if (!environment.production) {
-            console.info(`DBG XmEntitySpecWrapperService.clear`);
-        }
-        if (this.cache$) {
-            this.cache$ = null;
-        }
-        if (this.promise) {
-            this.promise = null;
-            this._spec = null;
-        }
+    /** @deprecated use getByTypeKey(typeKey) instead */
+    public xmSpecByKey(typeKey: string): Observable<XmEntitySpec> {
+        return this.getByTypeKey(typeKey);
     }
 
-    private  requestSpec(): Observable<Spec> {
-        return this.xmEntitySpecService.get().pipe(
-            map((httpResp) => ({types: httpResp.body})));
+    public clear(): void {
+        this.entitySpec.clear();
+    }
+
+    public getByTypeKey(typeKey: string): Observable<XmEntitySpec | null> {
+        return this.entitySpec.get().pipe(
+            map((i) => i.find((xmSpec) => typeKey === xmSpec.key)),
+        );
+    }
+
+    private requestSpec(): Observable<XmEntitySpec[]> {
+        return this.xmEntitySpecService.getAll();
     }
 
 }

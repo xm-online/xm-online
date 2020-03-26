@@ -3,12 +3,10 @@ import { Injectable } from '@angular/core';
 import { JhiDateUtils } from 'ng-jhipster';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { environment } from '../../../environments/environment';
-
-import { createRequestOption } from './request-util';
 import { SERVER_API_URL } from '../../xm.constants';
 import { Link } from './link.model';
+
+import { createRequestOption } from './request-util';
 import { XmEntity } from './xm-entity.model';
 
 @Injectable()
@@ -39,9 +37,6 @@ export class XmEntityService {
 
     public find(id: number, req?: any): Observable<HttpResponse<XmEntity>> {
         const options = createRequestOption(req);
-        if (!environment.production) {
-            console.info(`[dbg] find for ${id} with req %o`, req);
-        }
         return this.http.get<XmEntity>(`${this.resourceUrl}/${id}`, {params: options, observe: 'response'}).pipe(
             map((res: HttpResponse<XmEntity>) => this.convertResponse(res)));
     }

@@ -1,13 +1,25 @@
 <div class="row">
   <div class="col-md-12 text-center">
     <span>
-      <button (click)="zipTranslations()" class="btn btn-primary rounded-circle" type="submit">Upload result</button>
+      <button (click)="zipTranslations()"
+              class="btn"
+              color="primary"
+              mat-button
+              type="submit">Upload result</button>
     </span>
     <span>
-      <button (click)="resetLocalStorage()" class="btn btn-primary rounded-circle" type="submit">Reset local storage</button>
+      <button (click)="resetLocalStorage()"
+              class="btn"
+              color="primary"
+              mat-button
+              type="submit">Reset local storage</button>
     </span>
     <span *ngFor="let lang of settings.langs">
-      <button (click)="translateAllTo(lang)" *ngIf="lang != 'en'" class="btn btn-primary rounded-circle">
+      <button (click)="translateAllTo(lang)"
+              *ngIf="lang != 'en'"
+              class="btn"
+              color="primary"
+              mat-button>
         Translate ALL to {{lang}}</button>
     </span>
   </div>
@@ -36,8 +48,11 @@
               <div *ngFor="let location of settings.locations; let first = first;" [class.active]="first"
                    class="tab-pane" id="function-{{location}}">
                 <span *ngFor="let lang of settings.langs">
-                  <button (click)="translateLocationTo(location, lang)" *ngIf="lang != 'en'"
-                          class="btn btn-primary rounded-circle btn-sm">Translate {{location}} to {{lang}}</button>
+                  <button (click)="translateLocationTo(location, lang)"
+                          *ngIf="lang != 'en'"
+                          class="btn btn-sm"
+                          color="primary"
+                          mat-button>Translate {{location}} to {{lang}}</button>
                 </span>
 
                 <table class="table">
@@ -115,7 +130,8 @@
               <ng-container *ngFor="let langFile of missedTranslation.langFiles;  let i = index;">
                 <div class="radio">
                   <label>
-                    <input (click)="missedTranslation.targetFile = langFile" [name]="missedTranslation.key" checked="false"
+                    <input (click)="missedTranslation.targetFile = langFile" [name]="missedTranslation.key"
+                           checked="false"
                            type="radio">
                     {{langFile}}
                   </label>
@@ -123,8 +139,8 @@
 
                 <button (click)="addTranslationToFile(i, missedTranslation)"
                         *ngIf="missedTranslation.targetFile"
-                        mat-button
-                        color="primary">Move to file
+                        color="primary"
+                        mat-button>Move to file
                 </button>
               </ng-container>
             </td>

@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { XmDashboardModule } from '@xm-ngx/dynamic';
 import { TagInputModule } from 'ngx-chips';
@@ -31,7 +31,6 @@ import { EntityDetailComponent } from './entity-detail.component';
     providers: [
         ApplicationResolvePagingParams,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ApplicationModule {
 }

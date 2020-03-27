@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TagInputModule } from 'ngx-chips';
 import { ImageCropperModule } from 'ngx-img-cropper';
@@ -173,7 +173,6 @@ import { StateChangeDialogComponent } from './state-change-dialog/state-change-d
         XmEntitySpecService,
         XmEntitySpecWrapperService,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class XmEntityModule {
 }

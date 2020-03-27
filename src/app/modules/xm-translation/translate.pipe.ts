@@ -30,10 +30,10 @@ export class TranslatePipe extends NgxTranslate implements PipeTransform, OnDest
      *  {{ 'global.common.accept' | translate }}
      */
     public transform(value: Translate | ITranslate, ...args: any[]): string | any {
-        if (typeof value === 'object') {
+        if (typeof value === 'object' && value !== null) {
             return this.processMap(value, args);
         } else {
-            return super.transform(value, ...args);
+            return super.transform(value as string, ...args);
         }
     }
 

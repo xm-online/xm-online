@@ -32,6 +32,7 @@
       "@xm-ngx/shared/operators": ["src/app/modules/xm-shared-operators"],
       "@xm-ngx/translation": ["src/app/modules/xm-translation"],
       "@xm-ngx/entity": ["src/app/xm-entity/shared"],
+      "@xm-ngx/entity/*": ["src/app/xm-entity/*"],
       "@xm-ngx/dynamic": ["src/app/xm-dashboard"],
       "@xm-ngx/components/loader": ["src/app/shared/components/loader"],
       "@xm-ngx/components/no-data": ["src/app/shared/components/no-data"],

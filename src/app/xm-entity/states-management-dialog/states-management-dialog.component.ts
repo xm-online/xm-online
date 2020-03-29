@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/prefer-string-starts-ends-with */
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
+import { NoDataModule } from '@xm-ngx/components/no-data';
+import { EntityStateModule } from '@xm-ngx/entity/entity-state';
+import { XmSharedModule } from '@xm-ngx/shared';
 
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, tap } from 'rxjs/operators';
@@ -94,4 +97,14 @@ export class StatesManagementDialogComponent implements OnInit {
         return this.specs
             .filter((option) => option.key.toLowerCase().indexOf(value.toLowerCase()) === 0);
     }
+}
+
+@NgModule({
+    imports: [XmSharedModule, NoDataModule, EntityStateModule],
+    exports: [StatesManagementDialogComponent],
+    declarations: [StatesManagementDialogComponent],
+    entryComponents: [StatesManagementDialogComponent],
+    providers: [],
+})
+export class StatesManagementDialogModule {
 }

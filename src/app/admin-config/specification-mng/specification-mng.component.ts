@@ -1,14 +1,10 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { Principal } from '@xm-ngx/core/auth';
 import { finalize } from 'rxjs/operators';
 
 import { XmConfigService } from '../../shared/spec/config.service';
-import { StatesManagementDialogComponent } from '../../xm-entity';
 import { ConfigValidatorUtil } from './config-validator/config-validator.util';
-import { ConfigVisualizerDialogComponent } from './config-visualizer-dialog/config-visualizer-dialog.component';
-import { Principal } from '@xm-ngx/core/auth';
 
 const TENANT_SPEC_PATH = '/tenant-config.yml';
 
@@ -16,18 +12,6 @@ const TENANT_SPEC_PATH = '/tenant-config.yml';
     selector: 'xm-specification-mng',
     templateUrl: './specification-mng.component.html',
     styleUrls: ['./specification-mng.component.css'],
-    animations: [
-        trigger('expandSection', [
-            state('in', style({height: '*'})),
-            transition(':enter', [
-                style({height: 0}), animate(100),
-            ]),
-            transition(':leave', [
-                style({height: '*'}),
-                animate(100, style({height: 0})),
-            ]),
-        ]),
-    ],
 })
 export class SpecificationMngComponent implements OnInit {
 
@@ -43,7 +27,6 @@ export class SpecificationMngComponent implements OnInit {
 
     public isUiSpecValid: boolean;
     public isTenantSpecValid: boolean;
-    public isXmEntitySpecValid: boolean;
     public isTimelineSpecValid: boolean;
     public isUaaSpecValid: boolean;
     public isUaaLoginSpecValid: boolean;
@@ -56,9 +39,6 @@ export class SpecificationMngComponent implements OnInit {
     };
     public line: number;
 
-    public entitySpecificationIn: string;
-    public entitySpecificationOut: string;
-    public entityValidation: any;
     public uiSpecificationProgress: boolean;
 
     public timelineSpecificationIn: string;
@@ -89,7 +69,6 @@ export class SpecificationMngComponent implements OnInit {
     public uaaValidation: any;
 
     constructor(private activatedRoute: ActivatedRoute,
-                private modalService: MatDialog,
                 private principal: Principal,
                 private service: XmConfigService) {
         this.activatedRoute.params.subscribe((params) => {
@@ -102,10 +81,6 @@ export class SpecificationMngComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.service.getConfig('/entity/xmentityspec.yml').subscribe((result) => {
-            this.entitySpecificationIn = result;
-            this.entitySpecificationOut = result;
-        });
         this.service.getConfig('/timeline/timeline.yml').subscribe((result) => {
             this.timelineSpecificationIn = result;
             this.timelineSpecificationOut = result;
@@ -210,32 +185,6 @@ export class SpecificationMngComponent implements OnInit {
         }
     }
 
-    public updateEntityConfig(): void {
-        this.service.updateXmEntitySpec(this.entitySpecificationOut).subscribe(() => {
-            window.location.reload();
-        });
-    }
-
-    public onEntitySpecificationChange(textChanged: any): void {
-        this.isXmEntitySpecValid = false;
-        this.entityValidation = null;
-        this.entitySpecificationOut = textChanged;
-    }
-
-    public validateXmEntitySpec(): void {
-        const errors = ConfigValidatorUtil.validate(this.entitySpecificationOut);
-        if (errors && errors.length) {
-            this.entityValidation = {errorMessage: ''};
-            for (const err of errors) {
-                this.entityValidation.errorMessage += err.message + (err.path ? ' path: ' + err.path : '') + '<br/>';
-                if (err.line) {
-                    this.line = err.line;
-                }
-            }
-        } else {
-            this.isXmEntitySpecValid = true;
-        }
-    }
 
     public onTimelineSpecificationChange(textChanged: any): void {
         this.isTimelineSpecValid = false;
@@ -315,16 +264,6 @@ export class SpecificationMngComponent implements OnInit {
         });
     }
 
-    public onShowConfigVisualizerDialog(): void {
-        const modalRef = this.modalService
-            .open(ConfigVisualizerDialogComponent,
-                {width: '500px'});
-        modalRef.componentInstance.entitySpecification = this.entitySpecificationOut;
-    }
-
-    public onShowConfigStatesManagementDialog(): void {
-        this.modalService.open(StatesManagementDialogComponent, {width: '500px'});
-    }
 
     private renderValidationMessage(validation: any): void {
         const errorMessage = validation.errorMessage;

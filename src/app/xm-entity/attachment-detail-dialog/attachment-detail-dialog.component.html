@@ -18,7 +18,6 @@
                     placeholder="{{'xm-entity.attachment-detail-dialog.choose-type' | translate}}"
                     required>
           <mat-option *ngFor="let attachmentSpec of attachmentSpecs"
-                      [selected]="attachmentSpec.key == attachment.typeKey ? true : null"
                       [value]="attachmentSpec.key">
             {{attachmentSpec.name | translate | uppercase}}
           </mat-option>

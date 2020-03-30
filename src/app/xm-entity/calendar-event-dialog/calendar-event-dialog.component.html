@@ -16,7 +16,6 @@
                     placeholder="{{'xm-entity.calendar-event-dialog.choose-type' | translate}}"
                     required>
           <mat-option *ngFor="let eventSpec of calendarSpec.events"
-                      [selected]="event && eventSpec.key == event.typeKey ? true : null"
                       [value]="eventSpec.key">
             <span [style.borderColor]="eventSpec.color">{{eventSpec?.name | translate | uppercase}}</span>
           </mat-option>

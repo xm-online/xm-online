@@ -91,7 +91,7 @@
     </div>
     <div class="form-group">
         <mat-form-field class="xm-sources-tags">
-          <mat-chip-list #chipList aria-label="{{'clientManagement.scopes-add' | translate}}">
+          <mat-chip-list #chipList [attr.aria-label]="'clientManagement.scopes-add' | translate">
             <mat-chip
               color="primary"
               *ngFor="let scope of scopes"

@@ -10,7 +10,7 @@
       <button (click)="showGroup(group)"
               *ngFor="let group of groups"
               [class.disabled]="currentGroup === group"
-              class="btn btn-primary btn-sm rounded-circle"
+              class="btn btn-primary btn-sm"
               mat-button>
         {{group.name}}
       </button>

@@ -8,8 +8,8 @@
     <xm-dynamic-widget *ngIf="signWidget?.module"
                        [init]="{module: signWidget.module, component: signWidget.selector, config: signWidget.config}">
     </xm-dynamic-widget>
-
-    <dynamic-widget [widgetData]="{component: signWidget.component, inputs: {config: signWidget.config || {}}}"></dynamic-widget>
+<!-- TODO: remove or implement -->
+<!--    <dynamic-widget [widgetData]="{component: signWidget.component, inputs: {config: signWidget.config || {}}}"></dynamic-widget>-->
   </div>
 </div>
 

@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CovalentTextEditorModule } from '@covalent/text-editor';
 import { XmJsonSchemeFormModule } from '@xm-ngx/json-scheme-form';
 import { CookieOptions, CookieService } from 'angular2-cookie/core';
@@ -207,7 +207,6 @@ const PIPES = [
         PIPES,
         XmJsonSchemeFormModule,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
 })
 export class XmSharedModule {

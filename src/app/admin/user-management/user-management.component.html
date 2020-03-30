@@ -13,14 +13,14 @@
         <div *ngIf="authorities" class="btn-group flex-wrap">
           <button (click)="applySearchByRole(null)"
                   [class.disabled]="!currentSearch"
-                  class="btn btn-primary btn-sm rounded-circle"
+                  class="btn btn-primary btn-sm"
                   mat-button>
             <span jhiTranslate="global.all">All</span>
           </button>
           <button (click)="applySearchByRole(authority)"
                   *ngFor="let authority of authorities"
                   [class.disabled]="currentSearch === authority"
-                  class="btn btn-primary btn-sm rounded-circle"
+                  class="btn btn-primary btn-sm"
                   mat-button>{{ authority | translate }}
           </button>
         </div>

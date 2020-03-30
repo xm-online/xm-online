@@ -12,7 +12,7 @@
            *ngIf="error"
            [innerHTML]="'social.register.messages.error.fail' | translate"></div>
 
-      <xm-social *ngIf="success" provider="{{ provider }}"></xm-social>
+      <xm-social *ngIf="success"></xm-social>
       <br/>
       <div class="alert alert-warning">
         {{'global.messages.info.authenticated.prefix' | translate}}

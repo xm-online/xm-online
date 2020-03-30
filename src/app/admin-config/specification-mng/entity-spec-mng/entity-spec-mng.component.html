@@ -1,0 +1,57 @@
+<div class="card">
+  <div class="card-body">
+    <div class="text-center pb-3">
+
+      <button (click)="validateXmEntitySpec();"
+              *ngIf="!isXmEntitySpecValid"
+              class="mx-2"
+              color="primary"
+              mat-flat-button
+              type="submit">
+        {{'admin-config.specification-mng.validate' | translate}}
+      </button>
+
+      <button (click)="updateEntityConfig();"
+              *ngIf="isXmEntitySpecValid"
+              class="mx-2"
+              color="primary"
+              mat-flat-button
+              type="submit">
+        {{ 'admin-config.specification-mng.entity.save' | translate }}
+      </button>
+
+      <button (click)="onShowConfigVisualizerDialog();"
+              color="primary"
+              mat-icon-button
+              type="button">
+        <mat-icon>visibility</mat-icon>
+      </button>
+
+      <button (click)="onShowConfigStatesManagementDialog();"
+              color="primary"
+              mat-icon-button
+              type="button">
+        <mat-icon>more</mat-icon>
+      </button>
+
+    </div>
+
+    <div class="text-center">
+      <div *ngIf="entityValidation && !entityValidation.valid" [innerHtml]="entityValidation?.errorMessage"
+           class="text-danger">
+      </div>
+    </div>
+
+    <div class="text-right">
+      <div (textChanged)="onEntitySpecificationChange($event)"
+           [mode]="'yaml'"
+           [options]="aceEditorOptions"
+           [style.width]="'100%'"
+           [text]="entitySpecificationIn"
+           xmAceEditor>
+        <span jhiTranslate="admin-config.specification-mng.loading">loading specification...</span>
+      </div>
+    </div>
+
+  </div>
+</div>

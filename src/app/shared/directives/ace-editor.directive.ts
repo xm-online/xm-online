@@ -4,6 +4,8 @@ import 'brace';
 import 'brace/mode/json';
 import 'brace/mode/yaml';
 import 'brace/theme/chrome';
+import 'brace/ext/searchbox';
+import { Editor } from 'brace';
 
 declare const ace: any;
 
@@ -14,7 +16,7 @@ export class AceEditorDirective implements OnDestroy{
 
     public _highlightActiveLine: boolean = true;
     public _showGutter: boolean = true;
-    public editor: any;
+    public editor: Editor;
     public oldText: any;
     @Output('textChanged') public textChanged: EventEmitter<any> = new EventEmitter();
     public _options: any = {};

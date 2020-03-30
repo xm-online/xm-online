@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { EntityStateModule } from '@xm-ngx/entity/entity-state';
+import { StatesManagementDialogModule } from '@xm-ngx/entity/states-management-dialog';
 import { TagInputModule } from 'ngx-chips';
 import { ImageCropperModule } from 'ngx-img-cropper';
 import { RatingModule } from '../modules/components/xm-rating';
@@ -28,7 +30,6 @@ import {
     EntityDetailFabComponent,
     EntityListCardComponent,
     EntityListFabComponent,
-    EntityStateComponent,
     EventService,
     FunctionCallDialogComponent,
     FunctionContextService,
@@ -52,7 +53,6 @@ import {
     OverpassApiService,
     RatingListSectionComponent,
     RatingService,
-    StatesManagementDialogComponent,
     TagListSectionComponent,
     TagService,
     VoteService,
@@ -65,6 +65,11 @@ import { AttachmentListSimplifiedComponent } from './attachment-list/attachment-
 
 import { StateChangeDialogComponent } from './state-change-dialog/state-change-dialog.component';
 
+const MODULES = [
+    StatesManagementDialogModule,
+    EntityStateModule,
+];
+
 @NgModule({
     imports: [
         CommonModule,
@@ -73,6 +78,7 @@ import { StateChangeDialogComponent } from './state-change-dialog/state-change-d
         ImageCropperModule,
         RatingModule,
         TagInputModule,
+        MODULES,
     ],
     declarations: [
         AreaComponent,
@@ -92,7 +98,6 @@ import { StateChangeDialogComponent } from './state-change-dialog/state-change-d
         EntityDetailFabComponent,
         EntityListCardComponent,
         EntityListFabComponent,
-        EntityStateComponent,
         FunctionCallDialogComponent,
         StateChangeDialogComponent,
         FunctionListSectionComponent,
@@ -112,12 +117,10 @@ import { StateChangeDialogComponent } from './state-change-dialog/state-change-d
         TagListSectionComponent,
         EntityListFabComponent,
         LocationCardNamePipe,
-        StatesManagementDialogComponent,
         AttachmentListSimplifiedComponent,
         AttachmentListBaseComponent,
     ],
     entryComponents: [
-        StatesManagementDialogComponent,
         AttachmentDetailDialogComponent,
         AvatarDialogComponent,
         CalendarEventDialogComponent,
@@ -130,6 +133,7 @@ import { StateChangeDialogComponent } from './state-change-dialog/state-change-d
         OsmPolygonDialogComponent,
     ],
     exports: [
+        MODULES,
         AreaComponent,
         AttachmentCardComponent,
         AttachmentListComponent,
@@ -143,7 +147,6 @@ import { StateChangeDialogComponent } from './state-change-dialog/state-change-d
         EntityDetailFabComponent,
         EntityListCardComponent,
         EntityListFabComponent,
-        EntityStateComponent,
         FunctionListSectionComponent,
         FunctionListSectionCompactComponent,
         LinkDetailNewSectionComponent,
@@ -153,7 +156,6 @@ import { StateChangeDialogComponent } from './state-change-dialog/state-change-d
         LocationListCardComponent,
         RatingListSectionComponent,
         TagListSectionComponent,
-        StatesManagementDialogComponent,
     ],
     providers: [
         AttachmentService,

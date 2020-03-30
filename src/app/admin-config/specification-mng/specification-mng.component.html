@@ -21,8 +21,8 @@
                       *ngIf="isUiSpecValid"
                       [class.loading]="uiSpecificationProgress"
                       [disabled]="uiSpecificationProgress"
-                      mat-button
                       color="primary"
+                      mat-button
                       type="button">
                 {{'admin-config.specification-mng.ui.save' | translate}}
               </button>
@@ -58,56 +58,7 @@
           </div>
         </div>
       </div>
-      <div *ngSwitchCase="'entity'">
-        <div class="card">
-          <div class="card-body">
-            <div class="text-center pb-3">
-              <button (click)="validateXmEntitySpec();" *ngIf="!isXmEntitySpecValid" class="btn btn-primary mr-2"
-                      jhiTranslate="admin-config.specification-mng.validate"
-                      type="submit">
-                Validate
-              </button>
-              <button (click)="updateEntityConfig();" *ngIf="isXmEntitySpecValid" class="btn btn-primary mr-2"
-                      jhiTranslate="admin-config.specification-mng.entity.save"
-                      type="submit">
-                Update Entity specification
-              </button>
-
-              <button (click)="onShowConfigVisualizerDialog();"
-                      class="btn btn-icon btn-just-icon btn-primary ml-2"
-                      type="button">
-                <i class="material-icons">visibility</i>
-              </button>
-
-              <button (click)="onShowConfigStatesManagementDialog();"
-                      class="btn btn-icon btn-just-icon btn-primary ml-2"
-                      type="button">
-                <i class="material-icons">more</i>
-              </button>
-            </div>
-            <div class="text-center">
-              <div *ngIf="entityValidation && !entityValidation.valid" [innerHtml]="entityValidation?.errorMessage"
-                   class="text-danger">
-              </div>
-            </div>
-            <div class="text-right">
-              <div (textChanged)="onEntitySpecificationChange($event)"
-                   [autoUpdateContent]="true"
-                   [gotoLine]="line"
-                   [mode]="'yaml'"
-                   [options]="aceEditorOptions"
-                   [readOnly]="false"
-                   [style.min-height]="'200px'"
-                   [style.width]="'100%'"
-                   [text]="entitySpecificationIn"
-                   style="overflow-x: auto; border: 1px solid lightgray;"
-                   xmAceEditor>
-                <span jhiTranslate="admin-config.specification-mng.loading">loading specification...</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <xm-entity-spec-mng *ngSwitchCase="'entity'"></xm-entity-spec-mng>
       <div *ngSwitchCase="'timeline'">
         <div class="card">
           <div class="card-body">
@@ -125,7 +76,8 @@
                 Save Timeline specification
               </button>
               <div class="text-center">
-                <div *ngIf="timelineValidation && !timelineValidation.valid" [innerHtml]="timelineValidation?.errorMessage"
+                <div *ngIf="timelineValidation && !timelineValidation.valid"
+                     [innerHtml]="timelineValidation?.errorMessage"
                      class="text-danger">
                 </div>
               </div>

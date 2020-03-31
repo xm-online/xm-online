@@ -1,6 +1,7 @@
 export * from './balance-detail/balance-detail.component';
 export * from './balance-list-card/balance-list-card.component';
 export * from './balance-detail-dialog/balance-detail-dialog.component';
+export * from './xm-balance.module';
 
 export * from './shared/balance.model';
 export * from './shared/balance.service';

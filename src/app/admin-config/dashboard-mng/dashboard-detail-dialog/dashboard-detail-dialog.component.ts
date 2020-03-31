@@ -6,7 +6,7 @@ import { XmToasterService } from '@xm-ngx/toaster';
 
 import { environment } from '../../../../environments/environment';
 import { Principal } from '@xm-ngx/core/auth';
-import { Dashboard, DashboardService } from '../../../xm-dashboard';
+import { Dashboard, DashboardService } from '@xm-ngx/dynamic';
 
 
 @Component({

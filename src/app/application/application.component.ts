@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { I18nNamePipe, Principal, XmConfigService } from '../shared';
 import { LIST_DEFAULT_FIELDS } from '../shared/constants/default-lists-fields.constants';
-import { DashboardWrapperService } from '../xm-dashboard';
+import { DashboardWrapperService } from '@xm-ngx/dynamic';
 import { Link, Spec, XmEntitySpec, XmEntitySpecWrapperService } from '../xm-entity';
 import { EntityListCardOptions } from '../xm-entity/entity-list-card/entity-list-card-options.model';
 

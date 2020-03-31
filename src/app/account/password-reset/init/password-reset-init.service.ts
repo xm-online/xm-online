@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable()
+/** @deprecated use AccountService instead */
 export class PasswordResetInit {
 
     constructor(private http: HttpClient) {

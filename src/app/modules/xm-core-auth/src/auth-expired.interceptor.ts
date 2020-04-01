@@ -1,11 +1,12 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injector } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { LoginService } from '../../shared';
+import { LoginService } from '../../../shared/auth/login.service';
 
+@Injectable()
 export class AuthExpiredInterceptor implements HttpInterceptor {
 
     constructor(private injector: Injector) {

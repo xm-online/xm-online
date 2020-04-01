@@ -1,10 +1,14 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { Observable } from 'rxjs';
 
-import { CONFIG_SETTINGS_API, TOKEN_URL } from '../../shared';
-import { SERVER_API_URL } from '../../xm.constants';
+import { SERVER_API_URL } from '../../../xm.constants';
 
+const TOKEN_URL = 'uaa/oauth/token';
+const CONFIG_SETTINGS_API = 'config/api/profile/webapp/settings-public.yml?toJson';
+
+@Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
     constructor(private localStorage: LocalStorageService,

@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { defaults } from 'lodash';
 import { JhiEventManager } from 'ng-jhipster';
+import { ErrorHandlerInterceptor } from '../../../modules/xm-core/src/errorhandler.interceptor';
 import { XmPermissionService } from '../../privilege/xm-permission.service';
+import { XmEventManager } from '../index';
 import { XM_CORE_CONFIG_DEFAULT, XM_CORE_EXTERNAL_CONFIG, XmCoreConfig } from './xm-core-config';
 import { XmEventManagerService } from './xm-event-manager.service';
 
@@ -30,6 +33,12 @@ export class XmCoreModule {
                 XmPermissionService,
                 {provide: XM_CORE_EXTERNAL_CONFIG, useValue: externalConfig},
                 {provide: XmCoreConfig, useFactory: xmCoreConfigFactory, deps: [XM_CORE_EXTERNAL_CONFIG]},
+                {
+                    provide: HTTP_INTERCEPTORS,
+                    useClass: ErrorHandlerInterceptor,
+                    multi: true,
+                    deps: [XmEventManager],
+                },
             ],
         };
     }

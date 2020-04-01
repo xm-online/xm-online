@@ -21,7 +21,7 @@
     "paths": {
       "@xm-ngx/styles": ["packages/styles"],
       "@xm-ngx/core": ["src/app/shared/core"],
-      "@xm-ngx/core/auth": ["src/app/shared/auth"],
+      "@xm-ngx/core/auth": ["src/app/modules/xm-core-auth"],
       "@xm-ngx/ext/*": ["src/app/ext/*"],
       "@xm-ngx/core/environment": ["src/environments"],
       "@xm-ngx/core/permission": ["src/app/shared/privilege"],
@@ -34,6 +34,7 @@
       "@xm-ngx/entity": ["src/app/xm-entity/shared"],
       "@xm-ngx/entity/*": ["src/app/xm-entity/*"],
       "@xm-ngx/dynamic": ["src/app/xm-dashboard"],
+      "@xm-ngx/xm-balance": ["src/app/xm-balance"],
       "@xm-ngx/components/loader": ["src/app/shared/components/loader"],
       "@xm-ngx/components/no-data": ["src/app/shared/components/no-data"],
       "@xm-ngx/components/language": ["src/app/shared/language"],

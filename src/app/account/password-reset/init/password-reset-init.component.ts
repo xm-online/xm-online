@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatInput } from '@angular/material';
-import { PasswordResetInit } from './password-reset-init.service';
+import { AccountService } from '@xm-ngx/core/auth';
 
 @Component({
     selector: 'xm-password-reset-init',
@@ -14,7 +14,7 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
 
     @ViewChild('emailInputElement', {static: false}) public emailInputElement: MatInput;
 
-    constructor(private passwordResetInit: PasswordResetInit) {
+    constructor(private passwordResetInit: AccountService) {
     }
 
     public ngOnInit(): void {
@@ -29,7 +29,7 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
         this.error = null;
         this.errorEmailNotExists = null;
 
-        this.passwordResetInit.save(this.resetAccount.email).subscribe(() => {
+        this.passwordResetInit.resetPassword(this.resetAccount.email).subscribe(() => {
             this.success = 'OK';
         }, (response) => {
             this.success = null;

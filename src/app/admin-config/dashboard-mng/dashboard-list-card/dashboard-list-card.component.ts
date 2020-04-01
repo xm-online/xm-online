@@ -12,8 +12,8 @@ import 'rxjs/add/observable/of';
 import { finalize } from 'rxjs/operators';
 
 import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
-import { Dashboard } from '../../../xm-dashboard/shared/dashboard.model';
-import { DashboardService } from '../../../xm-dashboard/shared/dashboard.service';
+import { Dashboard } from '@xm-ngx/dynamic';
+import { DashboardService } from '@xm-ngx/dynamic';
 import { BaseAdminConfigListComponent } from '../../base-admin-config-list.component';
 import { DashboardDetailDialogComponent } from '../dashboard-detail-dialog/dashboard-detail-dialog.component';
 

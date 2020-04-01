@@ -8,7 +8,7 @@ import { XmSidebarModule } from '../modules/xm-sidebar';
 import { XmMaintenanceViewModule } from '../shared/components/maintenance/xm-maintenance-view.module';
 import { InputModule } from '../shared/directives/input.module';
 import { LanguageModule } from '@xm-ngx/components/language';
-import { XmBalanceModule } from '../xm-balance/xm-balance.module';
+import { XmBalanceModule } from '@xm-ngx/xm-balance';
 import { XmNotificationsModule } from '../xm-notifications/xm-notifications.module';
 import { XmTimelineModule } from '../xm-timeline/xm-timeline.module';
 import { ErrorComponent } from './error/error.component';

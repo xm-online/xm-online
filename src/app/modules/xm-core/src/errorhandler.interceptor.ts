@@ -1,8 +1,10 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { XmEventManager } from '@xm-ngx/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+@Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
 
     constructor(private eventManager: XmEventManager) {

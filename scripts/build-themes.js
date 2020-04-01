@@ -17,6 +17,7 @@ const DEST_PATH = 'src/assets/themes';
 
         const res = sass.renderSync({
             file,
+            includePaths: ['src/styles', 'src/app/ext'],
             importer: packageImporter(),
             sourceMap: false,
             outFile: outFile,

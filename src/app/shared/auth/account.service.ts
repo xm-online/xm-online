@@ -1,15 +1,15 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { createRequestOption } from '../../xm-entity/shared/request-util';
-import { XmEntity } from '../../xm-entity/shared/xm-entity.model';
 import { JhiDateUtils } from 'ng-jhipster';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { createRequestOption } from '../../xm-entity/shared/request-util';
+import { XmEntity } from '../../xm-entity/shared/xm-entity.model';
 
 import { SERVER_API_URL } from '../../xm.constants';
 import { ACCOUNT_TFA_DISABLE_URL, ACCOUNT_TFA_ENABLE_URL, ACCOUNT_URL } from './auth.constants';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AccountService {
 
     private resourceProfileUrl: string = SERVER_API_URL + 'entity/api/profile';
@@ -50,6 +50,10 @@ export class AccountService {
             map((res: HttpResponse<XmEntity>) => this.convertResponse(res)),
             map((res: HttpResponse<XmEntity>) => res.body),
         );
+    }
+
+    public resetPassword(mail: string): Observable<any> {
+        return this.http.post('uaa/api/account/reset_password/init', mail);
     }
 
     private convertResponse(res: HttpResponse<XmEntity>): HttpResponse<XmEntity> {

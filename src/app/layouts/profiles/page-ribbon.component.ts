@@ -14,6 +14,7 @@ import { ProfileService } from './profile.service';
     styleUrls: [
         'page-ribbon.css',
     ],
+    providers: [ProfileService],
 })
 export class PageRibbonComponent implements OnInit, OnDestroy {
 

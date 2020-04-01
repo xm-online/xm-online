@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { StatesManagementDialogModule } from '@xm-ngx/entity/states-management-dialog';
 import { XmSharedModule } from '../shared/shared.module';
-import { XmDashboardModule } from '../xm-dashboard/xm-dashboard.module';
+import { XmDashboardModule } from '@xm-ngx/dynamic';
 
 import { adminConfigState } from './admin-config.route';
 // tslint:disable-next-line:max-line-length

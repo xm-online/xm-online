@@ -3,8 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { XmAlertService } from '@xm-ngx/alert';
 
-import { PasswordResetInit } from '../../account/password-reset/init/password-reset-init.service';
-import { User, UserService } from '../../shared';
+import { AccountService, User, UserService } from '../../shared';
 import { JhiLanguageHelper } from '@xm-ngx/components/language';
 import { UserLogin } from '../../shared/user/login/user-login.model';
 import { UserLoginService } from '../../shared/user/login/user-login.service';
@@ -12,7 +11,7 @@ import { UserLoginService } from '../../shared/user/login/user-login.service';
 @Component({
     selector: 'xm-user-mgmt-detail',
     templateUrl: './user-management-detail.component.html',
-    providers: [PasswordResetInit],
+    providers: [],
 })
 export class UserMgmtDetailComponent implements OnInit, OnDestroy {
 
@@ -28,7 +27,7 @@ export class UserMgmtDetailComponent implements OnInit, OnDestroy {
         private alertService: XmAlertService,
         private userService: UserService,
         private userLoginService: UserLoginService,
-        private pwsResetService: PasswordResetInit,
+        private pwsResetService: AccountService,
         private route: ActivatedRoute,
         private location: Location,
     ) {
@@ -79,7 +78,7 @@ export class UserMgmtDetailComponent implements OnInit, OnDestroy {
             cancelButtonClass: 'btn mat-button',
             confirmButtonText: 'Yes, reset!',
         }).subscribe((result) => result.value
-            ? this.pwsResetService.save(this.userEmail).subscribe()
+            ? this.pwsResetService.resetPassword(this.userEmail).subscribe()
             : console.info('Cancel'));
     }
 

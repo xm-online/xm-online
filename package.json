@@ -90,6 +90,8 @@
     "chartist-plugin-zoom": "0.6.0",
     "core-js": "2.4.1",
     "datatables": "1.10.18",
+    "@ajsf/material": "0.1.4",
+    "@ajsf/core": "0.1.4",
     "datatables.net-bs": "1.10.20",
     "datatables.net-responsive": "2.2.3",
     "eonasdan-bootstrap-datetimepicker": "4.17.47",

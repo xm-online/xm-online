@@ -114,6 +114,7 @@
     "leaflet-draw": "0.4.14",
     "leaflet.gridlayer.googlemutant": "0.8.0",
     "lodash": "4.17.15",
+    "@kolkov/angular-editor": "1.1.2",
     "moment": "2.24.0",
     "moment-timezone": "0.5.27",
     "ng-jhipster": "0.11.4",

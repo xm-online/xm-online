@@ -225,7 +225,6 @@ export class AuthServerProvider {
                 let timeout = expiresIn * 1000;
                 timeout = this.updateTimoutToMaxValue(timeout);
                 this.updateTokenTimer = setTimeout(() => {
-                    debugger;
                     if (this.getRefreshToken()) {
                         this.refreshTokens(rememberMe);
                     }

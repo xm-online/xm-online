@@ -237,7 +237,7 @@ export class AuthServerProvider {
     }
 
     private updateTimoutToMaxValue(timeout: number): number {
-        let intMaxValue = Math.pow(2, 31) - 1;
+        const intMaxValue = Math.pow(2, 31) - 1;
         // WARNING! setTimeout - timeout max 2^31-1 otherwise function will run immediately
         if (timeout > intMaxValue) {
             timeout = intMaxValue;

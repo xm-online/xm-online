@@ -150,9 +150,11 @@ export class AuthServerProvider {
             const authenticationTokenexpiresDate = new Date().setSeconds(resp.expires_in);
             this.$sessionStorage.store(EXPIRES_DATE_FIELD, authenticationTokenexpiresDate);
             this.storeRefreshToken(refreshToken, rememberMe);
+            let timeout = (resp.expires_in - 60) * 1000;
+            timeout = this.updateTimoutToMaxValue(timeout);
             this.updateTokenTimer = setTimeout(() => {
                 this.refreshTokens(rememberMe);
-            }, (resp.expires_in - 60) * 1000);
+            }, timeout);
         } else {
             console.info('Expected to get %s but got undefined', REFRESH_TOKEN); // tslint:disable-line
         }
@@ -220,14 +222,25 @@ export class AuthServerProvider {
             const expiresdate = this.$sessionStorage.retrieve(EXPIRES_DATE_FIELD);
             if (currentDate < expiresdate) {
                 const expiresIn = (expiresdate - currentDate) / 1000 - 30;
+                let timeout = expiresIn * 1000;
+                timeout = this.updateTimoutToMaxValue(timeout);
                 this.updateTokenTimer = setTimeout(() => {
                     if (this.getRefreshToken()) {
                         this.refreshTokens(rememberMe);
                     }
-                }, expiresIn * 1000);
+                }, timeout);
             } else {
                 this.refreshTokens(rememberMe);
             }
         }
+    }
+
+    private updateTimoutToMaxValue(timeout: number): number {
+        const intMaxValue = Math.pow(2, 31) - 1;
+        // WARNING! setTimeout - timeout max 2^31-1 otherwise function will run immediately
+        if (timeout > intMaxValue) {
+            timeout = intMaxValue;
+        }
+        return timeout;
     }
 }

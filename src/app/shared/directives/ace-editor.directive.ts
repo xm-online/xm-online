@@ -3,6 +3,7 @@ import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/cor
 import 'brace';
 import 'brace/mode/json';
 import 'brace/mode/yaml';
+import 'brace/mode/html';
 import 'brace/theme/chrome';
 
 declare const ace: any;

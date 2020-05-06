@@ -45,6 +45,20 @@ export class FileUploadComponent implements OnInit, OnDestroy {
         const file = fileData;
         const formData: FormData = new FormData();
         formData.append('file', file, file.name);
+        const additionalParameters = this.options.additionalParameters;
+        if (additionalParameters) {
+            Object.keys(additionalParameters).forEach((key) => {
+                const parameter = additionalParameters[key];
+                if (parameter.hasOwnProperty('value')) {
+                    formData.append(key, parameter.value);
+                }
+                if (parameter.hasOwnProperty('valueExpression')) {
+                    const value = new Function('model', 'options', 'return '
+                        + parameter.valueExpression)(this.jsf.getData(), this.jsf.formOptions);
+                    formData.append(key, value);
+                }
+            });
+        }
 
         if (this.options.tokenSource) {
             this.httpClient

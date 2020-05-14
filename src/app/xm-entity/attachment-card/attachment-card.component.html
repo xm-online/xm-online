@@ -1,5 +1,8 @@
 <div class="card card-product">
-  <div class="card-header card-header-image attachment-card-image d-flex align-items-center">
+  <div (click)="onDownload()"
+       style="cursor: pointer;"
+       *xmPermitted="['ATTACHMENT.GET_LIST.ITEM']"
+       class="card-header card-header-image attachment-card-image d-flex align-items-center">
     <img *ngIf="isImage() && imageSrc"
          [src]="imageSrc"
          class="img"/>

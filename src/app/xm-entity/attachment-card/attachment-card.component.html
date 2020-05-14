@@ -1,15 +1,17 @@
 <div class="card card-product">
-  <div class="card-header card-header-image attachment-card-image d-flex align-items-center">
-    <img *ngIf="isImage() && imageSrc"
-         [src]="imageSrc"
-         class="img"/>
-    <img *ngIf="!isImage() && getFileTypeImage()"
-         [src]="getFileTypeImage()"
-         class="img"/>
-    <img *ngIf="!(isImage() && imageSrc) && !(!isImage() && getFileTypeImage())"
-         [src]="'./assets/img/filetypes/filetype-noimg.png'"
-         class="img">
-  </div>
+    <div (click)="canDownload && onDownload()"
+         [class.cursor-pointer]="canDownload"
+         class="card-header card-header-image attachment-card-image d-flex align-items-center">
+      <img *ngIf="isImage() && imageSrc"
+           [src]="imageSrc"
+           class="img"/>
+      <img *ngIf="!isImage() && getFileTypeImage()"
+           [src]="getFileTypeImage()"
+           class="img"/>
+      <img *ngIf="!(isImage() && imageSrc) && !(!isImage() && getFileTypeImage())"
+           [src]="'./assets/img/filetypes/filetype-noimg.png'"
+           class="img">
+    </div>
   <div class="card-body text-center">
     <p class="category"><em>{{(attachmentSpec.name | i18nName : principal).toUpperCase()}}</em></p>
     <h5 class="card-title attachment-card-title xm-word-wrap">{{attachment.name}}</h5>

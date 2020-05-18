@@ -1,9 +1,28 @@
 language: node_js
 node_js:
- - "10.16.2"
+- 10.16.2
 script:
- - set -e
- - npm install --save-dev
- - npm run lint
- - npm run prebuild
- - npm run build-aot
+  - set -e
+  - npm install --save-dev
+  - npm run lint
+  - npm run prebuild
+  - npm run build-aot
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - export DOCKER_REPO=$(echo  -n $TRAVIS_REPO_SLUG | sed -e 's/^xm-online\//xmonline\//g')
+  - export IMAGE_BRANCH=$(echo -n $TRAVIS_BRANCH | sed -e 's/\//-/g')
+  - export PROJECT_VERSION="$IMAGE_BRANCH"
+  - export TAGS="$IMAGE_BRANCH $IMAGE_BRANCH-$TRAVIS_BUILD_NUMBER";
+  - docker build -t app-docker-img --label commit_id="$TRAVIS_COMMIT" --label version="$PROJECT_VERSION" --label build_number="$TRAVIS_BUILD_NUMBER" --label build_url="$TRAVIS_BUILD_WEB_URL" --label git_url="$TRAVIS_REPO_SLUG" --label commit_message="$TRAVIS_COMMIT_MESSAGE" -f src/docker/Dockerfile .
+  - for TAG in $TAGS;
+    do
+        docker tag app-docker-img $DOCKER_REPO:$TAG;
+        docker push $DOCKER_REPO:$TAG;
+    done
+env:
+  global:
+  - secure: RME46HLcdu71DhtLfPIdPNib4XzANuGuGWJcrB94BUT9ixWdEtt4HQuJdyfQVRNa5JoB5LaOvXmHk1LQcn7cDDTChAjVrjZDqU1vpiqLpoJx0seLaYKtyRy1rFbuTjbOeqEWpwGVOGFIqZ4RZhDureTa+djZXCL6z+uJIDTKi/xKTH8PqxrcwxogNfBP5ECBCVDUxu3iXiXPDrksRCoVjBuPeq0QRiZ5xaexpQwru7+kEzmx3k8B+5Whk4b6ld96Lkbad8O08ib6EAwBpZ08t1O5jmqQCHabsRyn7sp3qtJYuJTvlJE9jSwE+SK9MTTUbHgedpMnaUq5kcbmkzZWp9WE2TrzDg+CAqpnAX/vcFWh8SkjflNzY2rlyrWjddpTOntB62z3/aJPuCzckav3TBUXZiW8qgLYWXLL16t+dg2QpxNNngusuc5+QAcMj6K8vqqMiFMJDAxqxdPKwJgZmaiXdct8jkUaa2xdIZjTB9X+V47pKaTb6J4BbN1G6uCFQuCsHj6e+8hFx4goLd0OGB9NnLrCUrOD5fGo384s5yAjZ+Yp22/WZ4CcrdXBAb22oml2imdgbg9CUVzJAbLznKko0w6TTnb55gOpXqjj8RJLsdKxnXPnw+G9PREGTmdi8PymYapsxG52GYfxuYbseyb1I4JQqhNifKYi+UO3mBs=
+  - secure: Lpu2VP1kPD1BvVFf9vX07uYtFPWWBhiT9fqbFkMcC5AeYoICwuOOh+DsbLLMZRHcyFzd8nkzDuudbEVtwODVpgWj1cPu8Oqnz+QjJmBRsX992DKry71hwKrookQS6TZstRoMPbQdGqMxsHxOqe8829s/jeBUnv/QsqNd87c8Vo1XplMlMIaZ/ceWQCgo2Ysr3KWqf3mR1IKUjPTXSBXuPOswHSqBWkSJDmh4Lt5CBIAEdMx0yehnzVTIguppV5Ac9Vc51wo3uvSA/mRwR5EtPE5GkQC/MUh1FLJ2sZ+bcRQ0/au91h0cmkgzQ96yNhUn8prZ8Jmzesp4EHTka1Wf4vjLEvElWdJ3LglTpMuzx8eEDF+gm8Jnq5cduT8SYqvo+PRG5VabtDvYVIp4wCYiZBuao9mojxvAwlpUUwUNC0hBIGwQaceG63tVREPFPdyGBBg4eAj/V3URa+HO6L9VkXjOCI6JhSK+VI54JScyA9BO7x8u60zlrGP+kJJ27Bt3zMwfi/LrkZXQs9zIRZ54clAUSPvysiUyeM14qFLPtKzL2LO2o3S+YIQlj41m99nG8+vm6qjEdvG+BTStQx8+m1e84X/Pym6EPddUaF4E5kMY8bR2GlJYoDFWkHlifniT+LpjvnnKmjKnu4nmr2XknVVeVg8EdlT3n2xlCaOr+RQ=
+notifications:
+  slack:
+    rooms:
+      secure: HOtcuqtrZEY+oRBNDsgR9sAbzY5wj17dQOvIVHRiyzE5bkoDpSGnDsfXEgKpmo40oNMGIH+NeHV+EU2WTjyqacwoMIvJoweYIdo74+k8Wi5ny8UZfUmILG4QVbvovelROEMbUb0tUMa/FcEu79/bIk6jJlwFvahdcxzXYPKOCXC/rK3MvoYqYE6+AzjbwWCTrqkjOrsoMrQnApPSz62M6i0C1NjskGTKcNbPQLHz64v7CMx1JjO5IzpdGX0A+dcyOPIsVr3apaSK47CWxiTe1s95q112t2dI6SHoUoDoNJC16RFyXLqvaQtS2qJpYJ+lZM9dz2DtVZtxiqF29ssMe00X/HQEFdg65auXLW1FhfSo7l2g8HqcJrgFF8ih9XR3WKNAhZLNocJJYk8Pwhznuo/2Z3zwhshei3DZqViwpFTL+SL4j6XxhbWCgGtCWGOLqHFflmu8/mP/FEoD0Kks0c+VUe5hq17b1tbVWR6vz8LM0+zhCTXFX2DdA6v3is1hH29KU4qvzKwmmKIuN5/4N0B6y3jNHmTnV0eQAkmyeeKxKl78witJvQpvPNm+EQ3xpknCZl6nHY4pt3zdcchHGBO8d0XpFHCRSLRBmkvHQHTHn4sw8Js6FeeD34UzvDS7DICDch0hu086rZCHfxEpbDyZIiBeIJEgrq2iMrDNzY8=

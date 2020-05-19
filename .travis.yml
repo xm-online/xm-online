@@ -11,7 +11,13 @@ script:
   - export DOCKER_REPO=$(echo  -n $TRAVIS_REPO_SLUG | sed -e 's/^xm-online\//xmonline\//g')
   - export IMAGE_BRANCH=$(echo -n $TRAVIS_BRANCH | sed -e 's/\//-/g')
   - export PROJECT_VERSION="$IMAGE_BRANCH"
-  - export TAGS="$IMAGE_BRANCH $IMAGE_BRANCH-$TRAVIS_BUILD_NUMBER";
+  - if [ "$IMAGE_BRANCH" == "master" ]; 
+    then 
+        PROJECT_VERSION=$(printf $npm_package_version);
+        TAGS="$PROJECT_VERSION $PROJECT_VERSION-$TRAVIS_BUILD_NUMBER $(echo $PROJECT_VERSION | awk -F '.' '{printf $1"."$2" "$1}') latest";
+    else
+        TAGS="$IMAGE_BRANCH $IMAGE_BRANCH-$TRAVIS_BUILD_NUMBER";
+    fi
   - docker build -t app-docker-img --label commit_id="$TRAVIS_COMMIT" --label version="$PROJECT_VERSION" --label build_number="$TRAVIS_BUILD_NUMBER" --label build_url="$TRAVIS_BUILD_WEB_URL" --label git_url="$TRAVIS_REPO_SLUG" --label commit_message="$TRAVIS_COMMIT_MESSAGE" -f src/docker/Dockerfile .
   - for TAG in $TAGS;
     do

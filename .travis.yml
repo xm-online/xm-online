@@ -11,7 +11,7 @@ script:
   - export DOCKER_REPO=$(echo  -n $TRAVIS_REPO_SLUG | sed -e 's/^xm-online\//xmonline\//g')
   - export IMAGE_BRANCH=$(echo -n $TRAVIS_BRANCH | sed -e 's/\//-/g')
   - export PROJECT_VERSION="$IMAGE_BRANCH"
-  - printf $npm_package_version;
+  - npm get-version
   - if [ "$IMAGE_BRANCH" == "master" ]; 
     then 
         PROJECT_VERSION=$(printf $npm_package_version);

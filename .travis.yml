@@ -11,10 +11,9 @@ script:
   - export DOCKER_REPO=$(echo  -n $TRAVIS_REPO_SLUG | sed -e 's/^xm-online\//xmonline\//g')
   - export IMAGE_BRANCH=$(echo -n $TRAVIS_BRANCH | sed -e 's/\//-/g')
   - export PROJECT_VERSION="$IMAGE_BRANCH"
-  - npm run-script get-version
   - if [ "$IMAGE_BRANCH" == "master" ]; 
     then 
-        PROJECT_VERSION=$(npm run-script get-version| awk '{print $1}' | cut -d '@' -f 2);
+        PROJECT_VERSION=$(npm run-script get-version| tail -n1);
         TAGS="$PROJECT_VERSION $PROJECT_VERSION-$TRAVIS_BUILD_NUMBER $(echo $PROJECT_VERSION | awk -F '.' '{printf $1"."$2" "$1}') latest";
     else
         TAGS="$IMAGE_BRANCH $IMAGE_BRANCH-$TRAVIS_BUILD_NUMBER";

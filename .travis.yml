@@ -14,7 +14,7 @@ script:
   - npm run-script get-version
   - if [ "$IMAGE_BRANCH" == "master" ]; 
     then 
-        PROJECT_VERSION=$(npm run-script get-version);
+        PROJECT_VERSION=$(npm run-script get-version| awk '{print $1}' | cut -d '@' -f 2);
         TAGS="$PROJECT_VERSION $PROJECT_VERSION-$TRAVIS_BUILD_NUMBER $(echo $PROJECT_VERSION | awk -F '.' '{printf $1"."$2" "$1}') latest";
     else
         TAGS="$IMAGE_BRANCH $IMAGE_BRANCH-$TRAVIS_BUILD_NUMBER";

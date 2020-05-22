@@ -39,7 +39,8 @@
     "e2e": "ng e2e",
     "get-unwraped-labels": "node ./scripts/get-unwraped-labels.js",
     "translations": "node ./scripts/translations.js",
-    "report:bundle": "webpack-bundle-analyzer dist/stats.json"
+    "report:bundle": "webpack-bundle-analyzer dist/stats.json",
+    "get-version": "printf $npm_package_version"
   },
   "dependencies": {
     "@agm/core": "1.1.0",

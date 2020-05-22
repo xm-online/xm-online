@@ -1,0 +1,41 @@
+name: set tags project version
+on: 
+  push:
+    branches:
+      - master
+jobs:
+  set_tags:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+      with:
+        ref: master
+
+    - name: Set up nodejs
+      uses: actions/setup-node@v2-beta
+      with:
+        node-version: '10'
+
+    - name: Set Tag
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        version=`npm -s run-script get-version`
+        for v in $(echo -n $version |  awk -F '.' '{printf $0" "$1"."$2" "$1}')
+        do
+            if git tag -l | egrep -q "^v"$v"$"
+            then
+                git tag -d "v"$v
+            fi
+            git tag -a "v"$v -m "add tag $v"
+        done
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: master
+        tags: true
+        force: true

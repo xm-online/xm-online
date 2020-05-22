@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - autotag-test
+   pull_request:
+    types: [closed]
+    branches:
+      - autotag-test
 
 jobs:
   increment_version:

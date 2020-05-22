@@ -38,3 +38,5 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: autotag-test
+        tags: true
+

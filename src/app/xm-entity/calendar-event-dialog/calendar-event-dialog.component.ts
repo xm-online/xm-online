@@ -50,21 +50,29 @@ export class CalendarEventDialogComponent implements OnInit {
     public onConfirmSave(): void {
         this.showLoader = true;
         if (this.calendar.id) {
-            this.event.calendar = this.calendar;
-            this.eventService.create(this.event).pipe(finalize(() => this.showLoader = false))
-                .subscribe(
-                    (eventResp: HttpResponse<Event>) => this.onSaveSuccess(this.calendar.id, eventResp.body),
-                    (err) => console.info(err),
-                    () => this.showLoader = false);
+            this.processCalendarEvent(this.calendar, this.event);
         } else {
             const copy: Event = Object.assign({}, this.event);
             copy.startDate = this.dateUtils.toDate(this.event.startDate);
             copy.endDate = this.dateUtils.toDate(this.event.endDate);
-            this.calendar.events = [copy];
             this.calendarService.create(this.calendar).pipe(finalize(() => this.showLoader = false))
                 .subscribe(
-                    (calendarResp: HttpResponse<Calendar>) => this.onSaveSuccess(calendarResp.body.id,
-                        calendarResp.body.events.shift()),
+                    (calendarResp: HttpResponse<Calendar>) => {
+                        const newCalendar = calendarResp.body;
+                        this.processCalendarEvent(newCalendar, this.event);
+                    },
+                    (err) => console.info(err),
+                    () => this.showLoader = false);
+        }
+    }
+
+    private processCalendarEvent(calendar: Calendar, event: Event): void {
+        if (calendar && event) {
+            const calendarId = calendar.id;
+            event.calendar = calendarId;
+            this.eventService.create(event).pipe(finalize(() => this.showLoader = false))
+                .subscribe(
+                    (eventResp: HttpResponse<Event>) => this.onSaveSuccess(calendarId, eventResp.body),
                     (err) => console.info(err),
                     () => this.showLoader = false);
         }

@@ -18,7 +18,7 @@ script:
     else
         TAGS="$IMAGE_BRANCH $IMAGE_BRANCH-$TRAVIS_BUILD_NUMBER";
     fi
-  - docker.build("-t app-docker-img --label commit_id=$TRAVIS_COMMIT --label version=$PROJECT_VERSION --label build_number=$TRAVIS_BUILD_NUMBER --label build_url=$TRAVIS_BUILD_WEB_URL --label git_url=$TRAVIS_REPO_SLUG --label commit_message=$TRAVIS_COMMIT_MESSAGE src/docker")
+  - docker build -t app-docker-img --label commit_id="$TRAVIS_COMMIT" --label version="$PROJECT_VERSION" --label build_number="$TRAVIS_BUILD_NUMBER" --label build_url="$TRAVIS_BUILD_WEB_URL" --label git_url="$TRAVIS_REPO_SLUG" --label commit_message="$TRAVIS_COMMIT_MESSAGE" src/docker
   - for TAG in $TAGS;
     do
         docker tag app-docker-img $DOCKER_REPO:$TAG;

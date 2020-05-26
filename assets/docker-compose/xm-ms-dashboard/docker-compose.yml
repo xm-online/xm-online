@@ -1,0 +1,27 @@
+version: '3.3'
+services:
+    dashboard-app:
+        image: xmonline/xm-ms-dashboard:${IMAGE_TAG:-latest}
+        networks:
+            - xm2
+        env_file:
+            - ./env/dashboard-app.env
+        secrets:
+            - source: DASHBOARD_SPRING_DATASOURCE_PASSWORD
+              target: SPRING_DATASOURCE_PASSWORD
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+        logging:
+            driver: syslog
+            options:
+                tag: dashboard
+                syslog-facility: local7
+secrets:
+    DASHBOARD_SPRING_DATASOURCE_PASSWORD:
+        external: true
+networks:
+    xm2:
+        driver: overlay

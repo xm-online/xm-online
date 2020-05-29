@@ -1,0 +1,32 @@
+version: '3.3'
+services:
+    entity-app:
+        image: xmonline/xm-ms-entity:${IMAGE_TAG:-latest}
+        networks:
+            - xm2
+        env_file:
+            - ./env/entity-app.env
+        volumes:
+            - type: bind
+              source: /opt/ext-lib/
+              target: /opt/ext-lib/
+              read_only: true
+        secrets:
+            - source: ENTITY_SPRING_DATASOURCE_PASSWORD
+              target: SPRING_DATASOURCE_PASSWORD
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+        logging:
+            driver: syslog
+            options:
+                tag: entity
+                syslog-facility: local7
+secrets:
+    ENTITY_SPRING_DATASOURCE_PASSWORD:
+        external: true
+networks:
+    xm2:
+        driver: overlay

@@ -99,11 +99,33 @@ From the `xm-online/assets/` run docker to start containers defined.
  ```sh
 $ docker swarm init
 ```
-  - start service XM^online2
+  - start each misc service for XM^online2
 
  ```sh
-$ docker stack deploy -c docker-compose.yml xm2local
+$ docker stack deploy -c misc-services/consul/docker-compose.yml xm2local
+$ docker stack deploy -c misc-services/kafka/docker-compose.yml xm2local
+$ docker stack deploy -c misc-services/elasticsearch/docker-compose.yml xm2local
+$ docker stack deploy -c misc-services/postgres/docker-compose.yml xm2local
+$ docker stack deploy -c misc-services/zookeeper/docker-compose.yml xm2local
 ```
+
+- start each XM^online2 service
+
+ ```sh
+// Go to service directory
+$ cd ../releases/docker-swarm/
+
+$ docker stack deploy -c xm-gate/docker-compose.yml xm2local
+$ docker stack deploy -c xm-ms-config/docker-compose.yml xm2local
+$ docker stack deploy -c xm-ms-entity/docker-compose.yml xm2local
+$ docker stack deploy -c xm-uaa/docker-compose.yml xm2local
+$ docker stack deploy -c xm-webapp/docker-compose.yml xm2local
+$ docker stack deploy -c xm-ms-balance/docker-compose.yml xm2local
+$ docker stack deploy -c xm-ms-timeline/docker-compose.yml xm2local
+$ docker stack deploy -c xm-ms-scheduler/docker-compose.yml xm2local
+$ docker stack deploy -c xm-ms-dashboard/docker-compose.yml xm2local
+```
+
 If it is the first time you are using those images, it will first download the images from hub which may take some time.
 
 If nothing goes wrong you should see a couple of containers are running on your machine. To see them you can type: 
@@ -128,24 +150,25 @@ Default user `xm/P@ssw0rd` could be used to sign-in.
 
 *Note: some browsers for example Chrome prevents accessing to the url localhost:80 so we recommend to use direct IP*
 
-The ports of all the services like Postgresql, Kafka etc. were intentionally changed to custom ones to not to conflict with the default ones that may be installed and running on machine. For example, to connect to Postgresql here is the credentials:
+The ports of all the services like Postgresql, Kafka etc. were intentionally changed to custom ones to not to conflict with the default ones that may be installed and running on machine. For example, to connect to Postgresql here is the credentials (./assets/misc-services/postgres/password.txt):
  ```sh
-postgresql:
+version: '3.7'
+services:
+    postgres:
         image: postgres:9.6.2
-        networks:
+        networks: 
             - xm2
         ports:
             - 5432:5432
         volumes:
-            - ./:/docker-entrypoint-initdb.d/
+            - pg-data:/var/lib/postgresql/data
         environment:
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=postgres
-        deploy:
-            mode: replicated
-            replicas: 1
-            restart_policy:
-                condition: on-failur
+                POSTGRES_USER: postgres
+                POSTGRES_PASSWORD_FILE: POSTGRES_PASSWORD
+secrets:
+    POSTGRES_PASSWORD:
+        file: ./password.txt
+        name: POSTGRES_PASSWORD
 ```
 To get credentials of other services you may want to see docker-compose.yml and docker logs 
 

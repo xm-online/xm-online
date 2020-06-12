@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+    zookeeper:
+        image: jbsukraine/apache-zookeeper:3.4.13
+        networks:
+            - xm2
+        hostname: zookeeper
+        volumes:
+            - zk:/opt/zookeeper/data
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+        logging:
+            driver: syslog
+            options:
+                tag: zookeeper
+                syslog-facility: local7
+
+networks:
+    xm2:
+        driver: overlay
+volumes:
+    zk:

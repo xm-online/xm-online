@@ -1,0 +1,27 @@
+version: '3.3'
+services:
+    elasticsearch:
+        image: elasticsearch:5.6.5
+        networks:
+            - xm2
+        ports:
+            - 9200:9200
+        volumes:
+            - es-data:/usr/share/elasticsearch/data
+        environment:
+            - "ES_JAVA_OPTS=-Xms512m -Xmx1024m" 
+        command: -Enetwork.host=0.0.0.0 -Ediscovery.type=single-node
+        deploy:
+          placement:
+            constraints: [node.role == manager]
+        logging:
+            driver: syslog
+            options:
+                tag: elasticsearch
+                syslog-facility: local7
+
+networks:
+    xm2:
+        driver: overlay
+volumes:
+    es-data:

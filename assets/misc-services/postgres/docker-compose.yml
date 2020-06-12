@@ -27,7 +27,7 @@ secrets:
 volumes:
     pg-data:
 
-        networks:
+networks:
     xm2:
         driver: overlay
         

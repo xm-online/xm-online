@@ -1,7 +1,7 @@
 version: '3.3'
 services:
     gate-app:
-        image: xmonline/xm-gate:${IMAGE_TAG:-latest}
+        image: xmonline/xm-gate:${IMAGE_XM_GATE_TAG:-latest}
         networks:
             - xm2
         env_file:
@@ -13,9 +13,6 @@ services:
             replicas: 1
             restart_policy:
                 condition: on-failure
-        secrets:
-            - source: GATE_SPRING_DATASOURCE_PASSWORD
-              target: SPRING_DATASOURCE_PASSWORD
         logging:
             driver: syslog
             options:
@@ -24,6 +21,3 @@ services:
 networks:
     xm2:
         driver: overlay
-secrets:
-    GATE_SPRING_DATASOURCE_PASSWORD:
-        external: true

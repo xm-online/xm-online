@@ -1,7 +1,7 @@
 version: '3.3'
 services:
     balance-app:
-        image: xmonline/xm-ms-balance:${IMAGE_TAG:-latest}
+        image: xmonline/xm-ms-balance:${IMAGE_XM_MS_BALANCE_TAG:-latest}
         networks:
             - xm2
         env_file:

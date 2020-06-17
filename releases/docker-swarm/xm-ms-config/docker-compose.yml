@@ -1,7 +1,7 @@
 version: '3.3'
 services:
     config-app:
-        image: xmonline/xm-ms-config:${IMAGE_TAG:-latest}
+        image: xmonline/xm-ms-config:${IMAGE_XM_MS_CONFIG_TAG:-latest}
         networks:
             - xm2
         env_file:

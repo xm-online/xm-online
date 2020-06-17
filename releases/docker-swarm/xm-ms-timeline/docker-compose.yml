@@ -1,7 +1,7 @@
 version: '3.3'
 services:
     timeline-app:
-        image: xmonline/xm-ms-timeline:${IMAGE_TAG:-latest}
+        image: xmonline/xm-ms-timeline:${IMAGE_XM_MS_TIMELINE_TAG:-latest}
         networks:
             - xm2
         env_file:

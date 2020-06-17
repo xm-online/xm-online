@@ -1,16 +1,11 @@
 version: '3.3'
 services:
     entity-app:
-        image: xmonline/xm-ms-entity:${IMAGE_TAG:-latest}
+        image: xmonline/xm-ms-entity:${IMAGE_XM_MS_ENTITY_TAG:-latest}
         networks:
             - xm2
         env_file:
             - ./env/entity-app.env
-        volumes:
-            - type: bind
-              source: /opt/ext-lib/
-              target: /opt/ext-lib/
-              read_only: true
         secrets:
             - source: ENTITY_SPRING_DATASOURCE_PASSWORD
               target: SPRING_DATASOURCE_PASSWORD

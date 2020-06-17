@@ -1,7 +1,7 @@
 version: '3.3'
 services:
     dashboard-app:
-        image: xmonline/xm-ms-dashboard:${IMAGE_TAG:-latest}
+        image: xmonline/xm-ms-dashboard:${IMAGE_XM_MS_DASHBOARD_TAG:-latest}
         networks:
             - xm2
         env_file:

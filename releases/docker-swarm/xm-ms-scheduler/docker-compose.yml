@@ -1,7 +1,7 @@
 version: '3.3'
 services:
     scheduler-app:
-        image: xmonline/xm-ms-scheduler:${IMAGE_TAG:-latest}
+        image: xmonline/xm-ms-scheduler:${IMAGE_XM_MS_SCHEDULER_TAG:-latest}
         networks:
             - xm2
         env_file:

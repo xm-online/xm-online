@@ -1,7 +1,7 @@
 version: '3.3'
 services:
     uaa-app:
-        image: xmonline/xm-uaa:${IMAGE_TAG:-latest}
+        image: xmonline/xm-uaa:${IMAGE_XM_UAA_TAG:-latest}
         networks:
             - xm2
         env_file:
@@ -9,10 +9,6 @@ services:
         secrets:
             - source: UAA_SPRING_DATASOURCE_PASSWORD
               target: SPRING_DATASOURCE_PASSWORD
-            - source: APPLICATION_RECAPTCHA_SECRETKEY
-              target: APPLICATION_RECAPTCHA_SECRETKEY
-            - source: APPLICATION_RECAPTCHA_PUBLICKEY
-              target: APPLICATION_RECAPTCHA_PUBLICKEY
         deploy:
             mode: replicated
             replicas: 1
@@ -26,10 +22,6 @@ services:
 
 secrets:
     UAA_SPRING_DATASOURCE_PASSWORD:
-        external: true
-    APPLICATION_RECAPTCHA_PUBLICKEY:
-        external: true
-    APPLICATION_RECAPTCHA_SECRETKEY:
         external: true
 
 networks:

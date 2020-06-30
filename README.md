@@ -98,10 +98,6 @@ $ git clone https://github.com/xm-online/xm-online.git
 cd xm-online/assets/
 ```
 
-```sh
-git clone --mirror https://github.com/xm-online/xm-ms-config-repository.git ../releases/docker-swarm/xm-ms-config/
-```
-
 From the `xm-online/assets/` run docker to start containers defined.
 
 -   start Docker
@@ -121,6 +117,40 @@ docker stack deploy -c misc-services/postgres/docker-compose.yml xm2local
 docker stack deploy -c misc-services/zookeeper/docker-compose.yml xm2local
 ```
 
+-   add rule to the end of file _/var/lib/docker/volumes/xm2local_pg-data/\_data/pg_hba.conf_
+
+```sh
+host    all             all             all                     trust
+```
+
+-   change default _max connections_ to 300 in _/var/lib/docker/volumes/xm2local_pg-data/\_data/postgresql.conf_
+
+```sh
+max_connections = 300
+```
+
+-   restart postgres
+
+```sh
+docker rm -f $(docker ps | grep postgres | awk '{print $1}')
+```
+
+-   initialize postgres databases
+
+```sh
+docker exec -it $(docker ps | grep postgres | awk '{print $1}') psql -U postgres
+
+CREATE DATABASE activation;
+CREATE DATABASE balance;
+CREATE DATABASE dashboard;
+CREATE DATABASE document;
+CREATE DATABASE entity;
+CREATE DATABASE scheduler;
+CREATE DATABASE uaa;
+CREATE DATABASE timeline;
+\q
+```
+
 -   initialize passwords for each XM^online2 service (_postgres_ is default)
 
 ```sh
@@ -137,14 +167,13 @@ echo my$3cr3t | docker secret create APPLICATION_GIT_PASSWORD -
 -   start each XM^online2 service
 
 ```sh
-mkdir /opt/ext-lib/
-
 // Go to service directory
 cd ../releases/docker-swarm/
 
 source component-versions.env
 docker stack deploy -c xm-gate/docker-compose.yml xm2local
 docker stack deploy -c xm-ms-config/docker-compose.yml xm2local
+git clone --mirror https://github.com/xm-online/xm-ms-config-repository.git /var/lib/docker/volumes/xm2local_config-repo/_data/
 docker stack deploy -c xm-ms-entity/docker-compose.yml xm2local
 docker stack deploy -c xm-uaa/docker-compose.yml xm2local
 docker stack deploy -c xm-webapp/docker-compose.yml xm2local

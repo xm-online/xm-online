@@ -2,6 +2,10 @@ version: '3.3'
 services:
     config-app:
         image: xmonline/xm-ms-config:${IMAGE_XM_MS_CONFIG_TAG:-latest}
+        volumes:
+            - type: volume
+              source: config-repo
+              target: /opt/xm-ms-config-repository.git
         networks:
             - xm2
         env_file:
@@ -27,3 +31,5 @@ secrets:
 networks:
     xm2:
         driver: overlay
+volumes:
+    config-repo:

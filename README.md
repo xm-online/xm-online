@@ -86,6 +86,12 @@ Applications:
 
 ### Installation steps
 
+-   set _net.core.somaxconn = 4096_ in _/etc/sysctl.conf_ and reload
+
+```sh
+sudo sysctl -p
+```
+
 Сlone this project and set up a mirror of the source repository xm2-config for local configuration, make git clone --mirror project xm2-config
 
 ```sh

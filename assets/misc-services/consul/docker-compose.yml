@@ -1,0 +1,24 @@
+version: '3.3'
+services:
+    consul:
+        image: consul:1.6.1
+        networks:
+            - xm2
+        ports:
+            - 8500:8500
+        command: consul agent -dev -ui -client 0.0.0.0
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+        logging:
+            driver: syslog
+            options:
+                tag: consul
+                syslog-facility: local7
+
+networks:
+    xm2:
+        driver: overlay
+

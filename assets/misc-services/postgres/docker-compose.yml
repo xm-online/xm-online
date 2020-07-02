@@ -2,15 +2,15 @@ version: '3.7'
 services:
     postgres:
         image: postgres:9.6.2
-        networks: 
+        networks:
             - xm2
         ports:
             - 5432:5432
         volumes:
             - pg-data:/var/lib/postgresql/data
         environment:
-                POSTGRES_USER: postgres
-                POSTGRES_PASSWORD_FILE: POSTGRES_PASSWORD
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD_FILE: /run/secrets/POSTGRES_PASSWORD
         secrets:
             - source: POSTGRES_PASSWORD
               target: POSTGRES_PASSWORD
@@ -30,4 +30,3 @@ volumes:
 networks:
     xm2:
         driver: overlay
-        

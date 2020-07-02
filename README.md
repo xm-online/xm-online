@@ -117,12 +117,6 @@ docker stack deploy -c misc-services/postgres/docker-compose.yml xm2local
 docker stack deploy -c misc-services/zookeeper/docker-compose.yml xm2local
 ```
 
--   add rule to the end of file _/var/lib/docker/volumes/xm2local_pg-data/\_data/pg_hba.conf_
-
-```sh
-host    all             all             all                     trust
-```
-
 -   change default _max connections_ to 300 in _/var/lib/docker/volumes/xm2local_pg-data/\_data/postgresql.conf_
 
 ```sh

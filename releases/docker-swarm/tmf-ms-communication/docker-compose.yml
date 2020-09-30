@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+    communication-app:
+        image: xmonline/tmf-ms-communication:${IMAGE_TMF_MS_COMMUNICATION_TAG:-latest}
+        networks:
+            - xm2
+        env_file:
+            - ./env/communication-app.env
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+        logging:
+            driver: syslog
+            options:
+                tag: communication
+                syslog-facility: local7
+
+networks:
+    xm2:
+        driver: overlay

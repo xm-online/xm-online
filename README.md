@@ -1,16 +1,11 @@
-# XM^online 2
+# XM^ONLINE fast-code platform (XME.digital fast-code platform) 2
 
 ## Introduction
 
-XM^online is an open-source framework that helps startups and developing businesses make digital transformation and launch a product with short time-to-market using MVP (Minimum Viable Product) approach. Due to real-time big data processing, multi-channel networks, enterprise integration, and secure multi-tenancy, it makes possible to launch new products and active high response engagement campaigns faster.
-
+XME.digital (former XM^ONLINE) is based on an open-source framework XM^ONLINE. XM^ONLINE (XME.digital) fast-code platform helps startups, SME and corporations make digital transformation and launch of the digital products and services within a short period of time by using MVP (Minimum Viable Product) approach. Due to real-time big data processing, multi-channel networks, enterprise integration, and secure multi-tenancy, it makes it possible to launch new products and active high response engagement campaigns faster. 
 The solution combines a set of customizable tools that allow customers to get own cloud application and configure it according to their needs and preferences.
-
--   For a full description of the solution, visit the project page:
-    https://www.xm-online.com/
-
--   To submit bug reports and feature suggestions:
-    https://github.com/xm-online/xm-online/issues
+For a full description of the solution, visit the project page: https://www.xme.digital/  
+To submit bug reports and feature suggestions: https://github.com/xm-online/xm-online/issues
 
 ## Technologies
 

@@ -1,0 +1,35 @@
+version: '3.3'
+services:
+    config-app:
+        image: xmonline/xm-ms-config:${IMAGE_XM_MS_CONFIG_TAG:-latest}
+        volumes:
+            - type: volume
+              source: config-repo
+              target: /opt/xm-ms-config-repository.git
+        networks:
+            - xm2
+        env_file:
+            - ./env/config-app.env
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+        secrets:
+            - source: APPLICATION_GIT_PASSWORD
+              target: APPLICATION_GIT_PASSWORD
+        logging:
+            driver: syslog
+            options:
+                tag: config
+                syslog-facility: local7
+
+secrets:
+    APPLICATION_GIT_PASSWORD:
+        external: true
+
+networks:
+    xm2:
+        driver: overlay
+volumes:
+    config-repo:

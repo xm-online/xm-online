@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+    uaa-app:
+        image: xmonline/xm-uaa:${IMAGE_XM_UAA_TAG:-latest}
+        networks:
+            - xm2
+        env_file:
+            - ./env/uaa-app.env
+        secrets:
+            - source: UAA_SPRING_DATASOURCE_PASSWORD
+              target: SPRING_DATASOURCE_PASSWORD
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+        logging:
+            driver: syslog
+            options:
+                tag: uaa
+                syslog-facility: local7
+
+secrets:
+    UAA_SPRING_DATASOURCE_PASSWORD:
+        external: true
+
+networks:
+    xm2:
+        driver: overlay

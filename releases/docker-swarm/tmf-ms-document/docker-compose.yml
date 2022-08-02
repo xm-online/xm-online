@@ -1,0 +1,27 @@
+version: '3.3'
+services:
+    document-app:
+        image: xmonline/tmf-ms-document:${IMAGE_TMF_MS_DOCUMENT_TAG:-latest}
+        networks:
+            - xm2
+        env_file:
+            - ./env/document-app.env
+        secrets:
+            - source: DOCUMENT_SPRING_DATASOURCE_PASSWORD
+              target: SPRING_DATASOURCE_PASSWORD
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+        logging:
+            driver: syslog
+            options:
+                tag: document
+                syslog-facility: local7
+secrets:
+    DOCUMENT_SPRING_DATASOURCE_PASSWORD:
+        external: true
+networks:
+    xm2:
+        driver: overlay

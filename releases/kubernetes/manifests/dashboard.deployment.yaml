@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dashboard-deployment
+spec:
+  progressDeadlineSeconds: 1600
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dashboard
+  template:
+    metadata:
+      labels:
+        app: dashboard
+    spec:
+      containers:
+        - env:
+            - name: _JAVA_OPTIONS
+              value: "-Xmx256m -Xms256m"
+            - name: PORT
+              value: "8082"
+            - name: SPRING_CLOUD_CONSUL_HOST
+              value: "consul-service"
+            - name: SPRING_CLOUD_CONSUL_PORT
+              value: "8500"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "postgres"
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres-service:5432/dashboard
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "postgres"
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: kafka-service:9092
+          image: xmonline/xm-ms-dashboard:latest
+          name: server
+          ports:
+            - containerPort: 8082
+          readinessProbe:
+            initialDelaySeconds: 450
+            tcpSocket:
+              port: 8082
+      initContainers:
+        - command: [ 'sh', '-c', 'until nc -vz config-service 8084 ; do echo "config-service"; sleep 1; done;' ]
+          image: busybox:latest
+          name: init-config-service

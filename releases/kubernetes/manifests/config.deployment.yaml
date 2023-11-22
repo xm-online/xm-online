@@ -1,0 +1,72 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: config
+  name: config-service
+spec:
+  ports:
+    - port: 8084
+  selector:
+    app: config
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-deployment
+spec:
+  progressDeadlineSeconds: 1600
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config
+  template:
+    metadata:
+      labels:
+        app: config
+    spec:
+      containers:
+        - env:
+            - name: _JAVA_OPTIONS
+              value: "-Xmx256m -Xms256m"
+            - name: APPLICATION_GIT_BRANCH_NAME
+              value: "master"
+            - name: APPLICATION_GIT_URI
+              value: "/root/repository"
+            - name: PORT
+              value: "8084"
+            - name: SPRING_CLOUD_CONSUL_HOST
+              value: "consul-service"
+            - name: SPRING_CLOUD_CONSUL_PORT
+              value: "8500"
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: 'kafka-service:9092'
+            - name: XM_CONFIG_INCLUDE_TENANTS
+              value: "xm,tenant1,tenant2"
+          image: xmonline/xm-ms-config:latest
+          name: config-container
+          ports:
+            - containerPort: 8084
+          readinessProbe:
+            initialDelaySeconds: 60
+            tcpSocket:
+              port: 8084
+          volumeMounts:
+            - mountPath: /root/repository
+              name: config-volume
+      initContainers:
+        - command: [ 'sh', '-c', 'until nc -vz kafka-service 9092; do echo "kafka-service"; sleep 1; done;' ]
+          image: busybox:latest
+          name: init-kafka-service
+        - args: [ 'git clone https://github.com/xm-online/xm-ms-config-repository.git /root/repository' ]
+          command: [ "/bin/sh","-c" ]
+          image: docker:git
+          name: git-clone-config
+          volumeMounts:
+            - mountPath: /root/repository
+              name: config-volume
+      volumes:
+        - emptyDir: { }
+          name: config-volume

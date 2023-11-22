@@ -1,0 +1,47 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: elastic
+  name: elastic-service
+spec:
+  ports:
+    - name: elastic-port
+      port: 9200
+      targetPort: 9200
+  selector:
+    app: elastic
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elastic-deployment
+spec:
+  progressDeadlineSeconds: 1600
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elastic
+  template:
+    metadata:
+      labels:
+        app: elastic
+    spec:
+      containers:
+        - env:
+            - name: PORT
+              value: "9200"
+            - name: discovery.type
+              value: "single-node"
+            - name: network.host
+              value: "0.0.0.0"
+          image: elasticsearch:8.5.3
+          name: elastic-container
+          ports:
+            - containerPort: 9200
+          readinessProbe:
+            initialDelaySeconds: 600
+            tcpSocket:
+              port: 9200

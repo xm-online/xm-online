@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uaa-deployment
+spec:
+  progressDeadlineSeconds: 1600
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uaa
+  template:
+    metadata:
+      labels:
+        app: uaa
+    spec:
+      containers:
+        - env:
+            - name: _JAVA_OPTIONS
+              value: "-Xmx256m -Xms256m"
+            - name: PORT
+              value: "9999"
+            - name: SPRING_CLOUD_CONSUL_HOST
+              value: "consul-service"
+            - name: SPRING_CLOUD_CONSUL_PORT
+              value: "8500"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "postgres"
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres-service:5432/uaa
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "postgres"
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: 'kafka-service:9092'
+          image: xmonline/xm-uaa:latest
+          name: uaa-container
+          ports:
+            - containerPort: 9999
+          readinessProbe:
+            initialDelaySeconds: 300
+            tcpSocket:
+              port: 9999
+      initContainers:
+        - command: [ 'sh', '-c', 'until nc -vz config-service 8084; do echo "config-service"; sleep 1; done;' ]
+          image: busybox:latest
+          name: init-config-service

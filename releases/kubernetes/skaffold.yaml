@@ -1,0 +1,16 @@
+apiVersion: skaffold/v2beta19
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - manifests/webapp.deployment.yaml
+      - manifests/postgres.deployment.yaml
+      - manifests/consul.deployment.yaml
+      - manifests/zookeeper.deployment.yaml
+      - manifests/kafka.deployment.yaml
+      - manifests/config.deployment.yaml
+      - manifests/gate.deployment.yaml
+      - manifests/uaa.deployment.yaml
+      - manifests/dashboard.deployment.yaml
+      - manifests/elastic.deployment.yaml
+      - manifests/entity.deployment.yaml

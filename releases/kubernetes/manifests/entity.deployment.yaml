@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: entity
+  name: entity-deployment
+spec:
+  progressDeadlineSeconds: 1600
+  replicas: 1
+  selector:
+    matchLabels:
+      app: entity
+  template:
+    metadata:
+      labels:
+        app: entity
+    spec:
+      containers:
+        - env:
+            - name: PORT
+              value: "8081"
+            - name: SPRING_CLOUD_CONSUL_HOST
+              value: "consul-service"
+            - name: SPRING_CLOUD_CONSUL_PORT
+              value: "8500"
+            - name: SPRING_DATA_ELASTICSEARCH_CLUSTERNAME_CLUSTERNODES
+              value: "elastic-service:9200"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "postgres"
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres-service:5432/entity
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "postgres"
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: kafka-service:9092
+            - name: _JAVA_OPTIONS
+              value: "-Xmx256m -Xms256m"
+          image: xmonline/xm-ms-entity:latest
+          name: server
+          ports:
+            - containerPort: 8081
+          readinessProbe:
+            initialDelaySeconds: 700
+            tcpSocket:
+              port: 8081
+      initContainers:
+        - command: [ 'sh', '-c', 'until nc -vz config-service 8084 ; do echo "config-service"; sleep 1; done;' ]
+          image: busybox:latest
+          name: init-config-service

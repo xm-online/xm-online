@@ -1,0 +1,53 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: zookeeper
+  name: zookeeper-service
+spec:
+  ports:
+    - name: zookeeper-port
+      port: 2181
+      targetPort: 2181
+  selector:
+    app: zookeeper
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zookeeper-deployment
+spec:
+  progressDeadlineSeconds: 1600
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zookeeper
+  template:
+    metadata:
+      labels:
+        app: zookeeper
+    spec:
+      containers:
+        - env:
+            - name: PORT
+              value: "2181"
+            - name: ZOOKEEPER_CLIENT_PORT
+              value: "2181"
+          image: confluentinc/cp-zookeeper:6.1.9
+          name: zookeeper-server
+          ports:
+            - containerPort: 2181
+            - containerPort: 2888
+            - containerPort: 3888
+          readinessProbe:
+            initialDelaySeconds: 5
+            tcpSocket:
+              port: 2181
+          volumeMounts:
+            - mountPath: /opt/zookeeper/data
+              name: zookeeper-cache
+      volumes:
+        - emptyDir: { }
+          name: zookeeper-cache
